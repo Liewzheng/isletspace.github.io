@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="next-config" data-name="main" type="application/json">{&quot;hostname&quot;:&quot;islet.space&quot;,&quot;root&quot;:&quot;&#x2F;&quot;,&quot;images&quot;:&quot;&#x2F;images&quot;,&quot;scheme&quot;:&quot;Muse&quot;,&quot;version&quot;:&quot;8.3.0&quot;,&quot;exturl&quot;:false,&quot;sidebar&quot;:{&quot;position&quot;:&quot;left&quot;,&quot;display&quot;:&quot;post&quot;,&quot;padding&quot;:18,&quot;offset&quot;:12},&quot;copycode&quot;:false,&quot;bookmark&quot;:{&quot;enable&quot;:false,&quot;color&quot;:&quot;#222&quot;,&quot;save&quot;:&quot;auto&quot;},&quot;fancybox&quot;:false,&quot;mediumzoom&quot;:false,&quot;lazyload&quot;:false,&quot;pangu&quot;:false,&quot;comments&quot;:{&quot;style&quot;:&quot;tabs&quot;,&quot;active&quot;:null,&quot;storage&quot;:true,&quot;lazyload&quot;:false,&quot;nav&quot;:null},&quot;motion&quot;:{&quot;enable&quot;:true,&quot;async&quot;:false,&quot;transition&quot;:{&quot;post_block&quot;:&quot;fadeIn&quot;,&quot;post_header&quot;:&quot;fadeInDown&quot;,&quot;post_body&quot;:&quot;fadeInDown&quot;,&quot;coll_header&quot;:&quot;fadeInLeft&quot;,&quot;sidebar&quot;:&quot;fadeInUp&quot;}},&quot;prism&quot;:false,&quot;i18n&quot;:{&quot;placeholder&quot;:&quot;Searching...&quot;,&quot;empty&quot;:&quot;We didn&#39;t find any results for the search: ${query}&quot;,&quot;hits_time&quot;:&quot;${hits} results found in ${time} ms&quot;,&quot;hits&quot;:&quot;${hits} results found&quot;}}</script>
+<meta name="description" content="原文出处：https:&#x2F;&#x2F;www.21ic.com&#x2F;app&#x2F;analog&#x2F;201207&#x2F;134812.htm 用可编程增益放大器(PGA)处理数据采集系统中传感器&#x2F;变送器模拟输出和信号处理数字之间的接口。单片和高集成度PGA现在被可编程、更高精度、更高吞吐量和更小封装尺寸的模块和混合方案替代。  由于来自传感器&#x2F;变送器的模拟信号的本性，使其工作必须具备相当大的动态范围。这要求采用连续增益级在进行任">
+<meta property="og:type" content="article">
+<meta property="og:title" content="模数接口中的可编程增益放大器（PGA）">
+<meta property="og:url" content="http://islet.space/2021/01/05/Signal/2021-01-05-%E6%A8%A1%E6%95%B0%E6%8E%A5%E5%8F%A3%E4%B8%AD%E7%9A%84%E5%8F%AF%E7%BC%96%E7%A8%8B%E5%A2%9E%E7%9B%8A%E6%94%BE%E5%A4%A7%E5%99%A8%EF%BC%88PGA%EF%BC%89/index.html">
+<meta property="og:site_name" content="Coder的孤岛">
+<meta property="og:description" content="原文出处：https:&#x2F;&#x2F;www.21ic.com&#x2F;app&#x2F;analog&#x2F;201207&#x2F;134812.htm 用可编程增益放大器(PGA)处理数据采集系统中传感器&#x2F;变送器模拟输出和信号处理数字之间的接口。单片和高集成度PGA现在被可编程、更高精度、更高吞吐量和更小封装尺寸的模块和混合方案替代。  由于来自传感器&#x2F;变送器的模拟信号的本性，使其工作必须具备相当大的动态范围。这要求采用连续增益级在进行任">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://pic.islet.space/2021/04/fb222bc5a544088d5a7fc0c708476621.jpg">
+<meta property="og:image" content="http://pic.islet.space/2021/04/8b55f596bcfdf9a408bd3c959504fb21.jpg">
+<meta property="og:image" content="http://pic.islet.space/2021/04/8CzZ7BjS2OMEYQJ.jpg">
+<meta property="article:published_time" content="2021-01-05T15:58:32.000Z">
+<meta property="article:modified_time" content="2021-04-28T16:36:28.884Z">
+<meta property="article:author" content="Liewzheng">
+<meta property="article:tag" content="PGA">
+<meta property="article:tag" content="forwarding">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://pic.islet.space/2021/04/fb222bc5a544088d5a7fc0c708476621.jpg">
+
+
+<link rel="canonical" href="http://islet.space/2021/01/05/Signal/2021-01-05-%E6%A8%A1%E6%95%B0%E6%8E%A5%E5%8F%A3%E4%B8%AD%E7%9A%84%E5%8F%AF%E7%BC%96%E7%A8%8B%E5%A2%9E%E7%9B%8A%E6%94%BE%E5%A4%A7%E5%99%A8%EF%BC%88PGA%EF%BC%89/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{&quot;sidebar&quot;:&quot;&quot;,&quot;isHome&quot;:false,&quot;isPost&quot;:true,&quot;lang&quot;:&quot;en&quot;,&quot;comments&quot;:true,&quot;permalink&quot;:&quot;http:&#x2F;&#x2F;islet.space&#x2F;2021&#x2F;01&#x2F;05&#x2F;Signal&#x2F;2021-01-05-%E6%A8%A1%E6%95%B0%E6%8E%A5%E5%8F%A3%E4%B8%AD%E7%9A%84%E5%8F%AF%E7%BC%96%E7%A8%8B%E5%A2%9E%E7%9B%8A%E6%94%BE%E5%A4%A7%E5%99%A8%EF%BC%88PGA%EF%BC%89&#x2F;&quot;,&quot;path&quot;:&quot;2021&#x2F;01&#x2F;05&#x2F;Signal&#x2F;2021-01-05-模数接口中的可编程增益放大器（PGA）&#x2F;&quot;,&quot;title&quot;:&quot;模数接口中的可编程增益放大器（PGA）&quot;}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">&quot;&quot;</script>
+<title>模数接口中的可编程增益放大器（PGA） | Coder的孤岛</title><script src="/js/config.js"></script>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Coder的孤岛</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">islet of the coder</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%90%84%E7%A7%8D%E6%80%A7%E8%83%BD%E7%9A%84PGA"><span class="nav-number">1.</span> <span class="nav-text">各种性能的PGA</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%9B%86%E6%88%90%E6%96%B9%E6%A1%88"><span class="nav-number">2.</span> <span class="nav-text">集成方案</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Liewzheng</p>
+  <div class="site-description" itemprop="description">笔记分享的旮旯孤岛而已</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">17</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://islet.space/2021/01/05/Signal/2021-01-05-%E6%A8%A1%E6%95%B0%E6%8E%A5%E5%8F%A3%E4%B8%AD%E7%9A%84%E5%8F%AF%E7%BC%96%E7%A8%8B%E5%A2%9E%E7%9B%8A%E6%94%BE%E5%A4%A7%E5%99%A8%EF%BC%88PGA%EF%BC%89/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Liewzheng">
+      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coder的孤岛">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          模数接口中的可编程增益放大器（PGA）
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-01-05 23:58:32" itemprop="dateCreated datePublished" datetime="2021-01-05T23:58:32+08:00">2021-01-05</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2021-04-29 00:36:28" itemprop="dateModified" datetime="2021-04-29T00:36:28+08:00">2021-04-29</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Signal/" itemprop="url" rel="index"><span itemprop="name">Signal</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>原文出处：<a target="_blank" rel="noopener" href="https://www.21ic.com/app/analog/201207/134812.htm">https://www.21ic.com/app/analog/201207/134812.htm</a></p>
+<p>用可编程增益放大器(PGA)处理数据采集系统中传感器/变送器模拟输出和信号处理数字之间的接口。单片和高集成度PGA现在被可编程、更高精度、更高吞吐量和更小封装尺寸的模块和混合方案替代。 </p>
+<p>由于来自传感器/变送器的模拟信号的本性，使其工作必须具备相当大的动态范围。这要求采用连续增益级在进行任何实际的数字处理之前增大这些信号，PGA能满足这种要求。 </p>
+<p>PGA是可变增益放大器(VGA)的一种。VGA提供可变和连续增益控制，而PGA <mark>必须在软件控制下以固定步(通常6dB步)做到可变增益控制</mark>。达到更精细的分辨步0.5dB是可能的。 一般多通道数据采集系统用很多不同类型的传感器/变送器，这包括 <strong>热电偶</strong>、<strong>惠斯登电桥</strong>，<strong>热敏电阻</strong>、<strong>应变计</strong> 和 <strong>超声系统</strong>。虽然，传感器/变送器是基于不同的物理原理，但大多数产品是 <strong>以电压做为输出</strong>。甚至这会产生中间值(如电容或电阻)，但最终变换为电压，以便在数据采集系统中进行</p>
+<p><img src="http://pic.islet.space/2021/04/fb222bc5a544088d5a7fc0c708476621.jpg"></p>
+<p>传感器/变送器的输出可覆盖非常大的范围，需要PGA来处理传感器/变送器输出到ADC的接口。</p>
+<blockquote>
+<p>例如，在工业过程控制系统中，低频信号可以几毫伏到几伏变化。需要PGA来匹配这种宽传感器/变送器输出范围到特定的ADC输入范围。通常，在输入数据采集通道最低信号电平与最高信号电平之比是2个量级或更大。  12位ADC接收小于ADC满标输入十分之一的信号仅可提供8位分辨率，除非在信号到达ADC之前用PGA放大。PGA允许在软件控制下使接收信号的增益达到宽范围增益一带宽乘积。这可避免钳位并允许采用较便宜的ADC，如用12位ADC替代16位ADC。 </p>
+</blockquote>
+<p>PGA可做更多事情。PGA缓冲来自前级(通常是多路转换器)ADC的输入，防止多路转换器导通电阻所引起的加载。PGA也提供差分别单端的变换，大多数跟踪和保持型ADC需要单输入。把PGA连接到差分多路转换器输出时，PGA提供共模抑制。 </p>
+<p>在市场上可以得到很多种PGA和支持元件。这包括可独立应用的运放被专门设计成PGA、ASIC、集成有可编程滤波器的PGA、仪表放大器PGA、用于运放的数字电位器前端、PGA用数字可编程分压器、ADC驱动器。有时把PGA和DAC集成在同一芯片上。 </p>
+<p>对于不需要信号宽动态范围的应用，PGA不是必须的。放大器可以直接接口传感器/变送器到ADC。</p>
+<blockquote>
+<p>例如，Maxim的MAX1494仪表放大器适合于250V/V或更小增益范围的应用。 </p>
+</blockquote>
+<h1 id="各种性能的PGA"><a href="#各种性能的PGA" class="headerlink" title="各种性能的PGA"></a>各种性能的PGA</h1><p>对于特殊性能参量(如高增益稳定性和高精度，低漂移，低失真，高输出驱动电流，高转换率，快速建立时间，高共模抑制比，低功率和小尺寸)有很多PGA是最佳的。 </p>
+<blockquote>
+<ul>
+<li>Microchip公司的MCP6S2X家族PGA具有2、6和8通道输入，包含多路转换器并可通过串行外设接口(SPI)总线进行增益控制和通道选择。</li>
+<li>NS公司的LMH6718IC是双PGA，具有高输出(200mA)驱动信号。  </li>
+<li>高性能小封装的PAG有ADI公司的AD8555，这是封装在微型8引线SOIC中的数字可编程信号调理自动零放大器，它包含放大器，比较器，用Digit  Trim技术的电阻调节分压器和缓冲器。其500V/℃总输入失调漂移是其他竞争产品的1/20。</li>
+<li>Linear公司的LTC6915A也是小封装高性能PGA。此仪表放大器封装为16引线SSOP或12引线DFN，可把它放置在最靠近传感器/变送器的地方。它所占电路板面积是等效分立方案的1/6。零漂移特性具有高达4096的宽可编程动态范围(增益精度0.1%)。它也有50mV/℃漂移和与增益无关的125dB CMRR。  </li>
+<li>对于低失真是主要考虑因素的应用，可以选择Intersil公司PGA缓冲器HFA11XX，其低失真电平低到-73dBc、噪声电平低到7”9nV/√Hz。</li>
+<li>TI公司的THS7001/7002单/双PGA采用Power PAD封装，包含分离的低噪声前置放大器和增益放大级。此器件可达到非常低的噪声电平(低到1.7nV/√Hz)。 </li>
+<li>其他可注意的PGA包括ADI公司的AD628首款具有可编程增益的共模差分放大器和Linear公司的LTC1564 PGA(除放大器外，它还具有8阶软件可编程抗混淆滤波器)。 </li>
+</ul>
+</blockquote>
+<p>PGA也集成有其他前端电路。</p>
+<blockquote>
+<p>如Maxim公司的MAX14XX家族，这是包含PGA的信号调理ASIC。这种器件直接用于传感器/变送器和ADC之间。</p>
+<p>Maxim公司的ADC驱动器MAX2055具有低失真(-76dBc 2次谐波和-69dBc 3次谐波)特性，其差分输出是为驱动高速ADC专门设计的。 </p>
+</blockquote>
+<p>一些PGA供应商也提供驱动PGA前端的数字电位计和分压器IC。</p>
+<blockquote>
+<p>例如，Maxim公司的MAX5420/21数字可编程电压分压器；</p>
+<p>ADI公司的AD5321数字电位计(常用于可编程增益和衰减的非易失性存储器)。  </p>
+<p>另外，Xicor也提供不少PGA器件，这些PGA器件对于执行数字控制的电位计(DCP)是最佳的。  </p>
+</blockquote>
+<h1 id="集成方案"><a href="#集成方案" class="headerlink" title="集成方案"></a>集成方案</h1><p>现在，很多公司把PGA和其他信号调理电路直接集成在ADC芯片上。这种方法有利于所占空间更小，比分离PGA和ADC方案具有更好的性能。然而，其成本比较高，集成PGA在ADC上除灵活性较低外，还有 <mark>较高的时钟噪声电平</mark>。 </p>
+<blockquote>
+<p>带线化前端的Maxim公司的MAX1457(图2)传统器线性化IC就是其中一种，它包含12位ADC。</p>
+<p>ADI公司的ADC7707高精度信号调理16位S-D  ADC包含多路转换器、缓冲器、PGA、电荷平衡电路、串行接口和时钟产生器。</p>
+<p>ADI公司的ADC7708/18S-D6位/24位ADC具有与AD7707相同的电路，但它们的目标是低电压和低功率应用。 </p>
+</blockquote>
+<p><img src="http://pic.islet.space/2021/04/8b55f596bcfdf9a408bd3c959504fb21.jpg" alt="img"></p>
+<p>一个感兴趣的高集成度ADC是ADC7731  24位S-D器件，它具有ADC77017的所有电路。另外，还加上定标微控制器(图3)。此IC的目标是低噪声高吞吐量应用。</p>
+<p>Maxim公司也有带集成PGA的双6位ADC，它具有90Sample/s吞吐率、功耗仅550mW。 </p>
+<p><img src="http://pic.islet.space/2021/04/8CzZ7BjS2OMEYQJ.jpg"></p>
+<p>我们将会看到更多包含PGA和其他信号处理电路的ADC吗？</p>
+<p>不可回避的事实是高集成度是IC业的准则，而PGA和其他信号调理支持电路也不例外。所以希望看到PGA与ADC集成在同一芯片，并能解决片上性能参量(如时钟引起的噪声)和降低高分辨率器件的单个ADC价格。</p>
+<p>事实上，设计人员主要的目标是把传感器/变送器电路放在高集成度ADC上。</p>
+<p>这将是最终解决问题：现实世界模拟信号与计算机的数字世界结合起来的途经。</p>
+<p>这也将聚焦在模拟和数字电路设计的两种不同方法。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/PGA/" rel="tag"># PGA</a>
+              <a href="/tags/forwarding/" rel="tag"># forwarding</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/01/05/Linux/C++/" rel="prev" title="C++">
+                  <i class="fa fa-chevron-left"></i> C++
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/01/15/Networking/C%20Socket/" rel="next" title="C socket">
+                  C socket <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+<script src="/js/comments.js"></script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">粤ICP备19004822号 </a>
+  </div>
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Liewzheng</span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

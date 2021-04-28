@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="next-config" data-name="main" type="application/json">{&quot;hostname&quot;:&quot;islet.space&quot;,&quot;root&quot;:&quot;&#x2F;&quot;,&quot;images&quot;:&quot;&#x2F;images&quot;,&quot;scheme&quot;:&quot;Muse&quot;,&quot;version&quot;:&quot;8.3.0&quot;,&quot;exturl&quot;:false,&quot;sidebar&quot;:{&quot;position&quot;:&quot;left&quot;,&quot;display&quot;:&quot;post&quot;,&quot;padding&quot;:18,&quot;offset&quot;:12},&quot;copycode&quot;:false,&quot;bookmark&quot;:{&quot;enable&quot;:false,&quot;color&quot;:&quot;#222&quot;,&quot;save&quot;:&quot;auto&quot;},&quot;fancybox&quot;:false,&quot;mediumzoom&quot;:false,&quot;lazyload&quot;:false,&quot;pangu&quot;:false,&quot;comments&quot;:{&quot;style&quot;:&quot;tabs&quot;,&quot;active&quot;:null,&quot;storage&quot;:true,&quot;lazyload&quot;:false,&quot;nav&quot;:null},&quot;motion&quot;:{&quot;enable&quot;:true,&quot;async&quot;:false,&quot;transition&quot;:{&quot;post_block&quot;:&quot;fadeIn&quot;,&quot;post_header&quot;:&quot;fadeInDown&quot;,&quot;post_body&quot;:&quot;fadeInDown&quot;,&quot;coll_header&quot;:&quot;fadeInLeft&quot;,&quot;sidebar&quot;:&quot;fadeInUp&quot;}},&quot;prism&quot;:false,&quot;i18n&quot;:{&quot;placeholder&quot;:&quot;Searching...&quot;,&quot;empty&quot;:&quot;We didn&#39;t find any results for the search: ${query}&quot;,&quot;hits_time&quot;:&quot;${hits} results found in ${time} ms&quot;,&quot;hits&quot;:&quot;${hits} results found&quot;}}</script>
+<meta name="description" content="C++语法及基础运算符运算符是一种告诉编译器执行特定的数学或逻辑操作的符号。C 语言内置了丰富的运算符，并提供了以下类型的运算符：  算术运算符 关系运算符 逻辑运算符 位运算符 赋值运算符 杂项运算符  位运算符位运算符作用于位，并逐位执行操作。&amp;、 | 和 ^ 的真值表如下所示：    p q p &amp; q p | q p ^ q    0 0 0 0 0   0 1 0 1 1">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C++">
+<meta property="og:url" content="http://islet.space/2021/01/05/Linux/C++/index.html">
+<meta property="og:site_name" content="Coder的孤岛">
+<meta property="og:description" content="C++语法及基础运算符运算符是一种告诉编译器执行特定的数学或逻辑操作的符号。C 语言内置了丰富的运算符，并提供了以下类型的运算符：  算术运算符 关系运算符 逻辑运算符 位运算符 赋值运算符 杂项运算符  位运算符位运算符作用于位，并逐位执行操作。&amp;、 | 和 ^ 的真值表如下所示：    p q p &amp; q p | q p ^ q    0 0 0 0 0   0 1 0 1 1">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-01-05T15:58:32.000Z">
+<meta property="article:modified_time" content="2021-04-25T16:12:40.717Z">
+<meta property="article:author" content="Liewzheng">
+<meta property="article:tag" content="C++">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://islet.space/2021/01/05/Linux/C++/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{&quot;sidebar&quot;:&quot;&quot;,&quot;isHome&quot;:false,&quot;isPost&quot;:true,&quot;lang&quot;:&quot;en&quot;,&quot;comments&quot;:true,&quot;permalink&quot;:&quot;http:&#x2F;&#x2F;islet.space&#x2F;2021&#x2F;01&#x2F;05&#x2F;Linux&#x2F;C++&#x2F;&quot;,&quot;path&quot;:&quot;2021&#x2F;01&#x2F;05&#x2F;Linux&#x2F;C++&#x2F;&quot;,&quot;title&quot;:&quot;C++&quot;}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">&quot;&quot;</script>
+<title>C++ | Coder的孤岛</title><script src="/js/config.js"></script>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Coder的孤岛</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">islet of the coder</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#C-%E8%AF%AD%E6%B3%95%E5%8F%8A%E5%9F%BA%E7%A1%80"><span class="nav-number">1.</span> <span class="nav-text">C++语法及基础</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%90%E7%AE%97%E7%AC%A6"><span class="nav-number">1.1.</span> <span class="nav-text">运算符</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%8D%E8%BF%90%E7%AE%97%E7%AC%A6"><span class="nav-number">1.1.1.</span> <span class="nav-text">位运算符</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Mangling"><span class="nav-number">1.2.</span> <span class="nav-text">Mangling</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%87%BD%E6%95%B0%E9%87%8D%E8%BD%BD"><span class="nav-number">1.2.1.</span> <span class="nav-text">函数重载</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Inherit"><span class="nav-number">1.3.</span> <span class="nav-text">Inherit</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Inline-Function"><span class="nav-number">1.4.</span> <span class="nav-text">Inline Function</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Constructor-and-Destructor"><span class="nav-number">1.5.</span> <span class="nav-text">Constructor and Destructor</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Friend-Function"><span class="nav-number">1.6.</span> <span class="nav-text">Friend Function</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Preprocessing"><span class="nav-number">1.7.</span> <span class="nav-text">Preprocessing</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A2%84%E5%A4%84%E7%90%86%E8%BF%90%E7%AE%97%E7%AC%A6%E5%8F%B7"><span class="nav-number">1.7.1.</span> <span class="nav-text">预处理运算符号</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#and"><span class="nav-number">1.7.1.1.</span> <span class="nav-text"># and</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%8C%96%E8%BF%90%E7%AE%97%E7%AC%A6"><span class="nav-number">1.7.1.1.1.</span> <span class="nav-text">字符串化运算符</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%A0%87%E8%AE%B0%E7%B2%98%E8%B4%B4%E8%BF%90%E7%AE%97%E7%AC%A6"><span class="nav-number">1.7.1.1.2.</span> <span class="nav-text">标记粘贴运算符</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Differences-between-C-amp-C"><span class="nav-number">1.8.</span> <span class="nav-text">Differences between C &amp; C++</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#TCP-IP"><span class="nav-number">2.</span> <span class="nav-text">TCP&#x2F;IP</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#PORT"><span class="nav-number">2.1.</span> <span class="nav-text">PORT</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#WINDOW-SOCKET"><span class="nav-number">3.</span> <span class="nav-text">WINDOW SOCKET</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Q-A"><span class="nav-number">4.</span> <span class="nav-text">Q&#x2F;A</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-C-%E5%B8%B8%E8%A7%81%E7%9A%84%E5%86%85%E5%AD%98%E9%94%99%E8%AF%AF%E5%8F%8A%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95"><span class="nav-number">4.0.0.1.</span> <span class="nav-text">1. C++常见的内存错误及解决方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-C-%E4%B8%ADstruct%E4%B8%8Eclass%E7%9A%84%E5%8C%BA%E5%88%AB%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="nav-number">4.0.0.2.</span> <span class="nav-text">2. C++中struct与class的区别是什么？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-%E5%A6%82%E4%BD%95%E5%B0%86%E7%BB%93%E6%9E%84%E4%BD%93%E4%BC%A0%E9%80%92%E7%BB%99%E5%87%BD%E6%95%B0%EF%BC%9F"><span class="nav-number">4.0.0.3.</span> <span class="nav-text">3. 如何将结构体传递给函数？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-%E5%A6%82%E4%BD%95%E4%BB%8E%E5%87%BD%E6%95%B0%E8%BF%94%E5%9B%9E%E4%B8%80%E4%B8%AA%E7%BB%93%E6%9E%84%E4%BD%93%EF%BC%9F"><span class="nav-number">4.0.0.4.</span> <span class="nav-text">4. 如何从函数返回一个结构体？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-gt-%E7%AC%A6%E5%8F%B7%E5%8C%BA%E5%88%86%EF%BC%9F"><span class="nav-number">4.0.0.5.</span> <span class="nav-text">5. . | -&gt; | :: | :符号区分？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-%E8%AE%A1%E7%AE%97%E6%9C%BA%E4%B8%8A%E6%AD%A3%E5%9C%A8%E8%BF%90%E8%A1%8C%E7%9A%84%E5%8F%A5%E6%9F%84%E3%80%81%E7%BA%BF%E7%A8%8B%E3%80%81%E8%BF%9B%E7%A8%8B%E5%88%86%E5%88%AB%E6%98%AF%E4%BB%80%E4%B9%88%E6%84%8F%E6%80%9D%EF%BC%9F"><span class="nav-number">4.0.0.6.</span> <span class="nav-text">6. 计算机上正在运行的句柄、线程、进程分别是什么意思？</span></a></li></ol></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Liewzheng</p>
+  <div class="site-description" itemprop="description">笔记分享的旮旯孤岛而已</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">17</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://islet.space/2021/01/05/Linux/C++/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Liewzheng">
+      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coder的孤岛">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          C++
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-01-05 23:58:32" itemprop="dateCreated datePublished" datetime="2021-01-05T23:58:32+08:00">2021-01-05</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2021-04-26 00:12:40" itemprop="dateModified" datetime="2021-04-26T00:12:40+08:00">2021-04-26</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Language/" itemprop="url" rel="index"><span itemprop="name">Language</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="C-语法及基础"><a href="#C-语法及基础" class="headerlink" title="C++语法及基础"></a>C++语法及基础</h1><h2 id="运算符"><a href="#运算符" class="headerlink" title="运算符"></a>运算符</h2><p>运算符是一种告诉编译器执行特定的数学或逻辑操作的符号。C 语言内置了丰富的运算符，并提供了以下类型的运算符：</p>
+<ul>
+<li>算术运算符</li>
+<li>关系运算符</li>
+<li>逻辑运算符</li>
+<li>位运算符</li>
+<li>赋值运算符</li>
+<li>杂项运算符</li>
+</ul>
+<h3 id="位运算符"><a href="#位运算符" class="headerlink" title="位运算符"></a>位运算符</h3><p>位运算符作用于位，并逐位执行操作。&amp;、 | 和 ^ 的真值表如下所示：</p>
+<table>
+<thead>
+<tr>
+<th>p</th>
+<th>q</th>
+<th>p &amp; q</th>
+<th>p | q</th>
+<th>p ^ q</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+</tr>
+</tbody></table>
+<p>假设如果 A = 60，且 B = 13，现在以二进制格式表示，它们如下所示：</p>
+<blockquote>
+<p>A = 0011 1100</p>
+<p>B = 0000 1101</p>
+</blockquote>
+<p>-—————-</p>
+<blockquote>
+<p>A&amp;B = 0000 1100</p>
+<p>A|B = 0011 1101</p>
+<p>A^B = 0011 0001</p>
+<p>~A = 1100 0011</p>
+</blockquote>
+<p>下表显示了 C 语言支持的位运算符。假设变量 <strong>A</strong> 的值为 60，变量 <strong>B</strong> 的值为 13，则：</p>
+<table>
+<thead>
+<tr>
+<th>运算符</th>
+<th>描述</th>
+<th>实例</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>&amp;</td>
+<td>按位与操作，按二进制位进行”与”运算。运算规则： <code>0&amp;0=0;    0&amp;1=0;     1&amp;0=0;      1&amp;1=1;</code></td>
+<td>(A &amp; B) 将得到 12，即为 0000 1100</td>
+</tr>
+<tr>
+<td>|</td>
+<td>按位或运算符，按二进制位进行”或”运算。运算规则： `0</td>
+<td>0=0;    0</td>
+</tr>
+<tr>
+<td>^</td>
+<td>异或运算符，按二进制位进行”异或”运算。运算规则： <code>0^0=0;    0^1=1;    1^0=1;   1^1=0;</code></td>
+<td>(A ^ B) 将得到 49，即为 0011 0001</td>
+</tr>
+<tr>
+<td>~</td>
+<td>取反运算符，按二进制位进行”取反”运算。运算规则： <code>~1=-2;    ~0=1;</code></td>
+<td>(~A ) 将得到 -61，即为 1100 0011，一个有符号二进制数的补码形式。</td>
+</tr>
+<tr>
+<td>&lt;&lt;</td>
+<td>二进制左移运算符。将一个运算对象的各二进制位全部左移若干位（左边的二进制位丢弃，右边补0）。</td>
+<td>A &lt;&lt; 2 将得到 240，即为 1111 0000</td>
+</tr>
+<tr>
+<td>&gt;&gt;</td>
+<td>二进制右移运算符。将一个数的各二进制位全部右移若干位，正数左补0，负数左补1，右边丢弃。</td>
+<td>A &gt;&gt; 2 将得到 15，即为 0000 1111</td>
+</tr>
+</tbody></table>
+<h2 id="Mangling"><a href="#Mangling" class="headerlink" title="Mangling"></a>Mangling</h2><p><strong>重载</strong>，包括 <strong>函数重载</strong> 和 <strong>操作符重载</strong> 。</p>
+<h3 id="函数重载"><a href="#函数重载" class="headerlink" title="函数重载"></a>函数重载</h3><blockquote>
+<p><strong>函数重载</strong> 也叫 <strong>方法重载</strong>。是编译器通过把原方法名称与其参数相结合产生一个独特的内部名字来取代原方法名称的技术。</p>
+<p>基本上，支持函数重载的语言都需要进行Name Mangling。Mangling的目的就是为了给重载的函数不同的签名，以避免调用时的二义性调用。</p>
+</blockquote>
+<p><strong>Name Mangling</strong> 不是一个非常新的技术，在C语言中也有，<em><strong>在汇编C语言时经常看到的以 下划线“_”开头的函数名，其实就是C编译器将函数名进行了 Name Mangling</strong></em> 。</p>
+<p>但是在C++中Name-mangling要复杂的多。 因为C++中支持 <em><strong>overload</strong></em> 和 <em><strong>override</strong></em> ，这就导致了C++编译器必须要有完成的Name-mangling把函数名或者变量名进行调整。 </p>
+<p>在面向对象编程语言出现之前，如果你想要打印不同类型的数据,需要写多个方法 ,象是 <code>PrintInteger(int i)</code> ，<code>PrintString(string s)</code>  和 <code>PrintFloat(float f)</code> 。也就是说必须<strong>通过命名来区别行为和数据类型</strong>，因为 OOP语言出现前，任一语言都（像是C）不允许使用相同的名字命名函数， 即使参数类型不同。</p>
+<p>但在C++中，像是 Print(int i)、Print(string s) 和 Print(float  f)，编译器自会准确调用特定的Print方法。当调用 <code>Print(1)</code> 的时候, 编译器可能在内部用源于参数类型的前缀重命名Print方法，这样一来 <code>Print(1)</code> 可能就变成  <code>i_Print (1)</code> 。</p>
+<p> 下面是更详细的例子：</p>
+<p> C++编译器实际上将下面这些重载函数：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">print</span><span class="params">(<span class="keyword">int</span> i)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">print</span><span class="params">(<span class="keyword">char</span> c)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">print</span><span class="params">(<span class="keyword">float</span> f)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">print</span><span class="params">(<span class="keyword">char</span>* s)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<p>编译为：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">_print_int</span><br><span class="line">_print_char</span><br><span class="line">_print_float</span><br><span class="line">_pirnt_string</span><br></pre></td></tr></table></figure>
+
+<p> 这样的函数名，来唯一标识每个函数。</p>
+<p><strong>注：</strong>不同的编译器实现可能不一样，但是都是利用这种机制。所以当连接是调用 <code>print(3)</code> 时，它会去查找 <code>_print_int(3)</code> 这样的函数。下面说个题外话，正是因为这点，重载被认为不是多态，多态是运行时动态绑定（“一种接口多种实现”），<strong>如果硬要认为重载是多态，它顶多是编译时“多态”。</strong></p>
+<p>C++中的变量，编译也类似，如全局变量可能编译g_xx，类变量编译为c_xx等。连接是也是按照这种机制去查找相应的变量。</p>
+<blockquote>
+<p><code>方法重载</code> 仅是多态性的一种情形。 </p>
+<p><code>名称重整</code> 是一种支持方法重载的机制。更普遍的情况下，多态性是与继承相联系。 </p>
+</blockquote>
+<h2 id="Inherit"><a href="#Inherit" class="headerlink" title="Inherit"></a>Inherit</h2><blockquote>
+<p>继承就是一个新类 (称为子类) 从被继承类（称为父类或超类）取得自身的部分定义同时增加一些自己的新的信息。</p>
+</blockquote>
+<p>如果你在相同的类中重载方法, 数据类型必须是不同的。如果你在继承关系下重载方法, 子类与父类的方法可能完全相同，而且名称重整器生成同样的重整名称。</p>
+<p> 举例来说，假设一个超类定义一个 <code>Print(int i)</code> 方法而一个从它继承的子类也定义了一个 <code>Print(int i)</code> 方法。当你有一个子类的实例时，运用多态性调用 <code>Child.Print(int)</code> ；而当你产生一个父类的实例时运用多态性调用 <code>Parent.Print(int)</code> 。这就是继承多态性：相同的名字和签字但是类却不同。</p>
+<p><code>继承多态性</code> 是通过使用一种与名称重整相关的另外一种机制实现的。编译器把方法放置在一个被称为虚拟方法表（其实是一个方法数组）的地方。每一个方法在VMT中都有一个索引, 如此当 <code>Print(int)</code> 被调用的时候, 编译器将被路由到VMT处找寻Print方法和类的内在索引。这样一来，编译器就可以调用正确的方法实现。由编译器负责管理所有的VMT索引和类偏移量。</p>
+<p> 简言之，多态性使你能够用非常相似的名字定义许多方法，这里的名字往往都是直观易记的。 OOP编译器自会根据调用者类理解到底该调用哪个方法。</p>
+<p>Only one version of an overloaded function can appear within the  extern C block. The code in the following example would result in an error.</p>
+<p>While you can use name overloading in your SYS/BIOS C++ applications, only one version of the overloaded function can be called from the configuration.</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">extern</span> “C” &#123; <span class="comment">// Example causes ERROR</span></span><br><span class="line">	<span class="function">Int <span class="title">addNums</span><span class="params">(Int x, Int y)</span></span>;</span><br><span class="line">	<span class="function">Int <span class="title">addNums</span><span class="params">(Int x, Int y, Int z)</span></span>; <span class="comment">// error, only one version of addNums is allowed</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h2 id="Inline-Function"><a href="#Inline-Function" class="headerlink" title="Inline Function"></a>Inline Function</h2><p>**内联方法 **即内联函数，成员函数，inline functions，是指定义在类体内的函数。</p>
+<p>该函数可以在类体内被声明和定义，也可以在类体内声明同时在体外使用 <code>inline</code> 关键字进行定义，如：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">angle</span>&#123;</span></span><br><span class="line">	<span class="keyword">private</span>:</span><br><span class="line">		<span class="keyword">double</span> value;</span><br><span class="line">	<span class="keyword">public</span>:</span><br><span class="line">		<span class="function"><span class="keyword">void</span> <span class="title">SetValue</span><span class="params">(<span class="keyword">double</span>)</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">void</span> <span class="title">angle::SetValue</span><span class="params">(<span class="keyword">double</span> x)</span></span>&#123;                <span class="comment">//定义内联函数</span></span><br><span class="line">	value = x;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>注意：</strong>内联函数无法递归。</p>
+<h2 id="Constructor-and-Destructor"><a href="#Constructor-and-Destructor" class="headerlink" title="Constructor and Destructor"></a>Constructor and Destructor</h2><p><strong>构造函数(Constructor Function)</strong> 在调用时会为对象开辟储存空间、作初始化 及 其他管理操作。</p>
+<ul>
+<li>如果为编写，则系统默认生成</li>
+<li>可以接受参数不能有返回值</li>
+<li>可以有多个构造函数，因此可以接受名称重载（Name Mangling）。</li>
+</ul>
+<p><strong>析构函数(Destructor Function)</strong> 仅在释放对象的内存空间时使用，如 <em><strong>程序超出类对象的作用域</strong></em> 或 <em><strong>类指针运行delete运算符</strong></em>  时。</p>
+<h2 id="Friend-Function"><a href="#Friend-Function" class="headerlink" title="Friend Function"></a>Friend Function</h2><p><strong>友元函数</strong> 是指 <code>在类内部声明</code>，可以 <code>自由访问该类的私有部分</code> 并且 <code>不属于类成员</code> 的 <strong>函数</strong>或<strong>类</strong>。</p>
+<p>在友元函数声明时定义一个该类的对象，可以通过引用该对象作为参数进行对类的访问。</p>
+<p>为了确保数据完整性并遵循数据封装和隐藏的原则，因尽量少用或不用友元。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">class Student;</span><br><span class="line">class Teacher&#123;</span><br><span class="line">	public:</span><br><span class="line">		&#x2F;&#x2F;....</span><br><span class="line">&#125;</span><br><span class="line">	protected:</span><br><span class="line">		int NoOfStudent;</span><br><span class="line">		Student * pList[100];</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">class Student&#123;</span><br><span class="line">	public:</span><br><span class="line">		friend class Teacher;             &#x2F;&#x2F;友元类声明</span><br><span class="line">		&#x2F;&#x2F;....</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h2 id="Preprocessing"><a href="#Preprocessing" class="headerlink" title="Preprocessing"></a>Preprocessing</h2><p><strong>定义</strong></p>
+<p>预处理是指将源文件的文本作为翻译的第一阶段操作的文本处理步骤。 预处理不会分析源文本，但会为了查找宏调用而将源文本细分为标记。 主要包括了下面三个方面：</p>
+<ul>
+<li>预处理指令</li>
+<li>预处理运算符</li>
+<li>预定义宏，这个有很多了，比如__FILE__、__LINE__和__DATA__等。</li>
+</ul>
+<p><strong>常识</strong></p>
+<ul>
+<li>预处理并不是编译，也不是“预编译”</li>
+<li>预处理并不是每个语言都有</li>
+<li>C/C++预处理仅仅是把源程序划分和整理成一个个的段（phase），并不进行编译。</li>
+<li>预处理器在UNIX传统中通常缩写为PP，在自动构建脚本中C预处理器被缩写为CPP的宏指代。为了不造成歧义，C++(c-plus-plus) 经常并不是缩写为CPP，而改成CXX</li>
+</ul>
+<p><strong>Preprocessing Directives 预处理指令</strong></p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>#include</td>
+<td>#import</td>
+<td>#using</td>
+<td>#progma</td>
+</tr>
+<tr>
+<td>#if</td>
+<td>#ifdef</td>
+<td>#ifndef</td>
+<td>#elif</td>
+</tr>
+<tr>
+<td>#lese</td>
+<td>#endif</td>
+<td>#define</td>
+<td>#undef</td>
+</tr>
+<tr>
+<td>#error</td>
+<td>#line</td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<h3 id="预处理运算符号"><a href="#预处理运算符号" class="headerlink" title="预处理运算符号"></a>预处理运算符号</h3><table>
+<thead>
+<tr>
+<th>运算符</th>
+<th>操作</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>字符串化运算符（#）</td>
+<td>导致对应的实参括在双引号内</td>
+</tr>
+<tr>
+<td>Charizing运算符（#@）</td>
+<td></td>
+</tr>
+<tr>
+<td>标记粘贴运算符（##）</td>
+<td></td>
+</tr>
+<tr>
+<td>定义的运算符</td>
+<td></td>
+</tr>
+</tbody></table>
+<h4 id="and"><a href="#and" class="headerlink" title="# and"></a># and</h4><h5 id="字符串化运算符"><a href="#字符串化运算符" class="headerlink" title="字符串化运算符"></a>字符串化运算符</h5><p><code>#</code> 除了是 <em><strong>预处理符号</strong></em>，也是一种 <strong>运算符</strong> ，即 <strong>字符串化运算符</strong>，只能出现在带参的宏的替换文本中，<strong>将跟在后面的参数转换成一个字符串常量</strong>。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> PF_INT(i) printf(#i<span class="meta-string">&quot;=%d\n&quot;</span>,i)</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> x=<span class="number">100</span>;</span><br><span class="line">    PF_INT(x);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>预处理后：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;x&quot;</span><span class="string">&quot;=%d\n&quot;</span>,x);</span><br></pre></td></tr></table></figure>
+
+<p>C语言常将相邻的字符串合并处理：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;x=%d\n&quot;</span>,x);</span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="标记粘贴运算符"><a href="#标记粘贴运算符" class="headerlink" title="标记粘贴运算符"></a>标记粘贴运算符</h5><p><code>##</code> 是一种 <strong>运算符</strong> ，即 <strong>标记粘贴运算符</strong>，是将两个 <strong>运算对象</strong> 连接（拼接）在一起，只能出现在带参宏定义的替换文本中。如：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> NUM(h,t,u)  h##t##u</span></span><br></pre></td></tr></table></figure>
+
+<p>假设u代表个位，t代表十位，h代表百位，则x=NUM(1,2,3)后,x=123。</p>
+<p><strong>注：</strong><code>##</code>也可以用于拼接一些开头一样，尾巴不一样的宏，这样的宏一般用于描述代表特定意义的对象的不同状态等。宏开头固定，根据不同条件则选择拼接不同尾巴，最后拼接的字符串代表一个具体的状态等。</p>
+<h2 id="Differences-between-C-amp-C"><a href="#Differences-between-C-amp-C" class="headerlink" title="Differences between C &amp; C++"></a>Differences between C &amp; C++</h2><ul>
+<li>从语法要求来说，C++的语法要求更为严格，编译器对参数变量的检查要求更高，更容易报错；很多在C中可以被顺利编译的语句，在C++中会被严厉拒绝，例如，在C++中，当形参为unsigned char，而实参为const char时会报错。</li>
+<li>C是面向过程语言，代码复用复杂。C++是面向对象语言。</li>
+</ul>
+<h1 id="TCP-IP"><a href="#TCP-IP" class="headerlink" title="TCP/IP"></a>TCP/IP</h1><h2 id="PORT"><a href="#PORT" class="headerlink" title="PORT"></a>PORT</h2><blockquote>
+<p>0~1023被分配给任何TCP/IP实现所提供的服务</p>
+<p>1024~5000被分配给临时端口</p>
+<p>5000以上被分配给不常用的服务器</p>
+</blockquote>
+<ul>
+<li>网络编程时要为程序指定一个1024以上的端口。</li>
+</ul>
+<h1 id="WINDOW-SOCKET"><a href="#WINDOW-SOCKET" class="headerlink" title="WINDOW SOCKET"></a>WINDOW SOCKET</h1><p>Windows Sockets可以保证应用程序在任何支持Windows Sockets API 的网络内正常通信。</p>
+<p>流式Socket：基于TCP，数据无差错且无重复发送；</p>
+<p>数据报Socket：基于UDP，不能保证数据按发送顺序接收，可能丢失或重复。</p>
+<p>真正与客户端Socket对象通信都不是服务器 Socket对象，而是新创建的“临时”Socket对象</p>
+<blockquote>
+<p>构造函数：CAsyncSocket();</p>
+<p>Create();【成功返回非0，失败返回0】            //SOCK_DGRAM 数据报</p>
+<p>GetSockName();                //用于获取Socket对象的本地名称（自己的信息），ip地址及端口号，或</p>
+<p>GetPeerName();                //用于获取连接的Socket对象名称（对方的信息）</p>
+<p>Listen();                              //面向流式使用，参数范围1~5，表示等待连接队列的最大长度</p>
+<p>Accept();                            //用以接收等待队列中存在的连接请求</p>
+<p>Connect();                         //建立连接请求函数</p>
+<p>Send();                              //</p>
+</blockquote>
+<p>除字符型与布尔型外，其余整型用于表示（可能）不同尺寸的整数。</p>
+<p>C++规定一个int（最小16bit）至少和一个short（16bit）一样大，一个long（最小32bit）至少和一个int一样大，一个long long（64bit）至少和一个long一样大。</p>
+<p>其中，long long 是在C++ 11中新定义的。</p>
+<p>尽管字符型char有三种（char、signed char、unsigned char），但是字符的表现形式只有2种，signed或unsigned。类型char实际上会表现为其中一种，具体由编译器决定。</p>
+<p>字面值常量</p>
+<blockquote>
+<p>20           //十进制</p>
+<p>020        //0开头的为8进制</p>
+<p>0x20      //0x开头的为16进制</p>
+</blockquote>
+<h1 id="Q-A"><a href="#Q-A" class="headerlink" title="Q/A"></a>Q/A</h1><h4 id="1-C-常见的内存错误及解决方法"><a href="#1-C-常见的内存错误及解决方法" class="headerlink" title="1. C++常见的内存错误及解决方法"></a>1. C++常见的内存错误及解决方法</h4><p><strong>（1）内存分配未成功，却使用了它。</strong></p>
+<blockquote>
+<p>在使用内存之前先检查指针是否是NULL。如果是用malloc来申请内存，应该用if(p == NULL)或if（p != NULL）进行防错处理。如果是new来申请内存，申请失败会抛出异常，所以应该捕捉异常来进行防错处理。</p>
+</blockquote>
+<p><strong>（2）内存虽然分配成功，但尚未初始化就引用它。</strong></p>
+<blockquote>
+<p>尽管有时候缺省时会自动初始化，但无论什么时候创建对象均要对其进行初始化，即使是赋0值也是不可忽略的。</p>
+</blockquote>
+<p><strong>（3）内存分配成功，但访问越界</strong></p>
+<blockquote>
+<p>对数组for循环时要把握越界，否则可能会导致数组越界。</p>
+</blockquote>
+<p><strong>（4）忘记释放内存，导致内存泄漏</strong></p>
+<blockquote>
+<p>动态内存的申请和释放必须配对，new-delete和malloc-free其使用次数必须相等。</p>
+</blockquote>
+<p><strong>（5）已经释放内存还在使用它</strong></p>
+<blockquote>
+<p>free或delete后 ，没有将指针设为NULL，产生“野指针”。</p>
+</blockquote>
+<h4 id="2-C-中struct与class的区别是什么？"><a href="#2-C-中struct与class的区别是什么？" class="headerlink" title="2. C++中struct与class的区别是什么？"></a>2. C++中struct与class的区别是什么？</h4><p>如果没有多态和虚拟继承，在C++中，struct和class的存取效率完全相同，存取class的数据成员与非虚函数效率和struct完全相同，不管该数据成员是定义在基类还是派生类。</p>
+<p>class的数据成员在内存中的布局不一定是数据成员的声明顺序，C++只保证处于同一个access section的数据成员按照声明顺序排列。</p>
+<p>C++中，class和struct做类型定义是只有两点区别：</p>
+<ul>
+<li>默认继承权限不同，<strong>class继承默认是private继承，而struct默认是public继承</strong>。</li>
+<li>class还可用于定义模板参数，像typename，但是关键字struct不能同于定义模板参数。</li>
+</ul>
+<p>C++保留struct关键字，原因：</p>
+<ul>
+<li>保证与C语言的向下兼容性，C++必须提供一个struct。</li>
+<li>C++中的struct定义必须百分百地保证与C语言中的struct的向下兼容性，把C++中的最基本的对象单元规定为class而不是struct，就是为了避免各种兼容性要求的限制。</li>
+<li>对struct定义的扩展使C语言的代码能够更容易的被移植到C++中。</li>
+</ul>
+<h4 id="3-如何将结构体传递给函数？"><a href="#3-如何将结构体传递给函数？" class="headerlink" title="3. 如何将结构体传递给函数？"></a>3. 如何将结构体传递给函数？</h4><p>与类对象一样，结构体变量也可以通过值、引用和常量引用传递给函数。</p>
+<p>默认情况下，它们通过值传递，这意味着需要生成整个原始结构的副本并传递给函数。</p>
+<p>因为不希望浪费时间来复制整个结构体，所以，除非结构很小，否则一般会通过 <strong>引用</strong> 将结构体传递给函数。但是，这样意味着函数可以访问原始结构的成员变量，从而可能更改它们。</p>
+<p>如果不想让函数更改任何成员变量值，那么可以考虑将结构体变量作为一个 <strong>常量引用</strong> 传递给函数。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//程序1</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iomanip&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Invltem</span>                       // <span class="title">Holds</span> <span class="title">data</span> <span class="title">for</span> <span class="title">an</span> <span class="title">inventory</span> <span class="title">item</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    <span class="keyword">int</span> partNum;                     <span class="comment">// Part number</span></span><br><span class="line">    <span class="built_in">string</span> description;              <span class="comment">// Item description</span></span><br><span class="line">    <span class="keyword">int</span> onHand;                      <span class="comment">// Units on hand</span></span><br><span class="line">    <span class="keyword">double</span> price;                    <span class="comment">// Unit price</span></span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">// Function prototypes</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">getltemData</span><span class="params">(InvItem &amp;)</span> </span>;        <span class="comment">//普通引用，函数可能会对结构体数据造成影响</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">showItem</span><span class="params">(<span class="keyword">const</span> InvItem &amp;)</span></span>;      <span class="comment">//常量引用，不会让函数对结构体造成数据变化</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    InvItem part;                    <span class="comment">// Define an Invltem structure variable.</span></span><br><span class="line">    getItemData(part);</span><br><span class="line">    showItem(part);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">getItemData</span><span class="params">(InvItem &amp;item)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;Enter the part number: &quot;</span>;</span><br><span class="line">    <span class="built_in">cin</span> &gt;&gt; item.partNum;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;Enter the part description: &quot;</span>;</span><br><span class="line">    <span class="built_in">cin</span>.get();</span><br><span class="line">    getline (<span class="built_in">cin</span>, item.description);</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;Enter the quantity on hand: &quot;</span>;</span><br><span class="line">    <span class="built_in">cin</span> &gt;&gt; item.onHand;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;Enter the unit price: &quot;</span>;</span><br><span class="line">    <span class="built_in">cin</span> &gt;&gt; item.price;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">showItem</span><span class="params">(<span class="keyword">const</span> InvItem &amp;item)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; fixed &lt;&lt; showpoint &lt;&lt; setprecision(<span class="number">2</span>) &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;Part Number : &quot;</span> &lt;&lt; item.partNum &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;Description : &quot;</span> &lt;&lt; item.description &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;Units On Hand : &quot;</span> &lt;&lt; item.onHand &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;Price : $&quot;</span> &lt;&lt; item.price &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>程序输出结果：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">Enter the part number: 800</span><br><span class="line">Enter the part description: Screwdriver</span><br><span class="line">Enter the quantity on hand: 135</span><br><span class="line">Enter the unit price: 1.25</span><br><span class="line"></span><br><span class="line">Part Number : 800</span><br><span class="line">Description : Screwdriver</span><br><span class="line">Units On Hand: 135</span><br><span class="line">Price : $1.25</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="4-如何从函数返回一个结构体？"><a href="#4-如何从函数返回一个结构体？" class="headerlink" title="4. 如何从函数返回一个结构体？"></a>4. 如何从函数返回一个结构体？</h4><p> 也可以从函数返回结构体变量。在这种情况下，函数的返回类型是结构体的名称。可以改写程序 1 以允许 getItemData 函数创建 Invltem 结构体的局部实例，将数据值放入其成员变量中，然后将其传递回 main，而不是将其作为引用变量从 main 接收。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">InvItem <span class="title">getItemData</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    InvItem item;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;Enter the part number:&quot;</span>;</span><br><span class="line">    <span class="built_in">cin</span> &gt;&gt; item.partNum;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;Enter the part description: &quot;</span>;</span><br><span class="line">    <span class="built_in">cin</span>.get();</span><br><span class="line">    getline(<span class="built_in">cin</span>, item.description);</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;Enter the quantity on hand: &quot;</span>;</span><br><span class="line">    <span class="built_in">cin</span> &gt;&gt; item.onHand;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;Enter the unit price: &quot;</span>;</span><br><span class="line">    <span class="built_in">cin</span> &gt;&gt; item.price;</span><br><span class="line">    <span class="keyword">return</span> item;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>以下是从 main 中调用它的方法：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">part = getItemData();</span><br></pre></td></tr></table></figure>
+
+<p><strong>注意：</strong> <em>C++ 只允许从函数返回单个值。然而，结构体提供了解决这一限制的方法。即使一个结构体可能有几个成员，它在技术上还是一个单一的对象。通过在结构体中打包多个值，可以从函数返回任意数量的值。</em></p>
+<h4 id="5-gt-符号区分？"><a href="#5-gt-符号区分？" class="headerlink" title="5. . | -&gt; | :: | :符号区分？"></a>5. . | -&gt; | :: | :符号区分？</h4><ol>
+<li><p>A.B则A为对象或者结构体；</p>
+</li>
+<li><p>A-&gt;B则A为指针，-&gt;是成员提取，A-&gt;B是提取A中的成员B，A只能是指向类、结构、联合的指针；</p>
+</li>
+<li><p>:: 是作用域运算符，A::B表示作用域A中的名称B，A可以是名字空间、类、结构；</p>
+</li>
+<li><p>: 一般用来表示继承；</p>
+</li>
+</ol>
+<h4 id="6-计算机上正在运行的句柄、线程、进程分别是什么意思？"><a href="#6-计算机上正在运行的句柄、线程、进程分别是什么意思？" class="headerlink" title="6. 计算机上正在运行的句柄、线程、进程分别是什么意思？"></a>6. 计算机上正在运行的句柄、线程、进程分别是什么意思？</h4><p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/bluestorm/p/5712238.html">https://www.cnblogs.com/bluestorm/p/5712238.html</a></p>
+<blockquote>
+<p>所谓 <code>句柄</code> 实际上是一个数据，是一个Long (整长型)的数据。</p>
+<p>句柄是WONDOWS用来标识被应用程序所建立或使用的对象的唯一整数，WINDOWS使用各种各样的句柄标识诸如应用程序实例，窗口，控制，位图，GDI对象等等。WINDOWS句柄有点像C语言中的文件句柄。 </p>
+</blockquote>
+<p>从上面的定义中的我们可以看到，句柄是一个 <code>标识符</code>，是拿来标识对象或者项目的，它就像我们的姓名一样，每个人都会有一个，不同的人的姓名不一样，但是，也可能有一个名字和你一样的人。从数据类型上来看它只是一个 <strong>16位的无符号整数</strong> 。<em><strong>应用程序几乎总是通过调用一个WINDOWS函数来获得一个句柄，之后其他的WINDOWS函数就可以使用该句柄，以引用相应的对象。</strong></em></p>
+<p>句柄是一种 <code>指向指针的指针</code>。所谓指针是一种内存地址。应用程序启动后，组成这个程序的各对象是驻留在内存的。如果简单地理解，似乎只要获知这个内存的首地址，那么就可以随时用这个地址访问对象。但是非也，<strong>Windows是一个以虚拟内存为基础的操作系统</strong>。在这种系统环境下，Windows内存管理器经常在内存中来回移动对象，依此来满足各种应用程序的内存需要。对象被移动意味着它的地址变化了。如果地址总是如此变化，该到哪里去找该对象呢?</p>
+<p>为了解决这个问题，Windows操作系统为各应用程序腾出一些 <code>内存储地址</code>，用来专门登记各应用对象在内存中的地址变化，而这个<strong>地址(存储单元的位置)本身是不变的</strong>。<strong>Windows内存管理器在移动对象在内存中的位置后，把对象新的地址告知这个句柄地址来保存。这样我们只需记住这个句柄地址就可以间接地知道对象具体在内存中的哪个位置。</strong>这个地址是在对象装载(Load)时由系统分配给的，当系统卸载时(Unload)又释放给系统。</p>
+<p>句柄地址(稳定)→记载着对象在内存中的地址→对象在内存中的地址(不稳定)→实际对象</p>
+<p><strong>本质：</strong>WINDOWS程序中并不是用物理地址来标识一个内存块，文件，任务或动态装入模块的，相反的，WINDOWS API给这些项目分配确定的句柄，并将句柄返回给应用程序，然后通过句柄来进行操作。 </p>
+<p>但是必须注意的是程序每次从新启动，系统不能保证分配给这个程序的句柄还是原来的那个句柄，而且绝大多数情况的确不一样的。假如我们把进入电影院看电影看成是一个应用程序的启动运行，那么系统给应用程序分配的句柄总是不一样，这和每次电影院售给我们的门票总是不同的一个座位是一样的道理。</p>
+<p><code>线程</code> 是指程序的一个指令执行序列，WIN32 平台支持多线程程序，允许程序中存在多个线程。 在单 CPU 系统中，系统把 CPU 的时间片按照调度算法分配给各个线程，因此各线程实际上是分时执行的，在多 CPU 的 Windows NT 系统中， 同一个程序的不同线程可以被分配到不同的 CPU 上去执行。<em>由于一个程序的各线程是在相同的地址空间运行的，因此设及到了如何共享内存， 如何通信等问题，这样便需要处理各线程之间的同步问题，这是多线程编程中的一个难点。</em></p>
+<blockquote>
+<p>线程,也被称为轻量进程（lightweight processes）。计算机科学术语，指运行中的程序的调度单位。</p>
+<p>线程是进程中的实体，一个进程可以拥有多个线程，一个线程必须有一个父进程。线程不拥有系统资源，只有运行必须的一些数据结构；它与父进程的其它线程共享该进程所拥有的全部资源。线程可以创建和撤消线程，从而实现程序的并发执行。一般，线程具有 <code>就绪</code> 、 <code>阻塞</code> 和 <code>运行</code> 三种基本状态。</p>
+</blockquote>
+<p>在多中央处理器的系统里，不同线程可以同时在不同的中央处理器上运行，甚至当它们属于同一个进程时也是如此。<em><strong>大多数支持多处理器的操作系统都提供编程接口来让进程可以控制自己的线程与各处理器之间的关联度（affinity）。</strong></em></p>
+<p><code>进程</code> 是程序在一个数据集合上运行的过程(注:一个程序有可能同时属于多个进程),它是操作系统进行资源分配和调度的一个独立单位,进程可以简单的分为 <code>系统进程</code> (包括一般Windows程序和服务进程)和 <code>用户进程</code> 。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/C/" rel="tag"># C++</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2020/12/25/Others/Phrases/" rel="prev" title="Phrases">
+                  <i class="fa fa-chevron-left"></i> Phrases
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/01/05/Signal/2021-01-05-%E6%A8%A1%E6%95%B0%E6%8E%A5%E5%8F%A3%E4%B8%AD%E7%9A%84%E5%8F%AF%E7%BC%96%E7%A8%8B%E5%A2%9E%E7%9B%8A%E6%94%BE%E5%A4%A7%E5%99%A8%EF%BC%88PGA%EF%BC%89/" rel="next" title="模数接口中的可编程增益放大器（PGA）">
+                  模数接口中的可编程增益放大器（PGA） <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+<script src="/js/comments.js"></script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">粤ICP备19004822号 </a>
+  </div>
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Liewzheng</span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
