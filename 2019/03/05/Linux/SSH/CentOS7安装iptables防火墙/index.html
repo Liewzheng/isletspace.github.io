@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="next-config" data-name="main" type="application/json">{&quot;hostname&quot;:&quot;islet.space&quot;,&quot;root&quot;:&quot;&#x2F;&quot;,&quot;images&quot;:&quot;&#x2F;images&quot;,&quot;scheme&quot;:&quot;Muse&quot;,&quot;version&quot;:&quot;8.3.0&quot;,&quot;exturl&quot;:false,&quot;sidebar&quot;:{&quot;position&quot;:&quot;left&quot;,&quot;display&quot;:&quot;post&quot;,&quot;padding&quot;:18,&quot;offset&quot;:12},&quot;copycode&quot;:false,&quot;bookmark&quot;:{&quot;enable&quot;:false,&quot;color&quot;:&quot;#222&quot;,&quot;save&quot;:&quot;auto&quot;},&quot;fancybox&quot;:false,&quot;mediumzoom&quot;:false,&quot;lazyload&quot;:false,&quot;pangu&quot;:false,&quot;comments&quot;:{&quot;style&quot;:&quot;tabs&quot;,&quot;active&quot;:null,&quot;storage&quot;:true,&quot;lazyload&quot;:false,&quot;nav&quot;:null},&quot;motion&quot;:{&quot;enable&quot;:true,&quot;async&quot;:false,&quot;transition&quot;:{&quot;post_block&quot;:&quot;fadeIn&quot;,&quot;post_header&quot;:&quot;fadeInDown&quot;,&quot;post_body&quot;:&quot;fadeInDown&quot;,&quot;coll_header&quot;:&quot;fadeInLeft&quot;,&quot;sidebar&quot;:&quot;fadeInUp&quot;}},&quot;prism&quot;:false,&quot;i18n&quot;:{&quot;placeholder&quot;:&quot;Searching...&quot;,&quot;empty&quot;:&quot;We didn&#39;t find any results for the search: ${query}&quot;,&quot;hits_time&quot;:&quot;${hits} results found in ${time} ms&quot;,&quot;hits&quot;:&quot;${hits} results found&quot;}}</script>
+<meta name="description" content="本文转自 清园 的《CentOS7安装iptables防火墙》 请直接复制第八部分的脚本到服务器，保存成***.sh ，并使用chmod +x ***.sh 提升脚本权限，然后直接使用.&#x2F;***.sh 执行即可。参考链接附《国内端口检测网站》。 CentOS7默认的防火墙不是iptables，而是firewalld。 一、 安装iptables#先检查是否安装了iptables 1service">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CentOS7安装iptables防火墙">
+<meta property="og:url" content="http://islet.space/2019/03/05/Linux/SSH/CentOS7%E5%AE%89%E8%A3%85iptables%E9%98%B2%E7%81%AB%E5%A2%99/index.html">
+<meta property="og:site_name" content="Coder的孤岛">
+<meta property="og:description" content="本文转自 清园 的《CentOS7安装iptables防火墙》 请直接复制第八部分的脚本到服务器，保存成***.sh ，并使用chmod +x ***.sh 提升脚本权限，然后直接使用.&#x2F;***.sh 执行即可。参考链接附《国内端口检测网站》。 CentOS7默认的防火墙不是iptables，而是firewalld。 一、 安装iptables#先检查是否安装了iptables 1service">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2019-03-05T04:00:00.000Z">
+<meta property="article:modified_time" content="2019-03-05T06:02:12.000Z">
+<meta property="article:author" content="Liewzheng">
+<meta property="article:tag" content="Centos">
+<meta property="article:tag" content="SSH">
+<meta property="article:tag" content="iptables">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://islet.space/2019/03/05/Linux/SSH/CentOS7%E5%AE%89%E8%A3%85iptables%E9%98%B2%E7%81%AB%E5%A2%99/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{&quot;sidebar&quot;:&quot;&quot;,&quot;isHome&quot;:false,&quot;isPost&quot;:true,&quot;lang&quot;:&quot;en&quot;,&quot;comments&quot;:true,&quot;permalink&quot;:&quot;http:&#x2F;&#x2F;islet.space&#x2F;2019&#x2F;03&#x2F;05&#x2F;Linux&#x2F;SSH&#x2F;CentOS7%E5%AE%89%E8%A3%85iptables%E9%98%B2%E7%81%AB%E5%A2%99&#x2F;&quot;,&quot;path&quot;:&quot;2019&#x2F;03&#x2F;05&#x2F;Linux&#x2F;SSH&#x2F;CentOS7安装iptables防火墙&#x2F;&quot;,&quot;title&quot;:&quot;CentOS7安装iptables防火墙&quot;}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">&quot;&quot;</script>
+<title>CentOS7安装iptables防火墙 | Coder的孤岛</title><script src="/js/config.js"></script>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Coder的孤岛</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">islet of the coder</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%80%E3%80%81-%E5%AE%89%E8%A3%85iptables"><span class="nav-number">1.</span> <span class="nav-text">一、 安装iptables</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%8C%E3%80%81-%E7%A6%81%E7%94%A8-%E5%81%9C%E6%AD%A2%E8%87%AA%E5%B8%A6%E7%9A%84firewalld%E6%9C%8D%E5%8A%A1"><span class="nav-number">2.</span> <span class="nav-text">二、 禁用&#x2F;停止自带的firewalld服务</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%89%E3%80%81-%E8%AE%BE%E7%BD%AE%E7%8E%B0%E6%9C%89%E8%A7%84%E5%88%99"><span class="nav-number">3.</span> <span class="nav-text">三、 设置现有规则</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9B%9B%E3%80%81-%E5%85%B6%E4%BB%96%E8%A7%84%E5%88%99%E8%AE%BE%E5%AE%9A"><span class="nav-number">4.</span> <span class="nav-text">四、 其他规则设定</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%94%E3%80%81-%E4%BF%9D%E5%AD%98%E8%A7%84%E5%88%99%E8%AE%BE%E5%AE%9A"><span class="nav-number">5.</span> <span class="nav-text">五、 保存规则设定</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%85%AD%E3%80%81-%E5%BC%80%E5%90%AFiptables%E6%9C%8D%E5%8A%A1"><span class="nav-number">6.</span> <span class="nav-text">六、 开启iptables服务</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%83%E3%80%81%E5%85%B6%E4%BB%96"><span class="nav-number">7.</span> <span class="nav-text">七、其他</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%85%AB%E3%80%81-%E4%BB%A5%E4%B8%8A%E5%AE%8C%E6%95%B4%E8%84%9A%E6%9C%AC%E5%A6%82%E4%B8%8B"><span class="nav-number">8.</span> <span class="nav-text">八、 以上完整脚本如下</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E9%93%BE%E6%8E%A5"><span class="nav-number">9.</span> <span class="nav-text">参考链接</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Liewzheng</p>
+  <div class="site-description" itemprop="description">笔记分享的旮旯孤岛而已</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">41</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">69</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://islet.space/2019/03/05/Linux/SSH/CentOS7%E5%AE%89%E8%A3%85iptables%E9%98%B2%E7%81%AB%E5%A2%99/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Liewzheng">
+      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coder的孤岛">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          CentOS7安装iptables防火墙
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2019-03-05 12:00:00 / Modified: 14:02:12" itemprop="dateCreated datePublished" datetime="2019-03-05T12:00:00+08:00">2019-03-05</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>本文转自 <strong>清园</strong> 的《<a target="_blank" rel="noopener" href="https://www.cnblogs.com/kreo/p/4368811.html">CentOS7安装iptables防火墙</a>》</p>
+<p>请直接复制第八部分的脚本到服务器，保存成<code>***.sh</code> ，并使用<code>chmod +x ***.sh</code> 提升脚本权限，然后直接使用<code>./***.sh</code> 执行即可。参考链接附《国内端口检测网站》。</p>
+<p>CentOS7默认的防火墙不是iptables，而是firewalld。</p>
+<h1 id="一、-安装iptables"><a href="#一、-安装iptables" class="headerlink" title="一、 安装iptables"></a>一、 安装iptables</h1><p>#先检查是否安装了iptables</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">service iptables status</span><br></pre></td></tr></table></figure>
+
+<p>#安装iptables</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install -y iptables</span><br></pre></td></tr></table></figure>
+
+<p>#升级iptables</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum update iptables </span><br></pre></td></tr></table></figure>
+
+<p>#安装iptables-services</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install iptables-services</span><br></pre></td></tr></table></figure>
+
+<h1 id="二、-禁用-停止自带的firewalld服务"><a href="#二、-禁用-停止自带的firewalld服务" class="headerlink" title="二、 禁用/停止自带的firewalld服务"></a>二、 禁用/停止自带的firewalld服务</h1><p>#停止firewalld服务</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl stop firewalld</span><br></pre></td></tr></table></figure>
+
+<p>#禁用firewalld服务</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl mask firewalld</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="三、-设置现有规则"><a href="#三、-设置现有规则" class="headerlink" title="三、 设置现有规则"></a>三、 设置现有规则</h1><p>#查看iptables现有规则</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">iptables -L -n</span><br></pre></td></tr></table></figure>
+
+<p>#先允许所有,不然有可能会杯具</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">iptables -P INPUT ACCEPT</span><br></pre></td></tr></table></figure>
+
+<p>#清空所有默认规则</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">iptables -F</span><br></pre></td></tr></table></figure>
+
+<p>#清空所有自定义规则</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">iptables -X</span><br></pre></td></tr></table></figure>
+
+<p>#所有计数器归0</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">iptables -Z</span><br></pre></td></tr></table></figure>
+
+<p>#允许来自于lo接口的数据包(本地访问)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">iptables -A INPUT -i lo -j ACCEPT</span><br></pre></td></tr></table></figure>
+
+<p>#开放22端口</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">iptables -A INPUT -p tcp --dport 22 -j ACCEPT</span><br></pre></td></tr></table></figure>
+
+<p>#开放21端口(FTP)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">iptables -A INPUT -p tcp --dport 21 -j ACCEPT</span><br></pre></td></tr></table></figure>
+
+<p>#开放80端口(HTTP)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">iptables -A INPUT -p tcp --dport 80 -j ACCEPT</span><br></pre></td></tr></table></figure>
+
+<p>#开放443端口(HTTPS)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">iptables -A INPUT -p tcp --dport 443 -j ACCEPT</span><br></pre></td></tr></table></figure>
+
+<p>#允许ping</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">iptables -A INPUT -p icmp --icmp-type 8 -j ACCEPT</span><br></pre></td></tr></table></figure>
+
+<p>#允许接受本机请求之后的返回数据 RELATED,是为FTP设置的</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">iptables -A INPUT -m state --state  RELATED,ESTABLISHED -j ACCEPT</span><br></pre></td></tr></table></figure>
+
+<p>#其他入站一律丢弃</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">iptables -P INPUT DROP</span><br></pre></td></tr></table></figure>
+
+<p>#所有出站一律绿灯</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">iptables -P OUTPUT ACCEPT</span><br></pre></td></tr></table></figure>
+
+<p>#所有转发一律丢弃</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">iptables -P FORWARD DROP</span><br></pre></td></tr></table></figure>
+
+<h1 id="四、-其他规则设定"><a href="#四、-其他规则设定" class="headerlink" title="四、 其他规则设定"></a>四、 其他规则设定</h1><p>#如果要添加内网ip信任（接受其所有TCP请求）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">iptables -A INPUT -p tcp -s 45.96.174.68 -j ACCEPT</span><br></pre></td></tr></table></figure>
+
+<p>#过滤所有非以上规则的请求</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">iptables -P INPUT DROP</span><br></pre></td></tr></table></figure>
+
+<p>#要封停一个IP，使用下面这条命令：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">iptables -I INPUT -s ***.***.***.*** -j DROP</span><br></pre></td></tr></table></figure>
+
+<p>#要解封一个IP，使用下面这条命令:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">iptables -D INPUT -s ***.***.***.*** -j DROP</span><br></pre></td></tr></table></figure>
+
+<h1 id="五、-保存规则设定"><a href="#五、-保存规则设定" class="headerlink" title="五、 保存规则设定"></a>五、 保存规则设定</h1><p>#保存上述规则</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">service iptables save</span><br></pre></td></tr></table></figure>
+
+<h1 id="六、-开启iptables服务"><a href="#六、-开启iptables服务" class="headerlink" title="六、 开启iptables服务"></a>六、 开启iptables服务</h1><p>#服务 开启 / 停止 / 重启 / 查看状态</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">service iptables start &#x2F; stop &#x2F; restart &#x2F; status</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="七、其他"><a href="#七、其他" class="headerlink" title="七、其他"></a>七、其他</h1><p>解决vsftpd在iptables开启后,无法使用被动模式的问题</p>
+<p>1.首先在/etc/sysconfig/iptables-config中修改或者添加以下内容</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">#添加以下内容,注意顺序不能调换</span><br><span class="line">IPTABLES_MODULES&#x3D;&quot;ip_conntrack_ftp&quot;</span><br><span class="line">IPTABLES_MODULES&#x3D;&quot;ip_nat_ftp&quot;</span><br></pre></td></tr></table></figure>
+
+<p>2.重新设置iptables设置</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">iptables -A INPUT -m state --state  RELATED,ESTABLISHED -j ACCEPT</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="八、-以上完整脚本如下"><a href="#八、-以上完整脚本如下" class="headerlink" title="八、 以上完整脚本如下"></a>八、 以上完整脚本如下</h1><p>版本一（通用）：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">#!&#x2F;bin&#x2F;sh</span><br><span class="line">iptables -P INPUT ACCEPT</span><br><span class="line">iptables -F</span><br><span class="line">iptables -X</span><br><span class="line">iptables -Z</span><br><span class="line"></span><br><span class="line">iptables -A INPUT -i lo -j ACCEPT</span><br><span class="line"></span><br><span class="line">iptables -A INPUT -p tcp --dport 22 -j ACCEPT</span><br><span class="line">iptables -A INPUT -p tcp --dport 21 -j ACCEPT</span><br><span class="line">iptables -A INPUT -p tcp --dport 80 -j ACCEPT</span><br><span class="line">iptables -A INPUT -p tcp --dport 443 -j ACCEPT</span><br><span class="line"></span><br><span class="line">iptables -A INPUT -p icmp --icmp-type 8 -j ACCEPT</span><br><span class="line"></span><br><span class="line">iptables -A INPUT -m state --state RELATED,ESTABLISHED -j ACCEPT</span><br><span class="line"></span><br><span class="line">iptables -P INPUT DROP</span><br><span class="line">iptables -P OUTPUT ACCEPT</span><br><span class="line">iptables -P FORWARD DROP</span><br><span class="line"></span><br><span class="line">service iptables save</span><br><span class="line">systemctl restart iptables.service</span><br></pre></td></tr></table></figure>
+
+
+
+<p>版本二（自定义）：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">#!&#x2F;bin&#x2F;sh</span><br><span class="line"></span><br><span class="line">systemctl stop firewalld</span><br><span class="line">systemctl mask firewalld</span><br><span class="line"></span><br><span class="line">iptables -P INPUT ACCEPT</span><br><span class="line">iptables -F</span><br><span class="line">iptables -X</span><br><span class="line">iptables -Z</span><br><span class="line"></span><br><span class="line">iptables -A INPUT -i lo -j ACCEPT</span><br><span class="line"></span><br><span class="line">iptables -A INPUT -p tcp --dport 22 -j ACCEPT</span><br><span class="line">iptables -A INPUT -p tcp --dport 21 -j ACCEPT</span><br><span class="line">iptables -A INPUT -p tcp --dport 80 -j ACCEPT</span><br><span class="line">iptables -A INPUT -p tcp --dport 443 -j ACCEPT</span><br><span class="line"></span><br><span class="line">iptables -A INPUT -p tcp --dport 22222 -j ACCEPT</span><br><span class="line">iptables -A INPUT -p tcp --dport 62666 -j ACCEPT</span><br><span class="line">iptables -A INPUT -p tcp --dport 20188 -j ACCEPT</span><br><span class="line">iptables -A INPUT -p tcp --dport 23333 -j ACCEPT</span><br><span class="line">iptables -A INPUT -p tcp --dport 15347 -j ACCEPT</span><br><span class="line">iptables -A INPUT -p tcp --dport 16666 -j ACCEPT</span><br><span class="line"></span><br><span class="line">iptables -A INPUT -p icmp --icmp-type 8 -j ACCEPT</span><br><span class="line"></span><br><span class="line">iptables -A INPUT -m state --state RELATED,ESTABLISHED -j ACCEPT</span><br><span class="line"></span><br><span class="line">iptables -P INPUT DROP</span><br><span class="line">iptables -P OUTPUT ACCEPT</span><br><span class="line">iptables -P FORWARD DROP</span><br><span class="line"></span><br><span class="line">service iptables save</span><br><span class="line">service iptables restart</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h1><ol>
+<li>《<a target="_blank" rel="noopener" href="https://www.cnblogs.com/kreo/p/4368811.html">CentOS7安装iptables防火墙</a>》</li>
+<li>《<a target="_blank" rel="noopener" href="http://coolaf.com/tool/port">国内端口检测网站</a>》</li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Centos/" rel="tag"># Centos</a>
+              <a href="/tags/SSH/" rel="tag"># SSH</a>
+              <a href="/tags/iptables/" rel="tag"># iptables</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2019/03/03/Linux/SSH/%E4%BD%BF%E7%94%A8SELinux%E5%BC%80%E6%94%BESSH%E7%AB%AF%E5%8F%A3/" rel="prev" title="使用SELinux开放SSH端口">
+                  <i class="fa fa-chevron-left"></i> 使用SELinux开放SSH端口
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2019/03/08/Linux/Maintain/%E3%80%90%E8%BD%AC%E3%80%91MBR%E5%92%8CGPT%E7%9A%84%E5%8C%BA%E5%88%AB/" rel="next" title="【转】MBR和GPT的区别">
+                  【转】MBR和GPT的区别 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+<script src="/js/comments.js"></script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">粤ICP备19004822号 </a>
+  </div>
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Liewzheng</span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="next-config" data-name="main" type="application/json">{&quot;hostname&quot;:&quot;islet.space&quot;,&quot;root&quot;:&quot;&#x2F;&quot;,&quot;images&quot;:&quot;&#x2F;images&quot;,&quot;scheme&quot;:&quot;Muse&quot;,&quot;version&quot;:&quot;8.3.0&quot;,&quot;exturl&quot;:false,&quot;sidebar&quot;:{&quot;position&quot;:&quot;left&quot;,&quot;display&quot;:&quot;post&quot;,&quot;padding&quot;:18,&quot;offset&quot;:12},&quot;copycode&quot;:false,&quot;bookmark&quot;:{&quot;enable&quot;:false,&quot;color&quot;:&quot;#222&quot;,&quot;save&quot;:&quot;auto&quot;},&quot;fancybox&quot;:false,&quot;mediumzoom&quot;:false,&quot;lazyload&quot;:false,&quot;pangu&quot;:false,&quot;comments&quot;:{&quot;style&quot;:&quot;tabs&quot;,&quot;active&quot;:null,&quot;storage&quot;:true,&quot;lazyload&quot;:false,&quot;nav&quot;:null},&quot;motion&quot;:{&quot;enable&quot;:true,&quot;async&quot;:false,&quot;transition&quot;:{&quot;post_block&quot;:&quot;fadeIn&quot;,&quot;post_header&quot;:&quot;fadeInDown&quot;,&quot;post_body&quot;:&quot;fadeInDown&quot;,&quot;coll_header&quot;:&quot;fadeInLeft&quot;,&quot;sidebar&quot;:&quot;fadeInUp&quot;}},&quot;prism&quot;:false,&quot;i18n&quot;:{&quot;placeholder&quot;:&quot;Searching...&quot;,&quot;empty&quot;:&quot;We didn&#39;t find any results for the search: ${query}&quot;,&quot;hits_time&quot;:&quot;${hits} results found in ${time} ms&quot;,&quot;hits&quot;:&quot;${hits} results found&quot;}}</script>
+<meta name="description" content="以下术语解释为本人在学习FreeRTOS途中的整理，大多直接引用了官网的原解释，部分用自己的话进行描述。 1. TaskTask is used to process a serial of things. A task must be declared as void type and have a void-type pointer parameter , like: void BLE_TAS">
+<meta property="og:type" content="article">
+<meta property="og:title" content="FreeRTOS术语整理">
+<meta property="og:url" content="http://islet.space/2019/01/22/Hardware/FreeRTOS/FreeRTOS%E6%9C%AF%E8%AF%AD%E6%95%B4%E7%90%86/index.html">
+<meta property="og:site_name" content="Coder的孤岛">
+<meta property="og:description" content="以下术语解释为本人在学习FreeRTOS途中的整理，大多直接引用了官网的原解释，部分用自己的话进行描述。 1. TaskTask is used to process a serial of things. A task must be declared as void type and have a void-type pointer parameter , like: void BLE_TAS">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://uk-liewzheng-blog-pic.oss-eu-west-1.aliyuncs.com/2019/01/22/%E5%9B%BE%E7%89%871.png">
+<meta property="article:published_time" content="2019-01-22T07:30:00.000Z">
+<meta property="article:modified_time" content="2019-01-24T09:05:56.000Z">
+<meta property="article:author" content="Liewzheng">
+<meta property="article:tag" content="FreeRTOS">
+<meta property="article:tag" content="Task">
+<meta property="article:tag" content="Event">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://uk-liewzheng-blog-pic.oss-eu-west-1.aliyuncs.com/2019/01/22/%E5%9B%BE%E7%89%871.png">
+
+
+<link rel="canonical" href="http://islet.space/2019/01/22/Hardware/FreeRTOS/FreeRTOS%E6%9C%AF%E8%AF%AD%E6%95%B4%E7%90%86/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{&quot;sidebar&quot;:&quot;&quot;,&quot;isHome&quot;:false,&quot;isPost&quot;:true,&quot;lang&quot;:&quot;en&quot;,&quot;comments&quot;:true,&quot;permalink&quot;:&quot;http:&#x2F;&#x2F;islet.space&#x2F;2019&#x2F;01&#x2F;22&#x2F;Hardware&#x2F;FreeRTOS&#x2F;FreeRTOS%E6%9C%AF%E8%AF%AD%E6%95%B4%E7%90%86&#x2F;&quot;,&quot;path&quot;:&quot;2019&#x2F;01&#x2F;22&#x2F;Hardware&#x2F;FreeRTOS&#x2F;FreeRTOS术语整理&#x2F;&quot;,&quot;title&quot;:&quot;FreeRTOS术语整理&quot;}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">&quot;&quot;</script>
+<title>FreeRTOS术语整理 | Coder的孤岛</title><script src="/js/config.js"></script>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Coder的孤岛</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">islet of the coder</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-Task"><span class="nav-number">1.</span> <span class="nav-text">1. Task</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-Scheduler"><span class="nav-number">2.</span> <span class="nav-text">2. Scheduler</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-IDLE-Task"><span class="nav-number">3.</span> <span class="nav-text">3. IDLE Task</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-Task-State"><span class="nav-number">4.</span> <span class="nav-text">4. Task State</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#4-1-RUNNING-STATE"><span class="nav-number">4.1.</span> <span class="nav-text">4.1 RUNNING-STATE</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-2-BLOCKED-STATE"><span class="nav-number">4.2.</span> <span class="nav-text">4.2 BLOCKED-STATE</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-3-SUSPENDED-STATE"><span class="nav-number">4.3.</span> <span class="nav-text">4.3 SUSPENDED-STATE</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-4-READY-STATE"><span class="nav-number">4.4.</span> <span class="nav-text">4.4 READY-STATE</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#5-Event"><span class="nav-number">5.</span> <span class="nav-text">5. Event</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#6-Event-drive-task"><span class="nav-number">6.</span> <span class="nav-text">6. Event-drive task</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#7-Semaphore-s"><span class="nav-number">7.</span> <span class="nav-text">7. Semaphore(s)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#8-Queue-s"><span class="nav-number">8.</span> <span class="nav-text">8. Queue(s)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#9-Event-Group-s"><span class="nav-number">9.</span> <span class="nav-text">9. Event Group(s)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#10-ISR"><span class="nav-number">10.</span> <span class="nav-text">10. ISR</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#11-Task-amp-Event-Interrupt"><span class="nav-number">11.</span> <span class="nav-text">11. Task &amp; Event(Interrupt)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Reference"><span class="nav-number">12.</span> <span class="nav-text">Reference</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Liewzheng</p>
+  <div class="site-description" itemprop="description">笔记分享的旮旯孤岛而已</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">41</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">69</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://islet.space/2019/01/22/Hardware/FreeRTOS/FreeRTOS%E6%9C%AF%E8%AF%AD%E6%95%B4%E7%90%86/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Liewzheng">
+      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coder的孤岛">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          FreeRTOS术语整理
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2019-01-22 15:30:00" itemprop="dateCreated datePublished" datetime="2019-01-22T15:30:00+08:00">2019-01-22</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2019-01-24 17:05:56" itemprop="dateModified" datetime="2019-01-24T17:05:56+08:00">2019-01-24</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/InternetOfThings/" itemprop="url" rel="index"><span itemprop="name">InternetOfThings</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>以下术语解释为本人在学习FreeRTOS途中的整理，大多直接引用了官网的原解释，部分用自己的话进行描述。</p>
+<h1 id="1-Task"><a href="#1-Task" class="headerlink" title="1. Task"></a>1. Task</h1><p>Task is used to process a serial of things. A task must be declared as void type and have a void-type pointer parameter , like: <code>void BLE_TASK(void * pvParameters);</code></p>
+<p>And when used, it’s used in the function xTaskCreate() with 6 parameters, like: <code>xTaskCreate(BLE_TASK, “BEL_TASK”,4000, NULL, 5, NULL);</code></p>
+<ul>
+<li>The 1st parameter should be the task you defined, and it only need the name of your task function.</li>
+<li>The 2nd parameter is the custom string you made in order to recognize it in the tasks list.</li>
+<li>The 3rd parameter is task stack memory it need. <code>MEMORY = STACK DEPTH * STACK WIDTH</code></li>
+<li>The 4th parameter is passed to the the task when it need, and it used to be NULL.</li>
+<li>The 5th parameter is the priority of the task, the lowest priority is 0, the highest priority is 32. But it always advisable to keep it at the minimum necessary.</li>
+<li>The 6th parameter is the return value: pdPASS or pdFAIL.</li>
+</ul>
+<h1 id="2-Scheduler"><a href="#2-Scheduler" class="headerlink" title="2. Scheduler"></a>2. Scheduler</h1><p>Scheduler is used to manage the tasks. It runs in the tick interrupt and select the highest priority task and bring it into RUNNING-STATE.</p>
+<h1 id="3-IDLE-Task"><a href="#3-IDLE-Task" class="headerlink" title="3. IDLE Task"></a>3. IDLE Task</h1><p>IDLE Task is automatically created by the scheduler when vTaskStartScheduler() is called and it is always able to run.</p>
+<h1 id="4-Task-State"><a href="#4-Task-State" class="headerlink" title="4. Task State"></a>4. Task State</h1><p>All the task has two big<br>states: <strong>RUNNING-STATE</strong> or <strong>NOT-RUNNING-STATE</strong>. BLOCKED-STATE, SUSPENDED-STATE and SUSPENDED-STATE are NON-RUNNING-STATE.</p>
+<p><img src="http://uk-liewzheng-blog-pic.oss-eu-west-1.aliyuncs.com/2019/01/22/%E5%9B%BE%E7%89%871.png" alt="Task State"></p>
+<h2 id="4-1-RUNNING-STATE"><a href="#4-1-RUNNING-STATE" class="headerlink" title="4.1 RUNNING-STATE"></a>4.1 RUNNING-STATE</h2><p>When the task is running, it is in the RUNNING-STATE.</p>
+<h2 id="4-2-BLOCKED-STATE"><a href="#4-2-BLOCKED-STATE" class="headerlink" title="4.2 BLOCKED-STATE"></a>4.2 BLOCKED-STATE</h2><p>BLOCKED-STATE is a sub-state of NOT-RUNNING STATE.<br>Tasks can enter the BLOCKED-STATE to wait for two different types of event: Temporal Event &amp; Synchronization Events.<br>While in this state, tasks are not able to run, so cannot be selected by the scheduler.</p>
+<h2 id="4-3-SUSPENDED-STATE"><a href="#4-3-SUSPENDED-STATE" class="headerlink" title="4.3 SUSPENDED-STATE"></a>4.3 SUSPENDED-STATE</h2><p>SUSPENDED-STATE is a sub-state of NOT-RUNNING STATE.</p>
+<h2 id="4-4-READY-STATE"><a href="#4-4-READY-STATE" class="headerlink" title="4.4 READY-STATE"></a>4.4 READY-STATE</h2><p>READY-STATE is a sub-state of NOT-RUNNING STATE.</p>
+<h1 id="5-Event"><a href="#5-Event" class="headerlink" title="5. Event"></a>5. Event</h1><p>Event is also called Interrupt. It is originated by the environment and force the embedded system to take action in response to it.</p>
+<h1 id="6-Event-drive-task"><a href="#6-Event-drive-task" class="headerlink" title="6. Event-drive task"></a>6. Event-drive task</h1><p>Event-drive task has work after the event that triggers it, and is not able to enter the RUNNING-STATE before that event has occurred.</p>
+<h1 id="7-Semaphore-s"><a href="#7-Semaphore-s" class="headerlink" title="7. Semaphore(s)"></a>7. Semaphore(s)</h1><p>(1) Binary Semaphore<br>(2) Counting Semaphore</p>
+<h1 id="8-Queue-s"><a href="#8-Queue-s" class="headerlink" title="8. Queue(s)"></a>8. Queue(s)</h1><p>Queue provides a task-to-task, task-to-interrupt, interrupt-to-task communication mechanism.</p>
+<h1 id="9-Event-Group-s"><a href="#9-Event-Group-s" class="headerlink" title="9. Event Group(s)"></a>9. Event Group(s)</h1><p>Event groups are another feature of FreeRTOS that allow events to be communicated to tasks.</p>
+<h1 id="10-ISR"><a href="#10-ISR" class="headerlink" title="10. ISR"></a>10. ISR</h1><p>Interrupt Service Routine. It is a software process invoked by an interrupt request from a hardware device. It handles the request and sends it to the CPU, interrupting the active process. When the ISR is complete, the process is resumed.</p>
+<h1 id="11-Task-amp-Event-Interrupt"><a href="#11-Task-amp-Event-Interrupt" class="headerlink" title="11. Task &amp; Event(Interrupt)"></a>11. Task &amp; Event(Interrupt)</h1><p>A task is a software feature that is unrelated to the hardware on which FreeRTOS is running. The priority of a task is assigned in software by the application writer, and a software algorithm (the scheduler) decides which task will be in the Running state.</p>
+<p>Although written in software, an interrupt service routine is a hardware feature because the hardware controls which interrupt service routine will run, and when it will run. Tasks will only run when there are no ISRs running, so the lowest priority interrupt will interrupt the highest priority task, and there is no way for a task to pre-empt an ISR.</p>
+<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><ol>
+<li>&lt;<a target="_blank" rel="noopener" href="https://freertos.org/Documentation/RTOS_book.html">FreeRTOS Documentation</a>&gt;</li>
+<li>&lt;<a target="_blank" rel="noopener" href="https://freertos.org/a00106.html">API</a>&gt;</li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/FreeRTOS/" rel="tag"># FreeRTOS</a>
+              <a href="/tags/Task/" rel="tag"># Task</a>
+              <a href="/tags/Event/" rel="tag"># Event</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2019/01/17/Programing/C++/C++%20-%2010%E8%BF%9B%E5%88%B6%E6%95%B4%E5%9E%8B%E8%BD%AC%E6%8D%A2%E6%88%9016%E8%BF%9B%E5%88%B6%E6%98%BE%E7%A4%BA%E7%9A%84%E5%AD%97%E7%AC%A6%E4%B8%B2/" rel="prev" title="10进制整型转换成16进制显示的字符串">
+                  <i class="fa fa-chevron-left"></i> 10进制整型转换成16进制显示的字符串
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2019/01/25/Blog/Hexo%E5%92%8C%E5%8D%9A%E5%AE%A2%E8%AF%84%E8%AE%BA%E7%B3%BB%E7%BB%9F/" rel="next" title="Hexo和博客评论系统">
+                  Hexo和博客评论系统 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+<script src="/js/comments.js"></script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">粤ICP备19004822号 </a>
+  </div>
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Liewzheng</span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

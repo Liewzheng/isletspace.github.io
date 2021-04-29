@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="next-config" data-name="main" type="application/json">{&quot;hostname&quot;:&quot;islet.space&quot;,&quot;root&quot;:&quot;&#x2F;&quot;,&quot;images&quot;:&quot;&#x2F;images&quot;,&quot;scheme&quot;:&quot;Muse&quot;,&quot;version&quot;:&quot;8.3.0&quot;,&quot;exturl&quot;:false,&quot;sidebar&quot;:{&quot;position&quot;:&quot;left&quot;,&quot;display&quot;:&quot;post&quot;,&quot;padding&quot;:18,&quot;offset&quot;:12},&quot;copycode&quot;:false,&quot;bookmark&quot;:{&quot;enable&quot;:false,&quot;color&quot;:&quot;#222&quot;,&quot;save&quot;:&quot;auto&quot;},&quot;fancybox&quot;:false,&quot;mediumzoom&quot;:false,&quot;lazyload&quot;:false,&quot;pangu&quot;:false,&quot;comments&quot;:{&quot;style&quot;:&quot;tabs&quot;,&quot;active&quot;:null,&quot;storage&quot;:true,&quot;lazyload&quot;:false,&quot;nav&quot;:null},&quot;motion&quot;:{&quot;enable&quot;:true,&quot;async&quot;:false,&quot;transition&quot;:{&quot;post_block&quot;:&quot;fadeIn&quot;,&quot;post_header&quot;:&quot;fadeInDown&quot;,&quot;post_body&quot;:&quot;fadeInDown&quot;,&quot;coll_header&quot;:&quot;fadeInLeft&quot;,&quot;sidebar&quot;:&quot;fadeInUp&quot;}},&quot;prism&quot;:false,&quot;i18n&quot;:{&quot;placeholder&quot;:&quot;Searching...&quot;,&quot;empty&quot;:&quot;We didn&#39;t find any results for the search: ${query}&quot;,&quot;hits_time&quot;:&quot;${hits} results found in ${time} ms&quot;,&quot;hits&quot;:&quot;${hits} results found&quot;}}</script>
+<meta name="description" content="1 – SYSTEM INFORMATION1234567891011121314151617181920212223242526272829303132# Display Linux system informationuname -a# Display kernel release informationuname -r# Show which version of redhat instal">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【转】Linux Commands Cheat Sheet">
+<meta property="og:url" content="http://islet.space/2019/03/15/Linux/Maintain/%E3%80%90%E8%BD%AC%E3%80%91Linux%20Commands%20Cheat%20Sheet/index.html">
+<meta property="og:site_name" content="Coder的孤岛">
+<meta property="og:description" content="1 – SYSTEM INFORMATION1234567891011121314151617181920212223242526272829303132# Display Linux system informationuname -a# Display kernel release informationuname -r# Show which version of redhat instal">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2019-03-15T11:00:00.000Z">
+<meta property="article:modified_time" content="2019-03-17T14:51:19.000Z">
+<meta property="article:author" content="Liewzheng">
+<meta property="article:tag" content="MBR">
+<meta property="article:tag" content="GPT">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://islet.space/2019/03/15/Linux/Maintain/%E3%80%90%E8%BD%AC%E3%80%91Linux%20Commands%20Cheat%20Sheet/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{&quot;sidebar&quot;:&quot;&quot;,&quot;isHome&quot;:false,&quot;isPost&quot;:true,&quot;lang&quot;:&quot;en&quot;,&quot;comments&quot;:true,&quot;permalink&quot;:&quot;http:&#x2F;&#x2F;islet.space&#x2F;2019&#x2F;03&#x2F;15&#x2F;Linux&#x2F;Maintain&#x2F;%E3%80%90%E8%BD%AC%E3%80%91Linux%20Commands%20Cheat%20Sheet&#x2F;&quot;,&quot;path&quot;:&quot;2019&#x2F;03&#x2F;15&#x2F;Linux&#x2F;Maintain&#x2F;【转】Linux Commands Cheat Sheet&#x2F;&quot;,&quot;title&quot;:&quot;【转】Linux Commands Cheat Sheet&quot;}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">&quot;&quot;</script>
+<title>【转】Linux Commands Cheat Sheet | Coder的孤岛</title><script src="/js/config.js"></script>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Coder的孤岛</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">islet of the coder</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-%E2%80%93-SYSTEM-INFORMATION"><span class="nav-number">1.</span> <span class="nav-text">1 – SYSTEM INFORMATION</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-%E2%80%93-HARDWARE-INFORMATION"><span class="nav-number">2.</span> <span class="nav-text">2 – HARDWARE INFORMATION</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-%E2%80%93-PERFORMANCE-MONITORING-AND-STATISTICS"><span class="nav-number">3.</span> <span class="nav-text">3 – PERFORMANCE MONITORING AND STATISTICS</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-%E2%80%93-USER-INFORMATION-AND-MANAGEMENT"><span class="nav-number">4.</span> <span class="nav-text">4 – USER INFORMATION AND MANAGEMENT</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#5-%E2%80%93-FILE-AND-DIRECTORY-COMMANDS"><span class="nav-number">5.</span> <span class="nav-text">5 – FILE AND DIRECTORY COMMANDS</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#6-%E2%80%93-PROCESS-MANAGEMENT"><span class="nav-number">6.</span> <span class="nav-text">6 – PROCESS MANAGEMENT</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#7-%E2%80%93-FILE-PERMISSIONS"><span class="nav-number">7.</span> <span class="nav-text">7 – FILE PERMISSIONS</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#8-%E2%80%93-NETWORKING"><span class="nav-number">8.</span> <span class="nav-text">8 – NETWORKING</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#9-%E2%80%93-ARCHIVES-TAR-FILES"><span class="nav-number">9.</span> <span class="nav-text">9 – ARCHIVES (TAR FILES)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#10-%E2%80%93-INSTALLING-PACKAGES"><span class="nav-number">10.</span> <span class="nav-text">10 – INSTALLING PACKAGES</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#11-%E2%80%93-SEARCH"><span class="nav-number">11.</span> <span class="nav-text">11 – SEARCH</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#12-%E2%80%93-SSH-LOGINS"><span class="nav-number">12.</span> <span class="nav-text">12 – SSH LOGINS</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#13-%E2%80%93-FILE-TRANSFERS"><span class="nav-number">13.</span> <span class="nav-text">13 – FILE TRANSFERS</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#14-%E2%80%93-DISK-USAGE"><span class="nav-number">14.</span> <span class="nav-text">14 – DISK USAGE</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#15-%E2%80%93-DIRECTORY-NAVIGATION"><span class="nav-number">15.</span> <span class="nav-text">15 – DIRECTORY NAVIGATION</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Liewzheng</p>
+  <div class="site-description" itemprop="description">笔记分享的旮旯孤岛而已</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">41</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">69</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://islet.space/2019/03/15/Linux/Maintain/%E3%80%90%E8%BD%AC%E3%80%91Linux%20Commands%20Cheat%20Sheet/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Liewzheng">
+      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coder的孤岛">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          【转】Linux Commands Cheat Sheet
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2019-03-15 19:00:00" itemprop="dateCreated datePublished" datetime="2019-03-15T19:00:00+08:00">2019-03-15</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2019-03-17 22:51:19" itemprop="dateModified" datetime="2019-03-17T22:51:19+08:00">2019-03-17</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="1-–-SYSTEM-INFORMATION"><a href="#1-–-SYSTEM-INFORMATION" class="headerlink" title="1 – SYSTEM INFORMATION"></a>1 – SYSTEM INFORMATION</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"># Display Linux system information</span><br><span class="line">uname -a</span><br><span class="line"></span><br><span class="line"># Display kernel release information</span><br><span class="line">uname -r</span><br><span class="line"></span><br><span class="line"># Show which version of redhat installed</span><br><span class="line">cat &#x2F;etc&#x2F;redhat-release</span><br><span class="line"></span><br><span class="line"># Show how long the system has been running + load</span><br><span class="line">uptime</span><br><span class="line"></span><br><span class="line"># Show system host name</span><br><span class="line">hostname</span><br><span class="line"></span><br><span class="line"># Display the IP addresses of the host</span><br><span class="line">hostname -I</span><br><span class="line"></span><br><span class="line"># Show system reboot history</span><br><span class="line">last reboot</span><br><span class="line"></span><br><span class="line"># Show the current date and time</span><br><span class="line">date</span><br><span class="line"></span><br><span class="line"># Show this month&#39;s calendar</span><br><span class="line">cal</span><br><span class="line"></span><br><span class="line"># Display who is online</span><br><span class="line">w</span><br><span class="line"></span><br><span class="line"># Who you are logged in as</span><br><span class="line">whoami</span><br></pre></td></tr></table></figure>
+
+<h1 id="2-–-HARDWARE-INFORMATION"><a href="#2-–-HARDWARE-INFORMATION" class="headerlink" title="2 – HARDWARE INFORMATION"></a>2 – HARDWARE INFORMATION</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"># Display messages in kernel ring buffer</span><br><span class="line">dmesg</span><br><span class="line"></span><br><span class="line"># Display CPU information</span><br><span class="line">cat &#x2F;proc&#x2F;cpuinfo</span><br><span class="line"></span><br><span class="line"># Display memory information</span><br><span class="line">cat &#x2F;proc&#x2F;meminfo</span><br><span class="line"></span><br><span class="line"># Display free and used memory ( -h for human readable, -m for MB, -g for GB.)</span><br><span class="line">free -h</span><br><span class="line"></span><br><span class="line"># Display PCI devices</span><br><span class="line">lspci -tv</span><br><span class="line"></span><br><span class="line"># Display USB devices</span><br><span class="line">lsusb -tv</span><br><span class="line"></span><br><span class="line"># Display DMI&#x2F;SMBIOS (hardware info) from the BIOS</span><br><span class="line">dmidecode</span><br><span class="line"></span><br><span class="line"># Show info about disk sda</span><br><span class="line">hdparm -i &#x2F;dev&#x2F;sda</span><br><span class="line"></span><br><span class="line"># Perform a read speed test on disk sda</span><br><span class="line">hdparm -tT &#x2F;dev&#x2F;sda</span><br><span class="line"></span><br><span class="line"># Test for unreadable blocks on disk sda</span><br><span class="line">badblocks -s &#x2F;dev&#x2F;sda</span><br></pre></td></tr></table></figure>
+
+<h1 id="3-–-PERFORMANCE-MONITORING-AND-STATISTICS"><a href="#3-–-PERFORMANCE-MONITORING-AND-STATISTICS" class="headerlink" title="3 – PERFORMANCE MONITORING AND STATISTICS"></a>3 – PERFORMANCE MONITORING AND STATISTICS</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"># Display and manage the top processes</span><br><span class="line">top</span><br><span class="line"></span><br><span class="line"># Interactive process viewer (top alternative)</span><br><span class="line">htop</span><br><span class="line"></span><br><span class="line"># Display processor related statistics</span><br><span class="line">mpstat 1</span><br><span class="line"></span><br><span class="line"># Display virtual memory statistics</span><br><span class="line">vmstat 1</span><br><span class="line"></span><br><span class="line"># Display I&#x2F;O statistics</span><br><span class="line">iostat 1</span><br><span class="line"></span><br><span class="line"># Display the last 100 syslog messages  (Use &#x2F;var&#x2F;log&#x2F;syslog for Debian based systems.)</span><br><span class="line">tail 100 &#x2F;var&#x2F;log&#x2F;messages</span><br><span class="line"></span><br><span class="line"># Capture and display all packets on interface eth0</span><br><span class="line">tcpdump -i eth0</span><br><span class="line"></span><br><span class="line"># Monitor all traffic on port 80 ( HTTP )</span><br><span class="line">tcpdump -i eth0 &#39;port 80&#39;</span><br><span class="line"></span><br><span class="line"># List all open files on the system</span><br><span class="line">lsof</span><br><span class="line"></span><br><span class="line"># List files opened by user</span><br><span class="line">lsof -u user</span><br><span class="line"></span><br><span class="line"># Display free and used memory ( -h for human readable, -m for MB, -g for GB.)</span><br><span class="line">free -h</span><br><span class="line"></span><br><span class="line"># Execute &quot;df -h&quot;, showing periodic updates</span><br><span class="line">watch df -h</span><br></pre></td></tr></table></figure>
+
+<h1 id="4-–-USER-INFORMATION-AND-MANAGEMENT"><a href="#4-–-USER-INFORMATION-AND-MANAGEMENT" class="headerlink" title="4 – USER INFORMATION AND MANAGEMENT"></a>4 – USER INFORMATION AND MANAGEMENT</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"># Display the user and group ids of your current user.</span><br><span class="line">id</span><br><span class="line"></span><br><span class="line"># Display the last users who have logged onto the system.</span><br><span class="line">last</span><br><span class="line"></span><br><span class="line"># Show who is logged into the system.</span><br><span class="line">who</span><br><span class="line"></span><br><span class="line"># Show who is logged in and what they are doing.</span><br><span class="line">w</span><br><span class="line"></span><br><span class="line"># Create a group named &quot;test&quot;.</span><br><span class="line">groupadd test</span><br><span class="line"></span><br><span class="line"># Create an account named john, with a comment of &quot;John Smith&quot; and create the user&#39;s home directory.</span><br><span class="line">useradd -c &quot;John Smith&quot; -m john</span><br><span class="line"></span><br><span class="line"># Delete the john account.</span><br><span class="line">userdel john</span><br><span class="line"></span><br><span class="line"># Add the john account to the sales group</span><br><span class="line">usermod -aG sales john</span><br></pre></td></tr></table></figure>
+
+<h1 id="5-–-FILE-AND-DIRECTORY-COMMANDS"><a href="#5-–-FILE-AND-DIRECTORY-COMMANDS" class="headerlink" title="5 – FILE AND DIRECTORY COMMANDS"></a>5 – FILE AND DIRECTORY COMMANDS</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"># List all files in a long listing (detailed) format</span><br><span class="line">ls -al</span><br><span class="line"></span><br><span class="line"># Display the present working directory</span><br><span class="line">pwd</span><br><span class="line"></span><br><span class="line"># Create a directory</span><br><span class="line">mkdir directory</span><br><span class="line"></span><br><span class="line"># Remove (delete) file</span><br><span class="line">rm file</span><br><span class="line"></span><br><span class="line"># Remove the directory and its contents recursively</span><br><span class="line">rm -r directory</span><br><span class="line"></span><br><span class="line"># Force removal of file without prompting for confirmation</span><br><span class="line">rm -f file</span><br><span class="line"></span><br><span class="line"># Forcefully remove directory recursively</span><br><span class="line">rm -rf directory</span><br><span class="line"></span><br><span class="line"># Copy file1 to file2</span><br><span class="line">cp file1 file2</span><br><span class="line"></span><br><span class="line"># Copy source_directory recursively to destination. If destination exists, copy source_directory into destination, otherwise create destination with the contents of source_directory.</span><br><span class="line">cp -r source_directory destination</span><br><span class="line"></span><br><span class="line"># Rename or move file1 to file2. If file2 is an existing directory, move file1 into directory file2</span><br><span class="line">mv file1 file2</span><br><span class="line"></span><br><span class="line"># Create symbolic link to linkname</span><br><span class="line">ln -s &#x2F;path&#x2F;to&#x2F;file linkname</span><br><span class="line"></span><br><span class="line"># Create an empty file or update the access and modification times of file.</span><br><span class="line">touch file</span><br><span class="line"></span><br><span class="line"># View the contents of file</span><br><span class="line">cat file</span><br><span class="line"></span><br><span class="line"># Browse through a text file</span><br><span class="line">less file</span><br><span class="line"></span><br><span class="line"># Display the first 10 lines of file</span><br><span class="line">head file</span><br><span class="line"></span><br><span class="line"># Display the last 10 lines of file</span><br><span class="line">tail file</span><br><span class="line"></span><br><span class="line"># Display the last 10 lines of file and &quot;follow&quot; the file as it grows.</span><br><span class="line">tail -f file</span><br></pre></td></tr></table></figure>
+
+<h1 id="6-–-PROCESS-MANAGEMENT"><a href="#6-–-PROCESS-MANAGEMENT" class="headerlink" title="6 – PROCESS MANAGEMENT"></a>6 – PROCESS MANAGEMENT</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"># Display your currently running processes</span><br><span class="line">ps</span><br><span class="line"></span><br><span class="line"># Display all the currently running processes on the system.</span><br><span class="line">ps -ef</span><br><span class="line"></span><br><span class="line"># Display process information for processname</span><br><span class="line">ps -ef | grep processname</span><br><span class="line"></span><br><span class="line"># Display and manage the top processes</span><br><span class="line">top</span><br><span class="line"></span><br><span class="line"># Interactive process viewer (top alternative)</span><br><span class="line">htop</span><br><span class="line"></span><br><span class="line"># Kill process with process ID of pid</span><br><span class="line">kill pid</span><br><span class="line"></span><br><span class="line"># Kill all processes named processname</span><br><span class="line">killall processname</span><br><span class="line"></span><br><span class="line"># Start program in the background</span><br><span class="line">program &amp;</span><br><span class="line"></span><br><span class="line"># Display stopped or background jobs</span><br><span class="line">bg</span><br><span class="line"></span><br><span class="line"># Brings the most recent background job to foreground</span><br><span class="line">fg</span><br><span class="line"></span><br><span class="line"># Brings job n to the foreground</span><br><span class="line">fg n</span><br></pre></td></tr></table></figure>
+
+<h1 id="7-–-FILE-PERMISSIONS"><a href="#7-–-FILE-PERMISSIONS" class="headerlink" title="7 – FILE PERMISSIONS"></a>7 – FILE PERMISSIONS</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">PERMISSION      EXAMPLE</span><br><span class="line"></span><br><span class="line">U   G   W</span><br><span class="line">rwx rwx rwx     chmod 777 filename</span><br><span class="line">rwx rwx r-x     chmod 775 filename</span><br><span class="line">rwx r-x r-x     chmod 755 filename</span><br><span class="line">rw- rw- r--     chmod 664 filename</span><br><span class="line">rw- r-- r--     chmod 644 filename</span><br><span class="line"></span><br><span class="line"># NOTE: Use 777 sparingly!</span><br><span class="line"></span><br><span class="line">LEGEND</span><br><span class="line">U &#x3D; User</span><br><span class="line">G &#x3D; Group</span><br><span class="line">W &#x3D; World</span><br><span class="line"></span><br><span class="line">r &#x3D; Read</span><br><span class="line">w &#x3D; write</span><br><span class="line">x &#x3D; execute</span><br><span class="line">- &#x3D; no access</span><br></pre></td></tr></table></figure>
+
+<h1 id="8-–-NETWORKING"><a href="#8-–-NETWORKING" class="headerlink" title="8 – NETWORKING"></a>8 – NETWORKING</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"># Display all network interfaces and ip address</span><br><span class="line">ifconfig -a</span><br><span class="line"></span><br><span class="line"># Display eth0 address and details</span><br><span class="line">ifconfig eth0</span><br><span class="line"></span><br><span class="line"># Query or control network driver and hardware settings</span><br><span class="line">ethtool eth0</span><br><span class="line"></span><br><span class="line"># Send ICMP echo request to host</span><br><span class="line">ping host</span><br><span class="line"></span><br><span class="line"># Display whois information for domain</span><br><span class="line">whois domain</span><br><span class="line"></span><br><span class="line"># Display DNS information for domain</span><br><span class="line">dig domain</span><br><span class="line"></span><br><span class="line"># Reverse lookup of IP_ADDRESS</span><br><span class="line">dig -x IP_ADDRESS</span><br><span class="line"></span><br><span class="line"># Display DNS ip address for domain</span><br><span class="line">host domain</span><br><span class="line"></span><br><span class="line"># Display the network address of the host name.</span><br><span class="line">hostname -i</span><br><span class="line"></span><br><span class="line"># Display all local ip addresses</span><br><span class="line">hostname -I</span><br><span class="line"></span><br><span class="line"># Download http:&#x2F;&#x2F;domain.com&#x2F;file</span><br><span class="line">wget http:&#x2F;&#x2F;domain.com&#x2F;file</span><br><span class="line"></span><br><span class="line"># Display listening tcp and udp ports and corresponding programs</span><br><span class="line">netstat -nutlp</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="9-–-ARCHIVES-TAR-FILES"><a href="#9-–-ARCHIVES-TAR-FILES" class="headerlink" title="9 – ARCHIVES (TAR FILES)"></a>9 – ARCHIVES (TAR FILES)</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"># Create tar named archive.tar containing directory.</span><br><span class="line">tar cf archive.tar directory</span><br><span class="line"></span><br><span class="line"># Extract the contents from archive.tar.</span><br><span class="line">tar xf archive.tar</span><br><span class="line"></span><br><span class="line"># Create a gzip compressed tar file name archive.tar.gz.</span><br><span class="line">tar czf archive.tar.gz directory</span><br><span class="line"></span><br><span class="line"># Extract a gzip compressed tar file.</span><br><span class="line">tar xzf archive.tar.gz</span><br><span class="line"></span><br><span class="line"># Create a tar file with bzip2 compression</span><br><span class="line">tar cjf archive.tar.bz2 directory</span><br><span class="line"></span><br><span class="line"># Extract a bzip2 compressed tar file.</span><br><span class="line">tar xjf archive.tar.bz2</span><br></pre></td></tr></table></figure>
+
+<h1 id="10-–-INSTALLING-PACKAGES"><a href="#10-–-INSTALLING-PACKAGES" class="headerlink" title="10 – INSTALLING PACKAGES"></a>10 – INSTALLING PACKAGES</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"># Search for a package by keyword.</span><br><span class="line">yum search keyword</span><br><span class="line"></span><br><span class="line"># Install package.</span><br><span class="line">yum install package</span><br><span class="line"></span><br><span class="line"># Display description and summary information about package.</span><br><span class="line">yum info package</span><br><span class="line"></span><br><span class="line"># Install package from local file named package.rpm</span><br><span class="line">rpm -i package.rpm</span><br><span class="line"></span><br><span class="line"># Remove&#x2F;uninstall package.</span><br><span class="line">yum remove package</span><br><span class="line"></span><br><span class="line"># Install software from source code.</span><br><span class="line">tar zxvf sourcecode.tar.gz</span><br><span class="line">cd sourcecode</span><br><span class="line">.&#x2F;configure</span><br><span class="line">make</span><br><span class="line">make install</span><br></pre></td></tr></table></figure>
+
+<h1 id="11-–-SEARCH"><a href="#11-–-SEARCH" class="headerlink" title="11 – SEARCH"></a>11 – SEARCH</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"># Search for pattern in file</span><br><span class="line">grep pattern file</span><br><span class="line"></span><br><span class="line"># Search recursively for pattern in directory</span><br><span class="line">grep -r pattern directory</span><br><span class="line"></span><br><span class="line"># Find files and directories by name</span><br><span class="line">locate name</span><br><span class="line"></span><br><span class="line"># Find files in &#x2F;home&#x2F;john that start with &quot;prefix&quot;.</span><br><span class="line">find &#x2F;home&#x2F;john -name &#39;prefix*&#39;</span><br><span class="line"></span><br><span class="line"># Find files larger than 100MB in &#x2F;home</span><br><span class="line">find &#x2F;home -size +100M</span><br></pre></td></tr></table></figure>
+
+<h1 id="12-–-SSH-LOGINS"><a href="#12-–-SSH-LOGINS" class="headerlink" title="12 – SSH LOGINS"></a>12 – SSH LOGINS</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"># Connect to host as your local username.</span><br><span class="line">ssh host</span><br><span class="line"></span><br><span class="line"># Connect to host as user</span><br><span class="line">ssh user@host</span><br><span class="line"></span><br><span class="line"># Connect to host using port</span><br><span class="line">ssh -p port user@host</span><br></pre></td></tr></table></figure>
+
+<h1 id="13-–-FILE-TRANSFERS"><a href="#13-–-FILE-TRANSFERS" class="headerlink" title="13 – FILE TRANSFERS"></a>13 – FILE TRANSFERS</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"># Secure copy file.txt to the &#x2F;tmp folder on server</span><br><span class="line">scp file.txt server:&#x2F;tmp</span><br><span class="line"></span><br><span class="line"># Copy *.html files from server to the local &#x2F;tmp folder.</span><br><span class="line">scp server:&#x2F;var&#x2F;www&#x2F;*.html &#x2F;tmp</span><br><span class="line"></span><br><span class="line"># Copy all files and directories recursively from server to the current system&#39;s &#x2F;tmp folder.</span><br><span class="line">scp -r server:&#x2F;var&#x2F;www &#x2F;tmp</span><br><span class="line"></span><br><span class="line"># Synchronize &#x2F;home to &#x2F;backups&#x2F;home</span><br><span class="line">rsync -a &#x2F;home &#x2F;backups&#x2F;</span><br><span class="line"></span><br><span class="line"># Synchronize files&#x2F;directories between the local and remote system with compression enabled</span><br><span class="line">rsync -avz &#x2F;home server:&#x2F;backups&#x2F;</span><br></pre></td></tr></table></figure>
+
+<h1 id="14-–-DISK-USAGE"><a href="#14-–-DISK-USAGE" class="headerlink" title="14 – DISK USAGE"></a>14 – DISK USAGE</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"># Show free and used space on mounted filesystems</span><br><span class="line">df -h</span><br><span class="line"></span><br><span class="line"># Show free and used inodes on mounted filesystems</span><br><span class="line">df -i</span><br><span class="line"></span><br><span class="line"># Display disks partitions sizes and types</span><br><span class="line">fdisk -l</span><br><span class="line"></span><br><span class="line"># Display disk usage for all files and directories in human readable format</span><br><span class="line">du -ah</span><br><span class="line"></span><br><span class="line"># Display total disk usage off the current directory</span><br><span class="line">du -sh</span><br></pre></td></tr></table></figure>
+
+<h1 id="15-–-DIRECTORY-NAVIGATION"><a href="#15-–-DIRECTORY-NAVIGATION" class="headerlink" title="15 – DIRECTORY NAVIGATION"></a>15 – DIRECTORY NAVIGATION</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"># To go up one level of the directory tree.  (Change into the parent directory.)</span><br><span class="line">cd ..</span><br><span class="line"></span><br><span class="line"># Go to the $HOME directory</span><br><span class="line">cd</span><br><span class="line"></span><br><span class="line"># Change to the &#x2F;etc directory</span><br><span class="line">cd &#x2F;etc</span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/MBR/" rel="tag"># MBR</a>
+              <a href="/tags/GPT/" rel="tag"># GPT</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2019/03/08/Linux/Maintain/%E3%80%90%E8%BD%AC%E3%80%91MBR%E5%92%8CGPT%E7%9A%84%E5%8C%BA%E5%88%AB/" rel="prev" title="【转】MBR和GPT的区别">
+                  <i class="fa fa-chevron-left"></i> 【转】MBR和GPT的区别
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2019/04/19/Others/%E4%B8%93%E5%88%A9%E6%92%B0%E5%86%99%E5%9F%BA%E7%A1%80%E4%B8%8E%E7%BB%8F%E9%AA%8C/" rel="next" title="专利撰写及经验">
+                  专利撰写及经验 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+<script src="/js/comments.js"></script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">粤ICP备19004822号 </a>
+  </div>
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Liewzheng</span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

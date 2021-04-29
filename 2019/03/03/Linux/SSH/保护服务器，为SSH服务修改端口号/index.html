@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="next-config" data-name="main" type="application/json">{&quot;hostname&quot;:&quot;islet.space&quot;,&quot;root&quot;:&quot;&#x2F;&quot;,&quot;images&quot;:&quot;&#x2F;images&quot;,&quot;scheme&quot;:&quot;Muse&quot;,&quot;version&quot;:&quot;8.3.0&quot;,&quot;exturl&quot;:false,&quot;sidebar&quot;:{&quot;position&quot;:&quot;left&quot;,&quot;display&quot;:&quot;post&quot;,&quot;padding&quot;:18,&quot;offset&quot;:12},&quot;copycode&quot;:false,&quot;bookmark&quot;:{&quot;enable&quot;:false,&quot;color&quot;:&quot;#222&quot;,&quot;save&quot;:&quot;auto&quot;},&quot;fancybox&quot;:false,&quot;mediumzoom&quot;:false,&quot;lazyload&quot;:false,&quot;pangu&quot;:false,&quot;comments&quot;:{&quot;style&quot;:&quot;tabs&quot;,&quot;active&quot;:null,&quot;storage&quot;:true,&quot;lazyload&quot;:false,&quot;nav&quot;:null},&quot;motion&quot;:{&quot;enable&quot;:true,&quot;async&quot;:false,&quot;transition&quot;:{&quot;post_block&quot;:&quot;fadeIn&quot;,&quot;post_header&quot;:&quot;fadeInDown&quot;,&quot;post_body&quot;:&quot;fadeInDown&quot;,&quot;coll_header&quot;:&quot;fadeInLeft&quot;,&quot;sidebar&quot;:&quot;fadeInUp&quot;}},&quot;prism&quot;:false,&quot;i18n&quot;:{&quot;placeholder&quot;:&quot;Searching...&quot;,&quot;empty&quot;:&quot;We didn&#39;t find any results for the search: ${query}&quot;,&quot;hits_time&quot;:&quot;${hits} results found in ${time} ms&quot;,&quot;hits&quot;:&quot;${hits} results found&quot;}}</script>
+<meta name="description" content="修改SSH的端口号是为了防止有人恶意使用暴力破解的方法登录你的服务器，其他保护服务器的方法有禁用Root登录、SSH-Key登录等，但更为简单的操作就是修改你的SSH端口号。下文中将添加一个新端口号，待测试新端口号能够正常使用之后就可以关闭旧的端口号了。 一、 修改SSH配置文件1vi &#x2F;etc&#x2F;ssh&#x2F;sshd_config  找到#Port 22，去掉#并在下一行">
+<meta property="og:type" content="article">
+<meta property="og:title" content="保护服务器，为SSH服务修改端口号">
+<meta property="og:url" content="http://islet.space/2019/03/03/Linux/SSH/%E4%BF%9D%E6%8A%A4%E6%9C%8D%E5%8A%A1%E5%99%A8%EF%BC%8C%E4%B8%BASSH%E6%9C%8D%E5%8A%A1%E4%BF%AE%E6%94%B9%E7%AB%AF%E5%8F%A3%E5%8F%B7/index.html">
+<meta property="og:site_name" content="Coder的孤岛">
+<meta property="og:description" content="修改SSH的端口号是为了防止有人恶意使用暴力破解的方法登录你的服务器，其他保护服务器的方法有禁用Root登录、SSH-Key登录等，但更为简单的操作就是修改你的SSH端口号。下文中将添加一个新端口号，待测试新端口号能够正常使用之后就可以关闭旧的端口号了。 一、 修改SSH配置文件1vi &#x2F;etc&#x2F;ssh&#x2F;sshd_config  找到#Port 22，去掉#并在下一行">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2019-03-03T04:00:00.000Z">
+<meta property="article:modified_time" content="2019-03-06T04:09:28.000Z">
+<meta property="article:author" content="Liewzheng">
+<meta property="article:tag" content="Centos">
+<meta property="article:tag" content="SSH">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://islet.space/2019/03/03/Linux/SSH/%E4%BF%9D%E6%8A%A4%E6%9C%8D%E5%8A%A1%E5%99%A8%EF%BC%8C%E4%B8%BASSH%E6%9C%8D%E5%8A%A1%E4%BF%AE%E6%94%B9%E7%AB%AF%E5%8F%A3%E5%8F%B7/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{&quot;sidebar&quot;:&quot;&quot;,&quot;isHome&quot;:false,&quot;isPost&quot;:true,&quot;lang&quot;:&quot;en&quot;,&quot;comments&quot;:true,&quot;permalink&quot;:&quot;http:&#x2F;&#x2F;islet.space&#x2F;2019&#x2F;03&#x2F;03&#x2F;Linux&#x2F;SSH&#x2F;%E4%BF%9D%E6%8A%A4%E6%9C%8D%E5%8A%A1%E5%99%A8%EF%BC%8C%E4%B8%BASSH%E6%9C%8D%E5%8A%A1%E4%BF%AE%E6%94%B9%E7%AB%AF%E5%8F%A3%E5%8F%B7&#x2F;&quot;,&quot;path&quot;:&quot;2019&#x2F;03&#x2F;03&#x2F;Linux&#x2F;SSH&#x2F;保护服务器，为SSH服务修改端口号&#x2F;&quot;,&quot;title&quot;:&quot;保护服务器，为SSH服务修改端口号&quot;}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">&quot;&quot;</script>
+<title>保护服务器，为SSH服务修改端口号 | Coder的孤岛</title><script src="/js/config.js"></script>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Coder的孤岛</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">islet of the coder</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%80%E3%80%81-%E4%BF%AE%E6%94%B9SSH%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="nav-number">1.</span> <span class="nav-text">一、 修改SSH配置文件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E6%9F%A5%E7%9C%8BSELinux%E5%BC%80%E6%94%BE%E6%83%85%E5%86%B5"><span class="nav-number">2.</span> <span class="nav-text">二、查看SELinux开放情况</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E5%BC%80%E5%90%AF%E9%98%B2%E7%81%AB%E5%A2%99%E5%AF%B9%E5%BA%94%E7%9A%84%E7%AB%AF%E5%8F%A3"><span class="nav-number">3.</span> <span class="nav-text">三、开启防火墙对应的端口</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9B%9B%E3%80%81-%E9%87%8D%E5%90%AF%E6%9C%8D%E5%8A%A1"><span class="nav-number">4.</span> <span class="nav-text">四、 重启服务</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%94%E3%80%81-%E5%B0%9D%E8%AF%95%E7%94%A8%E6%96%B0%E7%AB%AF%E5%8F%A3%E7%99%BB%E9%99%86SSH%E6%9C%8D%E5%8A%A1"><span class="nav-number">5.</span> <span class="nav-text">五、 尝试用新端口登陆SSH服务</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E9%93%BE%E6%8E%A5"><span class="nav-number">6.</span> <span class="nav-text">参考链接</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Liewzheng</p>
+  <div class="site-description" itemprop="description">笔记分享的旮旯孤岛而已</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">41</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">69</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://islet.space/2019/03/03/Linux/SSH/%E4%BF%9D%E6%8A%A4%E6%9C%8D%E5%8A%A1%E5%99%A8%EF%BC%8C%E4%B8%BASSH%E6%9C%8D%E5%8A%A1%E4%BF%AE%E6%94%B9%E7%AB%AF%E5%8F%A3%E5%8F%B7/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Liewzheng">
+      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coder的孤岛">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          保护服务器，为SSH服务修改端口号
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2019-03-03 12:00:00" itemprop="dateCreated datePublished" datetime="2019-03-03T12:00:00+08:00">2019-03-03</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2019-03-06 12:09:28" itemprop="dateModified" datetime="2019-03-06T12:09:28+08:00">2019-03-06</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>修改SSH的端口号是为了防止有人恶意使用暴力破解的方法登录你的服务器，其他保护服务器的方法有禁用Root登录、SSH-Key登录等，但更为简单的操作就是修改你的SSH端口号。下文中将添加一个新端口号，待测试新端口号能够正常使用之后就可以关闭旧的端口号了。</p>
+<h1 id="一、-修改SSH配置文件"><a href="#一、-修改SSH配置文件" class="headerlink" title="一、 修改SSH配置文件"></a>一、 修改SSH配置文件</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vi &#x2F;etc&#x2F;ssh&#x2F;sshd_config</span><br></pre></td></tr></table></figure>
+
+<p>找到<code>#Port 22</code>，去掉<code>#</code>并在下一行添加<code>Port 22222</code>。</p>
+<ul>
+<li>注意是<code>sshd_config</code>而不是<code>ssh_config</code>，多了个<code>d</code>。</li>
+<li>SSH服务的默认监听端口是22，如果不强制说明别的端口，”Port 22”注不注释都是开放22访问端口的。保留了22端口，是防止之后因为各种权限和配置问题，避免连22端口都不能访问的尴尬。</li>
+<li>如果设置10000以下的端口号，容易被系统或一些特殊软件占用，或是以后新应用准备占用该端口的时候，却被你先占用了，导致软件无法运行。因此，请选择10000~65535之间的任意端口号。</li>
+<li>到时候需要禁用22号端口的时候，重新修改此文件，给 <code>Port22</code> 前面加上 <code>#</code>，并重新启动服务即可。</li>
+</ul>
+<h1 id="二、查看SELinux开放情况"><a href="#二、查看SELinux开放情况" class="headerlink" title="二、查看SELinux开放情况"></a>二、查看SELinux开放情况</h1><p>见文章《<a target="_blank" rel="noopener" href="https://blog.liewzheng.cn/2019/03/03/Linux/SSH/%E4%BD%BF%E7%94%A8SELinux%E5%BC%80%E6%94%BESSH%E7%AB%AF%E5%8F%A3/">使用SELinux开放SSH端口</a>》</p>
+<p>如果没有安装SELinux或已关闭则略过。</p>
+<h1 id="三、开启防火墙对应的端口"><a href="#三、开启防火墙对应的端口" class="headerlink" title="三、开启防火墙对应的端口"></a>三、开启防火墙对应的端口</h1><p>见文章《<a target="_blank" rel="noopener" href="https://blog.liewzheng.cn/2019/03/05/Linux/SSH/CentOS7%E5%AE%89%E8%A3%85iptables%E9%98%B2%E7%81%AB%E5%A2%99/">CentOS7安装iptables防火墙</a>》</p>
+<p>直接下载里面的脚本（或者复制粘贴），然后提升权限并运行。</p>
+<h1 id="四、-重启服务"><a href="#四、-重启服务" class="headerlink" title="四、 重启服务"></a>四、 重启服务</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">service sshd restart</span><br><span class="line">service iptables restart</span><br><span class="line">reboot</span><br></pre></td></tr></table></figure>
+
+<p>此步骤如果使用了第三步骤的脚本之后，便可忽略，而 <code>reboot</code> 则可以看情况使用。</p>
+<h1 id="五、-尝试用新端口登陆SSH服务"><a href="#五、-尝试用新端口登陆SSH服务" class="headerlink" title="五、 尝试用新端口登陆SSH服务"></a>五、 尝试用新端口登陆SSH服务</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh -P 22222 root@******</span><br></pre></td></tr></table></figure>
+<p>更多防护技术请看参考链接里的文章。</p>
+<h1 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h1><ol>
+<li>《<a target="_blank" rel="noopener" href="https://blog.phpgao.com/vps_ssh.html">VPS安全之SSH设置</a>》</li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Centos/" rel="tag"># Centos</a>
+              <a href="/tags/SSH/" rel="tag"># SSH</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2019/02/22/Linux/ShadowsocksR/Beyond%20the%20Wall/" rel="prev" title="Beyond the Wall">
+                  <i class="fa fa-chevron-left"></i> Beyond the Wall
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2019/03/03/Linux/SSH/%E4%BD%BF%E7%94%A8SELinux%E5%BC%80%E6%94%BESSH%E7%AB%AF%E5%8F%A3/" rel="next" title="使用SELinux开放SSH端口">
+                  使用SELinux开放SSH端口 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+<script src="/js/comments.js"></script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">粤ICP备19004822号 </a>
+  </div>
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Liewzheng</span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

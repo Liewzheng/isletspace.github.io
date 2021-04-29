@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="next-config" data-name="main" type="application/json">{&quot;hostname&quot;:&quot;islet.space&quot;,&quot;root&quot;:&quot;&#x2F;&quot;,&quot;images&quot;:&quot;&#x2F;images&quot;,&quot;scheme&quot;:&quot;Muse&quot;,&quot;version&quot;:&quot;8.3.0&quot;,&quot;exturl&quot;:false,&quot;sidebar&quot;:{&quot;position&quot;:&quot;left&quot;,&quot;display&quot;:&quot;post&quot;,&quot;padding&quot;:18,&quot;offset&quot;:12},&quot;copycode&quot;:false,&quot;bookmark&quot;:{&quot;enable&quot;:false,&quot;color&quot;:&quot;#222&quot;,&quot;save&quot;:&quot;auto&quot;},&quot;fancybox&quot;:false,&quot;mediumzoom&quot;:false,&quot;lazyload&quot;:false,&quot;pangu&quot;:false,&quot;comments&quot;:{&quot;style&quot;:&quot;tabs&quot;,&quot;active&quot;:null,&quot;storage&quot;:true,&quot;lazyload&quot;:false,&quot;nav&quot;:null},&quot;motion&quot;:{&quot;enable&quot;:true,&quot;async&quot;:false,&quot;transition&quot;:{&quot;post_block&quot;:&quot;fadeIn&quot;,&quot;post_header&quot;:&quot;fadeInDown&quot;,&quot;post_body&quot;:&quot;fadeInDown&quot;,&quot;coll_header&quot;:&quot;fadeInLeft&quot;,&quot;sidebar&quot;:&quot;fadeInUp&quot;}},&quot;prism&quot;:false,&quot;i18n&quot;:{&quot;placeholder&quot;:&quot;Searching...&quot;,&quot;empty&quot;:&quot;We didn&#39;t find any results for the search: ${query}&quot;,&quot;hits_time&quot;:&quot;${hits} results found in ${time} ms&quot;,&quot;hits&quot;:&quot;${hits} results found&quot;}}</script>
+<meta name="description" content="本文几乎九成都是参考链接中的文章的摘写，很多前辈们都写得很好了，但是为了更好的适应现在的网络环境，还是做适当调整和补充说明。 基础解释部分，完全转自前辈 @ThomasXu 的文章《浅谈vpn、vps、Proxy以及shadowsocks之间的联系和区别》。 注意，本文不适合完全小白的受众阅读！实践操作部分，需要有一定的Linux基础和网络知识。 亲自画了个图，示意墙以外的协议和墙以内的协议。 基">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Beyond the Wall">
+<meta property="og:url" content="http://islet.space/2019/02/22/Linux/ShadowsocksR/Beyond%20the%20Wall/index.html">
+<meta property="og:site_name" content="Coder的孤岛">
+<meta property="og:description" content="本文几乎九成都是参考链接中的文章的摘写，很多前辈们都写得很好了，但是为了更好的适应现在的网络环境，还是做适当调整和补充说明。 基础解释部分，完全转自前辈 @ThomasXu 的文章《浅谈vpn、vps、Proxy以及shadowsocks之间的联系和区别》。 注意，本文不适合完全小白的受众阅读！实践操作部分，需要有一定的Linux基础和网络知识。 亲自画了个图，示意墙以外的协议和墙以内的协议。 基">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://uk-liewzheng-blog-pic.oss-eu-west-1.aliyuncs.com/2019/02/22/Beyond_the_Wall/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E5%8D%8F%E8%AE%AE%E7%90%86%E8%A7%A3.jpg">
+<meta property="article:published_time" content="2019-02-22T14:00:00.000Z">
+<meta property="article:modified_time" content="2019-02-22T14:03:10.000Z">
+<meta property="article:author" content="Liewzheng">
+<meta property="article:tag" content="ShadowsocksR">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://uk-liewzheng-blog-pic.oss-eu-west-1.aliyuncs.com/2019/02/22/Beyond_the_Wall/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E5%8D%8F%E8%AE%AE%E7%90%86%E8%A7%A3.jpg">
+
+
+<link rel="canonical" href="http://islet.space/2019/02/22/Linux/ShadowsocksR/Beyond%20the%20Wall/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{&quot;sidebar&quot;:&quot;&quot;,&quot;isHome&quot;:false,&quot;isPost&quot;:true,&quot;lang&quot;:&quot;en&quot;,&quot;comments&quot;:true,&quot;permalink&quot;:&quot;http:&#x2F;&#x2F;islet.space&#x2F;2019&#x2F;02&#x2F;22&#x2F;Linux&#x2F;ShadowsocksR&#x2F;Beyond%20the%20Wall&#x2F;&quot;,&quot;path&quot;:&quot;2019&#x2F;02&#x2F;22&#x2F;Linux&#x2F;ShadowsocksR&#x2F;Beyond the Wall&#x2F;&quot;,&quot;title&quot;:&quot;Beyond the Wall&quot;}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">&quot;&quot;</script>
+<title>Beyond the Wall | Coder的孤岛</title><script src="/js/config.js"></script>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Coder的孤岛</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">islet of the coder</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9F%BA%E7%A1%80%E8%A7%A3%E9%87%8A"><span class="nav-number">1.</span> <span class="nav-text">基础解释</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#GFW"><span class="nav-number">1.1.</span> <span class="nav-text">GFW</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#VPN"><span class="nav-number">1.2.</span> <span class="nav-text">VPN</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Proxy"><span class="nav-number">1.3.</span> <span class="nav-text">Proxy</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86"><span class="nav-number">1.3.1.</span> <span class="nav-text">反向代理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%AD%A3%E5%90%91%E4%BB%A3%E7%90%86"><span class="nav-number">1.3.2.</span> <span class="nav-text">正向代理</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Socks"><span class="nav-number">1.3.2.1.</span> <span class="nav-text">Socks</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#HTTPS%E5%92%8CV2Ray"><span class="nav-number">1.3.2.2.</span> <span class="nav-text">HTTPS和V2Ray</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#VPS"><span class="nav-number">1.4.</span> <span class="nav-text">VPS</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Shadowsocks"><span class="nav-number">1.5.</span> <span class="nav-text">Shadowsocks</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ShadowsockR"><span class="nav-number">1.6.</span> <span class="nav-text">ShadowsockR</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#VMess"><span class="nav-number">1.7.</span> <span class="nav-text">VMess</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%83%A8%E7%BD%B2%E5%AE%9E%E8%B7%B5"><span class="nav-number">2.</span> <span class="nav-text">部署实践</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E9%93%BE%E6%8E%A5"><span class="nav-number">3.</span> <span class="nav-text">参考链接</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Liewzheng</p>
+  <div class="site-description" itemprop="description">笔记分享的旮旯孤岛而已</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">41</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">69</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://islet.space/2019/02/22/Linux/ShadowsocksR/Beyond%20the%20Wall/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Liewzheng">
+      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coder的孤岛">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Beyond the Wall
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2019-02-22 22:00:00 / Modified: 22:03:10" itemprop="dateCreated datePublished" datetime="2019-02-22T22:00:00+08:00">2019-02-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>本文几乎九成都是参考链接中的文章的摘写，很多前辈们都写得很好了，但是为了更好的适应现在的网络环境，还是做适当调整和补充说明。</p>
+<p>基础解释部分，完全转自前辈 <strong>@ThomasXu</strong> 的文章《<a target="_blank" rel="noopener" href="https://medium.com/@thomas_summon/%E6%B5%85%E8%B0%88vpn-vps-proxy%E4%BB%A5%E5%8F%8Ashadowsocks%E4%B9%8B%E9%97%B4%E7%9A%84%E8%81%94%E7%B3%BB%E5%92%8C%E5%8C%BA%E5%88%AB-b0198f92db1b">浅谈vpn、vps、Proxy以及shadowsocks之间的联系和区别</a>》。</p>
+<p>注意，本文不适合完全小白的受众阅读！实践操作部分，需要有一定的Linux基础和网络知识。</p>
+<p>亲自画了个图，示意墙以外的协议和墙以内的协议。<br><img src="http://uk-liewzheng-blog-pic.oss-eu-west-1.aliyuncs.com/2019/02/22/Beyond_the_Wall/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E5%8D%8F%E8%AE%AE%E7%90%86%E8%A7%A3.jpg"></p>
+<h1 id="基础解释"><a href="#基础解释" class="headerlink" title="基础解释"></a>基础解释</h1><h2 id="GFW"><a href="#GFW" class="headerlink" title="GFW"></a>GFW</h2><p>如果有机会，可以搜一下<strong>GFW</strong>，此处不做解释。</p>
+<p>GFW实现网络封锁的手段主要有两种：<strong>DNS劫持</strong>和<strong>IP封锁</strong>（除此之外，还有<strong>DNS污染</strong>和<strong>关键词过滤</strong>，此处不做解释）。</p>
+<ul>
+<li><p><strong>DNS劫持</strong>：IP是网络上各主机的“地址”，要想访问“别人家”，当然得要有地址。但IP是一串数字，是给电脑看的，人记起来太麻烦，所以就有了域名Domain（也就是我们常说的网址）和 DNS（网域名称系统，Domain Name System）。域名是一串英文字符串，方便人记忆。DNS将域名和IP关联起来，形成映射及映射表。用户访问域名所在的目标网站前，将域名发给DNS服务器询问这对映射关系，拿到对应的IP后就可以在茫茫网海中找到那个“她”了。而GFW所做的就是站在用户和DNS服务器之间，破坏它们的正常通讯，并向用户回传一个假IP。用户拿不到真正的IP，自然也就访问不到本想访问的网站了。DNS劫持是GFW早期唯一的技术手段，所以那个时候的用户通过修改Hosts文件的方式就可以零成本突破封锁了。</p>
+</li>
+<li><p><strong>IP封锁</strong>：DNS劫持之后，GFW引入了IP封锁，直接锁住了访问目标网站的去路，用户发往被封锁ip的任何数据都会被墙截断。这个时候，依靠类似于修改Hosts文件这种低成本方法突破封锁就显得有些天方夜谭了。那么，解决办法是什么呢？答案是：在第三方架设翻墙服务器，中转与目标服务器间的来往流量。目前为止，GFW采用的是黑名单模式，像Google、Facebook这种在黑名单上的网站的ip无法访问，而不在黑名单上的第三方不记名ip可以。于是，一切就很明朗了，我们目前几乎所有的翻墙手段都是基于上述原理实现的，VPN是，ShadowSocks是，还有一些比较冷门的（比如V2Ray）同样如此，只不过它们的技术细节不同（这个我们不会深入）。</p>
+</li>
+</ul>
+<h2 id="VPN"><a href="#VPN" class="headerlink" title="VPN"></a>VPN</h2><p>VPN，全称“虚拟私人网络（Virtual Private Network）”，是一种加密通讯技术。VPN是一个统称，它有很多的具体实现，比如PPTP、L2TP、IPSec和openvpn。vpn出现远早于GFW，所以它不是为了翻墙而生的，它被设计出来的目的是数据传输安全和网络匿名。</p>
+<p>而既然不是为翻墙而生，那从翻墙的角度上讲，VPN协议就存在诸多问题。最严重的一个就是流量特征过于明显。墙目前已经能够精确识别绝大部分VPN协议的流量特征并给予封锁，所以，VPN这种翻墙方式基本已经废了。</p>
+<p>但即便如此，VPN作为过去很长一段时间最主流最热门最常用最为人所知的翻墙手段，已然成为翻墙的代名词。即便是VPN已不再常用的今天，当人们谈及翻墙的时候，说得最多的仍是：“你有什么好用的VPN吗？”。</p>
+<h2 id="Proxy"><a href="#Proxy" class="headerlink" title="Proxy"></a>Proxy</h2><p>Proxy（代理）又分为<strong>正向代理</strong>和<strong>反向代理</strong>。翻墙所用的代理都是正向代理。</p>
+<h3 id="反向代理"><a href="#反向代理" class="headerlink" title="反向代理"></a>反向代理</h3><p><a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86"><strong>反向代理</strong></a>的作用主要是为服务器做缓存和负载均衡，此处不做解释。</p>
+<p>另外，Shadowsocks里也有负载均衡的概念，但Shadowsocks的负载均衡和反向代理的负载均衡不是一个概念。</p>
+<p>反向代理的负载均衡是指：在多个真正的服务器前架设一个代理服务器，用户所有的数据都发给代理服务器，然后代理服务器根据各个真实服务器的状态将数据转发给一个任务较少的服务器处理。这样，服务商既可以架设多个服务器分担任务、减轻压力，用户也只要记一个域名或ip就可以了。</p>
+<p>Shadowsocks的负载均衡是指：每隔一段时间更改一次翻墙服务器，将用户的数据平均发给多个不同的翻墙服务器，以避免发往某一个翻墙服务器的流量过多。</p>
+<h3 id="正向代理"><a href="#正向代理" class="headerlink" title="正向代理"></a>正向代理</h3><p>正向代理主要有<strong>HTTP</strong>、<strong>HTTP over TLS(HTTPS)<strong>、</strong>Socks</strong>、<strong>Socks over TLS</strong>几种。</p>
+<p>其中，HTTP和Socks无法用于翻墙，HTTPS和Socks over TLS可以用于翻墙。不过，Socks over TLS几乎没人用，我们这里就不多说了。</p>
+<p>Proxy的历史同样早于GFW，它最早被设计出来的目的当然也不是翻墙。正向代理最主要的目的和VPN差不多，都是用于匿名，但HTTP和Socks不能加密，只能匿名，HTTPS既可以匿名，也可以用于加密通信。</p>
+<p>从理论上讲，四种代理协议都可以通过“用户先将数据发给代理服务器，再由代理服务器转发给目的服务器”的方法达到翻墙目的。但由于HTTP和Socks都是明文协议，GFW可以通过检查数据包内的内容得知用户的真实意图，进而拦截数据包。所以，HTTP和Socks一般只用作本地代理。而HTTPS协议是加密通讯，GFW无法得知数据包内的真实内容，类似于<strong>关键词过滤</strong>的手段无法施展。</p>
+<h4 id="Socks"><a href="#Socks" class="headerlink" title="Socks"></a>Socks</h4><p><strong><a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/SOCKS">Socks</a></strong> 代理与其他类型的代理不同，它只是简单地传递数据包，而并不关心是何种应用协议，既可以是HTTP请求，所以SOCKS代理服务器比其他类型的代理服务器速度要快得多。</p>
+<p>Socks代理又分为<strong>Socks4</strong> 和 <strong>Socks5</strong> ，二者不同的是Socks4代理只支持TCP协议，而Socks5代理则既支持TCP协议又支持UDP协议，还支持各种身份验证机制、服务器端域名解析等。Socks4能做到的Socks5都可得到，但Socks5能够做到的Socks4则不一定能做到，比如我们常用的聊天工具QQ在使用代理时就要求用Socks5代理，因为它需要使用UDP协议来传输数据.</p>
+<h4 id="HTTPS和V2Ray"><a href="#HTTPS和V2Ray" class="headerlink" title="HTTPS和V2Ray"></a>HTTPS和V2Ray</h4><ul>
+<li>HTTPS代理最大的缺点就是配置复杂。即便能用默认参数就用默认参数，用户自己只作最低限度的配置，对新手而言，这也是一个无比痛苦的过程。更别说，想要正常使用HTTPS代理，你还要购买域名和证书这些，非常麻烦。所以，即便是在shadowsocks出现之前，HTTPS代理也没在大陆流行起来。HTTPS代理只能转发TCP流量，对UDP无能为力。</li>
+<li>V2Ray的VMess over tls也许能和HTTPS代理媲美。但V2Ray存在的时间较短、使用者较少、社区也没有HTTPS代理活跃（从全球范围上看）。相比于HTTPS代理，VMess协议潜在的安全漏洞可能要多。这也是v2ray的小众的主要原因之一（另一个是用户没有从shadowsocks迁移到V2Ray的动力），它的配置同样相当复杂。</li>
+</ul>
+<p><strong>HTTPS代理的流量特征和我们平时访问网站时所产生的HTTPS流量几乎一摸一样，GFW无法分辨，稳定性爆表。</strong></p>
+<p>理论上讲，HTTPS代理无论是安全性还是在隐匿性上，都要比目前最为流行的Shadowsocks好。事实上，在所有已知的翻墙协议中，无论是VPN协议，还是代理协议，它应该都是最好的。</p>
+<p>这里推荐刘亚晨先生的一篇文章「<a target="_blank" rel="noopener" href="https://medium.com/@Blankwonder/%E5%90%84%E7%A7%8D%E5%8A%A0%E5%AF%86%E4%BB%A3%E7%90%86%E5%8D%8F%E8%AE%AE%E7%9A%84%E7%AE%80%E5%8D%95%E5%AF%B9%E6%AF%94-1ed52bf7a803">各种加密代理协议的简单对比</a>」。</p>
+<h2 id="VPS"><a href="#VPS" class="headerlink" title="VPS"></a>VPS</h2><p>VPS（Virtual private server，虚拟专用服务器）是由VPS提供商维护，租用给站长使用的“不会关机的电脑”。vps不是一台台独立的电脑，而是将一台巨型服务器通过虚拟化技术分割成若干台看似独立的服务器。这台巨型服务器不间断运行，被分割出来的小服务器也跟着不停的运作，站长租用其中一台小服务器，搭载上自己的站点，就可以等着用户访问了。</p>
+<p>Q: VPS和VPN、Proxy以及我们后面会说的Shadowsocks有什么关系呢？<br>A: 很简单，VPS可以用来搭建网站，当然也可以用来承载VPN服务器、代理服务器或是Shadowsocks的服务器啦。建站固然是VPS最主要的作用，但绝对不是它唯一的作用，既然VPS本质上也是电脑，那电脑能做的事它当然也能做。</p>
+<h2 id="Shadowsocks"><a href="#Shadowsocks" class="headerlink" title="Shadowsocks"></a>Shadowsocks</h2><p><a target="_blank" rel="noopener" href="http://shadowsocks.org/en/index.html"><strong>Shadowsocks(SS)</strong></a>是既可以指一种基于<strong>Socks5</strong>代理方式的加密传输协议，也可以指实现这个协议的各种开发包。目前包使用 Python、C、C++、C#、Go 等编程语言开发，大部分主要实现（iOS 平台的除外）采用 Apache 许可证、GPL、MIT 许可证等多种自由软件许可协议开放源代码。</p>
+<p>在Shadowsocks之前，墙内网民主要依靠寻找现成的技术实现翻墙。比如VPN、HTTPS、TOR的中继网桥以及之后的MEEK插件等等，虽然也有自己的技术，比如一种依靠Google隐藏IP实现翻墙的技术（名字忘了）,但毕竟难成大器，再加上GFW逐渐加大对VPN的干扰，人们迫切需要一种简单可靠的技术来抵御GFW的进攻。</p>
+<p>于是，大概是在2013年吧（具体时间我也不太清楚），@clowwindy带着他的shadowsocks横空出世。</p>
+<p>Shadowsocks同样是一种代理协议，但是作为@clowwindy为国人设计的专门用于翻墙的代理协议，相对于VPN，Shadowsocks有着极强的隐匿性；相对于HTTP代理，Shadowsocks提供了较为完善的加密方案，虽然比不上HTTPS代理和VPN，但使用的也是成熟的工业级的加密算法，普通个人用户完全不用顾虑；相对于HTTPS代理，Shadowsocks的安装配置更为简单，中文社区更为活跃，中文文档教程更完善，更符合中国国情。</p>
+<p>Shdadowsocks最初的版本是由@clowwindy使用Python（一种目前非常热门的脚本编程语言）实现的。所以clowwindy的版本被称为Python版。shadowsocks有点名气之后，不同的开发者使用不同的编程语言为其写了很多分支版本。比如:</p>
+<ul>
+<li>@cyfdecyf开发维护的Go版本。</li>
+<li>@madeye开发维护的libev版本（由纯C语言编写，基于libev库开发）。</li>
+<li>@librehat开发维护的c++版。</li>
+<li>@zhou0开发维护的Perl版。</li>
+</ul>
+<p>这些版本的安装使用指南都可以在shadowsocks的官网上查阅。</p>
+<p>2015年，clowwindy因喝茶事件被迫停止了shadowsocks的维护，并删除了其开源在GitHub上的代码，Python版就此停滞。但其它版本仍处于维护更新中。其中，更新最频繁，新技术跟进最快的是由@madeye维护的libev版本。这里有必要说明下，目前，shadowsocks协议（请区分“shadowsocks协议”和“shadowsocks协议的具体实现”这两者的区别）是由shadowsocks社区内的成员共同维护，协议上任何新改进都是社区成员共同商讨的结果。但对这些变化，不同的版本的shadowsocks跟进速度不同。而跟进速度最快的就是我上面说的libev版。无论是SIP007确认的ADEA Ciphers（一种同时进行认证和加密的算法），还是SIP003引进的simple-obfs（tor开发的一种混淆插件），shadowsocks-libev都是最早引入自己软件的。</p>
+<p>Shadowsocks 分为服务器端和客户端，在使用之前，需要先将服务器端部署到服务器上面，然后通过客户端连接并创建本地代理。</p>
+<h2 id="ShadowsockR"><a href="#ShadowsockR" class="headerlink" title="ShadowsockR"></a>ShadowsockR</h2><p><strong>ShadowsocksR(SSR)</strong> 是 <strong>@breakwa11</strong> 发起的Shadowsocks分支，在Shadowsocks的基础上增加了一些数据混淆方式，称修复了部分安全问题并可以提高QoS优先级。后来贡献者@Librehat 也为 Shadowsocks 补上了一些此类特性，甚至增加了类似 Tor 的可插拔传输层功能。</p>
+<p>因为Shadowsocks在普及之后最大的缺点就是加密流量过多，防火墙一旦检测到你的加密流量过多之后，就会进一步开始限制你的IP。因此不适合长期使用，而ShadowsocksR在Shadowsocks的基础上加上了Potocol和Obfs功能，能够进一步伪装成HTTPS流量，让防火墙检测到你的难度加大，安全和稳定性都更高。如果你用SS，那么你被检测到的时间可能需要几个月，短则几天，甚至是几分钟（曾经发生过，一下子就被截胡了），但是SSR能更稳定。</p>
+<h2 id="VMess"><a href="#VMess" class="headerlink" title="VMess"></a>VMess</h2><p><strong><a target="_blank" rel="noopener" href="https://www.v2ray.com/chapter_02/protocols/vmess.html">VMess</a></strong> 协议是由 V2Ray 原创并使用于 V2Ray 的加密传输协议，如同 Shadowsocks 一样为了对抗墙的深度包检测而研发的。在 V2Ray 上客户端与服务器的通信主要是通过 VMess 协议通信。V2Ray 是 Project V 下的一个工具。Project V 是一个包含一系列构建特定网络环境工具的项目，而 V2Ray 属于最核心的一个。从时间上来说，先有 V2Ray 才有 Project V。Project V还包含其他的传输加密协议，如Shadowsocks和socks。</p>
+<p>VMess 依赖于系统时间，请确保使用 V2Ray 的系统 UTC 时间误差在 90 秒之内，时区无关。</p>
+<p>在 Linux 系统中可以安装ntp服务来自动同步系统时间。</p>
+<h1 id="部署实践"><a href="#部署实践" class="headerlink" title="部署实践"></a>部署实践</h1><p>请见文章《<a target="_blank" rel="noopener" href="https://blog.liewzheng.cn/2019/02/14/Linux/ShadowsocksR/SSR%E7%AE%80%E6%98%93%E6%95%99%E7%A8%8B/">SSR简易教程</a>》</p>
+<h1 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h1><ol>
+<li>《<a target="_blank" rel="noopener" href="https://medium.com/@thomas_summon/%E6%B5%85%E8%B0%88vpn-vps-proxy%E4%BB%A5%E5%8F%8Ashadowsocks%E4%B9%8B%E9%97%B4%E7%9A%84%E8%81%94%E7%B3%BB%E5%92%8C%E5%8C%BA%E5%88%AB-b0198f92db1b">浅谈vpn、vps、Proxy以及shadowsocks之间的联系和区别</a>》</li>
+<li>《<a target="_blank" rel="noopener" href="https://my.oschina.net/aiguozhe/blog/127279">http,socks4,socks5代理的区别</a>》</li>
+<li>《<a target="_blank" rel="noopener" href="https://toutyrater.github.io/basic/vmess.html">VMess协议·V2Ray配置指南|V2Ray白话文教程</a>》</li>
+<li>《<a target="_blank" rel="noopener" href="https://www.cnblogs.com/kreo/p/4368811.html">CentOS7安装iptables防火墙</a>》</li>
+<li>《<a target="_blank" rel="noopener" href="https://walesexcitedmei.github.io/2018/11/26/SSR-ShadowsocksR-%E9%85%8D%E7%BD%AE%E5%8F%8A%E4%BD%BF%E7%94%A8/">ShadowsocksR 配置及使用</a>》</li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/ShadowsocksR/" rel="tag"># ShadowsocksR</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2019/02/14/Linux/ShadowsocksR/SSR%E7%AE%80%E6%98%93%E6%95%99%E7%A8%8B/" rel="prev" title="SSR简易教程">
+                  <i class="fa fa-chevron-left"></i> SSR简易教程
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2019/03/03/Linux/SSH/%E4%BF%9D%E6%8A%A4%E6%9C%8D%E5%8A%A1%E5%99%A8%EF%BC%8C%E4%B8%BASSH%E6%9C%8D%E5%8A%A1%E4%BF%AE%E6%94%B9%E7%AB%AF%E5%8F%A3%E5%8F%B7/" rel="next" title="保护服务器，为SSH服务修改端口号">
+                  保护服务器，为SSH服务修改端口号 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+<script src="/js/comments.js"></script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">粤ICP备19004822号 </a>
+  </div>
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Liewzheng</span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
