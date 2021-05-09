@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="next-config" data-name="main" type="application/json">{&quot;hostname&quot;:&quot;islet.space&quot;,&quot;root&quot;:&quot;&#x2F;&quot;,&quot;images&quot;:&quot;&#x2F;images&quot;,&quot;scheme&quot;:&quot;Muse&quot;,&quot;version&quot;:&quot;8.3.0&quot;,&quot;exturl&quot;:false,&quot;sidebar&quot;:{&quot;position&quot;:&quot;left&quot;,&quot;display&quot;:&quot;post&quot;,&quot;padding&quot;:18,&quot;offset&quot;:12},&quot;copycode&quot;:false,&quot;bookmark&quot;:{&quot;enable&quot;:false,&quot;color&quot;:&quot;#222&quot;,&quot;save&quot;:&quot;auto&quot;},&quot;fancybox&quot;:false,&quot;mediumzoom&quot;:false,&quot;lazyload&quot;:false,&quot;pangu&quot;:false,&quot;comments&quot;:{&quot;style&quot;:&quot;tabs&quot;,&quot;active&quot;:null,&quot;storage&quot;:true,&quot;lazyload&quot;:false,&quot;nav&quot;:null},&quot;motion&quot;:{&quot;enable&quot;:true,&quot;async&quot;:false,&quot;transition&quot;:{&quot;post_block&quot;:&quot;fadeIn&quot;,&quot;post_header&quot;:&quot;fadeInDown&quot;,&quot;post_body&quot;:&quot;fadeInDown&quot;,&quot;coll_header&quot;:&quot;fadeInLeft&quot;,&quot;sidebar&quot;:&quot;fadeInUp&quot;}},&quot;prism&quot;:false,&quot;i18n&quot;:{&quot;placeholder&quot;:&quot;Searching...&quot;,&quot;empty&quot;:&quot;We didn&#39;t find any results for the search: ${query}&quot;,&quot;hits_time&quot;:&quot;${hits} results found in ${time} ms&quot;,&quot;hits&quot;:&quot;${hits} results found&quot;}}</script>
+<meta name="description" content="​     sohu.com 阻抗介绍仅针对音频系统中的电路进行说明  在对电路施加电压时，电阻抗是 对电路中交流电的抵抗力的度量。 阻抗以欧姆为单位（类似于电阻）测量，并且 可以认为是交流电路中的一种“交流电阻”。 音频信号是交流电压，因为它们同时具有负电压和正电压（信号的正振幅和负振幅）。因此，音频信号是交流电（具有负电流和正电流）。 仅当上级设备输出连接到前置放大器（或串联的下一个音频设备）">
+<meta property="og:type" content="article">
+<meta property="og:title" content="音频设备连接基础知识">
+<meta property="og:url" content="http://islet.space/2021/05/03/Signal/2021-05-03-%E9%9F%B3%E9%A2%91%E8%AE%BE%E5%A4%87%E8%BF%9E%E6%8E%A5%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/index.html">
+<meta property="og:site_name" content="Coder的孤岛">
+<meta property="og:description" content="​     sohu.com 阻抗介绍仅针对音频系统中的电路进行说明  在对电路施加电压时，电阻抗是 对电路中交流电的抵抗力的度量。 阻抗以欧姆为单位（类似于电阻）测量，并且 可以认为是交流电路中的一种“交流电阻”。 音频信号是交流电压，因为它们同时具有负电压和正电压（信号的正振幅和负振幅）。因此，音频信号是交流电（具有负电流和正电流）。 仅当上级设备输出连接到前置放大器（或串联的下一个音频设备）">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://pic.islet.space/2021/05/a0fcf0d70d88400289cafcd70441614e.png">
+<meta property="og:image" content="https://pic.islet.space/2021/05/db9e3783f23c47a4b3529b34e2d8710a.png">
+<meta property="og:image" content="https://pic.islet.space/2021/05/0a2b0b9619794c908f565d648a72eec6.png">
+<meta property="og:image" content="https://pic.islet.space/2021/05/d969f365edb84996b66525d18320fe3c.jpeg">
+<meta property="og:image" content="https://pic.islet.space/2021/05/image-20210503171654739.png">
+<meta property="og:image" content="https://pic.islet.space/2021/05/image-20210503172016745.png">
+<meta property="og:image" content="https://pic.islet.space/2021/05/c9178428f8ad4ecf8272344c07e24c02.jpeg">
+<meta property="og:image" content="https://pic.islet.space/2021/05/cb59d2afa93b469b91fe410bbc38df23.jpeg">
+<meta property="article:published_time" content="2021-05-03T09:08:00.000Z">
+<meta property="article:modified_time" content="2021-05-09T05:01:38.914Z">
+<meta property="article:author" content="Liewzheng">
+<meta property="article:tag" content="resistance">
+<meta property="article:tag" content="match">
+<meta property="article:tag" content="voltage">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://pic.islet.space/2021/05/a0fcf0d70d88400289cafcd70441614e.png">
+
+
+<link rel="canonical" href="http://islet.space/2021/05/03/Signal/2021-05-03-%E9%9F%B3%E9%A2%91%E8%AE%BE%E5%A4%87%E8%BF%9E%E6%8E%A5%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{&quot;sidebar&quot;:&quot;&quot;,&quot;isHome&quot;:false,&quot;isPost&quot;:true,&quot;lang&quot;:&quot;en&quot;,&quot;comments&quot;:true,&quot;permalink&quot;:&quot;http:&#x2F;&#x2F;islet.space&#x2F;2021&#x2F;05&#x2F;03&#x2F;Signal&#x2F;2021-05-03-%E9%9F%B3%E9%A2%91%E8%AE%BE%E5%A4%87%E8%BF%9E%E6%8E%A5%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86&#x2F;&quot;,&quot;path&quot;:&quot;2021&#x2F;05&#x2F;03&#x2F;Signal&#x2F;2021-05-03-音频设备连接基础知识&#x2F;&quot;,&quot;title&quot;:&quot;音频设备连接基础知识&quot;}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">&quot;&quot;</script>
+<title>音频设备连接基础知识 | Coder的孤岛</title><script src="/js/config.js"></script>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Coder的孤岛</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">islet of the coder</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%98%BB%E6%8A%97%E4%BB%8B%E7%BB%8D"><span class="nav-number">1.</span> <span class="nav-text">阻抗介绍</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%9F%B3%E9%A2%91%E4%BF%A1%E5%8F%B7"><span class="nav-number">2.</span> <span class="nav-text">音频信号</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%9E%E9%99%85%E5%BA%94%E7%94%A8"><span class="nav-number">3.</span> <span class="nav-text">实际应用</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Liewzheng</p>
+  <div class="site-description" itemprop="description">笔记分享的旮旯孤岛而已</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">47</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">83</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://islet.space/2021/05/03/Signal/2021-05-03-%E9%9F%B3%E9%A2%91%E8%AE%BE%E5%A4%87%E8%BF%9E%E6%8E%A5%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Liewzheng">
+      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coder的孤岛">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          音频设备连接基础知识
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-05-03 17:08:00" itemprop="dateCreated datePublished" datetime="2021-05-03T17:08:00+08:00">2021-05-03</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2021-05-09 13:01:38" itemprop="dateModified" datetime="2021-05-09T13:01:38+08:00">2021-05-09</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/signal/" itemprop="url" rel="index"><span itemprop="name">signal</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>​    </p>
+<p><a target="_blank" rel="noopener" href="https://www.sohu.com/a/418986148_142772">sohu.com</a></p>
+<h1 id="阻抗介绍"><a href="#阻抗介绍" class="headerlink" title="阻抗介绍"></a>阻抗介绍</h1><p>仅针对音频系统中的电路进行说明</p>
+<ul>
+<li>在对电路施加电压时，电阻抗是 <strong>对电路中交流电的抵抗力的度量</strong>。</li>
+<li>阻抗以欧姆为单位（类似于电阻）测量，并且 <strong>可以认为是交流电路中的一种“交流电阻”</strong>。</li>
+<li>音频信号是交流电压，因为它们同时具有负电压和正电压（信号的正振幅和负振幅）。<strong>因此，音频信号是交流电</strong>（具有负电流和正电流）。</li>
+<li>仅当<strong>上级设备</strong>输出连接到前置放大器（或串联的下一个音频设备）时，音频信号才会通过。（上级设备的输出必须创建一个带有负载的电路，以使音频信号流动。）</li>
+</ul>
+<img src="https://pic.islet.space/2021/05/a0fcf0d70d88400289cafcd70441614e.png" alt="img" style="zoom:33%;" />
+
+
+
+<p>在音频系统的连接中，有各式各样的设备进行设备串联，首先说两个概念：</p>
+<blockquote>
+<p><strong>输出阻抗</strong>： 音频设备输出端上的固有阻抗。</p>
+<p><strong>负载阻抗</strong>： 音频设备下一级（通常是前置放大器）的输入阻抗，该阻抗与上级的输出共同构成电路。</p>
+</blockquote>
+<p>在音频行业内，行业规定 <mark>输入接口的阻抗应为输出阻抗的10倍以上，这样才能保证音频信号的传输质量</mark>。</p>
+<p><mark>这样的 “<strong>阻抗匹配</strong>” 其实是为了 “<strong>电压匹配</strong>” ，而不是传统电学概念中的输入输出等阻抗的“阻抗匹配”。</mark></p>
+<p>源输出阻抗和输入阻抗之间的电压传递公式：</p>
+<p><strong>V<del>L</del>= Z<del>L</del>·V<del>S</del> / (Z<del>S</del>+ Z<del>L</del>)</strong></p>
+<blockquote>
+<p>V<del>L</del>输入端 =前置放大器输入端的电压。</p>
+<p>V<del>S</del>输出端 =麦克风输出端的电压。 </p>
+<p>Z<del>L</del>输入端 =前置放大器的输入阻抗（麦克风负载阻抗）。 </p>
+<p>Z<del>S</del>输出端 =麦克风输出阻抗。 </p>
+</blockquote>
+<p>可以将其可视化为简单的分压器：</p>
+<img src="https://pic.islet.space/2021/05/db9e3783f23c47a4b3529b34e2d8710a.png" alt="img" style="zoom: 33%;" />
+
+<div style="text-align: center; font-size: 10px; color: #aaa;">图 简化电路</div>
+
+
+
+<p>不难推算，如果其他所有条件保持不变，增加负载阻抗“ Z输入端”可使上级设备的输出电压与前置放大器的输入电压之间的匹配度更高。</p>
+<p>Z输入端起码要达到Z输出端的10倍以上，电压才可达到源输出端电压的90%，但是我们也不希望输入端的阻抗过大，因为阻抗过高会增加线路出现噪音的可能。</p>
+<p>这种最大化的电压传输称为“阻抗桥接”，或者称为“电压匹配”。</p>
+<h1 id="音频信号"><a href="#音频信号" class="headerlink" title="音频信号"></a>音频信号</h1><p>HOLA，在了解完阻抗的秘密之后，在这里我们简单说一下各个种类的信号等级和阻抗的差异。我们在这说下经常遇到的三类信号：<strong>麦克风信号</strong>、<strong>线路信号</strong>、<strong>乐器信号</strong>。</p>
+<div style="text-align: center; font-size: 10px; color: #aaa;">表 各类信号参数表</div>
+
+<img src="https://pic.islet.space/2021/05/0a2b0b9619794c908f565d648a72eec6.png" alt="img" style="zoom:50%;" />
+
+<p><strong>麦克风信号</strong>，就是麦克风输出的信号，其电平大概在 <strong>-60dBV和-40dBV（0.001V -  0.010V)之间</strong>，通常需要前级放大器的放大才能正常使用，麦克风的<strong>输出阻抗通常在150Ω至200Ω之间</strong>。</p>
+<p>所以呢，你的声卡或者话放的Mic  Input（麦克风输入）接口的阻值应至少该有1500Ω。</p>
+<img src="https://pic.islet.space/2021/05/d969f365edb84996b66525d18320fe3c.jpeg" alt="img" style="zoom:50%;" />
+
+<div style="text-align: center; font-size: 10px; color: #aaa;">图 麦克风信号输入接口</div>
+
+<p><strong>线路信号</strong>也就是Line Level  Signal，一般由TRS（大三芯）平衡线缆传递，比如一些播放器、效果器的输出信号都为线路信号，<strong>其电平约为0dBV（1V）</strong>，<strong>是麦克风信号电平的100倍-1000倍</strong>；<strong>其输出阻抗通常在100Ω至600Ω之间</strong>，Line Input（线路信号输入）接口的阻抗通常大于10,000Ω。有些音频接口有独立的Line Input，有的则是复合型。比如M-Audio  Air192 | 4</p>
+<img src="https://pic.islet.space/2021/05/image-20210503171654739.png" alt="M-Audio  Air192|4" style="zoom: 50%;" />
+
+<div style="text-align: center; font-size: 10px; color: #aaa;">图 M-Audio  Air192 | 4</div>
+
+<p><strong>乐器信号</strong> - Instrument Level  Signal，乐器信号的电平位于麦克风信号和线路信号之间，通常以TS（大两芯）线缆传递，通常需要<strong>前级放大器</strong>将其提升到合适的<strong>线路电平等级</strong>；电吉他、电贝斯、带有拾音器的原声乐器输出的信号均为乐器信号，通常这些乐器的输出阻抗非常高，约在7,000Ω至15,000Ω甚至更高。因此你经常能看到话放、声卡的线路输入通道上有“Hi-Z(高阻抗）”或者“Line/Instrument”切换开关，能使线路输入接口的阻值增加，以适配乐器信号输入，有些音频接口则直接独立出来高阻乐器输入接口。乐器输入接口阻值通常在1MΩ（100万欧姆）左右。</p>
+<p>在前文说过，如果<strong>乐器输入接口阻值过低时，信号会失真、高频丢失，声音听起来会很沉闷</strong>；而<strong>阻值过高时，会增加线路出现噪音</strong>的可能。而有一类设备能完美的解决这一问题，让你随心所欲的调节满意的音色。比如：</p>
+<p>IK  Multimedia的Z‑Tone系列产品可对这些变量进行控制，通过使用高质量的前置放大器，并配备可调的输入阻抗，以使各种拾音器都能发出其完美的声音。Z-Tone系列有两款相关产品，有体积较大的Z‑Tone DI和更紧凑的Z‑Tone Buffer Boost。</p>
+<p><img src="https://pic.islet.space/2021/05/image-20210503172016745.png" alt="Z‑Tone Buffer Boost"></p>
+<div style="text-align: center; font-size: 10px; color: #aaa;">图 Z‑Tone Buffer Boost</div>
+
+
+
+<h1 id="实际应用"><a href="#实际应用" class="headerlink" title="实际应用"></a>实际应用</h1><p>如果<strong>将高阻抗输出输入到低阻抗麦克风电平输入中，它通常会使前置放大器过载</strong>。这将导致<strong>失真</strong>，甚至可能<strong>损坏前置放大器的电路</strong>！</p>
+<p>例如，如果你想将合成器、吉他等高阻信号插入调音台、音频接口的麦克风（XLR）输入，建议你使用<strong>DI盒转换</strong>，将高阻抗信号转换为低阻抗信号。</p>
+<img src="https://pic.islet.space/2021/05/c9178428f8ad4ecf8272344c07e24c02.jpeg" alt="img" style="zoom:50%;" />
+
+<div style="text-align: center; font-size: 10px; color: #aaa;">图 使用Z-Tone DI录制箱琴</div>
+
+
+
+<p><strong>注意</strong>：最好将DI盒尽可能靠近高阻抗输出源，较长的走线应将转换后的低阻抗信号传送到调音台或声卡。通俗点说就是，连接时，两芯线短，卡农线长。这将有助于节省更多的音频信号高端频率。</p>
+<p>那么有的好奇的同学会问，低阻抗的输出接入高阻抗会怎样呢？按理论来说，低阻出，高阻入，很完美呀！但是…</p>
+<p>举个栗子🌰，我们的麦克风是低阻输出，你的吉他单块效果器是高阻输入，串联在一起是理想的选择，也有一些朋友想实现这样的操作，让声音变得更有意思。但是你直接拿XLR卡农转TS大两芯，从麦克风插到效果器上，这样是有问题的。</p>
+<p>问题在于，线路或乐器输入需要线路或乐器信号等级。线路和乐器信号的电压比麦克风信号高得多。</p>
+<p><strong>将低阻抗麦克风插入高阻抗乐器或线路输入会产生很低的电平信号。音频信号将接近接收端设备本底噪声，因此当你提升放大器的增益时也会产生更大噪声，这种不良的信噪比是很令人绝望的。</strong></p>
+<p>这时候你就需要Re-amp盒或者类似AXE I/O这种带有Re-amp功能的音频接口来实现你的这一想法。</p>
+<img src="https://pic.islet.space/2021/05/cb59d2afa93b469b91fe410bbc38df23.jpeg" alt="img" style="zoom:50%;" />
+
+<div style="text-align: center; font-size: 10px; color: #aaa;">图 IK Multimedia AXE I/O</div>
+
+<p>​          </p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/resistance/" rel="tag"># resistance</a>
+              <a href="/tags/match/" rel="tag"># match</a>
+              <a href="/tags/voltage/" rel="tag"># voltage</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/05/01/Computer/2021-05-01-Fixed-Point-and-Floating-Point-Number-Representations/" rel="prev" title="Fixed Point and Floating Point Number Representations">
+                  <i class="fa fa-chevron-left"></i> Fixed Point and Floating Point Number Representations
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/05/05/Signal/2021-05-05-%E4%BD%BF%E7%94%A8ADAU1761-PGA%E3%80%81ALC-%E7%9A%84DSP%E6%8E%A7%E5%88%B6%E6%A8%A1%E5%BC%8F/" rel="next" title="使用ADAU1761 PGA、ALC 的DSP控制模式">
+                  使用ADAU1761 PGA、ALC 的DSP控制模式 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+<script src="/js/comments.js"></script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">粤ICP备19004822号 </a>
+  </div>
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Liewzheng</span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

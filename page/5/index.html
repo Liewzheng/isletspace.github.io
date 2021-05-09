@@ -118,16 +118,16 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">41</span>
+          <span class="site-state-item-count">47</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
-        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-count">14</span>
         <span class="site-state-item-name">categories</span>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">69</span>
+        <span class="site-state-item-count">83</span>
         <span class="site-state-item-name">tags</span>
       </div>
   </nav>
@@ -156,6 +156,670 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://islet.space/2019/01/09/Hardware/Bluetooth/%E8%93%9D%E7%89%99%20-%20%E4%BA%86%E8%A7%A3%E4%B8%8D%E5%90%8C%E7%B1%BB%E5%9E%8B%E7%9A%84BLE_Beacon/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Liewzheng">
+      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coder的孤岛">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2019/01/09/Hardware/Bluetooth/%E8%93%9D%E7%89%99%20-%20%E4%BA%86%E8%A7%A3%E4%B8%8D%E5%90%8C%E7%B1%BB%E5%9E%8B%E7%9A%84BLE_Beacon/" class="post-title-link" itemprop="url">【转/改】了解不同类型的BLE Beacon</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2019-01-09 15:00:00 / Modified: 17:13:22" itemprop="dateCreated datePublished" datetime="2019-01-09T15:00:00+08:00">2019-01-09</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Communication/" itemprop="url" rel="index"><span itemprop="name">Communication</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p><a target="_blank" rel="noopener" href="https://os.mbed.com/blog/entry/BLE-Beacons-URIBeacon-AltBeacons-iBeacon/">原文</a>中的URIBeacon已被Google Eddystone替代，因此本文并非完全由原文转载，有小幅度更改。</p>
+<h1 id="蓝牙低功耗（BLE）信标"><a href="#蓝牙低功耗（BLE）信标" class="headerlink" title="蓝牙低功耗（BLE）信标"></a>蓝牙低功耗（BLE）信标</h1><p>有几种类型（Eddystone，AltBeacon，iBeacon），每种类型都有自己的标准和优势。有些是开放和免费的，有些是封闭的，需要花钱。本文将介绍可用信标的三种主要类型，它们的优点，缺点，衍生物以及有关信标如何工作的一些低级实现细节。确保查看所有可用作BLE信标的已启用mbed的BLE平台。</p>
+<h1 id="概观"><a href="#概观" class="headerlink" title="概观"></a>概观</h1><p>蓝牙低功耗（BLE）能够以两种状态之一交换数据：连接和广告模式。连接模式使用通用属性（GATT）层以一对一的方式传输数据。广告模式使用通用访问配置文件（GAP）层向正在收听的任何人广播数据。广告模式是一对多转移，无法保证数据的一致性。</p>
+<p>BLE Beacons利用GAP广告模式以定期的，特殊格式的广告包广播数据。每种类型的信标都使用自定义规范来对广告数据进行分区，从而赋予其意义。我将看看三种现有类型的信标，URI Beacons，iBeacons和AltBeacons。mbed BLE团队页面支持所有信标类型，如果您想尝试它们，请提供包含文档的示例项目。</p>
+<h1 id="iBeacon"><a href="#iBeacon" class="headerlink" title="iBeacon"></a>iBeacon</h1><p>Apple的iBeacon是第一款出现的BLE Beacon技术，因此大多数信标都从iBeacon数据格式中获取灵感。iBeacons在几个Apple SDK中启用，可以从任何支持BLE的iDevice读取和广播。iBeacon是一种专有的封闭式标准。iBeacons有一个庞大的生态系统，并为开发人员提供了大量资源，但您必须成为Apple开发人员社区的一员。</p>
+<h2 id="数据规格"><a href="#数据规格" class="headerlink" title="数据规格"></a>数据规格</h2><p>iBeacons播放了四条信息：</p>
+<ol>
+<li>标识信标的UUID。</li>
+<li>标识大组中信标子集的主要编号。</li>
+<li>标识特定信标的次要编号。</li>
+<li>TX功率电平为2的补码，表示距设备一米的信号强度。必须由用户或制造商为每个设备校准此编号。</li>
+</ol>
+<p>扫描应用程序读取UUID，主要编号和次要编号，并针对数据库引用它们以获取有关信标的信息; 信标本身不包含描述性信息 - 它要求此外部数据库有用。TX功率字段与测量的信号强度一起使用以确定信标距智能电话的距离。请注意，用户必须在信标的基础上校准TxPower才能准确。</p>
+<p>  <img src="http://uk-liewzheng-blog-pic.oss-eu-west-1.aliyuncs.com/2019/01/09/%E4%BA%86%E8%A7%A3%E4%B8%8D%E5%90%8C%E7%B1%BB%E5%9E%8B%E7%9A%84BLE_Beacon/diagramredo.png" alt="iBeacon-Diagramredo"></p>
+<p>iBeacon前缀包含十六进制数据：0x02 01 06 1A FF 00 4C 02 15。这分解如下：</p>
+<ul>
+<li>0x020106将广告包定义为BLE General Discoverable和BR / EDR高速不兼容。实际上它说它只是广播，而不是连接。</li>
+<li>0x1AFF表示以下数据长度为26个字节，并且是制造商特定数据。</li>
+<li>0x004C是Apple的蓝牙Sig ID，是该规范的一部分，使其依赖于Apple。</li>
+<li>0x02是表示邻近信标的辅助ID，由所有iBeacons使用。</li>
+<li>0x15将剩余长度定义为21个字节（16 + 2 + 2 + 1）。</li>
+</ul>
+<p>其余的字段相当自我解释。邻近UUID是标准的16byte / 128bit BLE UUID，通常是公司独有的。主要和次要数字用于表示UUID内的资产; 常见用途是主要数字是商店（因此可能有65,536个商店），其中次要数字是商店内的单个标签（每个商店还有65,536个可能的标签）。</p>
+<h2 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h2><ol>
+<li>一家咖啡店在一个咖啡架和一个寄存器上放置了iBeacons。当顾客走进咖啡店足够近时，智能手机应用程序会看到iBeacon，搜索咖啡店的iBeacon数据库，将iBeacon识别为属于coffeeShop X，然后看到咖啡有效的优惠券，并通知优惠券的用户。</li>
+<li>iDevices可以广播iBeacon。这可用于在活动中自动登记并跟踪整个场地的移动。</li>
+<li>请参阅mbed iBeacon设备页面上的嵌入式设备代码。</li>
+</ol>
+<p>这是如何设置iBeacon设备以使用mbed BLE_API广播具有主要和次要号码的UUID的示例。请注意，tx功率水平应根据设备的1米测量用户校准。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">#include &quot;mbed.h&quot;</span><br><span class="line">#include &quot;iBeaconService.h&quot;</span><br><span class="line">...</span><br><span class="line">BLEDevice ble;</span><br><span class="line">const uint8_t uuid[] &#x3D; &#123;0xE2, 0x0A, 0x39, 0xF4, 0x73, 0xF5, 0x4B, 0xC4,     &#x2F;&#x2F; 16Byte UUID</span><br><span class="line">                        0xA1, 0x2F, 0x17, 0xD1, 0xAD, 0x07, 0xA9, 0x61</span><br><span class="line">                       &#125;;</span><br><span class="line">uint16_t majorNumber &#x3D; 1122;  &#x2F;&#x2F; 2 byte major number</span><br><span class="line">uint16_t minorNumber &#x3D; 3344;  &#x2F;&#x2F; 2 byte minor number</span><br><span class="line">uint16_t txPower &#x3D; 0xC8;      &#x2F;&#x2F; 1 byte tx power level</span><br><span class="line">...</span><br><span class="line">int main(void)&#123;</span><br><span class="line">    ...</span><br><span class="line">    iBeaconService ibeacon(ble, uuid, majorNumber, minorNumber, txPower);</span><br><span class="line">    ....</span><br><span class="line">    while(1)&#123;</span><br><span class="line">        ble.waitForEvent();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="思考"><a href="#思考" class="headerlink" title="思考"></a>思考</h2><p>iBeacons非常酷，得到广泛支持，因为它们是Apple产品，所以每个人都在与它们合作，生态系统尽可能健壮。唯一的限制是需要数据库来为iBeacon数据赋予意义。没有数据库，UUID就毫无意义。你可以在这里找到mbed iBeacon的例子。</p>
+<h2 id="衍生品"><a href="#衍生品" class="headerlink" title="衍生品"></a>衍生品</h2><p>一个流行的衍生产品是用不同的公司代码替换0x004C代码，例如分配给Nordic Semiconductor的0x0059。该NRF烽火台应用和nrf51822蓝牙智能灯塔套件就是这样的例子。<br>一些公司提供的示例未明确使用iBeacon规范。</p>
+<h1 id="AltBeacon"><a href="#AltBeacon" class="headerlink" title="AltBeacon"></a>AltBeacon</h1><p>AltBeacons是Radius Networks提供的开放式免费信标设计。它似乎正在获得一些动力。AltBeacon规范似乎是对Apple正在使用的闭源iBeacon规范的直接反应; 它涵盖了与iBeacon相同的功能，但不是公司特定的。也就是说，它尚未获得广泛支持。</p>
+<p>值得注意的是，虽然iBeacons有20个27字节可用于用户数据（UUID + Major + Minor），但AltBeacons有28个28字节可用（MFG ID，BeaconCode，BeaconID，MFG RSVD）。这意味着每条消息可以传送更多数据。</p>
+<h2 id="数据规格-1"><a href="#数据规格-1" class="headerlink" title="数据规格"></a>数据规格</h2><p>所述AltBeacon规格是28bytes（26B是用户可修改的）。AltBeacon的前两个字节不是用户可修改的，而是由BLE堆栈设置的。ADV长度为0x1B，ADV类型为0xFF; 这些将分别指定广告数据包的长度和类型作为制造数据。之后，一切都由用户决定，可以推送到广告制造商数据字段。请注意，在大多数情况下，MFG ID将与Bluetooth Sig分配的号码文档相关联。</p>
+<p>  <img src="http://uk-liewzheng-blog-pic.oss-eu-west-1.aliyuncs.com/2019/01/09/%E4%BA%86%E8%A7%A3%E4%B8%8D%E5%90%8C%E7%B1%BB%E5%9E%8B%E7%9A%84BLE_Beacon/altbeacon-spec-exploded-view.png" alt="altbeacon-spec-exploded-view"></p>
+<h2 id="例子-1"><a href="#例子-1" class="headerlink" title="例子"></a>例子</h2><p>用于iBeacons的相同示例适用于AltBeacons，具有以下修改：</p>
+<ol>
+<li>具有不同制造商ID的能力。</li>
+<li>具有不同信标码的能力。</li>
+<li>最后保留数据的一个字节，用于保存特定的制造商信息。</li>
+</ol>
+<p>使用AltBeacon，可以使用特定于应用程序的UUID而不是特定于公司的UUID，从而可以更改公司ID。虽然目前没有任何东西正在利用这一点，但我可以想象信标广播UUID用于信标服务，比如温度服务，然后提供制造公司的信息和温度，这样提供任何人的温度值。步行可以查看。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">#include &quot;mbed.h&quot;</span><br><span class="line">#include &quot;AltBeaconService.h&quot;</span><br><span class="line">...</span><br><span class="line">BLEDevice ble;</span><br><span class="line">uint8_t beaconID[] &#x3D; &#123;  0x00,0x01,0x02,0x03,0x04,0x05,0x06,0x07,0x08,0x09,     &#x2F;&#x2F; 16B of UUID + 4B subdivided as needed.</span><br><span class="line">                        0x10,0x11,0x12,0x13,0x14,0x15,0x00,0x01,0x00,0x02 &#125;;</span><br><span class="line">uint16_t manufacturerID &#x3D; 0x5900; &#x2F;&#x2F;Nordic SIG ID</span><br><span class="line">int8_t rssi &#x3D; -122;</span><br><span class="line">...</span><br><span class="line">int main(void)&#123;</span><br><span class="line">    ...</span><br><span class="line">    AltBeaconService altbeacon(ble, manufacturerID, beaconID, rssi); &#x2F;&#x2F; Add AltBeacon service to BLE object</span><br><span class="line">    ...</span><br><span class="line">    while(1)&#123;</span><br><span class="line">        ble.waitForEvent();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="思考-1"><a href="#思考-1" class="headerlink" title="思考"></a>思考</h2><p>AltBeacons有很大的可能性。它们充分利用了它们所拥有的空间，或多或少地向后兼容iBeacons，并且是开源的。这说它是一个非常新的规范，几乎没有人使用它，并且它与iBeacons的市场渗透作斗争是一场艰苦的战斗。我认为，越来越多的人会使用AltBeacons，因为他们可以携带更多的数据并拥有更广泛的用例 - 这是开放式蛋糕上的一个樱桃。您可以在此处找到mbed AltBeacon示例代码。</p>
+<h1 id="Eddystone"><a href="#Eddystone" class="headerlink" title="Eddystone"></a>Eddystone</h1><p><a target="_blank" rel="noopener" href="https://github.com/google/eddystone">Eddystone</a>前身为<a target="_blank" rel="noopener" href="https://github.com/google/uribeacon">URIBeacon</a>（发音为YUR-ee-BEE-kun）</p>
+<p>Eddystone是由Google开发的开放式信标格式，其设计考虑了透明度和稳健性。Android和iOS设备都可以检测到Eddystone。Eddystone格式建立在现有部署中与行业合作伙伴合作的经验教训的基础上，以及更广泛的灯塔社区。帧格式中可以包含几种不同类型的有效载荷，包括：</p>
+<ul>
+<li>Eddystone-UID：一个唯一的静态ID，带有一个10字节的命名空间组件和一个6字节的实例组件。</li>
+<li>Eddystone-URL：经过解析和解压缩后，可由客户端直接使用的压缩URL。</li>
+<li>Eddystone-TLM：信标状态数据，可用于信标队维护，并为Google Proximity Beacon API的诊断端点提供支持。-TLM应与识别帧交错，例如Eddystone-UID或Eddystone-EID（加密的eTLM版本保留安全性）。</li>
+<li>Eddystone-EID：时变信标帧，可通过链接解析器（例如Proximity Beacon API）解析为稳定标识符。</li>
+</ul>
+<p>此外，Eddystone还包括配置服务和品牌材料。为确保您的部署完全支持Google信标平台，您应该使用Eddystone-UID或-EID设置信标，并可选择添加-URL和-TLM。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://islet.space/2019/01/09/Hardware/Bluetooth/%E8%93%9D%E7%89%99%20-%20iBeacon%E4%B8%93%E6%9C%89%E5%90%8D%E8%AF%8D/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Liewzheng">
+      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coder的孤岛">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2019/01/09/Hardware/Bluetooth/%E8%93%9D%E7%89%99%20-%20iBeacon%E4%B8%93%E6%9C%89%E5%90%8D%E8%AF%8D/" class="post-title-link" itemprop="url">iBeacon专有名词</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2019-01-09 14:00:00 / Modified: 17:13:30" itemprop="dateCreated datePublished" datetime="2019-01-09T14:00:00+08:00">2019-01-09</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Communication/" itemprop="url" rel="index"><span itemprop="name">Communication</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="ADV-PDU-Type"><a href="#ADV-PDU-Type" class="headerlink" title="ADV_PDU Type"></a>ADV_PDU Type</h1><h2 id="PDU"><a href="#PDU" class="headerlink" title="PDU"></a>PDU</h2><p>Protocol Data Unit, 协议数据单元。</p>
+<h1 id="ADV-IND"><a href="#ADV-IND" class="headerlink" title="ADV_IND"></a>ADV_IND</h1><p>可连接的无向广告</p>
+<h1 id="ADV-NONCONN-IND"><a href="#ADV-NONCONN-IND" class="headerlink" title="ADV_NONCONN_IND"></a>ADV_NONCONN_IND</h1><p>不可连接的无向广告</p>
+<h1 id="ADV-DIR-IND"><a href="#ADV-DIR-IND" class="headerlink" title="ADV_DIR_IND"></a>ADV_DIR_IND</h1><h1 id="ADV-DISC"><a href="#ADV-DISC" class="headerlink" title="ADV_DISC"></a>ADV_DISC</h1><h1 id="ADV-CONNREQ"><a href="#ADV-CONNREQ" class="headerlink" title="ADV_CONNREQ"></a>ADV_CONNREQ</h1><h1 id="ADV-SCANREQ"><a href="#ADV-SCANREQ" class="headerlink" title="ADV_SCANREQ"></a>ADV_SCANREQ</h1><h1 id="ADV-SCANRSP"><a href="#ADV-SCANRSP" class="headerlink" title="ADV_SCANRSP"></a>ADV_SCANRSP</h1><h1 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h1><ol>
+<li>《<a target="_blank" rel="noopener" href="https://support.kontakt.io/hc/en-gb/articles/201492492-iBeacon-advertising-packet-structure">iBeacon advertising packet structure</a>》</li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://islet.space/2019/01/07/Networking/%E7%BD%91%E7%BB%9C%20-%20TCP-IP%E4%B8%93%E6%9C%89%E5%90%8D%E8%AF%8D/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Liewzheng">
+      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coder的孤岛">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2019/01/07/Networking/%E7%BD%91%E7%BB%9C%20-%20TCP-IP%E4%B8%93%E6%9C%89%E5%90%8D%E8%AF%8D/" class="post-title-link" itemprop="url">TCP/IP专有名词</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2019-01-07 19:38:13" itemprop="dateCreated datePublished" datetime="2019-01-07T19:38:13+08:00">2019-01-07</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2019-01-09 16:12:38" itemprop="dateModified" datetime="2019-01-09T16:12:38+08:00">2019-01-09</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Communication/" itemprop="url" rel="index"><span itemprop="name">Communication</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="DHCP"><a href="#DHCP" class="headerlink" title="DHCP"></a>DHCP</h1><p>  Dynamic Host Configuration Protocol, 动态主机设置协议, 是一个局域网的网络协议，使用UDP协议工作，主要有两个用途：</p>
+<ol>
+<li>用于内部网或网络服务供应商自动分配IP地址给用户</li>
+<li>用于内部网管理员作为对所有计算机作中央管理的手段</li>
+</ol>
+<h1 id="TCP-IP-Stack-Library-LwIP"><a href="#TCP-IP-Stack-Library-LwIP" class="headerlink" title="TCP/IP Stack Library (LwIP)"></a>TCP/IP Stack Library (LwIP)</h1><p>  LwIP是瑞典计算机科学院的一个开源的TCP/IP协议栈实现。</p>
+<p>  LwIP协议栈主要关注的是怎么样减少内存的使用和代码的大小，这样就可以让lwIP适用于资源有限的小型平台例如嵌入式系统。为了简化处理过程和内存要求，lwIP对API进行了裁减，可以不需要复制一些数据。</p>
+<p>  lwIP是TCP / IP协议套件的一个小型独立实现，最初由Adam Dunkels开发，现在继续在这里。</p>
+<p>  lwIP TCP / IP实现的重点是减少资源使用，同时仍然具有全面的TCP。这使得lwIP适用于具有数十千字节空闲RAM的嵌入式系统，并且可以容纳大约40千字节的代码ROM。</p>
+<h2 id="lwIP主要功能"><a href="#lwIP主要功能" class="headerlink" title="lwIP主要功能"></a>lwIP主要功能</h2><h3 id="协议"><a href="#协议" class="headerlink" title="协议"></a>协议</h3><p>  IP，IPv6，ICMP，ND，MLD，UDP，TCP，IGMP，ARP，PPPoS，PPPoE</p>
+<h3 id="客户端"><a href="#客户端" class="headerlink" title="客户端"></a>客户端</h3><p>DHCP客户端 DNS客户端（包括mDNS主机名解析器），AutoIP / APIPA（Zeroconf），SNMP agent（v1，v2c，v3，私有MIB支持和MIB编译器）</p>
+<h3 id="API"><a href="#API" class="headerlink" title="API"></a>API</h3><p>  用于增强性能的专用API，可选的Berkeley-socket套接字API</p>
+<h3 id="扩展功能"><a href="#扩展功能" class="headerlink" title="扩展功能"></a>扩展功能</h3><p>  通过多个网络接口进行IP转发，TCP拥塞控制，RTT估计和快速恢复/ fast retransmit</p>
+<h3 id="Addon应用程序"><a href="#Addon应用程序" class="headerlink" title="Addon应用程序"></a>Addon应用程序</h3><p>  HTTP(S)服务器，SNTP客户端，SMTP(S)客户端，ping，NetBIOS名称服务器，mDNS响应器，MQTT客户端，TFTP服务器</p>
+<p>  lwIP根据BSD风格许可证授权：<a target="_blank" rel="noopener" href="http://lwip.wikia.com/wiki/License">http://lwip.wikia.com/wiki/License</a></p>
+<h1 id="TTL"><a href="#TTL" class="headerlink" title="TTL"></a>TTL</h1><p>  TTL(Time- To-Live)，简单的说它表示一条域名解析记录在DNS服务器上缓存时间.当各地的DNS服务器接受到解析请求时，就会向域名指定的DNS服务器发出解析请求从而获得解析记录；在获得这个记录之后，记录会在DNS服务器中保存一段时间，这段时间内如果再接到这个域名的解析请求，DNS服务器将不再向DNS服务器发出请求，而是直接返回刚才获得的记录；而这个记录在DNS服务器上保留的时间，就是TTL值。</p>
+<h1 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h1><p>1.《<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/LwIP">lwIP</a>》<br>2.《<a target="_blank" rel="noopener" href="https://savannah.nongnu.org/projects/lwip/">lwIP - A Lightweight TCP/IP stack - Summary</a>》<br>3.《<a target="_blank" rel="noopener" href="https://blog.csdn.net/ysdaniel/article/details/6922097">TTL值的含义以及与域名DNS TTL值的区别</a>》</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://islet.space/2019/01/07/Hardware/Bluetooth/%E8%93%9D%E7%89%99%20-%20%E8%93%9D%E7%89%99%E4%B8%93%E6%9C%89%E5%90%8D%E8%AF%8D/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Liewzheng">
+      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coder的孤岛">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2019/01/07/Hardware/Bluetooth/%E8%93%9D%E7%89%99%20-%20%E8%93%9D%E7%89%99%E4%B8%93%E6%9C%89%E5%90%8D%E8%AF%8D/" class="post-title-link" itemprop="url">蓝牙专有名词</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2019-01-07 18:18:34" itemprop="dateCreated datePublished" datetime="2019-01-07T18:18:34+08:00">2019-01-07</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2019-01-09 15:58:41" itemprop="dateModified" datetime="2019-01-09T15:58:41+08:00">2019-01-09</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Communication/" itemprop="url" rel="index"><span itemprop="name">Communication</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>  蓝牙有超过20种不同的配置文件，涵盖了从手机到打印机，耳机，麦克风，笔记本电脑，车辆以及现在用于物联网/ M2M应用的蓝牙的各种不同类型的蓝牙设备，它还涵盖了各种可能的设备在这些场景中也会遇到。</p>
+<h1 id="A2DP"><a href="#A2DP" class="headerlink" title="A2DP"></a>A2DP</h1><p>  Advanced Audio Distribution Profile，蓝牙音频传输模型协定。</p>
+<h1 id="L2CAP"><a href="#L2CAP" class="headerlink" title="L2CAP"></a>L2CAP</h1><p>  Logic Link Control and Adaptation Protocol, 逻辑链路控制和适配协议。是蓝牙系统中的核心协议，负责适配基带中的上层协议。</p>
+<h1 id="GAP-amp-GATT"><a href="#GAP-amp-GATT" class="headerlink" title="GAP &amp; GATT"></a>GAP &amp; GATT</h1><p>  GAP（Generic Access Profile，通用访问协议）、GATT（Generic Attribute Profile，通用属性协议）。<br>  两个协议都隶属于Host层，直接关系到应用层开发，与BLE开发人员的关系比较密切，其分别负责连接前数据广播和连接后的数据传输。</p>
+<h1 id="SPP"><a href="#SPP" class="headerlink" title="SPP"></a>SPP</h1><p>  Serial Port Profile，蓝牙串口协议，用于蓝牙设备和其他设备之间的串口数据传输。</p>
+<h1 id="SPI"><a href="#SPI" class="headerlink" title="SPI"></a>SPI</h1><p>  Serial peripheral interface, 串行外围设备接口，是由Motorola首先在其MC68HCxx系列单片机上定义的，基于高速全双工总线的通讯协议。</p>
+<h1 id="VFS"><a href="#VFS" class="headerlink" title="VFS"></a>VFS</h1><p>  Virtual File System，虚拟文件系统组件。为可以对类文件对象执行操作的驱动程序提供统一接口。这可以是真实的文件系统（FAT、SPIFFS等），也可以是暴露文件类接口的驱动程序。</p>
+<h1 id="Initiator-amp-Acceptor"><a href="#Initiator-amp-Acceptor" class="headerlink" title="Initiator &amp; Acceptor"></a>Initiator &amp; Acceptor</h1><p>  BT SPP Initiator 和 BT SPP Acceptor，就是蓝牙串口数据发送端和蓝牙串口数据接收端，跟GATT服务有关。</p>
+<p>  引用原文《<a target="_blank" rel="noopener" href="https://www.espressif.com/sites/default/files/documentation/btble_coexistence_demo_en.pdf">ESP32 BT &amp; BLE Dual-mode Bluetooth</a>》</p>
+<blockquote>
+<p>After the initialization of both the controller and the host, the BT SPP acceptor and the BLE<br>GATT server are initialized.<br>After the DEV_A is powered on, the functions of the BT SPP initiator and the BLE GATT<br>client are initialized.</p>
+</blockquote>
+<h1 id="MTU-size"><a href="#MTU-size" class="headerlink" title="MTU size"></a>MTU size</h1><p>  Maximum Transmission Unit，最大传输单元，是指一种通信协议的某一层上面所能通过的最大数据包大小（以字节为单位）。最大传输单元这个参数通常与通信接口有关（网络接口卡、串口等）。</p>
+<h1 id="BLE-Scan-Duplicate-Options"><a href="#BLE-Scan-Duplicate-Options" class="headerlink" title="BLE Scan Duplicate Options"></a>BLE Scan Duplicate Options</h1><p>  The maximum number of devices in scan duplicate filter depends on the free heap size.</p>
+<h1 id="Eddystone"><a href="#Eddystone" class="headerlink" title="Eddystone"></a>Eddystone</h1><p>  Eddystone是由Google开发的开放式信标（Beacon）格式，其设计考虑了透明度和稳健性。</p>
+<h1 id="iBeacon"><a href="#iBeacon" class="headerlink" title="iBeacon"></a>iBeacon</h1><p>  iBeacon是苹果公司提出的“一种可以让附近手持电子设备检测到的一种新的低功耗、低成本信号传送器”的一套可用于室内定位系统的协议。</p>
+<h1 id="iBeacon和EddyStone的比较"><a href="#iBeacon和EddyStone的比较" class="headerlink" title="iBeacon和EddyStone的比较"></a>iBeacon和EddyStone的比较</h1><p>  <img src="http://uk-liewzheng-blog-pic.oss-eu-west-1.aliyuncs.com/2019/01/07/%E8%93%9D%E7%89%99%E4%B8%93%E6%9C%89%E5%90%8D%E8%AF%8D/%E5%9B%BE%E7%89%871.png" alt="iBeacon和EddyStone的比较"></p>
+<h1 id="HID"><a href="#HID" class="headerlink" title="HID"></a>HID</h1><p>  Human Interface Device, 人类接口设备，或称人体学输入设备，是一种与人类在直接交互的计算设备，通常提供一种人类可用的输入方法，以及可能将输出信息传递给人类。</p>
+<h1 id="UUID"><a href="#UUID" class="headerlink" title="UUID"></a>UUID</h1><p>  Universally Unique Identifier, 通用唯一识别码，是用于计算机体系中以识别信息数目的一个128位标识符。</p>
+<h1 id="GUID"><a href="#GUID" class="headerlink" title="GUID"></a>GUID</h1><p>  Global Unique Indentifier，全局唯一标识符。</p>
+<h1 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h1><ol>
+<li>《<a target="_blank" rel="noopener" href="https://www.electronics-notes.com/articles/connectivity/bluetooth/profiles.php">蓝牙配置文件</a>》</li>
+<li>《<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/List_of_Bluetooth_protocols">List of Bluetooth protocols</a>》</li>
+<li>《<a target="_blank" rel="noopener" href="https://www.cnblogs.com/hzl6255/p/3801732.html">Bluetooth L2CAP介绍</a>》</li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://islet.space/2019/01/06/Networking/%E7%BD%91%E7%BB%9C%20-%20%E5%88%A9%E7%94%A8%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%90%AD%E5%BB%BAMQTT%E6%9C%8D%E5%8A%A1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Liewzheng">
+      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coder的孤岛">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2019/01/06/Networking/%E7%BD%91%E7%BB%9C%20-%20%E5%88%A9%E7%94%A8%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%90%AD%E5%BB%BAMQTT%E6%9C%8D%E5%8A%A1/" class="post-title-link" itemprop="url">利用云服务器搭建MQTT服务</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2019-01-06 17:58:00" itemprop="dateCreated datePublished" datetime="2019-01-06T17:58:00+08:00">2019-01-06</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2019-01-09 17:36:00" itemprop="dateModified" datetime="2019-01-09T17:36:00+08:00">2019-01-09</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Communication/" itemprop="url" rel="index"><span itemprop="name">Communication</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>  MQTT全称Message Queue Telemetry Transport，是一个针对轻量级的发布/订阅式消息传输场景的协议，同时也是被推崇的物联网传输协议。<br>  MQTT：<a target="_blank" rel="noopener" href="http://mqtt.org/">http://mqtt.org</a></p>
+<p>  在以Linux为内核的服务器上，可以有很多种方法来搭建MQTT服务，如Apache Apollo、Emqttd和Eclipse Mosquitto等等。<br>  本文以将在阿里云Ubuntu云服务器上，创建专门用作MQTT服务器的账户，然后安装、开启并测试Mosquitto。</p>
+<h1 id="1-MQTT服务（官网）："><a href="#1-MQTT服务（官网）：" class="headerlink" title="1. MQTT服务（官网）："></a>1. MQTT服务（官网）：</h1><p>  Apache Apollo：<a target="_blank" rel="noopener" href="http://activemq.apache.org/apollo/">http://activemq.apache.org/apollo/</a><br>  EMQTTD：<a target="_blank" rel="noopener" href="http://emqttd.com/">http://emqttd.com</a><br>  Eclipse Mosquitto: <a target="_blank" rel="noopener" href="http://mosquitto.org/">http://mosquitto.org</a></p>
+<h1 id="2-准备工作"><a href="#2-准备工作" class="headerlink" title="2. 准备工作"></a>2. 准备工作</h1><h2 id="2-1-创建新用户"><a href="#2-1-创建新用户" class="headerlink" title="2.1 创建新用户"></a>2.1 创建新用户</h2><p>创建新用户是为了防止用户账户及密码泄露造成服务器root账号的信息安全及管理问题，因此很有必要单独创建一个用于MQTT服务的账户。<br>请在Terminal输入以下命令，XXXXX为你要新建的用户名称。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="2-2-安装Mosquitto"><a href="#2-2-安装Mosquitto" class="headerlink" title="2.2 安装Mosquitto"></a>2.2 安装Mosquitto</h2><h1 id="3-测试MQTT"><a href="#3-测试MQTT" class="headerlink" title="3. 测试MQTT"></a>3. 测试MQTT</h1><h2 id="3-1-电脑客户端安装"><a href="#3-1-电脑客户端安装" class="headerlink" title="3.1 电脑客户端安装"></a>3.1 电脑客户端安装</h2><p><a target="_blank" rel="noopener" href="https://mqttfx.jensd.de/index.php/download">MQTT.fx</a></p>
+<h2 id="3-2-测试"><a href="#3-2-测试" class="headerlink" title="3.2 测试"></a>3.2 测试</h2><h3 id="3-2-1-登录"><a href="#3-2-1-登录" class="headerlink" title="3.2.1 登录"></a>3.2.1 登录</h3><p>在两台连接到不同IP的设备上（这里要求这两台设备不会连接到同一个网段，包括同一个WiFi）分别填写MQTT服务器的信息，包括：</p>
+<ul>
+<li>服务器的IP（或绑定了IP的域名）</li>
+<li>端口号（物联网用的MQTT端口号默认为：1883）</li>
+<li>用户名</li>
+<li>密码</li>
+<li>作为订阅者/发布者的昵称（大致是这个意思）</li>
+</ul>
+<h3 id="3-2-2-主题订阅及收信"><a href="#3-2-2-主题订阅及收信" class="headerlink" title="3.2.2 主题订阅及收信"></a>3.2.2 主题订阅及收信</h3><p>在其中一台设备上填写订阅信息的主题名称，填写好后点Subscribe按钮。<br>在另一台设备上，填写发布信息的主题名称，填写好后在文本发送框填写发布内容并点击Publish按钮。</p>
+<p>然后就可以欢快地在两台设备上发布和接收信息了，测试结束。</p>
+<h1 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h1><ol>
+<li>《<a target="_blank" rel="noopener" href="https://blog.csdn.net/yannanxiu/article/details/70504586">【MQTT】在Ubuntu下搭建MQTT服务器</a>》</li>
+<li>《<a target="_blank" rel="noopener" href="http://mc.dfrobot.com.cn/forum.php?mod=viewthread&tid=27276">micropython之动手搭建自己的MQTT服务器并实现通信（点亮led）</a>》</li>
+<li>《<a target="_blank" rel="noopener" href="https://www.howtoing.com/how-to-install-and-secure-the-mosquitto-mqtt-messaging-broker-on-ubuntu-16-04">如何在Ubuntu 16.04上安装和保护Mosquitto MQTT消息传递代理</a>》</li>
+<li>《<a target="_blank" rel="noopener" href="https://blog.csdn.net/lele52141/article/details/6593840">ubuntu用户添加adduser, useradd</a>》</li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://islet.space/2019/01/06/Hardware/Common/%E7%A1%AC%E4%BB%B6%20-%20%E4%B8%B2%E8%A1%8C%E9%80%9A%E4%BF%A1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Liewzheng">
+      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coder的孤岛">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2019/01/06/Hardware/Common/%E7%A1%AC%E4%BB%B6%20-%20%E4%B8%B2%E8%A1%8C%E9%80%9A%E4%BF%A1/" class="post-title-link" itemprop="url">串行通信（Serial Communication）</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2019-01-06 15:58:00" itemprop="dateCreated datePublished" datetime="2019-01-06T15:58:00+08:00">2019-01-06</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2019-01-25 18:35:18" itemprop="dateModified" datetime="2019-01-25T18:35:18+08:00">2019-01-25</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Communication/" itemprop="url" rel="index"><span itemprop="name">Communication</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>在计算机系统中，CPU和外部通信有两种通信方式：<strong>并行通信</strong> 和 <strong>串行通信</strong> 。<br>而按照串行数据的时钟控制方式，串行通信又可分为 <strong>同步通信</strong> 和 <strong>异步通信</strong>。</p>
+<p>数据层标准：I2C、SPI、UART、USB、SATA<br>硬件层标准：RS232、TTL</p>
+<p>某些协议可能对于数据层或硬件层有着不同的规定，因此请自行了解并加以区分。</p>
+<h1 id="一、串行通信"><a href="#一、串行通信" class="headerlink" title="一、串行通信"></a>一、串行通信</h1><p>Serial communication，指所有的串行的通信协议。是相对<strong>并行通信（Parallel communication)</strong> 而言的。</p>
+<h2 id="1-1-同步串行通信"><a href="#1-1-同步串行通信" class="headerlink" title="1.1 同步串行通信"></a>1.1 同步串行通信</h2><p>Synchronous serial communication，指发送端在发送串行数据的同时，提供一个时钟信号，并按照一定的约定（例如在时钟信号的上升沿的时候，将数据发送出去）发送数据，接收端根据发送端提供的时钟信号，以及大家的约定，接收数据的。</p>
+<p>如：I2C、SPI。</p>
+<h2 id="1-2-异步串行通信"><a href="#1-2-异步串行通信" class="headerlink" title="1.2 异步串行通信"></a>1.2 异步串行通信</h2><p>Asynchronous serial communication，指发送端在数据发送之前和之后，通过特定形式的信号（例如START信号和STOP信号），告诉接收端，可以开始（或者停止）接收数据了。与此同时，收发两方会约定一个数据发送的速度（波特率），发送端在发送START信号之后，就按照固定的节奏发送串行数据，与此同时，接收端在收到START信号之后，也按照固定的节奏接收串行数据。</p>
+<p>如：UART、USB。</p>
+<p>在传送数据的过程中，字符与字符之间的传送是完全异步的，位与位之间的传送基本上是同步的，其特点可以概括为：</p>
+<ol>
+<li>以字符为单位传送信息。</li>
+<li>相邻两字符间的间隔是任意长。</li>
+<li>因为一个字符中的比特位长度有限，所以需要的接收时钟和发送时钟只要相近就可以。</li>
+<li>异步方式特点简单的说就是：字符间异步，字符内部各位同步。</li>
+</ol>
+<h1 id="二、串行协议标准介绍"><a href="#二、串行协议标准介绍" class="headerlink" title="二、串行协议标准介绍"></a>二、串行协议标准介绍</h1><p>本节仅对SPI、I2C、UART、RS232、TTL及COM接口做详细介绍，其他标准作为粗略的补充或拓展之用。</p>
+<h2 id="2-1-SPI"><a href="#2-1-SPI" class="headerlink" title="2.1 SPI"></a>2.1 SPI</h2><p>Serial Peripheral Interface Bus，串行外设接口。是一种用于短程通信的串行通信同步接口规范，也是一种<strong>同步串行通信协议</strong>，主要应用于单片机系统中。</p>
+<p>典型应用包含SD卡、液晶显示器、RFID读卡模块MFRC-522。 SPI设备之间使用全双工模式通信，包含一个主机和一个或多个从机。主机产生待读或待写的帧数据，多个从机通过一个片选线路 决定哪个来响应主机的请求。 有时SPI接口被称作四线程接口，SPI准确来讲称为同步串行接口，但是与同步串行接口协议（SSI）不同，SSI是一个四线程 同步通信协议，但是使用差分信号输入同时仅提供一个单工通信信道。</p>
+<p>SPI总线规定了4个保留逻辑信号接口：</p>
+<ul>
+<li><strong>SCLK</strong>（Serial Clock）：串列时脉，由主机发出</li>
+<li><strong>MOSI</strong>（Master Output,Slave Input）：主机输出从机输入信号，由主机发出</li>
+<li><strong>MISO</strong>（Master Input,Slave Output）：主机输入从机输出信号，由从机发出</li>
+<li><strong>SS</strong>（Slave Selected）：选择信号，由主机发出，一般是低电位有效</li>
+</ul>
+<p>尽管上面的引脚名称是最常用的，但在过去，有时会使用其他引脚命名约定，因此旧IC产品的SPI端口引脚名称可能有所不同。</p>
+<p><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/ed/SPI_single_slave.svg/1920px-SPI_single_slave.svg.png" alt="SPI总线：单一主机对单一从机"></p>
+<p><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fc/SPI_three_slaves.svg/1280px-SPI_three_slaves.svg.png" alt="SPI总线：单一主机对复合从机"></p>
+<h2 id="2-2-I²C"><a href="#2-2-I²C" class="headerlink" title="2.2 I²C"></a>2.2 I²C</h2><p>Inter-Integrated Circuit，字面上的意思是集成电路之间，是I²C Bus简称。也称集成电路总线，它是一种<strong>同步串行通信协议</strong>，使用多主从架构总线。</p>
+<p><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/I2C.svg/1920px-I2C.svg.png" alt="I2C bus"></p>
+<h2 id="2-3-UART"><a href="#2-3-UART" class="headerlink" title="2.3 UART"></a>2.3 UART</h2><p>Universally Asynchronous Receiver/Transmitter，通用异步接收/传输器，是指以某个固定的速率（1200bps、9600bps、115200bps等）进行数据传输，且一次只能传输一个bit（所以叫做串行传输）的<strong>异步串行通信协议</strong> 。<br>有时候UART会与TTL（Transistor-Transistor Logic）Serial混为一谈，这是因为TTL虽然可以采用其他串行通信协议（如I2C和SPI），但很多PC硬件上支持服务复杂，所以一般用UART协议导致的。<br>常见的微控制器中，都有内置UART协议接口。</p>
+<h2 id="2-4-RS232"><a href="#2-4-RS232" class="headerlink" title="2.4 RS232"></a>2.4 RS232</h2><p>RS232或者RS485，相较于UART是通信协议的标准，RS232或RS485d规定的是电路的<strong>物理层协议</strong>（电平标准）。<br>因为它规定了电气特性和各个引脚的功能定义，如 用-3V— -15V之间的任意电平表示逻辑“1” ；用+3V — +15V电平表示逻辑“0”，这里采用的是负逻辑。</p>
+<h2 id="2-5-TTL"><a href="#2-5-TTL" class="headerlink" title="2.5 TTL"></a>2.5 TTL</h2><p>Transistor-transistor Logic， 晶体管-晶体管逻辑集成电路，这种串行通信对应的物理电平始终是在0V和Vcc之间，其中常见的Vcc是5V或3.3V。<br>TTL指的是电路的 <strong>物理层协议</strong> （电平标准）。电压&gt;=2.4V时代表高电平1，电压&lt;=0.5V时代表低电平0（对于5V或3.3V电源电压），这里是正逻辑。TTL接口在Minnow板子上如图：<br><img src="http://uk-liewzheng-blog-pic.oss-eu-west-1.aliyuncs.com/2019/01/06/SerialCommunication/%E5%9B%BE%E7%89%873.png" alt="pic3"></p>
+<p>在TTL与RS232的互相转换中，使用的芯片是MAX3232（3.3V）或者MAX232（5V），里面就只涉及到电压转换的问题了，没有数据的改变和封装，因为他们在数据层的协议是一样的。<br>比如，对于同样传输0b01010101来说，RS232和TTL的时序对比如下图所示。<br><img src="http://uk-liewzheng-blog-pic.oss-eu-west-1.aliyuncs.com/2019/01/06/SerialCommunication/%E5%9B%BE%E7%89%874.png" alt="pic4"><br>当然，RS232和TTL之间的转换，不仅仅是简单的电平转换，还要考虑到其他一些因素，比如调节和矫正一些电平（提高或降低对应的电平），确保可能的有害的RS232电压不会破坏微控制器的串口针脚。</p>
+<p><strong>如何分辨究竟是TTL还是RS232呢？</strong></p>
+<ul>
+<li>一般来说，由SOC芯片引脚直接引出的一般是TTL，其高低电平不需要任何转换，可以由芯片之间驱动，节省费用；而中间接有转换芯片的可能就是RS232了，可以根据电路图的芯片型号google即可。</li>
+<li>另一个原则是RS232通常出现在传统的PC和服务器领域，TTL通常用于嵌入式设备。</li>
+</ul>
+<h2 id="2-6-COM接口"><a href="#2-6-COM接口" class="headerlink" title="2.6 COM接口"></a>2.6 COM接口</h2><p>Cluster Communication Port，串行通讯端口，简称串口。微机上的串口通常是9针（如下图示），也有25针的接口，最大速率115200bps。<br><img src="http://uk-liewzheng-blog-pic.oss-eu-west-1.aliyuncs.com/2019/01/06/SerialCommunication/%E5%9B%BE%E7%89%871.png" alt="pic1"><br>PC计算机背板的COM口通常采用RS232标准，其高电平定义为-12V，低电平定义为+12V。<br>在嵌入式设备上的4针杜邦线接口也算COM接口，采用的是TTL标准或RS232标准。<strong>但如果谈论到COM接口，一般是指RS232标准的PC背板的9pin的COM口。</strong><br><img src="http://uk-liewzheng-blog-pic.oss-eu-west-1.aliyuncs.com/2019/01/06/SerialCommunication/%E5%9B%BE%E7%89%872.png" alt="pic2"></p>
+<table>
+<thead>
+<tr>
+<th>转换方式</th>
+<th>芯片型号</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>TTL-RS232</td>
+<td>MAX3232 或者 ST3232</td>
+</tr>
+<tr>
+<td>USB-TTL</td>
+<td>PL2303HX 或者 CP2102</td>
+</tr>
+</tbody></table>
+<p>如果要转换USB-RS232的话，则要使用USB-TTL和TTL-RS232两种芯片。</p>
+<h2 id="2-7-其他"><a href="#2-7-其他" class="headerlink" title="2.7 其他"></a>2.7 其他</h2><h3 id="2-7-1-USB"><a href="#2-7-1-USB" class="headerlink" title="2.7.1 USB"></a>2.7.1 USB</h3><p>Universal Serial Bus，通用串行总线。是连接计算机系统与外部设备的一种串口总线标准，也是一种输入输出接口的技术规范。<br>USB使用NRZI编码方式：当数据为0时，电平翻转；数据为1时，电平不翻转。为了防止出现过长时间电平不变化现象，在发送数据时采用位填充处理。具体过程如下：</p>
+<ul>
+<li>当遇见连续6个高电平时，就强制插入一个0。</li>
+<li>经过位填充后的数据由串行接口引擎（SIE）将数据串行化和NRZI编码后，发送到USB的差分数据线上。</li>
+<li>接收端完成的过程和发送端刚好相反。</li>
+</ul>
+<h3 id="2-7-2-SATA"><a href="#2-7-2-SATA" class="headerlink" title="2.7.2 SATA"></a>2.7.2 SATA</h3><p>Serial Advanced Technology Attachment，串行高级技术附件。<br>是一种计算机总线，负责主板和大容量存储设备（如硬盘及光盘驱动器）之间的数据传输，主要用于个人计算机，用以取代PATA或称IDE接口。<br>串行ATA与串列SCSI（SAS: Serial Attached SCSI）的两者排线兼容，SATA硬盘可接上SAS接口。</p>
+<h1 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h1><ol>
+<li>《<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E5%BA%8F%E5%88%97%E5%91%A8%E9%82%8A%E4%BB%8B%E9%9D%A2">Serial Peripheral Interface</a>》</li>
+<li>《<a target="_blank" rel="noopener" href="https://blog.csdn.net/seashine_yan/article/details/71192283">同步串口和异步串口的区别及使用情况</a>》</li>
+<li>《<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/25893717">UART、RS232、TTL关系浅析</a>》</li>
+<li>《<a target="_blank" rel="noopener" href="https://fanzheng.org/archives/39">UART、TTL、RS232等概念的区别与联系</a>》</li>
+<li>《<a target="_blank" rel="noopener" href="https://wenku.baidu.com/view/a5df03bb856a561253d36f4e.html">串口、COM口、TTL、RS-232、RS-485区别详解</a>》</li>
+<li>《<a target="_blank" rel="noopener" href="http://www.elecfans.com/yuanqijian/yinjiaotu/20180418664020.html">一文看懂sp3232与max3232区别</a>》</li>
+<li>《<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/USB">USB</a>》</li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 

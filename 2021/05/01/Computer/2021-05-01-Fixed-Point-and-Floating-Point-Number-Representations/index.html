@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="next-config" data-name="main" type="application/json">{&quot;hostname&quot;:&quot;islet.space&quot;,&quot;root&quot;:&quot;&#x2F;&quot;,&quot;images&quot;:&quot;&#x2F;images&quot;,&quot;scheme&quot;:&quot;Muse&quot;,&quot;version&quot;:&quot;8.3.0&quot;,&quot;exturl&quot;:false,&quot;sidebar&quot;:{&quot;position&quot;:&quot;left&quot;,&quot;display&quot;:&quot;post&quot;,&quot;padding&quot;:18,&quot;offset&quot;:12},&quot;copycode&quot;:false,&quot;bookmark&quot;:{&quot;enable&quot;:false,&quot;color&quot;:&quot;#222&quot;,&quot;save&quot;:&quot;auto&quot;},&quot;fancybox&quot;:false,&quot;mediumzoom&quot;:false,&quot;lazyload&quot;:false,&quot;pangu&quot;:false,&quot;comments&quot;:{&quot;style&quot;:&quot;tabs&quot;,&quot;active&quot;:null,&quot;storage&quot;:true,&quot;lazyload&quot;:false,&quot;nav&quot;:null},&quot;motion&quot;:{&quot;enable&quot;:true,&quot;async&quot;:false,&quot;transition&quot;:{&quot;post_block&quot;:&quot;fadeIn&quot;,&quot;post_header&quot;:&quot;fadeInDown&quot;,&quot;post_body&quot;:&quot;fadeInDown&quot;,&quot;coll_header&quot;:&quot;fadeInLeft&quot;,&quot;sidebar&quot;:&quot;fadeInUp&quot;}},&quot;prism&quot;:false,&quot;i18n&quot;:{&quot;placeholder&quot;:&quot;Searching...&quot;,&quot;empty&quot;:&quot;We didn&#39;t find any results for the search: ${query}&quot;,&quot;hits_time&quot;:&quot;${hits} results found in ${time} ms&quot;,&quot;hits&quot;:&quot;${hits} results found&quot;}}</script>
+<meta name="description" content="​     [tutorialspoint.com](https:&#x2F;&#x2F;www.tutorialspoint.com&#x2F;fixed-point-and-floating-point-number-representations#:~:text&#x3D;In fixed point notation%2C there are a fixed,varying number of digits after the">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Fixed Point and Floating Point Number Representations">
+<meta property="og:url" content="http://islet.space/2021/05/01/Computer/2021-05-01-Fixed-Point-and-Floating-Point-Number-Representations/index.html">
+<meta property="og:site_name" content="Coder的孤岛">
+<meta property="og:description" content="​     [tutorialspoint.com](https:&#x2F;&#x2F;www.tutorialspoint.com&#x2F;fixed-point-and-floating-point-number-representations#:~:text&#x3D;In fixed point notation%2C there are a fixed,varying number of digits after the">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://pic.islet.space/2021/05/36_1.jpg">
+<meta property="og:image" content="https://pic.islet.space/2021/05/36_2.jpg">
+<meta property="og:image" content="https://pic.islet.space/2021/05/36_3.jpg">
+<meta property="og:image" content="https://pic.islet.space/2021/05/36_4.jpg">
+<meta property="og:image" content="https://pic.islet.space/2021/05/36_5.jpg">
+<meta property="og:image" content="https://pic.islet.space/2021/05/36_6.jpg">
+<meta property="og:image" content="https://pic.islet.space/2021/05/36_7.jpg">
+<meta property="og:image" content="https://pic.islet.space/2021/05/36_8.jpg">
+<meta property="article:published_time" content="2021-05-01T02:05:00.000Z">
+<meta property="article:modified_time" content="2021-05-09T05:12:08.642Z">
+<meta property="article:author" content="Liewzheng">
+<meta property="article:tag" content="fixe">
+<meta property="article:tag" content="float">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://pic.islet.space/2021/05/36_1.jpg">
+
+
+<link rel="canonical" href="http://islet.space/2021/05/01/Computer/2021-05-01-Fixed-Point-and-Floating-Point-Number-Representations/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{&quot;sidebar&quot;:&quot;&quot;,&quot;isHome&quot;:false,&quot;isPost&quot;:true,&quot;lang&quot;:&quot;en&quot;,&quot;comments&quot;:true,&quot;permalink&quot;:&quot;http:&#x2F;&#x2F;islet.space&#x2F;2021&#x2F;05&#x2F;01&#x2F;Computer&#x2F;2021-05-01-Fixed-Point-and-Floating-Point-Number-Representations&#x2F;&quot;,&quot;path&quot;:&quot;2021&#x2F;05&#x2F;01&#x2F;Computer&#x2F;2021-05-01-Fixed-Point-and-Floating-Point-Number-Representations&#x2F;&quot;,&quot;title&quot;:&quot;Fixed Point and Floating Point Number Representations&quot;}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">&quot;&quot;</script>
+<title>Fixed Point and Floating Point Number Representations | Coder的孤岛</title><script src="/js/config.js"></script>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Coder的孤岛</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">islet of the coder</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Storing-Real-Number"><span class="nav-number">1.</span> <span class="nav-text">Storing Real Number</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Fixed-Point-Representation"><span class="nav-number">2.</span> <span class="nav-text">Fixed-Point Representation</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Example"><span class="nav-number">2.0.1.</span> <span class="nav-text">Example</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Floating-Point-Representation"><span class="nav-number">3.</span> <span class="nav-text">Floating-Point Representation</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Example-1"><span class="nav-number">3.0.1.</span> <span class="nav-text">Example</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#IEEE-Floating-point-Number-Representation"><span class="nav-number">4.</span> <span class="nav-text">IEEE Floating point Number Representation</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Special-Value-Representation"><span class="nav-number">5.</span> <span class="nav-text">Special Value Representation</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Liewzheng</p>
+  <div class="site-description" itemprop="description">笔记分享的旮旯孤岛而已</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">47</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">83</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://islet.space/2021/05/01/Computer/2021-05-01-Fixed-Point-and-Floating-Point-Number-Representations/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Liewzheng">
+      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coder的孤岛">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Fixed Point and Floating Point Number Representations
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-05-01 10:05:00" itemprop="dateCreated datePublished" datetime="2021-05-01T10:05:00+08:00">2021-05-01</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2021-05-09 13:12:08" itemprop="dateModified" datetime="2021-05-09T13:12:08+08:00">2021-05-09</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Computer/" itemprop="url" rel="index"><span itemprop="name">Computer</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>​    </p>
+<p>[tutorialspoint.com](<a target="_blank" rel="noopener" href="https://www.tutorialspoint.com/fixed-point-and-floating-point-number-representations#:~:text=In">https://www.tutorialspoint.com/fixed-point-and-floating-point-number-representations#:~:text=In</a> fixed point notation%2C there are a fixed,varying number of digits after the decimal point.)</p>
+<p><em>Arjun Thakur</em></p>
+<p>Digital Computers use Binary number system to represent all types of  information inside the computers. Alphanumeric characters are  represented using binary bits (i.e., 0 and 1). Digital representations  are easier to design, storage is easy, accuracy and precision are  greater.</p>
+<p>There are various types of number representation  techniques for digital number representation, for example: Binary number system, octal number system, decimal number system, and hexadecimal  number system etc. But Binary number system is most relevant and popular for representing numbers in digital computer system.</p>
+<h1 id="Storing-Real-Number"><a href="#Storing-Real-Number" class="headerlink" title="Storing Real Number"></a>Storing Real Number</h1><p>These are structures as following below −</p>
+<p><img src="https://pic.islet.space/2021/05/36_1.jpg" alt="img"></p>
+<p>There are two major approaches to store real numbers (i.e., numbers with  fractional component) in modern computing. These are (i) Fixed Point  Notation and (ii) Floating Point Notation. </p>
+<p><mark>In fixed point notation,  there are a fixed number of digits after the decimal point, whereas  floating point number allows for a varying number of digits after the  decimal point.</mark> 在定点表示法中，小数点后有固定位数，而浮点数允许小数点后有不同位数。</p>
+<h1 id="Fixed-Point-Representation"><a href="#Fixed-Point-Representation" class="headerlink" title="Fixed-Point Representation"></a>Fixed-Point Representation</h1><p>This representation has fixed number of bits for integer part and for  fractional part. For example, if given fixed-point representation is  <code>IIII.FFFF</code>, then you can store minimum value is <code>0000.0001</code> and maximum  value is <code>9999.9999</code>. There are three parts of a fixed-point number  representation: <em><strong>the sign field</strong></em>, <em><strong>integer field</strong></em>, and <em><strong>fractional field</strong></em>.</p>
+<p><img src="https://pic.islet.space/2021/05/36_2.jpg" alt="img"></p>
+<p>We can represent these numbers using:</p>
+<ul>
+<li>Signed representation: range from -(2^(k-1)^-1) to (2^(k-1)^-1), for k bits.</li>
+<li>1’s complement representation: range from -(2^(k-1)^-1) to (2^(k-1)^-1), for k bits.</li>
+<li>2’s complementation representation: range from -(2^(k-1)^) to (2^(k-1)^-1), for k bits.</li>
+</ul>
+<p>2’s complementation representation is preferred in computer system because  of unambiguous property and easier for arithmetic operations.</p>
+<h3 id="Example"><a href="#Example" class="headerlink" title="Example"></a>Example</h3><p>Assume number is using 32-bit format which reserve 1 bit for the sign, 15 bits for the integer part and 16 bits for the fractional part.</p>
+<p>Then, <code>-43.625</code> is represented as following:</p>
+<p><img src="https://pic.islet.space/2021/05/36_3.jpg" alt="img"></p>
+<p>Where, <mark>0 is used to represent plus(+) and 1 is used to represent minus(-) </mark>. 000000000101011 is 15 bit binary value for decimal 43 and 1010000000000000 is 16 bit  binary value for fractional 0.625.</p>
+<p>The advantage of using a  fixed-point representation is performance and disadvantage is  relatively limited range of values that they can represent. So, <mark>it is  usually inadequate for numerical analysis as it does not allow enough  numbers and accuracy</mark>. A number whose representation exceeds 32 bits  would have to be stored inexactly. </p>
+<p><img src="https://pic.islet.space/2021/05/36_4.jpg" alt="img"></p>
+<p>These are above smallest positive number and largest positive number which  can be store in 32-bit representation as given above format. Therefore,  the smallest positive number is 2^-16^ ≈  0.000015 approximate and the largest positive number is (2^15^-1)+(1-2^-16^)=2^15^(1-2^-16^) =32768, and gap between these numbers is 2^-16^.</p>
+<p>We can move the radix point either left or right with the help of only integer field is 1.</p>
+<h1 id="Floating-Point-Representation"><a href="#Floating-Point-Representation" class="headerlink" title="Floating-Point Representation"></a>Floating-Point Representation</h1><p>This representation does not reserve a specific number of bits for the  integer part or the fractional part. Instead it reserves a certain  number of bits for the number (called the mantissa or significand) and a certain number of bits to say where within that number the decimal  place sits (called the exponent).</p>
+<p>The floating number  representation of a number has two part: the first part represents a  signed fixed point number called mantissa. The second part of designates the position of the decimal (or binary) point and is called the  exponent. The fixed point mantissa（定点尾数） may be fraction or an integer.  Floating -point is always interpreted to represent a number in the  following form: Mxr^e^.</p>
+<p>Only the mantissa m and the  exponent e are physically represented in the register (including their  sign). A floating-point binary number is represented in a similar manner except that is uses base 2 for the exponent. A floating-point number is said to be normalized if the most significant digit of the mantissa is  <code>1</code>.</p>
+<p><img src="https://pic.islet.space/2021/05/36_5.jpg" alt="img"></p>
+<p>So, actual number is (-1)^s^ (1+m) x2^(e-Bias)^, where <em>s</em> is the sign bit, <em>m</em> is the mantissa, <em>e</em> is the exponent value, and <em>Bias</em> is the bias number.</p>
+<p>Note that signed integers and exponent are represented by either sign  representation, or one’s complement representation, or two’s complement  representation.</p>
+<p>The floating point representation is more flexible. Any non-zero number can be represented in the normalized form of  ±(1.b<del>1</del>b<del>2</del>b<del>3</del> …)<del>2</del> x2^n^ This is normalized form of a number <code>x</code>.</p>
+<h3 id="Example-1"><a href="#Example-1" class="headerlink" title="Example"></a>Example</h3><p>Suppose number is using 32-bit format: the 1 bit sign bit（符号位）, 8 bits for signed  exponent（符号数）, and 23 bits for the fractional part（小数）. The leading bit 1 is not  stored (as it is always 1 for a normalized number) and is referred to as a <em>“hidden bit</em>”.</p>
+<p>Then −53.5 is normalized as  -53.5=(-110101.1)<del>2</del>=(-1.101011) x2^5^ , which is represented as following below,</p>
+<p><img src="https://pic.islet.space/2021/05/36_6.jpg" alt="img"></p>
+<p>Where <code>00000101</code> is the 8-bit binary value of exponent value <code>+5</code>.</p>
+<p>Note that 8-bit exponent ﬁeld is used to store integer exponents <code>-126 ≤  n ≤ 127</code>.</p>
+<p>The smallest normalized positive number that ﬁts into 32 bits is (1.000,000,000,000,000,000,000,00)2x26^-126^=2^-126^≈1.18x10^-38^ , and  largest normalized positive number that ﬁts into 32 bits is (1.111,111,111,111,111,111,111,11)2x2^127^=(224-1)x2^104^ ≈ 3.40x10^38^. These numbers are represented as following below,</p>
+<p><img src="https://pic.islet.space/2021/05/36_7.jpg" alt="img"></p>
+<p>The precision of a ﬂoating-point format is the number of positions reserved for binary digits plus one (for the hidden bit). In the examples  considered here the precision is <code>23+1=24</code>.</p>
+<p>The gap between 1 and the next normalized ﬂoating-point number is known as machine epsilon. the gap is (1+2^-23^)-1=2^-23^ for above example, but this is same as the smallest positive ﬂoating-point  number because of non-uniform spacing unlike in the ﬁxed-point scenario.</p>
+<p>Note that non-terminating binary numbers can be represented in floating point representation, e.g., 1/3 = (0.010101 …)^2^ cannot be a ﬂoating-point number as its binary representation is non-terminating.</p>
+<h1 id="IEEE-Floating-point-Number-Representation"><a href="#IEEE-Floating-point-Number-Representation" class="headerlink" title="IEEE Floating point Number Representation"></a>IEEE Floating point Number Representation</h1><p>IEEE (Institute of Electrical and Electronics Engineers) has standardized Floating-Point Representation as following diagram.</p>
+<p><img src="https://pic.islet.space/2021/05/36_8.jpg" alt="img"></p>
+<p>So, actual number is (-1)^s^(1+m)x2^(e-Bias)^, where <em>s</em> is the sign bit, <em>m</em> is the mantissa, <em>e</em> is the exponent value, and <em>Bias</em> is the bias number. The sign bit is 0 for positive number and 1 for  negative number. Exponents are represented by or two’s complement  representation.</p>
+<p><strong>According to IEEE 754 standard, the floating-point number is represented in following ways:</strong></p>
+<ul>
+<li>Half Precision (16 bit): 1 sign bit, 5 bit exponent, and 10 bit mantissa</li>
+<li>Single Precision (32 bit): 1 sign bit, 8 bit exponent, and 23 bit mantissa</li>
+<li>Double Precision (64 bit): 1 sign bit, 11 bit exponent, and 52 bit mantissa</li>
+<li>Quadruple Precision (128 bit): 1 sign bit, 15 bit exponent, and 112 bit mantissa</li>
+</ul>
+<h1 id="Special-Value-Representation"><a href="#Special-Value-Representation" class="headerlink" title="Special Value Representation"></a><strong>Special Value Representation</strong></h1><p>There are some special values depended upon different values of the exponent and mantissa in the IEEE 754 standard.</p>
+<ul>
+<li>All the exponent bits 0 with all mantissa bits 0 represents 0. If sign bit is 0, then +0, else -0.</li>
+<li>All the exponent bits 1 with all mantissa bits 0 represents infinity. If sign bit is 0, then +∞, else -∞.</li>
+<li>All the exponent bits 0 and mantissa bits non-zero represents <strong>denormalized number</strong>.</li>
+<li>All the exponent bits 1 and mantissa bits non-zero represents <strong>error</strong>.</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/fixe/" rel="tag"># fixe</a>
+              <a href="/tags/float/" rel="tag"># float</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/04/23/Linux/How%20to%20Install%20GCC%20(build-essential)%20on%20Ubuntu%2020.04/" rel="prev" title="How to Install GCC (build-essential) on Ubuntu 20.04">
+                  <i class="fa fa-chevron-left"></i> How to Install GCC (build-essential) on Ubuntu 20.04
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/05/03/Signal/2021-05-03-%E9%9F%B3%E9%A2%91%E8%AE%BE%E5%A4%87%E8%BF%9E%E6%8E%A5%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" rel="next" title="音频设备连接基础知识">
+                  音频设备连接基础知识 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+<script src="/js/comments.js"></script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">粤ICP备19004822号 </a>
+  </div>
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Liewzheng</span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
