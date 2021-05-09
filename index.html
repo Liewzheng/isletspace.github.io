@@ -118,7 +118,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">47</span>
+          <span class="site-state-item-count">46</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -1195,7 +1195,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://islet.space/2021/04/23/Hardware/AnalogDeviceSignmaStudio/">
+    <link itemprop="mainEntityOfPage" href="http://islet.space/2021/04/23/Hardware/ADI/AnalogDeviceSignmaStudio/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -1208,7 +1208,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/04/23/Hardware/AnalogDeviceSignmaStudio/" class="post-title-link" itemprop="url">ADI开发笔记</a>
+          <a href="/2021/04/23/Hardware/ADI/AnalogDeviceSignmaStudio/" class="post-title-link" itemprop="url">ADI开发笔记</a>
         </h2>
 
         <div class="post-meta-container">
@@ -1596,419 +1596,6 @@
 <img src="https://pic.islet.space/2021/05/image-20210506152135937.png" alt="image-20210506152135937" style="zoom: 67%;" />
 
 <p><img src="https://pic.islet.space/2021/05/image-20210506153151118.png" alt="image-20210506153151118"></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://islet.space/2021/04/23/Hardware/ADI/AnalogDeviceSignmaStudio/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Liewzheng">
-      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Coder的孤岛">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/04/23/Hardware/ADI/AnalogDeviceSignmaStudio/" class="post-title-link" itemprop="url">ADI开发笔记</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2021-04-23 23:58:32" itemprop="dateCreated datePublished" datetime="2021-04-23T23:58:32+08:00">2021-04-23</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-04-29 00:34:36" itemprop="dateModified" datetime="2021-04-29T00:34:36+08:00">2021-04-29</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Hardware/" itemprop="url" rel="index"><span itemprop="name">Hardware</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>[TOC]</p>
-<h1 id="基础知识"><a href="#基础知识" class="headerlink" title="基础知识"></a>基础知识</h1><p>原理图模块 是指用于构建SigmaStudio设计的模块。每个处理器可用的块显示在“工具箱”和“树形工具箱”窗口中，可以将其拖放到原理图中。</p>
-<h3 id="Algorithms-Add-Remove-Grow-Reduce"><a href="#Algorithms-Add-Remove-Grow-Reduce" class="headerlink" title="Algorithms: Add/Remove, Grow/Reduce"></a>Algorithms: Add/Remove, Grow/Reduce</h3><p>每个原理图块代表一种或多种信号处理算法。算法的范围从非常简单的<a target="_blank" rel="noopener" href="https://wiki.analog.com/resources/tools-software/sigmastudio/toolbox/basicdsp/signaladd">信号添加</a>（如<a target="_blank" rel="noopener" href="https://wiki.analog.com/resources/tools-software/sigmastudio/toolbox/basicdsp/signaladd">Signal Add</a>）到高级系统组件（如<a target="_blank" rel="noopener" href="https://wiki.analog.com/resources/tools-software/sigmastudio/toolbox/adialgorithms/dynamicbassboost">Dynamic Bass Boost）</a>。您可以从块中添加或删除算法以满足您的特定要求。如下所述，算法也可以增长。</p>
-<hr>
-<p><strong>添加算法：</strong></p>
-<p>您必须添加一种算法-通常与一组I / O引脚关联-才能使块起作用。要将算法添加到块，请<strong>右键单击</strong>该块，然后选择<strong>添加算法&gt; IC＃</strong>，然后选择<strong>算法</strong>的DSP IC。请注意，如果您的项目中有多个处理器（IC / DSP），则可以选择哪个DSP将运行算法，有关更多信息，请参见下文。</p>
-<p><a target="_blank" rel="noopener" href="https://wiki.analog.com/_detail/resources/tools-software/sigmastudio/usingsigmastudio/buildingschematics/algorithmpic1.png?id=resources:tools-software:sigmastudio:usingsigmastudio:buildingschematics:algorithms"><img src="https://wiki.analog.com/_media/resources/tools-software/sigmastudio/usingsigmastudio/buildingschematics/algorithmpic1.png" alt="img"></a></p>
-<p>此时，如果需要，右键单击块的边界或标签以添加其他算法。（重要的是右键单击边框或标签；如果右键单击中心，则可能会显示用于输入参数值的弹出窗口。）</p>
-<p><a target="_blank" rel="noopener" href="https://wiki.analog.com/_detail/resources/tools-software/sigmastudio/usingsigmastudio/buildingschematics/algorithmpic2.png?id=resources:tools-software:sigmastudio:usingsigmastudio:buildingschematics:algorithms"><img src="https://wiki.analog.com/_media/resources/tools-software/sigmastudio/usingsigmastudio/buildingschematics/algorithmpic2.png" alt="img"></a></p>
-<p>不包含算法的块将没有控件或引脚，并且您只会看到该块的名称（如下图所示）。必须在空块中添加算法，然后才能在原理图设计中使用它们。</p>
-<p><a target="_blank" rel="noopener" href="https://wiki.analog.com/_detail/resources/tools-software/sigmastudio/usingsigmastudio/buildingschematics/algorithmpic3.png?id=resources:tools-software:sigmastudio:usingsigmastudio:buildingschematics:algorithms"><img src="https://wiki.analog.com/_media/resources/tools-software/sigmastudio/usingsigmastudio/buildingschematics/algorithmpic3.png" alt="img"></a></p>
-<p>注意：使用“<a target="_blank" rel="noopener" href="https://wiki.analog.com/resources/tools-software/sigmastudio/developmentenvironment/toolbox">树形工具箱”窗口时</a>，总是为每个插入的块创建一个算法。但是，如果使用传统的“<a target="_blank" rel="noopener" href="https://wiki.analog.com/resources/tools-software/sigmastudio/developmentenvironment/toolbox">工具箱”</a>窗口插入块，则可能还必须添加算法。</p>
-<p>添加算法时，不仅要为模块选择计算方法，还要为算法选择特定的DSP关联。如果要连接多个DSP处理器，这一点很重要：通过将算法添加到模块中，可以共享模块和控件，并同时与多个DSP进行通信。</p>
-<p>例如：<a target="_blank" rel="noopener" href="https://wiki.analog.com/resources/tools-software/sigmastudio/volumecontrols/singlevolumecontrol">单个音量控制</a>块具有用于所有算法的单个滑块控件。如果使用2个DSP处理器（IC 1（AD1940）和IC 2（ADAU1701））创建一个项目，然后选择“添加算法”，则系统将提示您要将该算法添加到哪个芯片。</p>
-<p><a target="_blank" rel="noopener" href="https://wiki.analog.com/_detail/resources/tools-software/sigmastudio/usingsigmastudio/buildingschematics/algorithmpic4.png?id=resources:tools-software:sigmastudio:usingsigmastudio:buildingschematics:algorithms"><img src="https://wiki.analog.com/_media/resources/tools-software/sigmastudio/usingsigmastudio/buildingschematics/algorithmpic4.png" alt="img"></a></p>
-<p>可以将第一种算法分配给IC 1，将第二种算法分配给IC 2，但是它们共享音量块和单个滑块控件。请注意，您不能在不同的处理器之间建立连线，有关更多信息，请参见<a target="_blank" rel="noopener" href="https://wiki.analog.com/resources/tools-software/sigmastudio/usingsigmastudio/wiresandaliases">连线</a>主题。</p>
-<hr>
-<p><strong>删除算法：</strong></p>
-<p>也可以从块中删除算法。要删除算法，请<strong>右键单击</strong>该块，然后选择“<strong>删除算法”</strong>。这将删除最后添加的算法（底部引脚）。如果该块仅包含一种算法，则删除该算法将导致一个空块</p>
-<hr>
-<p><strong>增长算法：</strong></p>
-<p>不断增长的算法意味着在该块的现有算法的基础上，保持相同的算法（在其上进行扩展）和相同的DSP关联（添加算法均不执行）。要增长算法，请<strong>右键单击</strong>该块，然后选择“<strong>增长算法”&gt;“（算法名称）”&gt;“（增长量）”</strong>。请注意，并非所有算法都可以使用增长。</p>
-<p>理解添加和增长之间区别的最简单方法是使用混合器块。将交叉混合器（2个输入）拖到工作区中。右键单击并选择“增长算法”，请参见下面的示例。</p>
-<ul>
-<li>增加混音器会创建更多的混音器输出引脚，实际上，您正在创建共享公共输入的额外混音器输出通道。块中仍然只有一个算法。</li>
-<li>添加算法将创建单独的算法，这些算法共享控制窗口，但不共享输入/输出引脚或资源。在混频器示例中，一个附加的输入引脚，输出引脚和一个交叉混频器控件被添加到了该模块中。</li>
-</ul>
-<hr>
-<p><strong>减少算法：</strong></p>
-<p>减少与增加相反，减少了由“增加算法”操作创建的多余控件和引脚。像删除算法一样，reduce将删除从底部或最近增长的项目开始的控件/大头针。</p>
-<p><a target="_blank" rel="noopener" href="https://wiki.analog.com/_detail/resources/tools-software/sigmastudio/usingsigmastudio/buildingschematics/algorithmpic5.png?id=resources:tools-software:sigmastudio:usingsigmastudio:buildingschematics:algorithms"><img src="https://wiki.analog.com/_media/resources/tools-software/sigmastudio/usingsigmastudio/buildingschematics/algorithmpic5.png" alt="img"></a></p>
-<h3 id="Wires-and-Aliases"><a href="#Wires-and-Aliases" class="headerlink" title="Wires and Aliases"></a>Wires and Aliases</h3><p>SigmaStudio原理图设计由与“导线”连接在一起的模块构建。导线定义了系统的信号流。</p>
-<p><strong>要创建原理图导线：</strong> 将鼠标光标移到块的<a target="_blank" rel="noopener" href="https://wiki.analog.com/resources/tools-software/sigmastudio/usingsigmastudio/buildingschematics/schematicblocks">引脚上，</a>以便显示导线图标<a target="_blank" rel="noopener" href="https://wiki.analog.com/_detail/resources/tools-software/sigmastudio/usingsigmastudio/buildingschematics/icon.png?id=resources:tools-software:sigmastudio:usingsigmastudio:buildingschematics:wiresandaliases"><img src="https://wiki.analog.com/_media/resources/tools-software/sigmastudio/usingsigmastudio/buildingschematics/icon.png" alt="img"></a>。接下来，左键单击一个块引脚，然后在按住鼠标按钮的同时，将光标拖到另一个块的相应引脚上。输入引脚只能连接到输出引脚，而输出引脚只能连接到输入引脚。</p>
-<p><a target="_blank" rel="noopener" href="https://wiki.analog.com/_detail/resources/tools-software/sigmastudio/usingsigmastudio/buildingschematics/wirespic1.png?id=resources:tools-software:sigmastudio:usingsigmastudio:buildingschematics:wiresandaliases"><img src="https://wiki.analog.com/_media/resources/tools-software/sigmastudio/usingsigmastudio/buildingschematics/wirespic1.png" alt="img"></a></p>
-<p><strong>选择：</strong></p>
-<p>要选择一条导线，请用鼠标左键单击它。选定的电线用绿色正方形（点）表示，如下所示。<strong>位置：</strong></p>
-<p><a target="_blank" rel="noopener" href="https://wiki.analog.com/_detail/resources/tools-software/sigmastudio/usingsigmastudio/buildingschematics/wirespic2.png?id=resources:tools-software:sigmastudio:usingsigmastudio:buildingschematics:wiresandaliases"><img src="https://wiki.analog.com/_media/resources/tools-software/sigmastudio/usingsigmastudio/buildingschematics/wirespic2.png" alt="img"></a></p>
-<p>要更改导线的位置，请将鼠标光标放在一个点上。接下来，在导线点上<strong>单击</strong>鼠标左键，并在按住鼠标键的同时拖动光标以重新放置导线。</p>
-<p><a target="_blank" rel="noopener" href="https://wiki.analog.com/_detail/resources/tools-software/sigmastudio/usingsigmastudio/buildingschematics/wirespic3.png?id=resources:tools-software:sigmastudio:usingsigmastudio:buildingschematics:wiresandaliases"><img src="https://wiki.analog.com/_media/resources/tools-software/sigmastudio/usingsigmastudio/buildingschematics/wirespic3.png" alt="img"></a></p>
-<p><strong>菜单：</strong></p>
-<p>右键单击导线以调出导线菜单。该菜单包括以下命令：</p>
-<p><a target="_blank" rel="noopener" href="https://wiki.analog.com/_detail/resources/tools-software/sigmastudio/usingsigmastudio/buildingschematics/wirespic4.png?id=resources:tools-software:sigmastudio:usingsigmastudio:buildingschematics:wiresandaliases"><img src="https://wiki.analog.com/_media/resources/tools-software/sigmastudio/usingsigmastudio/buildingschematics/wirespic4.png" alt="img"></a></p>
-<p><strong>电线颜色：</strong></p>
-<p>电线根据其关联的DSP处理器进行着色。导线的输入和输出引脚必须与同一DSP关联，否则您将无法在引脚之间建立导线。具有多个处理器IC的项目的每个IC将具有不同的颜色。</p>
-<p><a target="_blank" rel="noopener" href="https://wiki.analog.com/_detail/resources/tools-software/sigmastudio/usingsigmastudio/buildingschematics/wirespic5.png?id=resources:tools-software:sigmastudio:usingsigmastudio:buildingschematics:wiresandaliases"><img src="https://wiki.analog.com/_media/resources/tools-software/sigmastudio/usingsigmastudio/buildingschematics/wirespic5.png" alt="img"></a></p>
-<hr>
-<p><strong>引脚（导线）备注：</strong></p>
-<p>为了直观地组织项目，通常有助于创建备注，以在原理图中的信号流中提供清晰的连接参考（“跳转”）。一个<strong>备注</strong>由一对输入的备注和备注输出块组成。使用备注块可以减少长导线连接所造成的原理图窗口中的视觉混乱。</p>
-<p>要创建备注，请<strong>右键单击</strong>块的输出引脚（蓝色引脚），然后从菜单中选择“<strong>备注</strong>”。</p>
-<p><a target="_blank" rel="noopener" href="https://wiki.analog.com/_detail/resources/tools-software/sigmastudio/usingsigmastudio/buildingschematics/wirespic6.png?id=resources:tools-software:sigmastudio:usingsigmastudio:buildingschematics:wiresandaliases"><img src="https://wiki.analog.com/_media/resources/tools-software/sigmastudio/usingsigmastudio/buildingschematics/wirespic6.png" alt="img"></a></p>
-<p>当您单击<strong>Alias时</strong>，将出现两个块，分别是输入和输出。备注输入自动连接到源模块的输出引脚。接下来，创建一条从备注输出块（在下面的示例中为备注2）到信号目标的导线。</p>
-<p><a target="_blank" rel="noopener" href="https://wiki.analog.com/_detail/resources/tools-software/sigmastudio/usingsigmastudio/buildingschematics/wirespic7.png?id=resources:tools-software:sigmastudio:usingsigmastudio:buildingschematics:wiresandaliases"><img src="https://wiki.analog.com/_media/resources/tools-software/sigmastudio/usingsigmastudio/buildingschematics/wirespic7.png" alt="img"></a></p>
-<p><strong>注意：</strong>使用备注在功能上等同于用电线连接两个引脚。以下示例中的信号流与上面的备注示例相同。</p>
-<p><a target="_blank" rel="noopener" href="https://wiki.analog.com/_detail/resources/tools-software/sigmastudio/usingsigmastudio/buildingschematics/wirespic8.png?id=resources:tools-software:sigmastudio:usingsigmastudio:buildingschematics:wiresandaliases"><img src="https://wiki.analog.com/_media/resources/tools-software/sigmastudio/usingsigmastudio/buildingschematics/wirespic8.png" alt="img"></a></p>
-<h3 id="Hardware-Configuration-Tab"><a href="#Hardware-Configuration-Tab" class="headerlink" title="Hardware Configuration Tab"></a>Hardware Configuration Tab</h3><p>硬件配置工作区允许您为设计选择一个或多个处理器。它还允许您设置SigmaStudio与硬件之间的通信。</p>
-<p>要了解可以在“硬件配置”选项卡中访问的高级操作（包括“输出捕获”，“ Flash / E2Prom下载”，“寄存器控制”窗口和“寄存器读/写”窗口），请参阅“硬件Windows”部分中的主题。</p>
-<h4 id="要将处理器（IC-DSP）插入设计中："><a href="#要将处理器（IC-DSP）插入设计中：" class="headerlink" title="要将处理器（IC / DSP）插入设计中："></a>要将处理器（IC / DSP）插入设计中：</h4><ol>
-<li><p>用鼠标左键从工具箱中选择一个“处理器”：</p>
-<ol>
-<li><a target="_blank" rel="noopener" href="https://wiki.analog.com/_detail/resources/tools-software/sigmastudio/developmentenvironment/hardwareconfpic1.png?id=resources:tools-software:sigmastudio:developmentenvironment:hardwareconfigurationtab"><img src="https://wiki.analog.com/_media/resources/tools-software/sigmastudio/developmentenvironment/hardwareconfpic1.png" alt="img"></a></li>
-</ol>
-</li>
-<li><p>将处理器模块拖放到右侧的“硬件配置”窗口中：</p>
-<p><a target="_blank" rel="noopener" href="https://wiki.analog.com/_detail/resources/tools-software/sigmastudio/developmentenvironment/hardwareconfpic2.png?id=resources:tools-software:sigmastudio:developmentenvironment:hardwareconfigurationtab"><img src="https://wiki.analog.com/_media/resources/tools-software/sigmastudio/developmentenvironment/hardwareconfpic2.png" alt="img"></a></p>
-</li>
-</ol>
-<p><strong>注意：</strong>一旦在“硬件配置”窗口中插入DSP，就会出现“原理图（Schematic）”选项卡。</p>
-<h4 id="在DSP处理器和硬件之间建立连接："><a href="#在DSP处理器和硬件之间建立连接：" class="headerlink" title="在DSP处理器和硬件之间建立连接："></a>在DSP处理器和硬件之间建立连接：</h4><ol>
-<li>单击“通信渠道（Communication Channel）”类别（在“工具箱”列的底部）。</li>
-<li>从列表中选择评估板或USB设备，并将其拖放到工作区中。</li>
-<li>通过在通信通道和处理器模块之间画线来连接两个模块，从蓝色菱形到绿色菱形。对于使用AD1940的USB连接，工作空间中的单元格应如下所示：</li>
-</ol>
-<p><strong>注意</strong>：“通信通道”菜单列出了带有前缀EvalBoard的名称和板号。这些通信通道将在不使用评估板设置的平台上适用于相同的IC类型。还有通用的通信通道，USBSerialConv和USBi。（有关更多信息，请参见USB串行转换器通信通道或USBi。）</p>
-<p><a target="_blank" rel="noopener" href="https://wiki.analog.com/_detail/resources/tools-software/sigmastudio/developmentenvironment/hardwareconfpic3.png?id=resources:tools-software:sigmastudio:developmentenvironment:hardwareconfigurationtab"><img src="https://wiki.analog.com/_media/resources/tools-software/sigmastudio/developmentenvironment/hardwareconfpic3.png" alt="img"></a></p>
-<p>通信模块上USB标签 的颜色表示是否已建立USB通信通道。如果您已正确配置USB硬件，则背景色将为浅橙色或白色。如果未初始化通信，则背景将为红色。请注意，这仅表示USB连接处于活动状态，不能保证与SigmaDSP IC的通信或SigmaDSP硬件已正确配置。</p>
-<p><a target="_blank" rel="noopener" href="https://wiki.analog.com/_detail/resources/tools-software/sigmastudio/developmentenvironment/hardwareconfpic4.png?id=resources:tools-software:sigmastudio:developmentenvironment:hardwareconfigurationtab"><img src="https://wiki.analog.com/_media/resources/tools-software/sigmastudio/developmentenvironment/hardwareconfpic4.png" alt="img"></a></p>
-<p>连接所有板卡IC时，“已连接”背景色为白色，而仅连接部分IC（但不是全部）时为“橙色”。例如，ADAU1701评估板包括ADAU1701 IC和E2Prom IC。仅连接ADAU1701时，背景将为浅橙色，但同时连接ADAU1701和E2Prom IC时，背景将为白色。</p>
-<p><a target="_blank" rel="noopener" href="https://wiki.analog.com/_detail/resources/tools-software/sigmastudio/developmentenvironment/hardwareconfpic5.png?id=resources:tools-software:sigmastudio:developmentenvironment:hardwareconfigurationtab"><img src="https://wiki.analog.com/_media/resources/tools-software/sigmastudio/developmentenvironment/hardwareconfpic5.png" alt="img"></a></p>
-<h3 id="USB串行转换器"><a href="#USB串行转换器" class="headerlink" title="USB串行转换器"></a>USB串行转换器</h3><p><em><strong>本文介绍了ADI公司不再提供的过时的硬件。包含此信息作为2007年前评估委员会用户的参考。不建议将AD1953用于新设计。此处包含与AD1953相关的信息，仅供参考。</strong></em></p>
-<p>ADI公司的USB串行转换器（EVAL-ADUSB1）板是PC的USB端口与评估板控制端口连接之间的接口。对于AD1953，-1954，-1940和-1941板，USB串行转换器直接连接到板上的DB25连接器。</p>
-<p>该USB适配器通常从计算机的供电USB端口。要以独立模式使用适配器，请通过将+ 5Vdc和地连接至测试点TP1和TP2为其供电。</p>
-<hr>
-<h4 id="要安装USB串行转换器："><a href="#要安装USB串行转换器：" class="headerlink" title="要安装USB串行转换器："></a>要安装USB串行转换器：</h4><ol>
-<li>将适配器插入评估板的控制端口（DB25连接器）。</li>
-<li>将USB电缆连接到PC和USB适配器。</li>
-<li>当提示您输入驱动程序时：<ol>
-<li><strong>Windows 2000-</strong> 选择“搜索合适的驱动程序”，然后单击“下一步”。<ol>
-<li>选中“指定位置”，然后取消选中其他选项。点击下一步。</li>
-</ol>
-</li>
-<li><strong>Windows XP-</strong> 选择“从列表或特定位置安装”。<ol>
-<li>选择“在这些位置搜索最佳驱动程序”。</li>
-<li>选中“在搜索中包括此位置”框。</li>
-</ol>
-</li>
-</ol>
-</li>
-<li>单击浏览，然后在SigmaStudio安装目录的USB驱动程序文件夹中找到ftd2xx.inf文件。默认位置是C：\ Program Files \ Analog Devices Inc \ SigmaStudio \ USB驱动程序。</li>
-<li>在Windows XP中，如果出现有关该软件未通过Windows徽标测试的对话框，请单击“仍然继续”。</li>
-</ol>
-<hr>
-<h4 id="使用USB串行转换器："><a href="#使用USB串行转换器：" class="headerlink" title="使用USB串行转换器："></a>使用USB串行转换器：</h4><p>为了在SigmaStudio与USB串行转换器板之间进行通信，必须在原理图设计中添加一个通信通道模块。要找到这些块，请选择“硬件配置”选项卡，然后在“工具箱”或“树形工具箱”窗口中选择“通讯通道”类别。 USB串行转换器板 可使用2个通信通道模块：USBSerialConv和USBSerialConvAddress。两个模块都为多个处理器提供连接，从而使您可以在单个设计中使用多个处理器。</p>
-<p><a target="_blank" rel="noopener" href="https://wiki.analog.com/_detail/resources/tools-software/sigmastudio/gettingstarted/usbinterfaces/usbpic1.png?id=resources:tools-software:sigmastudio:gettingstarted:usbinterfaces:usbserialconverter"><img src="https://wiki.analog.com/_media/resources/tools-software/sigmastudio/gettingstarted/usbinterfaces/usbpic1.png" alt="img"></a></p>
-<p>注意：只能连接USBSerialConv / USBSerialConvAddress块输出引脚之一。不必连接或终止所有输出引脚。同样，您将处理器连接到任何引脚，引脚连接的顺序也没有特殊要求。</p>
-<h4 id="USB串行转换"><a href="#USB串行转换" class="headerlink" title="USB串行转换"></a>USB串行转换</h4><p>允许连接多个DSP处理器模块和E2Prom模块。从上到下依次分配地址（例如 SPI通信。这些引脚从上到下与clatch0-4关联）。</p>
-<p><a target="_blank" rel="noopener" href="https://wiki.analog.com/_detail/resources/tools-software/sigmastudio/gettingstarted/usbinterfaces/usbpic2.png?id=resources:tools-software:sigmastudio:gettingstarted:usbinterfaces:usbserialconverter"><img src="https://wiki.analog.com/_media/resources/tools-software/sigmastudio/gettingstarted/usbinterfaces/usbpic2.png" alt="img"></a></p>
-<h4 id="USBSerialConvAddress"><a href="#USBSerialConvAddress" class="headerlink" title="USBSerialConvAddress"></a>USBSerialConvAddress</h4><p>该模块使您可以明确指定器件地址，I²C地址或SPI锁扣线（见下文）。请注意，DSP硬件的地址必须与块的所选地址匹配，以使通信起作用。有关寻址的更多信息，请参见器件数据手册（例如ADR_SEL，ADDR0或ADDR1引脚）。 根据SigmaDSP部分的不同，对此模块进行的连接将用于SPI（串行外围接口）数据或I²C数据。对于SPI</p>
-<p><a target="_blank" rel="noopener" href="https://wiki.analog.com/_detail/resources/tools-software/sigmastudio/gettingstarted/usbinterfaces/usbpic3.png?id=resources:tools-software:sigmastudio:gettingstarted:usbinterfaces:usbserialconverter"><img src="https://wiki.analog.com/_media/resources/tools-software/sigmastudio/gettingstarted/usbinterfaces/usbpic3.png" alt="img"></a></p>
-<p>，此通道可让您一次连接多个板，并可以选择将特定板连接到任何锁线。（唯一的例外是clatch1，它是为转换器EPROM保留的，在USBSerialConv块上用灰色的针脚表示。）针脚从上到下为clatch0-4。下图显示了将板连接到引脚的一种可能配置。</p>
-<p><a target="_blank" rel="noopener" href="https://wiki.analog.com/_detail/resources/tools-software/sigmastudio/gettingstarted/usbinterfaces/usbpic4.png?id=resources:tools-software:sigmastudio:gettingstarted:usbinterfaces:usbserialconverter"><img src="https://wiki.analog.com/_media/resources/tools-software/sigmastudio/gettingstarted/usbinterfaces/usbpic4.png" alt="img"></a></p>
-<hr>
-<h4 id="EVAL-ADUSB1板开关和跳线："><a href="#EVAL-ADUSB1板开关和跳线：" class="headerlink" title="EVAL-ADUSB1板开关和跳线："></a>EVAL-ADUSB1板开关和跳线：</h4><ul>
-<li>S1-将闪存中保存的程序加载到SigmaDSP。</li>
-<li>S2-选择当按下S1时将加载八个SigmaDSP程序中的哪一个。</li>
-<li>S3-重置USB适配器板。</li>
-<li>TP1-+ 5Vdc连接，用于适配器未通过PC的USB端口供电的情况。</li>
-<li>TP2-接地，用于适配器未通过PC的USB端口供电的情况。</li>
-<li>J3-当该接头连接器上有跳线时，将启用对闪存的写操作（用于存储SigmaDSP程序）。</li>
-<li>D4-此LED指示USB板已通电。</li>
-</ul>
-<p>可以使用SigmaStudio中的Flash Downloader工具将SigmaDSP程序和参数文件保存到USB板上的闪存中。通过将S2设置为适当的设置，然后按下程序加载按钮S1，可以将每个程序加载到SigmaDSP。请参阅Flash Downloader页面。<br>有关更多信息，请参见EVAL-ADUSB1数据手册，analog.com / sigmadsp。</p>
-<h3 id="Digital-Attenuator"><a href="#Digital-Attenuator" class="headerlink" title="Digital Attenuator"></a>Digital Attenuator</h3><p>即数字衰减器， 与可变衰减器不同，数字衰减器在离散和有限衰减状态下切换。该切换通常以二进制步骤实现。数字衰减器采用半导体器件来实现每个衰减步骤。为此目的而使用的一些半导体器件包括：PIN二极管，MOSFET和GaAs MESFET。数字衰减器能够实现与固态开关速度相当的开关速率。数字衰减器使用的最常见逻辑类型 是CMOS逻辑电平和晶体管晶体管逻辑（TTL）。</p>
-<p>数字衰减器利用驱动器电路来确定要使用的逻辑类型。驱动器电路的复杂性取决于所使用的位数。复杂度随着位数的增加而增加。通常根据数字衰减器设计提供的衰减状态对其进行分类。使用的位数决定了这些衰减状态。最高有效位提供最大的衰减，而最低有效位提供组件提供的最小衰减。其余位提供中间衰减值。通常，这些产品采用1位，5位，8位和6位数字衰减器。</p>
-<p>如果选择了所有位，则数字衰减器旨在提供最大的额定衰减。另一方面，其最小衰减步长仅通过选择最低有效位来实现。数字衰减器在3G和4G蜂窝网络，点对点节点，中继器以及广泛的测试和测量应用中具有广泛的用途。</p>
-<p class="italicp" style="font-style: italic; color: #BBB;">Shop Arrow.com选择了数字RF步进衰减器，数字音频衰减器等。 <a hre="https://www.arrow.com/en/categories/attenuators/fixedvariable-attenuators/digital-attenuators#">>>> read more</a></p>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<h3 id="ASRC"><a href="#ASRC" class="headerlink" title="ASRC"></a>ASRC</h3><p>异步采样速率转换器(ASRC，Asynchronous Sample Rate Converter)是一款可同时用于消费电子和专业应用的音频采样速率转换通用软件模块。 ASRC支持多种不同的采样速率配置。</p>
-<p><strong>ASRC软件模块</strong> 可用于以小步长改变采样频率，步长随着时间改变，且在变化过程中不生成任何输出音频干扰。 在许多多媒体系统中，时变采样速率的改变是非常重要的功能，例如能实现多个数据流的精密同步以及服务器和客户端的同步等。</p>
-<p>ADI公司的ASRC实施方案经过高度优化，适合在ADI公司的Blackfin系列处理器上运行。它是一个基于ADI专利设计的独立自足软件模块。该模块已经过各种根据音频信号质量分析定义的策略质量测试。</p>
-<p>ASRC模块是应用于PCM（脉冲编码调制）上的后处理模块，通过模拟输入、数字输入通道或解码应用的PCM输出接收数据。 ASRC模块能够处理多个通道的输入信息，并能够输出至同样多的通道。 开发的模块支持全面的重入和多实例。 ASRC模块是一个独立的模块，不依赖其他任何模块。 ADRC模块配备一个示例轻型包装器API，将模块插入至整体系统。 这使得该应用的系统集成简单易行。</p>
-<h4 id="ASRC-INPUT-OUTPUT"><a href="#ASRC-INPUT-OUTPUT" class="headerlink" title="ASRC INPUT/OUTPUT"></a>ASRC INPUT/OUTPUT</h4><p>ASRC输入和输出模块在原理图设计和硬件ASRC（异步采样率转换器）之间路由信号。</p>
-<p>使用输入块的复选框来启用或禁用特定输入。使用输出块的下拉列表控件从可用的ASRC中进行选择。</p>
-<ul>
-<li>每个ASRC输出必须连接其输入，否则编译时将出错。</li>
-<li>可以看到，随着将更多的ASRC输出块拖到原理图中，下拉列表中的可用输出数量会减少，因为一次只能由一个块表示。</li>
-<li>要更改ASRC <strong>输入采样率</strong>，请右键单击块名称，然后选择“设置采样率”，这将打开“采样率”窗口（默认值为44.1 kHz）。</li>
-</ul>
-<p><img src="https://wiki.analog.com/_media/resources/tools-software/sigmastudio/toolbox/io/asrc_input_output_020.jpg" alt="img"></p>
-<h4 id="Limiter-限幅器"><a href="#Limiter-限幅器" class="headerlink" title="Limiter 限幅器"></a>Limiter 限幅器</h4><p>限幅器（Limiter）是指能按限定的范围削平信号电压波幅的电路，又称削波器。限幅电路的作用是把输出信号幅度限定在一定的范围内，亦即当输入电压超过或低于某一参考值后，输出电压将被限制在某一电平（称作限幅电平），且再不随输入电压变化。</p>
-<h3 id="LSB-aligned"><a href="#LSB-aligned" class="headerlink" title="LSB-aligned"></a>LSB-aligned</h3><p>LSB(Least Significant Bit)是“最低有效位”。MSB(Most Significant Bit)是“最高有效位”。</p>
-<p>最高有效位是指二进制中最高值的比特，如：</p>
-<blockquote>
-<ol>
-<li><p>在16比特的数字音频中，其第1个比特便对16bit的字的数值有最大的影响。</p>
-</li>
-<li><p>在十进制的15，389这一数字中，相当于万数那1行（1）的数字便对数值的影响最大。比较与之相反的“最低有效位”（LSB）。</p>
-</li>
-<li><p>汇编中，比如8位2进制数10000001，其中第一个1是MSB,第二个1是LSB。<mark>1</mark>（MSB）100 001<mark>1</mark>（LSB）</p>
-</li>
-<li><p>在计算时，如果是整数，那么小数点（实际上是没有小数点的，但就把那一位和下一位之间看作有）在LSB后面；如果是小数，小数点在MSB后面；其中MSB在有符号数中又是符号位。</p>
-</li>
-</ol>
-</blockquote>
-<p>在网络通信方面，大家说的更多的是：“<strong>Big-Endian</strong>”和“<strong>Small-Endian</strong>”的问题。指的都是对于多字节的数据类型（比如4字节的32位整数），其多个字节的顺序问题，是最高字节在前（Big-Endian）还是最低字节在前（Small-Endian）。</p>
-<p>比如对于123456789这个整数，其16进制为0x075BCD15，那么按照Big-Endian的方式，它在网络上传输（或者在内存里存储）的4个字节依次是：<code>07 4B CD 15</code>，而Small-Endian的顺序正相反，是：<code>15 CD 4B 07</code>。</p>
-<p><strong>MSB</strong> 和 <strong>LSB</strong> 虽然跟这个事情看起来有点相似，但不是一回事。</p>
-<p>通常，一个芯片的管脚中，对于一个多比特的信号，比如32根的地址线，从低开始按0到31编个号。MSB就是31，LSB就是0。那么如果标记为：ADDR[31:0]就是MSB first的方式，如果标记为ADDR[0:31]就是LSB first的方式。</p>
-<p><strong>MSB LSB</strong>：起始地址为最高位， 最后地址为最低位。</p>
-<p><strong>LSB MSB</strong>：起始地址为最低位，最后地址为最高位。</p>
-<p>比如AD中，8位，最低有效位指D0</p>
-<h3 id="Cofficient-Write"><a href="#Cofficient-Write" class="headerlink" title="Cofficient Write"></a>Cofficient Write</h3><p>即 <strong>参数写入</strong>，是指对参数中两组 <em><strong>寄存器参数集</strong></em> 的系数写入。当然也可以单独写入某个寄存器的数值。</p>
-<p>可写入的参数如：filter coefficients、limiter settings、volume<br>control settings等。</p>
-<p>每组 <strong>寄存器参数集</strong> 可写入至多 160个参数（32个过滤器*5个系数）。</p>
-<h2 id="Filters"><a href="#Filters" class="headerlink" title="Filters"></a>Filters</h2><p>在ADAU1772的General(2^nd^ Order) Filter Setting中有几项过滤器，分别是 Parametric 、 Shelving 、 General HP/LP/BP/BS 、 Butterworth/Bessel 、 Tone Control、IIR Coefficient 、First Order Filters 、All Pass 、Peaking 、Notch 、 Chebyshev 共11中过滤器。</p>
-<p><img src="http://pic.islet.space/2021/04/image-20210428152357233.png" alt="image-20210428152357233"></p>
-<h1 id="SigmaStudio"><a href="#SigmaStudio" class="headerlink" title="SigmaStudio"></a>SigmaStudio</h1><p>以下简称sigma</p>
-<h2 id="Capture"><a href="#Capture" class="headerlink" title="Capture"></a>Capture</h2><p>Capture 窗口会捕捉开发者对设置的相关改动记录。</p>
-<p><img src="https://pic.islet.space/2021/04/image-20210422165857465.png" alt="image-20210422165857465"></p>
-<h2 id="Register-Control"><a href="#Register-Control" class="headerlink" title="Register Control"></a>Register Control</h2><p><img src="https://pic.islet.space/2021/04/image-20210422163633005.png" alt="image-20210422163633005"></p>
-<h3 id="Output-Serial-Port"><a href="#Output-Serial-Port" class="headerlink" title="Output/Serial Port"></a>Output/Serial Port</h3><h4 id="下压式音量按键"><a href="#下压式音量按键" class="headerlink" title="下压式音量按键"></a>下压式音量按键</h4><p>使用前需要进行跳线，跳线方法如下：</p>
-<img src="https://pic.islet.space/2021/04/image-20210422163804275.png" alt="image-20210422163804275" style="zoom:50%;" />
-
-<p>控制界面如下：</p>
-<p><img src="https://pic.islet.space/2021/04/image-20210422163228410.png" alt="image-20210422163228410"></p>
-<blockquote>
-<p>？？ Time</p>
-<p>Initial PB Volume 初始化下压式按键的音量值</p>
-<p>Gain Step 增益速度</p>
-<p>Ramp Speed 增加速度</p>
-<p>Converters Controlled by PushButton Volume 被控制的转换器</p>
-</blockquote>
-<h2 id="Download-Program"><a href="#Download-Program" class="headerlink" title="Download Program"></a>Download Program</h2><img src="https://pic.islet.space/2021/04/image-20210422170248954.png" alt="image-20210422170248954" style="zoom:67%;" />
-
-<p><img src="https://pic.islet.space/2021/04/image-20210422170328013.png" alt="image-20210422170328013"></p>
-<h2 id="Microphone"><a href="#Microphone" class="headerlink" title="Microphone"></a>Microphone</h2><p>TRS 1/8-inch<br>mini-plug stereo headphones</p>
-<img src="https://pic.islet.space/2021/04/048f07ee-e357-4c06-a8e4-1724e62765a4_1.e937ba0bd42739fc09e9ef63602645b8.jpeg" alt="查看源图像" style="zoom:50%;" />
-
-<p>standard 0.100”<br>headers</p>
-<img src="https://pic.islet.space/2021/04/R68f2db356a43d3653db1298ccd26e835" alt="查看源图像" style="zoom:50%;" />
-
-
-
-
-
-<h3 id="Bias-Setting"><a href="#Bias-Setting" class="headerlink" title="Bias Setting"></a>Bias Setting</h3><p><img src="https://pic.islet.space/2021/04/image-20210423102647330.png" alt="image-20210423102647330"></p>
-<blockquote>
-<p>Bias Gain</p>
-<p>AVDD</p>
-<p>0.9*AVDD</p>
-<p>0.65*AVDD</p>
-</blockquote>
-<p>dataword byte : 在突发模式（burst mode）中使用。 </p>
-<p>data byte : 在单字模式（single-word mode）下写入。</p>
-<h1 id="ADAU1772"><a href="#ADAU1772" class="headerlink" title="ADAU1772"></a>ADAU1772</h1><ul>
-<li>ADAU1772以下简称1772</li>
-<li>《Evaluation Board User Guide<br>  UG-477》以下简称UG</li>
-</ul>
-<h2 id="评估板结构"><a href="#评估板结构" class="headerlink" title="评估板结构"></a>评估板结构</h2><p>以下描述均以评估板为例，DIY板不一定适用。</p>
-<h3 id="插口（Jumper）定义"><a href="#插口（Jumper）定义" class="headerlink" title="插口（Jumper）定义"></a>插口（Jumper）定义</h3><img src="https://pic.islet.space/2021/04/image-20210427165847934.png" alt="image-20210427165847934" style="zoom: 67%;" />
-
-
-
-<h3 id="输入输出"><a href="#输入输出" class="headerlink" title="输入输出"></a>输入输出</h3><ul>
-<li>2/3输入通道是复用立体声通道，即1通道和0通道都可以单独接入音源，在物理音频接口上独立，但第2/3通道是在一起的，共用一个物理通道。UG第7页中也有提到。</li>
-</ul>
-<img src="https://pic.islet.space/2021/04/image-20210427104818097.png" alt="image-20210427104818097" style="zoom:50%;" />
-
-
-
-<img src="https://pic.islet.space/2021/04/image-20210427105655639.png" alt="image-20210427105655639" style="zoom:67%;" />
-
-<ul>
-<li>有四个单端输入通道可以设置为麦克风信号或线路信号，一个双立体声数字输入信号通道和也可被用于单端输出的两个差分(differential)输出。</li>
-</ul>
-<h3 id="USBi-仿真器"><a href="#USBi-仿真器" class="headerlink" title="USBi 仿真器"></a>USBi 仿真器</h3><ul>
-<li>USBi驱动安装：进入设备管理器，安装驱动在SigmaStudio安装目录 <code>\Analog Devices\SigmaStudio 4.6\USB drivers\</code> 下。</li>
-<li>连接到USBi未成功时是红色，设备驱动安装且连接成功时，USBi 在sigma中会由红变绿。</li>
-<li>USBi作为中间板对1772进行控制，在USBi右键可以控制1772设备开断，开断时板上D1区的VDD指示灯也会通断（见page10）。</li>
-<li>如果需要对设备进行实时控制，请务必记得打开设备，否则无法操作。</li>
-</ul>
-<img src="http://pic.islet.space/2021/04/image-20210428150645112.png" alt="image-20210428150645112" style="zoom: 67%;" />
-
-<ul>
-<li>USBi将例程down到了板子上ADAU1772的SRAM上，断电就没有了。USBi的这种调试是为了快速验证功能，最终需要把这个例程的代码导出，并通过单片机的 <strong>启动工程集成</strong>，烧写到单片机中，实现单片机启动。</li>
-</ul>
-<img src="https://pic.islet.space/2021/04/image-20210427110916316.png" alt="image-20210427110916316" style="zoom:67%;" />
-
-<h3 id="编译烧录"><a href="#编译烧录" class="headerlink" title="编译烧录"></a>编译烧录</h3><ul>
-<li>烧录按键如下：</li>
-</ul>
-<p><img src="https://pic.islet.space/2021/04/image-20210427162529600.png" alt="image-20210427162529600"></p>
-<ul>
-<li>编译完毕后，SS会在右边的output窗体里显示编译结果，如有错误会提示错误信息，用户可据此信息去修改设计；</li>
-<li>如成功则会显示资源占用信息，用户可根据百分比来增减模块。</li>
-</ul>
-<img src="https://pic.islet.space/2021/04/image-20210427111013493.png" alt="image-20210427111013493" style="zoom:67%;" />
-
-
-
-<h3 id="芯片"><a href="#芯片" class="headerlink" title="芯片"></a>芯片</h3><p>板上共有4颗芯片，分别是 <strong>DSP</strong>、<strong>EEPROM</strong>、<strong>线性整流芯片</strong> 和 <strong>升压芯片</strong></p>
-<img src="https://pic.islet.space/2021/04/image-20210427171901213.png" alt="image-20210427171901213" style="zoom:50%;" />
-
-
-
-<h4 id="U2-EEPROM"><a href="#U2-EEPROM" class="headerlink" title="U2: EEPROM"></a>U2: EEPROM</h4><p>ST官网对M24C32-F串行E2PROM的描述：</p>
-<p>容量：32-Kbit</p>
-<p>电压：1.7 ~ 5.5V</p>
-<p>温差：-40 ~ +85℃</p>
-<img src="https://pic.islet.space/2021/04/Snipaste_2021-04-27_17-18-01.png" alt="Snipaste_2021-04-27_17-18-01" style="zoom: 67%;" />
-
-<img src="https://pic.islet.space/2021/04/Snipaste_2021-04-27_17-18-18.png" alt="Snipaste_2021-04-27_17-18-18" style="zoom:67%;" />
-
-
-
-
-
-
-
-<h2 id="控制"><a href="#控制" class="headerlink" title="控制"></a>控制</h2><h3 id="HP输出"><a href="#HP输出" class="headerlink" title="HP输出"></a>HP输出</h3><p>HP即Headphone缩写，HP输出有两个输出端，分别是DAC0 和 DAC1，分别对应为 EVAL板 上的 OUT R(HP Right) 和 OUT L(HP Left)。</p>
-<img src="https://pic.islet.space/2021/04/image-20210427152251539.png" alt="image-20210427152251539" style="zoom:50%;" />
-
-<img src="https://pic.islet.space/2021/04/image-20210427143628880.png" alt="image-20210427143628880" style="zoom: 33%;" />
-
-<h4 id="输出静音"><a href="#输出静音" class="headerlink" title="输出静音"></a>输出静音</h4><img src="https://pic.islet.space/2021/04/image-20210427153425633.png" alt="image-20210427153425633" style="zoom:50%;" />
-
-<h4 id="输出断电"><a href="#输出断电" class="headerlink" title="输出断电"></a>输出断电</h4><p>关于HP输出的寄存器 <code>HP_EN_R</code> 及 <code>HP_EN_L</code> 说明：</p>
-<img src="https://pic.islet.space/2021/04/image-20210427152528194.png" alt="image-20210427152528194" style="zoom:50%;" />
-
-<p><code>0x31</code> 即 <code>0011 0001</code> ，最后两位 <code>01</code> 即 <code>HP_PDN_L</code> 中的 <code>01</code> 。    </p>
-<h4 id="输出音量控制"><a href="#输出音量控制" class="headerlink" title="输出音量控制"></a>输出音量控制</h4><ul>
-<li>对输出音量进行控制需要先对S5、S6进行跳针。</li>
-</ul>
-<img src="https://pic.islet.space/2021/04/image-20210427110159648.png" alt="image-20210427110159648" style="zoom:67%;" />
-
-
-
-
-
-<h3 id="TALKTHRU-DSP-BYPASS"><a href="#TALKTHRU-DSP-BYPASS" class="headerlink" title="TALKTHRU / DSP BYPASS"></a>TALKTHRU / DSP BYPASS</h3><blockquote>
-<p>DSP BYPASS MODE<br>When DSP bypass mode is enabled, a direct path from the ADC<br>outputs to the DACs is set up to enable bypassing the core processing to listen to environmental sounds. </p>
-<p>This is useful for<br>listening to someone speaking without having to remove the<br>noise cancelling headphones. The DSP bypass path is <strong>enabled by setting an MPx pin low</strong>. </p>
-<p>Figure 92 shows the DSP bypass path<br>disabled, and Figure 93 shows the DSP bypass path enabled by<br>pressing the push-button switch. </p>
-<p><img src="https://pic.islet.space/2021/04/image-20210427144110884.png" alt="image-20210427144110884"></p>
-<p>The DSP bypass feature works<br>for both analog and digital microphone inputs. </p>
-<ul>
-<li>Enabled when <em><strong>a switch</strong></em> connected to an MPx pin that is set to DSP bypass mode is closed and the MPx pin signal is pulled low. </li>
-</ul>
-<p>Pressing and holding the switch closed enables the<br>DSP bypass signal path as defined in the TALKTHRU register<br>(Address 0x002A). </p>
-<p>The DAC volume control setting is switched<br>from the default gain setting to the new TALKTHRU_GAINx<br>register setting (Address 0x002B and Address 0x002C). </p>
-<ul>
-<li>DSP bypass<br>  is enabled only on ADC0 and ADC1. </li>
-</ul>
-<p>The DSP bypass signal path<br>is from the output of ADCx to the input of the DAC(s).<br>When DSP bypass is enabled, the current DAC volume setting<br>is ramped down to −95.625 dB and the DSP bypass volume<br>setting is ramped up to avoid pops when switching paths.</p>
-</blockquote>
-<h1 id="案例"><a href="#案例" class="headerlink" title="案例"></a>案例</h1><h2 id="EXP1"><a href="#EXP1" class="headerlink" title="EXP1"></a>EXP1</h2><p>从左侧 <strong>树状工具箱</strong>(TreeToolBox)中拖出1772和USBi，并进行连接。</p>
-<img src="C:\Users\431240\AppData\Roaming\Typora\typora-user-images\image-20210428094527305.png" alt="image-20210428094527305" style="zoom: 67%;" />
-
-
-
-<p>在 <strong>原理图</strong>(schematic)中需要对输入输出路径进行定义，从左侧拖出组件并连线如下：</p>
-<p><img src="C:\Users\431240\AppData\Roaming\Typora\typora-user-images\image-20210428095433721.png" alt="image-20210428095433721"></p>
-<p><img src="C:\Users\431240\AppData\Roaming\Typora\typora-user-images\image-20210428093600257.png" alt="image-20210428093600257"></p>
-<p>相当于对 <strong>信号通路</strong>(Signal Routing) 选项卡中的各框区所示的信号进行连接，因其中 <strong>核心输入选择</strong>(Core Input Selection)仅针对输入源进行定义和设置，并未对输入和 <strong>音频处理核心</strong>(Audio Processing Core)之间的数据流向进行设置，所以需要在原理图中进行设置。</p>
-<img src="C:\Users\431240\AppData\Roaming\Typora\typora-user-images\image-20210428093647783.png" alt="image-20210428093647783" style="zoom:50%;" />
-
-<p>在 <strong>输出/串行接口</strong>(Output/Serial Port)中选择 <strong>按键音量</strong>(Push button vol) 选区进行调整，在 <strong>按键音量控制的转换器</strong>(Converters controlled by pushbutton volume) 中选择 <code>All ADCs</code> , 此处可对输入的ADC信号或输出的DAC信号进行音量加减。</p>
-<p><img src="C:\Users\431240\AppData\Roaming\Typora\typora-user-images\image-20210428094927404.png" alt="image-20210428094927404"></p>
-<p><strong>可编程增益放大器</strong> (Programable Gain Amplifier) 是模拟信号输入后的可选用部件，选用时应在</p>
 
       
     </div>
@@ -2517,6 +2104,126 @@
 <li>Create a new workspace, copy your .json files to it, adjust the  necessary settings for the new workspace path, program name, and so on,  and start coding!</li>
 </ul>
 <p>11/22/2019</p>
+<p>​          </p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://islet.space/2021/04/21/Signal/What%20is%20a%20Bypass%20Capacitor/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Liewzheng">
+      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coder的孤岛">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/04/21/Signal/What%20is%20a%20Bypass%20Capacitor/" class="post-title-link" itemprop="url">What is a Bypass Capacitor?</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-04-21 23:58:32" itemprop="dateCreated datePublished" datetime="2021-04-21T23:58:32+08:00">2021-04-21</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2021-04-29 00:50:14" itemprop="dateModified" datetime="2021-04-29T00:50:14+08:00">2021-04-29</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Signal/" itemprop="url" rel="index"><span itemprop="name">Signal</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p><a target="_blank" rel="noopener" href="http://www.learningaboutelectronics.com/Articles/What-is-a-bypass-capacitor.html">learningaboutelectronics.com</a></p>
+<h1 id="What-is-a-Bypass-Capacitor"><a href="#What-is-a-Bypass-Capacitor" class="headerlink" title="What is a Bypass Capacitor?"></a>What is a Bypass Capacitor?</h1><p><img src="http://www.learningaboutelectronics.com/images/Bypass-capacitor.png" alt="Bypass capacitor"></p>
+<p>A bypass capacitor is a capacitor that shorts AC signals to ground, so  that any AC noise that may be  present on a DC signal is removed, producing a much cleaner and pure DC signal.</p>
+<p>A bypass capacitor essentially bypasses  AC noise that may be on a DC signal, filtering out the AC, so that a clean, pure DC signal goes through without any AC ripple. </p>
+<p>For example, you may want a pure DC signal from a power source. </p>
+<p>Below is a transistor circuit. A transistor is an active device, so in order to work, it needs DC power. This power source is  VCC. In this case, VCC equals 15 volts. </p>
+<p><img src="http://www.learningaboutelectronics.com/images/DC-power-source-transistor.png" alt="DC Power Source for Transistor"></p>
+<p>This 15 volts provides power to the transistor so that the transistor can  amplify signals. We want this signal to be as purely DC as possible. Although we obtain our DC voltage, VCC, from a DC power  source such as a power supply, the voltage isn’t always purely DC. In  fact, many times the  voltage is very noisy and contains a lot of AC ripple on it, especially  at the 60Hz frequency because this is the frequency at which AC signals  run in many countries. </p>
+<p>So although we want a pure DC signal, such as below:</p>
+<p><img src="http://www.learningaboutelectronics.com/images/Pure-DC-voltage.png" alt="Pure DC Voltage"></p>
+<p>Many times, we get a noisy signal that looks like:</p>
+<p><img src="http://www.learningaboutelectronics.com/images/Noisy-dc-signal.png" alt="Noisy DC Voltage Signal"></p>
+<p>A DC signal such as this is actually very common. This is undesired  because it adds noise to the transistor circuit. Therefore, this  noisy DC signal will be imposed on the AC signal. So the AC signal which may have music or some type of recording will now have much more noise. </p>
+<p>This noise which is on the signal is AC ripple. Many  times when using a DC power supply connected to an AC power outlet, it  will  have some of the AC noise transfer to the DC power voltage. AC ripple  can also appear from other sources, so even batteries can produce noise. </p>
+<p>To eliminate this AC ripple, we use a bypass  capacitor. So our transistor circuit above will have a bypass capacitor  added to it:</p>
+<p><img src="http://www.learningaboutelectronics.com/images/Bypass-capacitor-transistor-circuit.png" alt="Bypass Capacitor for a Transistor Circuit"></p>
+<p>A capacitor is a device that offers a tremendously high resistance for  signals of low frequencies. Therefore, signals at low frequencies will  not go through them. This is because  signals (current) always takes the path of least resistance. Therefore,  they will instead go through the resistor, RE. Remember, again, this is for low frequency signals, which is  basically DC signals. </p>
+<p>However, capacitors offer much less resistance at higher frequencies (AC signals). So AC signals will go through the  capacitor and then to gorund. Therefore, DC signals will go  through the resistor, RE, while AC signals will go  through the capacitor, getting shunted to ground. So AC signals get  shunted to ground. This is how we have a clean DC signal  across our circuit, while AC noise imposed on it is bypassed to ground. </p>
+<p><img src="http://www.learningaboutelectronics.com/images/How-a-bypass-capacitor-works.png" alt="How a Bypass Capacitor Works"></p>
+<p>So a bypass capacitor blocks the DC from entering it by the great  resistance it offers to the signal but accepts the AC noise that may be  on the DC line and shunts or bypasses it to ground.  This is how bypass capacitors work.</p>
+<h1 id="How-to-Choose-the-Value-of-the-Bypass-Capacitor"><a href="#How-to-Choose-the-Value-of-the-Bypass-Capacitor" class="headerlink" title="How to Choose the Value of the Bypass Capacitor"></a>How to Choose the Value of the Bypass Capacitor</h1><p>Now that you know conceptually what a bypass capacitor is, the next step is to know how to select the value of the  bypass capacitor. </p>
+<p>And selecting the value is pretty straightforward. </p>
+<p>The value of the bypass capacitor should be at least 1/10th of the resistance across the emitter resistance,  RE at the lowest frequency intended to be bypassed.</p>
+<p>Because capacitors are reactive devices, they have different resistances to signals based on the signal’s frequency.  This is referred to as the capacitor’s reactance, which can be seen as the resistance it offers. We want the capacitor to have  1/10th of the resistance to the flow of current than what the resistor offers for the frequency signal that we want to bypass. </p>
+<p>If you visualize the current moving through the transistor, it can take one of 2 paths once it passes the collector and  moves through the emitter. Current can either go the resistor, RE or current can flow through the bypass capacitor.  Current always takes the path of least resistance. Therefore, current  will take the path of the lower resistance.  This is why you want  the value of the resistance of the bypass capacitor to be at least  1/10th the value of the emitter resistor or, even better, less than  one-tenth. We want the AC current to flow through the least resistance  path, which is the bypass capacitor if the correct value is  chosen. </p>
+<p>However, DC signals do not see it as AC. To DC, the capacitor has infinite resistance.  So DC will automatically go through the RE resistor, which offers lower resistance by far to the infinite resistance  of the capacitor. </p>
+<p>AC, however, does not see infinite resistance for the capacitor. If we choose the value correctly for the capacitor,  we can make the capacitor a much lower-resistance path to ground, thus shorting out the AC signal to ground. </p>
+<p>So let’s go over a practical example of how we would select the bypass capacitor value.</p>
+<p>Let’s say we want to bypass the lowest possible frequency of 50Hz, because the frequency of AC voltages worldwide are 50-60Hz. Therefore, this frequency can be a very problematic because often there is AC ripple at this frequency. </p>
+<p>Remember, when we said we bias the value of the bypass capacitor based on the lowest frequency that we want to bypass.  So by selecting the frequency of 50Hz, this blocks frequencies from 50Hz and higher; so it covers 60Hz. As frequency of an AC signal  increases, the resistance of the capacitor decreases and decreases with  each increase. Therefore, all the frequencies above the  frequency value that we choose get bypassed easier and easier. We’ll  demonstrate this all mathematically. </p>
+<p>So we decided we want to bypass AC signals 50Hz or higher to ground. </p>
+<p>The typical value of an emitter resistor is 400-500‎Ω. The resistance is kept low so that gain on the transistor isn’t  lowered too much. </p>
+<p>So let’s say we choose an emitter resistor of 470‎Ω. </p>
+<p>This means that we want the reactance of the capacitor to be one-tenth of 470‎Ω or less, which is 47‎Ω or lower.  So this is our target. </p>
+<p>The formula for the reactance of a capacitor is, XC= 1/2πfc= 1/2(3.14)(50Hz)(C)=47Ω. Solving for the  capacitance, C, we get the value of approximately 67μF. So we need a  capacitor of at least 67μF to get a resistance of one-tenth  the value of 470Ω resistor. </p>
+<p>Since a 67μF capacitor isn’t readily available, we can round up to 100μF, which is readily available and easy to obtain.  This is even better, because with a larger capacitance, the capacitor  offers even less resistance to the AC signal. If we plug a  100μF capacitor into the same capacitor reactance formula, we get XC= 1/2πfc= 1/2(3.14)(50Hz)(100μF)=31.8Ω. This is much  lower than 1/10 of the 470Ω resistor that we have in parallel. So it  will act effectively to short all AC signals 50Hz or higher  to ground to clean up the DC signal. </p>
+<p>Even if you wanted, you could increase the  capacitance even more to allow for less AC noise on the signal. But a  lot  of times, this will not be done for cost and size constraints reasons.  The larger the size a capacitor is, the more it costs per unit. Also the larger the size of a capacitor, the larger physically is. Therefore, if a company is designing a product, the size of the capacitor could be a problem if there are size constraint issues. The way things are going in electronics, companies want  products to be as small and concise as possible. So due to reasons such  as these, larger value capacitors won’t always be chosen, but  theoretically, they would increase the purity of the DC signal, by  allowing more AC to ground. </p>
+<p>So again, this is a summary of what a bypass capacitor is and how to select the value of them based on the lowest  AC signal desired to be filtered out and the value of the resistance in parallel with the capacitor. </p>
+<p>You can check out our <a target="_blank" rel="noopener" href="http://www.learningaboutelectronics.com/Articles/Bypass-capacitor-calculator.php">bypass capacitor calculator</a> to calculate  the value of a bypass capacitor based on the input AC signal frequency and the value of the resistor in parallel. </p>
+<p>Related Resources</p>
 <p>​          </p>
 
       
