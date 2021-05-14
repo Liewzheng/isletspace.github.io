@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="next-config" data-name="main" type="application/json">{&quot;hostname&quot;:&quot;islet.space&quot;,&quot;root&quot;:&quot;&#x2F;&quot;,&quot;images&quot;:&quot;&#x2F;images&quot;,&quot;scheme&quot;:&quot;Muse&quot;,&quot;version&quot;:&quot;8.3.0&quot;,&quot;exturl&quot;:false,&quot;sidebar&quot;:{&quot;position&quot;:&quot;left&quot;,&quot;display&quot;:&quot;post&quot;,&quot;padding&quot;:18,&quot;offset&quot;:12},&quot;copycode&quot;:false,&quot;bookmark&quot;:{&quot;enable&quot;:false,&quot;color&quot;:&quot;#222&quot;,&quot;save&quot;:&quot;auto&quot;},&quot;fancybox&quot;:false,&quot;mediumzoom&quot;:false,&quot;lazyload&quot;:false,&quot;pangu&quot;:false,&quot;comments&quot;:{&quot;style&quot;:&quot;tabs&quot;,&quot;active&quot;:null,&quot;storage&quot;:true,&quot;lazyload&quot;:false,&quot;nav&quot;:null},&quot;motion&quot;:{&quot;enable&quot;:true,&quot;async&quot;:false,&quot;transition&quot;:{&quot;post_block&quot;:&quot;fadeIn&quot;,&quot;post_header&quot;:&quot;fadeInDown&quot;,&quot;post_body&quot;:&quot;fadeInDown&quot;,&quot;coll_header&quot;:&quot;fadeInLeft&quot;,&quot;sidebar&quot;:&quot;fadeInUp&quot;}},&quot;prism&quot;:false,&quot;i18n&quot;:{&quot;placeholder&quot;:&quot;Searching...&quot;,&quot;empty&quot;:&quot;We didn&#39;t find any results for the search: ${query}&quot;,&quot;hits_time&quot;:&quot;${hits} results found in ${time} ms&quot;,&quot;hits&quot;:&quot;${hits} results found&quot;}}</script>
+<meta name="description" content="接口其实包括对 “接口” （interface）和 “连接器” （connector）这两个方面的讨论，“连接器”我们通常也称之为“接头”或“插头”。 “接口”定义了电子设备之间连接的物理特性，包括传输的信号频率、强度，以及相应连线的类型、数量，还包括插头、插座的结构设计；而“连接器”则是在物理上实现设备之间连接的装置。 TRSTRS端子（TRS connector）是一种常用于连接音响设备，用以">
+<meta property="og:type" content="article">
+<meta property="og:title" content="TRS端子及其他音频接口">
+<meta property="og:url" content="http://islet.space/2021/05/11/Signal/2021-05-11-TRS%E7%AB%AF%E5%AD%90%E5%8F%8A%E5%85%B6%E4%BB%96%E9%9F%B3%E9%A2%91%E6%8E%A5%E5%8F%A3/index.html">
+<meta property="og:site_name" content="Coder的孤岛">
+<meta property="og:description" content="接口其实包括对 “接口” （interface）和 “连接器” （connector）这两个方面的讨论，“连接器”我们通常也称之为“接头”或“插头”。 “接口”定义了电子设备之间连接的物理特性，包括传输的信号频率、强度，以及相应连线的类型、数量，还包括插头、插座的结构设计；而“连接器”则是在物理上实现设备之间连接的装置。 TRSTRS端子（TRS connector）是一种常用于连接音响设备，用以">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://pic.islet.space/2021/05/72f082025aafa40fc0dca129a764034f78f0192f">
+<meta property="og:image" content="https://pic.islet.space/2021/05/Cg-4WlUQA2qIVD1QAAEWTBx9jskAAAGGAKz658AARZk513.jpg">
+<meta property="og:image" content="https://pic.islet.space/2021/05/41_2.jpg">
+<meta property="og:image" content="https://article-fd.zol-img.com.cn/t_s640x2000/g2/M00/01/08/Cg-4WlUQBM2IO7yBAAPH1zKABagAAAGHwBFP9AAA8fv952.jpg">
+<meta property="og:image" content="https://pic.islet.space/2021/05/2021-05-11_16-39.png">
+<meta property="og:image" content="https://pic.islet.space/2021/05/image-20210511164353982.png">
+<meta property="og:image" content="https://article-fd.zol-img.com.cn/t_s640x2000/g2/M00/01/08/Cg-4WlUQCFeITgCFAAaVRivfdawAAAGKwBI8wMABpVe851.jpg">
+<meta property="og:image" content="https://article-fd.zol-img.com.cn/t_s640x2000/g2/M00/01/08/Cg-4WVUQCFyIRm-6AAMW5z_mkQ8AAAGKwB5ZmQAAxb_659.jpg">
+<meta property="og:image" content="https://article-fd.zol-img.com.cn/t_s640x2000/g2/M00/01/08/Cg-4WVUQChyIbKeoAALaNHpTfMUAAAGMAMweHgAAtpM096.jpg">
+<meta property="og:image" content="https://article-fd.zol-img.com.cn/t_s640x2000/g2/M00/01/08/Cg-4WlUQDLCIUqT0AAHcPS_ygasAAAGOQEvIJQAAdxV227.jpg">
+<meta property="article:published_time" content="2021-05-11T08:00:00.000Z">
+<meta property="article:modified_time" content="2021-05-14T11:47:43.235Z">
+<meta property="article:author" content="Liewzheng">
+<meta property="article:tag" content="TRS">
+<meta property="article:tag" content="stereo">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://pic.islet.space/2021/05/72f082025aafa40fc0dca129a764034f78f0192f">
+
+
+<link rel="canonical" href="http://islet.space/2021/05/11/Signal/2021-05-11-TRS%E7%AB%AF%E5%AD%90%E5%8F%8A%E5%85%B6%E4%BB%96%E9%9F%B3%E9%A2%91%E6%8E%A5%E5%8F%A3/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{&quot;sidebar&quot;:&quot;&quot;,&quot;isHome&quot;:false,&quot;isPost&quot;:true,&quot;lang&quot;:&quot;en&quot;,&quot;comments&quot;:true,&quot;permalink&quot;:&quot;http:&#x2F;&#x2F;islet.space&#x2F;2021&#x2F;05&#x2F;11&#x2F;Signal&#x2F;2021-05-11-TRS%E7%AB%AF%E5%AD%90%E5%8F%8A%E5%85%B6%E4%BB%96%E9%9F%B3%E9%A2%91%E6%8E%A5%E5%8F%A3&#x2F;&quot;,&quot;path&quot;:&quot;2021&#x2F;05&#x2F;11&#x2F;Signal&#x2F;2021-05-11-TRS端子及其他音频接口&#x2F;&quot;,&quot;title&quot;:&quot;TRS端子及其他音频接口&quot;}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">&quot;&quot;</script>
+<title>TRS端子及其他音频接口 | Coder的孤岛</title><script src="/js/config.js"></script>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Coder的孤岛</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">islet of the coder</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#TRS"><span class="nav-number">1.</span> <span class="nav-text">TRS</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B8%B8%E8%A7%81%E8%AE%BE%E5%A4%87"><span class="nav-number">1.1.</span> <span class="nav-text">常见设备</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TRS%E6%AF%8D%E5%A4%B4"><span class="nav-number">1.2.</span> <span class="nav-text">TRS母头</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#RCA"><span class="nav-number">2.</span> <span class="nav-text">RCA</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#XLR"><span class="nav-number">3.</span> <span class="nav-text">XLR</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Liewzheng</p>
+  <div class="site-description" itemprop="description">笔记分享的旮旯孤岛而已</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">51</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">94</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="mailto:liewzheng@qq.com" title="E-Mail → mailto:liewzheng@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://islet.space/2021/05/11/Signal/2021-05-11-TRS%E7%AB%AF%E5%AD%90%E5%8F%8A%E5%85%B6%E4%BB%96%E9%9F%B3%E9%A2%91%E6%8E%A5%E5%8F%A3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Liewzheng">
+      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coder的孤岛">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          TRS端子及其他音频接口
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-05-11 16:00:00" itemprop="dateCreated datePublished" datetime="2021-05-11T16:00:00+08:00">2021-05-11</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2021-05-14 19:47:43" itemprop="dateModified" datetime="2021-05-14T19:47:43+08:00">2021-05-14</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Signal/" itemprop="url" rel="index"><span itemprop="name">Signal</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>接口其实包括对 “<strong>接口</strong>” （interface）和 “<strong>连接器</strong>” （connector）这两个方面的讨论，“连接器”我们通常也称之为“接头”或“插头”。 “接口”定义了电子设备之间连接的物理特性，包括传输的<strong>信号频率</strong>、<strong>强度</strong>，以及相应<strong>连线的类型</strong>、<strong>数量</strong>，还包括<strong>插头</strong>、<strong>插座</strong>的结构设计；而“连接器”则是在物理上实现设备之间连接的装置。</p>
+<h1 id="TRS"><a href="#TRS" class="headerlink" title="TRS"></a>TRS</h1><p>TRS端子（TRS connector）是一种常用于连接音响设备，用以传递音频信号的连接器。该词是其三个组成部件的首字母缩写：<strong>Tip</strong>（尖）、<strong>Ring</strong>（环）、<strong>Sleeve</strong>（套）。</p>
+<p>由于该种接头一般用于接插耳机和麦克风，因此也称 Phone Jack。虽然统称TRS，但也可依据具体的插头/插座的<strong>环（R）数</strong> 不同而分别称为<strong>TS</strong>（无环，即尖和套各提供一个接触点）、<strong>TRS</strong>（一环，三个接触点）、<strong>TRRS</strong>（两环，四个接触点）等等。</p>
+<p>日常生活中我们见得最多的就是<strong>TRS</strong>接口，它的接头外观是圆柱体形状，通常有三种尺寸**1/4”<strong>（6.3mm）、</strong>1/8”<strong>（3.5mm）、</strong>3/32”**（2.5mm），最常见的是3.5mm尺寸的接头。</p>
+<img src="https://pic.islet.space/2021/05/72f082025aafa40fc0dca129a764034f78f0192f" alt="img" style="zoom:50%;" />
+
+<p><strong>TRS</strong> 的含义是Tip（signal）、Ring（signal）、Sleeve（ground），分别代表了这种接头的3个触点，我们看到的就是被两段绝缘材料隔离开的三段金属柱。因此，3.5mm接头和6.3mm接头也被人称为“小三芯”和“大三芯”。</p>
+<img src="https://pic.islet.space/2021/05/Cg-4WlUQA2qIVD1QAAEWTBx9jskAAAGGAKz658AARZk513.jpg" alt=" " style="zoom: 150%;" />
+
+
+
+<p>TRS接口就是一个圆孔，其内部与接头对应，也有三个触点，彼此之间也被绝缘材料隔开。</p>
+<h2 id="常见设备"><a href="#常见设备" class="headerlink" title="常见设备"></a>常见设备</h2><p>通常，手机上的耳机插口都是TRRS，而电脑上通常是两个TRS，一个传声音的左右声道，一个传话筒的左右声道。</p>
+<p>而为了使得双TRS的耳麦可以插到手机上，产生了转接头，也就是图中的第二个设备。不过我们考虑一下会发现，两个TRS都是3个信号，合并到一个TRRS接口上，信号变成了4个，减少了两个。除去一个共地的GND，还少了一个信号，去哪了呢？其实这是因为它会把LMIC和RMIC合并成一个MIC，而且TRRS本身就是只能传输一个MIC信号的，不存在左右声道。</p>
+<p>当然了，也有反过来将TRRS转接成两个TRS接口的转接头。</p>
+<p>此外，还有TS麦克风，如图中的第四个设备。如果话筒采用的这种接口，就默认了MIC只有一个声道，这种一般是用在小蜜蜂扩音器上。</p>
+<p><img src="https://pic.islet.space/2021/05/41_2.jpg" alt="img"></p>
+<p>当然，既然能加芯，那也可以减芯。二芯的TRS接头可以用来传送非平衡的单声道音频信号，比如电吉他用的线就是二芯的TRS线。所以，单从TRS接口外观来看，我们不会知道它是否支持平衡传输；单从芯数来看，我们也不能确定四芯及以上的TRS接头是否支持平衡传输，具体情况需要看设备。</p>
+<p>尖和套是一定要有的，但环可以根据需要加，常见的有0-2个环的，也就是TS、TRS和TRRS。环越多，可以传输的信号数量越多。</p>
+<p>因此，普通双声道耳机需要3个信号，即TRS；而如果是带麦克风的耳机，就需要4个信号了，即TRRS。注意，这里除了左声道(L)、右声道(R)以及带麦耳机所需的麦克风(MIC)信号，必须还要有地线(GND)，因为没有绝对电压而只有相对电压。</p>
+<p>在3.5mm接口上传输的是模拟信号，使用电压模拟声波。</p>
+<p>此外，还有一种用于耳机的四芯3.5mm插头则是用来传输平衡信号的。6.3mm的“大三芯”插头可用来传输平衡信号或非平衡立体声信号，也就是说它可以和XLR平衡接口一样，能够传输平衡信号，但因制作这样的平衡线成本比较高，所以一般只用在高档专业音频设备上。</p>
+<img src="https://article-fd.zol-img.com.cn/t_s640x2000/g2/M00/01/08/Cg-4WlUQBM2IO7yBAAPH1zKABagAAAGHwBFP9AAA8fv952.jpg" alt="拒绝做小白 你应该知道的常见音频接口 " style="zoom:67%;" />
+
+<div style="text-align: center; font-weight: 900;">二芯6.3mm TRS电吉他线</div>
+
+
+
+
+
+<h2 id="TRS母头"><a href="#TRS母头" class="headerlink" title="TRS母头"></a>TRS母头</h2><p>ADI公司旗下的 ADAU1772 评估板采用的就是CUI公司旗下型号为 SJ-3523-SMT-TR 的TRS母头</p>
+<p><img src="https://pic.islet.space/2021/05/2021-05-11_16-39.png"></p>
+<p>说明书如：<a target="_blank" rel="noopener" href="https://www.cuidevices.com/product/resource/digikeypdf/sj-352x-smt.pdf">sj-352x-smt.pdf</a> ，其规格如下：</p>
+<p><img src="https://pic.islet.space/2021/05/image-20210511164353982.png" alt="image-20210511164353982"></p>
+<h1 id="RCA"><a href="#RCA" class="headerlink" title="RCA"></a>RCA</h1><p> RCA接口在我们日常生活中也非常常见，音箱、电视、功放、DVD机等设备上基本都有。它得名于美国无线电公司的英文缩写（Radio Corporation of America），上世纪40年代的时候，该公司将这种接口引入市场，用它来连接留声机和扬声器，也因此，它在欧州又称为PHONO接口。我们对它更熟悉的接头称呼则是“莲花头”。</p>
+<img src="https://article-fd.zol-img.com.cn/t_s640x2000/g2/M00/01/08/Cg-4WlUQCFeITgCFAAaVRivfdawAAAGKwBI8wMABpVe851.jpg" alt="拒绝做小白 你应该知道的常见音频接口 " style="zoom:67%;" />
+
+<div style="text-align: center; font-weight: 900;">RCA接口在我们日常生活中非常常见</div>
+
+<img src="https://article-fd.zol-img.com.cn/t_s640x2000/g2/M00/01/08/Cg-4WVUQCFyIRm-6AAMW5z_mkQ8AAAGKwB5ZmQAAxb_659.jpg" alt="拒绝做小白 你应该知道的常见音频接口 " style="zoom:67%;" />
+
+<div style="text-align: center; font-weight: 900;">被称为“莲花头”的RCA接头</div>
+
+
+
+<p>RCA接口采用同轴传输信号的方式，中轴用来传输信号，外沿一圈的接触层用来接地。每一根RCA线缆负责传输一个声道的音频信号，因此，可以根据对声道的实际需要，使用与之数量相匹配的RCA线缆。比如要组双声道立体声就需要两根RCA线缆。</p>
+<h1 id="XLR"><a href="#XLR" class="headerlink" title="XLR"></a>XLR</h1><p>XLR接口又被称为“卡农口”，这是因为James H. Cannon创立的Cannon Electric公司是它最初的生产商。它们最早的产品是“cannon X”系列，后来改进产品增加了一个锁定装置（Latch），于是在“X”后面增加了一个“L”；再后来又围绕着接头的金属触点增加了橡胶封口（Rubber compound），于是又在“L”后面增加了一个“R”。人们就把三个大写字母组合在一起，称这种接头为“XLR connector”。</p>
+<p><img src="https://article-fd.zol-img.com.cn/t_s640x2000/g2/M00/01/08/Cg-4WVUQChyIbKeoAALaNHpTfMUAAAGMAMweHgAAtpM096.jpg"></p>
+<div style="text-align: center; font-weight: 900;">比较常见的三芯XLR接口</div>
+
+<p><img src="https://article-fd.zol-img.com.cn/t_s640x2000/g2/M00/01/08/Cg-4WlUQDLCIUqT0AAHcPS_ygasAAAGOQEvIJQAAdxV227.jpg" alt=" "></p>
+<div style="text-align: center; font-weight: 900;">有的耳放上面会提供四芯平衡XLR接口</div>
+
+<p>我们通常见到的XLR插头是3脚的，当然也有2脚、4脚、5脚、6脚的，比如在一些高档耳机线上，我们也会看到四芯XLR平衡接头。XLR接口与“大三芯”TRS接口一样，可以用来传输音频平衡信号。这里我们简单说一下平衡信号与非平衡信号。声波转换成电信号后，如果直接传送就是非平衡信号，如果把原始信号反相180度，然后同时传送原始信号和反相信号，这就是平衡信号。平衡传输就是利用相位抵消原理，将音频信号传输过程中受到的其他干扰降至最低。 当然，XLR接口也跟“大三芯”TRS接口一样，可以传输非平衡信号，因此光从接口看，我们是看不出来它到底传输的是哪种信号。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/TRS/" rel="tag"># TRS</a>
+              <a href="/tags/stereo/" rel="tag"># stereo</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/05/06/Signal/2021-05-06-%E6%BB%A4%E6%B3%A2%E5%99%A8%E3%80%81%E5%A2%9E%E7%9B%8A%E5%92%8C%E9%9F%B3%E9%87%8F/" rel="prev" title="晶振、滤波器、运放、增益与音量">
+                  <i class="fa fa-chevron-left"></i> 晶振、滤波器、运放、增益与音量
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/05/11/Computer/2021-05-11-%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" rel="next" title="数据库学习笔记">
+                  数据库学习笔记 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+<script src="/js/comments.js"></script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">粤ICP备19004822号 </a>
+  </div>
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Liewzheng</span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

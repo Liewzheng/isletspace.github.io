@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="next-config" data-name="main" type="application/json">{&quot;hostname&quot;:&quot;islet.space&quot;,&quot;root&quot;:&quot;&#x2F;&quot;,&quot;images&quot;:&quot;&#x2F;images&quot;,&quot;scheme&quot;:&quot;Muse&quot;,&quot;version&quot;:&quot;8.3.0&quot;,&quot;exturl&quot;:false,&quot;sidebar&quot;:{&quot;position&quot;:&quot;left&quot;,&quot;display&quot;:&quot;post&quot;,&quot;padding&quot;:18,&quot;offset&quot;:12},&quot;copycode&quot;:false,&quot;bookmark&quot;:{&quot;enable&quot;:false,&quot;color&quot;:&quot;#222&quot;,&quot;save&quot;:&quot;auto&quot;},&quot;fancybox&quot;:false,&quot;mediumzoom&quot;:false,&quot;lazyload&quot;:false,&quot;pangu&quot;:false,&quot;comments&quot;:{&quot;style&quot;:&quot;tabs&quot;,&quot;active&quot;:null,&quot;storage&quot;:true,&quot;lazyload&quot;:false,&quot;nav&quot;:null},&quot;motion&quot;:{&quot;enable&quot;:true,&quot;async&quot;:false,&quot;transition&quot;:{&quot;post_block&quot;:&quot;fadeIn&quot;,&quot;post_header&quot;:&quot;fadeInDown&quot;,&quot;post_body&quot;:&quot;fadeInDown&quot;,&quot;coll_header&quot;:&quot;fadeInLeft&quot;,&quot;sidebar&quot;:&quot;fadeInUp&quot;}},&quot;prism&quot;:false,&quot;i18n&quot;:{&quot;placeholder&quot;:&quot;Searching...&quot;,&quot;empty&quot;:&quot;We didn&#39;t find any results for the search: ${query}&quot;,&quot;hits_time&quot;:&quot;${hits} results found in ${time} ms&quot;,&quot;hits&quot;:&quot;${hits} results found&quot;}}</script>
+<meta name="description" content="I2C标准：《NXP_UM10204_I2C-bus specification and user manual》  I2C总线是一个事实上的世界标准，现在已经在50多家公司生产的1000多种不同的IC中实施。 此外，多功能的I2C总线被用于各种控制架构，如系统管理总线（SMBus）、电源管理总线（PMBus）、智能平台管理接口（IPMI）、显示数据通道（DDC）和高级电信计算架构（ATCA）。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="I2C、SPI、TDM及I2S">
+<meta property="og:url" content="http://islet.space/2021/05/14/Communication/2021-05-14-I2C%E3%80%81SPI%E3%80%81TDM%E5%8F%8AI2S/index.html">
+<meta property="og:site_name" content="Coder的孤岛">
+<meta property="og:description" content="I2C标准：《NXP_UM10204_I2C-bus specification and user manual》  I2C总线是一个事实上的世界标准，现在已经在50多家公司生产的1000多种不同的IC中实施。 此外，多功能的I2C总线被用于各种控制架构，如系统管理总线（SMBus）、电源管理总线（PMBus）、智能平台管理接口（IPMI）、显示数据通道（DDC）和高级电信计算架构（ATCA）。">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://pic.islet.space/2021/05/image-20210514111033910.png">
+<meta property="og:image" content="https://pic.islet.space/2021/05/image-20210514112114667.png">
+<meta property="og:image" content="https://pic.islet.space/2021/05/image-20210514134830615.png">
+<meta property="og:image" content="https://pic.islet.space/2021/05/image-20210514141512136.png">
+<meta property="og:image" content="https://pic.islet.space/2021/05/image-20210514142116674.png">
+<meta property="og:image" content="https://pic.islet.space/2021/05/image-20210514144620803.png">
+<meta property="og:image" content="http://islet.space/home/kali/.config/Typora/typora-user-images/image-20210514154506246.png">
+<meta property="og:image" content="https://pic.islet.space/2021/05/image-20210514170202184.png">
+<meta property="article:published_time" content="2021-05-14T02:55:00.000Z">
+<meta property="article:modified_time" content="2021-05-14T11:51:06.377Z">
+<meta property="article:author" content="Liewzheng">
+<meta property="article:tag" content="I2C">
+<meta property="article:tag" content="SPI">
+<meta property="article:tag" content="TDM">
+<meta property="article:tag" content="I2S">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://pic.islet.space/2021/05/image-20210514111033910.png">
+
+
+<link rel="canonical" href="http://islet.space/2021/05/14/Communication/2021-05-14-I2C%E3%80%81SPI%E3%80%81TDM%E5%8F%8AI2S/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{&quot;sidebar&quot;:&quot;&quot;,&quot;isHome&quot;:false,&quot;isPost&quot;:true,&quot;lang&quot;:&quot;en&quot;,&quot;comments&quot;:true,&quot;permalink&quot;:&quot;http:&#x2F;&#x2F;islet.space&#x2F;2021&#x2F;05&#x2F;14&#x2F;Communication&#x2F;2021-05-14-I2C%E3%80%81SPI%E3%80%81TDM%E5%8F%8AI2S&#x2F;&quot;,&quot;path&quot;:&quot;2021&#x2F;05&#x2F;14&#x2F;Communication&#x2F;2021-05-14-I2C、SPI、TDM及I2S&#x2F;&quot;,&quot;title&quot;:&quot;I2C、SPI、TDM及I2S&quot;}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">&quot;&quot;</script>
+<title>I2C、SPI、TDM及I2S | Coder的孤岛</title><script src="/js/config.js"></script>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Coder的孤岛</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">islet of the coder</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#I2C"><span class="nav-number">1.</span> <span class="nav-text">I2C</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%AF%E8%AF%AD"><span class="nav-number">1.1.</span> <span class="nav-text">术语</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BA%BF%E7%89%B9%E5%BE%81"><span class="nav-number">1.2.</span> <span class="nav-text">总线特征</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%BB%E7%BA%BF%E7%A1%AC%E4%BB%B6%E8%A6%81%E6%B1%82"><span class="nav-number">1.2.1.</span> <span class="nav-text">总线硬件要求</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A0%87%E5%87%86%E4%BC%A0%E8%BE%93%E9%80%9F%E7%8E%87"><span class="nav-number">1.2.2.</span> <span class="nav-text">标准传输速率</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8D%8F%E8%AE%AE%E8%A6%81%E6%B1%82"><span class="nav-number">1.3.</span> <span class="nav-text">协议要求</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%80%BB%E8%BE%91%E7%94%B5%E5%B9%B3%E8%A7%84%E5%AE%9A"><span class="nav-number">1.3.1.</span> <span class="nav-text">逻辑电平规定</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%97%B6%E5%BA%8F%E6%AD%A3%E7%A1%AE%E6%80%A7"><span class="nav-number">1.3.2.</span> <span class="nav-text">时序正确性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BC%80%E5%A7%8B%E5%8F%8A%E7%BB%93%E6%9D%9F%E6%A0%87%E5%BF%97"><span class="nav-number">1.3.3.</span> <span class="nav-text">开始及结束标志</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%BB%E7%BA%BF%E7%8A%B6%E6%80%81"><span class="nav-number">1.3.4.</span> <span class="nav-text">总线状态</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BC%A0%E8%BE%93%E6%AF%94%E7%89%B9%E4%BD%8D"><span class="nav-number">1.3.5.</span> <span class="nav-text">传输比特位</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A1%AE%E8%AE%A4%E6%A0%87%E5%BF%97"><span class="nav-number">1.3.6.</span> <span class="nav-text">确认标志</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%97%B6%E9%92%9F%E5%90%8C%E6%AD%A5"><span class="nav-number">1.3.7.</span> <span class="nav-text">时钟同步</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#SPI"><span class="nav-number">2.</span> <span class="nav-text">SPI</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%AF%E8%AF%AD-1"><span class="nav-number">2.1.</span> <span class="nav-text">术语</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SPI%E5%92%8CI2C%E7%9A%84%E5%AF%B9%E6%AF%94"><span class="nav-number">2.2.</span> <span class="nav-text">SPI和I2C的对比</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#UART"><span class="nav-number">3.</span> <span class="nav-text">UART</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#TDM"><span class="nav-number">4.</span> <span class="nav-text">TDM</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#I2S"><span class="nav-number">5.</span> <span class="nav-text">I2S</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Liewzheng</p>
+  <div class="site-description" itemprop="description">笔记分享的旮旯孤岛而已</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">51</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">94</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="mailto:liewzheng@qq.com" title="E-Mail → mailto:liewzheng@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://islet.space/2021/05/14/Communication/2021-05-14-I2C%E3%80%81SPI%E3%80%81TDM%E5%8F%8AI2S/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Liewzheng">
+      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coder的孤岛">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          I2C、SPI、TDM及I2S
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2021-05-14 10:55:00 / Modified: 19:51:06" itemprop="dateCreated datePublished" datetime="2021-05-14T10:55:00+08:00">2021-05-14</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Communication/" itemprop="url" rel="index"><span itemprop="name">Communication</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="I2C"><a href="#I2C" class="headerlink" title="I2C"></a>I2C</h1><p><strong>标准</strong>：<a target="_blank" rel="noopener" href="https://www.nxp.com/docs/en/user-guide/UM10204.pdf">《NXP_UM10204_I2C-bus specification and user manual》</a></p>
+<blockquote>
+<p><em>I2C总线是一个事实上的世界标准，现在已经在50多家公司生产的1000多种不同的IC中实施。</em></p>
+<p><em>此外，多功能的I2C总线被用于各种控制架构，如系统管理总线（SMBus）、电源管理总线（PMBus）、智能平台管理接口（IPMI）、显示数据通道（DDC）和高级电信计算架构（ATCA）。</em></p>
+<p><em>本文件帮助设备和系统设计者了解I2C总线的工作原理并实现工作应用。描述了各种操作模式。它包含了对I2C<strong>总线数据传输</strong>、握手和总线仲裁方案的全面介绍。详细的章节涵盖了I2C总线在每种工作模式下的时序和电气规范。</em></p>
+<p><em>I2C兼容芯片的设计者应将该文件作为参考，并确保新设备满足该文件中规定的所有限制。包含I2C器件的系统的设计者应审查本文件，并参考各个组件的数据表。</em></p>
+<p>——翻译自标准文件</p>
+</blockquote>
+<p>I2C(Inter－Integrated Circuit)是一种通用的总线协议。它是由Philips(飞利浦)公司，现NXP(恩智浦)半导体开发的一种简单的双向两线制总线协议标准。</p>
+<p>对于硬件设计人员来说，只需要2个管脚，极少的连接线和面积，就可以实现芯片间的通讯，对于软件开发者来说，可以使用同一个I2C驱动库，来实现实现不同器件的驱动，大大减少了软件的开发时间。极低的工作电流，降低了系统的功耗，完善的应答机制大大增强通讯的可靠性。</p>
+<h2 id="术语"><a href="#术语" class="headerlink" title="术语"></a>术语</h2><img src="https://pic.islet.space/2021/05/image-20210514111033910.png" alt="image-20210514111033910" style="zoom: 67%;" />
+
+<table>
+<thead>
+<tr>
+<th>术语</th>
+<th>释义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>总线</td>
+<td>传输数据的通路</td>
+</tr>
+<tr>
+<td>传送者</td>
+<td>传输数据至总线的设备</td>
+</tr>
+<tr>
+<td>接收者</td>
+<td>从总线上接受数据的设备</td>
+</tr>
+<tr>
+<td>主（机）</td>
+<td>主动开启传输、生成时钟信号 并 主动结束传输的设备</td>
+</tr>
+<tr>
+<td>从（机）</td>
+<td>由主机寻址的设备</td>
+</tr>
+<tr>
+<td>多主（机）</td>
+<td>在不损坏数据传输的情况下允许多主机可以试图同时控制总线</td>
+</tr>
+<tr>
+<td>仲裁</td>
+<td>确保在有多个主机同时试图控制总线的情况下，只允许一个主机这样做，而且仲裁成功的信息不会被（其他设备）破坏的程序。</td>
+</tr>
+<tr>
+<td>同步</td>
+<td>确保两个及以上设备其时钟信号的同步</td>
+</tr>
+</tbody></table>
+<p>以下这个图应该可以较好地解释“多主机”的概念，多个主机可以同时向外发出传输数据的申请，也可以主动结束其数据传输。虽然，I2C降低了总线复用的成本，但仍需要“仲裁”机制来解决多个主机之间的无序竞争状态。</p>
+<img src="https://pic.islet.space/2021/05/image-20210514112114667.png" alt="image-20210514112114667" style="zoom:67%;" />
+
+<h2 id="总线特征"><a href="#总线特征" class="headerlink" title="总线特征"></a>总线特征</h2><h3 id="总线硬件要求"><a href="#总线硬件要求" class="headerlink" title="总线硬件要求"></a>总线硬件要求</h3><p>通过 <strong>串行数据</strong>（SDA，Serial Data）和 <strong>串行时钟</strong>（SCL，Serial Clock）两条线路对设备进行连接。</p>
+<p>每个设备都通过自身的通信设备地址进行互相辨别，且每个设备都可以当发送者或接收者，取决于设备自身的功能定义。</p>
+<h3 id="标准传输速率"><a href="#标准传输速率" class="headerlink" title="标准传输速率"></a>标准传输速率</h3><p>各模式、速率及其传输方向见下方表格。</p>
+<blockquote>
+<p>Data on the I2C-bus can be transferred at rates of up to 100 kbit/s in the Standard-mode, up to 400 kbit/s in the Fast-mode, up to 1 Mbit/s in Fast-mode Plus, or up to 3.4 Mbit/s in the High-speed mode. </p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>MODE</th>
+<th>RATE</th>
+<th>TRANSFER DIRECTION</th>
+<th>DOWNWARD COMPATIBLE WITH</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>STANDARD</td>
+<td>100 Kbit/s</td>
+<td>bidirectional</td>
+<td>/</td>
+</tr>
+<tr>
+<td>FAST</td>
+<td>400 Kbit/s</td>
+<td>bidirectional</td>
+<td>STANDARD</td>
+</tr>
+<tr>
+<td>FAST-PLUS</td>
+<td>1 Mbit/s</td>
+<td>bidirectional</td>
+<td>STANDARD / FAST</td>
+</tr>
+<tr>
+<td>HIGH-SPEED</td>
+<td>3.4 Mbit/s</td>
+<td>bidirectional</td>
+<td>STANDARD / FAST / FAST-PLUS</td>
+</tr>
+<tr>
+<td>ULTRA-FAST</td>
+<td>5 Mbit/s</td>
+<td>unidirectional</td>
+<td>/</td>
+</tr>
+</tbody></table>
+<h2 id="协议要求"><a href="#协议要求" class="headerlink" title="协议要求"></a>协议要求</h2><p>以下协议要求适用于双向通信模式（不包括ULTRA-FAST模式下的单向通信）</p>
+<h3 id="逻辑电平规定"><a href="#逻辑电平规定" class="headerlink" title="逻辑电平规定"></a>逻辑电平规定</h3><p>由于I2C的接入设备众多（如CMOS、NMOS、Bipolar等），因此逻辑电平0和逻辑电平1（的电压）并不是固定不变的，这取决于VDD的电平。</p>
+<p>输入参考电平会被控制在VDD电平的30%<del>70%之间。 V</del>IL~ = 0.3 * V<del>DD</del>；V<del>IH</del> = 0.7 * V<del>DD</del> 。</p>
+<p>某些传统设备的输入电平会被固定在1.5V（V<del>IL</del>）和3.0V（V<del>IH</del>），但新设备都要求是 30%V<del>DD</del> 及 70%V<del>DD</del> 。</p>
+<p><strong>注意</strong>：V<del>IL</del>、V<del>IH</del>、V<del>OL</del>、V<del>OH</del>都是以参考电压作为基准的，即要达到某个电压的百分之多少时，才能够被认为是 <strong>逻辑电平0</strong> 或 <strong>逻辑电平1</strong> 。例如，可将V<del>IL</del> 视作当V<del>DD</del>下降到只有30%及以下时，为逻辑电平0，30%V<del>DD</del>是其逻辑电平的最高阈值；同理可得 V<del>IH</del> ；超过这个值而未到达70%的中间态则为不确定态。</p>
+<blockquote>
+<p>Due to the variety of different technology devices (CMOS, NMOS, bipolar) that can be connected to the I2C-bus, the levels of the logical ‘0’ (LOW) and ‘1’ (HIGH) are not fixed and depend on the associated level of VDD . Input reference levels are set as 30 % and 70 % of VDD ; VIL is 0.3VDD and VIH is 0.7V DD .</p>
+<p>See Figure 38, timing diagram. Some legacy device input levels were fixed at V<del>IL</del> = 1.5 V and V<del>IH</del> = 3.0 V, but all new devices require this 30 %/70 % specification. </p>
+</blockquote>
+<img src="https://pic.islet.space/2021/05/image-20210514134830615.png" alt="image-20210514134830615" style="zoom: 67%;" />
+
+
+
+<h3 id="时序正确性"><a href="#时序正确性" class="headerlink" title="时序正确性"></a>时序正确性</h3><ul>
+<li>SDA上的数据必须在SCL高电平期间保持稳定，即不能在SCL高电平期间发生翻转（后见原因），只有在SCL低电平时可以翻转。</li>
+<li>时钟脉冲信号生成要先于数据传送。</li>
+</ul>
+<blockquote>
+<p>The data on the SDA line must be stable during the HIGH period of the clock. The HIGH or LOW state of the data line can only change when the clock signal on the SCL line is LOW (see Figure 4). One clock pulse is generated for each data bit transferred.</p>
+</blockquote>
+<img src="https://pic.islet.space/2021/05/image-20210514141512136.png" alt="image-20210514141512136" style="zoom: 80%;" />
+
+
+
+<h3 id="开始及结束标志"><a href="#开始及结束标志" class="headerlink" title="开始及结束标志"></a>开始及结束标志</h3><ul>
+<li><p>传输开始时必须以一个 <strong>开始</strong> 信号作为标志，结束时必须以一个 <strong>结束</strong> 信号作为标志。</p>
+</li>
+<li><p><strong>开始信号 <strong>是以SCL为高电平时的 <strong>SDA电平的由高转低</strong> 作为标志，</strong>结束信号</strong> 是以SCL高电平时的 <strong>SDA电平的由低转高</strong> 作为标志。</p>
+</li>
+<li><p>开始和结束标志必须由主设备控制。</p>
+</li>
+</ul>
+<blockquote>
+<p>All transactions begin with a START (S) and are terminated by a STOP (P) (see Figure 5). A HIGH to LOW transition on the SDA line while SCL is HIGH defines a START condition. A LOW to HIGH transition on the SDA line while SCL is HIGH defines a STOP condition.</p>
+</blockquote>
+<img src="https://pic.islet.space/2021/05/image-20210514142116674.png" alt="image-20210514142116674" style="zoom: 80%;" />
+
+<h3 id="总线状态"><a href="#总线状态" class="headerlink" title="总线状态"></a>总线状态</h3><p>总线具有两种状态，<strong>繁忙</strong>（Busy）和 <strong>空闲</strong>（Free），即 SDA电平 “开始” 后，总线进入繁忙状态， SDA电平 “结束” 后，总线进入空闲状态。</p>
+<p><strong>注意</strong>：在总线繁忙期间，发生重复的“开始”状态（而不是“结束”状态），由于“重复开始”和 “开始” 功能相同，为了方便，统称为 “开始”，除非特殊说明为 “重复开始”。</p>
+<blockquote>
+<p>The bus stays busy if a repeated START (Sr) is generated instead of a STOP condition. In this respect, the START (S) and repeated START (Sr) conditions are functionally identical. For the remainder of this document, therefore, the S symbol is used as a generic term to represent both the START and repeated START conditions, unless Sr is particularly relevant.</p>
+</blockquote>
+<h3 id="传输比特位"><a href="#传输比特位" class="headerlink" title="传输比特位"></a>传输比特位</h3><ul>
+<li>SDA线上的字节传输必须满足8位长度。</li>
+<li>每次传输数据的字节数不受限制。</li>
+<li>每个字节数后都需要跟一个<strong>确认位（Acknowledge bit）</strong>。</li>
+<li>当从机无法完整接收或传输一个完整的数据字节时，例如正在产生内部中断等，除非其完成内部的某些功能，否则该从机将能够一直拉低SCL的电平，<strong>强制让主机一直处于等待状态</strong>。只有当从机准备好接收下一个完整的字节并释放SCL时，数据传输才会继续。</li>
+</ul>
+<blockquote>
+<p>Every byte put on the SDA line must be eight bits long. The number of bytes that can be transmitted per transfer is unrestricted. Each byte must be followed by an Acknowledge bit.</p>
+<p><strong>Data is transferred with the Most Significant Bit (MSB) first</strong> (see Figure 6). If a slave cannot receive or transmit another complete byte of data until it has performed some other function, for example servicing an internal interrupt, it can hold the clock line SCL LOW to force the master into a wait state. Data transfer then continues when the slave is ready for another byte of data and releases clock line SCL.</p>
+</blockquote>
+<img src="https://pic.islet.space/2021/05/image-20210514144620803.png" alt="image-20210514144620803" style="zoom:80%;" />
+
+
+
+<h3 id="确认标志"><a href="#确认标志" class="headerlink" title="确认标志"></a>确认标志</h3><ul>
+<li>每个字节（8比特）后都跟着一个确认位，即前8位数据，第9位确认。</li>
+<li><strong>SCL上的时钟信号由主机产生，包括确认位的的第九个时钟脉冲</strong>。</li>
+<li>SDA线并不是由主机一直占有的，每发送完一个完整字节后，主机都会释放SDA线，由从机进行数据确认。</li>
+<li>发送者在确认时钟脉冲期间释放SDA线，以便接收者可以将SDA线拉低，并且在该时钟脉冲的高电平期间保持稳定的低电平（见图4）。</li>
+<li>对于设置（set-up）和保持（Hold）的时间，都应该依照表10中只针对各种不同模式的要求进行设置。</li>
+<li>如果SDA电平在第九个时钟脉冲时仍保持高电平，则被定义为 “未确认状态”。则此时主机可以发送一个“结束”标志来结束当前连接，或发送一个“开始”标志来开启一次新的传送。</li>
+</ul>
+<img src="/home/kali/.config/Typora/typora-user-images/image-20210514154506246.png" alt="image-20210514154506246" style="zoom: 80%;" />
+
+<blockquote>
+<p>The acknowledge takes place after every byte. The acknowledge bit allows the receiver to signal the transmitter that the byte was successfully received and another byte may be sent. The master generates all clock pulses, including the acknowledge ninth clock pulse.</p>
+<p>The Acknowledge signal is defined as follows: the transmitter releases the SDA line during the acknowledge clock pulse so the <em><strong>receiver can pull the SDA line LOW</strong></em> and it remains stable LOW during the HIGH period of this clock pulse (see Figure 4). Set-up and hold times (specified in Section 6) must also be taken into account.</p>
+<p>When SDA remains HIGH during this ninth clock pulse, this is defined as the Not Acknowledge signal. The master can then generate either a STOP condition to abort the transfer, or a repeated START condition to start a new transfer. </p>
+</blockquote>
+<p><strong>以下为五种“未确认/未应答”的可能情况</strong>：There are five conditions that lead to the generation of a NACK:</p>
+<ol>
+<li><strong>传输地址错误</strong>：No receiver is present on the bus with the transmitted address so there is no device to respond with an acknowledge.</li>
+<li><strong>实时处理中</strong>：The receiver is unable to receive or transmit because it is performing some real-time function and is not ready to start communication with the master.</li>
+<li><strong>数据/代码未定义</strong>：During the transfer, the receiver <strong>gets data or commands that it does not understand.</strong></li>
+<li><strong>正在传输中</strong>：During the transfer, the receiver <strong>cannot receive any more data bytes</strong>.</li>
+<li><strong>未收到结束信号（收发身份未转换）</strong>：A master-receiver must signal the end of the transfer to the slave transmitter.</li>
+</ol>
+<h3 id="时钟同步"><a href="#时钟同步" class="headerlink" title="时钟同步"></a>时钟同步</h3><p>任意几个主机都可能同时发起数据传输请求，此时只有一个主机和一个从机可以掌握总线进行通信，此时需要通过 <strong>时间同步</strong> 和 <strong>仲裁</strong> 完成对总线的调配。</p>
+<p><mark>时钟同步其实是使 **主设备 **和 <strong>从设备</strong> 这两个时钟通过 SCL线 保持同步。</mark></p>
+<p><mark>这意味着SCL线上的高电平到低电平的转换会导致相关的 <strong>主设备</strong> 开始对<strong>从设备的</strong>低电平周期进行计数，一旦一个 <strong>主设备</strong> 时钟变为低电平，它就会将SCL的低电平保持在这个状态，直到<strong>从设备的</strong>时钟变成高电平状态，SCL的电平也同步变高，从而完成两个设备时钟的同步。</mark></p>
+<img src="https://pic.islet.space/2021/05/image-20210514170202184.png" alt="image-20210514170202184" style="zoom: 67%;" />
+
+
+
+
+
+
+
+
+
+
+
+<h1 id="SPI"><a href="#SPI" class="headerlink" title="SPI"></a>SPI</h1><p>标准：</p>
+<h2 id="术语-1"><a href="#术语-1" class="headerlink" title="术语"></a>术语</h2><h2 id="SPI和I2C的对比"><a href="#SPI和I2C的对比" class="headerlink" title="SPI和I2C的对比"></a>SPI和I2C的对比</h2><table>
+<thead>
+<tr>
+<th></th>
+<th>SPI</th>
+<th>I2C</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>通信模式</td>
+<td>全双工</td>
+<td>半双工</td>
+</tr>
+<tr>
+<td>主从模式</td>
+<td>一主多从</td>
+<td>多主多从</td>
+</tr>
+<tr>
+<td>引脚占用</td>
+<td>从设备越多，对主机占用的引脚较多<br>主设备占用引脚：3+n<br>从设备占用引脚：4</td>
+<td>主从设备均占用：2</td>
+</tr>
+<tr>
+<td>应答响应</td>
+<td>无</td>
+<td>有</td>
+</tr>
+<tr>
+<td>传输速率</td>
+<td>最高：</td>
+<td>最高：3.4Mbps</td>
+</tr>
+<tr>
+<td>从机选择</td>
+<td>通过 <strong>CS(SS)选择引脚</strong> 来选择</td>
+<td>通过 <strong>器件地址</strong> 来选择</td>
+</tr>
+<tr>
+<td>数据采样</td>
+<td>在SCLK边沿采样</td>
+<td>在SCL高电平采样</td>
+</tr>
+<tr>
+<td>通信距离</td>
+<td>短</td>
+<td>短</td>
+</tr>
+</tbody></table>
+<h1 id="UART"><a href="#UART" class="headerlink" title="UART"></a>UART</h1><p>标准：</p>
+<h1 id="TDM"><a href="#TDM" class="headerlink" title="TDM"></a>TDM</h1><p>标准：</p>
+<h1 id="I2S"><a href="#I2S" class="headerlink" title="I2S"></a>I2S</h1><p>标准：</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/I2C/" rel="tag"># I2C</a>
+              <a href="/tags/SPI/" rel="tag"># SPI</a>
+              <a href="/tags/TDM/" rel="tag"># TDM</a>
+              <a href="/tags/I2S/" rel="tag"># I2S</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/05/13/Linux/Firewalld/2021-05-13-Firewalld%E9%98%B2%E7%81%AB%E5%A2%99%E8%AF%A6%E8%A7%A3/" rel="prev" title="Firewalld防火墙详解">
+                  <i class="fa fa-chevron-left"></i> Firewalld防火墙详解
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+<script src="/js/comments.js"></script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">粤ICP备19004822号 </a>
+  </div>
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Liewzheng</span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

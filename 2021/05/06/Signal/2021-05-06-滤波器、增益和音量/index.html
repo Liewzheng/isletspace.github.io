@@ -22,7 +22,7 @@
 <script class="next-config" data-name="main" type="application/json">{&quot;hostname&quot;:&quot;islet.space&quot;,&quot;root&quot;:&quot;&#x2F;&quot;,&quot;images&quot;:&quot;&#x2F;images&quot;,&quot;scheme&quot;:&quot;Muse&quot;,&quot;version&quot;:&quot;8.3.0&quot;,&quot;exturl&quot;:false,&quot;sidebar&quot;:{&quot;position&quot;:&quot;left&quot;,&quot;display&quot;:&quot;post&quot;,&quot;padding&quot;:18,&quot;offset&quot;:12},&quot;copycode&quot;:false,&quot;bookmark&quot;:{&quot;enable&quot;:false,&quot;color&quot;:&quot;#222&quot;,&quot;save&quot;:&quot;auto&quot;},&quot;fancybox&quot;:false,&quot;mediumzoom&quot;:false,&quot;lazyload&quot;:false,&quot;pangu&quot;:false,&quot;comments&quot;:{&quot;style&quot;:&quot;tabs&quot;,&quot;active&quot;:null,&quot;storage&quot;:true,&quot;lazyload&quot;:false,&quot;nav&quot;:null},&quot;motion&quot;:{&quot;enable&quot;:true,&quot;async&quot;:false,&quot;transition&quot;:{&quot;post_block&quot;:&quot;fadeIn&quot;,&quot;post_header&quot;:&quot;fadeInDown&quot;,&quot;post_body&quot;:&quot;fadeInDown&quot;,&quot;coll_header&quot;:&quot;fadeInLeft&quot;,&quot;sidebar&quot;:&quot;fadeInUp&quot;}},&quot;prism&quot;:false,&quot;i18n&quot;:{&quot;placeholder&quot;:&quot;Searching...&quot;,&quot;empty&quot;:&quot;We didn&#39;t find any results for the search: ${query}&quot;,&quot;hits_time&quot;:&quot;${hits} results found in ${time} ms&quot;,&quot;hits&quot;:&quot;${hits} results found&quot;}}</script>
 <meta name="description" content="晶振                  滤波器自百度百科： 滤波器是由 电容、电感和电阻 组成的滤波电路。滤波器可以 对 电源线中特定频率的频点 或 该频点 以外的频率 进行有效滤除，得到一个特定频率的电源信号，或消除一个特定频率后的电源信号。 自Bilibili视频： 滤波器是具有频率选择作用的 电路 或 运算处理系统， 具有 滤除噪声 和 分离各种不同信号 的功能。 即滤波器有模拟滤波器和数字">
 <meta property="og:type" content="article">
-<meta property="og:title" content="晶振、滤波器、增益与音量">
+<meta property="og:title" content="晶振、滤波器、运放、增益与音量">
 <meta property="og:url" content="http://islet.space/2021/05/06/Signal/2021-05-06-%E6%BB%A4%E6%B3%A2%E5%99%A8%E3%80%81%E5%A2%9E%E7%9B%8A%E5%92%8C%E9%9F%B3%E9%87%8F/index.html">
 <meta property="og:site_name" content="Coder的孤岛">
 <meta property="og:description" content="晶振                  滤波器自百度百科： 滤波器是由 电容、电感和电阻 组成的滤波电路。滤波器可以 对 电源线中特定频率的频点 或 该频点 以外的频率 进行有效滤除，得到一个特定频率的电源信号，或消除一个特定频率后的电源信号。 自Bilibili视频： 滤波器是具有频率选择作用的 电路 或 运算处理系统， 具有 滤除噪声 和 分离各种不同信号 的功能。 即滤波器有模拟滤波器和数字">
@@ -38,7 +38,7 @@
 <meta property="og:image" content="https://pic.islet.space/2021/05/image-20210509155156432.png">
 <meta property="og:image" content="https://pic.islet.space/2021/05/image-20210509154226811.png">
 <meta property="article:published_time" content="2021-05-06T00:55:00.000Z">
-<meta property="article:modified_time" content="2021-05-09T08:48:25.914Z">
+<meta property="article:modified_time" content="2021-05-09T09:16:58.058Z">
 <meta property="article:author" content="Liewzheng">
 <meta property="article:tag" content="filter">
 <meta property="article:tag" content="gain">
@@ -50,10 +50,10 @@
 
 
 
-<script class="next-config" data-name="page" type="application/json">{&quot;sidebar&quot;:&quot;&quot;,&quot;isHome&quot;:false,&quot;isPost&quot;:true,&quot;lang&quot;:&quot;en&quot;,&quot;comments&quot;:true,&quot;permalink&quot;:&quot;http:&#x2F;&#x2F;islet.space&#x2F;2021&#x2F;05&#x2F;06&#x2F;Signal&#x2F;2021-05-06-%E6%BB%A4%E6%B3%A2%E5%99%A8%E3%80%81%E5%A2%9E%E7%9B%8A%E5%92%8C%E9%9F%B3%E9%87%8F&#x2F;&quot;,&quot;path&quot;:&quot;2021&#x2F;05&#x2F;06&#x2F;Signal&#x2F;2021-05-06-滤波器、增益和音量&#x2F;&quot;,&quot;title&quot;:&quot;晶振、滤波器、增益与音量&quot;}</script>
+<script class="next-config" data-name="page" type="application/json">{&quot;sidebar&quot;:&quot;&quot;,&quot;isHome&quot;:false,&quot;isPost&quot;:true,&quot;lang&quot;:&quot;en&quot;,&quot;comments&quot;:true,&quot;permalink&quot;:&quot;http:&#x2F;&#x2F;islet.space&#x2F;2021&#x2F;05&#x2F;06&#x2F;Signal&#x2F;2021-05-06-%E6%BB%A4%E6%B3%A2%E5%99%A8%E3%80%81%E5%A2%9E%E7%9B%8A%E5%92%8C%E9%9F%B3%E9%87%8F&#x2F;&quot;,&quot;path&quot;:&quot;2021&#x2F;05&#x2F;06&#x2F;Signal&#x2F;2021-05-06-滤波器、增益和音量&#x2F;&quot;,&quot;title&quot;:&quot;晶振、滤波器、运放、增益与音量&quot;}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">&quot;&quot;</script>
-<title>晶振、滤波器、增益与音量 | Coder的孤岛</title><script src="/js/config.js"></script>
+<title>晶振、滤波器、运放、增益与音量 | Coder的孤岛</title><script src="/js/config.js"></script>
   
 
 
@@ -121,7 +121,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%99%B6%E6%8C%AF"><span class="nav-number">1.</span> <span class="nav-text">晶振</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%BB%A4%E6%B3%A2%E5%99%A8"><span class="nav-number">2.</span> <span class="nav-text">滤波器</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AE%80%E4%BB%8B"><span class="nav-number">2.1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BB%E8%A6%81%E5%8F%82%E6%95%B0"><span class="nav-number">2.2.</span> <span class="nav-text">主要参数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BB%E8%A6%81%E5%88%86%E7%B1%BB"><span class="nav-number">2.3.</span> <span class="nav-text">主要分类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8%E6%BB%A4%E6%B3%A2%E5%99%A8"><span class="nav-number">2.4.</span> <span class="nav-text">常用滤波器</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%89%E6%BA%90%E6%BB%A4%E6%B3%A2%E5%8F%8A%E6%97%A0%E6%BA%90%E6%BB%A4%E6%B3%A2%E6%AF%94%E8%BE%83"><span class="nav-number">2.4.1.</span> <span class="nav-text">有源滤波及无源滤波比较</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E5%AD%97%E6%BB%A4%E6%B3%A2%E5%99%A8%E5%92%8C%E6%A8%A1%E6%8B%9F%E6%BB%A4%E6%B3%A2%E5%99%A8%E6%AF%94%E8%BE%83"><span class="nav-number">2.4.2.</span> <span class="nav-text">数字滤波器和模拟滤波器比较</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E5%AD%97%E6%BB%A4%E6%B3%A2%E5%99%A8"><span class="nav-number">2.4.3.</span> <span class="nav-text">数字滤波器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A8%8B%E6%8E%A7%E6%BB%A4%E6%B3%A2%E7%B3%BB%E7%BB%9F"><span class="nav-number">2.4.4.</span> <span class="nav-text">程控滤波系统</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%97%A0%E6%BA%90%E6%BB%A4%E6%B3%A2%E5%99%A8"><span class="nav-number">2.4.5.</span> <span class="nav-text">无源滤波器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%89%E6%BA%90%E6%BB%A4%E6%B3%A2%E5%99%A8"><span class="nav-number">2.4.6.</span> <span class="nav-text">有源滤波器</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="nav-number">2.5.</span> <span class="nav-text">注意事项</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%A2%9E%E7%9B%8A%E4%B8%8E%E9%9F%B3%E9%87%8F"><span class="nav-number">3.</span> <span class="nav-text">增益与音量</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A2%9E%E7%9B%8A"><span class="nav-number">3.1.</span> <span class="nav-text">增益</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B8%B8%E8%A7%81%E5%A2%9E%E7%9B%8A"><span class="nav-number">3.1.1.</span> <span class="nav-text">常见增益</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%A4%A9%E7%BA%BF%E5%A2%9E%E7%9B%8A"><span class="nav-number">3.1.1.1.</span> <span class="nav-text">天线增益</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%94%BE%E5%A4%A7%E5%99%A8%E5%A2%9E%E7%9B%8A"><span class="nav-number">3.1.1.2.</span> <span class="nav-text">放大器增益</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8A%9F%E7%8E%87%E5%A2%9E%E7%9B%8A"><span class="nav-number">3.1.1.3.</span> <span class="nav-text">功率增益</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%8E%AF%E8%B7%AF%E5%A2%9E%E7%9B%8A"><span class="nav-number">3.1.1.4.</span> <span class="nav-text">环路增益</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Volume-%E9%9F%B3%E9%87%8F"><span class="nav-number">3.2.</span> <span class="nav-text">Volume&#x2F;音量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A2%9E%E7%9B%8A%E5%92%8C%E9%9F%B3%E9%87%8F%E7%9A%84%E5%85%B3%E7%B3%BB"><span class="nav-number">3.3.</span> <span class="nav-text">增益和音量的关系</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%BB%A4%E6%B3%A2%E7%94%B5%E5%AE%B9"><span class="nav-number">4.</span> <span class="nav-text">滤波电容</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%99%B6%E6%8C%AF"><span class="nav-number">1.</span> <span class="nav-text">晶振</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%BB%A4%E6%B3%A2%E5%99%A8"><span class="nav-number">2.</span> <span class="nav-text">滤波器</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AE%80%E4%BB%8B"><span class="nav-number">2.1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BB%E8%A6%81%E5%8F%82%E6%95%B0"><span class="nav-number">2.2.</span> <span class="nav-text">主要参数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BB%E8%A6%81%E5%88%86%E7%B1%BB"><span class="nav-number">2.3.</span> <span class="nav-text">主要分类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8%E6%BB%A4%E6%B3%A2%E5%99%A8"><span class="nav-number">2.4.</span> <span class="nav-text">常用滤波器</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%89%E6%BA%90%E6%BB%A4%E6%B3%A2%E5%8F%8A%E6%97%A0%E6%BA%90%E6%BB%A4%E6%B3%A2%E6%AF%94%E8%BE%83"><span class="nav-number">2.4.1.</span> <span class="nav-text">有源滤波及无源滤波比较</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E5%AD%97%E6%BB%A4%E6%B3%A2%E5%99%A8%E5%92%8C%E6%A8%A1%E6%8B%9F%E6%BB%A4%E6%B3%A2%E5%99%A8%E6%AF%94%E8%BE%83"><span class="nav-number">2.4.2.</span> <span class="nav-text">数字滤波器和模拟滤波器比较</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E5%AD%97%E6%BB%A4%E6%B3%A2%E5%99%A8"><span class="nav-number">2.4.3.</span> <span class="nav-text">数字滤波器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A8%8B%E6%8E%A7%E6%BB%A4%E6%B3%A2%E7%B3%BB%E7%BB%9F"><span class="nav-number">2.4.4.</span> <span class="nav-text">程控滤波系统</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%97%A0%E6%BA%90%E6%BB%A4%E6%B3%A2%E5%99%A8"><span class="nav-number">2.4.5.</span> <span class="nav-text">无源滤波器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%89%E6%BA%90%E6%BB%A4%E6%B3%A2%E5%99%A8"><span class="nav-number">2.4.6.</span> <span class="nav-text">有源滤波器</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="nav-number">2.5.</span> <span class="nav-text">注意事项</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%BB%A4%E6%B3%A2%E7%94%B5%E5%AE%B9"><span class="nav-number">3.</span> <span class="nav-text">滤波电容</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%BF%90%E7%AE%97%E6%94%BE%E5%A4%A7%E5%99%A8"><span class="nav-number">4.</span> <span class="nav-text">运算放大器</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%90%E6%94%BE%E5%AE%9A%E4%B9%89"><span class="nav-number">4.1.</span> <span class="nav-text">运放定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%90%E6%94%BE%E5%88%86%E7%B1%BB"><span class="nav-number">4.2.</span> <span class="nav-text">运放分类</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%A2%9E%E7%9B%8A%E4%B8%8E%E9%9F%B3%E9%87%8F"><span class="nav-number">5.</span> <span class="nav-text">增益与音量</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A2%9E%E7%9B%8A"><span class="nav-number">5.1.</span> <span class="nav-text">增益</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B8%B8%E8%A7%81%E5%A2%9E%E7%9B%8A"><span class="nav-number">5.1.1.</span> <span class="nav-text">常见增益</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%A4%A9%E7%BA%BF%E5%A2%9E%E7%9B%8A"><span class="nav-number">5.1.1.1.</span> <span class="nav-text">天线增益</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%94%BE%E5%A4%A7%E5%99%A8%E5%A2%9E%E7%9B%8A"><span class="nav-number">5.1.1.2.</span> <span class="nav-text">放大器增益</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8A%9F%E7%8E%87%E5%A2%9E%E7%9B%8A"><span class="nav-number">5.1.1.3.</span> <span class="nav-text">功率增益</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%8E%AF%E8%B7%AF%E5%A2%9E%E7%9B%8A"><span class="nav-number">5.1.1.4.</span> <span class="nav-text">环路增益</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Volume-%E9%9F%B3%E9%87%8F"><span class="nav-number">5.2.</span> <span class="nav-text">Volume&#x2F;音量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A2%9E%E7%9B%8A%E5%92%8C%E9%9F%B3%E9%87%8F%E7%9A%84%E5%85%B3%E7%B3%BB"><span class="nav-number">5.3.</span> <span class="nav-text">增益和音量的关系</span></a></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -134,20 +134,25 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">46</span>
+          <span class="site-state-item-count">51</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
-        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-count">15</span>
         <span class="site-state-item-name">categories</span>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">83</span>
+        <span class="site-state-item-count">94</span>
         <span class="site-state-item-name">tags</span>
       </div>
   </nav>
 </div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="mailto:liewzheng@qq.com" title="E-Mail → mailto:liewzheng@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+      </span>
+  </div>
 
 
 
@@ -195,7 +200,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          晶振、滤波器、增益与音量
+          晶振、滤波器、运放、增益与音量
         </h1>
 
         <div class="post-meta-container">
@@ -213,7 +218,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-05-09 16:48:25" itemprop="dateModified" datetime="2021-05-09T16:48:25+08:00">2021-05-09</time>
+        <time title="Modified: 2021-05-09 17:16:58" itemprop="dateModified" datetime="2021-05-09T17:16:58+08:00">2021-05-09</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -430,6 +435,29 @@
 <p><strong>靠近电缆</strong>：滤波器与面板之间的导线的距离应尽量短。必要时，使用金属板遮挡一下，隔离近场干扰。</p>
 <p><strong>与机箱接</strong>：安装滤波器的干净地要与金属机箱可靠地搭接起来，如果机箱不是金属的，就在线路板下方设置一块较大的金属板来作为滤波地。干净地与金属机箱之间的搭接要保证很低的射频阻抗。如有必要，可以使用<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E7%94%B5%E7%A3%81">电磁</a>密封衬垫搭接，增加搭接面积，减小射频阻抗。</p>
 <p><strong>接地线短</strong>：考虑到<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E5%BC%95%E8%84%9A">引脚</a>的电感效应，其重要性前面已讨论，滤波器的局部布线和设计线路板与机箱（金属板）的连接结构时要特别注意。</p>
+<h1 id="滤波电容"><a href="#滤波电容" class="headerlink" title="滤波电容"></a>滤波电容</h1><iframe src="//player.bilibili.com/player.html?aid=497834686&bvid=BV1yK411V74V&cid=181383906&page=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"> </iframe>
+
+<p><strong>旁路</strong>：一般出现在电路的输入端，为交流信号提供一个分支，滤除不需要的交流成分。</p>
+<p><img src="https://pic.islet.space/2021/05/image-20210509154852357.png" alt="image-20210509154852357"> <img src="https://pic.islet.space/2021/05/image-20210509155438601.png" alt="image-20210509155438601"></p>
+<p>下图是带有低频扰动和高频尖刺的直流信号，使用所示电路对该信号进行过滤，可获得稳定直流信号。</p>
+<p><img src="https://pic.islet.space/2021/05/image-20210509155705572.png" alt="image-20210509155705572"> <img src="https://pic.islet.space/2021/05/image-20210509155806309.png" alt="image-20210509155806309"></p>
+<p>其中，0.1uF 用于滤除高频成分；1000uF 用于滤除/抵抗 <strong>低频扰动</strong> 信号。</p>
+<p><strong>去耦</strong>：既有 <strong>滤波</strong> 的作用也有 <strong>储能</strong> 的作用。</p>
+<p>当芯片电路需要拉去较大的电压时，VCC可能会突然供电不足，此时用于VCC的去耦电容发挥了储能的作用，为芯片电路提供较稳定的电源。</p>
+<p><img src="https://pic.islet.space/2021/05/image-20210509155156432.png" alt="image-20210509155156432"></p>
+<iframe src="//player.bilibili.com/player.html?aid=752864529&bvid=BV1kk4y1R7TZ&cid=178561019&page=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"> </iframe>
+
+<img src="https://pic.islet.space/2021/05/image-20210509154226811.png" alt="image-20210509154226811" style="zoom:50%;" />
+
+
+
+
+
+<h1 id="运算放大器"><a href="#运算放大器" class="headerlink" title="运算放大器"></a>运算放大器</h1><h2 id="运放定义"><a href="#运放定义" class="headerlink" title="运放定义"></a>运放定义</h2><p>同相输入端，V<del>p</del>和V<del>n</del> 。</p>
+<p>虚短：</p>
+<p>虚断：</p>
+<h2 id="运放分类"><a href="#运放分类" class="headerlink" title="运放分类"></a>运放分类</h2><p>按照电源电压分类：单端运放、双端运放。</p>
+<p>单端运放是指运算放大器的供给电源为正向电源和地；双端运放是指运算放大器的供给电源为正向电源和负向电源。</p>
 <h1 id="增益与音量"><a href="#增益与音量" class="headerlink" title="增益与音量"></a>增益与音量</h1><h2 id="增益"><a href="#增益" class="headerlink" title="增益"></a>增益</h2><blockquote>
 <p><strong>增益(Gain)的一般含义简而言之就是放大倍数</strong>。</p>
 <p>在电子学上，通常为一个系统的讯号输出与讯号输入的比率，如天线增益表示定向天线辐射集中程度的参数，为定向天线和无方向天线在预定方向产生的电场强度平方之比。<strong>放大器增益</strong>，表示放大器功率放大倍数，以输出功率同输入功率比值的常用对数表示等。</p>
@@ -467,20 +495,6 @@
 <p>音量影响的是后级最终输出的响度。</p>
 <h2 id="增益和音量的关系"><a href="#增益和音量的关系" class="headerlink" title="增益和音量的关系"></a>增益和音量的关系</h2><p>增益多与“敏感度”相关，比方说：你的麦克风需要更“灵敏”吗？那么就把增益开大些。但是增益开得过大，信噪比会降低，底噪声就会更加明显。还会因电流输出限制产生削波失真。 这就是我们所说的“过载”效果的真正来源。也是很多朋友想要通过开大clean通道的volume去制造过载却不明显的原因。</p>
 <p>如果把增益开大，把音量关小的话，可以得到过载的效果。很多60,70年代的音乐作品中可以听到这种音色；关小增益开大音量的话，音符会很清晰，颗粒性也很好。</p>
-<h1 id="滤波电容"><a href="#滤波电容" class="headerlink" title="滤波电容"></a>滤波电容</h1><iframe src="//player.bilibili.com/player.html?aid=497834686&bvid=BV1yK411V74V&cid=181383906&page=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"> </iframe>
-
-<p><strong>旁路</strong>：一般出现在电路的输入端，为交流信号提供一个分支，滤除不需要的交流成分。</p>
-<p><img src="https://pic.islet.space/2021/05/image-20210509154852357.png" alt="image-20210509154852357"> <img src="https://pic.islet.space/2021/05/image-20210509155438601.png" alt="image-20210509155438601"></p>
-<p>下图是带有低频扰动和高频尖刺的直流信号，使用所示电路对该信号进行过滤，可获得稳定直流信号。</p>
-<p><img src="https://pic.islet.space/2021/05/image-20210509155705572.png" alt="image-20210509155705572"> <img src="https://pic.islet.space/2021/05/image-20210509155806309.png" alt="image-20210509155806309"></p>
-<p>其中，0.1uF 用于滤除高频成分；1000uF 用于滤除/抵抗 <strong>低频扰动</strong> 信号。</p>
-<p><strong>去耦</strong>：既有 <strong>滤波</strong> 的作用也有 <strong>储能</strong> 的作用。</p>
-<p>当芯片电路需要拉去较大的电压时，VCC可能会突然供电不足，此时用于VCC的去耦电容发挥了储能的作用，为芯片电路提供较稳定的电源。</p>
-<p><img src="https://pic.islet.space/2021/05/image-20210509155156432.png" alt="image-20210509155156432"></p>
-<iframe src="//player.bilibili.com/player.html?aid=752864529&bvid=BV1kk4y1R7TZ&cid=178561019&page=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"> </iframe>
-
-<img src="https://pic.islet.space/2021/05/image-20210509154226811.png" alt="image-20210509154226811" style="zoom:50%;" />
-
 
     </div>
 
@@ -503,6 +517,9 @@
                 </a>
             </div>
             <div class="post-nav-item">
+                <a href="/2021/05/11/Signal/2021-05-11-TRS%E7%AB%AF%E5%AD%90%E5%8F%8A%E5%85%B6%E4%BB%96%E9%9F%B3%E9%A2%91%E6%8E%A5%E5%8F%A3/" rel="next" title="TRS端子及其他音频接口">
+                  TRS端子及其他音频接口 <i class="fa fa-chevron-right"></i>
+                </a>
             </div>
           </div>
     </footer>

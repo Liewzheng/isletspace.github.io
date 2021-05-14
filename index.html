@@ -118,20 +118,25 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">46</span>
+          <span class="site-state-item-count">51</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
-        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-count">15</span>
         <span class="site-state-item-name">categories</span>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">83</span>
+        <span class="site-state-item-count">94</span>
         <span class="site-state-item-name">tags</span>
       </div>
   </nav>
 </div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="mailto:liewzheng@qq.com" title="E-Mail → mailto:liewzheng@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+      </span>
+  </div>
 
 
 
@@ -165,6 +170,1121 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://islet.space/2021/05/14/Communication/2021-05-14-I2C%E3%80%81SPI%E3%80%81TDM%E5%8F%8AI2S/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Liewzheng">
+      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coder的孤岛">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/05/14/Communication/2021-05-14-I2C%E3%80%81SPI%E3%80%81TDM%E5%8F%8AI2S/" class="post-title-link" itemprop="url">I2C、SPI、TDM及I2S</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2021-05-14 10:55:00 / Modified: 19:51:06" itemprop="dateCreated datePublished" datetime="2021-05-14T10:55:00+08:00">2021-05-14</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Communication/" itemprop="url" rel="index"><span itemprop="name">Communication</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="I2C"><a href="#I2C" class="headerlink" title="I2C"></a>I2C</h1><p><strong>标准</strong>：<a target="_blank" rel="noopener" href="https://www.nxp.com/docs/en/user-guide/UM10204.pdf">《NXP_UM10204_I2C-bus specification and user manual》</a></p>
+<blockquote>
+<p><em>I2C总线是一个事实上的世界标准，现在已经在50多家公司生产的1000多种不同的IC中实施。</em></p>
+<p><em>此外，多功能的I2C总线被用于各种控制架构，如系统管理总线（SMBus）、电源管理总线（PMBus）、智能平台管理接口（IPMI）、显示数据通道（DDC）和高级电信计算架构（ATCA）。</em></p>
+<p><em>本文件帮助设备和系统设计者了解I2C总线的工作原理并实现工作应用。描述了各种操作模式。它包含了对I2C<strong>总线数据传输</strong>、握手和总线仲裁方案的全面介绍。详细的章节涵盖了I2C总线在每种工作模式下的时序和电气规范。</em></p>
+<p><em>I2C兼容芯片的设计者应将该文件作为参考，并确保新设备满足该文件中规定的所有限制。包含I2C器件的系统的设计者应审查本文件，并参考各个组件的数据表。</em></p>
+<p>——翻译自标准文件</p>
+</blockquote>
+<p>I2C(Inter－Integrated Circuit)是一种通用的总线协议。它是由Philips(飞利浦)公司，现NXP(恩智浦)半导体开发的一种简单的双向两线制总线协议标准。</p>
+<p>对于硬件设计人员来说，只需要2个管脚，极少的连接线和面积，就可以实现芯片间的通讯，对于软件开发者来说，可以使用同一个I2C驱动库，来实现实现不同器件的驱动，大大减少了软件的开发时间。极低的工作电流，降低了系统的功耗，完善的应答机制大大增强通讯的可靠性。</p>
+<h2 id="术语"><a href="#术语" class="headerlink" title="术语"></a>术语</h2><img src="https://pic.islet.space/2021/05/image-20210514111033910.png" alt="image-20210514111033910" style="zoom: 67%;" />
+
+<table>
+<thead>
+<tr>
+<th>术语</th>
+<th>释义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>总线</td>
+<td>传输数据的通路</td>
+</tr>
+<tr>
+<td>传送者</td>
+<td>传输数据至总线的设备</td>
+</tr>
+<tr>
+<td>接收者</td>
+<td>从总线上接受数据的设备</td>
+</tr>
+<tr>
+<td>主（机）</td>
+<td>主动开启传输、生成时钟信号 并 主动结束传输的设备</td>
+</tr>
+<tr>
+<td>从（机）</td>
+<td>由主机寻址的设备</td>
+</tr>
+<tr>
+<td>多主（机）</td>
+<td>在不损坏数据传输的情况下允许多主机可以试图同时控制总线</td>
+</tr>
+<tr>
+<td>仲裁</td>
+<td>确保在有多个主机同时试图控制总线的情况下，只允许一个主机这样做，而且仲裁成功的信息不会被（其他设备）破坏的程序。</td>
+</tr>
+<tr>
+<td>同步</td>
+<td>确保两个及以上设备其时钟信号的同步</td>
+</tr>
+</tbody></table>
+<p>以下这个图应该可以较好地解释“多主机”的概念，多个主机可以同时向外发出传输数据的申请，也可以主动结束其数据传输。虽然，I2C降低了总线复用的成本，但仍需要“仲裁”机制来解决多个主机之间的无序竞争状态。</p>
+<img src="https://pic.islet.space/2021/05/image-20210514112114667.png" alt="image-20210514112114667" style="zoom:67%;" />
+
+<h2 id="总线特征"><a href="#总线特征" class="headerlink" title="总线特征"></a>总线特征</h2><h3 id="总线硬件要求"><a href="#总线硬件要求" class="headerlink" title="总线硬件要求"></a>总线硬件要求</h3><p>通过 <strong>串行数据</strong>（SDA，Serial Data）和 <strong>串行时钟</strong>（SCL，Serial Clock）两条线路对设备进行连接。</p>
+<p>每个设备都通过自身的通信设备地址进行互相辨别，且每个设备都可以当发送者或接收者，取决于设备自身的功能定义。</p>
+<h3 id="标准传输速率"><a href="#标准传输速率" class="headerlink" title="标准传输速率"></a>标准传输速率</h3><p>各模式、速率及其传输方向见下方表格。</p>
+<blockquote>
+<p>Data on the I2C-bus can be transferred at rates of up to 100 kbit/s in the Standard-mode, up to 400 kbit/s in the Fast-mode, up to 1 Mbit/s in Fast-mode Plus, or up to 3.4 Mbit/s in the High-speed mode. </p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>MODE</th>
+<th>RATE</th>
+<th>TRANSFER DIRECTION</th>
+<th>DOWNWARD COMPATIBLE WITH</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>STANDARD</td>
+<td>100 Kbit/s</td>
+<td>bidirectional</td>
+<td>/</td>
+</tr>
+<tr>
+<td>FAST</td>
+<td>400 Kbit/s</td>
+<td>bidirectional</td>
+<td>STANDARD</td>
+</tr>
+<tr>
+<td>FAST-PLUS</td>
+<td>1 Mbit/s</td>
+<td>bidirectional</td>
+<td>STANDARD / FAST</td>
+</tr>
+<tr>
+<td>HIGH-SPEED</td>
+<td>3.4 Mbit/s</td>
+<td>bidirectional</td>
+<td>STANDARD / FAST / FAST-PLUS</td>
+</tr>
+<tr>
+<td>ULTRA-FAST</td>
+<td>5 Mbit/s</td>
+<td>unidirectional</td>
+<td>/</td>
+</tr>
+</tbody></table>
+<h2 id="协议要求"><a href="#协议要求" class="headerlink" title="协议要求"></a>协议要求</h2><p>以下协议要求适用于双向通信模式（不包括ULTRA-FAST模式下的单向通信）</p>
+<h3 id="逻辑电平规定"><a href="#逻辑电平规定" class="headerlink" title="逻辑电平规定"></a>逻辑电平规定</h3><p>由于I2C的接入设备众多（如CMOS、NMOS、Bipolar等），因此逻辑电平0和逻辑电平1（的电压）并不是固定不变的，这取决于VDD的电平。</p>
+<p>输入参考电平会被控制在VDD电平的30%<del>70%之间。 V</del>IL~ = 0.3 * V<del>DD</del>；V<del>IH</del> = 0.7 * V<del>DD</del> 。</p>
+<p>某些传统设备的输入电平会被固定在1.5V（V<del>IL</del>）和3.0V（V<del>IH</del>），但新设备都要求是 30%V<del>DD</del> 及 70%V<del>DD</del> 。</p>
+<p><strong>注意</strong>：V<del>IL</del>、V<del>IH</del>、V<del>OL</del>、V<del>OH</del>都是以参考电压作为基准的，即要达到某个电压的百分之多少时，才能够被认为是 <strong>逻辑电平0</strong> 或 <strong>逻辑电平1</strong> 。例如，可将V<del>IL</del> 视作当V<del>DD</del>下降到只有30%及以下时，为逻辑电平0，30%V<del>DD</del>是其逻辑电平的最高阈值；同理可得 V<del>IH</del> ；超过这个值而未到达70%的中间态则为不确定态。</p>
+<blockquote>
+<p>Due to the variety of different technology devices (CMOS, NMOS, bipolar) that can be connected to the I2C-bus, the levels of the logical ‘0’ (LOW) and ‘1’ (HIGH) are not fixed and depend on the associated level of VDD . Input reference levels are set as 30 % and 70 % of VDD ; VIL is 0.3VDD and VIH is 0.7V DD .</p>
+<p>See Figure 38, timing diagram. Some legacy device input levels were fixed at V<del>IL</del> = 1.5 V and V<del>IH</del> = 3.0 V, but all new devices require this 30 %/70 % specification. </p>
+</blockquote>
+<img src="https://pic.islet.space/2021/05/image-20210514134830615.png" alt="image-20210514134830615" style="zoom: 67%;" />
+
+
+
+<h3 id="时序正确性"><a href="#时序正确性" class="headerlink" title="时序正确性"></a>时序正确性</h3><ul>
+<li>SDA上的数据必须在SCL高电平期间保持稳定，即不能在SCL高电平期间发生翻转（后见原因），只有在SCL低电平时可以翻转。</li>
+<li>时钟脉冲信号生成要先于数据传送。</li>
+</ul>
+<blockquote>
+<p>The data on the SDA line must be stable during the HIGH period of the clock. The HIGH or LOW state of the data line can only change when the clock signal on the SCL line is LOW (see Figure 4). One clock pulse is generated for each data bit transferred.</p>
+</blockquote>
+<img src="https://pic.islet.space/2021/05/image-20210514141512136.png" alt="image-20210514141512136" style="zoom: 80%;" />
+
+
+
+<h3 id="开始及结束标志"><a href="#开始及结束标志" class="headerlink" title="开始及结束标志"></a>开始及结束标志</h3><ul>
+<li><p>传输开始时必须以一个 <strong>开始</strong> 信号作为标志，结束时必须以一个 <strong>结束</strong> 信号作为标志。</p>
+</li>
+<li><p><strong>开始信号 <strong>是以SCL为高电平时的 <strong>SDA电平的由高转低</strong> 作为标志，</strong>结束信号</strong> 是以SCL高电平时的 <strong>SDA电平的由低转高</strong> 作为标志。</p>
+</li>
+<li><p>开始和结束标志必须由主设备控制。</p>
+</li>
+</ul>
+<blockquote>
+<p>All transactions begin with a START (S) and are terminated by a STOP (P) (see Figure 5). A HIGH to LOW transition on the SDA line while SCL is HIGH defines a START condition. A LOW to HIGH transition on the SDA line while SCL is HIGH defines a STOP condition.</p>
+</blockquote>
+<img src="https://pic.islet.space/2021/05/image-20210514142116674.png" alt="image-20210514142116674" style="zoom: 80%;" />
+
+<h3 id="总线状态"><a href="#总线状态" class="headerlink" title="总线状态"></a>总线状态</h3><p>总线具有两种状态，<strong>繁忙</strong>（Busy）和 <strong>空闲</strong>（Free），即 SDA电平 “开始” 后，总线进入繁忙状态， SDA电平 “结束” 后，总线进入空闲状态。</p>
+<p><strong>注意</strong>：在总线繁忙期间，发生重复的“开始”状态（而不是“结束”状态），由于“重复开始”和 “开始” 功能相同，为了方便，统称为 “开始”，除非特殊说明为 “重复开始”。</p>
+<blockquote>
+<p>The bus stays busy if a repeated START (Sr) is generated instead of a STOP condition. In this respect, the START (S) and repeated START (Sr) conditions are functionally identical. For the remainder of this document, therefore, the S symbol is used as a generic term to represent both the START and repeated START conditions, unless Sr is particularly relevant.</p>
+</blockquote>
+<h3 id="传输比特位"><a href="#传输比特位" class="headerlink" title="传输比特位"></a>传输比特位</h3><ul>
+<li>SDA线上的字节传输必须满足8位长度。</li>
+<li>每次传输数据的字节数不受限制。</li>
+<li>每个字节数后都需要跟一个<strong>确认位（Acknowledge bit）</strong>。</li>
+<li>当从机无法完整接收或传输一个完整的数据字节时，例如正在产生内部中断等，除非其完成内部的某些功能，否则该从机将能够一直拉低SCL的电平，<strong>强制让主机一直处于等待状态</strong>。只有当从机准备好接收下一个完整的字节并释放SCL时，数据传输才会继续。</li>
+</ul>
+<blockquote>
+<p>Every byte put on the SDA line must be eight bits long. The number of bytes that can be transmitted per transfer is unrestricted. Each byte must be followed by an Acknowledge bit.</p>
+<p><strong>Data is transferred with the Most Significant Bit (MSB) first</strong> (see Figure 6). If a slave cannot receive or transmit another complete byte of data until it has performed some other function, for example servicing an internal interrupt, it can hold the clock line SCL LOW to force the master into a wait state. Data transfer then continues when the slave is ready for another byte of data and releases clock line SCL.</p>
+</blockquote>
+<img src="https://pic.islet.space/2021/05/image-20210514144620803.png" alt="image-20210514144620803" style="zoom:80%;" />
+
+
+
+<h3 id="确认标志"><a href="#确认标志" class="headerlink" title="确认标志"></a>确认标志</h3><ul>
+<li>每个字节（8比特）后都跟着一个确认位，即前8位数据，第9位确认。</li>
+<li><strong>SCL上的时钟信号由主机产生，包括确认位的的第九个时钟脉冲</strong>。</li>
+<li>SDA线并不是由主机一直占有的，每发送完一个完整字节后，主机都会释放SDA线，由从机进行数据确认。</li>
+<li>发送者在确认时钟脉冲期间释放SDA线，以便接收者可以将SDA线拉低，并且在该时钟脉冲的高电平期间保持稳定的低电平（见图4）。</li>
+<li>对于设置（set-up）和保持（Hold）的时间，都应该依照表10中只针对各种不同模式的要求进行设置。</li>
+<li>如果SDA电平在第九个时钟脉冲时仍保持高电平，则被定义为 “未确认状态”。则此时主机可以发送一个“结束”标志来结束当前连接，或发送一个“开始”标志来开启一次新的传送。</li>
+</ul>
+<img src="/home/kali/.config/Typora/typora-user-images/image-20210514154506246.png" alt="image-20210514154506246" style="zoom: 80%;" />
+
+<blockquote>
+<p>The acknowledge takes place after every byte. The acknowledge bit allows the receiver to signal the transmitter that the byte was successfully received and another byte may be sent. The master generates all clock pulses, including the acknowledge ninth clock pulse.</p>
+<p>The Acknowledge signal is defined as follows: the transmitter releases the SDA line during the acknowledge clock pulse so the <em><strong>receiver can pull the SDA line LOW</strong></em> and it remains stable LOW during the HIGH period of this clock pulse (see Figure 4). Set-up and hold times (specified in Section 6) must also be taken into account.</p>
+<p>When SDA remains HIGH during this ninth clock pulse, this is defined as the Not Acknowledge signal. The master can then generate either a STOP condition to abort the transfer, or a repeated START condition to start a new transfer. </p>
+</blockquote>
+<p><strong>以下为五种“未确认/未应答”的可能情况</strong>：There are five conditions that lead to the generation of a NACK:</p>
+<ol>
+<li><strong>传输地址错误</strong>：No receiver is present on the bus with the transmitted address so there is no device to respond with an acknowledge.</li>
+<li><strong>实时处理中</strong>：The receiver is unable to receive or transmit because it is performing some real-time function and is not ready to start communication with the master.</li>
+<li><strong>数据/代码未定义</strong>：During the transfer, the receiver <strong>gets data or commands that it does not understand.</strong></li>
+<li><strong>正在传输中</strong>：During the transfer, the receiver <strong>cannot receive any more data bytes</strong>.</li>
+<li><strong>未收到结束信号（收发身份未转换）</strong>：A master-receiver must signal the end of the transfer to the slave transmitter.</li>
+</ol>
+<h3 id="时钟同步"><a href="#时钟同步" class="headerlink" title="时钟同步"></a>时钟同步</h3><p>任意几个主机都可能同时发起数据传输请求，此时只有一个主机和一个从机可以掌握总线进行通信，此时需要通过 <strong>时间同步</strong> 和 <strong>仲裁</strong> 完成对总线的调配。</p>
+<p><mark>时钟同步其实是使 **主设备 **和 <strong>从设备</strong> 这两个时钟通过 SCL线 保持同步。</mark></p>
+<p><mark>这意味着SCL线上的高电平到低电平的转换会导致相关的 <strong>主设备</strong> 开始对<strong>从设备的</strong>低电平周期进行计数，一旦一个 <strong>主设备</strong> 时钟变为低电平，它就会将SCL的低电平保持在这个状态，直到<strong>从设备的</strong>时钟变成高电平状态，SCL的电平也同步变高，从而完成两个设备时钟的同步。</mark></p>
+<img src="https://pic.islet.space/2021/05/image-20210514170202184.png" alt="image-20210514170202184" style="zoom: 67%;" />
+
+
+
+
+
+
+
+
+
+
+
+<h1 id="SPI"><a href="#SPI" class="headerlink" title="SPI"></a>SPI</h1><p>标准：</p>
+<h2 id="术语-1"><a href="#术语-1" class="headerlink" title="术语"></a>术语</h2><h2 id="SPI和I2C的对比"><a href="#SPI和I2C的对比" class="headerlink" title="SPI和I2C的对比"></a>SPI和I2C的对比</h2><table>
+<thead>
+<tr>
+<th></th>
+<th>SPI</th>
+<th>I2C</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>通信模式</td>
+<td>全双工</td>
+<td>半双工</td>
+</tr>
+<tr>
+<td>主从模式</td>
+<td>一主多从</td>
+<td>多主多从</td>
+</tr>
+<tr>
+<td>引脚占用</td>
+<td>从设备越多，对主机占用的引脚较多<br>主设备占用引脚：3+n<br>从设备占用引脚：4</td>
+<td>主从设备均占用：2</td>
+</tr>
+<tr>
+<td>应答响应</td>
+<td>无</td>
+<td>有</td>
+</tr>
+<tr>
+<td>传输速率</td>
+<td>最高：</td>
+<td>最高：3.4Mbps</td>
+</tr>
+<tr>
+<td>从机选择</td>
+<td>通过 <strong>CS(SS)选择引脚</strong> 来选择</td>
+<td>通过 <strong>器件地址</strong> 来选择</td>
+</tr>
+<tr>
+<td>数据采样</td>
+<td>在SCLK边沿采样</td>
+<td>在SCL高电平采样</td>
+</tr>
+<tr>
+<td>通信距离</td>
+<td>短</td>
+<td>短</td>
+</tr>
+</tbody></table>
+<h1 id="UART"><a href="#UART" class="headerlink" title="UART"></a>UART</h1><p>标准：</p>
+<h1 id="TDM"><a href="#TDM" class="headerlink" title="TDM"></a>TDM</h1><p>标准：</p>
+<h1 id="I2S"><a href="#I2S" class="headerlink" title="I2S"></a>I2S</h1><p>标准：</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://islet.space/2021/05/13/Linux/Firewalld/2021-05-13-Firewalld%E9%98%B2%E7%81%AB%E5%A2%99%E8%AF%A6%E8%A7%A3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Liewzheng">
+      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coder的孤岛">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/05/13/Linux/Firewalld/2021-05-13-Firewalld%E9%98%B2%E7%81%AB%E5%A2%99%E8%AF%A6%E8%A7%A3/" class="post-title-link" itemprop="url">Firewalld防火墙详解</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-05-13 14:10:00" itemprop="dateCreated datePublished" datetime="2021-05-13T14:10:00+08:00">2021-05-13</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2021-05-14 19:47:48" itemprop="dateModified" datetime="2021-05-14T19:47:48+08:00">2021-05-14</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p><a target="_blank" rel="noopener" href="https://blog.51cto.com/andyxu/2137046">blog.51cto.com</a></p>
+<p>众所周知，在RHEL7系统中，firewalld防火墙取代了iptables防火墙。我们都知道iptables的防火墙策略是交由内核层面的netfilter网络过滤器来处理的，而firewalld则是交由内核层面的nftables包过滤框架来处理。<br>相较于iptables防火墙而言，firewalld支持动态更新技术并加入了区域（zone）的概念。简单来说，区域就是firewalld预先准备了几套防火墙策略集合（策略模板），用户可以根据生产场景的不同而选择合适的策略集合，从而实现防火墙策略之间的快速切换。</p>
+<blockquote>
+<p>Firewalld provides a dynamically managed firewall with support for network/firewall zones to define the trust level of network connections or interfaces. It has support for IPv4, IPv6 firewall settings and for ethernet bridges and has <strong>a separation of runtime and permanent configuration options.</strong> It also supports an interface for services or applications to add firewall rules directly.</p>
+</blockquote>
+<h1 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h1><h2 id="区域"><a href="#区域" class="headerlink" title="区域"></a>区域</h2><p><strong>表1：firewalld中常用的区域名称及策略规则</strong></p>
+<table>
+<thead>
+<tr>
+<th>区域（zone）</th>
+<th>默认策略规则</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>trusted</td>
+<td>允许所有的数据包进出</td>
+</tr>
+<tr>
+<td>home</td>
+<td>拒绝进入的流量，除非与出去的流量相关；而如果流量与ssh、mdns、ipp-client、amba-client与dhcpv6-client服务相关，则允许进入</td>
+</tr>
+<tr>
+<td>Internal</td>
+<td>等同于home区域</td>
+</tr>
+<tr>
+<td>work</td>
+<td>拒绝进入的流量，除非与出去的流量相关；而如果流量与ssh、ipp-client与dhcpv6-client服务相关，则允许进入</td>
+</tr>
+<tr>
+<td>public</td>
+<td>拒绝进入的流量，除非与出去的流量相关；而如果流量与ssh、dhcpv6-client服务相关，则允许进入</td>
+</tr>
+<tr>
+<td>external</td>
+<td>拒绝进入的流量，除非与出去的流量相关；而如果流量与ssh服务相关，则允许进入</td>
+</tr>
+<tr>
+<td>dmz</td>
+<td>拒绝进入的流量，除非与出去的流量相关；而如果流量与ssh服务相关，则允许进入</td>
+</tr>
+<tr>
+<td>block</td>
+<td>拒绝进入的流量，除非与出去的流量相关</td>
+</tr>
+<tr>
+<td>drop</td>
+<td>拒绝进入的流量，除非与出去的流量相关</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>These are the zones provided by firewalld sorted according to the default trust level of the zones <strong>from untrusted to trusted</strong>:</p>
+<p><strong>drop</strong> : Any incoming network packets are dropped, there is no reply. Only outgoing network connections are possible.</p>
+<p><strong>block</strong> : Any incoming network connections are rejected with an icmp-host-prohibited message for IPv4 and icmp6-adm-prohibited for IPv6. Only network connections initiated within this system are possible.</p>
+<p><strong>public</strong> : For use in public areas. You do not trust the other computers on networks to not harm your computer. Only selected incoming connections are accepted.</p>
+<p><strong>external</strong> : For use on external networks with masquerading enabled especially for routers. You do not trust the other computers on networks to not harm your computer. Only selected incoming connections are accepted.</p>
+<p><strong>dmz</strong> : For computers in your demilitarized zone that are publicly-accessible with limited access to your internal network. Only selected incoming connections are accepted.</p>
+<p><strong>work</strong> : For use in work areas. You mostly trust the other computers on networks to not harm your computer. Only selected incoming connections are accepted.</p>
+<p><strong>home</strong> : For use in home areas. You mostly trust the other computers on networks to not harm your computer. Only selected incoming connections are accepted.</p>
+<p><strong>internal</strong> : For use on internal networks. You mostly trust the other computers on the networks to not harm your computer. Only selected incoming connections are accepted.</p>
+<p><strong>trusted</strong> : All network connections are accepted.</p>
+</blockquote>
+<p><strong>动静态更新技术之间的区别</strong>：iptables每一个更改都需要先清除所有旧有的规则，然后重新加载所有的规则（包括新的和修改后的规则）；<mark>而firewalld任何规则的变更都不需要对整个防火墙规则重新加载</mark>。</p>
+<h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h2><p>firewalld服务的主配置文件是firewalld.conf，防火墙策略的配置文件是以xml格式为主，存放在以下两个目录里。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">/etc/firewalld   # 用户配置文件</span><br><span class="line">/usr/lib/firewalld    #系统配置文件，预定义配置文件</span><br></pre></td></tr></table></figure>
+
+
+<p>firewalld有基于CLI（命令行界面）和基于GUI（图形用户界面)两种管理方式，即：firewall-cmd（终端管理工具）和firewall-config（图形管理工具）。</p>
+<p>firewalld的参数一般都是以“长格式”来提供的，但是在RHEL7系统里支持部分命令的参数补齐，其中就包括firewall-cmd命令，也就是说可以用Tab键来补齐长格式参数，很酷吧。</p>
+<h2 id="命令"><a href="#命令" class="headerlink" title="命令"></a>命令</h2><p><strong>表2：firewall-cmd命令中使用的参数以及作用</strong></p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>–get-default-zone</td>
+<td>查访默认的区域名称</td>
+</tr>
+<tr>
+<td>–set-default-zone=&lt;区域名称&gt;</td>
+<td>设置默认的区域，使其永久生效</td>
+</tr>
+<tr>
+<td>–get-zones</td>
+<td>显示可用的区域</td>
+</tr>
+<tr>
+<td>–get-services</td>
+<td>显示预定义的服务</td>
+</tr>
+<tr>
+<td>–get-active-zones</td>
+<td>显示当前正在使用的区域、来源地址和网卡名称</td>
+</tr>
+<tr>
+<td>–add-source=</td>
+<td>将源自此IP或子网的流量导向指定的区域</td>
+</tr>
+<tr>
+<td>–remove-source=</td>
+<td>不再将源自此IP或子网的流量导向这个区域</td>
+</tr>
+<tr>
+<td>–add-interface=&lt;网卡名称&gt;</td>
+<td>将源自该网卡的所有流量都导向某个指定区域</td>
+</tr>
+<tr>
+<td>–change-interface=&lt;网卡名称&gt;</td>
+<td>将某个网卡与区域进行关联</td>
+</tr>
+<tr>
+<td>–list-all</td>
+<td>显示当前区域的网卡配置参数、资源、端口以及服务等信息</td>
+</tr>
+<tr>
+<td>–list-all-zones</td>
+<td>显示所有区域的网卡配置参数、资源、端口以及服务等信息</td>
+</tr>
+<tr>
+<td>–add-service=&lt;服务名&gt;</td>
+<td>设置默认区域允许该服务的流量</td>
+</tr>
+<tr>
+<td>–add-port=&lt;端口号/协议&gt;</td>
+<td>设置默认区域允许该端口的流量</td>
+</tr>
+<tr>
+<td>–remove-service=&lt;服务名&gt;</td>
+<td>设置默认区域不再允许该服务的流量</td>
+</tr>
+<tr>
+<td>–remove-port=&lt;端口号/协议&gt;</td>
+<td>设置默认区域不再允许该端口的流量</td>
+</tr>
+<tr>
+<td>–reload</td>
+<td>让“永久生效”的配置规则立即生效，并覆盖当前的配置规则</td>
+</tr>
+<tr>
+<td>–panic-on</td>
+<td>开启应急状况模式</td>
+</tr>
+<tr>
+<td>–panic-off</td>
+<td>关闭应急状况模式</td>
+</tr>
+</tbody></table>
+<p>firewalld配置的防火墙策略默认为运行时（Runtime）模式，又称为当前生效模式，而且随着系统的重启会失效。如果想让配置策略一直存在，就需要使用永久（Permanent）模式了，方法就是在firewall-cmd命令后面添加–permanent参数，这样配置的防火墙策略就可以永久生效了。但是，永久生效模式有一个“不近人情”的特点，就是使用它设置的策略只有在系统重启后才会生效。如果想让配置的永久策略立即生效，需要手动执行firewall-cmd –reload命令。</p>
+<p><em>注：remove掉ssh服务或者ssh端口，当前远程登陆会话不会断开，退出后就无法远程连接了。</em></p>
+<p>firewalld服务启动、重启、停止</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">systemctl start firewalld</span><br><span class="line">systemctl restart firewalld</span><br><span class="line">systemctl stop firewalld</span><br></pre></td></tr></table></figure>
+
+
+
+<p>重新加载防火墙配置<br><code>firewall-cmd --reload</code></p>
+<p>查看firewalld的运行状态<br><code>firewall-cmd --state</code></p>
+<p>查看默认当前使用的区域<br><code>firewall-cmd --get-default-zone</code></p>
+<p>查看系统默认活动区域名称、来源地址和关联的网卡<br><code>firewall-cmd --get-active-zones</code></p>
+<p><img src="https://pic.islet.space/2021/05/777d5cabb7eb51fbb84c7058129368d9.png" alt="firewalld防火墙详解"></p>
+<p>查看所有可用区域<br><code>firewall-cmd --get-zones</code></p>
+<p>查看区域的所有设置</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">firewall-cmd --zone&#x3D;internal --list-all   </span><br><span class="line">firewall-cmd --list-all   </span><br></pre></td></tr></table></figure>
+
+<p><img src="https://pic.islet.space/2021/05/4d9b1b3e6c45a33748d4892e6dd2736d.png" alt="firewalld防火墙详解"></p>
+<blockquote>
+<p>Target：目标<br>icmp-block-inversion：ICMP协议类型黑白名单开关（yes/no）<br>Interfaces：关联的网卡接口<br>sources：来源，可以是IP地址，也可以是mac地址<br>services：允许的服务<br>ports：允许的目标端口，即本地开放的端口<br>protocols：允许通过的协议<br>masquerade：是否允许伪装（yes/no），可改写来源IP地址及mac地址<br>forward-ports：允许转发的端口<br>source-ports：允许的来源端口<br>icmp-blocks：可添加ICMP类型，当icmp-block-inversion为no时，这些ICMP类型被拒绝；当icmp-block-inversion为yes时，这些ICMP类型被允许。<br>rich rules：富规则，即更细致、更详细的防火墙规则策略，它的优先级在所有的防火墙策略中也是最高的。</p>
+</blockquote>
+<h3 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h3><p>查看所有预设的服务<br><code>firewall-cmd --get-services</code><br>此时将会列出/usr/lib/firewalld/services/目录中所有的服务名称。</p>
+<p>查看所有区域的设置<br><code>firewall-cmd --list-all-zones</code></p>
+<p>查看指定网卡所在的区域<br><code>firewall-cmd --get-zone-of-interface=ens32</code></p>
+<p>把firewalld的当前默认区域设置为drop，此为永久设置<br><code>firewall-cmd --set-default-zone=drop</code></p>
+<p>把ens32网卡关联的区域修改为drop</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">firewall-cmd --permanent --zone&#x3D;drop --change-interface&#x3D;ens32   # 永久设置</span><br><span class="line">firewall-cmd --zone&#x3D;drop --change-interface&#x3D;ens32   # 当前生效</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://pic.islet.space/2021/05/aafb80274a54961a3c0c1a50989b7fd3.png" alt="firewalld防火墙详解"></p>
+<p>我们后面的设置命令将全部使用运行时模式，即当前生效模式。<br>将来自ens33网卡的流量都作用到默认的drop区域</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">firewall-cmd --zone&#x3D;drop -add-interface&#x3D;ens33   # 作用在指定区域</span><br><span class="line">firewall-cmd -add-interface&#x3D;ens33   # 作用在默认区域</span><br><span class="line">firewall-cmd -remove-interface&#x3D;ens33  # 禁止ens33网卡作用在drop区域</span><br></pre></td></tr></table></figure>
+
+<p><em>注：不指定–zone参数的话，将会对默认区域进行设置</em><br>启动关闭firewalld防火墙服务的应急状况模式，远程连接服务器时请慎用</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">firewall-cmd --panic-on  </span><br><span class="line">firewall-cmd --panic-off  </span><br><span class="line">firewall-cmd --query-panic  </span><br></pre></td></tr></table></figure>
+
+<p>设置一个来源地址作用在drop区域上面</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">firewall-cmd --zone&#x3D;drop --add-source&#x3D;192.168.1.12  # 作用在指定区域</span><br><span class="line">firewall-cmd --add-source&#x3D;192.168.1.12  # 作用在默认区域</span><br><span class="line">firewall-cmd --remove-source&#x3D;192.168.1.12  # 取消源IP为192.168.1.12的包作用在drop区域</span><br></pre></td></tr></table></figure>
+
+<p>说明：凡是IP为192.168.1.12发来包将会使用drop区域设置的规则</p>
+<p>对于一个接收到的请求具体使用哪个zone，firewalld是通过三种方式来判断的：</p>
+<p>1、source，来源地址<br>2、Interface，接收请求的网卡<br>3、firewalld配置的默认区域（zone）</p>
+<p>这三个方式的优先级按顺序依次降低，也就是说如果按照source可以找到就不会再按interface去找，如果前两个都找不到才会使用第三个默认区域。<br>查询drop区域是否允许请求ssh和https服务的流量</p>
+<h3 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h3><p>在drop区域开放https服务<br><code>firewall-cmd --zone=drop --add-service=https</code></p>
+<p>取消开放https服务，即禁止https服务<br><code>firewall-cmd --zone=drop --remove-service=https</code></p>
+<p>开放22端口<br><code>firewall-cmd --zone=drop --add-port=22/tcp</code></p>
+<p>取消开放22端口<br><code>firewall-cmd --zone=drop --remove-port=22/tcp</code></p>
+<p>开放8080和8081端口<br><code>firewall-cmd --zone=drop --add-port=8080-8081/tcp</code></p>
+<p><strong>查询drop区域开放了哪些端口</strong><br><code>firewall-cmd --zone=drop --list-ports</code></p>
+<p>允许icmp协议流量，即允许ping<br><code>firewall-cmd --zone=drop --add-protocol=icmp</code></p>
+<p>取消允许icmp协议的流量，即禁ping<br><code>firewall-cmd --zone=drop --remove-protocol=icmp</code></p>
+<p>查询drop区域开放了哪些协议<br><code>firewall-cmd --zone=drop --list-protocols</code></p>
+<h3 id="端口转发"><a href="#端口转发" class="headerlink" title="端口转发"></a>端口转发</h3><p>将原本访问本机888端口的流量转发到本机22端口<br><code>firewall-cmd --zone=drop --add-forward-port=port=888:proto=tcp:toport=22</code></p>
+<p>将原本访问本机888端口的流量转发到ip为192.168.2.208的主机的22端口，需要开启masquerade</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">firewall-cmd --zone&#x3D;drop --add-masquerade</span><br><span class="line">firewall-cmd --zone&#x3D;drop --add-forward-port&#x3D;port&#x3D;888:proto&#x3D;tcp:toport&#x3D;22:toaddr&#x3D;192.168.2.208</span><br></pre></td></tr></table></figure>
+
+<p>测试端口转发功能是否生效<br>在客户端尝试访问192.168.2.210主机的888端口，连上去后发现实际连接的是192.168.2.208主机，测试OK。</p>
+<p><img src="https://pic.islet.space/2021/05/34e156798d037e1dcc1e63d506fd2960.png" alt="firewalld防火墙详解"></p>
+<p><img src="https://pic.islet.space/2021/05/fec17bffb6fb66b9c077d844956a7699.png" alt="firewalld防火墙详解"></p>
+<h3 id="富规则"><a href="#富规则" class="headerlink" title="富规则"></a>富规则</h3><p>接下来我们来看富规则的设置，即 <em><strong>rich rules</strong></em></p>
+<p>允许192.168.2.208主机的所有流量<br><code>firewall-cmd --zone=drop --add-rich-rule=&quot;rule family=&quot;ipv4&quot; source address=&quot;192.168.2.208&quot; accept&quot;</code></p>
+<p>允许192.168.2.208主机的icmp协议，即允许192.168.2.208主机ping<br><code>firewall-cmd --add-rich-rule=&quot;rule family=&quot;ipv4&quot; source address=&quot;192.168.2.208&quot; protocol value=&quot;icmp&quot; accept&quot;</code></p>
+<p>取消允许192.168.2.208主机的所有流量<br><code>firewall-cmd --zone=drop --remove-rich-rule=&quot;rule family=&quot;ipv4&quot; source address=&quot;192.168.2.208&quot; accept&quot;</code></p>
+<p>允许192.168.2.208主机访问ssh服务<br><code>firewall-cmd --zone=drop --add-rich-rule=&quot;rule family=&quot;ipv4&quot; source address=&quot;192.168.2.208&quot; service name=&quot;ssh&quot; accept&quot;</code></p>
+<p>禁止192.168.2.208访问https服务，并返回错误信息<br><code>firewall-cmd --zone=drop --add-rich-rule=&quot;rule family=&quot;ipv4&quot; source address=&quot;192.168.2.208&quot; service name=&quot;https&quot; reject&quot;</code><br><em>注：如果是drop的话是直接丢弃，会返回timeout（连接超时）</em></p>
+<p>允许192.168.2.0/24网段的主机访问22端口<br><code>firewall-cmd --zone=drop --add-rich-rule=&quot;rule family=&quot;ipv4&quot; source address=&quot;192.168.2.0/24&quot; port protocol=&quot;tcp&quot; port=&quot;22&quot; accept&quot;</code></p>
+<p>每分钟允许2个新连接访问ftp服务<br><code>firewall-cmd --add-rich-rule=&quot;rule service name=ftp limit value=2/m accept&quot;</code></p>
+<p>允许新的ipv4和ipv6连接ftp，并使用日志和审核，每分钟允许访问一次<br><code>firewall-cmd --add-rich-rule=&quot;rule service name=ftp log limit value=&quot;1/m&quot; audit accept&quot;</code></p>
+<p>拒绝来自192.168.2.0/24网段的连接，10秒后自动取消<br><code>firewall-cmd --add-rich-rule=&quot;rule family=ipv4 source address=192.168.2.0/24 reject&quot; --timeout=10</code></p>
+<p>允许ipv6地址为2001:db8::/64子网的主机访问dns服务，并且每小时审核一次，300秒后自动取消<br><code>firewall-cmd --add-rich-rule=&quot;rule family=ipv6 source address=&quot;2001:db8::/64&quot; service name=&quot;dns&quot; audit limit value=&quot;1/h&quot; reject&quot; --timeout=300</code></p>
+<p>将来自192.168.2.0/24网段访问本机80端口的流量转发到本机的22端口<br><code>firewall-cmd --zone=drop --add-rich-rule=&quot;rule family=ipv4 source address=192.168.2.0/24 forward-port port=80 protocol=tcp to-port=22&quot;</code></p>
+<p>将来自192.168.2.0/24网段访问本地80端口的流量转发到192.168.2.208主机的22端口<br><code>firewall-cmd --zone=drop --add-rich-rule=&quot;rule family=ipv4 source address=192.168.2.0/24 forward-port port=80 protocol=tcp to-port=22 to-addr=192.168.2.208&quot;</code></p>
+<p>伪装，将来自局域网192.168.2.0/24网段访问外网的流量映射为网络出口公网IP，即修改源IP地址</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">firewall-cmd --zone&#x3D;drop --add-masquerade</span><br><span class="line">firewall-cmd --zone&#x3D;drop --add-rich-rule&#x3D;&quot;rule family&#x3D;ipv4 source address&#x3D;192.168.2.0&#x2F;24 masquerade&quot;</span><br></pre></td></tr></table></figure>
+
+<p>好了，写的差不多了，工作中基本上够用了</p>
+<h2 id="GUI配置"><a href="#GUI配置" class="headerlink" title="GUI配置"></a>GUI配置</h2><p>在RHEL7之前的发行版本默认的防火墙中，几乎没有图形化的防火墙管理工具，但是firewalld却有，firewall-config是firewalld防火墙配置管理工具的GUI（图开用户界面）版本，几乎可以实现所有命令行执行的操作。即使没有扎实的Linux命令基础，也完合可以通过它来妥善配置firewalld防火墙策略。Firewall-config的界面如下图所示，功能具体如下：</p>
+<p><img src="https://pic.islet.space/2021/05/cfe328ae0f110db0798a9d5edde8a2ba.png" alt="firewalld防火墙详解"></p>
+<p>1、选择运行时（Runtime）模式或永久（Permanent）模式。<br>2、可选的策略集合区域列表。<br>3、常用的系统服务列表。<br>4、当前正在使用的区域。<br>5、管理当前被选中区域中的服务。<br>6、管理当前被选中区域中的端口。<br>7、开启或关闭SNAT（源地址转换协议）技术。<br>8、设置端口转发策略。<br>9、控制请求icmp服务的流量。<br>10、管理防火墙的富规则。<br>11、管理网卡设备。<br>12、被选中区域的服务，若勾选了相应服务前面的复选框，则表示允许与之相关的流量。<br>13、Firewall-config工具的运行状态。</p>
+<p>对外开放http服务，如下图</p>
+<p><img src="https://pic.islet.space/2021/05/fc3e7d116afe83c1bfe5980bfd928849.png" alt="firewalld防火墙详解"></p>
+<p>添加一条防火墙规则，使其放行访问8080-8088端口（TCP协议）的流量，并且永久生效</p>
+<p><img src="https://pic.islet.space/2021/05/b9719667bc933bd079c526d733de7646.png" alt="firewalld防火墙详解"></p>
+<p>单击Options菜单中的Reload Firewalld选项，让上面配置的永久规则立即生效，这与在命令行中执行–reload参数的效果一样。</p>
+<p><img src="https://pic.islet.space/2021/05/8bbca43ed6964afbbeeff8ff711dbcde.png" alt="firewalld防火墙详解"></p>
+<p>SNAT技术相信很多人都知道，那现在我们来开启SNAT技术，其实就是命令行下的masquerade。</p>
+<p><img src="https://pic.islet.space/2021/05/695086a6a2aaf59d79bfe99bb5a02d85.png" alt="firewalld防火墙详解"></p>
+<p>下面我们来配置一个端口转发规则，将888端口的流量转发到其他主机的22端口上。<br><em>注：转发本机端口不需要开启masquerade，转发到别的主机才需要开启masquerade。</em></p>
+<p><img src="https://pic.islet.space/2021/05/e66fb33793bf0ab48346c83b6a383d68.png" alt="firewalld防火墙详解"></p>
+<p>配置富规则，允许192.168.2.206主机访问本机的1234端口号</p>
+<p><img src="https://pic.islet.space/2021/05/5e75f674b7cbf921f7e2c0d3d13384e9.png" alt="firewalld防火墙详解"></p>
+<p>最后来看一下区域和网卡的关联，增加网卡的话只需要输入网卡名称即可。</p>
+<p><img src="https://pic.islet.space/2021/05/51e73b7f425667cd83cc981c26fea0a2.png" alt="firewalld防火墙详解"></p>
+<p>下面是我自己写的一个简单的防火墙初始化脚本，5210是ssh端口号，192.168.2.208是<strong>保垒机</strong>，192.168.2.206是<strong>备用ssh机器</strong>。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">systemctl stop firewalld</span><br><span class="line">\cp -p &#x2F;usr&#x2F;lib&#x2F;firewalld&#x2F;zones&#x2F;drop.xml &#x2F;etc&#x2F;firewalld&#x2F;zones&#x2F;</span><br><span class="line">systemctl start firewalld</span><br><span class="line">firewall-cmd --set-default-zone&#x3D;drop</span><br><span class="line">firewall-cmd --permanent --zone&#x3D;drop --change-interface&#x3D;ens32</span><br><span class="line">firewall-cmd --permanent --zone&#x3D;drop --add-service&#x3D;https</span><br><span class="line">firewall-cmd --permanent --zone&#x3D;drop --add-protocol&#x3D;icmp</span><br><span class="line">firewall-cmd --permanent --zone&#x3D;drop --add-masquerade</span><br><span class="line">firewall-cmd --permanent --zone&#x3D;drop --add-rich-rule&#x3D;&quot;rule family&#x3D;&quot;ipv4&quot; source address&#x3D;&quot;192.168.2.208&quot; port protocol&#x3D;&quot;tcp&quot; port&#x3D;&quot;5210&quot; accept&quot;</span><br><span class="line">firewall-cmd --permanent --zone&#x3D;drop --add-rich-rule&#x3D;&quot;rule family&#x3D;&quot;ipv4&quot; source address&#x3D;&quot;192.168.2.206&quot; port protocol&#x3D;&quot;tcp&quot; port&#x3D;&quot;5210&quot; accept&quot;</span><br><span class="line">firewall-cmd --permanent --zone&#x3D;drop --add-rich-rule&#x3D;&quot;rule family&#x3D;&quot;ipv4&quot; source address&#x3D;&quot;116.226.230.115&quot; port protocol&#x3D;&quot;tcp&quot; port&#x3D;&quot;8023&quot; accept&quot;</span><br><span class="line">firewall-cmd --reload</span><br></pre></td></tr></table></figure>
+
+<p>​          </p>
+<p>​    </p>
+<p><a target="_blank" rel="noopener" href="https://firewalld.org/documentation/howto/enable-and-disable-firewalld.html">firewalld.org</a></p>
+<h1 id="Enable-and-Disable-firewalld"><a href="#Enable-and-Disable-firewalld" class="headerlink" title="Enable and Disable firewalld"></a>Enable and Disable firewalld</h1><p>firewalld provides an init script for systems using classic  SysVinit and also a systemd service file. The following documentation is about the systemd service used in Fedora, RHEL and CentOS  distributions.</p>
+<p>It is not recommended to use iptables directly while firewalld is  running as this could lead into some unexpected issues. If a user, for  example, is removing base rules or chains of the chain structure, then a firewalld reload might be needed to create them again.</p>
+<h2 id="Install-and-enable-firewalld"><a href="#Install-and-enable-firewalld" class="headerlink" title="Install and enable firewalld"></a>Install and enable firewalld</h2><p>If the iptables, ip6tables, ebtables and ipset services are in use:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">systemctl disable --now iptables.service</span><br><span class="line">systemctl disable --now ip6tables.service</span><br><span class="line">systemctl disable --now etables.service</span><br><span class="line">systemctl disable --now ipset.service</span><br><span class="line">dnf install firewalld firewall-config firewall-applet</span><br><span class="line">systemctl unmask --now firewalld.service</span><br><span class="line">systemctl enable --now firewalld.service</span><br></pre></td></tr></table></figure>
+
+<p>To check the firewall state you have different options. The fist option is to use <code>systemctl status firewalld</code> the other one is to use <code>firewall-cmd --state</code>.</p>
+<p>The output of the systemctl command should look like this:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">$ systemctl status firewalld</span><br><span class="line">● firewalld.service - firewalld - dynamic firewall daemon</span><br><span class="line">   Loaded: loaded (&#x2F;usr&#x2F;lib&#x2F;systemd&#x2F;system&#x2F;firewalld.service; enabled; vendor pr</span><br><span class="line">   Active: active (running) since Wed 2016-06-29 14:28:51 CEST; 1 weeks 6 days a</span><br><span class="line">     Docs: man:firewalld(1)</span><br><span class="line"> Main PID: 24540 (firewalld)</span><br><span class="line">    Tasks: 2 (limit: 512)</span><br><span class="line">   CGroup: &#x2F;system.slice&#x2F;firewalld.service</span><br><span class="line">           └─24540 &#x2F;usr&#x2F;bin&#x2F;python3 -Es &#x2F;usr&#x2F;sbin&#x2F;firewalld --nofork --nopid</span><br></pre></td></tr></table></figure>
+
+<p>The output of the firewall-cmd command should look like this:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ firewall-cmd --state</span><br><span class="line">running</span><br></pre></td></tr></table></figure>
+
+<h2 id="Install-and-enable-iptables-ip6tables-ebtables-and-ipset-services"><a href="#Install-and-enable-iptables-ip6tables-ebtables-and-ipset-services" class="headerlink" title="Install and enable iptables, ip6tables, ebtables and ipset services"></a>Install and enable iptables, ip6tables, ebtables and ipset services</h2><p>If firewalld is enabled and you want to enable the iptables, ip6tables, ebtables and ipset services instead:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">dnf install iptables-services ebtables ipset-service</span><br><span class="line">systemctl mask --now firewalld.service</span><br><span class="line">systemctl enable --now iptables.service</span><br><span class="line">systemctl enable --now ip6tables.service</span><br><span class="line">systemctl enable --now etables.service</span><br><span class="line">systemctl enable --now ipset.service</span><br></pre></td></tr></table></figure>
+
+<p>The use of the mask line is recommended as systemd will start  firewalld if there is another service requires it or if the D-Bus  interface of firewalld is used. If the service only gets disabled, then  it will not be auto started anymore.</p>
+<p>​                          </p>
+<p>​          </p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://islet.space/2021/05/13/Linux/SSH/%E4%BD%BF%E7%94%A8%20SSH-Key%20%E7%99%BB%E5%BD%95%E8%BF%9C%E7%A8%8B%E6%9C%8D%E5%8A%A1%E5%99%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Liewzheng">
+      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coder的孤岛">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/05/13/Linux/SSH/%E4%BD%BF%E7%94%A8%20SSH-Key%20%E7%99%BB%E5%BD%95%E8%BF%9C%E7%A8%8B%E6%9C%8D%E5%8A%A1%E5%99%A8/" class="post-title-link" itemprop="url">使用 SSH-Key 登录远程服务器</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-05-13 10:00:00" itemprop="dateCreated datePublished" datetime="2021-05-13T10:00:00+08:00">2021-05-13</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2021-05-14 19:50:08" itemprop="dateModified" datetime="2021-05-14T19:50:08+08:00">2021-05-14</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/fab3252b3192">jianshu.com</a></p>
+<p>ssh 提供两种级别的安全认证：</p>
+<ol>
+<li>基于口令的安全认证</li>
+<li>基于密钥的安全认证</li>
+</ol>
+<h2 id="基于口令的安全认证"><a href="#基于口令的安全认证" class="headerlink" title="基于口令的安全认证"></a>基于口令的安全认证</h2><p>需要知道用户名和密码即可登录，该连接是加密的，但客户端不能确认目标主机是否为“伪造的”，也不能保证口令安全。</p>
+<p>远程主机的 /etc/ssh/sshd_config 需配置：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">PasswordAuthentication yes</span><br></pre></td></tr></table></figure>
+
+<p>重启 sshd 使改动生效：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ &#x2F;etc&#x2F;init.d&#x2F;sshd reload</span><br></pre></td></tr></table></figure>
+
+<h2 id="基于密钥的安全认证"><a href="#基于密钥的安全认证" class="headerlink" title="基于密钥的安全认证"></a>基于密钥的安全认证</h2><p>需要用户持有“公钥/私钥对”，远程服务器持有公钥，本地持有私钥。</p>
+<p>客户端向服务器发出请求。服务器收到请求之后，先在用户的主目录下找到该用户的公钥，然后对比用户发送过来的公钥。如果一致，服务器用公钥加密“质询”并发送给客户端。客户端收到“质询”后用私钥解密，再发还给服务器。认证结束。</p>
+<p>生成 ssh-key，选加密算法（rsa、dsa），给秘钥命名（可选）：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ssh-keygen -t rsa -C &quot;name&quot;</span><br></pre></td></tr></table></figure>
+
+<p>passphrase 是证书口令，以加强安全性，避免证书被恶意复制。</p>
+<p>会在 <code>~.ssh</code> 下生成 <code>id_rsa</code>, <code>id_rsa.pub</code> 两个文件，分别是 私钥/公钥。</p>
+<p><mark>公钥需保存到远程服务器 <code>~/.ssh/authorized_keys</code> 里，私钥由客户端本地留存。</mark></p>
+<p>要保证 <code>.ssh</code> 和 <code>authorized_keys</code> 都只有用户自己有写权限。否则验证无效。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ chmod -R 700 ~&#x2F;.ssh&#x2F;</span><br><span class="line">$ chmod 600 ~&#x2F;.ssh&#x2F;authorized_keys</span><br></pre></td></tr></table></figure>
+
+<h2 id="ssh-配置的一些实践"><a href="#ssh-配置的一些实践" class="headerlink" title="ssh 配置的一些实践"></a>ssh 配置的一些实践</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">$ vim &#x2F;etc&#x2F;ssh&#x2F;sshd_config</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">PermitRootLogin no</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">StrictModes no</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">RSAAuthentication yes</span><br><span class="line">PubkeyAuthentication yes</span><br><span class="line">AuthorizedKeysFile %h&#x2F;.ssh&#x2F;authorized_keys</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">PasswordAuthentication no</span><br></pre></td></tr></table></figure>
+
+<h2 id="持有多个-ssh-key-时的使用方法"><a href="#持有多个-ssh-key-时的使用方法" class="headerlink" title="持有多个 ssh-key 时的使用方法"></a>持有多个 ssh-key 时的使用方法</h2><p>简单情况下，通过手动指定私钥文件登录</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ssh username@hostname -i ~&#x2F;.ssh&#x2F;my_id_rsa</span><br></pre></td></tr></table></figure>
+
+<p>觉得麻烦可以配置客户端的 <code>/etc/ssh/ssh_config</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">IdentityFile ~&#x2F;.ssh&#x2F;id_rsa</span><br><span class="line"></span><br><span class="line">IdentityFile ~&#x2F;.ssh&#x2F;my_id_rsa</span><br></pre></td></tr></table></figure>
+
+<p>你也可以使用 SSH Agent，下面以使用 GitHub 为场景简单介绍。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ ssh-keygen -t rsa -C &#39;second@mail.com&#39;</span><br><span class="line">$ ssh-add ～&#x2F;.ssh&#x2F;id_rsa_second</span><br></pre></td></tr></table></figure>
+
+<p>创建 <code>~/.ssh/config</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">Host github.com</span><br><span class="line">HostName github.com</span><br><span class="line">User git</span><br><span class="line">IdentityFile C:&#x2F;Users&#x2F;username&#x2F;.ssh&#x2F;id_rsa</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Host github-second</span><br><span class="line">HostName github.com</span><br><span class="line">User git</span><br><span class="line">IdentityFile C:&#x2F;Users&#x2F;username&#x2F;.ssh&#x2F;id_rsa_second</span><br></pre></td></tr></table></figure>
+
+<p>配置完成后，在连接非默认账号的仓库时，远端地址要修改为</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git remote add test git@github-second:second&#x2F;test.git</span><br></pre></td></tr></table></figure>
+
+<p>​          </p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://islet.space/2021/05/11/Computer/2021-05-11-%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Liewzheng">
+      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coder的孤岛">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/05/11/Computer/2021-05-11-%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="post-title-link" itemprop="url">数据库学习笔记</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-05-11 19:11:00" itemprop="dateCreated datePublished" datetime="2021-05-11T19:11:00+08:00">2021-05-11</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2021-05-14 19:47:28" itemprop="dateModified" datetime="2021-05-14T19:47:28+08:00">2021-05-14</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/database/" itemprop="url" rel="index"><span itemprop="name">database</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="数据库入门"><a href="#数据库入门" class="headerlink" title="数据库入门"></a>数据库入门</h1><h4 id="数据库相关从业"><a href="#数据库相关从业" class="headerlink" title="数据库相关从业"></a>数据库相关从业</h4><p><strong>前面五种</strong>：重点是设计和应用，侧重于软件和数据逻辑层面。</p>
+<p>数据库应用开发 (application development)</p>
+<blockquote>
+<p>除了基本的SQL方面的知识，还要对开发流程，软件工程，各种框架和开发工具等等<br>数据库应用开发这个方向上的机会最多，职位最多</p>
+</blockquote>
+<p>数据建模专家 (data modeler)</p>
+<blockquote>
+<p>除了基本的SQL方面的知识，非常熟悉数据库原理，数据建模<br>负责将用户对数据的需求转化为数据库物理设计和物理设计<br>这个方向上在大公司（金融，保险，研究，软件开发商等）有专门职位，<br>在中小公司则可能由程序员承担。</p>
+</blockquote>
+<p>商业智能专家 (business intelligence - BI)</p>
+<blockquote>
+<p>主要从商业应用，最终用户的角度去从数据中获得有用的信息，<br>涉及OLAP (online analytical processing)<br>需要使用SSRS, cognos, crystal report等报表工具，或者其他一些数据挖掘，统计方面的软件工具</p>
+</blockquote>
+<p>ETL开发 (ETL Developer)</p>
+<blockquote>
+<p>使用ETL工具或者自己编写程序在不同的数据源之间对数据进行导入，导出，转换，<br>所接触的数据库一般数据量非常大，要求进行的数据转换也比较复杂。<br>和数据仓库和商业智能的关系比较密切。</p>
+</blockquote>
+<blockquote>
+<p>在一些数据库应用规模很大的公司里面有专门的职位，<br>中小公司里面则可能由程序员或者DBA负责这方面的工作。</p>
+</blockquote>
+<p>数据构架师 (Data Architect)</p>
+<blockquote>
+<p>主要从全局上制定和控制关于数据库在逻辑这一层的大方向，<br>也包括数据可用性，扩展性等长期性战略，<br>协调数据库的应用开发，建模，DBA之间的工作。<br>这个方向上在大公司（金融，保险，研究，软件开发商等）有专门职位，<br>在中小公司或者没有这个职位，或者由开发人员，DBA负责。</p>
+</blockquote>
+<p><strong>后面五种</strong>：重点是运营和维护，侧重与硬件和数据物理层面。</p>
+<p>数据库管理员 (database administrator - DBA)</p>
+<blockquote>
+<p>数据库的安装，配置，调优，备份/恢复，监控，自动化等，<br>协助应用开发（有些职位还要求优化SQL，写存储过程和函数等）<br>这个方向上的职位相对少一些，但一般有点规模的公司还是会有这样的职位</p>
+</blockquote>
+<p>数据仓库专家 (data warehouse - DW)</p>
+<blockquote>
+<p>应付超大规模的数据，历史数据的存储，管理和使用，<br>和商业智能关系密切，很多时候BI和DW是放在一个大类里面的，<br>但是我觉得DW更侧重于硬件和物理层上的管理和优化。</p>
+</blockquote>
+<p>存储工程师 (storage engineer)</p>
+<blockquote>
+<p>专门负责提供数据存储方案，使用各种存储技术满足数据访问和存储需求，<br>和DBA的工作关系比较密切。<br>对高可用性有严格要求（比如通信，金融，数据中心等）的公司通常有这种职位，<br>这种职位也非常少。</p>
+</blockquote>
+<p>性能优化工程师 (performance engineer)</p>
+<blockquote>
+<p>专长数据库的性能调试和优化，为用户提供解决性能瓶颈方面的问题。<br>我知道至少IBM, 微软和Oracle都有专门的数据库性能实验室(database performance lab）,<br>也有专门的性能优化工程师，负责为其数据库产品和关键应用提供这方面的技术支持。<br>对数据库性能有严格要求的公司（比如金融行业）可能会有这种职位。<br>因为针对性很强，甚至要求对多种数据库非常熟悉，所以职位极少。</p>
+</blockquote>
+<p>高级数据库管理员 (senior DBA)</p>
+<blockquote>
+<p>在DBA的基础上，还涉及上面3种职位的部分工作，具体包括下面这些：<br>对应用系统的数据（布局，访问模式，增长模式，存储要求等）比较熟悉。<br>对性能优化非常熟悉，可以发现并优化从SQL到硬件I/O，网络等各个层面上的瓶颈<br>对于存储技术相对熟悉，可能代替存储工程师的一些工作，<br>对数据库的高可用性技术非常熟悉（比如MSSQL的集群，ORACLE RAC/FailSafe, IBM的DPF, HADR等）<br>对大规模数据库有效进行物理扩展（比如表分区）或者逻辑扩展（比如数据库分区，联合数据库等）<br>熟悉各种数据复制技术，比如单向，双向，点对点复制技术，以满足应用要求。<br>灾难数据恢复过程的建立，测试和执行<br>这种职位一般只在对数据库要求非常高并且规模非常大（比如金融，电信，数据中心等）的公司需要，<br>而且这种公司一般有一个专门独立负责数据库的部门或组。 </p>
+</blockquote>
+<h1 id="关系型数据库"><a href="#关系型数据库" class="headerlink" title="关系型数据库"></a>关系型数据库</h1><p>说到关系型数据库，不仅仅是涉及计算机概念，也涉及一些数学概念，例如表格的概念、包含关系、关系运算及关系代数等。</p>
+<h2 id="关系模型术语"><a href="#关系模型术语" class="headerlink" title="关系模型术语"></a>关系模型术语</h2><img src="https://pic.islet.space/2021/05/image-20210512085059008.png" alt="image-20210512085059008" style="zoom:67%;" />
+
+<ol>
+<li><strong>表</strong>：关系型数据库由表集合而成，<strong>表是关系型数据库的一个基本组成</strong>，每个表具有唯一的名字。</li>
+<li><strong>关系</strong>：在关系型数据库中，<strong>关系</strong> 指代 <strong>表</strong> 的概念，即一般可认为 <strong>关系 = 表</strong>。</li>
+<li><strong>元组</strong>：在关系型数据库中，<strong>元组</strong> 指代 <strong>行</strong> 的概念，即一般可认为 <strong>元组 = 行</strong>。</li>
+<li><strong>属性</strong>：在关系型数据库中，<strong>属性</strong> 指代 <strong>列</strong> 的概念，即一般可认为 <strong>属性 = 列</strong>。</li>
+<li><strong>域</strong>：属性下所有元素的可取值范围或取值类型。</li>
+<li><strong>原子域</strong>：域中的元素不可再分，则称为原子域。</li>
+<li><strong>空值</strong>：属性下元素为空(NULL)。</li>
+<li><strong>关系实例</strong>：即表实例，严谨说法是 “表示一个关系的特定实例，也就是所包含的一组特定的行”，就是不仅仅只有属性这一行，还具有特定的某些具体数据的表格。</li>
+<li><strong>关系模式</strong>：即表模式，严谨说法是“关系模式由属性序列及各属性对应域组成”，通俗地说就是，没有具体数据，而仅定义了属性和域的表格。</li>
+<li><strong>数据库模式</strong>：对数据库的逻辑设计。</li>
+<li><strong>数据库实例</strong>：对数据库中数据的快照。</li>
+<li><strong>超码</strong>：是一个或多个属性的集合，超码内的一个或多个属性组合可以唯一区分和标识一个元组。</li>
+<li><strong>候选码</strong>：最小超码。</li>
+<li><strong>主码</strong>：主码是候选码的一种，最重要的是，<strong>主码由设计者选中，具有人为性</strong>。</li>
+<li><strong>外码</strong>：用于表示关系之间的引用和被引用关系。即关系A中的某项属性来自于关系B中的某项属性，则称该引用过来的属性为外码。<strong>但据课本，是被引用的主码称为外码。</strong></li>
+<li><img src="https://pic.islet.space/2021/05/image-20210512134116409.png" alt="image-20210512134116409"></li>
+</ol>
+<h2 id="结构化查询语言SQL"><a href="#结构化查询语言SQL" class="headerlink" title="结构化查询语言SQL"></a>结构化查询语言SQL</h2><h3 id="发展历史"><a href="#发展历史" class="headerlink" title="发展历史"></a>发展历史</h3><img src="https://pic.islet.space/2021/05/image-20210512192241572.png" alt="image-20210512192241572" style="zoom:67%;" />
+
+
+
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://developer.aliyun.com/article/745815#:~:text=SQL%E6%A0%87%E5%87%86%E6%98%AF%E7%94%B1%E5%9B%BD%E9%99%85%E6%A0%87%E5%87%86%E5%8C%96%E7%BB%84%E7%BB%87%EF%BC%88ISO%EF%BC%89%E3%80%81%E7%BE%8E%E5%9B%BD%E5%9B%BD%E5%AE%B6%E6%A0%87%E5%87%86%E5%A7%94%E5%91%98%E4%BC%9AANSI%E7%AD%89%E5%88%B6%E5%AE%9A%E7%9A%84%EF%BC%8C%E5%AF%B9%E6%95%B0%E6%8D%AE%E5%BA%93%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E7%9A%84%E7%BB%9F%E4%B8%80%E6%93%8D%E4%BD%9C%E6%96%B9%E5%BC%8F%E3%80%82%20SQL%20%E6%98%AF%20Structured%20Query%20Language%20%E7%9A%84%E7%BC%A9%E5%86%99%EF%BC%8C%E8%A7%84%E8%8C%83%E7%9A%84%E5%8F%91%E9%9F%B3%E6%98%AF%20%E2%80%9C%CB%8C%C9%9Bs%CB%8Ckju%CB%90%CB%88%C9%9Bl%E2%80%9D%E3%80%82,%E6%98%AF%20SQL%20Query%20Language%20%E7%9A%84%E7%BC%A9%E5%86%99%E3%80%82%20IBM%E5%AF%B9%E5%85%B3%E7%B3%BB%E6%95%B0%E6%8D%AE%E5%BA%93%E4%BB%A5%E5%8F%8ASQL%E8%AF%AD%E8%A8%80%E7%9A%84%E5%BD%A2%E6%88%90%E5%92%8C%E8%A7%84%E8%8C%83%E5%8C%96%E4%BA%A7%E7%94%9F%E4%BA%86%E9%87%8D%E5%A4%A7%E7%9A%84%E5%BD%B1%E5%93%8D%EF%BC%8C%E7%AC%AC%E4%B8%80%E4%B8%AA%E7%89%88%E6%9C%AC%E7%9A%84SQL%E6%A0%87%E5%87%86SQL86%E5%B0%B1%E6%98%AF%E5%9F%BA%E4%BA%8ESystem%20R%E7%9A%84%E6%89%8B%E5%86%8C%E8%80%8C%E6%9D%A5%E7%9A%84%E3%80%82%20Oracle%E5%9C%A81979%E5%B9%B4%E7%8E%87%E5%85%88%E6%8E%A8%E5%87%BA%E4%BA%86%E6%94%AF%E6%8C%81SQL%E7%9A%84%E5%95%86%E7%94%A8%E4%BA%A7%E5%93%81%E3%80%82">数据库必知词汇：SQL标准</a></p>
+<p>SQL标准是由国际标准化组织（ISO）、美国国家标准委员会ANSI等制定的，对数据库管理系统的统一操作方式。</p>
+<p>SQL 是  Structured Query Language 的缩写，规范的发音是 “ˌɛsˌkjuːˈɛl”。但是它的前身是著名的关系数据库原型系统  System R 所采用的 SEQUEL 语言，这也是为什么有很多人将其读作 “ˈsiːkwəl” 的来源。也有人类比 GNU  这个词的定义（GNU’s Not UNIX），认为 SQL 是 SQL Query Language 的缩写。</p>
+<p>IBM对关系数据库以及SQL语言的形成和规范化产生了重大的影响，第一个版本的SQL标准SQL86就是基于System  R的手册而来的。Oracle在1979年率先推出了支持SQL的商用产品。随着数据库技术和应用的发展，为不同RDBMS提供一致的语言成了一种现实需要。</p>
+<p>对SQL标准影响最大的机构自然是那些著名的数据库产商，而具体的制订者则是一些非营利机构，例如国际标准化组织ISO、美国国家标准委员会ANSI等。各国通常会按照ISO标准和ANSI标准制定自己的国家标准。</p>
+<p>“美国国家标准化组织(ANSI)”是一个核准多种行业标准的组织。SQL作为关系型数据库所使用的标准语言，最初是基于IBM的实现在1986年被批准的。1987年，“国际标准化组织(ISO)”把ANSI SQL作为国际标准。</p>
+<p>SQL发展的简要历史：<br>1986年，ANSI X3.135-1986，ISO/IEC 9075:1986，SQL-86<br>1989年，ANSI X3.135-1989，ISO/IEC 9075:1989，SQL-89<br>1992年，ANSI X3.135-1992，ISO/IEC 9075:1992，SQL-92（SQL2）<br>1999年，ISO/IEC 9075:1999，SQL:1999（SQL3）<br>2003年，ISO/IEC 9075:2003，SQL:2003<br>2008年，ISO/IEC 9075:2008，SQL:2008<br>2011年，ISO/IEC 9075:2011，SQL:2011<br>补充<br>1986 年，ANSI X3.135-1986，ISO/IEC 9075:1986，SQL-86。这是 ANSI 首次将 SQL 语言标准化的版本。<br>1989 年，ANSI X3.135-1989，ISO/IEC 9075:1989，SQL-89。增加了完整性约束。<br>1992 年，ANSI X3.135-1992，ISO/IEC 9075:1992，SQL-92（SQL2）。最重要的一个版本。 引入了标准的分级概念。<br>1999 年，ISO/IEC 9075:1999，SQL:1999（SQL3）。变动最大的一个版本。改变了标准符合程度的定义；增加了面向对象特性、正则表达式、存储过程、Java 等支持。<br>2003 年，ISO/IEC 9075:2003，SQL:2003。引入了 XML、Window 函数等。<br>2008 年，ISO/IEC 9075:2008，SQL:2008。引入了 TRUNCATE 等。<br>2011 年，ISO/IEC 9075:2011，SQL:2011。引入了时序数据等。<br>2016 年，ISO/IEC 9075:2016，SQL:2016。引入了 JSON 等。</p>
+<p>绝大多数人提起SQL标准，涉及的内容其实是SQL92里头最基本或者说最核心的一部分。SQL92本身是分级的，包括入门级、过度级、中间级和完全级，推荐泛读SQL92，增量式式阅读其他标准。而随着SQL标准的发展，其包含的内容实在太多了，而且有很多特性对新的SQL产品而言也越来越不重要了。从SQL99之后，标准中符合程度的定义就不再分级，而是改成了核心兼容性和特性兼容性；也没有机构来推出权威的SQL标准符合程度的测试认证了。</p>
+</blockquote>
+<h3 id="作用"><a href="#作用" class="headerlink" title="作用"></a>作用</h3><ol>
+<li>数据库查询</li>
+<li>定义数据结构</li>
+<li>修改数据</li>
+<li>说明安全性约束条件</li>
+</ol>
+<h3 id="基本数据类型"><a href="#基本数据类型" class="headerlink" title="基本数据类型"></a>基本数据类型</h3><img src="https://pic.islet.space/2021/05/image-20210512192708528.png" alt="image-20210512192708528" style="zoom:67%;" />
+
+<p><em><strong>以上所有类型都可能包含一个被称作空值的特殊值。NULL表示一个缺失的值，即表示该值可能存在但并不为人所知，或者可能根本不存在。</strong></em></p>
+<h4 id="关于char-varchar-nvarchar的比较"><a href="#关于char-varchar-nvarchar的比较" class="headerlink" title="关于char / varchar / nvarchar的比较"></a>关于char / varchar / nvarchar的比较</h4><img src="https://pic.islet.space/2021/05/image-20210512193208247.png" alt="image-20210512193208247" style="zoom:67%;" />
+
+
+
+<h3 id="SQL完整性约束"><a href="#SQL完整性约束" class="headerlink" title="SQL完整性约束"></a>SQL完整性约束</h3><img src="https://pic.islet.space/2021/05/image-20210512201050138.png" alt="image-20210512201050138" style="zoom:67%;" />
+
+<p>例如，上方教员的名称为 “张三”， 我想删除后保存，会破坏 <code>instructor</code> 关系下 <code>name</code> 的非空约束，SQL不通过这种操作。</p>
+<h3 id="数据库操作"><a href="#数据库操作" class="headerlink" title="数据库操作"></a>数据库操作</h3><h4 id="新建表格"><a href="#新建表格" class="headerlink" title="新建表格"></a>新建表格</h4><p>数据表格新建格式及样例如下：</p>
+<p><img src="https://pic.islet.space/2021/05/image-20210512193506987.png" alt="image-20210512193506987"></p>
+<blockquote>
+<p>其中r是关系名，即表名；A<del>x</del>是属性名，即列名；D<del>x</del>是属性的域，即指定了A的类型及可选约束，用于限制所允许的A<del>x</del>取值的集合。</p>
+</blockquote>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*部门关系*/</span></span><br><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> department(</span><br><span class="line">    dept_name <span class="type">varchar</span>(<span class="number">20</span>),</span><br><span class="line">    building <span class="type">varchar</span>(<span class="number">15</span>),</span><br><span class="line">    budget <span class="type">numeric</span>(<span class="number">12</span>,<span class="number">2</span>),</span><br><span class="line">    <span class="keyword">primary</span> key(dept_name)</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line"><span class="comment">/*课程关系*/</span></span><br><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> course(</span><br><span class="line">    coourse_id <span class="type">varchar</span>(<span class="number">7</span>),</span><br><span class="line">    title <span class="type">varchar</span>(<span class="number">50</span>),</span><br><span class="line">    dept_name <span class="type">varchar</span>(<span class="number">20</span>),</span><br><span class="line">    credits <span class="type">numeric</span>(<span class="number">2</span>,<span class="number">0</span>),</span><br><span class="line">    <span class="keyword">primary</span> key(course_id),</span><br><span class="line">    <span class="keyword">foreign</span> key (dept_name) <span class="keyword">references</span> department</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line"><span class="comment">/*教员关系*/</span></span><br><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> instructor(</span><br><span class="line">	ID <span class="type">varchar</span>(<span class="number">5</span>),</span><br><span class="line">    name <span class="type">varchar</span>(<span class="number">20</span>) <span class="keyword">not</span> <span class="keyword">null</span>,</span><br><span class="line">    dept_name <span class="type">varchar</span>(<span class="number">20</span>),</span><br><span class="line">    salary <span class="type">numeric</span>(<span class="number">8</span>,<span class="number">2</span>),</span><br><span class="line">    <span class="keyword">primary</span> key(ID),</span><br><span class="line">    <span class="keyword">foreign</span> key(dept_name) <span class="keyword">references</span> department</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line"><span class="comment">/*（课程）章节关系*/</span></span><br><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> section(</span><br><span class="line">	course_id <span class="type">varchar</span>(<span class="number">8</span>),</span><br><span class="line">    sec_id <span class="type">varchar</span>(<span class="number">8</span>),</span><br><span class="line">    semester <span class="type">varchar</span>(<span class="number">6</span>),</span><br><span class="line">    <span class="keyword">year</span> <span class="type">numeric</span>(<span class="number">4</span>,<span class="number">0</span>),</span><br><span class="line">    building <span class="type">varchar</span>(<span class="number">7</span>),</span><br><span class="line">    time_slot_id <span class="type">varchar</span>(<span class="number">4</span>),</span><br><span class="line">    <span class="keyword">primary</span> key(course_id, sec_id, semester, <span class="keyword">year</span>),</span><br><span class="line">    <span class="keyword">foreign</span> key(course_id) <span class="keyword">references</span> course</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line"><span class="comment">/*教师关系*/</span></span><br><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> teachers(</span><br><span class="line">	ID <span class="type">varchar</span>(<span class="number">5</span>),</span><br><span class="line">    course_id <span class="type">varchar</span>(<span class="number">8</span>),</span><br><span class="line">    sec_id <span class="type">varchar</span>(<span class="number">8</span>),</span><br><span class="line">    semester <span class="type">varchar</span>(<span class="number">6</span>),</span><br><span class="line">    <span class="keyword">year</span> <span class="type">numeric</span>(<span class="number">4</span>,<span class="number">0</span>),</span><br><span class="line">    <span class="keyword">primary</span> key(ID, course_id, sec_id, semester, <span class="keyword">year</span>),</span><br><span class="line">    <span class="keyword">foreign</span> key(course_id, sec_id, semester, <span class="keyword">year</span>) <span class="keyword">references</span> section,</span><br><span class="line">    <span class="keyword">foreign</span> key(ID) <span class="keyword">references</span> instructor</span><br><span class="line">);</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>foreign key 可以拿来当 primary key，如章节关系中所示。</p>
+<p><code>not null</code> 关键字约束表明 “在该属性上不允许空值” 。</p>
+</blockquote>
+<h4 id="插入"><a href="#插入" class="headerlink" title="插入"></a>插入</h4><p><img src="https://pic.islet.space/2021/05/image-20210512201338050.png" alt="image-20210512201338050"></p>
+<p>插入值过程中，所给出的值的顺序应与关系模式中的属性顺序一致。</p>
+<h4 id="删除"><a href="#删除" class="headerlink" title="删除"></a>删除</h4><p><code>delete</code> 命令可以用于删除元组。</p>
+<ul>
+<li>如果直接使用命令 <code>delete from student</code> ， 则将从 <em>student</em> 关系中删除所有元组。</li>
+<li>使用其他语句可以执行特定删除，如：<ul>
+<li>使用命令 <code>delete from instructor where salary between 13000 and 150000;</code> ，删除所有工资在13000到15000美元之间的教师</li>
+<li>其他操作……</li>
+</ul>
+</li>
+</ul>
+<h4 id="丢弃表格"><a href="#丢弃表格" class="headerlink" title="丢弃表格"></a>丢弃表格</h4>
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://islet.space/2021/05/11/Signal/2021-05-11-TRS%E7%AB%AF%E5%AD%90%E5%8F%8A%E5%85%B6%E4%BB%96%E9%9F%B3%E9%A2%91%E6%8E%A5%E5%8F%A3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Liewzheng">
+      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coder的孤岛">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/05/11/Signal/2021-05-11-TRS%E7%AB%AF%E5%AD%90%E5%8F%8A%E5%85%B6%E4%BB%96%E9%9F%B3%E9%A2%91%E6%8E%A5%E5%8F%A3/" class="post-title-link" itemprop="url">TRS端子及其他音频接口</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-05-11 16:00:00" itemprop="dateCreated datePublished" datetime="2021-05-11T16:00:00+08:00">2021-05-11</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2021-05-14 19:47:43" itemprop="dateModified" datetime="2021-05-14T19:47:43+08:00">2021-05-14</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Signal/" itemprop="url" rel="index"><span itemprop="name">Signal</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>接口其实包括对 “<strong>接口</strong>” （interface）和 “<strong>连接器</strong>” （connector）这两个方面的讨论，“连接器”我们通常也称之为“接头”或“插头”。 “接口”定义了电子设备之间连接的物理特性，包括传输的<strong>信号频率</strong>、<strong>强度</strong>，以及相应<strong>连线的类型</strong>、<strong>数量</strong>，还包括<strong>插头</strong>、<strong>插座</strong>的结构设计；而“连接器”则是在物理上实现设备之间连接的装置。</p>
+<h1 id="TRS"><a href="#TRS" class="headerlink" title="TRS"></a>TRS</h1><p>TRS端子（TRS connector）是一种常用于连接音响设备，用以传递音频信号的连接器。该词是其三个组成部件的首字母缩写：<strong>Tip</strong>（尖）、<strong>Ring</strong>（环）、<strong>Sleeve</strong>（套）。</p>
+<p>由于该种接头一般用于接插耳机和麦克风，因此也称 Phone Jack。虽然统称TRS，但也可依据具体的插头/插座的<strong>环（R）数</strong> 不同而分别称为<strong>TS</strong>（无环，即尖和套各提供一个接触点）、<strong>TRS</strong>（一环，三个接触点）、<strong>TRRS</strong>（两环，四个接触点）等等。</p>
+<p>日常生活中我们见得最多的就是<strong>TRS</strong>接口，它的接头外观是圆柱体形状，通常有三种尺寸**1/4”<strong>（6.3mm）、</strong>1/8”<strong>（3.5mm）、</strong>3/32”**（2.5mm），最常见的是3.5mm尺寸的接头。</p>
+<img src="https://pic.islet.space/2021/05/72f082025aafa40fc0dca129a764034f78f0192f" alt="img" style="zoom:50%;" />
+
+<p><strong>TRS</strong> 的含义是Tip（signal）、Ring（signal）、Sleeve（ground），分别代表了这种接头的3个触点，我们看到的就是被两段绝缘材料隔离开的三段金属柱。因此，3.5mm接头和6.3mm接头也被人称为“小三芯”和“大三芯”。</p>
+<img src="https://pic.islet.space/2021/05/Cg-4WlUQA2qIVD1QAAEWTBx9jskAAAGGAKz658AARZk513.jpg" alt=" " style="zoom: 150%;" />
+
+
+
+<p>TRS接口就是一个圆孔，其内部与接头对应，也有三个触点，彼此之间也被绝缘材料隔开。</p>
+<h2 id="常见设备"><a href="#常见设备" class="headerlink" title="常见设备"></a>常见设备</h2><p>通常，手机上的耳机插口都是TRRS，而电脑上通常是两个TRS，一个传声音的左右声道，一个传话筒的左右声道。</p>
+<p>而为了使得双TRS的耳麦可以插到手机上，产生了转接头，也就是图中的第二个设备。不过我们考虑一下会发现，两个TRS都是3个信号，合并到一个TRRS接口上，信号变成了4个，减少了两个。除去一个共地的GND，还少了一个信号，去哪了呢？其实这是因为它会把LMIC和RMIC合并成一个MIC，而且TRRS本身就是只能传输一个MIC信号的，不存在左右声道。</p>
+<p>当然了，也有反过来将TRRS转接成两个TRS接口的转接头。</p>
+<p>此外，还有TS麦克风，如图中的第四个设备。如果话筒采用的这种接口，就默认了MIC只有一个声道，这种一般是用在小蜜蜂扩音器上。</p>
+<p><img src="https://pic.islet.space/2021/05/41_2.jpg" alt="img"></p>
+<p>当然，既然能加芯，那也可以减芯。二芯的TRS接头可以用来传送非平衡的单声道音频信号，比如电吉他用的线就是二芯的TRS线。所以，单从TRS接口外观来看，我们不会知道它是否支持平衡传输；单从芯数来看，我们也不能确定四芯及以上的TRS接头是否支持平衡传输，具体情况需要看设备。</p>
+<p>尖和套是一定要有的，但环可以根据需要加，常见的有0-2个环的，也就是TS、TRS和TRRS。环越多，可以传输的信号数量越多。</p>
+<p>因此，普通双声道耳机需要3个信号，即TRS；而如果是带麦克风的耳机，就需要4个信号了，即TRRS。注意，这里除了左声道(L)、右声道(R)以及带麦耳机所需的麦克风(MIC)信号，必须还要有地线(GND)，因为没有绝对电压而只有相对电压。</p>
+<p>在3.5mm接口上传输的是模拟信号，使用电压模拟声波。</p>
+<p>此外，还有一种用于耳机的四芯3.5mm插头则是用来传输平衡信号的。6.3mm的“大三芯”插头可用来传输平衡信号或非平衡立体声信号，也就是说它可以和XLR平衡接口一样，能够传输平衡信号，但因制作这样的平衡线成本比较高，所以一般只用在高档专业音频设备上。</p>
+<img src="https://article-fd.zol-img.com.cn/t_s640x2000/g2/M00/01/08/Cg-4WlUQBM2IO7yBAAPH1zKABagAAAGHwBFP9AAA8fv952.jpg" alt="拒绝做小白 你应该知道的常见音频接口 " style="zoom:67%;" />
+
+<div style="text-align: center; font-weight: 900;">二芯6.3mm TRS电吉他线</div>
+
+
+
+
+
+<h2 id="TRS母头"><a href="#TRS母头" class="headerlink" title="TRS母头"></a>TRS母头</h2><p>ADI公司旗下的 ADAU1772 评估板采用的就是CUI公司旗下型号为 SJ-3523-SMT-TR 的TRS母头</p>
+<p><img src="https://pic.islet.space/2021/05/2021-05-11_16-39.png"></p>
+<p>说明书如：<a target="_blank" rel="noopener" href="https://www.cuidevices.com/product/resource/digikeypdf/sj-352x-smt.pdf">sj-352x-smt.pdf</a> ，其规格如下：</p>
+<p><img src="https://pic.islet.space/2021/05/image-20210511164353982.png" alt="image-20210511164353982"></p>
+<h1 id="RCA"><a href="#RCA" class="headerlink" title="RCA"></a>RCA</h1><p> RCA接口在我们日常生活中也非常常见，音箱、电视、功放、DVD机等设备上基本都有。它得名于美国无线电公司的英文缩写（Radio Corporation of America），上世纪40年代的时候，该公司将这种接口引入市场，用它来连接留声机和扬声器，也因此，它在欧州又称为PHONO接口。我们对它更熟悉的接头称呼则是“莲花头”。</p>
+<img src="https://article-fd.zol-img.com.cn/t_s640x2000/g2/M00/01/08/Cg-4WlUQCFeITgCFAAaVRivfdawAAAGKwBI8wMABpVe851.jpg" alt="拒绝做小白 你应该知道的常见音频接口 " style="zoom:67%;" />
+
+<div style="text-align: center; font-weight: 900;">RCA接口在我们日常生活中非常常见</div>
+
+<img src="https://article-fd.zol-img.com.cn/t_s640x2000/g2/M00/01/08/Cg-4WVUQCFyIRm-6AAMW5z_mkQ8AAAGKwB5ZmQAAxb_659.jpg" alt="拒绝做小白 你应该知道的常见音频接口 " style="zoom:67%;" />
+
+<div style="text-align: center; font-weight: 900;">被称为“莲花头”的RCA接头</div>
+
+
+
+<p>RCA接口采用同轴传输信号的方式，中轴用来传输信号，外沿一圈的接触层用来接地。每一根RCA线缆负责传输一个声道的音频信号，因此，可以根据对声道的实际需要，使用与之数量相匹配的RCA线缆。比如要组双声道立体声就需要两根RCA线缆。</p>
+<h1 id="XLR"><a href="#XLR" class="headerlink" title="XLR"></a>XLR</h1><p>XLR接口又被称为“卡农口”，这是因为James H. Cannon创立的Cannon Electric公司是它最初的生产商。它们最早的产品是“cannon X”系列，后来改进产品增加了一个锁定装置（Latch），于是在“X”后面增加了一个“L”；再后来又围绕着接头的金属触点增加了橡胶封口（Rubber compound），于是又在“L”后面增加了一个“R”。人们就把三个大写字母组合在一起，称这种接头为“XLR connector”。</p>
+<p><img src="https://article-fd.zol-img.com.cn/t_s640x2000/g2/M00/01/08/Cg-4WVUQChyIbKeoAALaNHpTfMUAAAGMAMweHgAAtpM096.jpg"></p>
+<div style="text-align: center; font-weight: 900;">比较常见的三芯XLR接口</div>
+
+<p><img src="https://article-fd.zol-img.com.cn/t_s640x2000/g2/M00/01/08/Cg-4WlUQDLCIUqT0AAHcPS_ygasAAAGOQEvIJQAAdxV227.jpg" alt=" "></p>
+<div style="text-align: center; font-weight: 900;">有的耳放上面会提供四芯平衡XLR接口</div>
+
+<p>我们通常见到的XLR插头是3脚的，当然也有2脚、4脚、5脚、6脚的，比如在一些高档耳机线上，我们也会看到四芯XLR平衡接头。XLR接口与“大三芯”TRS接口一样，可以用来传输音频平衡信号。这里我们简单说一下平衡信号与非平衡信号。声波转换成电信号后，如果直接传送就是非平衡信号，如果把原始信号反相180度，然后同时传送原始信号和反相信号，这就是平衡信号。平衡传输就是利用相位抵消原理，将音频信号传输过程中受到的其他干扰降至最低。 当然，XLR接口也跟“大三芯”TRS接口一样，可以传输非平衡信号，因此光从接口看，我们是看不出来它到底传输的是哪种信号。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
     <link itemprop="mainEntityOfPage" href="http://islet.space/2021/05/06/Signal/2021-05-06-%E6%BB%A4%E6%B3%A2%E5%99%A8%E3%80%81%E5%A2%9E%E7%9B%8A%E5%92%8C%E9%9F%B3%E9%87%8F/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -178,7 +1298,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/05/06/Signal/2021-05-06-%E6%BB%A4%E6%B3%A2%E5%99%A8%E3%80%81%E5%A2%9E%E7%9B%8A%E5%92%8C%E9%9F%B3%E9%87%8F/" class="post-title-link" itemprop="url">晶振、滤波器、增益与音量</a>
+          <a href="/2021/05/06/Signal/2021-05-06-%E6%BB%A4%E6%B3%A2%E5%99%A8%E3%80%81%E5%A2%9E%E7%9B%8A%E5%92%8C%E9%9F%B3%E9%87%8F/" class="post-title-link" itemprop="url">晶振、滤波器、运放、增益与音量</a>
         </h2>
 
         <div class="post-meta-container">
@@ -196,7 +1316,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-05-09 16:48:25" itemprop="dateModified" datetime="2021-05-09T16:48:25+08:00">2021-05-09</time>
+        <time title="Modified: 2021-05-09 17:16:58" itemprop="dateModified" datetime="2021-05-09T17:16:58+08:00">2021-05-09</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -413,6 +1533,29 @@
 <p><strong>靠近电缆</strong>：滤波器与面板之间的导线的距离应尽量短。必要时，使用金属板遮挡一下，隔离近场干扰。</p>
 <p><strong>与机箱接</strong>：安装滤波器的干净地要与金属机箱可靠地搭接起来，如果机箱不是金属的，就在线路板下方设置一块较大的金属板来作为滤波地。干净地与金属机箱之间的搭接要保证很低的射频阻抗。如有必要，可以使用<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E7%94%B5%E7%A3%81">电磁</a>密封衬垫搭接，增加搭接面积，减小射频阻抗。</p>
 <p><strong>接地线短</strong>：考虑到<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E5%BC%95%E8%84%9A">引脚</a>的电感效应，其重要性前面已讨论，滤波器的局部布线和设计线路板与机箱（金属板）的连接结构时要特别注意。</p>
+<h1 id="滤波电容"><a href="#滤波电容" class="headerlink" title="滤波电容"></a>滤波电容</h1><iframe src="//player.bilibili.com/player.html?aid=497834686&bvid=BV1yK411V74V&cid=181383906&page=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"> </iframe>
+
+<p><strong>旁路</strong>：一般出现在电路的输入端，为交流信号提供一个分支，滤除不需要的交流成分。</p>
+<p><img src="https://pic.islet.space/2021/05/image-20210509154852357.png" alt="image-20210509154852357"> <img src="https://pic.islet.space/2021/05/image-20210509155438601.png" alt="image-20210509155438601"></p>
+<p>下图是带有低频扰动和高频尖刺的直流信号，使用所示电路对该信号进行过滤，可获得稳定直流信号。</p>
+<p><img src="https://pic.islet.space/2021/05/image-20210509155705572.png" alt="image-20210509155705572"> <img src="https://pic.islet.space/2021/05/image-20210509155806309.png" alt="image-20210509155806309"></p>
+<p>其中，0.1uF 用于滤除高频成分；1000uF 用于滤除/抵抗 <strong>低频扰动</strong> 信号。</p>
+<p><strong>去耦</strong>：既有 <strong>滤波</strong> 的作用也有 <strong>储能</strong> 的作用。</p>
+<p>当芯片电路需要拉去较大的电压时，VCC可能会突然供电不足，此时用于VCC的去耦电容发挥了储能的作用，为芯片电路提供较稳定的电源。</p>
+<p><img src="https://pic.islet.space/2021/05/image-20210509155156432.png" alt="image-20210509155156432"></p>
+<iframe src="//player.bilibili.com/player.html?aid=752864529&bvid=BV1kk4y1R7TZ&cid=178561019&page=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"> </iframe>
+
+<img src="https://pic.islet.space/2021/05/image-20210509154226811.png" alt="image-20210509154226811" style="zoom:50%;" />
+
+
+
+
+
+<h1 id="运算放大器"><a href="#运算放大器" class="headerlink" title="运算放大器"></a>运算放大器</h1><h2 id="运放定义"><a href="#运放定义" class="headerlink" title="运放定义"></a>运放定义</h2><p>同相输入端，V<del>p</del>和V<del>n</del> 。</p>
+<p>虚短：</p>
+<p>虚断：</p>
+<h2 id="运放分类"><a href="#运放分类" class="headerlink" title="运放分类"></a>运放分类</h2><p>按照电源电压分类：单端运放、双端运放。</p>
+<p>单端运放是指运算放大器的供给电源为正向电源和地；双端运放是指运算放大器的供给电源为正向电源和负向电源。</p>
 <h1 id="增益与音量"><a href="#增益与音量" class="headerlink" title="增益与音量"></a>增益与音量</h1><h2 id="增益"><a href="#增益" class="headerlink" title="增益"></a>增益</h2><blockquote>
 <p><strong>增益(Gain)的一般含义简而言之就是放大倍数</strong>。</p>
 <p>在电子学上，通常为一个系统的讯号输出与讯号输入的比率，如天线增益表示定向天线辐射集中程度的参数，为定向天线和无方向天线在预定方向产生的电场强度平方之比。<strong>放大器增益</strong>，表示放大器功率放大倍数，以输出功率同输入功率比值的常用对数表示等。</p>
@@ -450,20 +1593,6 @@
 <p>音量影响的是后级最终输出的响度。</p>
 <h2 id="增益和音量的关系"><a href="#增益和音量的关系" class="headerlink" title="增益和音量的关系"></a>增益和音量的关系</h2><p>增益多与“敏感度”相关，比方说：你的麦克风需要更“灵敏”吗？那么就把增益开大些。但是增益开得过大，信噪比会降低，底噪声就会更加明显。还会因电流输出限制产生削波失真。 这就是我们所说的“过载”效果的真正来源。也是很多朋友想要通过开大clean通道的volume去制造过载却不明显的原因。</p>
 <p>如果把增益开大，把音量关小的话，可以得到过载的效果。很多60,70年代的音乐作品中可以听到这种音色；关小增益开大音量的话，音符会很清晰，颗粒性也很好。</p>
-<h1 id="滤波电容"><a href="#滤波电容" class="headerlink" title="滤波电容"></a>滤波电容</h1><iframe src="//player.bilibili.com/player.html?aid=497834686&bvid=BV1yK411V74V&cid=181383906&page=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"> </iframe>
-
-<p><strong>旁路</strong>：一般出现在电路的输入端，为交流信号提供一个分支，滤除不需要的交流成分。</p>
-<p><img src="https://pic.islet.space/2021/05/image-20210509154852357.png" alt="image-20210509154852357"> <img src="https://pic.islet.space/2021/05/image-20210509155438601.png" alt="image-20210509155438601"></p>
-<p>下图是带有低频扰动和高频尖刺的直流信号，使用所示电路对该信号进行过滤，可获得稳定直流信号。</p>
-<p><img src="https://pic.islet.space/2021/05/image-20210509155705572.png" alt="image-20210509155705572"> <img src="https://pic.islet.space/2021/05/image-20210509155806309.png" alt="image-20210509155806309"></p>
-<p>其中，0.1uF 用于滤除高频成分；1000uF 用于滤除/抵抗 <strong>低频扰动</strong> 信号。</p>
-<p><strong>去耦</strong>：既有 <strong>滤波</strong> 的作用也有 <strong>储能</strong> 的作用。</p>
-<p>当芯片电路需要拉去较大的电压时，VCC可能会突然供电不足，此时用于VCC的去耦电容发挥了储能的作用，为芯片电路提供较稳定的电源。</p>
-<p><img src="https://pic.islet.space/2021/05/image-20210509155156432.png" alt="image-20210509155156432"></p>
-<iframe src="//player.bilibili.com/player.html?aid=752864529&bvid=BV1kk4y1R7TZ&cid=178561019&page=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"> </iframe>
-
-<img src="https://pic.islet.space/2021/05/image-20210509154226811.png" alt="image-20210509154226811" style="zoom:50%;" />
-
 
       
     </div>
@@ -1175,1194 +2304,8 @@
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://islet.space/2021/04/23/Linux/How%20to%20Install%20GCC%20(build-essential)%20on%20Ubuntu%2020.04/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Liewzheng">
-      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Coder的孤岛">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/04/23/Linux/How%20to%20Install%20GCC%20(build-essential)%20on%20Ubuntu%2020.04/" class="post-title-link" itemprop="url">How to Install GCC (build-essential) on Ubuntu 20.04</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2021-04-23 23:58:32" itemprop="dateCreated datePublished" datetime="2021-04-23T23:58:32+08:00">2021-04-23</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-04-29 00:51:49" itemprop="dateModified" datetime="2021-04-29T00:51:49+08:00">2021-04-29</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Language/" itemprop="url" rel="index"><span itemprop="name">Language</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>[linuxize.com](<a target="_blank" rel="noopener" href="https://linuxize.com/post/how-to-install-gcc-on-ubuntu-20-04/#:~:text=The">https://linuxize.com/post/how-to-install-gcc-on-ubuntu-20-04/#:~:text=The</a> default Ubuntu repositories contain a meta-package named,as root or user with sudo privileges %3A)</p>
-<p>The GNU Compiler Collection (GCC) is a collection of compilers and libraries for C, C++, Objective-C, Fortran, Ada, <a target="_blank" rel="noopener" href="https://linuxize.com/post/how-to-install-go-on-ubuntu-20-04/">Go</a> , and D programming languages. A lot of open-source projects, including the Linux kernel and GNU tools, are compiled using GCC.</p>
-<p>This article explains how to install GCC on Ubuntu 20.04.</p>
-<h1 id="Installing-GCC-on-Ubuntu-20-04"><a href="#Installing-GCC-on-Ubuntu-20-04" class="headerlink" title="Installing GCC on Ubuntu 20.04"></a>Installing GCC on Ubuntu 20.04</h1><p>The default Ubuntu repositories contain a meta-package named  “build-essential” that includes the GNU compiler collection, GNU  debugger, and other development libraries and tools required for  compiling software.</p>
-<p>To install the Development Tools packages, run the following command as root or <a target="_blank" rel="noopener" href="https://linuxize.com/post/how-to-create-a-sudo-user-on-ubuntu/">user with sudo privileges</a> :</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt update</span><br><span class="line">sudo apt install build-essential</span><br></pre></td></tr></table></figure>
-
-<p>The command installs a lot of packages, including <code>gcc</code>, <code>g++</code> and <code>make</code>.</p>
-<p>You may also want to install the manual pages about using GNU/Linux for development:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install manpages-dev</span><br></pre></td></tr></table></figure>
-
-<p>Verify that the GCC compiler is successfully installed by running the following command that prints the GCC version:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gcc --version</span><br></pre></td></tr></table></figure>
-
-<p>Ubuntu 20.04 repositories provide GCC version <code>9.3.0</code>:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">gcc (Ubuntu 9.3.0-10ubuntu2) 9.3.0</span><br><span class="line">Copyright (C) 2019 Free Software Foundation, Inc.</span><br><span class="line">This is free software; see the source for copying conditions.  There is NO</span><br><span class="line">warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.</span><br></pre></td></tr></table></figure>
-
-<p>That’s it. GCC tools and libraries have been installed on your Ubuntu system.</p>
-<h1 id="Compiling-a-Hello-World-Example"><a href="#Compiling-a-Hello-World-Example" class="headerlink" title="Compiling a Hello World Example"></a>Compiling a Hello World Example</h1><p>Compiling a basic C or C++ program using GCC is pretty easy. Open your <a target="_blank" rel="noopener" href="https://linuxize.com/post/how-to-install-visual-studio-code-on-ubuntu-18-04/">text editor</a> and create the following file:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nano hello.c</span><br></pre></td></tr></table></figure>
-
-<p>hello.c</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; hello.c</span><br><span class="line">#include &lt;stdio.h&gt;</span><br><span class="line"> </span><br><span class="line">int main() &#123;</span><br><span class="line">    printf(&quot;Hello, world!\n&quot;);</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>Save the file and compile it into an executable:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gcc hello.c -o hello</span><br></pre></td></tr></table></figure>
-
-<p>This creates a binary file named <code>hello</code> in the same directory where you run the command.</p>
-<p>Execute the <code>hello</code> program with:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">.&#x2F;hello</span><br></pre></td></tr></table></figure>
-
-<p>The program should print:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Hello World!</span><br></pre></td></tr></table></figure>
-
-<h1 id="Installing-Multiple-GCC-Versions"><a href="#Installing-Multiple-GCC-Versions" class="headerlink" title="Installing Multiple GCC Versions"></a>Installing Multiple GCC Versions</h1><p>This section provides instructions about how to install and use multiple  versions of GCC on Ubuntu 20.04. The newer versions of the GCC compiler  include new functions and optimization improvements.</p>
-<p>At the time of writing this article, the default Ubuntu repositories include several GCC versions, from <code>7.x.x</code> to <code>10.x.x</code>.</p>
-<p>In the following example, we will install the latest three versions of GCC and G++.</p>
-<p>Install the desired GCC and G++ versions by typing:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install gcc-8 g++-8 gcc-9 g++-9 gcc-10 g++-10</span><br></pre></td></tr></table></figure>
-
-<p>The commands below configures alternative for each version and associate a  priority with it. The default version is the one with the highest  priority, in our case that is <code>gcc-10</code>.</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo update-alternatives --install &#x2F;usr&#x2F;bin&#x2F;gcc gcc &#x2F;usr&#x2F;bin&#x2F;gcc-10 100 --slave &#x2F;usr&#x2F;bin&#x2F;g++ g++ &#x2F;usr&#x2F;bin&#x2F;g++-10 --slave &#x2F;usr&#x2F;bin&#x2F;gcov gcov &#x2F;usr&#x2F;bin&#x2F;gcov-10sudo update-alternatives --install &#x2F;usr&#x2F;bin&#x2F;gcc gcc &#x2F;usr&#x2F;bin&#x2F;gcc-9 90 --slave &#x2F;usr&#x2F;bin&#x2F;g++ g++ &#x2F;usr&#x2F;bin&#x2F;g++-9 --slave &#x2F;usr&#x2F;bin&#x2F;gcov gcov &#x2F;usr&#x2F;bin&#x2F;gcov-9sudo update-alternatives --install &#x2F;usr&#x2F;bin&#x2F;gcc gcc &#x2F;usr&#x2F;bin&#x2F;gcc-8 80 --slave &#x2F;usr&#x2F;bin&#x2F;g++ g++ &#x2F;usr&#x2F;bin&#x2F;g++-8 --slave &#x2F;usr&#x2F;bin&#x2F;gcov gcov &#x2F;usr&#x2F;bin&#x2F;gcov-8</span><br></pre></td></tr></table></figure>
-
-<p>Later if you want to change the default version use the <code>update-alternatives</code> command:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">sudo update-alternatives --config gcc</span><br><span class="line">There are 3 choices for the alternative gcc (providing &#x2F;usr&#x2F;bin&#x2F;gcc).</span><br><span class="line"></span><br><span class="line">  Selection    Path            Priority   Status</span><br><span class="line">------------------------------------------------------------</span><br><span class="line">* 0            &#x2F;usr&#x2F;bin&#x2F;gcc-10   100       auto mode</span><br><span class="line">  1            &#x2F;usr&#x2F;bin&#x2F;gcc-10   100       manual mode</span><br><span class="line">  2            &#x2F;usr&#x2F;bin&#x2F;gcc-8    80        manual mode</span><br><span class="line">  3            &#x2F;usr&#x2F;bin&#x2F;gcc-9    90        manual mode</span><br><span class="line"></span><br><span class="line">Press &lt;enter&gt; to keep the current choice[*], or type selection number:</span><br></pre></td></tr></table></figure>
-
-<p>You will be presented with a list of all installed GCC  versions on your Ubuntu system. Enter the number of the version you want to be used as a default and press <code>Enter</code>.</p>
-<p>The command will create <a target="_blank" rel="noopener" href="https://linuxize.com/post/how-to-create-symbolic-links-in-linux-using-the-ln-command/">symbolic links</a> to the specific versions of GCC and G++.</p>
-<h1 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h1><p>We’ve shown you how to installed GCC on Ubuntu 20.04. You can now visit the official <a target="_blank" rel="noopener" href="https://gcc.gnu.org/onlinedocs/">GCC Documentation</a> page and learn how to use GCC and G++ to compile your C and C++ programs.</p>
-<p>If you hit a problem or have feedback, leave a comment below.</p>
-<p>​          </p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://islet.space/2021/04/23/Hardware/ADI/AnalogDeviceSignmaStudio/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Liewzheng">
-      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Coder的孤岛">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/04/23/Hardware/ADI/AnalogDeviceSignmaStudio/" class="post-title-link" itemprop="url">ADI开发笔记</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2021-04-23 23:58:32" itemprop="dateCreated datePublished" datetime="2021-04-23T23:58:32+08:00">2021-04-23</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-05-09 13:15:49" itemprop="dateModified" datetime="2021-05-09T13:15:49+08:00">2021-05-09</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Hardware/" itemprop="url" rel="index"><span itemprop="name">Hardware</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>[TOC]</p>
-<h1 id="基础知识"><a href="#基础知识" class="headerlink" title="基础知识"></a>基础知识</h1><p>原理图模块 是指用于构建SigmaStudio设计的模块。每个处理器可用的块显示在“工具箱”和“树形工具箱”窗口中，可以将其拖放到原理图中。</p>
-<h3 id="Algorithms-Add-Remove-Grow-Reduce"><a href="#Algorithms-Add-Remove-Grow-Reduce" class="headerlink" title="Algorithms: Add/Remove, Grow/Reduce"></a>Algorithms: Add/Remove, Grow/Reduce</h3><p>每个原理图块代表一种或多种信号处理算法。算法的范围从非常简单的<a target="_blank" rel="noopener" href="https://wiki.analog.com/resources/tools-software/sigmastudio/toolbox/basicdsp/signaladd">信号添加</a>（如<a target="_blank" rel="noopener" href="https://wiki.analog.com/resources/tools-software/sigmastudio/toolbox/basicdsp/signaladd">Signal Add</a>）到高级系统组件（如<a target="_blank" rel="noopener" href="https://wiki.analog.com/resources/tools-software/sigmastudio/toolbox/adialgorithms/dynamicbassboost">Dynamic Bass Boost）</a>。您可以从块中添加或删除算法以满足您的特定要求。如下所述，算法也可以增长。</p>
-<hr>
-<p><strong>添加算法：</strong></p>
-<p>您必须添加一种算法-通常与一组I / O引脚关联-才能使块起作用。要将算法添加到块，请<strong>右键单击</strong>该块，然后选择<strong>添加算法&gt; IC＃</strong>，然后选择<strong>算法</strong>的DSP IC。请注意，如果您的项目中有多个处理器（IC / DSP），则可以选择哪个DSP将运行算法，有关更多信息，请参见下文。</p>
-<p><a target="_blank" rel="noopener" href="https://wiki.analog.com/_detail/resources/tools-software/sigmastudio/usingsigmastudio/buildingschematics/algorithmpic1.png?id=resources:tools-software:sigmastudio:usingsigmastudio:buildingschematics:algorithms"><img src="https://wiki.analog.com/_media/resources/tools-software/sigmastudio/usingsigmastudio/buildingschematics/algorithmpic1.png" alt="img"></a></p>
-<p>此时，如果需要，右键单击块的边界或标签以添加其他算法。（重要的是右键单击边框或标签；如果右键单击中心，则可能会显示用于输入参数值的弹出窗口。）</p>
-<p><a target="_blank" rel="noopener" href="https://wiki.analog.com/_detail/resources/tools-software/sigmastudio/usingsigmastudio/buildingschematics/algorithmpic2.png?id=resources:tools-software:sigmastudio:usingsigmastudio:buildingschematics:algorithms"><img src="https://wiki.analog.com/_media/resources/tools-software/sigmastudio/usingsigmastudio/buildingschematics/algorithmpic2.png" alt="img"></a></p>
-<p>不包含算法的块将没有控件或引脚，并且您只会看到该块的名称（如下图所示）。必须在空块中添加算法，然后才能在原理图设计中使用它们。</p>
-<p><a target="_blank" rel="noopener" href="https://wiki.analog.com/_detail/resources/tools-software/sigmastudio/usingsigmastudio/buildingschematics/algorithmpic3.png?id=resources:tools-software:sigmastudio:usingsigmastudio:buildingschematics:algorithms"><img src="https://wiki.analog.com/_media/resources/tools-software/sigmastudio/usingsigmastudio/buildingschematics/algorithmpic3.png" alt="img"></a></p>
-<p>注意：使用“<a target="_blank" rel="noopener" href="https://wiki.analog.com/resources/tools-software/sigmastudio/developmentenvironment/toolbox">树形工具箱”窗口时</a>，总是为每个插入的块创建一个算法。但是，如果使用传统的“<a target="_blank" rel="noopener" href="https://wiki.analog.com/resources/tools-software/sigmastudio/developmentenvironment/toolbox">工具箱”</a>窗口插入块，则可能还必须添加算法。</p>
-<p>添加算法时，不仅要为模块选择计算方法，还要为算法选择特定的DSP关联。如果要连接多个DSP处理器，这一点很重要：通过将算法添加到模块中，可以共享模块和控件，并同时与多个DSP进行通信。</p>
-<p>例如：<a target="_blank" rel="noopener" href="https://wiki.analog.com/resources/tools-software/sigmastudio/volumecontrols/singlevolumecontrol">单个音量控制</a>块具有用于所有算法的单个滑块控件。如果使用2个DSP处理器（IC 1（AD1940）和IC 2（ADAU1701））创建一个项目，然后选择“添加算法”，则系统将提示您要将该算法添加到哪个芯片。</p>
-<p><a target="_blank" rel="noopener" href="https://wiki.analog.com/_detail/resources/tools-software/sigmastudio/usingsigmastudio/buildingschematics/algorithmpic4.png?id=resources:tools-software:sigmastudio:usingsigmastudio:buildingschematics:algorithms"><img src="https://wiki.analog.com/_media/resources/tools-software/sigmastudio/usingsigmastudio/buildingschematics/algorithmpic4.png" alt="img"></a></p>
-<p>可以将第一种算法分配给IC 1，将第二种算法分配给IC 2，但是它们共享音量块和单个滑块控件。请注意，您不能在不同的处理器之间建立连线，有关更多信息，请参见<a target="_blank" rel="noopener" href="https://wiki.analog.com/resources/tools-software/sigmastudio/usingsigmastudio/wiresandaliases">连线</a>主题。</p>
-<hr>
-<p><strong>删除算法：</strong></p>
-<p>也可以从块中删除算法。要删除算法，请<strong>右键单击</strong>该块，然后选择“<strong>删除算法”</strong>。这将删除最后添加的算法（底部引脚）。如果该块仅包含一种算法，则删除该算法将导致一个空块</p>
-<hr>
-<p><strong>增长算法：</strong></p>
-<p>不断增长的算法意味着在该块的现有算法的基础上，保持相同的算法（在其上进行扩展）和相同的DSP关联（添加算法均不执行）。要增长算法，请<strong>右键单击</strong>该块，然后选择“<strong>增长算法”&gt;“（算法名称）”&gt;“（增长量）”</strong>。请注意，并非所有算法都可以使用增长。</p>
-<p>理解添加和增长之间区别的最简单方法是使用混合器块。将交叉混合器（2个输入）拖到工作区中。右键单击并选择“增长算法”，请参见下面的示例。</p>
-<ul>
-<li>增加混音器会创建更多的混音器输出引脚，实际上，您正在创建共享公共输入的额外混音器输出通道。块中仍然只有一个算法。</li>
-<li>添加算法将创建单独的算法，这些算法共享控制窗口，但不共享输入/输出引脚或资源。在混频器示例中，一个附加的输入引脚，输出引脚和一个交叉混频器控件被添加到了该模块中。</li>
-</ul>
-<hr>
-<p><strong>减少算法：</strong></p>
-<p>减少与增加相反，减少了由“增加算法”操作创建的多余控件和引脚。像删除算法一样，reduce将删除从底部或最近增长的项目开始的控件/大头针。</p>
-<p><a target="_blank" rel="noopener" href="https://wiki.analog.com/_detail/resources/tools-software/sigmastudio/usingsigmastudio/buildingschematics/algorithmpic5.png?id=resources:tools-software:sigmastudio:usingsigmastudio:buildingschematics:algorithms"><img src="https://wiki.analog.com/_media/resources/tools-software/sigmastudio/usingsigmastudio/buildingschematics/algorithmpic5.png" alt="img"></a></p>
-<h3 id="Wires-and-Aliases"><a href="#Wires-and-Aliases" class="headerlink" title="Wires and Aliases"></a>Wires and Aliases</h3><p>SigmaStudio原理图设计由与“导线”连接在一起的模块构建。导线定义了系统的信号流。</p>
-<p><strong>要创建原理图导线：</strong> 将鼠标光标移到块的<a target="_blank" rel="noopener" href="https://wiki.analog.com/resources/tools-software/sigmastudio/usingsigmastudio/buildingschematics/schematicblocks">引脚上，</a>以便显示导线图标<a target="_blank" rel="noopener" href="https://wiki.analog.com/_detail/resources/tools-software/sigmastudio/usingsigmastudio/buildingschematics/icon.png?id=resources:tools-software:sigmastudio:usingsigmastudio:buildingschematics:wiresandaliases"><img src="https://wiki.analog.com/_media/resources/tools-software/sigmastudio/usingsigmastudio/buildingschematics/icon.png" alt="img"></a>。接下来，左键单击一个块引脚，然后在按住鼠标按钮的同时，将光标拖到另一个块的相应引脚上。输入引脚只能连接到输出引脚，而输出引脚只能连接到输入引脚。</p>
-<p><a target="_blank" rel="noopener" href="https://wiki.analog.com/_detail/resources/tools-software/sigmastudio/usingsigmastudio/buildingschematics/wirespic1.png?id=resources:tools-software:sigmastudio:usingsigmastudio:buildingschematics:wiresandaliases"><img src="https://wiki.analog.com/_media/resources/tools-software/sigmastudio/usingsigmastudio/buildingschematics/wirespic1.png" alt="img"></a></p>
-<p><strong>选择：</strong></p>
-<p>要选择一条导线，请用鼠标左键单击它。选定的电线用绿色正方形（点）表示，如下所示。<strong>位置：</strong></p>
-<p><a target="_blank" rel="noopener" href="https://wiki.analog.com/_detail/resources/tools-software/sigmastudio/usingsigmastudio/buildingschematics/wirespic2.png?id=resources:tools-software:sigmastudio:usingsigmastudio:buildingschematics:wiresandaliases"><img src="https://wiki.analog.com/_media/resources/tools-software/sigmastudio/usingsigmastudio/buildingschematics/wirespic2.png" alt="img"></a></p>
-<p>要更改导线的位置，请将鼠标光标放在一个点上。接下来，在导线点上<strong>单击</strong>鼠标左键，并在按住鼠标键的同时拖动光标以重新放置导线。</p>
-<p><a target="_blank" rel="noopener" href="https://wiki.analog.com/_detail/resources/tools-software/sigmastudio/usingsigmastudio/buildingschematics/wirespic3.png?id=resources:tools-software:sigmastudio:usingsigmastudio:buildingschematics:wiresandaliases"><img src="https://wiki.analog.com/_media/resources/tools-software/sigmastudio/usingsigmastudio/buildingschematics/wirespic3.png" alt="img"></a></p>
-<p><strong>菜单：</strong></p>
-<p>右键单击导线以调出导线菜单。该菜单包括以下命令：</p>
-<p><a target="_blank" rel="noopener" href="https://wiki.analog.com/_detail/resources/tools-software/sigmastudio/usingsigmastudio/buildingschematics/wirespic4.png?id=resources:tools-software:sigmastudio:usingsigmastudio:buildingschematics:wiresandaliases"><img src="https://wiki.analog.com/_media/resources/tools-software/sigmastudio/usingsigmastudio/buildingschematics/wirespic4.png" alt="img"></a></p>
-<p><strong>电线颜色：</strong></p>
-<p>电线根据其关联的DSP处理器进行着色。导线的输入和输出引脚必须与同一DSP关联，否则您将无法在引脚之间建立导线。具有多个处理器IC的项目的每个IC将具有不同的颜色。</p>
-<p><a target="_blank" rel="noopener" href="https://wiki.analog.com/_detail/resources/tools-software/sigmastudio/usingsigmastudio/buildingschematics/wirespic5.png?id=resources:tools-software:sigmastudio:usingsigmastudio:buildingschematics:wiresandaliases"><img src="https://wiki.analog.com/_media/resources/tools-software/sigmastudio/usingsigmastudio/buildingschematics/wirespic5.png" alt="img"></a></p>
-<hr>
-<p><strong>引脚（导线）备注：</strong></p>
-<p>为了直观地组织项目，通常有助于创建备注，以在原理图中的信号流中提供清晰的连接参考（“跳转”）。一个<strong>备注</strong>由一对输入的备注和备注输出块组成。使用备注块可以减少长导线连接所造成的原理图窗口中的视觉混乱。</p>
-<p>要创建备注，请<strong>右键单击</strong>块的输出引脚（蓝色引脚），然后从菜单中选择“<strong>备注</strong>”。</p>
-<p><a target="_blank" rel="noopener" href="https://wiki.analog.com/_detail/resources/tools-software/sigmastudio/usingsigmastudio/buildingschematics/wirespic6.png?id=resources:tools-software:sigmastudio:usingsigmastudio:buildingschematics:wiresandaliases"><img src="https://wiki.analog.com/_media/resources/tools-software/sigmastudio/usingsigmastudio/buildingschematics/wirespic6.png" alt="img"></a></p>
-<p>当您单击<strong>Alias时</strong>，将出现两个块，分别是输入和输出。备注输入自动连接到源模块的输出引脚。接下来，创建一条从备注输出块（在下面的示例中为备注2）到信号目标的导线。</p>
-<p><a target="_blank" rel="noopener" href="https://wiki.analog.com/_detail/resources/tools-software/sigmastudio/usingsigmastudio/buildingschematics/wirespic7.png?id=resources:tools-software:sigmastudio:usingsigmastudio:buildingschematics:wiresandaliases"><img src="https://wiki.analog.com/_media/resources/tools-software/sigmastudio/usingsigmastudio/buildingschematics/wirespic7.png" alt="img"></a></p>
-<p><strong>注意：</strong>使用备注在功能上等同于用电线连接两个引脚。以下示例中的信号流与上面的备注示例相同。</p>
-<p><a target="_blank" rel="noopener" href="https://wiki.analog.com/_detail/resources/tools-software/sigmastudio/usingsigmastudio/buildingschematics/wirespic8.png?id=resources:tools-software:sigmastudio:usingsigmastudio:buildingschematics:wiresandaliases"><img src="https://wiki.analog.com/_media/resources/tools-software/sigmastudio/usingsigmastudio/buildingschematics/wirespic8.png" alt="img"></a></p>
-<h3 id="Hardware-Configuration-Tab"><a href="#Hardware-Configuration-Tab" class="headerlink" title="Hardware Configuration Tab"></a>Hardware Configuration Tab</h3><p>硬件配置工作区允许您为设计选择一个或多个处理器。它还允许您设置SigmaStudio与硬件之间的通信。</p>
-<p>要了解可以在“硬件配置”选项卡中访问的高级操作（包括“输出捕获”，“ Flash / E2Prom下载”，“寄存器控制”窗口和“寄存器读/写”窗口），请参阅“硬件Windows”部分中的主题。</p>
-<h4 id="要将处理器（IC-DSP）插入设计中："><a href="#要将处理器（IC-DSP）插入设计中：" class="headerlink" title="要将处理器（IC / DSP）插入设计中："></a>要将处理器（IC / DSP）插入设计中：</h4><ol>
-<li><p>用鼠标左键从工具箱中选择一个“处理器”：</p>
-<ol>
-<li><a target="_blank" rel="noopener" href="https://wiki.analog.com/_detail/resources/tools-software/sigmastudio/developmentenvironment/hardwareconfpic1.png?id=resources:tools-software:sigmastudio:developmentenvironment:hardwareconfigurationtab"><img src="https://wiki.analog.com/_media/resources/tools-software/sigmastudio/developmentenvironment/hardwareconfpic1.png" alt="img"></a></li>
-</ol>
-</li>
-<li><p>将处理器模块拖放到右侧的“硬件配置”窗口中：</p>
-<p><a target="_blank" rel="noopener" href="https://wiki.analog.com/_detail/resources/tools-software/sigmastudio/developmentenvironment/hardwareconfpic2.png?id=resources:tools-software:sigmastudio:developmentenvironment:hardwareconfigurationtab"><img src="https://wiki.analog.com/_media/resources/tools-software/sigmastudio/developmentenvironment/hardwareconfpic2.png" alt="img"></a></p>
-</li>
-</ol>
-<p><strong>注意：</strong>一旦在“硬件配置”窗口中插入DSP，就会出现“原理图（Schematic）”选项卡。</p>
-<h4 id="在DSP处理器和硬件之间建立连接："><a href="#在DSP处理器和硬件之间建立连接：" class="headerlink" title="在DSP处理器和硬件之间建立连接："></a>在DSP处理器和硬件之间建立连接：</h4><ol>
-<li>单击“通信渠道（Communication Channel）”类别（在“工具箱”列的底部）。</li>
-<li>从列表中选择评估板或USB设备，并将其拖放到工作区中。</li>
-<li>通过在通信通道和处理器模块之间画线来连接两个模块，从蓝色菱形到绿色菱形。对于使用AD1940的USB连接，工作空间中的单元格应如下所示：</li>
-</ol>
-<p><strong>注意</strong>：“通信通道”菜单列出了带有前缀EvalBoard的名称和板号。这些通信通道将在不使用评估板设置的平台上适用于相同的IC类型。还有通用的通信通道，USBSerialConv和USBi。（有关更多信息，请参见USB串行转换器通信通道或USBi。）</p>
-<p><a target="_blank" rel="noopener" href="https://wiki.analog.com/_detail/resources/tools-software/sigmastudio/developmentenvironment/hardwareconfpic3.png?id=resources:tools-software:sigmastudio:developmentenvironment:hardwareconfigurationtab"><img src="https://wiki.analog.com/_media/resources/tools-software/sigmastudio/developmentenvironment/hardwareconfpic3.png" alt="img"></a></p>
-<p>通信模块上USB标签 的颜色表示是否已建立USB通信通道。如果您已正确配置USB硬件，则背景色将为浅橙色或白色。如果未初始化通信，则背景将为红色。请注意，这仅表示USB连接处于活动状态，不能保证与SigmaDSP IC的通信或SigmaDSP硬件已正确配置。</p>
-<p><a target="_blank" rel="noopener" href="https://wiki.analog.com/_detail/resources/tools-software/sigmastudio/developmentenvironment/hardwareconfpic4.png?id=resources:tools-software:sigmastudio:developmentenvironment:hardwareconfigurationtab"><img src="https://wiki.analog.com/_media/resources/tools-software/sigmastudio/developmentenvironment/hardwareconfpic4.png" alt="img"></a></p>
-<p>连接所有板卡IC时，“已连接”背景色为白色，而仅连接部分IC（但不是全部）时为“橙色”。例如，ADAU1701评估板包括ADAU1701 IC和E2Prom IC。仅连接ADAU1701时，背景将为浅橙色，但同时连接ADAU1701和E2Prom IC时，背景将为白色。</p>
-<p><a target="_blank" rel="noopener" href="https://wiki.analog.com/_detail/resources/tools-software/sigmastudio/developmentenvironment/hardwareconfpic5.png?id=resources:tools-software:sigmastudio:developmentenvironment:hardwareconfigurationtab"><img src="https://wiki.analog.com/_media/resources/tools-software/sigmastudio/developmentenvironment/hardwareconfpic5.png" alt="img"></a></p>
-<p><a target="_blank" rel="noopener" href="https://wiki.analog.com/_detail/resources/tools-software/sigmastudio/gettingstarted/usbinterfaces/usbpic4.png?id=resources:tools-software:sigmastudio:gettingstarted:usbinterfaces:usbserialconverter">https://wiki.analog.com/_detail/resources/tools-software/sigmastudio/gettingstarted/usbinterfaces/usbpic4.png?id=resources%3Atools-software%3Asigmastudio%3Agettingstarted%3Ausbinterfaces%3Ausbserialconverter</a>)</p>
-<hr>
-<h4 id="EVAL-ADUSB1板开关和跳线："><a href="#EVAL-ADUSB1板开关和跳线：" class="headerlink" title="EVAL-ADUSB1板开关和跳线："></a>EVAL-ADUSB1板开关和跳线：</h4><ul>
-<li>S1-将闪存中保存的程序加载到SigmaDSP。</li>
-<li>S2-选择当按下S1时将加载八个SigmaDSP程序中的哪一个。</li>
-<li>S3-重置USB适配器板。</li>
-<li>TP1-+ 5Vdc连接，用于适配器未通过PC的USB端口供电的情况。</li>
-<li>TP2-接地，用于适配器未通过PC的USB端口供电的情况。</li>
-<li>J3-当该接头连接器上有跳线时，将启用对闪存的写操作（用于存储SigmaDSP程序）。</li>
-<li>D4-此LED指示USB板已通电。</li>
-</ul>
-<p>可以使用SigmaStudio中的Flash Downloader工具将SigmaDSP程序和参数文件保存到USB板上的闪存中。通过将S2设置为适当的设置，然后按下程序加载按钮S1，可以将每个程序加载到SigmaDSP。请参阅Flash Downloader页面。<br>有关更多信息，请参见EVAL-ADUSB1数据手册，analog.com / sigmadsp。</p>
-<h3 id="Digital-Attenuator"><a href="#Digital-Attenuator" class="headerlink" title="Digital Attenuator"></a>Digital Attenuator</h3><p>即数字衰减器， 与可变衰减器不同，数字衰减器在离散和有限衰减状态下切换。该切换通常以二进制步骤实现。数字衰减器采用半导体器件来实现每个衰减步骤。为此目的而使用的一些半导体器件包括：PIN二极管，MOSFET和GaAs MESFET。数字衰减器能够实现与固态开关速度相当的开关速率。数字衰减器使用的最常见逻辑类型 是CMOS逻辑电平和晶体管晶体管逻辑（TTL）。</p>
-<p>数字衰减器利用驱动器电路来确定要使用的逻辑类型。驱动器电路的复杂性取决于所使用的位数。复杂度随着位数的增加而增加。通常根据数字衰减器设计提供的衰减状态对其进行分类。使用的位数决定了这些衰减状态。最高有效位提供最大的衰减，而最低有效位提供组件提供的最小衰减。其余位提供中间衰减值。通常，这些产品采用1位，5位，8位和6位数字衰减器。</p>
-<p>如果选择了所有位，则数字衰减器旨在提供最大的额定衰减。另一方面，其最小衰减步长仅通过选择最低有效位来实现。数字衰减器在3G和4G蜂窝网络，点对点节点，中继器以及广泛的测试和测量应用中具有广泛的用途。</p>
-<p class="italicp" style="font-style: italic; color: #BBB;">Shop Arrow.com选择了数字RF步进衰减器，数字音频衰减器等。 <a hre="https://www.arrow.com/en/categories/attenuators/fixedvariable-attenuators/digital-attenuators#">>>> read more</a></p>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<h3 id="ASRC"><a href="#ASRC" class="headerlink" title="ASRC"></a>ASRC</h3><p>异步采样速率转换器(ASRC，Asynchronous Sample Rate Converter)是一款可同时用于消费电子和专业应用的音频采样速率转换通用软件模块。 ASRC支持多种不同的采样速率配置。</p>
-<p><strong>ASRC软件模块</strong> 可用于以小步长改变采样频率，步长随着时间改变，且在变化过程中不生成任何输出音频干扰。 在许多多媒体系统中，时变采样速率的改变是非常重要的功能，例如能实现多个数据流的精密同步以及服务器和客户端的同步等。</p>
-<p>ADI公司的ASRC实施方案经过高度优化，适合在ADI公司的Blackfin系列处理器上运行。它是一个基于ADI专利设计的独立自足软件模块。该模块已经过各种根据音频信号质量分析定义的策略质量测试。</p>
-<p>ASRC模块是应用于PCM（脉冲编码调制）上的后处理模块，通过模拟输入、数字输入通道或解码应用的PCM输出接收数据。 ASRC模块能够处理多个通道的输入信息，并能够输出至同样多的通道。 开发的模块支持全面的重入和多实例。 ASRC模块是一个独立的模块，不依赖其他任何模块。 ADRC模块配备一个示例轻型包装器API，将模块插入至整体系统。 这使得该应用的系统集成简单易行。</p>
-<h4 id="ASRC-INPUT-OUTPUT"><a href="#ASRC-INPUT-OUTPUT" class="headerlink" title="ASRC INPUT/OUTPUT"></a>ASRC INPUT/OUTPUT</h4><p>ASRC输入和输出模块在原理图设计和硬件ASRC（异步采样率转换器）之间路由信号。</p>
-<p>使用输入块的复选框来启用或禁用特定输入。使用输出块的下拉列表控件从可用的ASRC中进行选择。</p>
-<ul>
-<li>每个ASRC输出必须连接其输入，否则编译时将出错。</li>
-<li>可以看到，随着将更多的ASRC输出块拖到原理图中，下拉列表中的可用输出数量会减少，因为一次只能由一个块表示。</li>
-<li>要更改ASRC <strong>输入采样率</strong>，请右键单击块名称，然后选择“设置采样率”，这将打开“采样率”窗口（默认值为44.1 kHz）。</li>
-</ul>
-<p><img src="https://wiki.analog.com/_media/resources/tools-software/sigmastudio/toolbox/io/asrc_input_output_020.jpg" alt="img"></p>
-<h4 id="Limiter-限幅器"><a href="#Limiter-限幅器" class="headerlink" title="Limiter 限幅器"></a>Limiter 限幅器</h4><p>限幅器（Limiter）是指能按限定的范围削平信号电压波幅的电路，又称削波器。限幅电路的作用是把输出信号幅度限定在一定的范围内，亦即当输入电压超过或低于某一参考值后，输出电压将被限制在某一电平（称作限幅电平），且再不随输入电压变化。</p>
-<h3 id="LSB-aligned"><a href="#LSB-aligned" class="headerlink" title="LSB-aligned"></a>LSB-aligned</h3><p>LSB(Least Significant Bit)是“最低有效位”。MSB(Most Significant Bit)是“最高有效位”。</p>
-<p>最高有效位是指二进制中最高值的比特，如：</p>
-<blockquote>
-<ol>
-<li><p>在16比特的数字音频中，其第1个比特便对16bit的字的数值有最大的影响。</p>
-</li>
-<li><p>在十进制的15，389这一数字中，相当于万数那1行（1）的数字便对数值的影响最大。比较与之相反的“最低有效位”（LSB）。</p>
-</li>
-<li><p>汇编中，比如8位2进制数10000001，其中第一个1是MSB,第二个1是LSB。<mark>1</mark>（MSB）100 001<mark>1</mark>（LSB）</p>
-</li>
-<li><p>在计算时，如果是整数，那么小数点（实际上是没有小数点的，但就把那一位和下一位之间看作有）在LSB后面；如果是小数，小数点在MSB后面；其中MSB在有符号数中又是符号位。</p>
-</li>
-</ol>
-</blockquote>
-<p>在网络通信方面，大家说的更多的是：“<strong>Big-Endian</strong>”和“<strong>Small-Endian</strong>”的问题。指的都是对于多字节的数据类型（比如4字节的32位整数），其多个字节的顺序问题，是最高字节在前（Big-Endian）还是最低字节在前（Small-Endian）。</p>
-<p>比如对于123456789这个整数，其16进制为0x075BCD15，那么按照Big-Endian的方式，它在网络上传输（或者在内存里存储）的4个字节依次是：<code>07 4B CD 15</code>，而Small-Endian的顺序正相反，是：<code>15 CD 4B 07</code>。</p>
-<p><strong>MSB</strong> 和 <strong>LSB</strong> 虽然跟这个事情看起来有点相似，但不是一回事。</p>
-<p>通常，一个芯片的管脚中，对于一个多比特的信号，比如32根的地址线，从低开始按0到31编个号。MSB就是31，LSB就是0。那么如果标记为：ADDR[31:0]就是MSB first的方式，如果标记为ADDR[0:31]就是LSB first的方式。</p>
-<p><strong>MSB LSB</strong>：起始地址为最高位， 最后地址为最低位。</p>
-<p><strong>LSB MSB</strong>：起始地址为最低位，最后地址为最高位。</p>
-<p>比如AD中，8位，最低有效位指D0</p>
-<h3 id="Cofficient-Write"><a href="#Cofficient-Write" class="headerlink" title="Cofficient Write"></a>Cofficient Write</h3><p>即 <strong>参数写入</strong>，是指对参数中两组 <em><strong>寄存器参数集</strong></em> 的系数写入。当然也可以单独写入某个寄存器的数值。</p>
-<p>可写入的参数如：filter coefficients、limiter settings、volume<br>control settings等。</p>
-<p>每组 <strong>寄存器参数集</strong> 可写入至多 160个参数（32个过滤器*5个系数）。</p>
-<h2 id="Filters"><a href="#Filters" class="headerlink" title="Filters"></a>Filters</h2><p>在ADAU1772的General(2^nd^ Order) Filter Setting中有几项过滤器，分别是 Parametric 、 Shelving 、 General HP/LP/BP/BS 、 Butterworth/Bessel 、 Tone Control、IIR Coefficient 、First Order Filters 、All Pass 、Peaking 、Notch 、 Chebyshev 共11中过滤器。</p>
-<p><img src="http://pic.islet.space/2021/04/image-20210428152357233.png" alt="image-20210428152357233"></p>
-<h1 id="SigmaStudio"><a href="#SigmaStudio" class="headerlink" title="SigmaStudio"></a>SigmaStudio</h1><p>以下简称sigma</p>
-<h2 id="Capture"><a href="#Capture" class="headerlink" title="Capture"></a>Capture</h2><p>Capture 窗口会捕捉开发者对设置的相关改动记录。</p>
-<p><img src="https://pic.islet.space/2021/04/image-20210422165857465.png" alt="image-20210422165857465"></p>
-<h2 id="Register-Control"><a href="#Register-Control" class="headerlink" title="Register Control"></a>Register Control</h2><p><img src="https://pic.islet.space/2021/04/image-20210422163633005.png" alt="image-20210422163633005"></p>
-<h3 id="Output-Serial-Port"><a href="#Output-Serial-Port" class="headerlink" title="Output/Serial Port"></a>Output/Serial Port</h3><h4 id="下压式音量按键"><a href="#下压式音量按键" class="headerlink" title="下压式音量按键"></a>下压式音量按键</h4><p>使用前需要进行跳线，跳线方法如下：</p>
-<img src="https://pic.islet.space/2021/04/image-20210422163804275.png" alt="image-20210422163804275" style="zoom:50%;" />
-
-<p>控制界面如下：</p>
-<p><img src="https://pic.islet.space/2021/04/image-20210422163228410.png" alt="image-20210422163228410"></p>
-<blockquote>
-<p>？？ Time</p>
-<p>Initial PB Volume 初始化下压式按键的音量值</p>
-<p>Gain Step 增益速度</p>
-<p>Ramp Speed 增加速度</p>
-<p>Converters Controlled by PushButton Volume 被控制的转换器</p>
-</blockquote>
-<h2 id="Download-Program"><a href="#Download-Program" class="headerlink" title="Download Program"></a>Download Program</h2><img src="https://pic.islet.space/2021/04/image-20210422170248954.png" alt="image-20210422170248954" style="zoom:67%;" />
-
-<p><img src="https://pic.islet.space/2021/04/image-20210422170328013.png" alt="image-20210422170328013"></p>
-<h2 id="Microphone"><a href="#Microphone" class="headerlink" title="Microphone"></a>Microphone</h2><p>TRS 1/8-inch<br>mini-plug stereo headphones</p>
-<img src="https://pic.islet.space/2021/04/048f07ee-e357-4c06-a8e4-1724e62765a4_1.e937ba0bd42739fc09e9ef63602645b8.jpeg" alt="查看源图像" style="zoom:50%;" />
-
-<p>standard 0.100”<br>headers</p>
-<img src="https://pic.islet.space/2021/04/R68f2db356a43d3653db1298ccd26e835" alt="查看源图像" style="zoom:50%;" />
-
-
-
-
-
-<h3 id="Bias-Setting"><a href="#Bias-Setting" class="headerlink" title="Bias Setting"></a>Bias Setting</h3><p><img src="https://pic.islet.space/2021/04/image-20210423102647330.png" alt="image-20210423102647330"></p>
-<blockquote>
-<p>Bias Gain</p>
-<p>AVDD</p>
-<p>0.9*AVDD</p>
-<p>0.65*AVDD</p>
-</blockquote>
-<p>dataword byte : 在突发模式（burst mode）中使用。 </p>
-<p>data byte : 在单字模式（single-word mode）下写入。</p>
-<h1 id="ADAU1772"><a href="#ADAU1772" class="headerlink" title="ADAU1772"></a>ADAU1772</h1><ul>
-<li>ADAU1772以下简称1772</li>
-<li>《Evaluation Board User Guide<br>  UG-477》以下简称UG</li>
-</ul>
-<h2 id="评估板结构"><a href="#评估板结构" class="headerlink" title="评估板结构"></a>评估板结构</h2><p>以下描述均以评估板为例，DIY板不一定适用。</p>
-<h3 id="插口（Jumper）定义"><a href="#插口（Jumper）定义" class="headerlink" title="插口（Jumper）定义"></a>插口（Jumper）定义</h3><img src="https://pic.islet.space/2021/04/image-20210427165847934.png" alt="image-20210427165847934" style="zoom: 67%;" />
-
-
-
-<h3 id="输入输出"><a href="#输入输出" class="headerlink" title="输入输出"></a>输入输出</h3><ul>
-<li>2/3输入通道是复用立体声通道，即1通道和0通道都可以单独接入音源，在物理音频接口上独立，但第2/3通道是在一起的，共用一个物理通道。UG第7页中也有提到。</li>
-</ul>
-<img src="https://pic.islet.space/2021/04/image-20210427104818097.png" alt="image-20210427104818097" style="zoom:50%;" />
-
-
-
-<img src="https://pic.islet.space/2021/04/image-20210427105655639.png" alt="image-20210427105655639" style="zoom:67%;" />
-
-<ul>
-<li>有四个单端输入通道可以设置为麦克风信号或线路信号，一个双立体声数字输入信号通道和也可被用于单端输出的两个差分(differential)输出。</li>
-</ul>
-<h3 id="USBi-仿真器"><a href="#USBi-仿真器" class="headerlink" title="USBi 仿真器"></a>USBi 仿真器</h3><ul>
-<li>USBi驱动安装：进入设备管理器，安装驱动在SigmaStudio安装目录 <code>\Analog Devices\SigmaStudio 4.6\USB drivers\</code> 下。</li>
-<li>连接到USBi未成功时是红色，设备驱动安装且连接成功时，USBi 在sigma中会由红变绿。</li>
-<li>USBi作为中间板对1772进行控制，在USBi右键可以控制1772设备开断，开断时板上D1区的VDD指示灯也会通断（见page10）。</li>
-<li>如果需要对设备进行实时控制，请务必记得打开设备，否则无法操作。</li>
-</ul>
-<img src="http://pic.islet.space/2021/04/image-20210428150645112.png" alt="image-20210428150645112" style="zoom: 67%;" />
-
-<ul>
-<li>USBi将例程down到了板子上ADAU1772的SRAM上，断电就没有了。USBi的这种调试是为了快速验证功能，最终需要把这个例程的代码导出，并通过单片机的 <strong>启动工程集成</strong>，烧写到单片机中，实现单片机启动。</li>
-</ul>
-<img src="https://pic.islet.space/2021/04/image-20210427110916316.png" alt="image-20210427110916316" style="zoom:67%;" />
-
-<h3 id="编译烧录"><a href="#编译烧录" class="headerlink" title="编译烧录"></a>编译烧录</h3><ul>
-<li>烧录按键如下：</li>
-</ul>
-<p><img src="https://pic.islet.space/2021/04/image-20210427162529600.png" alt="image-20210427162529600"></p>
-<ul>
-<li>编译完毕后，SS会在右边的output窗体里显示编译结果，如有错误会提示错误信息，用户可据此信息去修改设计；</li>
-<li>如成功则会显示资源占用信息，用户可根据百分比来增减模块。</li>
-</ul>
-<img src="https://pic.islet.space/2021/04/image-20210427111013493.png" alt="image-20210427111013493" style="zoom:67%;" />
-
-
-
-<h3 id="芯片"><a href="#芯片" class="headerlink" title="芯片"></a>芯片</h3><p>板上共有4颗芯片，分别是 <strong>DSP</strong>、<strong>EEPROM</strong>、<strong>线性整流芯片</strong> 和 <strong>升压芯片</strong></p>
-<img src="https://pic.islet.space/2021/04/image-20210427171901213.png" alt="image-20210427171901213" style="zoom:50%;" />
-
-
-
-<h4 id="U2-EEPROM"><a href="#U2-EEPROM" class="headerlink" title="U2: EEPROM"></a>U2: EEPROM</h4><p>ST官网对M24C32-F串行E2PROM的描述：</p>
-<p>容量：32-Kbit</p>
-<p>电压：1.7 ~ 5.5V</p>
-<p>温差：-40 ~ +85℃</p>
-<img src="https://pic.islet.space/2021/04/Snipaste_2021-04-27_17-18-01.png" alt="Snipaste_2021-04-27_17-18-01" style="zoom: 67%;" />
-
-<img src="https://pic.islet.space/2021/04/Snipaste_2021-04-27_17-18-18.png" alt="Snipaste_2021-04-27_17-18-18" style="zoom:67%;" />
-
-
-
-
-
-
-
-<h2 id="控制"><a href="#控制" class="headerlink" title="控制"></a>控制</h2><h3 id="HP输出"><a href="#HP输出" class="headerlink" title="HP输出"></a>HP输出</h3><p>HP即Headphone缩写，HP输出有两个输出端，分别是DAC0 和 DAC1，分别对应为 EVAL板 上的 OUT R(HP Right) 和 OUT L(HP Left)。</p>
-<img src="https://pic.islet.space/2021/04/image-20210427152251539.png" alt="image-20210427152251539" style="zoom:50%;" />
-
-<img src="https://pic.islet.space/2021/04/image-20210427143628880.png" alt="image-20210427143628880" style="zoom: 33%;" />
-
-<h4 id="输出静音"><a href="#输出静音" class="headerlink" title="输出静音"></a>输出静音</h4><img src="https://pic.islet.space/2021/04/image-20210427153425633.png" alt="image-20210427153425633" style="zoom:50%;" />
-
-<h4 id="输出断电"><a href="#输出断电" class="headerlink" title="输出断电"></a>输出断电</h4><p>关于HP输出的寄存器 <code>HP_EN_R</code> 及 <code>HP_EN_L</code> 说明：</p>
-<img src="https://pic.islet.space/2021/04/image-20210427152528194.png" alt="image-20210427152528194" style="zoom:50%;" />
-
-<p><code>0x31</code> 即 <code>0011 0001</code> ，最后两位 <code>01</code> 即 <code>HP_PDN_L</code> 中的 <code>01</code> 。    </p>
-<h4 id="输出音量控制"><a href="#输出音量控制" class="headerlink" title="输出音量控制"></a>输出音量控制</h4><ul>
-<li>对输出音量进行控制需要先对S5、S6进行跳针。</li>
-</ul>
-<img src="https://pic.islet.space/2021/04/image-20210427110159648.png" alt="image-20210427110159648" style="zoom:67%;" />
-
-
-
-
-
-<h3 id="TALKTHRU-DSP-BYPASS"><a href="#TALKTHRU-DSP-BYPASS" class="headerlink" title="TALKTHRU / DSP BYPASS"></a>TALKTHRU / DSP BYPASS</h3><blockquote>
-<p>DSP BYPASS MODE<br>When DSP bypass mode is enabled, a direct path from the ADC<br>outputs to the DACs is set up to enable bypassing the core processing to listen to environmental sounds. </p>
-<p>This is useful for<br>listening to someone speaking without having to remove the<br>noise cancelling headphones. The DSP bypass path is <strong>enabled by setting an MPx pin low</strong>. </p>
-<p>Figure 92 shows the DSP bypass path<br>disabled, and Figure 93 shows the DSP bypass path enabled by<br>pressing the push-button switch. </p>
-<p><img src="https://pic.islet.space/2021/04/image-20210427144110884.png" alt="image-20210427144110884"></p>
-<p>The DSP bypass feature works<br>for both analog and digital microphone inputs. </p>
-<ul>
-<li>Enabled when <em><strong>a switch</strong></em> connected to an MPx pin that is set to DSP bypass mode is closed and the MPx pin signal is pulled low. </li>
-</ul>
-<p>Pressing and holding the switch closed enables the<br>DSP bypass signal path as defined in the TALKTHRU register<br>(Address 0x002A). </p>
-<p>The DAC volume control setting is switched<br>from the default gain setting to the new TALKTHRU_GAINx<br>register setting (Address 0x002B and Address 0x002C). </p>
-<ul>
-<li>DSP bypass<br>  is enabled only on ADC0 and ADC1. </li>
-</ul>
-<p>The DSP bypass signal path<br>is from the output of ADCx to the input of the DAC(s).<br>When DSP bypass is enabled, the current DAC volume setting<br>is ramped down to −95.625 dB and the DSP bypass volume<br>setting is ramped up to avoid pops when switching paths.</p>
-</blockquote>
-<h1 id="案例"><a href="#案例" class="headerlink" title="案例"></a>案例</h1><h2 id="EXP1"><a href="#EXP1" class="headerlink" title="EXP1"></a>EXP1</h2><p>本案例使用麦克风采集信号并从前两个通道输入，经过信号增益放大器调整后经过立体声通道输出。</p>
-<p>具体步骤如下：</p>
-<ol>
-<li>从左侧 <strong>树状工具箱</strong>(TreeToolBox)中拖出1772和USBi，并进行连接。</li>
-</ol>
-<img src="https://pic.islet.space/2021/05/image-20210428094527305.png" alt="image-20210428094527305" style="zoom: 67%;" />
-
-
-
-<ol start="2">
-<li>在 <strong>原理图（SCHEMATIC)</strong> <img src="https://pic.islet.space/2021/05/image-20210506150111553.png" alt="image-20210506150111553" style="zoom:80%;" />中需要对输入输出路径进行定义，在此处定义的所有图形编程内容都是对 <strong>可编程增益放大器（PGA）</strong>的使用，即此处的输入到输出所有内容都不经过 <strong>信号通路（SIGNAL ROUTING）</strong> 选项卡中的 <strong>音频处理核心（AUDIO PROCESSING CORE）</strong>，是由 <strong>核心输入选择器（CORE INPUT SELECTION）</strong>完成的，<mark>也可以理解为PGA就是在其中，且PGA的设置在原理图中进行。</mark></li>
-</ol>
-<img src="https://pic.islet.space/2021/05/image-20210506145903478.png" alt="image-20210506145903478" style="zoom:67%;" />
-
-
-
-<ol start="3">
-<li>在原理图中，从左侧 <img src="https://pic.islet.space/2021/05/image-20210506150230833.png" alt="image-20210506150230833" style="zoom:80%;" /> 拖出组件并连线如下，其中需要用到四个通道中的第1及第2通道，每个通告分别连接到一个 <strong>线性增益器（LINEAR GAIN）</strong>，增益50分贝，将原本的麦克风信号从-60分贝左右提升一下。然后经过 <strong>全通角过滤器（ALL POLE FILTER）</strong>,对1500Hz以下的声音增益10分贝。再经过 <strong>分线器（T CONNECTION）</strong>，将信号分别传输给 <strong>分贝显示器（DISPLAY DBREG）</strong>及 <strong>输出通道（OUTPUT）</strong>。</li>
-</ol>
-<img src="https://pic.islet.space/2021/05/image-20210428095433721.png" alt="image-20210428095433721" style="zoom:80%;" />
-
-<img src="https://pic.islet.space/2021/05/image-20210506144919655.png" alt="image-20210506144919655" style="zoom: 80%;" />
-
-<ol start="4">
-<li>另，PGA的设置还需要在 <strong>PGA/ADC</strong> 选项卡中进行设置：</li>
-</ol>
-<ul>
-<li>启用<strong>PGA<del>x</del></strong> 及 <strong>PGA<del>x</del> Boost</strong></li>
-<li>启用 <strong>Mic<del>x</del> Bias</strong></li>
-<li>调整 各通道的增益大小等</li>
-</ul>
-<img src="https://pic.islet.space/2021/05/image-20210506145534521.png" alt="image-20210506145534521" style="zoom:80%;" />
-
-<ol start="5">
-<li>对 <strong>信号通路</strong> 选项卡进行设置，使信号不经过 <strong>音频处理核心</strong> ，启用 <strong>输出ASRC源选择器（OUTPUT ASRC SOURCE SELECT）</strong> ，信号经流如图示：</li>
-</ol>
-<img src="https://pic.islet.space/2021/05/image-20210506150516695.png" alt="image-20210506150516695" style="zoom: 80%;" />
-
-
-
-<ol start="6">
-<li>​    如果设置芯片使用，可以在 <strong>芯片控制（CHIP CONTROL）</strong>选项卡中设置性能增强模式</li>
-</ol>
-<img src="https://pic.islet.space/2021/05/image-20210506151533990.png" alt="image-20210506151533990" style="zoom:80%;" />
-
-<ol start="7">
-<li>输出结果如下图所示：</li>
-</ol>
-<blockquote>
-<p>下图仍然存在问题：</p>
-<ul>
-<li>从第4.5秒开始，信号正常，但是第10.5秒左右开始，信号逐渐失真。</li>
-<li>第0和第1通道两麦克风失真时间起始点不一致。</li>
-<li>多次测试时第1通道较为普遍出现失真，且失真时信号趋向正数。</li>
-</ul>
-</blockquote>
-<img src="https://pic.islet.space/2021/05/image-20210506152135937.png" alt="image-20210506152135937" style="zoom: 67%;" />
-
-<p><img src="https://pic.islet.space/2021/05/image-20210506153151118.png" alt="image-20210506153151118"></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://islet.space/2021/04/22/Linux/Linux%E5%88%86%E5%8C%BA%E5%8F%8A%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Liewzheng">
-      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Coder的孤岛">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/04/22/Linux/Linux%E5%88%86%E5%8C%BA%E5%8F%8A%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/" class="post-title-link" itemprop="url">Linux分区及文件系统</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2021-04-22 23:58:32" itemprop="dateCreated datePublished" datetime="2021-04-22T23:58:32+08:00">2021-04-22</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-04-26 00:14:16" itemprop="dateModified" datetime="2021-04-26T00:14:16+08:00">2021-04-26</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="Linux分区与挂载"><a href="#Linux分区与挂载" class="headerlink" title="Linux分区与挂载"></a>Linux分区与挂载</h1><h2 id="分区表"><a href="#分区表" class="headerlink" title="分区表"></a>分区表</h2><p><strong>分区表</strong>(partition table)是将大表的数据分成称为分区的许多小的子集，类型有FAT16, FAT32, NTFS, exFAT, Ext2/3/4, HFS+, VMFS。另外，分区表的种类划分主要有：range（范围）、list（列表）和hash（散列）分区。划分依据主要是根据其表内部属性。同时，分区表可以创建其独特的分区索引。倘若硬盘丢失了分区表，数据就无法按顺序读取和写入，导致无法操作。</p>
-<p>Kali Linux支持的分区表类型：aix、amiga、bsd、dvh、gpt、mac、msdos、pc98、sun、atari 及 loop。</p>
-<h2 id="磁盘结构"><a href="#磁盘结构" class="headerlink" title="磁盘结构"></a>磁盘结构</h2><p><img src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/04/kzq6k9g8x7.png"></p>
-<p>磁盘结构</p>
-<p>磁盘主要分为以下结构：</p>
-<ul>
-<li>磁头（head）：对磁盘的数据进行读写</li>
-<li>磁道（track）：当磁盘旋转时，磁头若保持在一个位置上，则每个磁头都会在磁盘表面划出一个圆形轨迹，这些圆形轨迹就叫做磁道。 磁盘上的磁道是一组记录密度不同的同心圆</li>
-<li>扇区（sector）：磁盘上的每个磁道被等分为若干个弧段，这些弧段便是硬盘的扇区。硬盘的第一个扇区，叫做引导扇区。 一个扇区的大小为512个字节。</li>
-<li>柱面（cylinder）：在有多个盘片构成的盘组中，由不同盘片的面，但处于同一半径圆的多个磁道组成的一个圆柱面。</li>
-</ul>
-<p>整个磁盘的存储大小为： <strong>存储容量 ＝ 磁头数 × 磁道(柱面)数 × 每道扇区数 × 每扇区字节数</strong></p>
-<h2 id="磁盘的使用"><a href="#磁盘的使用" class="headerlink" title="磁盘的使用"></a>磁盘的使用</h2><p>一块新的硬盘或者U盘等外部设备在插入PC后，需要完成以下事情：</p>
-<ul>
-<li>在/dev/下创建一个新的目录，用来代表该磁盘。如/dev/hda，/dev/hdb等。</li>
-<li>磁盘最开始需要进行格式化，使用<code>mkfs</code>命令为磁盘进行格式化，确定文件系统类型。</li>
-<li>对硬盘进行分区后才可以使用。</li>
-<li>在Linux中挂载到一个已经存在的目录下才可以访问该磁盘，否则无法访问。使用<code>mount</code>与<code>unmount</code>来进行挂载和卸载。</li>
-</ul>
-<blockquote>
-<p> 一般挂在点都在/mnt/xxx目录下，并且该目录必须是已经存在的，否则无法挂载 </p>
-</blockquote>
-<h2 id="fdisk的使用"><a href="#fdisk的使用" class="headerlink" title="fdisk的使用"></a>fdisk的使用</h2><p>在Linux中，使用fdisk来查看当前的硬盘以及硬盘的分区、文件系统等信息。并且使用fdisk命令可以为磁盘进行分区。 fdisk的命令有以下这些： Fdisk命令详解：</p>
-<table>
-<thead>
-<tr>
-<th align="left">命令</th>
-<th align="left">备注</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="left">m</td>
-<td align="left">获取帮助</td>
-</tr>
-<tr>
-<td align="left">n</td>
-<td align="left">新建分区</td>
-</tr>
-<tr>
-<td align="left">p</td>
-<td align="left">显示分区表</td>
-</tr>
-<tr>
-<td align="left">d</td>
-<td align="left">删除分区</td>
-</tr>
-<tr>
-<td align="left">b</td>
-<td align="left">设置卷标</td>
-</tr>
-<tr>
-<td align="left">w</td>
-<td align="left">写入分区表</td>
-</tr>
-<tr>
-<td align="left">t</td>
-<td align="left">改变分区文件系统类型</td>
-</tr>
-<tr>
-<td align="left">v</td>
-<td align="left">检验分区</td>
-</tr>
-<tr>
-<td align="left">l</td>
-<td align="left">显示fdisk所支持的文件系统代码</td>
-</tr>
-<tr>
-<td align="left">q</td>
-<td align="left">退出</td>
-</tr>
-</tbody></table>
-<h5 id="fdisk示例"><a href="#fdisk示例" class="headerlink" title="fdisk示例"></a>fdisk示例</h5><ol>
-<li>使用<code>fdisk -l</code>查看当前所有硬盘以及分区的状态。</li>
-</ol>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"># fdisk -l</span><br><span class="line"></span><br><span class="line">Disk /dev/sda: <span class="number">10.7</span> GB, <span class="number">10737418240</span> bytes</span><br><span class="line"><span class="number">255</span> heads, <span class="number">63</span> sectors/track, <span class="number">1305</span> cylinders</span><br><span class="line">Units = cylinders <span class="keyword">of</span> <span class="number">16065</span> * <span class="number">512</span> = <span class="number">8225280</span> bytes</span><br><span class="line"></span><br><span class="line">Device Boot   Start     End   Blocks  Id System</span><br><span class="line">/dev/sda1  *      <span class="number">1</span>     <span class="number">13</span>   <span class="number">104391</span>  <span class="number">83</span> Linux</span><br><span class="line">/dev/sda2       <span class="number">14</span>    <span class="number">1305</span>  <span class="number">10377990</span>  8e Linux LVM</span><br><span class="line"></span><br><span class="line">Disk /dev/sdb: <span class="number">5368</span> MB, <span class="number">5368709120</span> bytes</span><br><span class="line"><span class="number">255</span> heads, <span class="number">63</span> sectors/track, <span class="number">652</span> cylinders</span><br><span class="line">Units = cylinders <span class="keyword">of</span> <span class="number">16065</span> * <span class="number">512</span> = <span class="number">8225280</span> bytes</span><br><span class="line"></span><br><span class="line">Disk /dev/sdb doesn<span class="string">&#x27;t contain a valid partition table</span></span><br></pre></td></tr></table></figure>
-
-<p>可以看到目前有两个磁盘：</p>
-<ul>
-<li>sda：10.7G，255个磁头，63个磁道，1305个扇区 <ul>
-<li>主分区1：/dev/sda1</li>
-<li>主分区2：/dev/sda2</li>
-</ul>
-</li>
-<li>sdb：5G，255个磁头，63个磁道，652个扇区 <ul>
-<li>无分区</li>
-</ul>
-</li>
-</ul>
-<h2 id="分区的概念"><a href="#分区的概念" class="headerlink" title="分区的概念"></a>分区的概念</h2><p>Linux中，磁盘只有被分区完后，才可以被挂载到目录下。</p>
-<p>分区有三种：主分区，扩展分区，逻辑分区，每个磁盘最多只能有四个主分区，而可以有多个扩展分区，在扩展分区中，还可以创建多个逻辑分区。</p>
-<ul>
-<li>主分区：创建完后即可挂载</li>
-<li>扩展分区：扩展分区创建完后，还需要创建逻辑分区才可以被挂载</li>
-</ul>
-<h2 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h2><p>格式化一块硬盘(hdb)，并且对其进行分区，分区后进行挂载</p>
-<h5 id="创建主分区"><a href="#创建主分区" class="headerlink" title="创建主分区"></a>创建主分区</h5><ol>
-<li>通过<code>fdisk /dev/hdb</code>进入磁盘的命令模式    </li>
-</ol>
-<p><img src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/04/s22aqd4o24.png" alt="s22aqd4o24"></p>
-<p>  进入格式化命令模式  </p>
-<ol>
-<li>输入<code>n</code>代表创建分区，<code>e</code>代表扩展分区，<code>p</code>代表主分区    </li>
-</ol>
-<p><img src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/04/0u6woej2nq.png" alt="0u6woej2nq"></p>
-<p>  新建主分区  </p>
-<ol>
-<li>输入<code>First Cylinder</code>的值代表分区初始的柱面值，以及分区的大小<code>+3G</code>代表为该分区分3G    </li>
-</ol>
-<p><img src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/04/vopy3iwz2v.png" alt="vopy3iwz2v"></p>
-<p>  输入初始柱面的值以及分区大小  </p>
-<ol>
-<li>输入<code>p</code>查看创建的分区<code>/dev/hdb1</code>    </li>
-</ol>
-<p><img src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/04/rflbc73wpf.png" alt="rflbc73wpf"></p>
-<p>  新建分区  </p>
-<h5 id="创建扩展分区"><a href="#创建扩展分区" class="headerlink" title="创建扩展分区"></a>创建扩展分区</h5><ol>
-<li>与创建主分区步骤相同，只是在选择<code>command action</code>的时候，选择<code>e</code>，表示创建扩展分区    </li>
-</ol>
-<p><img src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/04/ymjwni22fr.png" alt="ymjwni22fr"></p>
-<p>  创建后的扩展分区  </p>
-<ol>
-<li>在创建完扩展分区后，来创建逻辑分区，输入<code>l</code>代表创建逻辑分区    </li>
-</ol>
-<p><img src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/04/ra4wa3017d.png" alt="ra4wa3017d"></p>
-<p>  创建逻辑分区  </p>
-<ol>
-<li> 与创建主分区、扩展分区一样，为逻辑分区选择起始的柱面，以及分配的大小     </li>
-</ol>
-<p><img src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/04/y0kb4p9z23.png" alt="y0kb4p9z23"></p>
-<p>  分配分区大小  </p>
-<ol>
-<li> 查看扩展分区     </li>
-</ol>
-<p><img src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/04/c78q2lt7wi.png" alt="c78q2lt7wi"></p>
-<p>  查看分区信息  </p>
-<h5 id="分区格式化"><a href="#分区格式化" class="headerlink" title="分区格式化"></a>分区格式化</h5><p>在磁盘分区创建完毕后，需要为分区通过<code>mkfs</code>进行格式化，赋予它文件系统： 如<code>ext2</code>,<code>ext3</code>,<code>vfat</code>等</p>
-<p>使用命令 <code>mkfs -t ext3 /dev/hdb1</code>分别对分区<code>hdb1</code>进行格式化处理，格式化为ext3文件类型</p>
-<p>其中<code>mkfs –t ext3</code>命令等价于<code>mkfs.ext3</code>，<code>mkfs -t ext2</code>命令等价于<code>mkfs.ext2</code> </p>
-<p><img src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/04/513p7ponts.png" alt="513p7ponts"></p>
-<p>mkfs命令</p>
-<h5 id="分区挂载"><a href="#分区挂载" class="headerlink" title="分区挂载"></a>分区挂载</h5><p>当分区格式化完成文件系统后，就可以通过<code>mount</code>与<code>unmount</code>进行挂载与卸载了，当分区挂载到具体目录后，即可进行创建文件、删除文件等文件操作了。</p>
-<p>如<code>mount /dev/hdb1 /mnt/hdb1</code>就会将<code>/dev/hdb1</code>分区挂载到<code>/mnt/hdb1</code>目录下，也就是该目录下的文件都会被写到<code>/dev/hdb1</code>的磁盘分区中保存。</p>
-<p>本文参与<a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer/support-plan">腾讯云自媒体分享计划</a>，欢迎正在阅读的你也加入，一起分享。</p>
-<h1 id="Linux-文件系统"><a href="#Linux-文件系统" class="headerlink" title="Linux 文件系统"></a>Linux 文件系统</h1><h2 id="文件系统类型"><a href="#文件系统类型" class="headerlink" title="文件系统类型"></a>文件系统类型</h2><p>Kali Linux支持：btrfs、exfat、ext2\3\4、f2fs、fat16、fat32、hfs、hfs+、jfs、linux-swap、lvm2 pv、minix、nilfs2、ntfs、reiser4、reiserfs、udf、xfs;</p>
-<h3 id="LINUX-SWAP"><a href="#LINUX-SWAP" class="headerlink" title="LINUX-SWAP"></a>LINUX-SWAP</h3><p>Swap分区在系统的物理内存不够用的时候，把硬盘空间中的一部分空间释放出来，以供当前运行的程序使用。那些被释放的空间可能来自一些很长时间没有什么操作的程序，这些被释放的空间被临时保存到Swap分区中，等到那些程序要运行时，再从Swap分区中恢复保存的数据到内存中。 本文将从分区开始讲解如何开启SWAP交换空间</p>
-<h4 id="分区"><a href="#分区" class="headerlink" title="分区"></a>分区</h4><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># 查看块设备</span><br><span class="line"># 如图可以看出硬盘sda和vdb还有剩余</span><br><span class="line">[root@rainss ~]# lsblk</span><br></pre></td></tr></table></figure>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<h2 id="分区类型"><a href="#分区类型" class="headerlink" title="分区类型"></a>分区类型</h2><p>主分区、扩展分区、逻辑分区</p>
-<h2 id="对齐类型"><a href="#对齐类型" class="headerlink" title="对齐类型"></a>对齐类型</h2><p>对齐到MiB、对齐到柱面</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://islet.space/2021/04/22/Programing/C++/Get%20Started%20with%20C++%20and%20Windows%20Subsystem%20for%20Linux%20in%20Visual%20Studio%20Code/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Liewzheng">
-      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Coder的孤岛">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/04/22/Programing/C++/Get%20Started%20with%20C++%20and%20Windows%20Subsystem%20for%20Linux%20in%20Visual%20Studio%20Code/" class="post-title-link" itemprop="url">Get Started with C++ and Windows Subsystem for Linux in Visual Studio Code</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2021-04-22 23:58:32" itemprop="dateCreated datePublished" datetime="2021-04-22T23:58:32+08:00">2021-04-22</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-04-29 00:51:10" itemprop="dateModified" datetime="2021-04-29T00:51:10+08:00">2021-04-29</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Language/" itemprop="url" rel="index"><span itemprop="name">Language</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p><a target="_blank" rel="noopener" href="https://code.visualstudio.com/docs/cpp/config-wsl">code.visualstudio.com</a></p>
-<h2 id="Using-C-and-WSL-in-VS-Code"><a href="#Using-C-and-WSL-in-VS-Code" class="headerlink" title="Using C++ and WSL in VS Code"></a>Using C++ and WSL in VS Code</h2><p>In this tutorial, you will configure Visual Studio Code to use the GCC C++ compiler (g++) and GDB debugger on Ubuntu in the <a target="_blank" rel="noopener" href="https://docs.microsoft.com/windows/wsl/install-win10">Windows Subsystem for Linux</a> (WSL). GCC stands for GNU Compiler Collection; GDB is the GNU debugger. WSL is a Linux environment within Windows that runs directly on the  machine hardware, not in a virtual machine.</p>
-<blockquote>
-<p><strong>Note</strong>: Much of this tutorial is applicable to working with C++ and VS Code directly on a Linux machine.</p>
-</blockquote>
-<p>Visual Studio Code has support for working directly in WSL with the <a target="_blank" rel="noopener" href="https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-wsl">Remote - WSL extension</a>. We recommend this mode of <a target="_blank" rel="noopener" href="https://code.visualstudio.com/docs/remote/wsl">WSL development</a>, where all your source code files, in addition to the compiler, are hosted on the Linux distro. For more background, see <a target="_blank" rel="noopener" href="https://code.visualstudio.com/docs/remote/remote-overview">VS Code Remote Development</a>.</p>
-<p>After completing this tutorial, you will be ready to create and  configure your own C++ project, and to explore the VS Code documentation for further information about its many features. This tutorial does not teach you about GCC or Linux or the C++ language. For those subjects,  there are many good resources available on the Web.</p>
-<p>If you have any problems, feel free to file an issue for this tutorial in the <a target="_blank" rel="noopener" href="https://github.com/microsoft/vscode-docs/issues">VS Code documentation repository</a>.</p>
-<h2 id="Prerequisites"><a href="#Prerequisites" class="headerlink" title="Prerequisites#"></a>Prerequisites<a href="about:reader?url=https%3A%2F%2Fcode.visualstudio.com%2Fdocs%2Fcpp%2Fconfig-wsl#_prerequisites">#</a></h2><p>To successfully complete this tutorial, you must do the following steps:</p>
-<ol>
-<li>Install <a target="_blank" rel="noopener" href="https://code.visualstudio.com/download">Visual Studio Code</a>.</li>
-<li>Install the <a target="_blank" rel="noopener" href="https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-wsl">Remote - WSL extension</a>.</li>
-<li>Install <a target="_blank" rel="noopener" href="https://docs.microsoft.com/windows/wsl/install-win10">Windows Subsystem for Linux</a> and then use the links on that same page to install your Linux  distribution of choice. This tutorial uses Ubuntu. During installation,  remember your Linux user password because you’ll need it to install  additional software.</li>
-</ol>
-<h2 id="Set-up-your-Linux-environment"><a href="#Set-up-your-Linux-environment" class="headerlink" title="Set up your Linux environment#"></a>Set up your Linux environment<a href="about:reader?url=https%3A%2F%2Fcode.visualstudio.com%2Fdocs%2Fcpp%2Fconfig-wsl#_set-up-your-linux-environment">#</a></h2><ol>
-<li><p>Open the Bash shell for WSL. If you installed an Ubuntu distro, type  “Ubuntu” in the Windows search box and then click on it in the result  list. For Debian, type “Debian”, and so on.</p>
-<p> <img src="https://code.visualstudio.com/assets/docs/cpp/wsl/start-ubuntu.png" alt="Ubuntu in Start Menu"></p>
-<p> The shell appears with a command prompt that by default consists of  your user name and computer name, and puts you in your home directory.  For Ubuntu it looks like this:</p>
-<p> <img src="https://code.visualstudio.com/assets/docs/cpp/wsl/bash-ubuntu.png" alt="Bash Shell"></p>
-</li>
-<li><p>Make a directory called <code>projects</code> and then subdirectory under that called <code>helloworld</code>:</p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mkdir projects</span><br><span class="line">cd projects</span><br><span class="line">mkdir helloworld</span><br></pre></td></tr></table></figure></li>
-<li><p>Although you will be using VS Code to edit your source code, you’ll  be <strong>compiling the source code on Linux using the g++ compiler</strong>. You’ll  also <strong>debug on Linux using GDB</strong>. These tools are not installed by default  on Ubuntu, so you have to install them. Fortunately, that task is quite  easy!</p>
-</li>
-<li><p>From the WSL command prompt, first run <code>apt-get update</code> to update the Ubuntu package lists. An out-of-date distro can sometimes interfere with attempts to install new packages.</p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get update</span><br></pre></td></tr></table></figure>
-
-<p> If you like, you can run <code>sudo apt-get update &amp;&amp; sudo apt-get dist-upgrade</code> to also download the latest versions of the system packages, but this  can take significantly longer depending on your connection speed.</p>
-</li>
-<li><p>From the command prompt, install the GNU compiler tools and the GDB debugger by typing:</p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install build-essential gdb</span><br></pre></td></tr></table></figure></li>
-</ol>
-<p><img src="C:\Users\431240\AppData\Roaming\Typora\typora-user-images\image-20210419161354074.png" alt="image-20210419161354074"></p>
-<ol start="6">
-<li>Verify that the install succeeded by locating g++ and gdb. If the filenames are not returned from the <code>whereis</code> command, try running the update command again.</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">whereis g++</span><br><span class="line">whereis gdb</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p><strong>Note</strong>: The setup steps for installing the g++  compiler and GDB debugger apply if you are working directly on a Linux  machine rather than in WSL. Running VS Code in your helloworld project,  as well as the editing, building, and debugging steps are the same.</p>
-</blockquote>
-<h2 id="Run-VS-Code-in-WSL"><a href="#Run-VS-Code-in-WSL" class="headerlink" title="Run VS Code in WSL#"></a>Run VS Code in WSL<a href="about:reader?url=https%3A%2F%2Fcode.visualstudio.com%2Fdocs%2Fcpp%2Fconfig-wsl#_run-vs-code-in-wsl">#</a></h2><p>Navigate to your helloworld project folder and launch VS Code from the WSL terminal with <code>code .</code>:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd $HOME&#x2F;projects&#x2F;helloworld</span><br><span class="line">code .</span><br></pre></td></tr></table></figure>
-
-<p>You’ll see a message about “Installing VS Code Server”. <strong>VS Code is  downloading and installing a small server on the Linux side that the  desktop VS Code will then talk to.</strong> </p>
-<p><img src="C:\Users\431240\AppData\Roaming\Typora\typora-user-images\image-20210419155740210.png" alt="image-20210419155740210"></p>
-<p>VS Code will then start and open the <code>helloWorld</code> folder. The File Explorer shows that VS Code is now running in the context of WSL with the title bar <strong>[WSL: Ubuntu]</strong>.</p>
-<p><img src="https://code.visualstudio.com/assets/docs/cpp/wsl/file-explorer-wsl.png" alt="File Explorer in WSL"></p>
-<p>You can also tell the remote context from the Status bar.</p>
-<p><img src="https://code.visualstudio.com/assets/docs/cpp/wsl/wsl-status-bar.png" alt="Remote context in the Status bar"></p>
-<p>If you click on the Remote Status bar item, you will see a dropdown  of Remote commands appropriate for the session. </p>
-<p><img src="C:\Users\431240\AppData\Roaming\Typora\typora-user-images\image-20210419155444952.png" alt="image-20210419155444952"></p>
-<p>For example, if you want to end your session running in WSL, you can select the <strong>Close Remote Connection</strong> command from the dropdown. </p>
-<p>Running <code>code .</code> from your <em>WSL command prompt</em> will restart VS Code running in WSL.</p>
-<p>The <strong>code .</strong> command opened VS Code in the current  working folder, which becomes your “workspace”. As you go through the  tutorial, you will see three files created in a <code>.vscode</code> folder in the workspace:</p>
-<ul>
-<li><code>c_cpp_properties.json</code> (compiler path and IntelliSense settings)</li>
-<li><code>tasks.json</code> (build instructions)</li>
-<li><code>launch.json</code> (debugger settings)</li>
-</ul>
-<h2 id="Add-a-source-code-file"><a href="#Add-a-source-code-file" class="headerlink" title="Add a source code file#"></a>Add a source code file<a href="about:reader?url=https%3A%2F%2Fcode.visualstudio.com%2Fdocs%2Fcpp%2Fconfig-wsl#_add-a-source-code-file">#</a></h2><p>In the File Explorer title bar, select the <strong>New File</strong> button and name the file <code>helloworld.cpp</code>.</p>
-<p><img src="https://code.visualstudio.com/assets/docs/cpp/wsl/new-file-button.png" alt="New File title bar button"></p>
-<h3 id="Install-the-C-C-extension"><a href="#Install-the-C-C-extension" class="headerlink" title="Install the C/C++ extension#"></a>Install the C/C++ extension<a href="about:reader?url=https%3A%2F%2Fcode.visualstudio.com%2Fdocs%2Fcpp%2Fconfig-wsl#_install-the-cc-extension">#</a></h3><p>Once you create the file and VS Code detects it is a C++ language file, you may be prompted to install the <a target="_blank" rel="noopener" href="https://marketplace.visualstudio.com/items?itemName=ms-vscode.cpptools">Microsoft C/C++ extension</a> if you don’t already have it installed.</p>
-<p><img src="https://code.visualstudio.com/assets/docs/cpp/wsl/cpp-extension-notification.png" alt="C++ extension notification"></p>
-<p>Choose <strong>Install</strong> and then <strong>Reload Required</strong> when the button is displayed in the Extensions view to complete installing the C/C++ extension.</p>
-<p>If you already have C/C++ language extensions installed locally in VS Code, you’ll need to go to the Extensions view (Ctrl+Shift+X) and install those extensions into WSL. Locally installed extensions can be installed into WSL by selecting the <strong>Install in WSL</strong> button and then <strong>Reload Required</strong>.</p>
-<p><img src="https://code.visualstudio.com/assets/docs/cpp/wsl/install-in-wsl.png" alt="Install in WSL button"></p>
-<h3 id="Add-hello-world-source-code"><a href="#Add-hello-world-source-code" class="headerlink" title="Add hello world source code#"></a>Add hello world source code<a href="about:reader?url=https%3A%2F%2Fcode.visualstudio.com%2Fdocs%2Fcpp%2Fconfig-wsl#_add-hello-world-source-code">#</a></h3><p>Now paste in this source code:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line">#include &lt;vector&gt;</span><br><span class="line">#include &lt;string&gt;</span><br><span class="line"></span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">   vector&lt;string&gt; msg &#123;&quot;Hello&quot;, &quot;C++&quot;, &quot;World&quot;, &quot;from&quot;, &quot;VS Code&quot;, &quot;and the C++ extension!&quot;&#125;;</span><br><span class="line"></span><br><span class="line">   for (const string&amp; word : msg)</span><br><span class="line">   &#123;</span><br><span class="line">      cout &lt;&lt; word &lt;&lt; &quot; &quot;;</span><br><span class="line">   &#125;</span><br><span class="line">   cout &lt;&lt; endl;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>Now press Ctrl+S to save the file. Notice how the file you just added appears in the <strong>File Explorer</strong> view (Ctrl+Shift+E) in the side bar of VS Code:</p>
-<p><img src="https://code.visualstudio.com/assets/docs/cpp/wsl/file-explorer-helloworld.png" alt="File Explorer"></p>
-<p>You can also enable <a target="_blank" rel="noopener" href="https://code.visualstudio.com/docs/editor/codebasics#_saveauto-save">Auto Save</a> to automatically save your file changes, by checking <strong>Auto Save</strong> in the main <strong>File</strong> menu.</p>
-<p>The Activity Bar on the far left lets you open different views such as <strong>Search</strong>, <strong>Source Control</strong>, and <strong>Run</strong>. You’ll look at the <strong>Run</strong> view later in this tutorial. You can find out more about the other views in the VS Code <a target="_blank" rel="noopener" href="https://code.visualstudio.com/docs/getstarted/userinterface">User Interface documentation</a>.</p>
-<p>若在此处遇到未找到头文件的问题，请参照一下方法。</p>
-<img src="C:\Users\431240\AppData\Roaming\Typora\typora-user-images\image-20210419160838596.png" alt="image-20210419160838596"  />
-
-
-
-
-
-
-
-<h2 id="Explore-IntelliSense"><a href="#Explore-IntelliSense" class="headerlink" title="Explore IntelliSense#"></a>Explore IntelliSense<a href="about:reader?url=https%3A%2F%2Fcode.visualstudio.com%2Fdocs%2Fcpp%2Fconfig-wsl#_explore-intellisense">#</a></h2><p>In your new <code>helloworld.cpp</code> file, hover over <code>vector</code> or <code>string</code> to see type information. After the declaration of the <code>msg</code> variable, start typing <code>msg.</code> as you would when calling a member function. You should immediately see a completion list that shows all the member functions, and a window  that shows the type information for the <code>msg</code> object:</p>
-<p><img src="https://code.visualstudio.com/assets/docs/cpp/wsl/msg-intellisense.png" alt="Statement completion IntelliSense"></p>
-<p>You can press the Tab key to insert the selected member; then, when you add the opening parenthesis, you will see information about any arguments that the function requires.您可以按Tab键插入所选的成员;然后，当添加左括号时，您将看到关于函数所需的任何参数的信息。</p>
-<h2 id="Build-helloworld-cpp"><a href="#Build-helloworld-cpp" class="headerlink" title="Build helloworld.cpp#"></a>Build helloworld.cpp<a href="about:reader?url=https%3A%2F%2Fcode.visualstudio.com%2Fdocs%2Fcpp%2Fconfig-wsl#_build-helloworldcpp">#</a></h2><p>Next, you will create a <code>tasks.json</code> file to tell VS Code  how to build (compile) the program. This task will invoke the g++  compiler on WSL to create an executable file based on the source code.</p>
-<p>From the main menu, choose <strong>Terminal</strong> &gt; <strong>Configure Default Build Task</strong>. In the dropdown, which will display a tasks dropdown listing various predefined build tasks for C++ compilers. Choose <strong>g++ build active file</strong>, which will build the file that is currently displayed (active) in the editor.</p>
-<p><img src="https://code.visualstudio.com/assets/docs/cpp/wsl/build-active-file.png" alt="Tasks C++ build dropdown"></p>
-<p>This will create a <code>tasks.json</code> file in a <code>.vscode</code> folder and open it in the editor.</p>
-<p>Your new <code>tasks.json</code> file should look similar to the JSON below:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;version&quot;: &quot;2.0.0&quot;,</span><br><span class="line">  &quot;tasks&quot;: [</span><br><span class="line">    &#123;</span><br><span class="line">      &quot;type&quot;: &quot;shell&quot;,</span><br><span class="line">      &quot;label&quot;: &quot;g++ build active file&quot;,</span><br><span class="line">      &quot;command&quot;: &quot;&#x2F;usr&#x2F;bin&#x2F;g++&quot;,</span><br><span class="line">      &quot;args&quot;: [&quot;-g&quot;, &quot;$&#123;file&#125;&quot;, &quot;-o&quot;, &quot;$&#123;fileDirname&#125;&#x2F;$&#123;fileBasenameNoExtension&#125;&quot;],</span><br><span class="line">      &quot;options&quot;: &#123;</span><br><span class="line">        &quot;cwd&quot;: &quot;&#x2F;usr&#x2F;bin&quot;</span><br><span class="line">      &#125;,</span><br><span class="line">      &quot;problemMatcher&quot;: [&quot;$gcc&quot;],</span><br><span class="line">      &quot;group&quot;: &#123;</span><br><span class="line">        &quot;kind&quot;: &quot;build&quot;,</span><br><span class="line">        &quot;isDefault&quot;: true</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>The <code>command</code> setting specifies the program to run; in this case that is g++. The <code>args</code> array specifies the command-line arguments that will be passed to g++.  These arguments must be specified in the order expected by the compiler. This task tells g++ to take the active file (<code>$&#123;file&#125;</code>), compile it, and create an executable file in the current directory (<code>$&#123;fileDirname&#125;</code>) with the same name as the active file but without an extension (<code>$&#123;fileBasenameNoExtension&#125;</code>), resulting in <code>helloworld</code> for our example.</p>
-<blockquote>
-<p><strong>Note</strong>: You can learn more about <code>tasks.json</code> variables in the <a target="_blank" rel="noopener" href="https://code.visualstudio.com/docs/editor/variables-reference">variables reference</a>.</p>
-</blockquote>
-<p>The <code>label</code> value is what you will see in the tasks list; you can name this whatever you like.</p>
-<p>The <code>&quot;isDefault&quot;: true</code> value in the <code>group</code> object specifies that this task will be run when you press Ctrl+Shift+B. This property is for convenience only; if you set it to false, you can still run it from the Terminal menu with <strong>Tasks: Run Build Task</strong>.</p>
-<h3 id="Running-the-build"><a href="#Running-the-build" class="headerlink" title="Running the build#"></a>Running the build<a href="about:reader?url=https%3A%2F%2Fcode.visualstudio.com%2Fdocs%2Fcpp%2Fconfig-wsl#_running-the-build">#</a></h3><ol>
-<li><p>Go back to <code>helloworld.cpp</code>. Your task builds the active file and you want to build <code>helloworld.cpp</code>.</p>
-</li>
-<li><p>To run the build task defined in <code>tasks.json</code>, press Ctrl+Shift+B or from the <strong>Terminal</strong> main menu choose <strong>Tasks: Run Build Task</strong>.</p>
-</li>
-<li><p>When the task starts, you should see the Integrated Terminal panel  appear below the source code editor. After the task completes, the  terminal shows output from the compiler that indicates whether the build succeeded or failed. For a successful g++ build, the output looks  something like this:</p>
-<p> <img src="https://code.visualstudio.com/assets/docs/cpp/wsl/wsl-task-in-terminal.png" alt="G++ build output in terminal"></p>
-</li>
-<li><p>Create a new terminal using the <strong>+</strong> button and you’ll have a bash terminal running in the context of WSL with the <code>helloworld</code> folder as the working directory. Run <code>ls</code> and you should now see the executable <code>helloworld</code> (no file extension).</p>
-<p> <img src="https://code.visualstudio.com/assets/docs/cpp/wsl/wsl-bash-terminal.png" alt="WSL bash terminal"></p>
-</li>
-<li><p>You can run <code>helloworld</code> in the terminal by typing <code>./helloworld</code>.</p>
-</li>
-</ol>
-<h3 id="Modifying-tasks-json"><a href="#Modifying-tasks-json" class="headerlink" title="Modifying tasks.json#"></a>Modifying tasks.json<a href="about:reader?url=https%3A%2F%2Fcode.visualstudio.com%2Fdocs%2Fcpp%2Fconfig-wsl#_modifying-tasksjson">#</a></h3><p>You can modify your <code>tasks.json</code> to build multiple C++ files by using an argument like <code>&quot;$&#123;workspaceFolder&#125;/*.cpp&quot;</code> instead of <code>$&#123;file&#125;</code>. You can also modify the output filename by replacing <code>&quot;$&#123;fileDirname&#125;/$&#123;fileBasenameNoExtension&#125;&quot;</code> with a hard-coded filename (for example ‘helloworld.out’).</p>
-<h2 id="Debug-helloworld-cpp"><a href="#Debug-helloworld-cpp" class="headerlink" title="Debug helloworld.cpp#"></a>Debug helloworld.cpp<a href="about:reader?url=https%3A%2F%2Fcode.visualstudio.com%2Fdocs%2Fcpp%2Fconfig-wsl#_debug-helloworldcpp">#</a></h2><p>Next, you’ll create a <code>launch.json</code> file to configure VS Code to launch the GDB debugger when you press F5 to debug the program. From the main menu, choose <strong>Run</strong> &gt; <strong>Add Configuration…</strong> and then choose <strong>C++ (GDB/LLDB)</strong>.</p>
-<p>You’ll then see a dropdown for various predefined debugging configurations. Choose <strong>g++ build and debug active file</strong>.</p>
-<p><img src="https://code.visualstudio.com/assets/docs/cpp/wsl/build-and-debug-active-file.png" alt="C++ debug configuration dropdown"></p>
-<p>VS Code creates a <code>launch.json</code> file, opens it in the editor, and builds and runs ‘helloworld’.</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;version&quot;: &quot;0.2.0&quot;,</span><br><span class="line">  &quot;configurations&quot;: [</span><br><span class="line">    &#123;</span><br><span class="line">      &quot;name&quot;: &quot;g++ build and debug active file&quot;,</span><br><span class="line">      &quot;type&quot;: &quot;cppdbg&quot;,</span><br><span class="line">      &quot;request&quot;: &quot;launch&quot;,</span><br><span class="line">      &quot;program&quot;: &quot;$&#123;fileDirname&#125;&#x2F;$&#123;fileBasenameNoExtension&#125;&quot;,</span><br><span class="line">      &quot;args&quot;: [],</span><br><span class="line">      &quot;stopAtEntry&quot;: false,</span><br><span class="line">      &quot;cwd&quot;: &quot;$&#123;workspaceFolder&#125;&quot;,</span><br><span class="line">      &quot;environment&quot;: [],</span><br><span class="line">      &quot;externalConsole&quot;: false,</span><br><span class="line">      &quot;MIMode&quot;: &quot;gdb&quot;,</span><br><span class="line">      &quot;setupCommands&quot;: [</span><br><span class="line">        &#123;</span><br><span class="line">          &quot;description&quot;: &quot;Enable pretty-printing for gdb&quot;,</span><br><span class="line">          &quot;text&quot;: &quot;-enable-pretty-printing&quot;,</span><br><span class="line">          &quot;ignoreFailures&quot;: true</span><br><span class="line">        &#125;</span><br><span class="line">      ],</span><br><span class="line">      &quot;preLaunchTask&quot;: &quot;g++ build active file&quot;,</span><br><span class="line">      &quot;miDebuggerPath&quot;: &quot;&#x2F;usr&#x2F;bin&#x2F;gdb&quot;</span><br><span class="line">    &#125;</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>The <code>program</code> setting specifies the program you want to debug. Here it is set to the active file folder <code>$&#123;fileDirname&#125;</code> and active filename without an extension <code>$&#123;fileBasenameNoExtension&#125;</code>, which if <code>helloworld.cpp</code> is the active file will be <code>helloworld</code>.</p>
-<p>By default, the C++ extension won’t add any breakpoints to your source code and the <code>stopAtEntry</code> value is set to <code>false</code>. Change the <code>stopAtEntry</code> value to <code>true</code> to cause the debugger to stop on the <code>main</code> method when you start debugging.</p>
-<p>The remaining steps are provided as an optional exercise to help you get familiar with the editing and debugging experience.</p>
-<h3 id="Start-a-debugging-session"><a href="#Start-a-debugging-session" class="headerlink" title="Start a debugging session#"></a>Start a debugging session<a href="about:reader?url=https%3A%2F%2Fcode.visualstudio.com%2Fdocs%2Fcpp%2Fconfig-wsl#_start-a-debugging-session">#</a></h3><ol>
-<li>Go back to <code>helloworld.cpp</code> so that it is the active file.</li>
-<li>Press F5 or from the main menu choose <strong>Run &gt; Start Debugging</strong>. Before you start stepping through the code, let’s take a moment to notice several changes in the user interface:</li>
-</ol>
-<ul>
-<li><p>The Integrated Terminal appears at the bottom of the source code editor. In the <strong>Debug Output</strong> tab, you see output that indicates the debugger is up and running.</p>
-</li>
-<li><p>The editor highlights the first statement in the <code>main</code> method. This is a breakpoint that the C++ extension automatically sets for you:</p>
-<p>  <img src="https://code.visualstudio.com/assets/docs/cpp/wsl/wsl-breakpoint-default.png" alt="Initial breakpoint"></p>
-</li>
-<li><p>The Run view on the left shows debugging information. You’ll see an example later in the tutorial.</p>
-</li>
-<li><p>At the top of the code editor, a debugging control panel appears. You can move this around the screen by grabbing the dots on the left side.</p>
-<p>  <img src="https://code.visualstudio.com/assets/docs/cpp/cpp/debug-controls.png" alt="Debugging controls"></p>
-</li>
-</ul>
-<h2 id="Step-through-the-code"><a href="#Step-through-the-code" class="headerlink" title="Step through the code#"></a>Step through the code<a href="about:reader?url=https%3A%2F%2Fcode.visualstudio.com%2Fdocs%2Fcpp%2Fconfig-wsl#_step-through-the-code">#</a></h2><p>Now you’re ready to start stepping through the code.</p>
-<ol>
-<li><p>Click or press the <strong>Step over</strong> icon in the debugging control panel.</p>
-<p> <img src="https://code.visualstudio.com/assets/docs/cpp/cpp/step-over-button.png" alt="Step over button"></p>
-<p> This will advance program execution to the first line of the for loop, and skip over all the internal function calls within the <code>vector</code> and <code>string</code> classes that are invoked when the <code>msg</code> variable is created and initialized. Notice the change in the <strong>Variables</strong> window on the left.</p>
-<p> <img src="https://code.visualstudio.com/assets/docs/cpp/wsl/debug-view-variables.png" alt="Debugging windows"></p>
-<p> In this case, the errors are expected because, although the variable  names for the loop are now visible to the debugger, the statement has  not executed yet, so there is nothing to read at this point. The  contents of <code>msg</code> are visible, however, because that statement has completed.</p>
-</li>
-<li><p>Press <strong>Step over</strong> again to advance to the next  statement in this program (skipping over all the internal code that is  executed to initialize the loop). Now, the <strong>Variables</strong> window shows information about the loop variables.</p>
-</li>
-<li><p>Press <strong>Step over</strong> again to execute the <code>cout</code> statement. (Note that as of the March 2019 release, the C++ extension does not print any output to the <strong>Debug Console</strong> until the loop exits.)</p>
-</li>
-<li><p>If you like, you can keep pressing <strong>Step over</strong> until all the words in the vector have been printed to the console. But if you are curious, try pressing the <strong>Step Into</strong> button to step through source code in the C++ standard library!</p>
-<p> <img src="https://code.visualstudio.com/assets/docs/cpp/cpp/gcc-system-header-stepping.png" alt="Breakpoint in gcc standard library header"></p>
-<p> To return to your own code, one way is to keep pressing <strong>Step over</strong>. Another way is to set a breakpoint in your code by switching to the <code>helloworld.cpp</code> tab in the code editor, putting the insertion point somewhere on the <code>cout</code> statement inside the loop, and pressing F9. A red dot appears in the gutter on the left to indicate that a breakpoint has been set on this line.</p>
-<p> <img src="https://code.visualstudio.com/assets/docs/cpp/cpp/breakpoint-in-main.png" alt="Breakpoint in main"></p>
-<p> Then press F5 to start execution from the current line in the standard library header. Execution will break on <code>cout</code>. If you like, you can press F9 again to toggle off the breakpoint.</p>
-<p> When the loop has completed, you can see the output in the <strong>Debug Console</strong> tab of the integrated terminal, along with some other diagnostic information that is output by GDB.</p>
-<p> <img src="https://code.visualstudio.com/assets/docs/cpp/wsl/debug-console-output-wsl.png" alt="Debug console display"></p>
-</li>
-</ol>
-<h2 id="Set-a-watch"><a href="#Set-a-watch" class="headerlink" title="Set a watch#"></a>Set a watch<a href="about:reader?url=https%3A%2F%2Fcode.visualstudio.com%2Fdocs%2Fcpp%2Fconfig-wsl#_set-a-watch">#</a></h2><p>Sometimes you might want to keep track of the value of a variable as your program executes. You can do this by setting a <strong>watch</strong> on the variable.</p>
-<ol>
-<li><p>Place the insertion point inside the loop. In the <strong>Watch</strong> window, click the plus sign and in the text box, type <code>word</code>, which is the name of the loop variable. Now view the Watch window as you step through the loop.</p>
-<p> <img src="https://code.visualstudio.com/assets/docs/cpp/cpp/watch-window.png" alt="Watch window"></p>
-</li>
-<li><p>Add another watch by adding this statement before the loop: <code>int i = 0;</code>. Then, inside the loop, add this statement: <code>++i;</code>. Now add a watch for <code>i</code> as you did in the previous step.</p>
-</li>
-<li><p>To quickly view the value of any variable while execution is paused  on a breakpoint, you can hover over it with the mouse pointer.</p>
-<p> <img src="https://code.visualstudio.com/assets/docs/cpp/cpp/mouse-hover.png" alt="Mouse hover"></p>
-</li>
-</ol>
-<h2 id="C-C-configurations"><a href="#C-C-configurations" class="headerlink" title="C/C++ configurations#"></a>C/C++ configurations<a href="about:reader?url=https%3A%2F%2Fcode.visualstudio.com%2Fdocs%2Fcpp%2Fconfig-wsl#_cc-configurations">#</a></h2><p>If you want more control over the C/C++ extension, you can create a <code>c_cpp_properties.json</code> file, which will allow you to change settings such as the path to the  compiler, include paths, C++ standard (default is C++17), and more.</p>
-<p>You can view the C/C++ configuration UI by running the command <strong>C/C++: Edit Configurations (UI)</strong> from the Command Palette (Ctrl+Shift+P).</p>
-<p><img src="https://code.visualstudio.com/assets/docs/cpp/cpp/command-palette.png" alt="Command Palette"></p>
-<p>This opens the <strong>C/C++ Configurations</strong> page. When you make changes here, VS Code writes them to a file called <code>c_cpp_properties.json</code> in the <code>.vscode</code> folder.</p>
-<p><img src="https://code.visualstudio.com/assets/docs/cpp/wsl/intellisense-configurations-wsl.png" alt="Command Palette"></p>
-<p>You only need to modify the <strong>Include path</strong> setting if your program includes header files that are not in your workspace or in the standard library path.</p>
-<p>Visual Studio Code places these settings in <code>.vscode/c_cpp_properties.json</code>. If you open that file directly, it should look something like this:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;configurations&quot;: [</span><br><span class="line">    &#123;</span><br><span class="line">      &quot;name&quot;: &quot;Linux&quot;,</span><br><span class="line">      &quot;includePath&quot;: [&quot;$&#123;workspaceFolder&#125;&#x2F;**&quot;],</span><br><span class="line">      &quot;defines&quot;: [],</span><br><span class="line">      &quot;compilerPath&quot;: &quot;&#x2F;usr&#x2F;bin&#x2F;gcc&quot;,</span><br><span class="line">      &quot;cStandard&quot;: &quot;c11&quot;,</span><br><span class="line">      &quot;cppStandard&quot;: &quot;c++17&quot;,</span><br><span class="line">      &quot;intelliSenseMode&quot;: &quot;clang-x64&quot;</span><br><span class="line">    &#125;</span><br><span class="line">  ],</span><br><span class="line">  &quot;version&quot;: 4</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="Closing-the-WSL-session"><a href="#Closing-the-WSL-session" class="headerlink" title="Closing the WSL session#"></a>Closing the WSL session<a href="about:reader?url=https%3A%2F%2Fcode.visualstudio.com%2Fdocs%2Fcpp%2Fconfig-wsl#_closing-the-wsl-session">#</a></h2><p>When you are done working in WSL, you can close your remote session with the <strong>Close Remote Connection</strong> command available in the main <strong>File</strong> menu and the Command Palette (Ctrl+Shift+P). This will restart VS Code running locally. You can easily reopen your WSL session from the <strong>File</strong> &gt; <strong>Open Recent</strong> list by selecting folders with the <strong>[WSL]</strong> suffix.</p>
-<h2 id="Next-steps"><a href="#Next-steps" class="headerlink" title="Next steps#"></a>Next steps<a href="about:reader?url=https%3A%2F%2Fcode.visualstudio.com%2Fdocs%2Fcpp%2Fconfig-wsl#_next-steps">#</a></h2><ul>
-<li>Explore the <a target="_blank" rel="noopener" href="https://code.visualstudio.com/docs/editor/codebasics">VS Code User Guide</a>.</li>
-<li>Review the <a target="_blank" rel="noopener" href="https://code.visualstudio.com/docs/languages/cpp">Overview of the C++ extension</a>.</li>
-<li>Create a new workspace, copy your .json files to it, adjust the  necessary settings for the new workspace path, program name, and so on,  and start coding!</li>
-</ul>
-<p>11/22/2019</p>
-<p>​          </p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://islet.space/2021/04/21/Signal/What%20is%20a%20Bypass%20Capacitor/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Liewzheng">
-      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Coder的孤岛">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/04/21/Signal/What%20is%20a%20Bypass%20Capacitor/" class="post-title-link" itemprop="url">What is a Bypass Capacitor?</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2021-04-21 23:58:32" itemprop="dateCreated datePublished" datetime="2021-04-21T23:58:32+08:00">2021-04-21</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-04-29 00:50:14" itemprop="dateModified" datetime="2021-04-29T00:50:14+08:00">2021-04-29</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Signal/" itemprop="url" rel="index"><span itemprop="name">Signal</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p><a target="_blank" rel="noopener" href="http://www.learningaboutelectronics.com/Articles/What-is-a-bypass-capacitor.html">learningaboutelectronics.com</a></p>
-<h1 id="What-is-a-Bypass-Capacitor"><a href="#What-is-a-Bypass-Capacitor" class="headerlink" title="What is a Bypass Capacitor?"></a>What is a Bypass Capacitor?</h1><p><img src="http://www.learningaboutelectronics.com/images/Bypass-capacitor.png" alt="Bypass capacitor"></p>
-<p>A bypass capacitor is a capacitor that shorts AC signals to ground, so  that any AC noise that may be  present on a DC signal is removed, producing a much cleaner and pure DC signal.</p>
-<p>A bypass capacitor essentially bypasses  AC noise that may be on a DC signal, filtering out the AC, so that a clean, pure DC signal goes through without any AC ripple. </p>
-<p>For example, you may want a pure DC signal from a power source. </p>
-<p>Below is a transistor circuit. A transistor is an active device, so in order to work, it needs DC power. This power source is  VCC. In this case, VCC equals 15 volts. </p>
-<p><img src="http://www.learningaboutelectronics.com/images/DC-power-source-transistor.png" alt="DC Power Source for Transistor"></p>
-<p>This 15 volts provides power to the transistor so that the transistor can  amplify signals. We want this signal to be as purely DC as possible. Although we obtain our DC voltage, VCC, from a DC power  source such as a power supply, the voltage isn’t always purely DC. In  fact, many times the  voltage is very noisy and contains a lot of AC ripple on it, especially  at the 60Hz frequency because this is the frequency at which AC signals  run in many countries. </p>
-<p>So although we want a pure DC signal, such as below:</p>
-<p><img src="http://www.learningaboutelectronics.com/images/Pure-DC-voltage.png" alt="Pure DC Voltage"></p>
-<p>Many times, we get a noisy signal that looks like:</p>
-<p><img src="http://www.learningaboutelectronics.com/images/Noisy-dc-signal.png" alt="Noisy DC Voltage Signal"></p>
-<p>A DC signal such as this is actually very common. This is undesired  because it adds noise to the transistor circuit. Therefore, this  noisy DC signal will be imposed on the AC signal. So the AC signal which may have music or some type of recording will now have much more noise. </p>
-<p>This noise which is on the signal is AC ripple. Many  times when using a DC power supply connected to an AC power outlet, it  will  have some of the AC noise transfer to the DC power voltage. AC ripple  can also appear from other sources, so even batteries can produce noise. </p>
-<p>To eliminate this AC ripple, we use a bypass  capacitor. So our transistor circuit above will have a bypass capacitor  added to it:</p>
-<p><img src="http://www.learningaboutelectronics.com/images/Bypass-capacitor-transistor-circuit.png" alt="Bypass Capacitor for a Transistor Circuit"></p>
-<p>A capacitor is a device that offers a tremendously high resistance for  signals of low frequencies. Therefore, signals at low frequencies will  not go through them. This is because  signals (current) always takes the path of least resistance. Therefore,  they will instead go through the resistor, RE. Remember, again, this is for low frequency signals, which is  basically DC signals. </p>
-<p>However, capacitors offer much less resistance at higher frequencies (AC signals). So AC signals will go through the  capacitor and then to gorund. Therefore, DC signals will go  through the resistor, RE, while AC signals will go  through the capacitor, getting shunted to ground. So AC signals get  shunted to ground. This is how we have a clean DC signal  across our circuit, while AC noise imposed on it is bypassed to ground. </p>
-<p><img src="http://www.learningaboutelectronics.com/images/How-a-bypass-capacitor-works.png" alt="How a Bypass Capacitor Works"></p>
-<p>So a bypass capacitor blocks the DC from entering it by the great  resistance it offers to the signal but accepts the AC noise that may be  on the DC line and shunts or bypasses it to ground.  This is how bypass capacitors work.</p>
-<h1 id="How-to-Choose-the-Value-of-the-Bypass-Capacitor"><a href="#How-to-Choose-the-Value-of-the-Bypass-Capacitor" class="headerlink" title="How to Choose the Value of the Bypass Capacitor"></a>How to Choose the Value of the Bypass Capacitor</h1><p>Now that you know conceptually what a bypass capacitor is, the next step is to know how to select the value of the  bypass capacitor. </p>
-<p>And selecting the value is pretty straightforward. </p>
-<p>The value of the bypass capacitor should be at least 1/10th of the resistance across the emitter resistance,  RE at the lowest frequency intended to be bypassed.</p>
-<p>Because capacitors are reactive devices, they have different resistances to signals based on the signal’s frequency.  This is referred to as the capacitor’s reactance, which can be seen as the resistance it offers. We want the capacitor to have  1/10th of the resistance to the flow of current than what the resistor offers for the frequency signal that we want to bypass. </p>
-<p>If you visualize the current moving through the transistor, it can take one of 2 paths once it passes the collector and  moves through the emitter. Current can either go the resistor, RE or current can flow through the bypass capacitor.  Current always takes the path of least resistance. Therefore, current  will take the path of the lower resistance.  This is why you want  the value of the resistance of the bypass capacitor to be at least  1/10th the value of the emitter resistor or, even better, less than  one-tenth. We want the AC current to flow through the least resistance  path, which is the bypass capacitor if the correct value is  chosen. </p>
-<p>However, DC signals do not see it as AC. To DC, the capacitor has infinite resistance.  So DC will automatically go through the RE resistor, which offers lower resistance by far to the infinite resistance  of the capacitor. </p>
-<p>AC, however, does not see infinite resistance for the capacitor. If we choose the value correctly for the capacitor,  we can make the capacitor a much lower-resistance path to ground, thus shorting out the AC signal to ground. </p>
-<p>So let’s go over a practical example of how we would select the bypass capacitor value.</p>
-<p>Let’s say we want to bypass the lowest possible frequency of 50Hz, because the frequency of AC voltages worldwide are 50-60Hz. Therefore, this frequency can be a very problematic because often there is AC ripple at this frequency. </p>
-<p>Remember, when we said we bias the value of the bypass capacitor based on the lowest frequency that we want to bypass.  So by selecting the frequency of 50Hz, this blocks frequencies from 50Hz and higher; so it covers 60Hz. As frequency of an AC signal  increases, the resistance of the capacitor decreases and decreases with  each increase. Therefore, all the frequencies above the  frequency value that we choose get bypassed easier and easier. We’ll  demonstrate this all mathematically. </p>
-<p>So we decided we want to bypass AC signals 50Hz or higher to ground. </p>
-<p>The typical value of an emitter resistor is 400-500‎Ω. The resistance is kept low so that gain on the transistor isn’t  lowered too much. </p>
-<p>So let’s say we choose an emitter resistor of 470‎Ω. </p>
-<p>This means that we want the reactance of the capacitor to be one-tenth of 470‎Ω or less, which is 47‎Ω or lower.  So this is our target. </p>
-<p>The formula for the reactance of a capacitor is, XC= 1/2πfc= 1/2(3.14)(50Hz)(C)=47Ω. Solving for the  capacitance, C, we get the value of approximately 67μF. So we need a  capacitor of at least 67μF to get a resistance of one-tenth  the value of 470Ω resistor. </p>
-<p>Since a 67μF capacitor isn’t readily available, we can round up to 100μF, which is readily available and easy to obtain.  This is even better, because with a larger capacitance, the capacitor  offers even less resistance to the AC signal. If we plug a  100μF capacitor into the same capacitor reactance formula, we get XC= 1/2πfc= 1/2(3.14)(50Hz)(100μF)=31.8Ω. This is much  lower than 1/10 of the 470Ω resistor that we have in parallel. So it  will act effectively to short all AC signals 50Hz or higher  to ground to clean up the DC signal. </p>
-<p>Even if you wanted, you could increase the  capacitance even more to allow for less AC noise on the signal. But a  lot  of times, this will not be done for cost and size constraints reasons.  The larger the size a capacitor is, the more it costs per unit. Also the larger the size of a capacitor, the larger physically is. Therefore, if a company is designing a product, the size of the capacitor could be a problem if there are size constraint issues. The way things are going in electronics, companies want  products to be as small and concise as possible. So due to reasons such  as these, larger value capacitors won’t always be chosen, but  theoretically, they would increase the purity of the DC signal, by  allowing more AC to ground. </p>
-<p>So again, this is a summary of what a bypass capacitor is and how to select the value of them based on the lowest  AC signal desired to be filtered out and the value of the resistance in parallel with the capacitor. </p>
-<p>You can check out our <a target="_blank" rel="noopener" href="http://www.learningaboutelectronics.com/Articles/Bypass-capacitor-calculator.php">bypass capacitor calculator</a> to calculate  the value of a bypass capacitor based on the input AC signal frequency and the value of the resistor in parallel. </p>
-<p>Related Resources</p>
-<p>​          </p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 <script src="/js/comments.js"></script>
 </div>
