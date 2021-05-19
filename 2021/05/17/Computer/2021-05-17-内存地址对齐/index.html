@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="next-config" data-name="main" type="application/json">{&quot;hostname&quot;:&quot;islet.space&quot;,&quot;root&quot;:&quot;&#x2F;&quot;,&quot;images&quot;:&quot;&#x2F;images&quot;,&quot;scheme&quot;:&quot;Gemini&quot;,&quot;version&quot;:&quot;8.3.0&quot;,&quot;exturl&quot;:false,&quot;sidebar&quot;:{&quot;position&quot;:&quot;left&quot;,&quot;display&quot;:&quot;post&quot;,&quot;padding&quot;:18,&quot;offset&quot;:12},&quot;copycode&quot;:false,&quot;bookmark&quot;:{&quot;enable&quot;:false,&quot;color&quot;:&quot;#222&quot;,&quot;save&quot;:&quot;auto&quot;},&quot;fancybox&quot;:false,&quot;mediumzoom&quot;:false,&quot;lazyload&quot;:false,&quot;pangu&quot;:false,&quot;comments&quot;:{&quot;style&quot;:&quot;tabs&quot;,&quot;active&quot;:null,&quot;storage&quot;:true,&quot;lazyload&quot;:false,&quot;nav&quot;:null},&quot;motion&quot;:{&quot;enable&quot;:true,&quot;async&quot;:false,&quot;transition&quot;:{&quot;post_block&quot;:&quot;fadeIn&quot;,&quot;post_header&quot;:&quot;fadeInDown&quot;,&quot;post_body&quot;:&quot;fadeInDown&quot;,&quot;coll_header&quot;:&quot;fadeInLeft&quot;,&quot;sidebar&quot;:&quot;fadeInUp&quot;}},&quot;prism&quot;:false,&quot;i18n&quot;:{&quot;placeholder&quot;:&quot;Searching...&quot;,&quot;empty&quot;:&quot;We didn&#39;t find any results for the search: ${query}&quot;,&quot;hits_time&quot;:&quot;${hits} results found in ${time} ms&quot;,&quot;hits&quot;:&quot;${hits} results found&quot;}}</script>
+<meta name="description" content="cnblogs.com 对齐定义内存地址对齐，是一种在计算机内存中排列数据、访问数据的一种方式。 对齐分类内存地址对齐包含了两种相互独立又相互关联的部分：基本数据对齐 和 结构体数据对齐。 当今的计算机在计算机内存中读写数据时都是 按字(word)大小块来进行操作 的。在32位系统中，数据总线宽度为32位，每次能读取4bytes，地址总线宽度为32，因此最大的寻址空间为2^32^bits&#x3D;4GB，">
+<meta property="og:type" content="article">
+<meta property="og:title" content="内存地址对齐">
+<meta property="og:url" content="http://islet.space/2021/05/17/Computer/2021-05-17-%E5%86%85%E5%AD%98%E5%9C%B0%E5%9D%80%E5%AF%B9%E9%BD%90/index.html">
+<meta property="og:site_name" content="Coder的孤岛">
+<meta property="og:description" content="cnblogs.com 对齐定义内存地址对齐，是一种在计算机内存中排列数据、访问数据的一种方式。 对齐分类内存地址对齐包含了两种相互独立又相互关联的部分：基本数据对齐 和 结构体数据对齐。 当今的计算机在计算机内存中读写数据时都是 按字(word)大小块来进行操作 的。在32位系统中，数据总线宽度为32位，每次能读取4bytes，地址总线宽度为32，因此最大的寻址空间为2^32^bits&#x3D;4GB，">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://pic.islet.space/2021/05/1231881-20190917224404418-1265388453.png">
+<meta property="og:image" content="https://pic.islet.space/2021/05/1231881-20190917224631323-2009020349.png">
+<meta property="og:image" content="https://pic.islet.space/2021/05/1231881-20190917224653471-2076639760.png">
+<meta property="og:image" content="https://common.cnblogs.com/images/copycode.gif">
+<meta property="og:image" content="https://common.cnblogs.com/images/copycode.gif">
+<meta property="og:image" content="https://pic.islet.space/2021/05/1231881-20190917225512389-1581088258.png">
+<meta property="og:image" content="https://pic.islet.space/2021/05/1231881-20190917225534651-684741719.png">
+<meta property="og:image" content="https://pic.islet.space/2021/05/1231881-20190917225553591-1418591054.png">
+<meta property="article:published_time" content="2021-05-17T12:10:00.000Z">
+<meta property="article:modified_time" content="2021-05-17T12:32:07.926Z">
+<meta property="article:author" content="Liewzheng">
+<meta property="article:tag" content="address">
+<meta property="article:tag" content="align">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://pic.islet.space/2021/05/1231881-20190917224404418-1265388453.png">
+
+
+<link rel="canonical" href="http://islet.space/2021/05/17/Computer/2021-05-17-%E5%86%85%E5%AD%98%E5%9C%B0%E5%9D%80%E5%AF%B9%E9%BD%90/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{&quot;sidebar&quot;:&quot;&quot;,&quot;isHome&quot;:false,&quot;isPost&quot;:true,&quot;lang&quot;:&quot;en&quot;,&quot;comments&quot;:true,&quot;permalink&quot;:&quot;http:&#x2F;&#x2F;islet.space&#x2F;2021&#x2F;05&#x2F;17&#x2F;Computer&#x2F;2021-05-17-%E5%86%85%E5%AD%98%E5%9C%B0%E5%9D%80%E5%AF%B9%E9%BD%90&#x2F;&quot;,&quot;path&quot;:&quot;2021&#x2F;05&#x2F;17&#x2F;Computer&#x2F;2021-05-17-内存地址对齐&#x2F;&quot;,&quot;title&quot;:&quot;内存地址对齐&quot;}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">&quot;&quot;</script>
+<title>内存地址对齐 | Coder的孤岛</title><script src="/js/config.js"></script>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Coder的孤岛</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">islet of the coder</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-文章"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>文章</a></li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AF%B9%E9%BD%90%E5%AE%9A%E4%B9%89"><span class="nav-number">1.</span> <span class="nav-text">对齐定义</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AF%B9%E9%BD%90%E5%88%86%E7%B1%BB"><span class="nav-number">2.</span> <span class="nav-text">对齐分类</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E6%95%B0%E6%8D%AE%E5%AF%B9%E9%BD%90%E7%A4%BA%E4%BE%8B"><span class="nav-number">2.1.</span> <span class="nav-text">基本数据对齐示例</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%93%E6%9E%84%E4%BD%93%E5%AF%B9%E9%BD%90%E7%A4%BA%E4%BE%8B"><span class="nav-number">2.2.</span> <span class="nav-text">结构体对齐示例</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9D%9E32%E4%BD%8D%E6%95%B0%E6%8D%AE%E9%9D%9E%E5%AF%B9%E9%BD%90%E4%BC%A0%E8%BE%93%E7%A4%BA%E4%BE%8B"><span class="nav-number">2.3.</span> <span class="nav-text">非32位数据非对齐传输示例</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AF%B9%E9%BD%90%E5%8E%9F%E5%88%99"><span class="nav-number">3.</span> <span class="nav-text">对齐原则</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E6%95%B0%E6%8D%AE%E5%AF%B9%E9%BD%90%E4%B8%8E%E7%BB%93%E6%9E%84%E8%A1%A5%E9%BD%90%E7%A4%BA%E4%BE%8B"><span class="nav-number">3.1.</span> <span class="nav-text">基本数据对齐与结构补齐示例</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E9%93%BE%E6%8E%A5"><span class="nav-number">4.</span> <span class="nav-text">参考链接</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Liewzheng</p>
+  <div class="site-description" itemprop="description">笔记分享的旮旯孤岛而已</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">54</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">16</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">102</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="mailto:liewzheng@qq.com" title="E-Mail → mailto:liewzheng@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://islet.space/2021/05/17/Computer/2021-05-17-%E5%86%85%E5%AD%98%E5%9C%B0%E5%9D%80%E5%AF%B9%E9%BD%90/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Liewzheng">
+      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coder的孤岛">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          内存地址对齐
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2021-05-17 20:10:00 / Modified: 20:32:07" itemprop="dateCreated datePublished" datetime="2021-05-17T20:10:00+08:00">2021-05-17</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Computer/" itemprop="url" rel="index"><span itemprop="name">Computer</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/mhq-martin/p/11537873.html">cnblogs.com</a></p>
+<h1 id="对齐定义"><a href="#对齐定义" class="headerlink" title="对齐定义"></a>对齐定义</h1><p>内存地址对齐，是一种在计算机内存中排列数据、访问数据的一种方式。</p>
+<h1 id="对齐分类"><a href="#对齐分类" class="headerlink" title="对齐分类"></a>对齐分类</h1><p>内存地址对齐包含了两种相互独立又相互关联的部分：<strong>基本数据对齐</strong> 和 <strong>结构体数据对齐</strong>。</p>
+<p>当今的计算机在计算机内存中读写数据时都是 <mark>按字(word)大小块来进行操作</mark> 的。在32位系统中，数据总线宽度为32位，每次能读取4bytes，地址总线宽度为32，因此最大的寻址空间为2^32^bits=4GB，但是最低2位A[0]、A[1]是不用于寻址，A[2-31]才能存储器相连，因此只能访问4的倍数地址空间，但是总的寻址空间还是2^30^bits字长=4GB，因此在 <mark>内存中所有存放的基本类型数据的首地址的最低两位都是0，除结构体中的成员变量</mark> 。</p>
+<blockquote>
+<p>基本类型数据对齐就是数据在内存中的 <mark>偏移地址必须等于一个字的倍数</mark>，按这种存储数据的方式，可以提升系统在读取数据时的性能。<mark>为了对齐数据，可能必须在上一个数据结束和下一个数据开始的地方插入一些没有用处字节，这就是结构体数据对齐</mark>。</p>
+</blockquote>
+<h2 id="基本数据对齐示例"><a href="#基本数据对齐示例" class="headerlink" title="基本数据对齐示例"></a>基本数据对齐示例</h2><p>例如，假设计算机的字大小为4bytes，因此变量在内存中的首地址都是满足4地址对齐，CPU只能对4的倍数的地址进行读取，而每次能读取4个字节大小的数据。</p>
+<p>假设有一个整型的数据a的首地址不是4的倍数(如下图所示)，不妨设为 <code>0X00FFFFF3</code>，则该整型数据存储在地址范围为<code>0X00FFFFF3</code> ~`0X00FFFFF6<code>的存储空间中，而CPU每次只能对4的倍数内存地址进行读取，因此想读取a的数据，CPU要分别在 </code>0X00FFFFF0<code>和</code>0X00FFFFF4` 进行两次内存读取，而且还要对两次读取的数据进行处理才能得到a的数据，而一个程序的瓶颈往往不是CPU的速度，而是取决于内存的带宽，因为CPU得处理速度要远大于从内存中读取数据的速度，因此减少对内存空间的访问是提高程序性能的关键。从上例可以看出，采取内存地址对齐策略是提高程序性能的关键。</p>
+<p><mark>也就是说，不对齐内存地址的话会造成CPU对内存中数据访问范围的增大，造成性能浪费。</mark></p>
+<h2 id="结构体对齐示例"><a href="#结构体对齐示例" class="headerlink" title="结构体对齐示例"></a>结构体对齐示例</h2><p>首先我们先看看下面的C语言的结构体：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">typedef struct MemAlign</span><br><span class="line">&#123;</span><br><span class="line">    int a;</span><br><span class="line">    char b[3];</span><br><span class="line">    int c;</span><br><span class="line">&#125;MemAlign;</span><br></pre></td></tr></table></figure>
+
+<p>以上这个结构体占用内存多少空间呢？</p>
+<p>也许你会说，这个简单，计算每个类型的大小，将它们相加就行了，以32bit平台为例，int类型占4bytes，char占用1byte，所以：4 + 3 + 4 =  11bytes，那么这个结构体一共占用11字节空间。</p>
+<p>实际上用sizeof运算符来求出这个结构体占用内存空间大小，sizeof(MemAlign)，出乎意料的是，结果居然为12？</p>
+<p>是因为这个结构体被优化了，这个优化有个另外一个名字叫“对齐”，那么这个对齐到底做了什么样的优化呢。</p>
+<p><img src="https://pic.islet.space/2021/05/1231881-20190917224404418-1265388453.png" alt="img"></p>
+<p>相信学过汇编的朋友都很熟悉这张图，这张图就是CPU与内存如何进行数据交换的模型，其中，左边蓝色的方框是CPU，右边绿色的方框是内存，内存上面的0～3是内存地址。</p>
+<p>上图以32位CPU作为代表，<mark>32位CPU是以双字（DWORD）为单位进行数据传输的</mark>，因此 <mark>在32位系统中，无论是8位、16位还是32位都是以双字进行数据传输</mark> 。</p>
+<h2 id="非32位数据非对齐传输示例"><a href="#非32位数据非对齐传输示例" class="headerlink" title="非32位数据非对齐传输示例"></a>非32位数据非对齐传输示例</h2><p>8位或16位一样可以传输，但是事情并非像我们想象的那么简单。</p>
+<p>一个int类型4字节的数据如果放在上图内存地址1开始的位置，那么这个数据占用的内存地址为1～4，那么这个数据就被分为了2个部分，一个部分在地址0～3中，另外一部分在地址4～7中，又由于32位CPU以双字进行传输，所以，CPU会分2次进行读取，一次先读取地址0～3中内容，再一次读取地址4～7中数据，最后CPU提取并组合出正确的int类型数据，舍弃掉无关数据。那么反过来，如果我们把这个int类型4字节的数据放在上图从地址0开始的位置会怎样呢？读到这里，也许你明白了，CPU只要进行一次读取就可以得到这个int类型数据了。没错，就是这样，这次CPU只用了一个周期就得到了数据，由此可见，对内存数据的摆放是多么重要啊，<mark>摆放正确位置可以减少CPU的使用资源</mark>。</p>
+<h1 id="对齐原则"><a href="#对齐原则" class="headerlink" title="对齐原则"></a>对齐原则</h1><ul>
+<li><p>第一个成员的首地址为0</p>
+</li>
+<li><p>每个成员的首地址是自身大小的整数倍</p>
+<ul>
+<li>以4bytes对齐为例，如果自身大小大于4bytes，都以4bytes整数倍为基准对齐。</li>
+</ul>
+</li>
+<li><p>最后以结构总体对齐。</p>
+<ul>
+<li>以4字节bytes为例，取结构体中最大成员类型倍数，如果超过4字节，都以4字节整数倍为基准对齐。（其中这一条还有个名字叫：“补齐”，补齐的目的就是多个结构变量挨着摆放的时候也满足对齐的要求。）</li>
+</ul>
+</li>
+</ul>
+<h2 id="基本数据对齐与结构补齐示例"><a href="#基本数据对齐与结构补齐示例" class="headerlink" title="基本数据对齐与结构补齐示例"></a>基本数据对齐与结构补齐示例</h2><p>上述的三原则听起来还是比较抽象，那么接下来我们通过一个例子来加深对内存对齐概念的理解，下面是一个结构体，我们动手算出下面结构体一共占用多少内存？假设我们以32位平台并且以4字节对齐方式：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">#pragma pack(4)</span><br><span class="line">typedef struct MemAlign</span><br><span class="line">&#123;</span><br><span class="line">    char a[18];</span><br><span class="line">    double b;    </span><br><span class="line">    char c;</span><br><span class="line">    int d;    </span><br><span class="line">    short e;    </span><br><span class="line">&#125;MemAlign;</span><br></pre></td></tr></table></figure>
+
+<p>下图为对齐后结构如下：</p>
+<p><img src="https://pic.islet.space/2021/05/1231881-20190917224631323-2009020349.png" alt="img"></p>
+<p>我们就以这个图来讲解是如何对齐的：</p>
+<p>第一个成员（char a[18]）：首先，假设我们把它放到内存开始地址为0的位置，由于第一个成员占18个字节，所以第一个成员占用内存地址范围为0～18。</p>
+<p>第二个成员（double b）：由于double类型占8字节，又因为8字节大于4字节，所以就以4字节对齐为基准。由于第一个成员结束地址为18，那么地址18并不是4的整数倍，我们需要再加2个字节，也就是从地址20开始摆放第二个成员。</p>
+<p>第三个成员（char c）：由于char类型占1字节，任意地址是1字节的整数倍，所以我们就直接将其摆放到紧接第二个成员之后即可。</p>
+<p>第四个成员（int d）：由于int类型占4字节，但是地址29并不是4的整数倍，所以我们需要再加3个字节，也就是从地址32开始摆放这个成员。</p>
+<p>第五个成员（short e）：由于short类型占2字节，地址36正好是2的整数倍，这样我们就可以直接摆放，无需填充字节,紧跟其后即可。</p>
+<p>这样我们内存对齐就完成了。但是离成功还差那么一步，那是什么呢？对，是对整个结构体补齐，接下来我们就补齐整个结构体。那么，先让我们回顾一下补齐的原则：“以4字节对齐为例，取结构体中最大成员类型倍数，如果超过4字节，都以4字节整数倍为基准对齐。”在这个结构体中最大类型为double类型（占8字节），又由于8字节大于4字  节，所以我们还是以4字节补齐为基准，整个结构体结束地址为38，而地址38并不是4的整数倍，所以我们还需要加额外2个字节来填充结构体，如下图红色的就是补齐出来的空间：</p>
+<p><img src="https://pic.islet.space/2021/05/1231881-20190917224653471-2076639760.png" alt="img"></p>
+<p> 到此为止，我们内存对齐与补齐就完毕了！接下来我们用实验来证明真理，程序如下：</p>
+<p><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;stdio.h&gt;</span><br><span class="line">#include &lt;memory.h&gt;</span><br><span class="line"> </span><br><span class="line">&#x2F;&#x2F; 由于VS2010默认是8字节对齐，我们</span><br><span class="line">&#x2F;&#x2F; 通过预编译来通知编译器我们以4字节对齐</span><br><span class="line">#pragma pack(4)</span><br><span class="line"> </span><br><span class="line">&#x2F;&#x2F; 用于测试的结构体</span><br><span class="line">typedef struct MemAlign</span><br><span class="line">&#123;</span><br><span class="line">    char a[18];    &#x2F;&#x2F; 18 bytes</span><br><span class="line">    double b;    &#x2F;&#x2F; 08 bytes    </span><br><span class="line">    char c;        &#x2F;&#x2F; 01 bytes</span><br><span class="line">    int d;        &#x2F;&#x2F; 04 bytes</span><br><span class="line">    short e;    &#x2F;&#x2F; 02 bytes</span><br><span class="line">&#125;MemAlign;</span><br><span class="line"> </span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    &#x2F;&#x2F; 定义一个结构体变量</span><br><span class="line">    MemAlign m;</span><br><span class="line">    &#x2F;&#x2F; 定义个以指向结构体指针</span><br><span class="line">    MemAlign *p &#x3D; &amp;m;</span><br><span class="line">    &#x2F;&#x2F; 依次对各个成员进行填充，这样我们可以</span><br><span class="line">    &#x2F;&#x2F; 动态观察内存变化情况</span><br><span class="line">    memset( &amp;m.a, 0x11, sizeof(m.a) );</span><br><span class="line">    memset( &amp;m.b, 0x22, sizeof(m.b) );</span><br><span class="line">    memset( &amp;m.c, 0x33, sizeof(m.c) );</span><br><span class="line">    memset( &amp;m.d, 0x44, sizeof(m.d) );</span><br><span class="line">    memset( &amp;m.e, 0x55, sizeof(m.e) );</span><br><span class="line">    &#x2F;&#x2F; 由于有补齐原因，所以我们需要对整个</span><br><span class="line">    &#x2F;&#x2F; 结构体进行填充，补齐对齐剩下的字节</span><br><span class="line">    &#x2F;&#x2F; 以便我们可以观察到变化</span><br><span class="line">    memset( &amp;m, 0x66, sizeof(m) );</span><br><span class="line">    &#x2F;&#x2F; 输出结构体大小</span><br><span class="line">    printf( &quot;sizeof(MemAlign) &#x3D; %d&quot;, sizeof(m) );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"></p>
+<p>程序运行过程中，查看内存如下：</p>
+<p><img src="https://pic.islet.space/2021/05/1231881-20190917225512389-1581088258.png" alt="img"></p>
+<p>其中，各种颜色带下划线的代表各个成员变量，蓝色方框的代表为内存对齐时候填补的多余字节，由于这里看不到补齐效果，我们接下来看下图，下图篮框包围的字节就是与上图的交集以外的部分就是补齐所填充的字节。</p>
+<p><img src="https://pic.islet.space/2021/05/1231881-20190917225534651-684741719.png" alt="img"></p>
+<p> 在最后，我在谈一谈关于补齐的作用，<mark>补齐其实就是为了让这个结构体定义的数组变量时候，数组内部，也同样满足内存对齐的要求</mark>，为了更好的理解这点，我做了一个跟本例子相对照的图：</p>
+<p><img src="https://pic.islet.space/2021/05/1231881-20190917225553591-1418591054.png" alt="img"></p>
+<h1 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h1><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/donkeylong/article/details/4909720">https://blog.csdn.net/donkeylong/article/details/4909720</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/cyousui/article/details/17655051">https://blog.csdn.net/cyousui/article/details/17655051</a></p>
+<p>​          </p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/address/" rel="tag"># address</a>
+              <a href="/tags/align/" rel="tag"># align</a>
+          </div>
+
+    <div id="vcomment" style="margin: 20px 0 0 0"></div>
+    <script>
+        new Valine({
+            el: '#vcomment' ,
+            appId: 'vRGM12EcYxDSM2lat5qjjSeY-gzGzoHsz',
+            appKey: 'WBgAb6NTAFQ7DYtgH0uOPNNh'
+        });
+    </script>
+</body>
+
+
+
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/05/17/Computer/2021-05-17-%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80/" rel="prev" title="汇编语言">
+                  <i class="fa fa-chevron-left"></i> 汇编语言
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/05/19/Web/2021-05-19-What-is-the-meaning-of--savefor-NPM-install-/" rel="next" title="What is the meaning of '-save' for NPM install ?">
+                  What is the meaning of '-save' for NPM install ? <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+<script src="/js/comments.js"></script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">粤ICP备19004822号 </a>
+  </div>
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Liewzheng</span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
