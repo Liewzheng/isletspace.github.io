@@ -471,99 +471,6 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://islet.space/2019/01/14/Others/%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6/%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6%20%E6%9C%AF%E8%AF%AD%E6%95%B4%E7%90%86/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Liewzheng">
-      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Coder的孤岛">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2019/01/14/Others/%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6/%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6%20%E6%9C%AF%E8%AF%AD%E6%95%B4%E7%90%86/" class="post-title-link" itemprop="url">版本控制术语整理</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
-    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2019-01-14 15:30:00" itemprop="dateCreated datePublished" datetime="2019-01-14T15:30:00+08:00">2019-01-14</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2019-01-24 16:19:44" itemprop="dateModified" datetime="2019-01-24T16:19:44+08:00">2019-01-24</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/InternetOfThings/" itemprop="url" rel="index"><span itemprop="name">InternetOfThings</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>以下为本人在学习开发途中的一些关于版本控制的资料整理。</p>
-<h1 id="版本控制"><a href="#版本控制" class="headerlink" title="版本控制"></a>版本控制</h1><p>版本控制（Revision control）是维护工程蓝图的标准作法，能追踪工程蓝图从诞生一直到定案的过程。此外，版本控制也是一种软件工程技巧，借此能在软件开发的过程中，确保由不同人所编辑的同一程序文件都得到同步。</p>
-<h2 id="基线（Baseline）"><a href="#基线（Baseline）" class="headerlink" title="基线（Baseline）"></a>基线（Baseline）</h2><p>基线是软件文档或源码（或其它产出物）的一个稳定版本，它是进一步开发的基础。[1]</p>
-<h2 id="文件库（Repository）"><a href="#文件库（Repository）" class="headerlink" title="文件库（Repository）"></a>文件库（Repository）</h2><p>存储文件的新版本还有历史数据的地方，通常是在服务器上。有时候也叫Depot（像是在SVK、AccuRev还有Perforce中）</p>
-<h2 id="工作复本（Working-copy）"><a href="#工作复本（Working-copy）" class="headerlink" title="工作复本（Working copy）"></a>工作复本（Working copy）</h2><p>从文件库中取出一个本地端（客户端）的复制，针对一个特定的时间或是版本。所有在文件库中的文件更动，都是从一个工作版本中修改而来的，这也是这名称的由来。观念上，这是一个沙盒。</p>
-<h2 id="提交（Commit）"><a href="#提交（Commit）" class="headerlink" title="提交（Commit）"></a>提交（Commit）</h2><p>将本地端的修改送回档案库。（由版本控制软件处理“跟上次更动相比，哪个文件又被更动”的事）</p>
-<h2 id="变更（Change）"><a href="#变更（Change）" class="headerlink" title="变更（Change）"></a>变更（Change）</h2><p>对一份文件作的特定更动。</p>
-<h2 id="变更记录（Change-List）"><a href="#变更记录（Change-List）" class="headerlink" title="变更记录（Change List）"></a>变更记录（Change List）</h2><h2 id="取出（Check-Out）"><a href="#取出（Check-Out）" class="headerlink" title="取出（Check-Out）"></a>取出（Check-Out）</h2><p>从文件库取出文件到本地端（客户端）。</p>
-<h2 id="更新（Update）"><a href="#更新（Update）" class="headerlink" title="更新（Update）"></a>更新（Update）</h2><p>将文件库的修改送到本地端（与提交相反）</p>
-<h2 id="合并（Merge-Integration）"><a href="#合并（Merge-Integration）" class="headerlink" title="合并（Merge / Integration）"></a>合并（Merge / Integration）</h2><p>合并各个改变。</p>
-<h2 id="版次（Revision）"><a href="#版次（Revision）" class="headerlink" title="版次（Revision）"></a>版次（Revision）</h2><p>一个revision或version指的是一系列版本变迁的其中之一。</p>
-<h2 id="导入（Import）"><a href="#导入（Import）" class="headerlink" title="导入（Import）"></a>导入（Import）</h2><h2 id="导出（Export）"><a href="#导出（Export）" class="headerlink" title="导出（Export）"></a>导出（Export）</h2><h2 id="冲突（Conflict）"><a href="#冲突（Conflict）" class="headerlink" title="冲突（Conflict）"></a>冲突（Conflict）</h2><p>当两方更动同一份文件会发生冲突。</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
     <link itemprop="mainEntityOfPage" href="http://islet.space/2019/01/14/Hardware/ESP32/ESP32%E7%9B%B8%E5%85%B3%E6%9C%AF%E8%AF%AD%E6%95%B4%E7%90%86/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -642,6 +549,99 @@
 <li>《<a target="_blank" rel="noopener" href="http://www.warski.org/blog/2014/01/how-ibeacons-work/">How do iBeacons work?</a>》</li>
 <li>《<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/GPIO">GPIO</a>》</li>
 </ol>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://islet.space/2019/01/14/Others/%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6/%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6%20%E6%9C%AF%E8%AF%AD%E6%95%B4%E7%90%86/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Liewzheng">
+      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coder的孤岛">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2019/01/14/Others/%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6/%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6%20%E6%9C%AF%E8%AF%AD%E6%95%B4%E7%90%86/" class="post-title-link" itemprop="url">版本控制术语整理</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2019-01-14 15:30:00" itemprop="dateCreated datePublished" datetime="2019-01-14T15:30:00+08:00">2019-01-14</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2019-01-24 16:19:44" itemprop="dateModified" datetime="2019-01-24T16:19:44+08:00">2019-01-24</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/InternetOfThings/" itemprop="url" rel="index"><span itemprop="name">InternetOfThings</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>以下为本人在学习开发途中的一些关于版本控制的资料整理。</p>
+<h1 id="版本控制"><a href="#版本控制" class="headerlink" title="版本控制"></a>版本控制</h1><p>版本控制（Revision control）是维护工程蓝图的标准作法，能追踪工程蓝图从诞生一直到定案的过程。此外，版本控制也是一种软件工程技巧，借此能在软件开发的过程中，确保由不同人所编辑的同一程序文件都得到同步。</p>
+<h2 id="基线（Baseline）"><a href="#基线（Baseline）" class="headerlink" title="基线（Baseline）"></a>基线（Baseline）</h2><p>基线是软件文档或源码（或其它产出物）的一个稳定版本，它是进一步开发的基础。[1]</p>
+<h2 id="文件库（Repository）"><a href="#文件库（Repository）" class="headerlink" title="文件库（Repository）"></a>文件库（Repository）</h2><p>存储文件的新版本还有历史数据的地方，通常是在服务器上。有时候也叫Depot（像是在SVK、AccuRev还有Perforce中）</p>
+<h2 id="工作复本（Working-copy）"><a href="#工作复本（Working-copy）" class="headerlink" title="工作复本（Working copy）"></a>工作复本（Working copy）</h2><p>从文件库中取出一个本地端（客户端）的复制，针对一个特定的时间或是版本。所有在文件库中的文件更动，都是从一个工作版本中修改而来的，这也是这名称的由来。观念上，这是一个沙盒。</p>
+<h2 id="提交（Commit）"><a href="#提交（Commit）" class="headerlink" title="提交（Commit）"></a>提交（Commit）</h2><p>将本地端的修改送回档案库。（由版本控制软件处理“跟上次更动相比，哪个文件又被更动”的事）</p>
+<h2 id="变更（Change）"><a href="#变更（Change）" class="headerlink" title="变更（Change）"></a>变更（Change）</h2><p>对一份文件作的特定更动。</p>
+<h2 id="变更记录（Change-List）"><a href="#变更记录（Change-List）" class="headerlink" title="变更记录（Change List）"></a>变更记录（Change List）</h2><h2 id="取出（Check-Out）"><a href="#取出（Check-Out）" class="headerlink" title="取出（Check-Out）"></a>取出（Check-Out）</h2><p>从文件库取出文件到本地端（客户端）。</p>
+<h2 id="更新（Update）"><a href="#更新（Update）" class="headerlink" title="更新（Update）"></a>更新（Update）</h2><p>将文件库的修改送到本地端（与提交相反）</p>
+<h2 id="合并（Merge-Integration）"><a href="#合并（Merge-Integration）" class="headerlink" title="合并（Merge / Integration）"></a>合并（Merge / Integration）</h2><p>合并各个改变。</p>
+<h2 id="版次（Revision）"><a href="#版次（Revision）" class="headerlink" title="版次（Revision）"></a>版次（Revision）</h2><p>一个revision或version指的是一系列版本变迁的其中之一。</p>
+<h2 id="导入（Import）"><a href="#导入（Import）" class="headerlink" title="导入（Import）"></a>导入（Import）</h2><h2 id="导出（Export）"><a href="#导出（Export）" class="headerlink" title="导出（Export）"></a>导出（Export）</h2><h2 id="冲突（Conflict）"><a href="#冲突（Conflict）" class="headerlink" title="冲突（Conflict）"></a>冲突（Conflict）</h2><p>当两方更动同一份文件会发生冲突。</p>
 
       
     </div>

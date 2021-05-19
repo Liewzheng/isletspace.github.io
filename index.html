@@ -476,7 +476,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-05-18 01:17:11" itemprop="dateModified" datetime="2021-05-18T01:17:11+08:00">2021-05-18</time>
+        <time title="Modified: 2021-05-20 01:29:16" itemprop="dateModified" datetime="2021-05-20T01:29:16+08:00">2021-05-20</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -498,7 +498,7 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h2 id="X86指令集介绍"><a href="#X86指令集介绍" class="headerlink" title="X86指令集介绍"></a>X86指令集介绍</h2><h3 id="X86指令集的基本特色"><a href="#X86指令集的基本特色" class="headerlink" title="X86指令集的基本特色"></a>X86指令集的基本特色</h3><ul>
+          <h1 id="X86指令集介绍"><a href="#X86指令集介绍" class="headerlink" title="X86指令集介绍"></a>X86指令集介绍</h1><h2 id="X86指令集的基本特色"><a href="#X86指令集的基本特色" class="headerlink" title="X86指令集的基本特色"></a>X86指令集的基本特色</h2><ul>
 <li>向下兼容</li>
 <li>变长指令<ul>
 <li>1-15字节，多为2-3字节长度</li>
@@ -507,7 +507,7 @@
 <li>多种寻址方式（可访问不对齐内存地址）</li>
 </ul>
 <p><img src="https://pic.islet.space/2021/05/image-20210517203416861.png" alt="image-20210517203416861"></p>
-<h3 id="X86寄存器"><a href="#X86寄存器" class="headerlink" title="X86寄存器"></a>X86寄存器</h3><p>指令集的通用寄存器个数有限</p>
+<h2 id="X86寄存器"><a href="#X86寄存器" class="headerlink" title="X86寄存器"></a>X86寄存器</h2><p>指令集的通用寄存器个数有限</p>
 <blockquote>
 <p>X86-32下指令集通用寄存器数量为8个，x86-64下为16个</p>
 </blockquote>
@@ -515,6 +515,69 @@
 <p><img src="https://pic.islet.space/2021/05/image-20210517204354665.png" alt="image-20210517204354665"></p>
 <p><img src="https://pic.islet.space/2021/05/image-20210517204446891.png" alt="image-20210517204446891"></p>
 <p><em>源自 网络PDF</em>——<a target="_blank" rel="noopener" href="https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=&cad=rja&uact=8&ved=2ahUKEwimmc7O39DwAhV5yYsBHdS2CHMQFjAAegQIAxAD&url=http://images.china-pub.com/ebook4930001-4935000/4934543/ch02.pdf&usg=AOvVaw0yJuRWmzjtj41FR6ld_Vmm">X86处理器架构</a></p>
+<h1 id="SHARC汇编"><a href="#SHARC汇编" class="headerlink" title="SHARC汇编"></a>SHARC汇编</h1><p><a href="">《Assembler and Preprocessor Manual(including the ADSP-BFxxx, ADSP-21xxx, ADSP-TSxxx)》</a></p>
+<h2 id="VisualDSP"><a href="#VisualDSP" class="headerlink" title="VisualDSP++"></a>VisualDSP++</h2><p>以下是ADI官网对VisualDSP++（以下简称VDSP）的解释，本质上是个集成软件开发和调试环境（IDDE）。</p>
+<p><img src="https://pic.islet.space/2021/05/image-20210520005659254.png" alt="image-20210520005659254"></p>
+<p>汇编器的操作取决于两种类型的控制：汇编器指令和汇编器开关。</p>
+<blockquote>
+<p>Assembler operations depend on two types of controls: <strong>assembler directives</strong> and <strong>assembler switches</strong>.</p>
+</blockquote>
+<p>VDSP支持以下三种不同的汇编器：</p>
+<img src="https://pic.islet.space/2021/05/image-20210520010438229.png" alt="image-20210520010438229" style="zoom: 67%;" />
+
+
+
+<p>DSP汇编开发者需要先熟悉以下内容：</p>
+<blockquote>
+<ul>
+<li><p>“<em>Writing Assembly Programs</em>” on page 1-3</p>
+</li>
+<li><p> “<em>Using Assembler Support for C Structs</em>” on page 1-21</p>
+</li>
+<li><p> “<em>Preprocessing a Program</em>” on page 1-24</p>
+</li>
+<li><p>“<em>Using Assembler Feature Macros</em>” on page 1-25</p>
+</li>
+<li><p>“<em>Generating Make Dependencies</em>” on page 1-37</p>
+</li>
+<li><p>“<em>Reading a Listing File</em>” on page 1-38</p>
+</li>
+<li><p>“<em>Enabling Statistical Profiling for Assembly Functions</em>” on page 1-38</p>
+</li>
+<li><p>“*Specifying Assembler Options in VisualDSP++*” on page 1-173</p>
+</li>
+</ul>
+</blockquote>
+<h2 id="总览"><a href="#总览" class="headerlink" title="总览"></a>总览</h2><p>汇编器 将 <strong>汇编源(.asm)<strong>、</strong>数据(.dat)</strong> 和 <strong>头文件(.h)</strong> 三者整理成可执行可链接的格式（ELF），也就是一个标准的 **二进制文件(.doj)**。</p>
+<p>另外，汇编器还将生成一个 **列表文件(.lst)**，展示二进制文件和源文件之间的联系。</p>
+<img src="https://pic.islet.space/2021/05/image-20210520011656751.png" alt="image-20210520011656751" style="zoom:67%;" />
+
+<blockquote>
+<p>Figure 1-1 shows a graphical overview of the assembly process. The figure shows the preprocessor processing the assembly source (.asm) and header (.h) files.</p>
+<p>By default, the assembler processes an intermediate file to produce a binary object file (.doj) and an optional listing file (.lst). </p>
+</blockquote>
+<img src="https://pic.islet.space/2021/05/image-20210520012328329.png" alt="image-20210520012328329" style="zoom:67%;" />
+
+
+
+<h2 id="编写"><a href="#编写" class="headerlink" title="编写"></a>编写</h2><ul>
+<li><p>Assembler directives are coded in assembly source files. </p>
+</li>
+<li><p>The directives allow you to <strong>define variables</strong>, <strong>set up hardware features</strong>, and <strong>identify program sections</strong> for placement within processor memory. </p>
+</li>
+<li><p>The assembler uses directives for guidance as it translates a source program into object code. </p>
+</li>
+</ul>
+<p>注意：</p>
+<blockquote>
+<ul>
+<li><p>Do not use a <em><strong>word processor</strong></em> that embeds special control codes in the text. </p>
+</li>
+<li><p>Use an <code>.asm</code> extension to source file names to identify them as assembly source files.</p>
+</li>
+</ul>
+</blockquote>
+<p>可以使用像 <code>batch-file</code> 和 <code>makefile</code> 这样的命令行工具来汇编你的源文件。</p>
 
       
     </div>

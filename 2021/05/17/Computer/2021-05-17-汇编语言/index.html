@@ -20,18 +20,22 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
 
 <script class="next-config" data-name="main" type="application/json">{&quot;hostname&quot;:&quot;islet.space&quot;,&quot;root&quot;:&quot;&#x2F;&quot;,&quot;images&quot;:&quot;&#x2F;images&quot;,&quot;scheme&quot;:&quot;Gemini&quot;,&quot;version&quot;:&quot;8.3.0&quot;,&quot;exturl&quot;:false,&quot;sidebar&quot;:{&quot;position&quot;:&quot;left&quot;,&quot;display&quot;:&quot;post&quot;,&quot;padding&quot;:18,&quot;offset&quot;:12},&quot;copycode&quot;:false,&quot;bookmark&quot;:{&quot;enable&quot;:false,&quot;color&quot;:&quot;#222&quot;,&quot;save&quot;:&quot;auto&quot;},&quot;fancybox&quot;:false,&quot;mediumzoom&quot;:false,&quot;lazyload&quot;:false,&quot;pangu&quot;:false,&quot;comments&quot;:{&quot;style&quot;:&quot;tabs&quot;,&quot;active&quot;:null,&quot;storage&quot;:true,&quot;lazyload&quot;:false,&quot;nav&quot;:null},&quot;motion&quot;:{&quot;enable&quot;:true,&quot;async&quot;:false,&quot;transition&quot;:{&quot;post_block&quot;:&quot;fadeIn&quot;,&quot;post_header&quot;:&quot;fadeInDown&quot;,&quot;post_body&quot;:&quot;fadeInDown&quot;,&quot;coll_header&quot;:&quot;fadeInLeft&quot;,&quot;sidebar&quot;:&quot;fadeInUp&quot;}},&quot;prism&quot;:false,&quot;i18n&quot;:{&quot;placeholder&quot;:&quot;Searching...&quot;,&quot;empty&quot;:&quot;We didn&#39;t find any results for the search: ${query}&quot;,&quot;hits_time&quot;:&quot;${hits} results found in ${time} ms&quot;,&quot;hits&quot;:&quot;${hits} results found&quot;}}</script>
-<meta name="description" content="X86指令集介绍X86指令集的基本特色 向下兼容 变长指令 1-15字节，多为2-3字节长度   多种寻址方式（可访问不对齐内存地址）   X86寄存器指令集的通用寄存器个数有限  X86-32下指令集通用寄存器数量为8个，x86-64下为16个  至多只有一个操作数在内存中，另一个操作数为立即数或寄存器   源自 网络PDF——X86处理器架构">
+<meta name="description" content="X86指令集介绍X86指令集的基本特色 向下兼容 变长指令 1-15字节，多为2-3字节长度   多种寻址方式（可访问不对齐内存地址）   X86寄存器指令集的通用寄存器个数有限  X86-32下指令集通用寄存器数量为8个，x86-64下为16个  至多只有一个操作数在内存中，另一个操作数为立即数或寄存器   源自 网络PDF——X86处理器架构 SHARC汇编《Assembler and Pre">
 <meta property="og:type" content="article">
 <meta property="og:title" content="汇编语言">
 <meta property="og:url" content="http://islet.space/2021/05/17/Computer/2021-05-17-%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80/index.html">
 <meta property="og:site_name" content="Coder的孤岛">
-<meta property="og:description" content="X86指令集介绍X86指令集的基本特色 向下兼容 变长指令 1-15字节，多为2-3字节长度   多种寻址方式（可访问不对齐内存地址）   X86寄存器指令集的通用寄存器个数有限  X86-32下指令集通用寄存器数量为8个，x86-64下为16个  至多只有一个操作数在内存中，另一个操作数为立即数或寄存器   源自 网络PDF——X86处理器架构">
+<meta property="og:description" content="X86指令集介绍X86指令集的基本特色 向下兼容 变长指令 1-15字节，多为2-3字节长度   多种寻址方式（可访问不对齐内存地址）   X86寄存器指令集的通用寄存器个数有限  X86-32下指令集通用寄存器数量为8个，x86-64下为16个  至多只有一个操作数在内存中，另一个操作数为立即数或寄存器   源自 网络PDF——X86处理器架构 SHARC汇编《Assembler and Pre">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://pic.islet.space/2021/05/image-20210517203416861.png">
 <meta property="og:image" content="https://pic.islet.space/2021/05/image-20210517204354665.png">
 <meta property="og:image" content="https://pic.islet.space/2021/05/image-20210517204446891.png">
+<meta property="og:image" content="https://pic.islet.space/2021/05/image-20210520005659254.png">
+<meta property="og:image" content="https://pic.islet.space/2021/05/image-20210520010438229.png">
+<meta property="og:image" content="https://pic.islet.space/2021/05/image-20210520011656751.png">
+<meta property="og:image" content="https://pic.islet.space/2021/05/image-20210520012328329.png">
 <meta property="article:published_time" content="2021-05-17T12:00:00.000Z">
-<meta property="article:modified_time" content="2021-05-17T17:17:11.573Z">
+<meta property="article:modified_time" content="2021-05-19T17:29:16.665Z">
 <meta property="article:author" content="Liewzheng">
 <meta property="article:tag" content="assembly">
 <meta property="article:tag" content="x86">
@@ -122,7 +126,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#X86%E6%8C%87%E4%BB%A4%E9%9B%86%E4%BB%8B%E7%BB%8D"><span class="nav-number">1.</span> <span class="nav-text">X86指令集介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#X86%E6%8C%87%E4%BB%A4%E9%9B%86%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%89%B9%E8%89%B2"><span class="nav-number">1.1.</span> <span class="nav-text">X86指令集的基本特色</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#X86%E5%AF%84%E5%AD%98%E5%99%A8"><span class="nav-number">1.2.</span> <span class="nav-text">X86寄存器</span></a></li></ol></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#X86%E6%8C%87%E4%BB%A4%E9%9B%86%E4%BB%8B%E7%BB%8D"><span class="nav-number">1.</span> <span class="nav-text">X86指令集介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#X86%E6%8C%87%E4%BB%A4%E9%9B%86%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%89%B9%E8%89%B2"><span class="nav-number">1.1.</span> <span class="nav-text">X86指令集的基本特色</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#X86%E5%AF%84%E5%AD%98%E5%99%A8"><span class="nav-number">1.2.</span> <span class="nav-text">X86寄存器</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#SHARC%E6%B1%87%E7%BC%96"><span class="nav-number">2.</span> <span class="nav-text">SHARC汇编</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#VisualDSP"><span class="nav-number">2.1.</span> <span class="nav-text">VisualDSP++</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E8%A7%88"><span class="nav-number">2.2.</span> <span class="nav-text">总览</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BC%96%E5%86%99"><span class="nav-number">2.3.</span> <span class="nav-text">编写</span></a></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -221,7 +225,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-05-18 01:17:11" itemprop="dateModified" datetime="2021-05-18T01:17:11+08:00">2021-05-18</time>
+        <time title="Modified: 2021-05-20 01:29:16" itemprop="dateModified" datetime="2021-05-20T01:29:16+08:00">2021-05-20</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -243,7 +247,7 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <h2 id="X86指令集介绍"><a href="#X86指令集介绍" class="headerlink" title="X86指令集介绍"></a>X86指令集介绍</h2><h3 id="X86指令集的基本特色"><a href="#X86指令集的基本特色" class="headerlink" title="X86指令集的基本特色"></a>X86指令集的基本特色</h3><ul>
+        <h1 id="X86指令集介绍"><a href="#X86指令集介绍" class="headerlink" title="X86指令集介绍"></a>X86指令集介绍</h1><h2 id="X86指令集的基本特色"><a href="#X86指令集的基本特色" class="headerlink" title="X86指令集的基本特色"></a>X86指令集的基本特色</h2><ul>
 <li>向下兼容</li>
 <li>变长指令<ul>
 <li>1-15字节，多为2-3字节长度</li>
@@ -252,7 +256,7 @@
 <li>多种寻址方式（可访问不对齐内存地址）</li>
 </ul>
 <p><img src="https://pic.islet.space/2021/05/image-20210517203416861.png" alt="image-20210517203416861"></p>
-<h3 id="X86寄存器"><a href="#X86寄存器" class="headerlink" title="X86寄存器"></a>X86寄存器</h3><p>指令集的通用寄存器个数有限</p>
+<h2 id="X86寄存器"><a href="#X86寄存器" class="headerlink" title="X86寄存器"></a>X86寄存器</h2><p>指令集的通用寄存器个数有限</p>
 <blockquote>
 <p>X86-32下指令集通用寄存器数量为8个，x86-64下为16个</p>
 </blockquote>
@@ -260,6 +264,69 @@
 <p><img src="https://pic.islet.space/2021/05/image-20210517204354665.png" alt="image-20210517204354665"></p>
 <p><img src="https://pic.islet.space/2021/05/image-20210517204446891.png" alt="image-20210517204446891"></p>
 <p><em>源自 网络PDF</em>——<a target="_blank" rel="noopener" href="https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=&cad=rja&uact=8&ved=2ahUKEwimmc7O39DwAhV5yYsBHdS2CHMQFjAAegQIAxAD&url=http://images.china-pub.com/ebook4930001-4935000/4934543/ch02.pdf&usg=AOvVaw0yJuRWmzjtj41FR6ld_Vmm">X86处理器架构</a></p>
+<h1 id="SHARC汇编"><a href="#SHARC汇编" class="headerlink" title="SHARC汇编"></a>SHARC汇编</h1><p><a href="">《Assembler and Preprocessor Manual(including the ADSP-BFxxx, ADSP-21xxx, ADSP-TSxxx)》</a></p>
+<h2 id="VisualDSP"><a href="#VisualDSP" class="headerlink" title="VisualDSP++"></a>VisualDSP++</h2><p>以下是ADI官网对VisualDSP++（以下简称VDSP）的解释，本质上是个集成软件开发和调试环境（IDDE）。</p>
+<p><img src="https://pic.islet.space/2021/05/image-20210520005659254.png" alt="image-20210520005659254"></p>
+<p>汇编器的操作取决于两种类型的控制：汇编器指令和汇编器开关。</p>
+<blockquote>
+<p>Assembler operations depend on two types of controls: <strong>assembler directives</strong> and <strong>assembler switches</strong>.</p>
+</blockquote>
+<p>VDSP支持以下三种不同的汇编器：</p>
+<img src="https://pic.islet.space/2021/05/image-20210520010438229.png" alt="image-20210520010438229" style="zoom: 67%;" />
+
+
+
+<p>DSP汇编开发者需要先熟悉以下内容：</p>
+<blockquote>
+<ul>
+<li><p>“<em>Writing Assembly Programs</em>” on page 1-3</p>
+</li>
+<li><p> “<em>Using Assembler Support for C Structs</em>” on page 1-21</p>
+</li>
+<li><p> “<em>Preprocessing a Program</em>” on page 1-24</p>
+</li>
+<li><p>“<em>Using Assembler Feature Macros</em>” on page 1-25</p>
+</li>
+<li><p>“<em>Generating Make Dependencies</em>” on page 1-37</p>
+</li>
+<li><p>“<em>Reading a Listing File</em>” on page 1-38</p>
+</li>
+<li><p>“<em>Enabling Statistical Profiling for Assembly Functions</em>” on page 1-38</p>
+</li>
+<li><p>“*Specifying Assembler Options in VisualDSP++*” on page 1-173</p>
+</li>
+</ul>
+</blockquote>
+<h2 id="总览"><a href="#总览" class="headerlink" title="总览"></a>总览</h2><p>汇编器 将 <strong>汇编源(.asm)<strong>、</strong>数据(.dat)</strong> 和 <strong>头文件(.h)</strong> 三者整理成可执行可链接的格式（ELF），也就是一个标准的 **二进制文件(.doj)**。</p>
+<p>另外，汇编器还将生成一个 **列表文件(.lst)**，展示二进制文件和源文件之间的联系。</p>
+<img src="https://pic.islet.space/2021/05/image-20210520011656751.png" alt="image-20210520011656751" style="zoom:67%;" />
+
+<blockquote>
+<p>Figure 1-1 shows a graphical overview of the assembly process. The figure shows the preprocessor processing the assembly source (.asm) and header (.h) files.</p>
+<p>By default, the assembler processes an intermediate file to produce a binary object file (.doj) and an optional listing file (.lst). </p>
+</blockquote>
+<img src="https://pic.islet.space/2021/05/image-20210520012328329.png" alt="image-20210520012328329" style="zoom:67%;" />
+
+
+
+<h2 id="编写"><a href="#编写" class="headerlink" title="编写"></a>编写</h2><ul>
+<li><p>Assembler directives are coded in assembly source files. </p>
+</li>
+<li><p>The directives allow you to <strong>define variables</strong>, <strong>set up hardware features</strong>, and <strong>identify program sections</strong> for placement within processor memory. </p>
+</li>
+<li><p>The assembler uses directives for guidance as it translates a source program into object code. </p>
+</li>
+</ul>
+<p>注意：</p>
+<blockquote>
+<ul>
+<li><p>Do not use a <em><strong>word processor</strong></em> that embeds special control codes in the text. </p>
+</li>
+<li><p>Use an <code>.asm</code> extension to source file names to identify them as assembly source files.</p>
+</li>
+</ul>
+</blockquote>
+<p>可以使用像 <code>batch-file</code> 和 <code>makefile</code> 这样的命令行工具来汇编你的源文件。</p>
 
     </div>
 
