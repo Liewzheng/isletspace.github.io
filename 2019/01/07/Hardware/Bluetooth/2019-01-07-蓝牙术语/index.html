@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="next-config" data-name="main" type="application/json">{&quot;hostname&quot;:&quot;islet.space&quot;,&quot;root&quot;:&quot;&#x2F;&quot;,&quot;images&quot;:&quot;&#x2F;images&quot;,&quot;scheme&quot;:&quot;Gemini&quot;,&quot;version&quot;:&quot;8.3.0&quot;,&quot;exturl&quot;:false,&quot;sidebar&quot;:{&quot;position&quot;:&quot;left&quot;,&quot;display&quot;:&quot;post&quot;,&quot;padding&quot;:18,&quot;offset&quot;:12},&quot;copycode&quot;:false,&quot;bookmark&quot;:{&quot;enable&quot;:false,&quot;color&quot;:&quot;#222&quot;,&quot;save&quot;:&quot;auto&quot;},&quot;fancybox&quot;:false,&quot;mediumzoom&quot;:false,&quot;lazyload&quot;:false,&quot;pangu&quot;:false,&quot;comments&quot;:{&quot;style&quot;:&quot;tabs&quot;,&quot;active&quot;:null,&quot;storage&quot;:true,&quot;lazyload&quot;:false,&quot;nav&quot;:null},&quot;motion&quot;:{&quot;enable&quot;:true,&quot;async&quot;:false,&quot;transition&quot;:{&quot;post_block&quot;:&quot;fadeIn&quot;,&quot;post_header&quot;:&quot;fadeInDown&quot;,&quot;post_body&quot;:&quot;fadeInDown&quot;,&quot;coll_header&quot;:&quot;fadeInLeft&quot;,&quot;sidebar&quot;:&quot;fadeInUp&quot;}},&quot;prism&quot;:false,&quot;i18n&quot;:{&quot;placeholder&quot;:&quot;Searching...&quot;,&quot;empty&quot;:&quot;We didn&#39;t find any results for the search: ${query}&quot;,&quot;hits_time&quot;:&quot;${hits} results found in ${time} ms&quot;,&quot;hits&quot;:&quot;${hits} results found&quot;}}</script>
+<meta name="description" content="蓝牙有超过20种不同的配置文件，涵盖了从手机到打印机，耳机，麦克风，笔记本电脑，车辆以及现在用于物联网&#x2F; M2M应用的蓝牙的各种不同类型的蓝牙设备，它还涵盖了各种可能的设备在这些场景中也会遇到。 A2DP  Advanced Audio Distribution Profile，蓝牙音频传输模型协定。 L2CAP  Logic Link Control and Adaptation Proto">
+<meta property="og:type" content="article">
+<meta property="og:title" content="蓝牙术语">
+<meta property="og:url" content="http://islet.space/2019/01/07/Hardware/Bluetooth/2019-01-07-%E8%93%9D%E7%89%99%E6%9C%AF%E8%AF%AD/index.html">
+<meta property="og:site_name" content="Coder的孤岛">
+<meta property="og:description" content="蓝牙有超过20种不同的配置文件，涵盖了从手机到打印机，耳机，麦克风，笔记本电脑，车辆以及现在用于物联网&#x2F; M2M应用的蓝牙的各种不同类型的蓝牙设备，它还涵盖了各种可能的设备在这些场景中也会遇到。 A2DP  Advanced Audio Distribution Profile，蓝牙音频传输模型协定。 L2CAP  Logic Link Control and Adaptation Proto">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://uk-liewzheng-blog-pic.oss-eu-west-1.aliyuncs.com/2019/01/07/%E8%93%9D%E7%89%99%E4%B8%93%E6%9C%89%E5%90%8D%E8%AF%8D/%E5%9B%BE%E7%89%871.png">
+<meta property="article:published_time" content="2019-01-07T10:18:34.000Z">
+<meta property="article:modified_time" content="2021-05-20T14:36:35.897Z">
+<meta property="article:author" content="Liewzheng">
+<meta property="article:tag" content="Terminology">
+<meta property="article:tag" content="Bluetooth">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://uk-liewzheng-blog-pic.oss-eu-west-1.aliyuncs.com/2019/01/07/%E8%93%9D%E7%89%99%E4%B8%93%E6%9C%89%E5%90%8D%E8%AF%8D/%E5%9B%BE%E7%89%871.png">
+
+
+<link rel="canonical" href="http://islet.space/2019/01/07/Hardware/Bluetooth/2019-01-07-%E8%93%9D%E7%89%99%E6%9C%AF%E8%AF%AD/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{&quot;sidebar&quot;:&quot;&quot;,&quot;isHome&quot;:false,&quot;isPost&quot;:true,&quot;lang&quot;:&quot;en&quot;,&quot;comments&quot;:true,&quot;permalink&quot;:&quot;http:&#x2F;&#x2F;islet.space&#x2F;2019&#x2F;01&#x2F;07&#x2F;Hardware&#x2F;Bluetooth&#x2F;2019-01-07-%E8%93%9D%E7%89%99%E6%9C%AF%E8%AF%AD&#x2F;&quot;,&quot;path&quot;:&quot;2019&#x2F;01&#x2F;07&#x2F;Hardware&#x2F;Bluetooth&#x2F;2019-01-07-蓝牙术语&#x2F;&quot;,&quot;title&quot;:&quot;蓝牙术语&quot;}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">&quot;&quot;</script>
+<title>蓝牙术语 | Coder的孤岛</title><script src="/js/config.js"></script>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Coder的孤岛</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">islet of the coder</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-文章"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>文章</a></li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#A2DP"><span class="nav-number">1.</span> <span class="nav-text">A2DP</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#L2CAP"><span class="nav-number">2.</span> <span class="nav-text">L2CAP</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#GAP-amp-GATT"><span class="nav-number">3.</span> <span class="nav-text">GAP &amp; GATT</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#SPP"><span class="nav-number">4.</span> <span class="nav-text">SPP</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#SPI"><span class="nav-number">5.</span> <span class="nav-text">SPI</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#VFS"><span class="nav-number">6.</span> <span class="nav-text">VFS</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Initiator-amp-Acceptor"><span class="nav-number">7.</span> <span class="nav-text">Initiator &amp; Acceptor</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#MTU-size"><span class="nav-number">8.</span> <span class="nav-text">MTU size</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#BLE-Scan-Duplicate-Options"><span class="nav-number">9.</span> <span class="nav-text">BLE Scan Duplicate Options</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Eddystone"><span class="nav-number">10.</span> <span class="nav-text">Eddystone</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#iBeacon"><span class="nav-number">11.</span> <span class="nav-text">iBeacon</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#iBeacon%E5%92%8CEddyStone%E7%9A%84%E6%AF%94%E8%BE%83"><span class="nav-number">12.</span> <span class="nav-text">iBeacon和EddyStone的比较</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#HID"><span class="nav-number">13.</span> <span class="nav-text">HID</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#UUID"><span class="nav-number">14.</span> <span class="nav-text">UUID</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#GUID"><span class="nav-number">15.</span> <span class="nav-text">GUID</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E9%93%BE%E6%8E%A5"><span class="nav-number">16.</span> <span class="nav-text">参考链接</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Liewzheng</p>
+  <div class="site-description" itemprop="description">笔记分享的旮旯孤岛而已</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">54</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">16</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">102</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="mailto:liewzheng@qq.com" title="E-Mail → mailto:liewzheng@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://islet.space/2019/01/07/Hardware/Bluetooth/2019-01-07-%E8%93%9D%E7%89%99%E6%9C%AF%E8%AF%AD/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Liewzheng">
+      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coder的孤岛">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          蓝牙术语
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2019-01-07 18:18:34" itemprop="dateCreated datePublished" datetime="2019-01-07T18:18:34+08:00">2019-01-07</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2021-05-20 22:36:35" itemprop="dateModified" datetime="2021-05-20T22:36:35+08:00">2021-05-20</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Communication/" itemprop="url" rel="index"><span itemprop="name">Communication</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>  蓝牙有超过20种不同的配置文件，涵盖了从手机到打印机，耳机，麦克风，笔记本电脑，车辆以及现在用于物联网/ M2M应用的蓝牙的各种不同类型的蓝牙设备，它还涵盖了各种可能的设备在这些场景中也会遇到。</p>
+<h1 id="A2DP"><a href="#A2DP" class="headerlink" title="A2DP"></a>A2DP</h1><p>  Advanced Audio Distribution Profile，蓝牙音频传输模型协定。</p>
+<h1 id="L2CAP"><a href="#L2CAP" class="headerlink" title="L2CAP"></a>L2CAP</h1><p>  Logic Link Control and Adaptation Protocol, 逻辑链路控制和适配协议。是蓝牙系统中的核心协议，负责适配基带中的上层协议。</p>
+<h1 id="GAP-amp-GATT"><a href="#GAP-amp-GATT" class="headerlink" title="GAP &amp; GATT"></a>GAP &amp; GATT</h1><p>  GAP（Generic Access Profile，通用访问协议）、GATT（Generic Attribute Profile，通用属性协议）。<br>  两个协议都隶属于Host层，直接关系到应用层开发，与BLE开发人员的关系比较密切，其分别负责连接前数据广播和连接后的数据传输。</p>
+<h1 id="SPP"><a href="#SPP" class="headerlink" title="SPP"></a>SPP</h1><p>  Serial Port Profile，蓝牙串口协议，用于蓝牙设备和其他设备之间的串口数据传输。</p>
+<h1 id="SPI"><a href="#SPI" class="headerlink" title="SPI"></a>SPI</h1><p>  Serial peripheral interface, 串行外围设备接口，是由Motorola首先在其MC68HCxx系列单片机上定义的，基于高速全双工总线的通讯协议。</p>
+<h1 id="VFS"><a href="#VFS" class="headerlink" title="VFS"></a>VFS</h1><p>  Virtual File System，虚拟文件系统组件。为可以对类文件对象执行操作的驱动程序提供统一接口。这可以是真实的文件系统（FAT、SPIFFS等），也可以是暴露文件类接口的驱动程序。</p>
+<h1 id="Initiator-amp-Acceptor"><a href="#Initiator-amp-Acceptor" class="headerlink" title="Initiator &amp; Acceptor"></a>Initiator &amp; Acceptor</h1><p>  BT SPP Initiator 和 BT SPP Acceptor，就是蓝牙串口数据发送端和蓝牙串口数据接收端，跟GATT服务有关。</p>
+<p>  引用原文《<a target="_blank" rel="noopener" href="https://www.espressif.com/sites/default/files/documentation/btble_coexistence_demo_en.pdf">ESP32 BT &amp; BLE Dual-mode Bluetooth</a>》</p>
+<blockquote>
+<p>After the initialization of both the controller and the host, the BT SPP acceptor and the BLE<br>GATT server are initialized.<br>After the DEV_A is powered on, the functions of the BT SPP initiator and the BLE GATT<br>client are initialized.</p>
+</blockquote>
+<h1 id="MTU-size"><a href="#MTU-size" class="headerlink" title="MTU size"></a>MTU size</h1><p>  Maximum Transmission Unit，最大传输单元，是指一种通信协议的某一层上面所能通过的最大数据包大小（以字节为单位）。最大传输单元这个参数通常与通信接口有关（网络接口卡、串口等）。</p>
+<h1 id="BLE-Scan-Duplicate-Options"><a href="#BLE-Scan-Duplicate-Options" class="headerlink" title="BLE Scan Duplicate Options"></a>BLE Scan Duplicate Options</h1><p>  The maximum number of devices in scan duplicate filter depends on the free heap size.</p>
+<h1 id="Eddystone"><a href="#Eddystone" class="headerlink" title="Eddystone"></a>Eddystone</h1><p>  Eddystone是由Google开发的开放式信标（Beacon）格式，其设计考虑了透明度和稳健性。</p>
+<h1 id="iBeacon"><a href="#iBeacon" class="headerlink" title="iBeacon"></a>iBeacon</h1><p>  iBeacon是苹果公司提出的“一种可以让附近手持电子设备检测到的一种新的低功耗、低成本信号传送器”的一套可用于室内定位系统的协议。</p>
+<h1 id="iBeacon和EddyStone的比较"><a href="#iBeacon和EddyStone的比较" class="headerlink" title="iBeacon和EddyStone的比较"></a>iBeacon和EddyStone的比较</h1><p>  <img src="http://uk-liewzheng-blog-pic.oss-eu-west-1.aliyuncs.com/2019/01/07/%E8%93%9D%E7%89%99%E4%B8%93%E6%9C%89%E5%90%8D%E8%AF%8D/%E5%9B%BE%E7%89%871.png" alt="iBeacon和EddyStone的比较"></p>
+<h1 id="HID"><a href="#HID" class="headerlink" title="HID"></a>HID</h1><p>  Human Interface Device, 人类接口设备，或称人体学输入设备，是一种与人类在直接交互的计算设备，通常提供一种人类可用的输入方法，以及可能将输出信息传递给人类。</p>
+<h1 id="UUID"><a href="#UUID" class="headerlink" title="UUID"></a>UUID</h1><p>  Universally Unique Identifier, 通用唯一识别码，是用于计算机体系中以识别信息数目的一个128位标识符。</p>
+<h1 id="GUID"><a href="#GUID" class="headerlink" title="GUID"></a>GUID</h1><p>  Global Unique Indentifier，全局唯一标识符。</p>
+<h1 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h1><ol>
+<li>《<a target="_blank" rel="noopener" href="https://www.electronics-notes.com/articles/connectivity/bluetooth/profiles.php">蓝牙配置文件</a>》</li>
+<li>《<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/List_of_Bluetooth_protocols">List of Bluetooth protocols</a>》</li>
+<li>《<a target="_blank" rel="noopener" href="https://www.cnblogs.com/hzl6255/p/3801732.html">Bluetooth L2CAP介绍</a>》</li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Terminology/" rel="tag"># Terminology</a>
+              <a href="/tags/Bluetooth/" rel="tag"># Bluetooth</a>
+          </div>
+
+    <div id="vcomment" style="margin: 20px 0 0 0"></div>
+    <script>
+        new Valine({
+            el: '#vcomment' ,
+            appId: 'vRGM12EcYxDSM2lat5qjjSeY-gzGzoHsz',
+            appKey: 'WBgAb6NTAFQ7DYtgH0uOPNNh'
+        });
+    </script>
+</body>
+
+
+
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2019/01/06/Networking/%E7%BD%91%E7%BB%9C%20-%20%E5%88%A9%E7%94%A8%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%90%AD%E5%BB%BAMQTT%E6%9C%8D%E5%8A%A1/" rel="prev" title="利用云服务器搭建MQTT服务">
+                  <i class="fa fa-chevron-left"></i> 利用云服务器搭建MQTT服务
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2019/01/07/Networking/%E7%BD%91%E7%BB%9C%20-%20TCP-IP%E4%B8%93%E6%9C%89%E5%90%8D%E8%AF%8D/" rel="next" title="TCP/IP专有名词">
+                  TCP/IP专有名词 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+<script src="/js/comments.js"></script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">粤ICP备19004822号 </a>
+  </div>
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Liewzheng</span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

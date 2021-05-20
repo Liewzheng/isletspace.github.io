@@ -476,7 +476,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-05-20 01:29:16" itemprop="dateModified" datetime="2021-05-20T01:29:16+08:00">2021-05-20</time>
+        <time title="Modified: 2021-05-20 22:50:31" itemprop="dateModified" datetime="2021-05-20T22:50:31+08:00">2021-05-20</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -550,6 +550,7 @@
 </blockquote>
 <h2 id="总览"><a href="#总览" class="headerlink" title="总览"></a>总览</h2><p>汇编器 将 <strong>汇编源(.asm)<strong>、</strong>数据(.dat)</strong> 和 <strong>头文件(.h)</strong> 三者整理成可执行可链接的格式（ELF），也就是一个标准的 **二进制文件(.doj)**。</p>
 <p>另外，汇编器还将生成一个 **列表文件(.lst)**，展示二进制文件和源文件之间的联系。</p>
+<p>也就是说，编译成功后，.doj和.lst文件就是其编译结果。</p>
 <img src="https://pic.islet.space/2021/05/image-20210520011656751.png" alt="image-20210520011656751" style="zoom:67%;" />
 
 <blockquote>
@@ -578,6 +579,13 @@
 </ul>
 </blockquote>
 <p>可以使用像 <code>batch-file</code> 和 <code>makefile</code> 这样的命令行工具来汇编你的源文件。</p>
+<p>列表文件还提供了关于导入的C语言数据结构的信息。</p>
+<h2 id="问题解决"><a href="#问题解决" class="headerlink" title="问题解决"></a>问题解决</h2><h3 id="问题一"><a href="#问题一" class="headerlink" title="问题一"></a>问题一</h3><p><strong>现象</strong>：出现如下图所示的头文件缺少</p>
+<p><img src="https://pic.islet.space/2021/05/20210520095711.png" alt="image-20210520090023689"></p>
+<p><strong>原因</strong>：<code>.boj </code>文件和其所依赖的 <code>.h</code> 头文件相对路径不一致，或项目文件的绝对路径与原来创建时不一致。</p>
+<p><strong>例如</strong>：从文件 <code>Debug/system/startup_Idf/app_IVT.doj</code> 中可以看出，该文件的创作者是将其放置在 <code>D:\ADSP\workspace\LED_test\Debug</code> 下的，因此需要改变该项目文件的位置。</p>
+<p><strong>解决方法</strong>：在原创作者的绝对路径下放置该项目文件。</p>
+<p><img src="https://pic.islet.space/2021/05/20210520095708.png" alt="image-20210520090936369"></p>
 
       
     </div>
@@ -2065,7 +2073,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://islet.space/2021/05/05/Signal/2021-05-05-%E5%88%86%E8%B4%9D/">
+    <link itemprop="mainEntityOfPage" href="http://islet.space/2021/05/05/Signal/2021-05-05-%E6%A8%A1%E6%95%B0%E6%8E%A5%E5%8F%A3%E4%B8%AD%E7%9A%84%E5%8F%AF%E7%BC%96%E7%A8%8B%E5%A2%9E%E7%9B%8A%E6%94%BE%E5%A4%A7%E5%99%A8%EF%BC%88PGA%EF%BC%89/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -2078,7 +2086,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/05/05/Signal/2021-05-05-%E5%88%86%E8%B4%9D/" class="post-title-link" itemprop="url">分贝</a>
+          <a href="/2021/05/05/Signal/2021-05-05-%E6%A8%A1%E6%95%B0%E6%8E%A5%E5%8F%A3%E4%B8%AD%E7%9A%84%E5%8F%AF%E7%BC%96%E7%A8%8B%E5%A2%9E%E7%9B%8A%E6%94%BE%E5%A4%A7%E5%99%A8%EF%BC%88PGA%EF%BC%89/" class="post-title-link" itemprop="url">模数接口中的可编程增益放大器（PGA）</a>
         </h2>
 
         <div class="post-meta-container">
@@ -2091,14 +2099,14 @@
       </span>
       <span class="post-meta-item-text">Posted on</span>
 
-      <time title="Created: 2021-05-05 14:30:32" itemprop="dateCreated datePublished" datetime="2021-05-05T14:30:32+08:00">2021-05-05</time>
+      <time title="Created: 2021-05-05 23:58:32" itemprop="dateCreated datePublished" datetime="2021-05-05T23:58:32+08:00">2021-05-05</time>
     </span>
       <span class="post-meta-item">
         <span class="post-meta-item-icon">
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-05-09 13:01:39" itemprop="dateModified" datetime="2021-05-09T13:01:39+08:00">2021-05-09</time>
+        <time title="Modified: 2021-05-20 22:53:04" itemprop="dateModified" datetime="2021-05-20T22:53:04+08:00">2021-05-20</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -2120,223 +2128,59 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <p><a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E5%88%86%E8%B2%9D">Wikipedia</a></p>
-<h1 id="分貝"><a href="#分貝" class="headerlink" title="分貝"></a>分貝</h1><p><strong>分贝</strong>（decibel）是量度两个相同单位之数量<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E6%AF%94%E4%BE%8B">比例</a>的单位，常用<strong>dB</strong>表示。“<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E5%88%86">分</a>”（deci-）指十分之一，个位是“贝”或“贝尔”（bel，纪念发明家<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E4%BA%9A%E5%8E%86%E5%B1%B1%E5%A4%A7%C2%B7%E6%A0%BC%E6%8B%89%E6%B1%89%E5%A7%86%C2%B7%E8%B4%9D%E5%B0%94">亚历山大·格拉汉姆·贝尔</a>），但一般只用分贝。</p>
-<table>
-<thead>
-<tr>
-<th>dB</th>
-<th>声能比</th>
-<th>声压比</th>
-<th></th>
-<th></th>
-</tr>
-</thead>
-<tbody><tr>
-<td>100</td>
-<td>10 000 000 000</td>
-<td></td>
-<td>100 000</td>
-<td></td>
-</tr>
-<tr>
-<td>90</td>
-<td>1 000 000 000</td>
-<td></td>
-<td>31 623</td>
-<td></td>
-</tr>
-<tr>
-<td>80</td>
-<td>100 000 000</td>
-<td></td>
-<td>10 000</td>
-<td></td>
-</tr>
-<tr>
-<td>70</td>
-<td>10 000 000</td>
-<td></td>
-<td>3 162</td>
-<td></td>
-</tr>
-<tr>
-<td>60</td>
-<td>1 000 000</td>
-<td></td>
-<td>1 000</td>
-<td></td>
-</tr>
-<tr>
-<td>50</td>
-<td>100 000</td>
-<td></td>
-<td>316</td>
-<td>.2</td>
-</tr>
-<tr>
-<td>40</td>
-<td>10 000</td>
-<td></td>
-<td>100</td>
-<td></td>
-</tr>
-<tr>
-<td>30</td>
-<td>1 000</td>
-<td></td>
-<td>31</td>
-<td>.62</td>
-</tr>
-<tr>
-<td>20</td>
-<td>100</td>
-<td></td>
-<td>10</td>
-<td></td>
-</tr>
-<tr>
-<td>10</td>
-<td>10</td>
-<td></td>
-<td>3</td>
-<td>.162</td>
-</tr>
-<tr>
-<td>6</td>
-<td>3</td>
-<td>.981（≈4）</td>
-<td>1</td>
-<td>.995（≈2）</td>
-</tr>
-<tr>
-<td>3</td>
-<td>1</td>
-<td>.995（≈2）</td>
-<td>1</td>
-<td>.413（≈√2）</td>
-</tr>
-<tr>
-<td>1</td>
-<td>1</td>
-<td>.259</td>
-<td>1</td>
-<td>.122</td>
-</tr>
-<tr>
-<td>0</td>
-<td>1</td>
-<td></td>
-<td>1</td>
-<td></td>
-</tr>
-<tr>
-<td>-3</td>
-<td>0</td>
-<td>.501（≈½）</td>
-<td>0</td>
-<td>.708（≈√½）</td>
-</tr>
-<tr>
-<td>-6</td>
-<td>0</td>
-<td>.251（≈¼）</td>
-<td>0</td>
-<td>.501（≈½）</td>
-</tr>
-<tr>
-<td>-10</td>
-<td>0</td>
-<td>.1</td>
-<td>0</td>
-<td>.316 2</td>
-</tr>
-<tr>
-<td>-20</td>
-<td>0</td>
-<td>.01</td>
-<td>0</td>
-<td>.1</td>
-</tr>
-<tr>
-<td>-30</td>
-<td>0</td>
-<td>.001</td>
-<td>0</td>
-<td>.031 62</td>
-</tr>
-<tr>
-<td>-40</td>
-<td>0</td>
-<td>.000 1</td>
-<td>0</td>
-<td>.01</td>
-</tr>
-<tr>
-<td>-50</td>
-<td>0</td>
-<td>.000 01</td>
-<td>0</td>
-<td>.003 162</td>
-</tr>
-<tr>
-<td>-60</td>
-<td>0</td>
-<td>.000 001</td>
-<td>0</td>
-<td>.001</td>
-</tr>
-<tr>
-<td>-70</td>
-<td>0</td>
-<td>.000 000 1</td>
-<td>0</td>
-<td>.000 316 2</td>
-</tr>
-<tr>
-<td>-80</td>
-<td>0</td>
-<td>.000 000 01</td>
-<td>0</td>
-<td>.000 1</td>
-</tr>
-<tr>
-<td>-90</td>
-<td>0</td>
-<td>.000 000 001</td>
-<td>0</td>
-<td>.000 031 62</td>
-</tr>
-<tr>
-<td>-100</td>
-<td>0</td>
-<td>.000 000 000 1</td>
-<td>0</td>
-<td>.000 01</td>
-</tr>
-</tbody></table>
-<p>这是一个说明声源能量 (<img src="https://wikimedia.org/api/rest_v1/media/math/render/svg/87f9e315fd7e2ba406057a97300593c4802b53e4" alt="x">), 声压 (<img src="https://wikimedia.org/api/rest_v1/media/math/render/svg/d62b24be305beff66cba9bfbcc01a362ba390f44" alt="{\sqrt {x}}">)，与声音分贝数 dB (<img src="https://wikimedia.org/api/rest_v1/media/math/render/svg/be2b0b75f65fbc06b19e6e8548ce8ec33b0c0c4f" alt="{\displaystyle 10\log _{10}{x}}">) 正比关系的对照表 从声音分贝数 dB 只有 2<del>3 个数字的差异，相比声源或声压 9</del>10 个数字的差异，dB可<strong>帮助人们更快的理解数字代表的意义</strong>。</p>
-<h2 id="计算方法"><a href="#计算方法" class="headerlink" title="计算方法"></a>计算方法</h2><p>分贝（dB）是十分之一贝尔（B）：<code>1B = 10dB</code>。1贝尔的两个功率量的比值是10:1，1贝尔的两个场量的比值是<img src="https://wikimedia.org/api/rest_v1/media/math/render/svg/2f35055a56f97ce282bf4797deddb716cfa8a924" alt="{\sqrt {10}}:1">[<a href="about:reader?url=https%3A%2F%2Fzh.wikipedia.org%2Fwiki%2F%E5%88%86%E8%B2%9D#cite_note-1">1]</a>。’</p>
-<p>场量（field quantity）是诸如<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E7%94%B5%E5%8E%8B">电压</a>、<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E7%94%B5%E6%B5%81">电流</a>、<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E5%A3%B0%E5%8E%8B">声压</a>、<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E7%94%B5%E5%9C%BA%E5%BC%BA%E5%BA%A6">电场强度</a>、<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E9%80%9F%E5%BA%A6">速度</a>、<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E9%9B%BB%E8%8D%B7%E5%AF%86%E5%BA%A6">电荷密度</a>等量值，其平方值在一个线性系统中与功率成比例。功率量（power quantity）是功率值或者直接与功率值成比例的其它量，如<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E8%83%BD%E9%87%8F%E5%AF%86%E5%BA%A6">能量密度</a>、<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E9%9F%B3%E5%BC%BA">音强</a>、<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E5%8F%91%E5%85%89%E5%BC%BA%E5%BA%A6">发光强度</a>等。 </p>
-<p>分贝的计算，依赖于是 <strong>功率量</strong> 还是 <strong>场量</strong> 而不同。 </p>
-<p>两个信号具有1分贝的差异，那么其功率比值是1.25892（即<img src="https://wikimedia.org/api/rest_v1/media/math/render/svg/99d92002d56747705f253a7c0aac2c7e4c310f20" alt="10^{\frac {1}{10}}\,">）而幅值之比是1.12202（即<img src="https://wikimedia.org/api/rest_v1/media/math/render/svg/a515a9617441696adc7fb0f3a2cd1f74210cee64" alt="{\sqrt {10}}^{\frac {1}{10}}\,">）[<a href="about:reader?url=https%3A%2F%2Fzh.wikipedia.org%2Fwiki%2F%E5%88%86%E8%B2%9D#cite_note-2">2]</a>。</p>
-<h2 id="好处"><a href="#好处" class="headerlink" title="好处"></a>好处</h2><p>使用分贝有很多便利之处：</p>
+          <p>原文出处：<a target="_blank" rel="noopener" href="https://www.21ic.com/app/analog/201207/134812.htm">https://www.21ic.com/app/analog/201207/134812.htm</a></p>
+<p>用可编程增益放大器(PGA)处理数据采集系统中传感器/变送器模拟输出和信号处理数字之间的接口。单片和高集成度PGA现在被可编程、更高精度、更高吞吐量和更小封装尺寸的模块和混合方案替代。 </p>
+<p>由于来自传感器/变送器的模拟信号的本性，使其工作必须具备相当大的动态范围。这要求采用连续增益级在进行任何实际的数字处理之前增大这些信号，PGA能满足这种要求。 </p>
+<p>PGA是可变增益放大器(VGA)的一种。VGA提供可变和连续增益控制，而PGA <mark>必须在软件控制下以固定步(通常6dB步)做到可变增益控制</mark>。达到更精细的分辨步0.5dB是可能的。 一般多通道数据采集系统用很多不同类型的传感器/变送器，这包括 <strong>热电偶</strong>、<strong>惠斯登电桥</strong>，<strong>热敏电阻</strong>、<strong>应变计</strong> 和 <strong>超声系统</strong>。虽然，传感器/变送器是基于不同的物理原理，但大多数产品是 <strong>以电压做为输出</strong>。甚至这会产生中间值(如电容或电阻)，但最终变换为电压，以便在数据采集系统中进行</p>
+<p><img src="http://pic.islet.space/2021/04/fb222bc5a544088d5a7fc0c708476621.jpg"></p>
+<p>传感器/变送器的输出可覆盖非常大的范围，需要PGA来处理传感器/变送器输出到ADC的接口。</p>
+<blockquote>
+<p>例如，在工业过程控制系统中，低频信号可以几毫伏到几伏变化。需要PGA来匹配这种宽传感器/变送器输出范围到特定的ADC输入范围。通常，在输入数据采集通道最低信号电平与最高信号电平之比是2个量级或更大。  12位ADC接收小于ADC满标输入十分之一的信号仅可提供8位分辨率，除非在信号到达ADC之前用PGA放大。PGA允许在软件控制下使接收信号的增益达到宽范围增益一带宽乘积。这可避免钳位并允许采用较便宜的ADC，如用12位ADC替代16位ADC。 </p>
+</blockquote>
+<p>PGA可做更多事情。PGA缓冲来自前级(通常是多路转换器)ADC的输入，防止多路转换器导通电阻所引起的加载。PGA也提供差分别单端的变换，大多数跟踪和保持型ADC需要单输入。把PGA连接到差分多路转换器输出时，PGA提供共模抑制。 </p>
+<p>在市场上可以得到很多种PGA和支持元件。这包括可独立应用的运放被专门设计成PGA、ASIC、集成有可编程滤波器的PGA、仪表放大器PGA、用于运放的数字电位器前端、PGA用数字可编程分压器、ADC驱动器。有时把PGA和DAC集成在同一芯片上。 </p>
+<p>对于不需要信号宽动态范围的应用，PGA不是必须的。放大器可以直接接口传感器/变送器到ADC。</p>
+<blockquote>
+<p>例如，Maxim的MAX1494仪表放大器适合于250V/V或更小增益范围的应用。 </p>
+</blockquote>
+<h1 id="各种性能的PGA"><a href="#各种性能的PGA" class="headerlink" title="各种性能的PGA"></a>各种性能的PGA</h1><p>对于特殊性能参量(如高增益稳定性和高精度，低漂移，低失真，高输出驱动电流，高转换率，快速建立时间，高共模抑制比，低功率和小尺寸)有很多PGA是最佳的。 </p>
+<blockquote>
 <ul>
-<li>分贝实际上是对数值，因此可以用常用的数量来表示非常大的比值，可以清楚地表示非常大的数量变化。</li>
-<li>多部件系统的整体增益（如级联的<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E6%94%BE%E5%A4%A7%E5%99%A8">放大器</a>）可以直接用各部件的增益分贝相加而求得。不必把这些增益值相乘（例如log(A × B × C) = log(A) + log(B) + log(C)）。</li>
-<li>人对强度的感知，如声音或者光照，更接近与强度的对数成正比而不是强度值本身，依据<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E9%9F%8B%E4%BC%AF%E5%AE%9A%E7%90%86">韦伯定理</a>，因此分贝值可用于描述感知级别或级差。</li>
+<li>Microchip公司的MCP6S2X家族PGA具有2、6和8通道输入，包含多路转换器并可通过串行外设接口(SPI)总线进行增益控制和通道选择。</li>
+<li>NS公司的LMH6718IC是双PGA，具有高输出(200mA)驱动信号。  </li>
+<li>高性能小封装的PAG有ADI公司的AD8555，这是封装在微型8引线SOIC中的数字可编程信号调理自动零放大器，它包含放大器，比较器，用Digit  Trim技术的电阻调节分压器和缓冲器。其500V/℃总输入失调漂移是其他竞争产品的1/20。</li>
+<li>Linear公司的LTC6915A也是小封装高性能PGA。此仪表放大器封装为16引线SSOP或12引线DFN，可把它放置在最靠近传感器/变送器的地方。它所占电路板面积是等效分立方案的1/6。零漂移特性具有高达4096的宽可编程动态范围(增益精度0.1%)。它也有50mV/℃漂移和与增益无关的125dB CMRR。  </li>
+<li>对于低失真是主要考虑因素的应用，可以选择Intersil公司PGA缓冲器HFA11XX，其低失真电平低到-73dBc、噪声电平低到7”9nV/√Hz。</li>
+<li>TI公司的THS7001/7002单/双PGA采用Power PAD封装，包含分离的低噪声前置放大器和增益放大级。此器件可达到非常低的噪声电平(低到1.7nV/√Hz)。 </li>
+<li>其他可注意的PGA包括ADI公司的AD628首款具有可编程增益的共模差分放大器和Linear公司的LTC1564 PGA(除放大器外，它还具有8阶软件可编程抗混淆滤波器)。 </li>
 </ul>
-<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><h3 id="声学"><a href="#声学" class="headerlink" title="声学"></a>声学</h3><p>声学中，<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E5%A3%B0%E5%BC%BA">声音的强度</a>定义为声压。计算分贝值时采用20微帕斯卡为参考值[<a href="about:reader?url=https%3A%2F%2Fzh.wikipedia.org%2Fwiki%2F%E5%88%86%E8%B2%9D#cite_note-ElectronicEngineersHandbook-5">5]</a>。这一参考值是人类对声音能够感知的阈值下限。声压是场量，因此使用声压计算分贝时使用下述版本的公式： </p>
-<p><img src="https://wikimedia.org/api/rest_v1/media/math/render/svg/3994b439a75418d133c3c75063bdea671f5f16ae" alt="声音强度公式"></p>
-<p>在空气中 <strong>1帕斯卡等于94分贝声压级</strong>。在其他介质，如水下，1微帕斯卡更为普遍[<a href="about:reader?url=https%3A%2F%2Fzh.wikipedia.org%2Fwiki%2F%E5%88%86%E8%B2%9D#cite_note-Morfey-6">6]</a>。这些标准被<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/ANSI">ANSI</a>S1.1-1994.所收录[<a href="about:reader?url=https%3A%2F%2Fzh.wikipedia.org%2Fwiki%2F%E5%88%86%E8%B2%9D#cite_note-7">7]</a>。</p>
-<p>人耳对声音感知具有很大的<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E5%8A%A8%E6%80%81%E8%8C%83%E5%9B%B4">动态范围</a>。从短期暴露即会永久损害听力的声强到最静的人耳能听到的声强，其比值是1万亿（10^12^）。[<a href="about:reader?url=https%3A%2F%2Fzh.wikipedia.org%2Fwiki%2F%E5%88%86%E8%B2%9D#cite_note-8">8]</a>这么大的比值范围表示为对数度量：1万亿（10^12^）基于10的对数为12，用分贝表示是240。人的听力并不是对所有频率都是相同敏感，最敏感的频率范围是20<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E8%B5%AB%E5%85%B9">Hz</a>~20<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E5%8D%83%E8%B5%AB%E5%85%B9">kHz</a>.</p>
-<p>当一个空间受外来声音干扰，而影响预期的正常作息时，需要建置一个六面结构的宁静空间，而当宁静空间建置完成后，能否达到预期的效果，则于施工前制定一个规范，此规范即为声学规范。</p>
-<h3 id="电子学"><a href="#电子学" class="headerlink" title="电子学"></a>电子学</h3><p>电子学中，通常用分贝表示功率或幅值之比（<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E5%A2%9E%E7%9B%8A">增益</a>），而不常用算术比或者百分比。一项好处是一些列部件组成的系统的总增益是各部件增益之和。类似的，电信领域中，从一个发射器到一个接收器通过一些媒介（<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/w/index.php?title=%E5%85%89%E6%97%A0%E7%BA%BF%E9%80%9A%E4%BF%A1&action=edit&redlink=1">光无线通信</a>、<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E6%B3%A2%E5%AF%BC">波导</a>、<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E5%90%8C%E8%BD%B4%E7%94%B5%E7%BC%86">同轴电缆</a>、<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E5%85%89%E7%BA%A4">光纤</a>等等）的信号增益用分贝表示，用于<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E9%93%BE%E8%B7%AF%E9%A2%84%E7%AE%97">链路预算</a>。</p>
-<p>分贝也可以组合一些后缀，表示电功率的绝对单位。例如，后缀”m”表示”毫瓦”组合出”dBm”，0 dBm等于1毫瓦，1 dBm约为1.259 毫瓦。</p>
-<p>在专业声学领域，常用单位是dBu。”u”代表”unloaded”。dBu是电压的<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E5%B9%B3%E6%96%B9%E5%B9%B3%E5%9D%87%E6%95%B0">平方平均数</a>（RMS）度量的单位，其参考电压约为 0.775 VRMS。由于历史原因，此参考电压是在600欧姆电阻上耗散1 mW功率的电压，用于电话音频电路的标准阻抗。</p>
-<h2 id="后缀与参考值"><a href="#后缀与参考值" class="headerlink" title="后缀与参考值"></a>后缀与参考值</h2><p>dB与后缀的组合，指出计算比值时的参考值。例如dBm指示功率值与1毫瓦的比值的分贝数。 </p>
-<p>如果计算分贝时的参考值明确、确切地给出，那么分贝数值可以作为绝对量，如同被测量的功率量或者场量。例如，20dBm即为100毫瓦。 </p>
-<p>SI国际单位制不允许使用分贝与后缀的组合形式如dBm, dBu, dBA，等等[<a href="about:reader?url=https%3A%2F%2Fzh.wikipedia.org%2Fwiki%2F%E5%88%86%E8%B2%9D#cite_note-13">13]</a>。但这种不遵从SI单位制的表示却广泛应用于很多场合。 </p>
+</blockquote>
+<p>PGA也集成有其他前端电路。</p>
+<blockquote>
+<p>如Maxim公司的MAX14XX家族，这是包含PGA的信号调理ASIC。这种器件直接用于传感器/变送器和ADC之间。</p>
+<p>Maxim公司的ADC驱动器MAX2055具有低失真(-76dBc 2次谐波和-69dBc 3次谐波)特性，其差分输出是为驱动高速ADC专门设计的。 </p>
+</blockquote>
+<p>一些PGA供应商也提供驱动PGA前端的数字电位计和分压器IC。</p>
+<blockquote>
+<p>例如，Maxim公司的MAX5420/21数字可编程电压分压器；</p>
+<p>ADI公司的AD5321数字电位计(常用于可编程增益和衰减的非易失性存储器)。  </p>
+<p>另外，Xicor也提供不少PGA器件，这些PGA器件对于执行数字控制的电位计(DCP)是最佳的。  </p>
+</blockquote>
+<h1 id="集成方案"><a href="#集成方案" class="headerlink" title="集成方案"></a>集成方案</h1><p>现在，很多公司把PGA和其他信号调理电路直接集成在ADC芯片上。这种方法有利于所占空间更小，比分离PGA和ADC方案具有更好的性能。然而，其成本比较高，集成PGA在ADC上除灵活性较低外，还有 <mark>较高的时钟噪声电平</mark>。 </p>
+<blockquote>
+<p>带线化前端的Maxim公司的MAX1457(图2)传统器线性化IC就是其中一种，它包含12位ADC。</p>
+<p>ADI公司的ADC7707高精度信号调理16位S-D  ADC包含多路转换器、缓冲器、PGA、电荷平衡电路、串行接口和时钟产生器。</p>
+<p>ADI公司的ADC7708/18S-D6位/24位ADC具有与AD7707相同的电路，但它们的目标是低电压和低功率应用。 </p>
+</blockquote>
+<p><img src="http://pic.islet.space/2021/04/8b55f596bcfdf9a408bd3c959504fb21.jpg" alt="img"></p>
+<p>一个感兴趣的高集成度ADC是ADC7731  24位S-D器件，它具有ADC77017的所有电路。另外，还加上定标微控制器(图3)。此IC的目标是低噪声高吞吐量应用。</p>
+<p>Maxim公司也有带集成PGA的双6位ADC，它具有90Sample/s吞吐率、功耗仅550mW。 </p>
+<p><img src="http://pic.islet.space/2021/04/8CzZ7BjS2OMEYQJ.jpg"></p>
+<p>我们将会看到更多包含PGA和其他信号处理电路的ADC吗？</p>
+<p>不可回避的事实是高集成度是IC业的准则，而PGA和其他信号调理支持电路也不例外。所以希望看到PGA与ADC集成在同一芯片，并能解决片上性能参量(如时钟引起的噪声)和降低高分辨率器件的单个ADC价格。</p>
+<p>事实上，设计人员主要的目标是把传感器/变送器电路放在高集成度ADC上。</p>
+<p>这将是最终解决问题：现实世界模拟信号与计算机的数字世界结合起来的途经。</p>
+<p>这也将聚焦在模拟和数字电路设计的两种不同方法。</p>
 
       
     </div>

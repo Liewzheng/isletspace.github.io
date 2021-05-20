@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="next-config" data-name="main" type="application/json">{&quot;hostname&quot;:&quot;islet.space&quot;,&quot;root&quot;:&quot;&#x2F;&quot;,&quot;images&quot;:&quot;&#x2F;images&quot;,&quot;scheme&quot;:&quot;Gemini&quot;,&quot;version&quot;:&quot;8.3.0&quot;,&quot;exturl&quot;:false,&quot;sidebar&quot;:{&quot;position&quot;:&quot;left&quot;,&quot;display&quot;:&quot;post&quot;,&quot;padding&quot;:18,&quot;offset&quot;:12},&quot;copycode&quot;:false,&quot;bookmark&quot;:{&quot;enable&quot;:false,&quot;color&quot;:&quot;#222&quot;,&quot;save&quot;:&quot;auto&quot;},&quot;fancybox&quot;:false,&quot;mediumzoom&quot;:false,&quot;lazyload&quot;:false,&quot;pangu&quot;:false,&quot;comments&quot;:{&quot;style&quot;:&quot;tabs&quot;,&quot;active&quot;:null,&quot;storage&quot;:true,&quot;lazyload&quot;:false,&quot;nav&quot;:null},&quot;motion&quot;:{&quot;enable&quot;:true,&quot;async&quot;:false,&quot;transition&quot;:{&quot;post_block&quot;:&quot;fadeIn&quot;,&quot;post_header&quot;:&quot;fadeInDown&quot;,&quot;post_body&quot;:&quot;fadeInDown&quot;,&quot;coll_header&quot;:&quot;fadeInLeft&quot;,&quot;sidebar&quot;:&quot;fadeInUp&quot;}},&quot;prism&quot;:false,&quot;i18n&quot;:{&quot;placeholder&quot;:&quot;Searching...&quot;,&quot;empty&quot;:&quot;We didn&#39;t find any results for the search: ${query}&quot;,&quot;hits_time&quot;:&quot;${hits} results found in ${time} ms&quot;,&quot;hits&quot;:&quot;${hits} results found&quot;}}</script>
+<meta name="description" content="在计算机系统中，CPU和外部通信有两种通信方式：并行通信 和 串行通信 。而按照串行数据的时钟控制方式，串行通信又可分为 同步通信 和 异步通信。 数据层标准：I2C、SPI、UART、USB、SATA硬件层标准：RS232、TTL 某些协议可能对于数据层或硬件层有着不同的规定，因此请自行了解并加以区分。 一、串行通信Serial communication，指所有的串行的通信协议。是相对并行通信">
+<meta property="og:type" content="article">
+<meta property="og:title" content="串行通信（Serial Communication）">
+<meta property="og:url" content="http://islet.space/2019/01/06/Hardware/Common/2019-01-06-%E4%B8%B2%E8%A1%8C%E9%80%9A%E4%BF%A1/index.html">
+<meta property="og:site_name" content="Coder的孤岛">
+<meta property="og:description" content="在计算机系统中，CPU和外部通信有两种通信方式：并行通信 和 串行通信 。而按照串行数据的时钟控制方式，串行通信又可分为 同步通信 和 异步通信。 数据层标准：I2C、SPI、UART、USB、SATA硬件层标准：RS232、TTL 某些协议可能对于数据层或硬件层有着不同的规定，因此请自行了解并加以区分。 一、串行通信Serial communication，指所有的串行的通信协议。是相对并行通信">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://upload.wikimedia.org/wikipedia/commons/thumb/e/ed/SPI_single_slave.svg/1920px-SPI_single_slave.svg.png">
+<meta property="og:image" content="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fc/SPI_three_slaves.svg/1280px-SPI_three_slaves.svg.png">
+<meta property="og:image" content="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/I2C.svg/1920px-I2C.svg.png">
+<meta property="og:image" content="http://uk-liewzheng-blog-pic.oss-eu-west-1.aliyuncs.com/2019/01/06/SerialCommunication/%E5%9B%BE%E7%89%873.png">
+<meta property="og:image" content="http://uk-liewzheng-blog-pic.oss-eu-west-1.aliyuncs.com/2019/01/06/SerialCommunication/%E5%9B%BE%E7%89%874.png">
+<meta property="og:image" content="http://uk-liewzheng-blog-pic.oss-eu-west-1.aliyuncs.com/2019/01/06/SerialCommunication/%E5%9B%BE%E7%89%871.png">
+<meta property="og:image" content="http://uk-liewzheng-blog-pic.oss-eu-west-1.aliyuncs.com/2019/01/06/SerialCommunication/%E5%9B%BE%E7%89%872.png">
+<meta property="article:published_time" content="2019-01-06T07:58:00.000Z">
+<meta property="article:modified_time" content="2019-01-25T10:35:18.000Z">
+<meta property="article:author" content="Liewzheng">
+<meta property="article:tag" content="Terminology">
+<meta property="article:tag" content="Serial">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://upload.wikimedia.org/wikipedia/commons/thumb/e/ed/SPI_single_slave.svg/1920px-SPI_single_slave.svg.png">
+
+
+<link rel="canonical" href="http://islet.space/2019/01/06/Hardware/Common/2019-01-06-%E4%B8%B2%E8%A1%8C%E9%80%9A%E4%BF%A1/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{&quot;sidebar&quot;:&quot;&quot;,&quot;isHome&quot;:false,&quot;isPost&quot;:true,&quot;lang&quot;:&quot;en&quot;,&quot;comments&quot;:true,&quot;permalink&quot;:&quot;http:&#x2F;&#x2F;islet.space&#x2F;2019&#x2F;01&#x2F;06&#x2F;Hardware&#x2F;Common&#x2F;2019-01-06-%E4%B8%B2%E8%A1%8C%E9%80%9A%E4%BF%A1&#x2F;&quot;,&quot;path&quot;:&quot;2019&#x2F;01&#x2F;06&#x2F;Hardware&#x2F;Common&#x2F;2019-01-06-串行通信&#x2F;&quot;,&quot;title&quot;:&quot;串行通信（Serial Communication）&quot;}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">&quot;&quot;</script>
+<title>串行通信（Serial Communication） | Coder的孤岛</title><script src="/js/config.js"></script>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Coder的孤岛</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">islet of the coder</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-文章"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>文章</a></li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E4%B8%B2%E8%A1%8C%E9%80%9A%E4%BF%A1"><span class="nav-number">1.</span> <span class="nav-text">一、串行通信</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-1-%E5%90%8C%E6%AD%A5%E4%B8%B2%E8%A1%8C%E9%80%9A%E4%BF%A1"><span class="nav-number">1.1.</span> <span class="nav-text">1.1 同步串行通信</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-2-%E5%BC%82%E6%AD%A5%E4%B8%B2%E8%A1%8C%E9%80%9A%E4%BF%A1"><span class="nav-number">1.2.</span> <span class="nav-text">1.2 异步串行通信</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E4%B8%B2%E8%A1%8C%E5%8D%8F%E8%AE%AE%E6%A0%87%E5%87%86%E4%BB%8B%E7%BB%8D"><span class="nav-number">2.</span> <span class="nav-text">二、串行协议标准介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-SPI"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 SPI</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2-I%C2%B2C"><span class="nav-number">2.2.</span> <span class="nav-text">2.2 I²C</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-3-UART"><span class="nav-number">2.3.</span> <span class="nav-text">2.3 UART</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-4-RS232"><span class="nav-number">2.4.</span> <span class="nav-text">2.4 RS232</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-5-TTL"><span class="nav-number">2.5.</span> <span class="nav-text">2.5 TTL</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-6-COM%E6%8E%A5%E5%8F%A3"><span class="nav-number">2.6.</span> <span class="nav-text">2.6 COM接口</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-7-%E5%85%B6%E4%BB%96"><span class="nav-number">2.7.</span> <span class="nav-text">2.7 其他</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-7-1-USB"><span class="nav-number">2.7.1.</span> <span class="nav-text">2.7.1 USB</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-7-2-SATA"><span class="nav-number">2.7.2.</span> <span class="nav-text">2.7.2 SATA</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="nav-number">3.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Liewzheng</p>
+  <div class="site-description" itemprop="description">笔记分享的旮旯孤岛而已</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">54</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">16</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">102</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="mailto:liewzheng@qq.com" title="E-Mail → mailto:liewzheng@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://islet.space/2019/01/06/Hardware/Common/2019-01-06-%E4%B8%B2%E8%A1%8C%E9%80%9A%E4%BF%A1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Liewzheng">
+      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coder的孤岛">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          串行通信（Serial Communication）
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2019-01-06 15:58:00" itemprop="dateCreated datePublished" datetime="2019-01-06T15:58:00+08:00">2019-01-06</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2019-01-25 18:35:18" itemprop="dateModified" datetime="2019-01-25T18:35:18+08:00">2019-01-25</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Communication/" itemprop="url" rel="index"><span itemprop="name">Communication</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>在计算机系统中，CPU和外部通信有两种通信方式：<strong>并行通信</strong> 和 <strong>串行通信</strong> 。<br>而按照串行数据的时钟控制方式，串行通信又可分为 <strong>同步通信</strong> 和 <strong>异步通信</strong>。</p>
+<p>数据层标准：I2C、SPI、UART、USB、SATA<br>硬件层标准：RS232、TTL</p>
+<p>某些协议可能对于数据层或硬件层有着不同的规定，因此请自行了解并加以区分。</p>
+<h1 id="一、串行通信"><a href="#一、串行通信" class="headerlink" title="一、串行通信"></a>一、串行通信</h1><p>Serial communication，指所有的串行的通信协议。是相对<strong>并行通信（Parallel communication)</strong> 而言的。</p>
+<h2 id="1-1-同步串行通信"><a href="#1-1-同步串行通信" class="headerlink" title="1.1 同步串行通信"></a>1.1 同步串行通信</h2><p>Synchronous serial communication，指发送端在发送串行数据的同时，提供一个时钟信号，并按照一定的约定（例如在时钟信号的上升沿的时候，将数据发送出去）发送数据，接收端根据发送端提供的时钟信号，以及大家的约定，接收数据的。</p>
+<p>如：I2C、SPI。</p>
+<h2 id="1-2-异步串行通信"><a href="#1-2-异步串行通信" class="headerlink" title="1.2 异步串行通信"></a>1.2 异步串行通信</h2><p>Asynchronous serial communication，指发送端在数据发送之前和之后，通过特定形式的信号（例如START信号和STOP信号），告诉接收端，可以开始（或者停止）接收数据了。与此同时，收发两方会约定一个数据发送的速度（波特率），发送端在发送START信号之后，就按照固定的节奏发送串行数据，与此同时，接收端在收到START信号之后，也按照固定的节奏接收串行数据。</p>
+<p>如：UART、USB。</p>
+<p>在传送数据的过程中，字符与字符之间的传送是完全异步的，位与位之间的传送基本上是同步的，其特点可以概括为：</p>
+<ol>
+<li>以字符为单位传送信息。</li>
+<li>相邻两字符间的间隔是任意长。</li>
+<li>因为一个字符中的比特位长度有限，所以需要的接收时钟和发送时钟只要相近就可以。</li>
+<li>异步方式特点简单的说就是：字符间异步，字符内部各位同步。</li>
+</ol>
+<h1 id="二、串行协议标准介绍"><a href="#二、串行协议标准介绍" class="headerlink" title="二、串行协议标准介绍"></a>二、串行协议标准介绍</h1><p>本节仅对SPI、I2C、UART、RS232、TTL及COM接口做详细介绍，其他标准作为粗略的补充或拓展之用。</p>
+<h2 id="2-1-SPI"><a href="#2-1-SPI" class="headerlink" title="2.1 SPI"></a>2.1 SPI</h2><p>Serial Peripheral Interface Bus，串行外设接口。是一种用于短程通信的串行通信同步接口规范，也是一种<strong>同步串行通信协议</strong>，主要应用于单片机系统中。</p>
+<p>典型应用包含SD卡、液晶显示器、RFID读卡模块MFRC-522。 SPI设备之间使用全双工模式通信，包含一个主机和一个或多个从机。主机产生待读或待写的帧数据，多个从机通过一个片选线路 决定哪个来响应主机的请求。 有时SPI接口被称作四线程接口，SPI准确来讲称为同步串行接口，但是与同步串行接口协议（SSI）不同，SSI是一个四线程 同步通信协议，但是使用差分信号输入同时仅提供一个单工通信信道。</p>
+<p>SPI总线规定了4个保留逻辑信号接口：</p>
+<ul>
+<li><strong>SCLK</strong>（Serial Clock）：串列时脉，由主机发出</li>
+<li><strong>MOSI</strong>（Master Output,Slave Input）：主机输出从机输入信号，由主机发出</li>
+<li><strong>MISO</strong>（Master Input,Slave Output）：主机输入从机输出信号，由从机发出</li>
+<li><strong>SS</strong>（Slave Selected）：选择信号，由主机发出，一般是低电位有效</li>
+</ul>
+<p>尽管上面的引脚名称是最常用的，但在过去，有时会使用其他引脚命名约定，因此旧IC产品的SPI端口引脚名称可能有所不同。</p>
+<p><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/ed/SPI_single_slave.svg/1920px-SPI_single_slave.svg.png" alt="SPI总线：单一主机对单一从机"></p>
+<p><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fc/SPI_three_slaves.svg/1280px-SPI_three_slaves.svg.png" alt="SPI总线：单一主机对复合从机"></p>
+<h2 id="2-2-I²C"><a href="#2-2-I²C" class="headerlink" title="2.2 I²C"></a>2.2 I²C</h2><p>Inter-Integrated Circuit，字面上的意思是集成电路之间，是I²C Bus简称。也称集成电路总线，它是一种<strong>同步串行通信协议</strong>，使用多主从架构总线。</p>
+<p><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/I2C.svg/1920px-I2C.svg.png" alt="I2C bus"></p>
+<h2 id="2-3-UART"><a href="#2-3-UART" class="headerlink" title="2.3 UART"></a>2.3 UART</h2><p>Universally Asynchronous Receiver/Transmitter，通用异步接收/传输器，是指以某个固定的速率（1200bps、9600bps、115200bps等）进行数据传输，且一次只能传输一个bit（所以叫做串行传输）的<strong>异步串行通信协议</strong> 。<br>有时候UART会与TTL（Transistor-Transistor Logic）Serial混为一谈，这是因为TTL虽然可以采用其他串行通信协议（如I2C和SPI），但很多PC硬件上支持服务复杂，所以一般用UART协议导致的。<br>常见的微控制器中，都有内置UART协议接口。</p>
+<h2 id="2-4-RS232"><a href="#2-4-RS232" class="headerlink" title="2.4 RS232"></a>2.4 RS232</h2><p>RS232或者RS485，相较于UART是通信协议的标准，RS232或RS485d规定的是电路的<strong>物理层协议</strong>（电平标准）。<br>因为它规定了电气特性和各个引脚的功能定义，如 用-3V— -15V之间的任意电平表示逻辑“1” ；用+3V — +15V电平表示逻辑“0”，这里采用的是负逻辑。</p>
+<h2 id="2-5-TTL"><a href="#2-5-TTL" class="headerlink" title="2.5 TTL"></a>2.5 TTL</h2><p>Transistor-transistor Logic， 晶体管-晶体管逻辑集成电路，这种串行通信对应的物理电平始终是在0V和Vcc之间，其中常见的Vcc是5V或3.3V。<br>TTL指的是电路的 <strong>物理层协议</strong> （电平标准）。电压&gt;=2.4V时代表高电平1，电压&lt;=0.5V时代表低电平0（对于5V或3.3V电源电压），这里是正逻辑。TTL接口在Minnow板子上如图：<br><img src="http://uk-liewzheng-blog-pic.oss-eu-west-1.aliyuncs.com/2019/01/06/SerialCommunication/%E5%9B%BE%E7%89%873.png" alt="pic3"></p>
+<p>在TTL与RS232的互相转换中，使用的芯片是MAX3232（3.3V）或者MAX232（5V），里面就只涉及到电压转换的问题了，没有数据的改变和封装，因为他们在数据层的协议是一样的。<br>比如，对于同样传输0b01010101来说，RS232和TTL的时序对比如下图所示。<br><img src="http://uk-liewzheng-blog-pic.oss-eu-west-1.aliyuncs.com/2019/01/06/SerialCommunication/%E5%9B%BE%E7%89%874.png" alt="pic4"><br>当然，RS232和TTL之间的转换，不仅仅是简单的电平转换，还要考虑到其他一些因素，比如调节和矫正一些电平（提高或降低对应的电平），确保可能的有害的RS232电压不会破坏微控制器的串口针脚。</p>
+<p><strong>如何分辨究竟是TTL还是RS232呢？</strong></p>
+<ul>
+<li>一般来说，由SOC芯片引脚直接引出的一般是TTL，其高低电平不需要任何转换，可以由芯片之间驱动，节省费用；而中间接有转换芯片的可能就是RS232了，可以根据电路图的芯片型号google即可。</li>
+<li>另一个原则是RS232通常出现在传统的PC和服务器领域，TTL通常用于嵌入式设备。</li>
+</ul>
+<h2 id="2-6-COM接口"><a href="#2-6-COM接口" class="headerlink" title="2.6 COM接口"></a>2.6 COM接口</h2><p>Cluster Communication Port，串行通讯端口，简称串口。微机上的串口通常是9针（如下图示），也有25针的接口，最大速率115200bps。<br><img src="http://uk-liewzheng-blog-pic.oss-eu-west-1.aliyuncs.com/2019/01/06/SerialCommunication/%E5%9B%BE%E7%89%871.png" alt="pic1"><br>PC计算机背板的COM口通常采用RS232标准，其高电平定义为-12V，低电平定义为+12V。<br>在嵌入式设备上的4针杜邦线接口也算COM接口，采用的是TTL标准或RS232标准。<strong>但如果谈论到COM接口，一般是指RS232标准的PC背板的9pin的COM口。</strong><br><img src="http://uk-liewzheng-blog-pic.oss-eu-west-1.aliyuncs.com/2019/01/06/SerialCommunication/%E5%9B%BE%E7%89%872.png" alt="pic2"></p>
+<table>
+<thead>
+<tr>
+<th>转换方式</th>
+<th>芯片型号</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>TTL-RS232</td>
+<td>MAX3232 或者 ST3232</td>
+</tr>
+<tr>
+<td>USB-TTL</td>
+<td>PL2303HX 或者 CP2102</td>
+</tr>
+</tbody></table>
+<p>如果要转换USB-RS232的话，则要使用USB-TTL和TTL-RS232两种芯片。</p>
+<h2 id="2-7-其他"><a href="#2-7-其他" class="headerlink" title="2.7 其他"></a>2.7 其他</h2><h3 id="2-7-1-USB"><a href="#2-7-1-USB" class="headerlink" title="2.7.1 USB"></a>2.7.1 USB</h3><p>Universal Serial Bus，通用串行总线。是连接计算机系统与外部设备的一种串口总线标准，也是一种输入输出接口的技术规范。<br>USB使用NRZI编码方式：当数据为0时，电平翻转；数据为1时，电平不翻转。为了防止出现过长时间电平不变化现象，在发送数据时采用位填充处理。具体过程如下：</p>
+<ul>
+<li>当遇见连续6个高电平时，就强制插入一个0。</li>
+<li>经过位填充后的数据由串行接口引擎（SIE）将数据串行化和NRZI编码后，发送到USB的差分数据线上。</li>
+<li>接收端完成的过程和发送端刚好相反。</li>
+</ul>
+<h3 id="2-7-2-SATA"><a href="#2-7-2-SATA" class="headerlink" title="2.7.2 SATA"></a>2.7.2 SATA</h3><p>Serial Advanced Technology Attachment，串行高级技术附件。<br>是一种计算机总线，负责主板和大容量存储设备（如硬盘及光盘驱动器）之间的数据传输，主要用于个人计算机，用以取代PATA或称IDE接口。<br>串行ATA与串列SCSI（SAS: Serial Attached SCSI）的两者排线兼容，SATA硬盘可接上SAS接口。</p>
+<h1 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h1><ol>
+<li>《<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E5%BA%8F%E5%88%97%E5%91%A8%E9%82%8A%E4%BB%8B%E9%9D%A2">Serial Peripheral Interface</a>》</li>
+<li>《<a target="_blank" rel="noopener" href="https://blog.csdn.net/seashine_yan/article/details/71192283">同步串口和异步串口的区别及使用情况</a>》</li>
+<li>《<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/25893717">UART、RS232、TTL关系浅析</a>》</li>
+<li>《<a target="_blank" rel="noopener" href="https://fanzheng.org/archives/39">UART、TTL、RS232等概念的区别与联系</a>》</li>
+<li>《<a target="_blank" rel="noopener" href="https://wenku.baidu.com/view/a5df03bb856a561253d36f4e.html">串口、COM口、TTL、RS-232、RS-485区别详解</a>》</li>
+<li>《<a target="_blank" rel="noopener" href="http://www.elecfans.com/yuanqijian/yinjiaotu/20180418664020.html">一文看懂sp3232与max3232区别</a>》</li>
+<li>《<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/USB">USB</a>》</li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Terminology/" rel="tag"># Terminology</a>
+              <a href="/tags/Serial/" rel="tag"># Serial</a>
+          </div>
+
+    <div id="vcomment" style="margin: 20px 0 0 0"></div>
+    <script>
+        new Valine({
+            el: '#vcomment' ,
+            appId: 'vRGM12EcYxDSM2lat5qjjSeY-gzGzoHsz',
+            appKey: 'WBgAb6NTAFQ7DYtgH0uOPNNh'
+        });
+    </script>
+</body>
+
+
+
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2019/01/04/Blog/2019-01-04-%E5%88%A9%E7%94%A8Hexo%E6%90%AD%E5%BB%BAGitHub%E6%89%98%E7%AE%A1%E7%9A%84%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/" rel="prev" title="利用Hexo搭建GitHub托管的个人博客">
+                  <i class="fa fa-chevron-left"></i> 利用Hexo搭建GitHub托管的个人博客
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2019/01/06/Networking/%E7%BD%91%E7%BB%9C%20-%20%E5%88%A9%E7%94%A8%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%90%AD%E5%BB%BAMQTT%E6%9C%8D%E5%8A%A1/" rel="next" title="利用云服务器搭建MQTT服务">
+                  利用云服务器搭建MQTT服务 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+<script src="/js/comments.js"></script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">粤ICP备19004822号 </a>
+  </div>
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Liewzheng</span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

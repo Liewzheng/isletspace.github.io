@@ -34,8 +34,10 @@
 <meta property="og:image" content="https://pic.islet.space/2021/05/image-20210520010438229.png">
 <meta property="og:image" content="https://pic.islet.space/2021/05/image-20210520011656751.png">
 <meta property="og:image" content="https://pic.islet.space/2021/05/image-20210520012328329.png">
+<meta property="og:image" content="https://pic.islet.space/2021/05/20210520095711.png">
+<meta property="og:image" content="https://pic.islet.space/2021/05/20210520095708.png">
 <meta property="article:published_time" content="2021-05-17T12:00:00.000Z">
-<meta property="article:modified_time" content="2021-05-19T17:29:16.665Z">
+<meta property="article:modified_time" content="2021-05-20T14:50:31.597Z">
 <meta property="article:author" content="Liewzheng">
 <meta property="article:tag" content="assembly">
 <meta property="article:tag" content="x86">
@@ -126,7 +128,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#X86%E6%8C%87%E4%BB%A4%E9%9B%86%E4%BB%8B%E7%BB%8D"><span class="nav-number">1.</span> <span class="nav-text">X86指令集介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#X86%E6%8C%87%E4%BB%A4%E9%9B%86%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%89%B9%E8%89%B2"><span class="nav-number">1.1.</span> <span class="nav-text">X86指令集的基本特色</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#X86%E5%AF%84%E5%AD%98%E5%99%A8"><span class="nav-number">1.2.</span> <span class="nav-text">X86寄存器</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#SHARC%E6%B1%87%E7%BC%96"><span class="nav-number">2.</span> <span class="nav-text">SHARC汇编</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#VisualDSP"><span class="nav-number">2.1.</span> <span class="nav-text">VisualDSP++</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E8%A7%88"><span class="nav-number">2.2.</span> <span class="nav-text">总览</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BC%96%E5%86%99"><span class="nav-number">2.3.</span> <span class="nav-text">编写</span></a></li></ol></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#X86%E6%8C%87%E4%BB%A4%E9%9B%86%E4%BB%8B%E7%BB%8D"><span class="nav-number">1.</span> <span class="nav-text">X86指令集介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#X86%E6%8C%87%E4%BB%A4%E9%9B%86%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%89%B9%E8%89%B2"><span class="nav-number">1.1.</span> <span class="nav-text">X86指令集的基本特色</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#X86%E5%AF%84%E5%AD%98%E5%99%A8"><span class="nav-number">1.2.</span> <span class="nav-text">X86寄存器</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#SHARC%E6%B1%87%E7%BC%96"><span class="nav-number">2.</span> <span class="nav-text">SHARC汇编</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#VisualDSP"><span class="nav-number">2.1.</span> <span class="nav-text">VisualDSP++</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E8%A7%88"><span class="nav-number">2.2.</span> <span class="nav-text">总览</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BC%96%E5%86%99"><span class="nav-number">2.3.</span> <span class="nav-text">编写</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3"><span class="nav-number">2.4.</span> <span class="nav-text">问题解决</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%97%AE%E9%A2%98%E4%B8%80"><span class="nav-number">2.4.1.</span> <span class="nav-text">问题一</span></a></li></ol></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -225,7 +227,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-05-20 01:29:16" itemprop="dateModified" datetime="2021-05-20T01:29:16+08:00">2021-05-20</time>
+        <time title="Modified: 2021-05-20 22:50:31" itemprop="dateModified" datetime="2021-05-20T22:50:31+08:00">2021-05-20</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -299,6 +301,7 @@
 </blockquote>
 <h2 id="总览"><a href="#总览" class="headerlink" title="总览"></a>总览</h2><p>汇编器 将 <strong>汇编源(.asm)<strong>、</strong>数据(.dat)</strong> 和 <strong>头文件(.h)</strong> 三者整理成可执行可链接的格式（ELF），也就是一个标准的 **二进制文件(.doj)**。</p>
 <p>另外，汇编器还将生成一个 **列表文件(.lst)**，展示二进制文件和源文件之间的联系。</p>
+<p>也就是说，编译成功后，.doj和.lst文件就是其编译结果。</p>
 <img src="https://pic.islet.space/2021/05/image-20210520011656751.png" alt="image-20210520011656751" style="zoom:67%;" />
 
 <blockquote>
@@ -327,6 +330,13 @@
 </ul>
 </blockquote>
 <p>可以使用像 <code>batch-file</code> 和 <code>makefile</code> 这样的命令行工具来汇编你的源文件。</p>
+<p>列表文件还提供了关于导入的C语言数据结构的信息。</p>
+<h2 id="问题解决"><a href="#问题解决" class="headerlink" title="问题解决"></a>问题解决</h2><h3 id="问题一"><a href="#问题一" class="headerlink" title="问题一"></a>问题一</h3><p><strong>现象</strong>：出现如下图所示的头文件缺少</p>
+<p><img src="https://pic.islet.space/2021/05/20210520095711.png" alt="image-20210520090023689"></p>
+<p><strong>原因</strong>：<code>.boj </code>文件和其所依赖的 <code>.h</code> 头文件相对路径不一致，或项目文件的绝对路径与原来创建时不一致。</p>
+<p><strong>例如</strong>：从文件 <code>Debug/system/startup_Idf/app_IVT.doj</code> 中可以看出，该文件的创作者是将其放置在 <code>D:\ADSP\workspace\LED_test\Debug</code> 下的，因此需要改变该项目文件的位置。</p>
+<p><strong>解决方法</strong>：在原创作者的绝对路径下放置该项目文件。</p>
+<p><img src="https://pic.islet.space/2021/05/20210520095708.png" alt="image-20210520090936369"></p>
 
     </div>
 
