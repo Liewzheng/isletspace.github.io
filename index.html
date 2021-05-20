@@ -126,16 +126,16 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">54</span>
+          <span class="site-state-item-count">55</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
-        <span class="site-state-item-count">16</span>
+        <span class="site-state-item-count">17</span>
         <span class="site-state-item-name">categories</span>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">102</span>
+        <span class="site-state-item-count">105</span>
         <span class="site-state-item-name">tags</span>
       </div>
   </nav>
@@ -169,6 +169,124 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://islet.space/2021/05/21/Programing/C++/2021-05-21-How-to-Use-the-C-Preprocessors-#error-Directive/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Liewzheng">
+      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coder的孤岛">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/05/21/Programing/C++/2021-05-21-How-to-Use-the-C-Preprocessors-#error-Directive/" class="post-title-link" itemprop="url">How to Use the C Preprocessor's</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2021-05-21 23:40:32 / Modified: 00:17:16" itemprop="dateCreated datePublished" datetime="2021-05-21T23:40:32+08:00">2021-05-21</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Programing/" itemprop="url" rel="index"><span itemprop="name">Programing</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p><a target="_blank" rel="noopener" href="https://barrgroup.com/embedded-systems/how-to/c-preprocessor-error-directive">barrgroup.com</a></p>
+<p>One of the least used but potentially most useful features of the C  preprocessor is the <em><strong>ANSI-specified #error directive</strong></em>. Here’s a look at a couple of clever uses for <code>#error</code> that have proven invaluable in embedded software development.</p>
+<p>The syntax of <code>#error</code> is very straightforward:</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">error</span> <span class="meta-string">&lt;writer supplied error message&gt;</span>  <span class="comment">//开发者提供的错误信息</span></span></span><br></pre></td></tr></table></figure>
+
+<p><code>&lt;writer supplied error message&gt;</code> 中可包含任何可显示的文本，甚至不需要使用双引号 <code>&quot;&quot;</code> 。</p>
+<blockquote>
+<p>The <code> &lt;writer supplied error message&gt;</code> can consist of any  printable text. You don’t even have to enclose the text in quotes.  (Technically, the message is optional–though it rarely makes sense to omit it.)</p>
+</blockquote>
+<p>当C预处理器遇到 <code>#error</code> 语句时，会将停止编译，并将错误信息输出至 <code>stderr</code> 文件。C编译器的典型错误信息如下：</p>
+<blockquote>
+<p>When the C preprocessor encounters a <code>#error</code> statement, it causes  compilation to terminate and the writer-supplied error message to be  printed to <a target="_blank" rel="noopener" href="http://en.wikipedia.org/wiki/Standard_streams">stderr (link is external)</a>. A typical error message from a C compiler looks like this:</p>
+</blockquote>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Filename(line_number): Error! </span><br><span class="line">Ennnn: &lt;writer supplied error message&gt; </span><br></pre></td></tr></table></figure>
+
+<p>where Filename is the source file name, <code>line_number</code> is the line  number where the <code>#error</code> statement is located, and <code>Ennnn</code> is a  compiler-specific error number. Thus, the <code>#error</code> message is basically  indistinguishable from ordinary compiler error messages.</p>
+<p>“Wait a minute,” you might say. “I spend enough time trying to get  code to compile and now he wants me to do something that causes more  compiler errors?” Absolutely! The essential point is that code that compiles but is incorrect is worse than useless. I’ve found three  general areas in which this problem can arise and <code>#error</code> can help. Read  on and see if you agree with me.</p>
+<h2 id="Incomplete-code"><a href="#Incomplete-code" class="headerlink" title="Incomplete code"></a>Incomplete code</h2><p>I tend to code using a step-wise refinement approach, so it isn’t  unusual during development for me to have functions that do nothing, for loops that lack a body, and so forth. Consequently, I often have files  that are compilable but lack some essential functionality. Working this  way is fine, until I’m pulled off to work on something else (an  occupational hazard of being in the consulting business). Because these  distractions can occasionally run into weeks, I sometimes return to the  job with my memory a little hazy about what I haven’t completed. In the  worst-case scenario (which has occurred), I perform a make, which runs  happily, and then I attempt to use the code. The program, of course,  crashes and burns, and I’m left wondering where to start.</p>
+<p>In the past, I’d comment the file to note what had been done and what was still needed. However, I found this approach to be rather weak  because I then had to read all my comments (and I comment heavily) in  order to find what I was looking for. Now I simply enter something like  the following in an appropriate place in the file:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#error *** Nigel - Function incomplete. Fix before using *** </span><br></pre></td></tr></table></figure>
+
+<p>Thus, if I forget that I haven’t done the necessary work, an  inadvertent attempt to use the file will result in just about the most  meaningful compiler message I’ll ever receive. Furthermore, it saves me  from having to wade through pages of comments, trying to find what work I haven’t finished.</p>
+<h2 id="Compiler-dependent-code"><a href="#Compiler-dependent-code" class="headerlink" title="Compiler-dependent code"></a>Compiler-dependent code</h2><p>As much as I strive to write portable code, I often find myself  having to trade off performance for portability - and in the embedded  world, performance tends to win. However, what happens if a few years  later I reuse some code without remembering that the code has <em><strong>compiler-specific peculiarities</strong></em>? The result is a much longer debug  session than is necessary. But a <em><strong>judicious</strong></em> <code>#error</code> statement can prevent a lot of grief. A couple of examples may help.</p>
+<h3 id="Example-1"><a href="#Example-1" class="headerlink" title="Example 1"></a>Example 1</h3><p>Some floating-point code requires at least 12 digits of resolution to return the correct results. Accordingly, the various variables are defined as type long double. But <em><strong>ISO C</strong></em> only requires that <em><u>a long double have 10 digits of resolution</u></em>. Thus on certain machines, a long double may be <em><strong>inadequate</strong></em> to do the job. To protect against this, I would  include the following:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;float.h&gt;</span><br><span class="line">#if (LDBL_DIG &lt; 12) </span><br><span class="line">	#error *** long doubles need 12 digit resolution.</span><br><span class="line">	Do not use this compiler! *** </span><br><span class="line">#endif </span><br></pre></td></tr></table></figure>
+
+<p>This approach works by examining the value of an ANSI-mandated constant found in <a target="_blank" rel="noopener" href="http://en.wikipedia.org/wiki/Float.h">float.h (link is external)</a>.</p>
+<h3 id="Example-2"><a href="#Example-2" class="headerlink" title="Example 2"></a>Example 2</h3><p>An amazing amount of code makes invalid assumptions about the  underlying size of the various integer types. If you have code that has to use an int (as opposed to a user-specified data type such as <code>int16</code>),  and the code assumes that an int is 16 bits, you can do the following:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;limits.h&gt;</span><br><span class="line">#if (INT_MAX !&#x3D; 32767) </span><br><span class="line">	#error *** This file only works with 16-bit int.</span><br><span class="line">	Do not use this compiler! *** </span><br><span class="line">#endif </span><br></pre></td></tr></table></figure>
+
+<p>Again, this works by checking the value of an ANSI-mandated constant. This time the constant is found in the file <a target="_blank" rel="noopener" href="http://en.wikipedia.org/wiki/Limits.h">limits.h (link is external)</a>. This approach is a lot more useful than putting these limitations  inside a big comment that someone may or may not read. After all, you have to read the compiler error messages.</p>
+<h2 id="Conditionally-compiled-code"><a href="#Conditionally-compiled-code" class="headerlink" title="Conditionally-compiled code"></a>Conditionally-compiled code</h2><p>Since conditionally compiled code seems to be a necessary evil in embedded programming, it’s common to find code sequences such as the  following:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">#if defined OPT_1 </span><br><span class="line">	&#x2F;* Do option_1 *&#x2F; </span><br><span class="line">#else </span><br><span class="line">	&#x2F;* Do option_2 *&#x2F; </span><br><span class="line">#endif </span><br></pre></td></tr></table></figure>
+
+<p>As it is written, this code means the following: if and only if OPT_1 is defined, we will do option_1; otherwise we’ll do option_2. The  problem with this code is that a user of the code doesn’t know (without explicitly examining the code) that OPT_1 is a valid compiler switch.  Instead, the naive user will simply compile the code without defining OPT_1 and get the alternate implementation, irrespective of whether  that is what’s required or not. A more considerate coder might be aware  of this problem, and instead do the following:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">#if defined OPT_1 </span><br><span class="line">	&#x2F;* Do option 1 *&#x2F; </span><br><span class="line">#elif defined OPT_2 </span><br><span class="line">	&#x2F;* Do option 2*&#x2F; </span><br><span class="line">#endif </span><br></pre></td></tr></table></figure>
+
+<p>In this case, failure to define either OPT_1 or OPT_2 will typically  result in an obscure compiler error at a point later in the code. The  user of this code will then be stuck with trying to work out what must  be done to get the module to compile. This is where #error comes in.  Consider the following code sequence:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">#if defined OPT_1 </span><br><span class="line">	&#x2F;* Do option_1 *&#x2F; </span><br><span class="line">#elif defined OPT_2 </span><br><span class="line">	&#x2F;* Do option_2 *&#x2F; </span><br><span class="line">#else </span><br><span class="line">	#error *** You must define one of OPT_1 or OPT_2 *** </span><br><span class="line">#endif </span><br></pre></td></tr></table></figure>
+
+<p>Now the compilation fails, but at least it tells the user explicitly  what to do to make the module compile. I know that if this procedure had been adopted universally, I would have saved a lot of time over the  years trying to reuse other people’s code.</p>
+<p>So there you have it. Now tell me, don’t you agree that <code>#error</code> is a  really useful part of the preprocessor, worthy of your frequent use-and  occasional praise?</p>
+<p>​          </p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -2047,140 +2165,6 @@
 <p>音量影响的是后级最终输出的响度。</p>
 <h2 id="增益和音量的关系"><a href="#增益和音量的关系" class="headerlink" title="增益和音量的关系"></a>增益和音量的关系</h2><p>增益多与“敏感度”相关，比方说：你的麦克风需要更“灵敏”吗？那么就把增益开大些。但是增益开得过大，信噪比会降低，底噪声就会更加明显。还会因电流输出限制产生削波失真。 这就是我们所说的“过载”效果的真正来源。也是很多朋友想要通过开大clean通道的volume去制造过载却不明显的原因。</p>
 <p>如果把增益开大，把音量关小的话，可以得到过载的效果。很多60,70年代的音乐作品中可以听到这种音色；关小增益开大音量的话，音符会很清晰，颗粒性也很好。</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://islet.space/2021/05/05/Signal/2021-05-05-%E6%A8%A1%E6%95%B0%E6%8E%A5%E5%8F%A3%E4%B8%AD%E7%9A%84%E5%8F%AF%E7%BC%96%E7%A8%8B%E5%A2%9E%E7%9B%8A%E6%94%BE%E5%A4%A7%E5%99%A8%EF%BC%88PGA%EF%BC%89/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Liewzheng">
-      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Coder的孤岛">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/05/05/Signal/2021-05-05-%E6%A8%A1%E6%95%B0%E6%8E%A5%E5%8F%A3%E4%B8%AD%E7%9A%84%E5%8F%AF%E7%BC%96%E7%A8%8B%E5%A2%9E%E7%9B%8A%E6%94%BE%E5%A4%A7%E5%99%A8%EF%BC%88PGA%EF%BC%89/" class="post-title-link" itemprop="url">模数接口中的可编程增益放大器（PGA）</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
-    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2021-05-05 23:58:32" itemprop="dateCreated datePublished" datetime="2021-05-05T23:58:32+08:00">2021-05-05</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-05-20 22:53:04" itemprop="dateModified" datetime="2021-05-20T22:53:04+08:00">2021-05-20</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Signal/" itemprop="url" rel="index"><span itemprop="name">Signal</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>原文出处：<a target="_blank" rel="noopener" href="https://www.21ic.com/app/analog/201207/134812.htm">https://www.21ic.com/app/analog/201207/134812.htm</a></p>
-<p>用可编程增益放大器(PGA)处理数据采集系统中传感器/变送器模拟输出和信号处理数字之间的接口。单片和高集成度PGA现在被可编程、更高精度、更高吞吐量和更小封装尺寸的模块和混合方案替代。 </p>
-<p>由于来自传感器/变送器的模拟信号的本性，使其工作必须具备相当大的动态范围。这要求采用连续增益级在进行任何实际的数字处理之前增大这些信号，PGA能满足这种要求。 </p>
-<p>PGA是可变增益放大器(VGA)的一种。VGA提供可变和连续增益控制，而PGA <mark>必须在软件控制下以固定步(通常6dB步)做到可变增益控制</mark>。达到更精细的分辨步0.5dB是可能的。 一般多通道数据采集系统用很多不同类型的传感器/变送器，这包括 <strong>热电偶</strong>、<strong>惠斯登电桥</strong>，<strong>热敏电阻</strong>、<strong>应变计</strong> 和 <strong>超声系统</strong>。虽然，传感器/变送器是基于不同的物理原理，但大多数产品是 <strong>以电压做为输出</strong>。甚至这会产生中间值(如电容或电阻)，但最终变换为电压，以便在数据采集系统中进行</p>
-<p><img src="http://pic.islet.space/2021/04/fb222bc5a544088d5a7fc0c708476621.jpg"></p>
-<p>传感器/变送器的输出可覆盖非常大的范围，需要PGA来处理传感器/变送器输出到ADC的接口。</p>
-<blockquote>
-<p>例如，在工业过程控制系统中，低频信号可以几毫伏到几伏变化。需要PGA来匹配这种宽传感器/变送器输出范围到特定的ADC输入范围。通常，在输入数据采集通道最低信号电平与最高信号电平之比是2个量级或更大。  12位ADC接收小于ADC满标输入十分之一的信号仅可提供8位分辨率，除非在信号到达ADC之前用PGA放大。PGA允许在软件控制下使接收信号的增益达到宽范围增益一带宽乘积。这可避免钳位并允许采用较便宜的ADC，如用12位ADC替代16位ADC。 </p>
-</blockquote>
-<p>PGA可做更多事情。PGA缓冲来自前级(通常是多路转换器)ADC的输入，防止多路转换器导通电阻所引起的加载。PGA也提供差分别单端的变换，大多数跟踪和保持型ADC需要单输入。把PGA连接到差分多路转换器输出时，PGA提供共模抑制。 </p>
-<p>在市场上可以得到很多种PGA和支持元件。这包括可独立应用的运放被专门设计成PGA、ASIC、集成有可编程滤波器的PGA、仪表放大器PGA、用于运放的数字电位器前端、PGA用数字可编程分压器、ADC驱动器。有时把PGA和DAC集成在同一芯片上。 </p>
-<p>对于不需要信号宽动态范围的应用，PGA不是必须的。放大器可以直接接口传感器/变送器到ADC。</p>
-<blockquote>
-<p>例如，Maxim的MAX1494仪表放大器适合于250V/V或更小增益范围的应用。 </p>
-</blockquote>
-<h1 id="各种性能的PGA"><a href="#各种性能的PGA" class="headerlink" title="各种性能的PGA"></a>各种性能的PGA</h1><p>对于特殊性能参量(如高增益稳定性和高精度，低漂移，低失真，高输出驱动电流，高转换率，快速建立时间，高共模抑制比，低功率和小尺寸)有很多PGA是最佳的。 </p>
-<blockquote>
-<ul>
-<li>Microchip公司的MCP6S2X家族PGA具有2、6和8通道输入，包含多路转换器并可通过串行外设接口(SPI)总线进行增益控制和通道选择。</li>
-<li>NS公司的LMH6718IC是双PGA，具有高输出(200mA)驱动信号。  </li>
-<li>高性能小封装的PAG有ADI公司的AD8555，这是封装在微型8引线SOIC中的数字可编程信号调理自动零放大器，它包含放大器，比较器，用Digit  Trim技术的电阻调节分压器和缓冲器。其500V/℃总输入失调漂移是其他竞争产品的1/20。</li>
-<li>Linear公司的LTC6915A也是小封装高性能PGA。此仪表放大器封装为16引线SSOP或12引线DFN，可把它放置在最靠近传感器/变送器的地方。它所占电路板面积是等效分立方案的1/6。零漂移特性具有高达4096的宽可编程动态范围(增益精度0.1%)。它也有50mV/℃漂移和与增益无关的125dB CMRR。  </li>
-<li>对于低失真是主要考虑因素的应用，可以选择Intersil公司PGA缓冲器HFA11XX，其低失真电平低到-73dBc、噪声电平低到7”9nV/√Hz。</li>
-<li>TI公司的THS7001/7002单/双PGA采用Power PAD封装，包含分离的低噪声前置放大器和增益放大级。此器件可达到非常低的噪声电平(低到1.7nV/√Hz)。 </li>
-<li>其他可注意的PGA包括ADI公司的AD628首款具有可编程增益的共模差分放大器和Linear公司的LTC1564 PGA(除放大器外，它还具有8阶软件可编程抗混淆滤波器)。 </li>
-</ul>
-</blockquote>
-<p>PGA也集成有其他前端电路。</p>
-<blockquote>
-<p>如Maxim公司的MAX14XX家族，这是包含PGA的信号调理ASIC。这种器件直接用于传感器/变送器和ADC之间。</p>
-<p>Maxim公司的ADC驱动器MAX2055具有低失真(-76dBc 2次谐波和-69dBc 3次谐波)特性，其差分输出是为驱动高速ADC专门设计的。 </p>
-</blockquote>
-<p>一些PGA供应商也提供驱动PGA前端的数字电位计和分压器IC。</p>
-<blockquote>
-<p>例如，Maxim公司的MAX5420/21数字可编程电压分压器；</p>
-<p>ADI公司的AD5321数字电位计(常用于可编程增益和衰减的非易失性存储器)。  </p>
-<p>另外，Xicor也提供不少PGA器件，这些PGA器件对于执行数字控制的电位计(DCP)是最佳的。  </p>
-</blockquote>
-<h1 id="集成方案"><a href="#集成方案" class="headerlink" title="集成方案"></a>集成方案</h1><p>现在，很多公司把PGA和其他信号调理电路直接集成在ADC芯片上。这种方法有利于所占空间更小，比分离PGA和ADC方案具有更好的性能。然而，其成本比较高，集成PGA在ADC上除灵活性较低外，还有 <mark>较高的时钟噪声电平</mark>。 </p>
-<blockquote>
-<p>带线化前端的Maxim公司的MAX1457(图2)传统器线性化IC就是其中一种，它包含12位ADC。</p>
-<p>ADI公司的ADC7707高精度信号调理16位S-D  ADC包含多路转换器、缓冲器、PGA、电荷平衡电路、串行接口和时钟产生器。</p>
-<p>ADI公司的ADC7708/18S-D6位/24位ADC具有与AD7707相同的电路，但它们的目标是低电压和低功率应用。 </p>
-</blockquote>
-<p><img src="http://pic.islet.space/2021/04/8b55f596bcfdf9a408bd3c959504fb21.jpg" alt="img"></p>
-<p>一个感兴趣的高集成度ADC是ADC7731  24位S-D器件，它具有ADC77017的所有电路。另外，还加上定标微控制器(图3)。此IC的目标是低噪声高吞吐量应用。</p>
-<p>Maxim公司也有带集成PGA的双6位ADC，它具有90Sample/s吞吐率、功耗仅550mW。 </p>
-<p><img src="http://pic.islet.space/2021/04/8CzZ7BjS2OMEYQJ.jpg"></p>
-<p>我们将会看到更多包含PGA和其他信号处理电路的ADC吗？</p>
-<p>不可回避的事实是高集成度是IC业的准则，而PGA和其他信号调理支持电路也不例外。所以希望看到PGA与ADC集成在同一芯片，并能解决片上性能参量(如时钟引起的噪声)和降低高分辨率器件的单个ADC价格。</p>
-<p>事实上，设计人员主要的目标是把传感器/变送器电路放在高集成度ADC上。</p>
-<p>这将是最终解决问题：现实世界模拟信号与计算机的数字世界结合起来的途经。</p>
-<p>这也将聚焦在模拟和数字电路设计的两种不同方法。</p>
 
       
     </div>

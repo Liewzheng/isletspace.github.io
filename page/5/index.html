@@ -126,16 +126,16 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">54</span>
+          <span class="site-state-item-count">55</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
-        <span class="site-state-item-count">16</span>
+        <span class="site-state-item-count">17</span>
         <span class="site-state-item-name">categories</span>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">102</span>
+        <span class="site-state-item-count">105</span>
         <span class="site-state-item-name">tags</span>
       </div>
   </nav>
@@ -169,6 +169,111 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://islet.space/2019/01/30/Hardware/STM32/2019-01-30-STM32%E5%88%9D%E8%AF%86%E5%8F%8A%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Liewzheng">
+      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coder的孤岛">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2019/01/30/Hardware/STM32/2019-01-30-STM32%E5%88%9D%E8%AF%86%E5%8F%8A%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/" class="post-title-link" itemprop="url">STM32初识及环境配置(未完待续)</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2019-01-30 19:00:00" itemprop="dateCreated datePublished" datetime="2019-01-30T19:00:00+08:00">2019-01-30</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2019-02-14 15:05:54" itemprop="dateModified" datetime="2019-02-14T15:05:54+08:00">2019-02-14</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/InternetOfThings/" itemprop="url" rel="index"><span itemprop="name">InternetOfThings</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="一、Some-Conception"><a href="#一、Some-Conception" class="headerlink" title="一、Some Conception"></a>一、Some Conception</h1><h2 id="1-ST"><a href="#1-ST" class="headerlink" title="1. ST"></a>1. ST</h2><p>ST是指意法半导体。意法半导体是一家法国-意大利跨国电子和半导体制造商，总部位于瑞士日内瓦。它通常被称为ST，它是欧洲最大的基于收入的半导体芯片制造商。</p>
+<h2 id="2-Programing-Method"><a href="#2-Programing-Method" class="headerlink" title="2. Programing Method"></a>2. Programing Method</h2><h3 id="2-1-基于寄存器的编程方式"><a href="#2-1-基于寄存器的编程方式" class="headerlink" title="2.1 基于寄存器的编程方式"></a>2.1 基于寄存器的编程方式</h3><p>“设置寄存器-&gt;操作寄存器-&gt;写用户代码”的编程方式通常被称为“基于寄存器的编程方式”，这种编程方式普遍适用于 51、AVR、PIC 或者 MSP430等平台，STM32 当然也可以通过此方式进行程序编写。<br>“基于寄存器的编程方式”有利于大家更好地对一块单片机设备进行操作，但是 这种方式也有以下几个不足:</p>
+<ol>
+<li>移植性差。即当你想把STM32F1的程序移植到STM32F0的单片机上面时，由于两者内核已经内部外设有很多不同，因此，需要修改很多地方才能完成移植;</li>
+<li>效率低下。由于 STM32整个系列的单片机具有非常多的外设，还有两个8位机从没有过的DMA，因此如果基于寄存器编程时，需要设置的寄存器有很多，需要花很长时间来查询用户手册才能完成。</li>
+</ol>
+<h3 id="2-2-基于固件库的编程方式"><a href="#2-2-基于固件库的编程方式" class="headerlink" title="2.2 基于固件库的编程方式"></a>2.2 基于固件库的编程方式</h3><p>基于固件库的变成方式是指，把所有STM32单片机的内部资源抽象成诸多函数，通过对这些函数的设置，即可完成相应固件的初始化以及操作。</p>
+<h2 id="3-IDE"><a href="#3-IDE" class="headerlink" title="3. IDE"></a>3. IDE</h2><h3 id="3-1-IAR-Embedded-Workbench-for-ARM"><a href="#3-1-IAR-Embedded-Workbench-for-ARM" class="headerlink" title="3.1 IAR Embedded Workbench for ARM"></a>3.1 IAR Embedded Workbench for ARM</h3><p>IAR Embedded Workbench 是一套用于编译和调试嵌入式系统应用程序的开发工具，支持汇编、C和C++语言。它提供完整的集成开发环境，包括工程管理器、编辑器、编译链接工具和C-SPY调试器。IAR Systems以其高度优化的编译器 而闻名。每个C/C++编译器不仅包含一般全局性的优化，也包含针对特定芯片的低级优化，以充分利用您所选芯片的所有特性，确保较小的代码尺寸。IAR Embedded Workbench 能够支持由不同的芯片制造商生产，且种类繁多的8位、16位或32位芯片。</p>
+<p>下载链接：<a target="_blank" rel="noopener" href="https://pan.baidu.com/s/1FhzyGrN0bkCP85pQAy79ug">IAR Embedded Workbench for IAR</a> 提取码：c4pm</p>
+<h3 id="3-2-RealView-MDK-ARM"><a href="#3-2-RealView-MDK-ARM" class="headerlink" title="3.2 RealView MDK - ARM"></a>3.2 RealView MDK - ARM</h3><p>RealView MDK开发工具源自德国Keil公司，被全球超过10万的嵌入式开发工程师验证和使用，是ARM公司目前最新推出的针对各种嵌入式处理器的软件开发工具。RealView MDK集成了业内最领先的技术，包括μVision集成开发环境与 RealView编译器。支持ARM7、ARM9和最新的Cortex-M3核处理器，自动配置启动代码，集成Flash烧写模块，强大的Simulation设备模拟，性能分析等功能，与ARM之前的工具包 ADS等相比，RealView编译器的最新版本可将性能改 善超过20%。</p>
+<p>下载链接：<a target="_blank" rel="noopener" href="https://pan.baidu.com/s/18Ni-4gxaqe-P-SIsGrVDIA">Keil MDK 5.24</a> 提取码：jrqc</p>
+<h2 id="4-Debug-Method"><a href="#4-Debug-Method" class="headerlink" title="4. Debug Method"></a>4. Debug Method</h2><p>STM32支持<strong>ISP</strong>和<strong>JTAG/SWD</strong>两种调试方式。</p>
+<h3 id="4-1-1-ISP"><a href="#4-1-1-ISP" class="headerlink" title="4.1.1 ISP"></a>4.1.1 ISP</h3><p>In-System Programmability，即在线系统编程。使用时需要先设置 <strong>BOOT0</strong> 和 <strong>BOOT1</strong> 两脚，然后通过串口 1进行程序烧写，烧写的软件为<strong>Flash_Loader_Demonstrator</strong>。此方法的好处是，可以无需外加编程口，但是只可以烧写程序，无法进行在线仿真。</p>
+<h3 id="4-2-JTAG模式-amp-SWD模式"><a href="#4-2-JTAG模式-amp-SWD模式" class="headerlink" title="4.2 JTAG模式 &amp; SWD模式"></a>4.2 JTAG模式 &amp; SWD模式</h3><p>JTAG，全称为Joint Test Action Group，联合测试工作组。是一种国际标准测试协议 (IEEE 1149.1兼容)， 主要用于芯片内部测试，早在ARM7上面就已经使用了JTAG作为调试和下载口。</p>
+<p>而SWD模式比JTAG 在高速模式下面更加可靠。 在大数据量的情况下面JTAG下载程序会失败, 但是SWD 发生的几率会小很多。基本使用JTAG仿真模式的情况下是可以直接使用SWD模式的。</p>
+<p>与 ISP 相比，SWD接口可以与大多数IDE完美兼容，比如IAR，并且可以通过IAR和调试器，进行程序的在线调试，这种调试方法可以直接追踪到当前代码处的各变量状态，寄存器状态等等。</p>
+<h2 id="5-Download-Tools"><a href="#5-Download-Tools" class="headerlink" title="5. Download Tools"></a>5. Download Tools</h2><h3 id="5-1-J-LINK"><a href="#5-1-J-LINK" class="headerlink" title="5.1 J-LINK"></a>5.1 J-LINK</h3><p>J-Link是SEGGER公司为支持仿真ARM内核芯片推出的仿真调试工具，支持JTAG和SWD两种模式进行调试。</p>
+<h3 id="5-2-U-LINK"><a href="#5-2-U-LINK" class="headerlink" title="5.2 U-LINK"></a>5.2 U-LINK</h3><p>ULINK是由Keil推出的ARM芯片仿真调试工具，是Keil下默认的调试工具，缺点是不支持IAR。<br>ULINK官方提供电路图等资料（半开源资料），可以自行制作仿真调试电路工具。</p>
+<h3 id="5-3-ST-LINK"><a href="#5-3-ST-LINK" class="headerlink" title="5.3 ST-LINK"></a>5.3 ST-LINK</h3><p>ST-LINK是由意法半导体开发的仿真调试工具。<br>(ST-LINKV2)适用于STM32与STM8。与STM32连接时支持JTAG与SWD模式，与STM8连接时支持SWIM模式。</p>
+<h1 id="二、IDE安装及配置"><a href="#二、IDE安装及配置" class="headerlink" title="二、IDE安装及配置"></a>二、IDE安装及配置</h1><h2 id="1-IAR"><a href="#1-IAR" class="headerlink" title="1. IAR"></a>1. IAR</h2><h2 id="2-MDK"><a href="#2-MDK" class="headerlink" title="2. MDK"></a>2. MDK</h2><h1 id="参考材料"><a href="#参考材料" class="headerlink" title="参考材料"></a>参考材料</h1><ol>
+<li>《<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/STMicroelectronics">意法半导体</a>》</li>
+<li>《<a target="_blank" rel="noopener" href="http://bbs.eeworld.com.cn/thread-431094-1-1.html">提问+J-LINK、U-LINK和ST-LINK有什么区别？</a>》</li>
+<li>《<a target="_blank" rel="noopener" href="https://www.eefocus.com/component/m/398663">JTAG与JLink有啥不同？看完这个你就知道了</a>》</li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1296,104 +1401,6 @@
 <h1 id="ADV-DIR-IND"><a href="#ADV-DIR-IND" class="headerlink" title="ADV_DIR_IND"></a>ADV_DIR_IND</h1><h1 id="ADV-DISC"><a href="#ADV-DISC" class="headerlink" title="ADV_DISC"></a>ADV_DISC</h1><h1 id="ADV-CONNREQ"><a href="#ADV-CONNREQ" class="headerlink" title="ADV_CONNREQ"></a>ADV_CONNREQ</h1><h1 id="ADV-SCANREQ"><a href="#ADV-SCANREQ" class="headerlink" title="ADV_SCANREQ"></a>ADV_SCANREQ</h1><h1 id="ADV-SCANRSP"><a href="#ADV-SCANRSP" class="headerlink" title="ADV_SCANRSP"></a>ADV_SCANRSP</h1><h1 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h1><ol>
 <li>《<a target="_blank" rel="noopener" href="https://support.kontakt.io/hc/en-gb/articles/201492492-iBeacon-advertising-packet-structure">iBeacon advertising packet structure</a>》</li>
 </ol>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://islet.space/2019/01/07/Networking/%E7%BD%91%E7%BB%9C%20-%20TCP-IP%E4%B8%93%E6%9C%89%E5%90%8D%E8%AF%8D/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Liewzheng">
-      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Coder的孤岛">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2019/01/07/Networking/%E7%BD%91%E7%BB%9C%20-%20TCP-IP%E4%B8%93%E6%9C%89%E5%90%8D%E8%AF%8D/" class="post-title-link" itemprop="url">TCP/IP专有名词</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
-    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2019-01-07 19:38:13" itemprop="dateCreated datePublished" datetime="2019-01-07T19:38:13+08:00">2019-01-07</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2019-01-09 16:12:38" itemprop="dateModified" datetime="2019-01-09T16:12:38+08:00">2019-01-09</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Communication/" itemprop="url" rel="index"><span itemprop="name">Communication</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="DHCP"><a href="#DHCP" class="headerlink" title="DHCP"></a>DHCP</h1><p>  Dynamic Host Configuration Protocol, 动态主机设置协议, 是一个局域网的网络协议，使用UDP协议工作，主要有两个用途：</p>
-<ol>
-<li>用于内部网或网络服务供应商自动分配IP地址给用户</li>
-<li>用于内部网管理员作为对所有计算机作中央管理的手段</li>
-</ol>
-<h1 id="TCP-IP-Stack-Library-LwIP"><a href="#TCP-IP-Stack-Library-LwIP" class="headerlink" title="TCP/IP Stack Library (LwIP)"></a>TCP/IP Stack Library (LwIP)</h1><p>  LwIP是瑞典计算机科学院的一个开源的TCP/IP协议栈实现。</p>
-<p>  LwIP协议栈主要关注的是怎么样减少内存的使用和代码的大小，这样就可以让lwIP适用于资源有限的小型平台例如嵌入式系统。为了简化处理过程和内存要求，lwIP对API进行了裁减，可以不需要复制一些数据。</p>
-<p>  lwIP是TCP / IP协议套件的一个小型独立实现，最初由Adam Dunkels开发，现在继续在这里。</p>
-<p>  lwIP TCP / IP实现的重点是减少资源使用，同时仍然具有全面的TCP。这使得lwIP适用于具有数十千字节空闲RAM的嵌入式系统，并且可以容纳大约40千字节的代码ROM。</p>
-<h2 id="lwIP主要功能"><a href="#lwIP主要功能" class="headerlink" title="lwIP主要功能"></a>lwIP主要功能</h2><h3 id="协议"><a href="#协议" class="headerlink" title="协议"></a>协议</h3><p>  IP，IPv6，ICMP，ND，MLD，UDP，TCP，IGMP，ARP，PPPoS，PPPoE</p>
-<h3 id="客户端"><a href="#客户端" class="headerlink" title="客户端"></a>客户端</h3><p>DHCP客户端 DNS客户端（包括mDNS主机名解析器），AutoIP / APIPA（Zeroconf），SNMP agent（v1，v2c，v3，私有MIB支持和MIB编译器）</p>
-<h3 id="API"><a href="#API" class="headerlink" title="API"></a>API</h3><p>  用于增强性能的专用API，可选的Berkeley-socket套接字API</p>
-<h3 id="扩展功能"><a href="#扩展功能" class="headerlink" title="扩展功能"></a>扩展功能</h3><p>  通过多个网络接口进行IP转发，TCP拥塞控制，RTT估计和快速恢复/ fast retransmit</p>
-<h3 id="Addon应用程序"><a href="#Addon应用程序" class="headerlink" title="Addon应用程序"></a>Addon应用程序</h3><p>  HTTP(S)服务器，SNTP客户端，SMTP(S)客户端，ping，NetBIOS名称服务器，mDNS响应器，MQTT客户端，TFTP服务器</p>
-<p>  lwIP根据BSD风格许可证授权：<a target="_blank" rel="noopener" href="http://lwip.wikia.com/wiki/License">http://lwip.wikia.com/wiki/License</a></p>
-<h1 id="TTL"><a href="#TTL" class="headerlink" title="TTL"></a>TTL</h1><p>  TTL(Time- To-Live)，简单的说它表示一条域名解析记录在DNS服务器上缓存时间.当各地的DNS服务器接受到解析请求时，就会向域名指定的DNS服务器发出解析请求从而获得解析记录；在获得这个记录之后，记录会在DNS服务器中保存一段时间，这段时间内如果再接到这个域名的解析请求，DNS服务器将不再向DNS服务器发出请求，而是直接返回刚才获得的记录；而这个记录在DNS服务器上保留的时间，就是TTL值。</p>
-<h1 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h1><p>1.《<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/LwIP">lwIP</a>》<br>2.《<a target="_blank" rel="noopener" href="https://savannah.nongnu.org/projects/lwip/">lwIP - A Lightweight TCP/IP stack - Summary</a>》<br>3.《<a target="_blank" rel="noopener" href="https://blog.csdn.net/ysdaniel/article/details/6922097">TTL值的含义以及与域名DNS TTL值的区别</a>》</p>
 
       
     </div>

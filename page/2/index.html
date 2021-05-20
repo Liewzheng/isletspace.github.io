@@ -126,16 +126,16 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">54</span>
+          <span class="site-state-item-count">55</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
-        <span class="site-state-item-count">16</span>
+        <span class="site-state-item-count">17</span>
         <span class="site-state-item-name">categories</span>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">102</span>
+        <span class="site-state-item-count">105</span>
         <span class="site-state-item-name">tags</span>
       </div>
   </nav>
@@ -169,6 +169,140 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://islet.space/2021/05/05/Signal/2021-05-05-%E6%A8%A1%E6%95%B0%E6%8E%A5%E5%8F%A3%E4%B8%AD%E7%9A%84%E5%8F%AF%E7%BC%96%E7%A8%8B%E5%A2%9E%E7%9B%8A%E6%94%BE%E5%A4%A7%E5%99%A8%EF%BC%88PGA%EF%BC%89/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Liewzheng">
+      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coder的孤岛">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/05/05/Signal/2021-05-05-%E6%A8%A1%E6%95%B0%E6%8E%A5%E5%8F%A3%E4%B8%AD%E7%9A%84%E5%8F%AF%E7%BC%96%E7%A8%8B%E5%A2%9E%E7%9B%8A%E6%94%BE%E5%A4%A7%E5%99%A8%EF%BC%88PGA%EF%BC%89/" class="post-title-link" itemprop="url">模数接口中的可编程增益放大器（PGA）</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-05-05 23:58:32" itemprop="dateCreated datePublished" datetime="2021-05-05T23:58:32+08:00">2021-05-05</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2021-05-20 22:53:04" itemprop="dateModified" datetime="2021-05-20T22:53:04+08:00">2021-05-20</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Signal/" itemprop="url" rel="index"><span itemprop="name">Signal</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>原文出处：<a target="_blank" rel="noopener" href="https://www.21ic.com/app/analog/201207/134812.htm">https://www.21ic.com/app/analog/201207/134812.htm</a></p>
+<p>用可编程增益放大器(PGA)处理数据采集系统中传感器/变送器模拟输出和信号处理数字之间的接口。单片和高集成度PGA现在被可编程、更高精度、更高吞吐量和更小封装尺寸的模块和混合方案替代。 </p>
+<p>由于来自传感器/变送器的模拟信号的本性，使其工作必须具备相当大的动态范围。这要求采用连续增益级在进行任何实际的数字处理之前增大这些信号，PGA能满足这种要求。 </p>
+<p>PGA是可变增益放大器(VGA)的一种。VGA提供可变和连续增益控制，而PGA <mark>必须在软件控制下以固定步(通常6dB步)做到可变增益控制</mark>。达到更精细的分辨步0.5dB是可能的。 一般多通道数据采集系统用很多不同类型的传感器/变送器，这包括 <strong>热电偶</strong>、<strong>惠斯登电桥</strong>，<strong>热敏电阻</strong>、<strong>应变计</strong> 和 <strong>超声系统</strong>。虽然，传感器/变送器是基于不同的物理原理，但大多数产品是 <strong>以电压做为输出</strong>。甚至这会产生中间值(如电容或电阻)，但最终变换为电压，以便在数据采集系统中进行</p>
+<p><img src="http://pic.islet.space/2021/04/fb222bc5a544088d5a7fc0c708476621.jpg"></p>
+<p>传感器/变送器的输出可覆盖非常大的范围，需要PGA来处理传感器/变送器输出到ADC的接口。</p>
+<blockquote>
+<p>例如，在工业过程控制系统中，低频信号可以几毫伏到几伏变化。需要PGA来匹配这种宽传感器/变送器输出范围到特定的ADC输入范围。通常，在输入数据采集通道最低信号电平与最高信号电平之比是2个量级或更大。  12位ADC接收小于ADC满标输入十分之一的信号仅可提供8位分辨率，除非在信号到达ADC之前用PGA放大。PGA允许在软件控制下使接收信号的增益达到宽范围增益一带宽乘积。这可避免钳位并允许采用较便宜的ADC，如用12位ADC替代16位ADC。 </p>
+</blockquote>
+<p>PGA可做更多事情。PGA缓冲来自前级(通常是多路转换器)ADC的输入，防止多路转换器导通电阻所引起的加载。PGA也提供差分别单端的变换，大多数跟踪和保持型ADC需要单输入。把PGA连接到差分多路转换器输出时，PGA提供共模抑制。 </p>
+<p>在市场上可以得到很多种PGA和支持元件。这包括可独立应用的运放被专门设计成PGA、ASIC、集成有可编程滤波器的PGA、仪表放大器PGA、用于运放的数字电位器前端、PGA用数字可编程分压器、ADC驱动器。有时把PGA和DAC集成在同一芯片上。 </p>
+<p>对于不需要信号宽动态范围的应用，PGA不是必须的。放大器可以直接接口传感器/变送器到ADC。</p>
+<blockquote>
+<p>例如，Maxim的MAX1494仪表放大器适合于250V/V或更小增益范围的应用。 </p>
+</blockquote>
+<h1 id="各种性能的PGA"><a href="#各种性能的PGA" class="headerlink" title="各种性能的PGA"></a>各种性能的PGA</h1><p>对于特殊性能参量(如高增益稳定性和高精度，低漂移，低失真，高输出驱动电流，高转换率，快速建立时间，高共模抑制比，低功率和小尺寸)有很多PGA是最佳的。 </p>
+<blockquote>
+<ul>
+<li>Microchip公司的MCP6S2X家族PGA具有2、6和8通道输入，包含多路转换器并可通过串行外设接口(SPI)总线进行增益控制和通道选择。</li>
+<li>NS公司的LMH6718IC是双PGA，具有高输出(200mA)驱动信号。  </li>
+<li>高性能小封装的PAG有ADI公司的AD8555，这是封装在微型8引线SOIC中的数字可编程信号调理自动零放大器，它包含放大器，比较器，用Digit  Trim技术的电阻调节分压器和缓冲器。其500V/℃总输入失调漂移是其他竞争产品的1/20。</li>
+<li>Linear公司的LTC6915A也是小封装高性能PGA。此仪表放大器封装为16引线SSOP或12引线DFN，可把它放置在最靠近传感器/变送器的地方。它所占电路板面积是等效分立方案的1/6。零漂移特性具有高达4096的宽可编程动态范围(增益精度0.1%)。它也有50mV/℃漂移和与增益无关的125dB CMRR。  </li>
+<li>对于低失真是主要考虑因素的应用，可以选择Intersil公司PGA缓冲器HFA11XX，其低失真电平低到-73dBc、噪声电平低到7”9nV/√Hz。</li>
+<li>TI公司的THS7001/7002单/双PGA采用Power PAD封装，包含分离的低噪声前置放大器和增益放大级。此器件可达到非常低的噪声电平(低到1.7nV/√Hz)。 </li>
+<li>其他可注意的PGA包括ADI公司的AD628首款具有可编程增益的共模差分放大器和Linear公司的LTC1564 PGA(除放大器外，它还具有8阶软件可编程抗混淆滤波器)。 </li>
+</ul>
+</blockquote>
+<p>PGA也集成有其他前端电路。</p>
+<blockquote>
+<p>如Maxim公司的MAX14XX家族，这是包含PGA的信号调理ASIC。这种器件直接用于传感器/变送器和ADC之间。</p>
+<p>Maxim公司的ADC驱动器MAX2055具有低失真(-76dBc 2次谐波和-69dBc 3次谐波)特性，其差分输出是为驱动高速ADC专门设计的。 </p>
+</blockquote>
+<p>一些PGA供应商也提供驱动PGA前端的数字电位计和分压器IC。</p>
+<blockquote>
+<p>例如，Maxim公司的MAX5420/21数字可编程电压分压器；</p>
+<p>ADI公司的AD5321数字电位计(常用于可编程增益和衰减的非易失性存储器)。  </p>
+<p>另外，Xicor也提供不少PGA器件，这些PGA器件对于执行数字控制的电位计(DCP)是最佳的。  </p>
+</blockquote>
+<h1 id="集成方案"><a href="#集成方案" class="headerlink" title="集成方案"></a>集成方案</h1><p>现在，很多公司把PGA和其他信号调理电路直接集成在ADC芯片上。这种方法有利于所占空间更小，比分离PGA和ADC方案具有更好的性能。然而，其成本比较高，集成PGA在ADC上除灵活性较低外，还有 <mark>较高的时钟噪声电平</mark>。 </p>
+<blockquote>
+<p>带线化前端的Maxim公司的MAX1457(图2)传统器线性化IC就是其中一种，它包含12位ADC。</p>
+<p>ADI公司的ADC7707高精度信号调理16位S-D  ADC包含多路转换器、缓冲器、PGA、电荷平衡电路、串行接口和时钟产生器。</p>
+<p>ADI公司的ADC7708/18S-D6位/24位ADC具有与AD7707相同的电路，但它们的目标是低电压和低功率应用。 </p>
+</blockquote>
+<p><img src="http://pic.islet.space/2021/04/8b55f596bcfdf9a408bd3c959504fb21.jpg" alt="img"></p>
+<p>一个感兴趣的高集成度ADC是ADC7731  24位S-D器件，它具有ADC77017的所有电路。另外，还加上定标微控制器(图3)。此IC的目标是低噪声高吞吐量应用。</p>
+<p>Maxim公司也有带集成PGA的双6位ADC，它具有90Sample/s吞吐率、功耗仅550mW。 </p>
+<p><img src="http://pic.islet.space/2021/04/8CzZ7BjS2OMEYQJ.jpg"></p>
+<p>我们将会看到更多包含PGA和其他信号处理电路的ADC吗？</p>
+<p>不可回避的事实是高集成度是IC业的准则，而PGA和其他信号调理支持电路也不例外。所以希望看到PGA与ADC集成在同一芯片，并能解决片上性能参量(如时钟引起的噪声)和降低高分辨率器件的单个ADC价格。</p>
+<p>事实上，设计人员主要的目标是把传感器/变送器电路放在高集成度ADC上。</p>
+<p>这将是最终解决问题：现实世界模拟信号与计算机的数字世界结合起来的途经。</p>
+<p>这也将聚焦在模拟和数字电路设计的两种不同方法。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -2309,116 +2443,6 @@
 <p>So again, this is a summary of what a bypass capacitor is and how to select the value of them based on the lowest  AC signal desired to be filtered out and the value of the resistance in parallel with the capacitor. </p>
 <p>You can check out our <a target="_blank" rel="noopener" href="http://www.learningaboutelectronics.com/Articles/Bypass-capacitor-calculator.php">bypass capacitor calculator</a> to calculate  the value of a bypass capacitor based on the input AC signal frequency and the value of the resistor in parallel. </p>
 <p>Related Resources</p>
-<p>​          </p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://islet.space/2021/04/20/Networking/Unix%20domain%20socket%20%E7%AE%80%E4%BB%8B/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Liewzheng">
-      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Coder的孤岛">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/04/20/Networking/Unix%20domain%20socket%20%E7%AE%80%E4%BB%8B/" class="post-title-link" itemprop="url">Unix domain socket 简介</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
-    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2021-04-20 23:58:32" itemprop="dateCreated datePublished" datetime="2021-04-20T23:58:32+08:00">2021-04-20</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-04-29 00:52:30" itemprop="dateModified" datetime="2021-04-29T00:52:30+08:00">2021-04-29</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Networking/" itemprop="url" rel="index"><span itemprop="name">Networking</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/sparkdev/p/8359028.html">cnblogs.com</a></p>
-<p><strong>Unix domain socket 又叫 IPC(inter-process communication 进程间通信) socket，用于实现同一主机上的进程间通信。</strong>socket 原本是为网络通讯设计的，但后来在 socket 的框架上发展出一种 IPC 机制，就是 UNIX domain socket。虽然网络  socket 也可用于同一台主机的进程间通讯(通过 loopback 地址 127.0.0.1)，但是 UNIX domain socket  用于 IPC  更有效率：不需要经过网络协议栈，不需要打包拆包、计算校验和、维护序号和应答等，只是将应用层数据从一个进程拷贝到另一个进程。这是因为，IPC  机制本质上是可靠的通讯，而网络协议是为不可靠的通讯设计的。<br>UNIX domain socket 是全双工的，API 接口语义丰富，相比其它 IPC 机制有明显的优越性，目前已成为使用最广泛的 IPC 机制，比如 X Window 服务器和 GUI 程序之间就是通过 UNIX domain socket 通讯的。<br>Unix domain socket 是 POSIX 标准中的一个组件，所以不要被名字迷惑，linux 系统也是支持它的。</p>
-<p>下面通过一个简单的 demo 来理解相关概念。程序分为服务器端和客户端两部分，它们之间通过 unix domain socket 进行通信。</p>
-<h1 id="服务器端程序"><a href="#服务器端程序" class="headerlink" title="服务器端程序"></a>服务器端程序</h1><p>下面是一个非常简单的服务器端程序，它从客户端读字符，然后将每个字符转换为大写并回送给客户端：</p>
-<p><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;stdlib.h&gt;  </span><br><span class="line">#include &lt;stdio.h&gt;  </span><br><span class="line">#include &lt;stddef.h&gt;  </span><br><span class="line">#include &lt;sys&#x2F;socket.h&gt;  </span><br><span class="line">#include &lt;sys&#x2F;un.h&gt;  </span><br><span class="line">#include &lt;errno.h&gt;  </span><br><span class="line">#include &lt;string.h&gt;  </span><br><span class="line">#include &lt;unistd.h&gt;  </span><br><span class="line">#include &lt;ctype.h&gt;   </span><br><span class="line"> </span><br><span class="line">#define MAXLINE 80  </span><br><span class="line"> </span><br><span class="line">char *socket_path &#x3D; &quot;server.socket&quot;;  </span><br><span class="line"> </span><br><span class="line">int main(void)  </span><br><span class="line">&#123;  </span><br><span class="line">    struct sockaddr_un serun, cliun;  </span><br><span class="line">    socklen_t cliun_len;  </span><br><span class="line">    int listenfd, connfd, size;  </span><br><span class="line">    char buf[MAXLINE];  </span><br><span class="line">    int i, n;  </span><br><span class="line"> </span><br><span class="line">    if ((listenfd &#x3D; socket(AF_UNIX, SOCK_STREAM, 0)) &lt; 0) &#123;  </span><br><span class="line">        perror(&quot;socket error&quot;);  </span><br><span class="line">        exit(1);  </span><br><span class="line">    &#125;  </span><br><span class="line"> </span><br><span class="line">    memset(&amp;serun, 0, sizeof(serun));  </span><br><span class="line">    serun.sun_family &#x3D; AF_UNIX;  </span><br><span class="line">    strcpy(serun.sun_path, socket_path);  </span><br><span class="line">    size &#x3D; offsetof(struct sockaddr_un, sun_path) + strlen(serun.sun_path);  </span><br><span class="line">    unlink(socket_path);  </span><br><span class="line">    if (bind(listenfd, (struct sockaddr *)&amp;serun, size) &lt; 0) &#123;  </span><br><span class="line">        perror(&quot;bind error&quot;);  </span><br><span class="line">        exit(1);  </span><br><span class="line">    &#125;  </span><br><span class="line">    printf(&quot;UNIX domain socket bound\n&quot;);  </span><br><span class="line">      </span><br><span class="line">    if (listen(listenfd, 20) &lt; 0) &#123;  </span><br><span class="line">        perror(&quot;listen error&quot;);  </span><br><span class="line">        exit(1);          </span><br><span class="line">    &#125;  </span><br><span class="line">    printf(&quot;Accepting connections ...\n&quot;);  </span><br><span class="line"> </span><br><span class="line">    while(1) &#123;  </span><br><span class="line">        cliun_len &#x3D; sizeof(cliun);         </span><br><span class="line">        if ((connfd &#x3D; accept(listenfd, (struct sockaddr *)&amp;cliun, &amp;cliun_len)) &lt; 0)&#123;  </span><br><span class="line">            perror(&quot;accept error&quot;);  </span><br><span class="line">            continue;  </span><br><span class="line">        &#125;  </span><br><span class="line">          </span><br><span class="line">        while(1) &#123;  </span><br><span class="line">            n &#x3D; read(connfd, buf, sizeof(buf));  </span><br><span class="line">            if (n &lt; 0) &#123;  </span><br><span class="line">                perror(&quot;read error&quot;);  </span><br><span class="line">                break;  </span><br><span class="line">            &#125; else if(n &#x3D;&#x3D; 0) &#123;  </span><br><span class="line">                printf(&quot;EOF\n&quot;);  </span><br><span class="line">                break;  </span><br><span class="line">            &#125;  </span><br><span class="line">              </span><br><span class="line">            printf(&quot;received: %s&quot;, buf);  </span><br><span class="line"> </span><br><span class="line">            for(i &#x3D; 0; i &lt; n; i++) &#123;  </span><br><span class="line">                buf[i] &#x3D; toupper(buf[i]);  </span><br><span class="line">            &#125;  </span><br><span class="line">            write(connfd, buf, n);  </span><br><span class="line">        &#125;  </span><br><span class="line">        close(connfd);  </span><br><span class="line">    &#125;  </span><br><span class="line">    close(listenfd);  </span><br><span class="line">    return 0;  </span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
-
-<p><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"></p>
-<p>简单介绍一下这段代码：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">int socket(int family, int type, int protocol);</span><br></pre></td></tr></table></figure>
-
-<p>使用 UNIX domain socket 的过程和网络 socket 十分相似，也要先调用 socket() 创建一个 socket 文件描述符.<br><strong>family</strong> 指定为 AF_UNIX，使用 AF_UNIX 会在系统上创建一个 socket 文件，不同进程通过读写这个文件来实现通信。<br><strong>type</strong> 可以选择 SOCK_DGRAM 或 SOCK_STREAM。SOCK_STREAM 意味着会提供按顺序的、可靠、双向、面向连接的比特流。SOCK_DGRAM 意味着会提供定长的、不可靠、无连接的通信。<br><strong>protocol</strong> 参数指定为 0 即可。<br>UNIX domain socket 与网络 socket 编程最明显的不同在于地址格式不同，用结构体 sockaddr_un 表示，网络编程的  socket 地址是 IP 地址加端口号，而 UNIX domain socket 的地址是一个 socket  类型的文件在文件系统中的路径，这个 socket 文件由 bind() 调用创建，如果调用 bind() 时该文件已存在，则 bind()  错误返回。因此，一般在调用 bind() 前会检查 socket 文件是否存在，如果存在就删除掉。<br>网络 socket 编程类似，在 bind 之后要 listen，表示通过 bind 的地址（也就是 socket 文件）提供服务。<br>接下来必须用 accept() 函数初始化连接。accept() 为每个连接创立新的套接字并从监听队列中移除这个连接。</p>
-<h1 id="客户端程序"><a href="#客户端程序" class="headerlink" title="客户端程序"></a>客户端程序</h1><p>下面是客户端程序，它接受用户的输入，并把字符串发送给服务器，然后接收服务器返回的字符串并打印：</p>
-<p><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;stdlib.h&gt;  </span><br><span class="line">#include &lt;stdio.h&gt;  </span><br><span class="line">#include &lt;stddef.h&gt;  </span><br><span class="line">#include &lt;sys&#x2F;socket.h&gt;  </span><br><span class="line">#include &lt;sys&#x2F;un.h&gt;  </span><br><span class="line">#include &lt;errno.h&gt;  </span><br><span class="line">#include &lt;string.h&gt;  </span><br><span class="line">#include &lt;unistd.h&gt;  </span><br><span class="line"> </span><br><span class="line">#define MAXLINE 80  </span><br><span class="line"> </span><br><span class="line">char *client_path &#x3D; &quot;client.socket&quot;;  </span><br><span class="line">char *server_path &#x3D; &quot;server.socket&quot;;  </span><br><span class="line"> </span><br><span class="line">int main() &#123;  </span><br><span class="line">    struct  sockaddr_un cliun, serun;  </span><br><span class="line">    int len;  </span><br><span class="line">    char buf[100];  </span><br><span class="line">    int sockfd, n;  </span><br><span class="line"> </span><br><span class="line">    if ((sockfd &#x3D; socket(AF_UNIX, SOCK_STREAM, 0)) &lt; 0)&#123;  </span><br><span class="line">        perror(&quot;client socket error&quot;);  </span><br><span class="line">        exit(1);  </span><br><span class="line">    &#125;  </span><br><span class="line">      </span><br><span class="line">    &#x2F;&#x2F; 一般显式调用bind函数，以便服务器区分不同客户端  </span><br><span class="line">    memset(&amp;cliun, 0, sizeof(cliun));  </span><br><span class="line">    cliun.sun_family &#x3D; AF_UNIX;  </span><br><span class="line">    strcpy(cliun.sun_path, client_path);  </span><br><span class="line">    len &#x3D; offsetof(struct sockaddr_un, sun_path) + strlen(cliun.sun_path);  </span><br><span class="line">    unlink(cliun.sun_path);  </span><br><span class="line">    if (bind(sockfd, (struct sockaddr *)&amp;cliun, len) &lt; 0) &#123;  </span><br><span class="line">        perror(&quot;bind error&quot;);  </span><br><span class="line">        exit(1);  </span><br><span class="line">    &#125;  </span><br><span class="line"> </span><br><span class="line">    memset(&amp;serun, 0, sizeof(serun));  </span><br><span class="line">    serun.sun_family &#x3D; AF_UNIX;  </span><br><span class="line">    strcpy(serun.sun_path, server_path);  </span><br><span class="line">    len &#x3D; offsetof(struct sockaddr_un, sun_path) + strlen(serun.sun_path);  </span><br><span class="line">    if (connect(sockfd, (struct sockaddr *)&amp;serun, len) &lt; 0)&#123;  </span><br><span class="line">        perror(&quot;connect error&quot;);  </span><br><span class="line">        exit(1);  </span><br><span class="line">    &#125;  </span><br><span class="line"> </span><br><span class="line">    while(fgets(buf, MAXLINE, stdin) !&#x3D; NULL) &#123;    </span><br><span class="line">         write(sockfd, buf, strlen(buf));    </span><br><span class="line">         n &#x3D; read(sockfd, buf, MAXLINE);    </span><br><span class="line">         if ( n &lt; 0 ) &#123;    </span><br><span class="line">            printf(&quot;the other side has been closed.\n&quot;);    </span><br><span class="line">         &#125;else &#123;    </span><br><span class="line">            write(STDOUT_FILENO, buf, n);    </span><br><span class="line">         &#125;    </span><br><span class="line">    &#125;   </span><br><span class="line">    close(sockfd);  </span><br><span class="line">    return 0;  </span><br><span class="line">&#125;  </span><br></pre></td></tr></table></figure>
-
-<p><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"></p>
-<p>与网络 socket 编程不同的是，UNIX domain socket 客户端一般要显式调用 bind  函数，而不依赖系统自动分配的地址。客户端 bind 一个自己指定的 socket 文件名的好处是，该文件名可以包含客户端的 pid  等信息以便服务器区分不同的客户端。</p>
-<h1 id="运行上面的程序"><a href="#运行上面的程序" class="headerlink" title="运行上面的程序"></a>运行上面的程序</h1><p>分别把服务器端程序和客户端程序保存为 server.c 和 client.c 文件，并编译：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ gcc server.c -o server</span><br><span class="line">$ gcc client.c -o client</span><br></pre></td></tr></table></figure>
-
-<p>先启动服务器端程序，然后启动客户端程序输入字符串并回车：</p>
-<p><img src="https://images2017.cnblogs.com/blog/952033/201801/952033-20180126125928506-239880118.png" alt="img"></p>
-<p>还不错，客户端得到了服务器端返回的大写字符串。接下来看看当前目录下的文件：</p>
-<p><img src="https://images2017.cnblogs.com/blog/952033/201801/952033-20180126125951834-1641586991.png" alt="img"></p>
-<p>哈哈，多了两个 socket 文件。</p>
-<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>Unix domain socket 主要用于同一主机上的进程间通信。与主机间的进程通信不同，它不是通过 “IP地址 + TCP或UDP端口号” 的方式进程通信，而是使用 socket 类型的文件来完成通信，因此在稳定性、可靠性以及效率方面的表现都很不错。</p>
-<p><strong>参考：</strong><br><a target="_blank" rel="noopener" href="http://docs.linuxtone.org/ebooks/C&CPP/c/ch37s04.html">UNIX Domain Socket IPC</a><br>[<a target="_blank" rel="noopener" href="http://blog.csdn.net/tzshlyt/article/details/53391655">linux] unix domain socket 例子</a></p>
 <p>​          </p>
 
       
