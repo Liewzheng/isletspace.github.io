@@ -126,7 +126,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">55</span>
+          <span class="site-state-item-count">56</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -135,7 +135,7 @@
         <span class="site-state-item-name">categories</span>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">105</span>
+        <span class="site-state-item-count">109</span>
         <span class="site-state-item-name">tags</span>
       </div>
   </nav>
@@ -169,6 +169,128 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://islet.space/2021/04/21/Signal/What%20is%20a%20Bypass%20Capacitor/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Liewzheng">
+      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coder的孤岛">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/04/21/Signal/What%20is%20a%20Bypass%20Capacitor/" class="post-title-link" itemprop="url">What is a Bypass Capacitor?</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-04-21 23:58:32" itemprop="dateCreated datePublished" datetime="2021-04-21T23:58:32+08:00">2021-04-21</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2021-04-29 00:50:14" itemprop="dateModified" datetime="2021-04-29T00:50:14+08:00">2021-04-29</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Signal/" itemprop="url" rel="index"><span itemprop="name">Signal</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p><a target="_blank" rel="noopener" href="http://www.learningaboutelectronics.com/Articles/What-is-a-bypass-capacitor.html">learningaboutelectronics.com</a></p>
+<h1 id="What-is-a-Bypass-Capacitor"><a href="#What-is-a-Bypass-Capacitor" class="headerlink" title="What is a Bypass Capacitor?"></a>What is a Bypass Capacitor?</h1><p><img src="http://www.learningaboutelectronics.com/images/Bypass-capacitor.png" alt="Bypass capacitor"></p>
+<p>A bypass capacitor is a capacitor that shorts AC signals to ground, so  that any AC noise that may be  present on a DC signal is removed, producing a much cleaner and pure DC signal.</p>
+<p>A bypass capacitor essentially bypasses  AC noise that may be on a DC signal, filtering out the AC, so that a clean, pure DC signal goes through without any AC ripple. </p>
+<p>For example, you may want a pure DC signal from a power source. </p>
+<p>Below is a transistor circuit. A transistor is an active device, so in order to work, it needs DC power. This power source is  VCC. In this case, VCC equals 15 volts. </p>
+<p><img src="http://www.learningaboutelectronics.com/images/DC-power-source-transistor.png" alt="DC Power Source for Transistor"></p>
+<p>This 15 volts provides power to the transistor so that the transistor can  amplify signals. We want this signal to be as purely DC as possible. Although we obtain our DC voltage, VCC, from a DC power  source such as a power supply, the voltage isn’t always purely DC. In  fact, many times the  voltage is very noisy and contains a lot of AC ripple on it, especially  at the 60Hz frequency because this is the frequency at which AC signals  run in many countries. </p>
+<p>So although we want a pure DC signal, such as below:</p>
+<p><img src="http://www.learningaboutelectronics.com/images/Pure-DC-voltage.png" alt="Pure DC Voltage"></p>
+<p>Many times, we get a noisy signal that looks like:</p>
+<p><img src="http://www.learningaboutelectronics.com/images/Noisy-dc-signal.png" alt="Noisy DC Voltage Signal"></p>
+<p>A DC signal such as this is actually very common. This is undesired  because it adds noise to the transistor circuit. Therefore, this  noisy DC signal will be imposed on the AC signal. So the AC signal which may have music or some type of recording will now have much more noise. </p>
+<p>This noise which is on the signal is AC ripple. Many  times when using a DC power supply connected to an AC power outlet, it  will  have some of the AC noise transfer to the DC power voltage. AC ripple  can also appear from other sources, so even batteries can produce noise. </p>
+<p>To eliminate this AC ripple, we use a bypass  capacitor. So our transistor circuit above will have a bypass capacitor  added to it:</p>
+<p><img src="http://www.learningaboutelectronics.com/images/Bypass-capacitor-transistor-circuit.png" alt="Bypass Capacitor for a Transistor Circuit"></p>
+<p>A capacitor is a device that offers a tremendously high resistance for  signals of low frequencies. Therefore, signals at low frequencies will  not go through them. This is because  signals (current) always takes the path of least resistance. Therefore,  they will instead go through the resistor, RE. Remember, again, this is for low frequency signals, which is  basically DC signals. </p>
+<p>However, capacitors offer much less resistance at higher frequencies (AC signals). So AC signals will go through the  capacitor and then to gorund. Therefore, DC signals will go  through the resistor, RE, while AC signals will go  through the capacitor, getting shunted to ground. So AC signals get  shunted to ground. This is how we have a clean DC signal  across our circuit, while AC noise imposed on it is bypassed to ground. </p>
+<p><img src="http://www.learningaboutelectronics.com/images/How-a-bypass-capacitor-works.png" alt="How a Bypass Capacitor Works"></p>
+<p>So a bypass capacitor blocks the DC from entering it by the great  resistance it offers to the signal but accepts the AC noise that may be  on the DC line and shunts or bypasses it to ground.  This is how bypass capacitors work.</p>
+<h1 id="How-to-Choose-the-Value-of-the-Bypass-Capacitor"><a href="#How-to-Choose-the-Value-of-the-Bypass-Capacitor" class="headerlink" title="How to Choose the Value of the Bypass Capacitor"></a>How to Choose the Value of the Bypass Capacitor</h1><p>Now that you know conceptually what a bypass capacitor is, the next step is to know how to select the value of the  bypass capacitor. </p>
+<p>And selecting the value is pretty straightforward. </p>
+<p>The value of the bypass capacitor should be at least 1/10th of the resistance across the emitter resistance,  RE at the lowest frequency intended to be bypassed.</p>
+<p>Because capacitors are reactive devices, they have different resistances to signals based on the signal’s frequency.  This is referred to as the capacitor’s reactance, which can be seen as the resistance it offers. We want the capacitor to have  1/10th of the resistance to the flow of current than what the resistor offers for the frequency signal that we want to bypass. </p>
+<p>If you visualize the current moving through the transistor, it can take one of 2 paths once it passes the collector and  moves through the emitter. Current can either go the resistor, RE or current can flow through the bypass capacitor.  Current always takes the path of least resistance. Therefore, current  will take the path of the lower resistance.  This is why you want  the value of the resistance of the bypass capacitor to be at least  1/10th the value of the emitter resistor or, even better, less than  one-tenth. We want the AC current to flow through the least resistance  path, which is the bypass capacitor if the correct value is  chosen. </p>
+<p>However, DC signals do not see it as AC. To DC, the capacitor has infinite resistance.  So DC will automatically go through the RE resistor, which offers lower resistance by far to the infinite resistance  of the capacitor. </p>
+<p>AC, however, does not see infinite resistance for the capacitor. If we choose the value correctly for the capacitor,  we can make the capacitor a much lower-resistance path to ground, thus shorting out the AC signal to ground. </p>
+<p>So let’s go over a practical example of how we would select the bypass capacitor value.</p>
+<p>Let’s say we want to bypass the lowest possible frequency of 50Hz, because the frequency of AC voltages worldwide are 50-60Hz. Therefore, this frequency can be a very problematic because often there is AC ripple at this frequency. </p>
+<p>Remember, when we said we bias the value of the bypass capacitor based on the lowest frequency that we want to bypass.  So by selecting the frequency of 50Hz, this blocks frequencies from 50Hz and higher; so it covers 60Hz. As frequency of an AC signal  increases, the resistance of the capacitor decreases and decreases with  each increase. Therefore, all the frequencies above the  frequency value that we choose get bypassed easier and easier. We’ll  demonstrate this all mathematically. </p>
+<p>So we decided we want to bypass AC signals 50Hz or higher to ground. </p>
+<p>The typical value of an emitter resistor is 400-500‎Ω. The resistance is kept low so that gain on the transistor isn’t  lowered too much. </p>
+<p>So let’s say we choose an emitter resistor of 470‎Ω. </p>
+<p>This means that we want the reactance of the capacitor to be one-tenth of 470‎Ω or less, which is 47‎Ω or lower.  So this is our target. </p>
+<p>The formula for the reactance of a capacitor is, XC= 1/2πfc= 1/2(3.14)(50Hz)(C)=47Ω. Solving for the  capacitance, C, we get the value of approximately 67μF. So we need a  capacitor of at least 67μF to get a resistance of one-tenth  the value of 470Ω resistor. </p>
+<p>Since a 67μF capacitor isn’t readily available, we can round up to 100μF, which is readily available and easy to obtain.  This is even better, because with a larger capacitance, the capacitor  offers even less resistance to the AC signal. If we plug a  100μF capacitor into the same capacitor reactance formula, we get XC= 1/2πfc= 1/2(3.14)(50Hz)(100μF)=31.8Ω. This is much  lower than 1/10 of the 470Ω resistor that we have in parallel. So it  will act effectively to short all AC signals 50Hz or higher  to ground to clean up the DC signal. </p>
+<p>Even if you wanted, you could increase the  capacitance even more to allow for less AC noise on the signal. But a  lot  of times, this will not be done for cost and size constraints reasons.  The larger the size a capacitor is, the more it costs per unit. Also the larger the size of a capacitor, the larger physically is. Therefore, if a company is designing a product, the size of the capacitor could be a problem if there are size constraint issues. The way things are going in electronics, companies want  products to be as small and concise as possible. So due to reasons such  as these, larger value capacitors won’t always be chosen, but  theoretically, they would increase the purity of the DC signal, by  allowing more AC to ground. </p>
+<p>So again, this is a summary of what a bypass capacitor is and how to select the value of them based on the lowest  AC signal desired to be filtered out and the value of the resistance in parallel with the capacitor. </p>
+<p>You can check out our <a target="_blank" rel="noopener" href="http://www.learningaboutelectronics.com/Articles/Bypass-capacitor-calculator.php">bypass capacitor calculator</a> to calculate  the value of a bypass capacitor based on the input AC signal frequency and the value of the resistor in parallel. </p>
+<p>Related Resources</p>
+<p>​          </p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -5007,662 +5129,6 @@
 <li></li>
 </ol>
 <h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><p><a target="_blank" rel="noopener" href="http://www.digoboy.com/">www.digoboy.com</a></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://islet.space/2020/12/25/Others/Phrases/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Liewzheng">
-      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Coder的孤岛">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2020/12/25/Others/Phrases/" class="post-title-link" itemprop="url">Phrases</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
-    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2020-12-25 23:58:32" itemprop="dateCreated datePublished" datetime="2020-12-25T23:58:32+08:00">2020-12-25</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-04-26 00:15:30" itemprop="dateModified" datetime="2021-04-26T00:15:30+08:00">2021-04-26</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/English/" itemprop="url" rel="index"><span itemprop="name">English</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>comment out sth. 注释掉</p>
-<blockquote>
-<p> Therefore, commenting out a continued line comments out the entire command.</p>
-<p>因此，注释掉一个连续的行就会注释掉整个命令.</p>
-</blockquote>
-<blockquote>
-<p>That is, no white space is implied, nor is a comment terminated. </p>
-<p>也就是说，没有空格，注释也不会终止。</p>
-</blockquote>
-<p>several-input-lines command 多行输入命令</p>
-<blockquote>
-<p>Commands may extend over several input lines by ending each line but the last with a backslash ().</p>
-<p>命令可以扩展到多个输入行，每一行以反斜杠()结束，最后一行以反斜杠()结束。</p>
-</blockquote>
-<p>curly braces 花括号</p>
-<p>denote optional arguments 表示可选参数</p>
-<p>mutually exclusive choices 互相排斥的选择</p>
-<blockquote>
-<p>In this document, curly braces ({}) denote optional arguments and a vertical bar (|) separates mutually exclusive choices.</p>
-<p>在本文档中，花括号({})表示可选参数，竖线(|)分隔互斥的选项。</p>
-</blockquote>
-<p> mutual <span style="color: #CCC; font-style: italic;">/‘mju: tfuel/</span> exclusion 互斥</p>
-<blockquote>
-<p>Manages gates for mutual exclusion of shared resources by multiple processors and threads. 管理多个处理器和线程共享资源的互斥门。</p>
-</blockquote>
-<p>care should be taken when 当/在……时需要小心</p>
-<blockquote>
-<p><em>Care should be taken</em> when choosing a Task stack size. </p>
-<p>在选择任务堆栈大小时要小心。</p>
-</blockquote>
-<p>recursive nature 递归性质</p>
-<p>a significant amount of 大量的</p>
-<blockquote>
-<p>Due to its recursive nature, a Task tends to consume a significant amount of stack. </p>
-<p>由于其递归性质，任务往往会消耗大量的堆栈。</p>
-</blockquote>
-<p>the proper adjustment 适当调整</p>
-<blockquote>
-<p>The scheduler thread can run at any priority with the proper adjustment.</p>
-<p>调度器线程经适当调整可以运行在任何优先级。</p>
-</blockquote>
-<p><em>sb./sth.</em> places certain restrictions on <em>sth. / sw.</em> 某物对某物产生影响</p>
-<blockquote>
-<p>Running the scheduler thread at a low priority places certain restrictions on how a Task can operate at the socket layer.</p>
-<p>以低优先级运行调度程序线程会对任务在套接字层上的操作方式产生某些限制。</p>
-</blockquote>
-<p>re-entrance exclusion methodology 重连拒绝方法</p>
-<blockquote>
-<p>The NDK requires a re-entrance exclusion methodology to call into internal  tack functions.</p>
-</blockquote>
-<p>interactive plot windows 互动式绘制窗口</p>
-<blockquote>
-<p><em>-p</em> tells the program not to close any remaining interactive plot windows when the program exits.</p>
-</blockquote>
-<p>bad font metrics 糟糕的字体度量</p>
-<blockquote>
-<p><em>-s</em> tells the program to wait for slow font initialization on startup. Otherwise it prints an error and continues with bad font metrics.</p>
-</blockquote>
-<p>batch session 批处理会话</p>
-<blockquote>
-<p>To launch a batch session using two command files “input1” and “input2”.</p>
-</blockquote>
-<p>use <em>sth.</em> from <em>sb.</em>/<em>sth.</em></p>
-<blockquote>
-<p>In earlier versions of gnuplot, some terminal types used the values from ‘set size’ to control also the size of the output canvas.</p>
-<p>在gnuplot的早期版本中，一些终端类型使用set size中的值来控制输出画布的大小。</p>
-</blockquote>
-<p>minimum addressable units 最小可寻址单元</p>
-<blockquote>
-<p>Memory allocation sizes are measured in “Minimum Addressable Units” (MAUs) of memory. An MAU is the smallest unit of data storage that can be read or written by the CPU.</p>
-</blockquote>
-<p>memory policy 存储策略</p>
-<p>on a *** basis 在*** 的基础上</p>
-<blockquote>
-<p>You can reduce the amount of code space used by an application by setting the memory Policy on a global or per-module basis.</p>
-</blockquote>
-<p>be significantly constrained 非常有限 / 显著不足的</p>
-<blockquote>
-<p>This is particularly useful on targets where the code memory is significantly constrained.</p>
-</blockquote>
-<p>A make calls to B  A调用B</p>
-<blockquote>
-<p>it makes calls to the Heap module through the <code>IHeap_Handle</code>.</p>
-</blockquote>
-<p>a particular heap implementation 特定堆生成</p>
-<blockquote>
-<p>Using Memory APIs makes applications and middleware portable and not tied to a particular heap implementation.</p>
-</blockquote>
-<p><em>A</em> calls into <em>B</em>  A调用B</p>
-<blockquote>
-<p> Internally, the Memory module calls into the heap’s interface functions.</p>
-</blockquote>
-<p>memory management traits 内存管理特征</p>
-<blockquote>
-<p>Different heap implementations optimize for different memory management traits.</p>
-</blockquote>
-<p><em>sth</em>. become scattered throughout <em>somewhere</em> 某物被分散到某处</p>
-<blockquote>
-<p> As memory blocks are “freed” back to the <code>HeapMem</code>, the available memory in the <code>HeapMem</code> becomes scattered throughout the heap. </p>
-</blockquote>
-<p>presume / assume 假定</p>
-<blockquote>
-<p>So this book <em>presumes</em> that you have already learned something about Python programming from the many excellent tutorials and books on the subject.</p>
-<p>On the other hand, this book does not start by <em>assuming</em> that you know any networking! </p>
-</blockquote>
-<p>sophisticated services </p>
-<blockquote>
-<p>The idea of a <em>protocol stack</em>, in which very simple network services are used as a foundation on which to build more sophisticated services. </p>
-</blockquote>
-<p>ship(<em>v.</em>) with  与某物一起（类似于打包在一起）</p>
-<blockquote>
-<p>The fact that you will often be using Python libraries of prepared code—whether from the built-in standard library that ships with Python.</p>
-</blockquote>
-<p>other than …. 除了……</p>
-<blockquote>
-<p>Blue boxes identify modules for which your application will call C API functions <em>other than</em> those used to dynamically create objects.</p>
-</blockquote>
-<p>be used in a variety of combinations 被用于多种组合</p>
-<blockquote>
-<p>IPC modules can be used in variety of combinations.</p>
-</blockquote>
-<p>previous versions 以前的版本</p>
-<blockquote>
-<p>Note that the appropriate include file location has changed from previous versions of IPC. 注意，适当的头文件位置已经从以前的IPC版本中更改。</p>
-</blockquote>
-<p>function call sequence 函数调用顺序</p>
-<blockquote>
-<p>Standard IPC Function Call Sequence</p>
-</blockquote>
-<p>the corresponding modules</p>
-<blockquote>
-<p> For example, <code>Ipc_S_SUCCESS</code>, <code>MessageQ_E_FAIL</code>, and <code>SharedRegion_E_MEMORY</code> are status codes that may be returned by functions in the corresponding modules.</p>
-</blockquote>
-<p>the remote processor</p>
-<blockquote>
-<p>The response from the remote processor triggers a hardware interrupt, which then posts a Semaphore to allow to Task to resume execution.  远程处理器的响应触发硬件中断，然后硬件中断发布一个信号量以允许任务继续执行。</p>
-</blockquote>
-<p>register optimizations 寄存器优化</p>
-<p>local optimizations 本地优化</p>
-<p>global optimizations 全局优化</p>
-<p>interprocedure optimization 进程优化</p>
-<p>runtime support library 运行时支持库</p>
-<blockquote>
-<p>This module provides <code>xdc.runtime.ITimestampClient</code> APIs for the xdc Runtime Support Library.</p>
-</blockquote>
-<p>Exploring the Ecosystem 探索生态系统</p>
-<p>maximum outstanding connection request 最大未完成连接请求</p>
-<p>zero out 清零</p>
-<blockquote>
-<p>Zero out structure object. 清空结构体对象</p>
-</blockquote>
-<p>memory region 内存区域</p>
-<blockquote>
-<p>This function enables caching for a specific memory region. </p>
-</blockquote>
-<p>software convertion 软件公约、软件惯例</p>
-<blockquote>
-<p>Allocation of source bits to source processor and meaning is entirely based on software convention.源位分配到源处理器和意义完全基于软件惯例。</p>
-</blockquote>
-<p>facility n. 设备，设施</p>
-<p>facilitate v. 促进，帮助，使容易</p>
-<blockquote>
-<p>These registers also provide a <em>Source ID facility</em> by which up to 28 different sources of interrupts can be identified. 这些寄存器还提供了一个 <em>源 ID设备</em> ，通过它可以识别多达28个不同的中断源。</p>
-<p>The IPCGRH register facilitates interrupts to external hosts. IPCGRH寄存器促进中断到外部主机。</p>
-</blockquote>
-<p>be aligned on B    对齐至B</p>
-<p>A be a multiple of B    A应该是B的数倍</p>
-<blockquote>
-<p>To prevent unintended behavior “blockPtr” should be aligned on the cache line size and “byteCnt” should be a multiple of the cache line size.</p>
-</blockquote>
-<p>adaptive layout 自适应布局</p>
-<p>give you more control over <em>sth</em>. 在某事上予以更多控制权</p>
-<p>a handful of <em>sth</em>. 一些某物（可数）</p>
-<blockquote>
-<p>An adaptive layout will give you more control over the design because you only have a handful of states to consider. </p>
-</blockquote>
-<p>derived <span style="color: #CCC; font-style: italic;">/dɪˈraɪvd/</span> class 派生类</p>
-<blockquote>
-<p>In derived classes, <code>super()</code> must be called before you can use <code>this</code>. 在派生类中，使用<code>this</code> 前必先调用 <code>super()</code> 函数。</p>
-</blockquote>
-<p>granularity n. 间隔尺寸，[岩] 粒度</p>
-<blockquote>
-<p>the quality of being composed of relatively large particles</p>
-</blockquote>
-<p>an entire contiguous Ethernet packet 一个完整连续的以太网包</p>
-<p>aligned <span style="color: #CCC; font-style: italic;">/əˈlaɪnd/</span> v. 结盟；支持；使成一直线；校准；安放，排列；使一致（align 的过去式和过去分词）</p>
-<blockquote>
-<p> byte-aligned memory address 字节内存地址</p>
-</blockquote>
-<p>explicitly  <span style="color: #CCC; font-style: italic;">/ɪkˈsplɪsɪtli/</span> adv. 明确地；明白地</p>
-<p>implicitly  <span style="color: #CCC; font-style: italic;">/ɪmˈplɪsɪtli/</span> adv. 含蓄地；暗中地</p>
-<blockquote>
-<p>explicity and implicity 显性和隐性</p>
-</blockquote>
-<p>auxiliary <span style="color: #CCC; font-style: italic;">/ɔːɡˈzɪliəri/</span> adj. 辅助的；副的；附加的；（发动机、设备等）备用的</p>
-<blockquote>
-<p>auxiliary definitions 辅助定义</p>
-</blockquote>
-<p>assert vt. 维护，坚持；断言；主张；声称</p>
-<p>assertion <span style="color: #CCC; font-style: italic;">/əˈsɜːʃn/</span> n. 断言，声明；主张，要求；坚持；认定</p>
-<blockquote>
-<p>assertion check 断言检查</p>
-<p>internal asserts 内部断言</p>
-</blockquote>
-<p>mangle <span style="color: #CCC; font-style: italic;">/mæŋgl/</span> vt. 乱砍、损坏</p>
-<p>name mangling （函数）命名重整</p>
-<blockquote>
-<p>The process of encoding the signature into the link name is referred to as <strong>name mangling</strong>.  对链接名称解码签名的过程被称为命名重整。</p>
-<p>Since function overloading is accomplished through <strong>name mangling</strong>, function overloading has limitations for functions that are called from the configuration. 由于函数重载是通过命名重整完成的，因此函数重载对从配置中调用的函数有限制。</p>
-</blockquote>
-<p>assemble vt. 集合，聚集；装配；收集 vi. 集合，聚集</p>
-<p>assembly n. 装配；集会，集合 n. 汇编，编译</p>
-<blockquote>
-<p>assembly source 汇编源代码</p>
-<p>assembly code 汇编码</p>
-</blockquote>
-<p>toggle <span style="color: #CCC; font-style: italic;">/ˈtɒɡl/</span> n. 拴扣；切换键，开关；套索钉 v. 切换；拴牢，系紧</p>
-<p>split <span style="color: #CCC; font-style: italic;">/splɪt/</span> vt. 分离；使分离；劈开；离开；分解 vi. 离开；被劈开；断绝关系 n. 劈开；裂缝 adj. 劈开的</p>
-<blockquote>
-<p>toggle split editor 切换分屏编辑器</p>
-<p>toggle full screen 切换全屏幕</p>
-<p>toggle funciton 切换功能？</p>
-</blockquote>
-<p>perspective n. 观点；远景；透视图 adj. 透视的</p>
-<blockquote>
-<p>customize perspective 定制化的角度（来看）</p>
-</blockquote>
-<p>specification n. 规范  (a detailed description of design criteria for a piece of work)</p>
-<p>benchmark n. 参考标准，基准 (a standard by which something can be measured or judged)</p>
-<blockquote>
-<p>specifications for benchmark tests 基准测试规范</p>
-</blockquote>
-<p>target-specific functions 目标特定的功能</p>
-<blockquote>
-<p>device-specific functions 设备特定的功能</p>
-</blockquote>
-<p>instantiation n. 实例化；[计] 例示 </p>
-<p>implement v. vt. 实施，执行；实现，使生效 n. 工具，器具；手段 (apply in a manner consistent with its purpose or design)</p>
-<blockquote>
-<p>implementation of the IGateProvider interface 接口的实现</p>
-<p>instantiation of clock 时钟实例化</p>
-</blockquote>
-<p>fixed    adj. 固定的</p>
-<blockquote>
-<p>variable-sized buffers 可变大小缓冲</p>
-<p>fixed-size buffers 固定大小缓冲</p>
-</blockquote>
-<p>dynamic memory allocation and deallocation 动态内存分配和回收</p>
-<p>reentrant versions 可重入版本</p>
-<blockquote>
-<p>SYS/BIOS provides reentrant versions of malloc() and free() that internally use the xdc.runtime. SYS/BIOS为内部使用XDC.RUNTIME的 malloc() 和 free() 提供了可重入版本。</p>
-</blockquote>
-<p>formal parameter 形式参数</p>
-<blockquote>
-<p>C++ allows you to specify default values for formal parameters within the function declaration. C++允许你在函数声明中指定形参的默认值。</p>
-</blockquote>
-<p>invoke the class member function 调用类成员函数</p>
-<blockquote>
-<p>By writing a wrapper function which accepts a class instance as a parameter, you can invoke the class member function from within the wrapper. 通过编写以类实例作为参数的包装函数，你可以在包装函数中调用其类成员函数。</p>
-</blockquote>
-<p>context of a software interrupt 软件中断的上下文</p>
-<blockquote>
-<p>Memory allocation APIs such as <code>Memory_alloc()</code> and <code>Memory_calloc()</code> cannot be called from within the context of a software interrupt.内存分配接口如A和B不能够在软件中断的上下文中被调用。</p>
-</blockquote>
-<p>commit <span style="color: #CCC; font-style: italic;">/kəˈmɪt/</span>    vt. 犯罪；把…交托给；指派…作战；使…承担义务；（公开地）表示意见</p>
-<p>​    vi. 忠于（某个人、机构等）；承诺</p>
-<blockquote>
-<p>amend last commit 修改上一次提交（的数据）</p>
-<p>initial commit message 初始提交消息</p>
-</blockquote>
-<p>advance vt. 使……前进</p>
-<blockquote>
-<p>advancing the connected timer by one second 将连接的时钟向前推进1秒</p>
-<p>advance at different rates 以不同的速率前进</p>
-</blockquote>
-<p>preempt 抢占</p>
-<blockquote>
-<p> All Clock functions run at the same Swi priority, so one Clock function cannot preempt another. 所有的时钟函数都运行在相同的SWI优先级，所以一个时钟函数不能抢占另一个时钟函数。</p>
-</blockquote>
-<p>optimal isolation 最佳隔离？？？</p>
-<blockquote>
-<p>As previously stated, the stack has been designed for optimal isolation, and so that it may seamlessly plug in to varying run-time environments. </p>
-</blockquote>
-<p>parse <span style="color: #CCC; font-style: italic;">/‘pɑːz/</span> v.理解，从语法上分析，解析</p>
-<blockquote>
-<p>Parsing CGI Form Data 解析CGI结构的数据</p>
-</blockquote>
-<p>constructor n. 构造函数；构造器；建造者</p>
-<p>destructor n. 析构函数</p>
-<p>millenium n. 千年；千禧年</p>
-<p>leap year 闰年</p>
-<p>second 秒</p>
-<p>microsecond 微秒</p>
-<p>millisecond 毫秒</p>
-<p>nanosecond 纳秒</p>
-<p>farad 法拉</p>
-<p>microfarad 微法</p>
-<p>millifarad 毫法</p>
-<p>nanofarad 纳法</p>
-<p>the attached clock 附带的时钟</p>
-<p>results in an accurate clock 产生了（导致、致使）一个精确的时钟</p>
-<p>period n. 周期</p>
-<p>periodic <span style="color: #CCC; font-style: italic;">/periɒdik/</span> adj. 周期的</p>
-<p>semaphore  <span style="color: #CCC; font-style: italic;">/ˈseməfɔːr/</span> n. 信号标，旗语；臂板信号装置 v. 打旗语，发信号</p>
-<p>diagnostics n. 诊断学（用作单数）</p>
-<p>declaration <span style="color: #CCC; font-style: italic;">/,deklə’reiʃən/</span> n. （纳税品等的）申报；宣布；公告；申诉书；声明；</p>
-<p>prefix n. 前缀 vt. 加前缀；将某事物加在前面</p>
-<p>stage changed （确认）暂存（数据）已变化</p>
-<p>device endianness  设备字节顺序</p>
-<p>terminate <span style="color: #CCC; font-style: italic;">/ˈtɜːmɪneɪt/</span>   vi./vt. 使终止；使结束；解雇</p>
-<p>Event Combiner 事件组合器</p>
-<p>octet <span style="color: #CCC; font-style: italic;">/ɔk’tet/</span> 八重、八位（计算机语境下，基本与byte同意）</p>
-<p>configuration entry 配置条目</p>
-<p>is independent of 独立于……；相对于……独立</p>
-<p>wrapper function 包装函数</p>
-<p>patched <span style="color: #CCC; font-style: italic;">/pætʃt/</span>  adj. 打补丁的  v. 打补丁；遮盖（视力好的眼）促进弱视眼看；（用补丁对程序）改错（patch 的过去式和过去分词）</p>
-<p>be patched with 用**修补</p>
-<p>volatile <span style="color: #CCC; font-style: italic;">/ˈvɒlətaɪl/</span> adj. [化学] 挥发性的；不稳定的；爆炸性的；反复无常的 n. 挥发物；有翅的动物</p>
-<p>volatile unsigned int</p>
-<p>prior <span style="color: #CCC; font-style: italic;">/ˈpraɪər/</span> adj. （时间、顺序等）先前的；优先的</p>
-<p>priority n. 优先级</p>
-<p>prioritize <span style="color: #CCC; font-style: italic;">/praɪˈɒrətaɪz/</span> v. 按优先顺序列出，确定 (任务) 优先顺序；优先处理，优先考虑</p>
-<p>prior to 在……之前； 居先</p>
-<blockquote>
-<p>It is important to enrich the soil prior to planting. 栽种之前给土壤施肥很重要。</p>
-</blockquote>
-<p>indicate vt. 表明；指出；预示；象征</p>
-<p>prologue <span style="color: #CCC; font-style: italic;">/prəʊlɒg/</span> <em>n</em>. 开场白</p>
-<p>static inline 静态内联</p>
-<p>hint n. 暗示；线索 <em>vt</em>. 暗示；示意 <em>vi</em>. 示意</p>
-<blockquote>
-<p>This chapter provides hints for improving the runtime performance and shared memory usage of applications that use IPC.</p>
-</blockquote>
-<p>mandatory <span style="color: #CCC; font-style: italic;">/‘mændətəri/</span> <em>adj</em>. 强制的；命令的；托管的； <em>n</em>. 受托者</p>
-<p>elicit <span style="color: #CCC; font-style: italic;">/i’lisit/</span> <em>vt</em>. 引出</p>
-<blockquote>
-<p>Ping uses the ICMP protocol’s mandatory ECHO_REQUEST datagram to elicit  an ICMP ECHO_RESPONSE from a host or gateway.</p>
-<p>PING使用ICMP协议的强制性的“回声请求”数据报来引出主机或网关的“回声响应”。</p>
-</blockquote>
-<p>incorporate 包含</p>
-<blockquote>
-<p>The ADAU1772 is a codec with four inputs and two outputs that incorporates a digital processing engine to perform filtering, level control, signal level monitoring, and mixing. </p>
-</blockquote>
-<p>low latency 低延迟</p>
-<p>noise cancelling headset 降噪耳机</p>
-<blockquote>
-<p>The path from the analog input to the DSP core to the analog output is<br>optimized for low latency and is ideal for noise cancelling headsets.</p>
-</blockquote>
-<p>analog to analog latency 模比延迟</p>
-<blockquote>
-<p>38 μs analog-to-analog latency</p>
-</blockquote>
-<p>bias <em>n</em>. 偏移；偏差；偏见；<em>vt</em>. 使存偏见 <em>adj</em>. 偏斜的 <em>adv</em>. 偏斜地</p>
-<p>bias generators 偏置发生器</p>
-<p>ADC<br>modulator ADC调制器</p>
-<p>ADC decimator</p>
-<p>clock oscillator <span style="color: #CCC; font-style: italic;">/ˈɒsɪleɪtə(r)/</span> 时钟振荡器</p>
-<p>Cofficient write 系数写？？？</p>
-<p>base address 基地址</p>
-<p>schematic n. 原理图</p>
-<p>offset error 便宜误差</p>
-<p>gain error 增益误差</p>
-<p>interchannel isolation 通道间隔</p>
-<p>power supply rejection ratio 电源抑制比</p>
-<p>SNR（Signal-to-Noise Ratio） 信噪比</p>
-<p>attenuation 衰减</p>
-<p>digital attenuation step 数字衰减步长</p>
-<p>digital attenuation range 数字衰减范围</p>
-<p>Total Harmonic Distortion + Noise 总谐波失真噪声</p>
-<p>tristate <em>n</em>. 三角洲的</p>
-<p>tristate buffer 三态缓冲器</p>
-<p>tristate control 三态控制</p>
-<p>tristating <em>adj</em>. ????</p>
-<p>on-board fractional PLL 小数分频PLL</p>
-<p>on-board regulator 板载调节器</p>
-<blockquote>
-<p>The on-board regulator generates the 3.3 V dc or 1.8 V dc supply, determined by S1, for the on-board circuitry. 板载整流器为板载电流提供了由S1决定的1.8V或3.3V电压。</p>
-</blockquote>
-<p>internal digital supply voltage 内部数字电源电压</p>
-<blockquote>
-<p>The operating voltage range is 1.8 V to<br>3.63 V, with an on-board regulator generating the internal<br>digital supply voltage.</p>
-</blockquote>
-<p>electret  <span style="color: #CCC; font-style: italic;">/ɪˈlektrət/</span> <em>n</em>. 驻极体；电介体</p>
-<p>electret microphone 驻极体麦克风</p>
-<p>seamless interfacing 无缝连接（的接口）</p>
-<blockquote>
-<p>Two microphone bias pins provide seamless interfacing to electret microphones. 两个麦克风偏置针为驻极体麦克风提供了无缝连接。</p>
-</blockquote>
-<p> graphical programming software 图形化编程软件</p>
-<blockquote>
-<p>The program and parameter RAMs can be loaded with custom audio processing signal flow built using the SigmaStudio™ graphical programming software from Analog Devices, Inc. 在使用Analog Devices公司的SigmaStudio图形化编程软件建立自定义音频处理信号流时，程序和参数内存会被自动加载。</p>
-</blockquote>
-<p>standalone operation 独立操作</p>
-<blockquote>
-<p>For standalone operation, the clock can be generated using the on-board crystal oscillator.</p>
-</blockquote>
-<p>A be fed directly to <em>somewhere</em> / B      A被直接带到某处 、A被直接喂给B（吃掉）</p>
-<blockquote>
-<p>The ADAU1772 can generate its clocks either from an externally provided clock or from a crystal oscillator. In both cases, the on board PLL can be used or the clock can be fed directly to the core. </p>
-</blockquote>
-<p>rate <em>n</em>. 比率，率；速度；价格；等级<br><em>vt</em>. 认为；估价；责骂<br><em>vi</em>. 责骂；被评价</p>
-<p>ratio <em>n</em>. 比率，比例</p>
-<p>speed <em>n</em>. 速度，速率；进度；迅速；繁荣；感光度；排挡；<br><em>v</em>. 快速运动；加速；促进；</p>
-<blockquote>
-<p>The rate of the internal master clock must be set properly using the CC_MDIV bit in the clock control register (Address 0x0000).  内部主时钟的速率必须要在时钟控制寄存器下的CC_MDIV位上设置正确。</p>
-</blockquote>
-<p>LDO regulator （某种）线性稳压器？</p>
-<img src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/04/image-20210421160130520.png" alt="image-20210421160130520" style="zoom: 67%;" />
-
-
-
-<p>circuitry <span style="color: #CCC; font-style: italic;">/ˈsɜːkɪtri/</span> n. 电路；电路系统；电路学；一环路</p>
-<blockquote>
-<p>The easiest way to achieve this is to use a regulator that<br>has a power good (PGOOD) signal to power the ADAU1772 or<br>generate a power good signal using additional circuitry external<br>to the regulator itself.</p>
-</blockquote>
-<p>regular <em>adj</em>. 有规律的</p>
-<p>regulate <em>vt</em>. 调节；规定；控制；校准；有系统地管理</p>
-<p>regulated voltage 稳定电压</p>
-<p>regulator <em>n</em>. 监管机构，监管者；调整者；校准器；稳压器</p>
-<blockquote>
-<p>Typically, on such regulators the power good<br>signal changes state when the regulated voltage drops below ~90%<br>of its target value. 通常只有在稳定电压低于规定目标的90%以下时，这些稳压器的良好信号才会改变状态。</p>
-</blockquote>
-<p>polar 北极</p>
-<p>polarity <span style="color: #CCC; font-style: italic;">/pəˈlærəti/</span> <em>n</em>. [物] 极性；两极；对立</p>
-<p>signal polarity 信号极性</p>
-<p>unipolar signal 单极信号（仅有零值和正值）</p>
-<p>bipolar signal 双极信号（有正负值和零值）</p>
-<p>impedance <span style="color: #CCC; font-style: italic;">/ɪmˈpiːdns/</span> n. 阻抗</p>
-<p>input impedance 输入阻抗</p>
-<p>output impedance 输出阻抗</p>
-<p>load impedance 负载阻抗</p>
-<p>impedance matching 阻抗匹配</p>
-<p>impedance mismatch 阻抗失配</p>
-<p>amplify <em>vt</em>. 放大，扩大；增强；详述<br><em>vi</em>. 详述</p>
-<p>amplifier <em>n</em>. 增益器；放大器；</p>
-<p>power amplifier （也简写: power amp）功率放大器</p>
-<p>pre-amplifier 前置放大器（也写作：preamplifier 或 preamp）</p>
-<p>signal path 信号通路，信号路径</p>
-<p><em>【这语法令我迷惑】</em></p>
-<blockquote>
-<p>The MICBIASx pins can also be used to cleanly supply voltage to digital or analog MEMS microphones with separate power supply pins. </p>
-<p>能够为数字（信号）和模拟（信号）的MEMS麦克风提供稳定供应的电压（cleanly supply voltage）</p>
-</blockquote>
-<p>attenuate <em>v</em>. （使）减弱；（使）纤细，稀薄<br>adj. 减弱的；稀薄的；细小的</p>
-<p>attenuated <em>adj</em>. （力量或效果）衰减的；（人）瘦长的<br><em>v</em>. 使减弱；使变细；稀释</p>
-<p>attenuation n. [物] 衰减；变薄；稀释</p>
-<blockquote>
-<p>The volume setting of each ADC can be digitally attenuated in the ADCx_VOLUME registers (Address 0x001F to Address 0x0022).</p>
-</blockquote>
-<p>PCM (Pulse Code Modulation) 脉冲编码调至</p>
-<p>PDM (Pulse Density Modulation) 脉冲密度调制</p>
-<p>PDM modulator</p>
-<p>coupling capacitor 耦合电容器</p>
-<p>connect A in series with B  让A与B以串联形式连接</p>
-<blockquote>
-<p>The headphone outputs can also be configured as ground centered outputs by connecting coupling capacitors in series with the output pins. </p>
-</blockquote>
-<p>corner frequency 角频率</p>
-<p>suppress vt. 抑制；镇压；废止</p>
-<p>suppression n. 抑制；镇压；[植] 压抑</p>
-<p>Pop-and-Click Suppression 音频杂音（嘀嗒和爆破）抑制</p>
-<p>potentiostat  <span style="color: #CCC; font-style: italic;">/pəu’tenʃiəstæt/</span> <em>n</em>. 恒电势器；[电] 稳压器</p>
-<p>potentiostatic <em>adj</em>. 电压稳定器的；恒电势的；电势恒定器的</p>
-<p>potentiometer <span style="color: #CCC; font-style: italic;">/pəˌtenʃiˈɒmɪtə(r)/</span> <em>n</em>. 电位计；分压计</p>
-<p>potentiometric <span style="color: #CCC; font-style: italic;">/pəu,tenʃiə’metrik/</span> <em>adj</em>. 电势测定的，电位计的</p>
-<blockquote>
-<p>control interface: switches and potentiometers 控制接口：开关和电位器</p>
-</blockquote>
-<p>level 有 <code>层级</code>、 <code>等级</code> 、<code>电平</code>、<code>水平</code> 之意，较难区分。</p>
-<p><strong>等级</strong>：relative stack priority level 相对堆栈优先（等）级</p>
-<blockquote>
-<p>The below options allow you to set the scheduler’s relative stack priority level and run mode.</p>
-<p>下列设置允许你调整调度器的相对堆栈优先级和运行模式。</p>
-</blockquote>
-<p><strong>层级</strong>：以下为音频信号从弱到强的各层：</p>
-<table>
-<thead>
-<tr>
-<th></th>
-<th></th>
-<th></th>
-</tr>
-</thead>
-<tbody><tr>
-<td>microphone level 麦克风层</td>
-<td>microphone output</td>
-<td></td>
-</tr>
-<tr>
-<td>instrument level 乐器层</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>line level 线路层</td>
-<td>line output</td>
-<td></td>
-</tr>
-<tr>
-<td>speak level 喇叭层</td>
-<td></td>
-<td></td>
-</tr>
-</tbody></table>
-<blockquote>
-<p>be driven either by a line output driver or by a microphone driver.</p>
-<p>drive differential loads</p>
-</blockquote>
-<p><strong>电平</strong>：full-scale level 满量程电平</p>
-<blockquote>
-<p>Therefore, the full-scale level of a signal in the processing core will be slightly different from a full-scale level external to the IC. </p>
-</blockquote>
-<blockquote>
-<p>full-scale 全尺寸的、全尺度的、满量程的</p>
-<p>full-scale input voltage 满量程输入电压</p>
-</blockquote>
-<p>precision 精度</p>
-<p>single-precision 单精度</p>
-<p>double-precision 双精度</p>
-<p>Single-precision biquad filter 单精度双四轴滤波器</p>
-<blockquote>
-<p>The double length memory enables the core to double precision arithmetic with double length data and single length coefficients.</p>
-</blockquote>
-<p>second order filter 二阶滤波器</p>
-<p>limiter 限幅器</p>
-<p>endian <em>n</em>. 字节存储次序，元组排列顺序</p>
-<p>big-endian</p>
-<p>small-endian</p>
-<p>two parameter banks 参数集（参数组， two sets of parameters）</p>
-<blockquote>
-<p>There are two parameter banks available. Each bank can hold a full set of 160 parameters (32 filters × 5 coefficients).</p>
-</blockquote>
-<p>A be assigned to B   A被分配给了B</p>
-<blockquote>
-<p>Parameters are assigned to instructions in the order in which<br>the instructions are instantiated in the code. 参数按照在代码中实例化指令的顺序被分配给了指令。</p>
-</blockquote>
-<p>以下词汇均有 “<strong>线路</strong>“ 之意：line、wire、trace、cable</p>
-<p>connect the audio cables 连接音频电缆</p>
-<p>wider trace 更宽的线路、更宽的导线</p>
-<blockquote>
-<p>If the<br>headphone amplifiers are enabled, the PCB trace to this pin should<br>be wider than traces to other pins to increase the current carrying<br>capacity. A wider trace should also be used for the headphone<br>output lines.</p>
-</blockquote>
-<p>equivalent <em>adj</em>. （在价值、数量等方面）相等的；等价的；等效的；等量的；同意义的<br><em>n</em>. 对等的人（或事物）；当量</p>
-<p>equidistant <span style="color: #CCC; font-style: italic;">/ˌiːkwɪˈdɪstənt/</span> <em>adj</em>. 等距的；距离相等的</p>
-<p>locate <em>sth</em>. from <em>somewhere</em> 从某处定位某物</p>
-<blockquote>
-<p>For maximum effectiveness, <em>locate</em> the capacitor equidistant<br><em>from</em> the power and ground pins or slightly closer to the power pin<br>if equidistant placement is not possible. 为了获取最大效率，应在电源及接地的等距接口处置放电容，若等距放置无法采用，则应在放置在电源一侧。</p>
-</blockquote>
-<p>bypass capacitor 旁路电容</p>
-<img src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/04/Bypass-capacitor.png" alt="旁路电容" style="zoom:50%;" />
-
-<p>be bypassed with a capacitor 用一个电容进行绕装</p>
-<blockquote>
-<p>Each supply signal on the board should also be bypassed with a single bulk capacitor (10 μF to 47 μF).</p>
-</blockquote>
-<p>sequence file</p>
-<p>address/data file</p>
-<p>solder <em>n</em>. 焊料；接合物<br><em>v</em>. 焊接；使联接在一起</p>
-<p>unpopulated header pads 未焊接点（盘）</p>
-<p>unpopulated pcb 无载印制电路板</p>
-<blockquote>
-<p>To use an external speaker, wires can be soldered to the<br>unpopulated header pads, J13 and J16.</p>
-<p>The R2 resistor is not populated from the factory.  在工厂时，R2电阻未安装。</p>
-</blockquote>
-<p>left/right justified</p>
-<p>install <em>sth</em>. across <em>sth</em>. 在某物上安装某物</p>
-<blockquote>
-<p>To use MCLK on the J4 header, first install a resistor across<br>the R2 pads.  要在J4引脚上使用MCLK，首先要在R2焊盘上安装一个电阻。</p>
-</blockquote>
-<p><img src="http://pic.islet.space/2021/04/aiologo.png" alt="aiologo"></p>
-<p>single-address mode</p>
-<p>burst mode</p>
-<blockquote>
-<p>All addresses can be accessed in either single-address mode or burst mode. </p>
-</blockquote>
 
       
     </div>
