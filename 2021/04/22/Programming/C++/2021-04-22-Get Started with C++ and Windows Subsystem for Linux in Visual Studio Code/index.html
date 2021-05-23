@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="next-config" data-name="main" type="application/json">{&quot;hostname&quot;:&quot;islet.space&quot;,&quot;root&quot;:&quot;&#x2F;&quot;,&quot;images&quot;:&quot;&#x2F;images&quot;,&quot;scheme&quot;:&quot;Gemini&quot;,&quot;version&quot;:&quot;8.3.0&quot;,&quot;exturl&quot;:false,&quot;sidebar&quot;:{&quot;position&quot;:&quot;left&quot;,&quot;display&quot;:&quot;post&quot;,&quot;padding&quot;:18,&quot;offset&quot;:12},&quot;copycode&quot;:false,&quot;bookmark&quot;:{&quot;enable&quot;:false,&quot;color&quot;:&quot;#222&quot;,&quot;save&quot;:&quot;auto&quot;},&quot;fancybox&quot;:false,&quot;mediumzoom&quot;:false,&quot;lazyload&quot;:false,&quot;pangu&quot;:false,&quot;comments&quot;:{&quot;style&quot;:&quot;tabs&quot;,&quot;active&quot;:null,&quot;storage&quot;:true,&quot;lazyload&quot;:false,&quot;nav&quot;:null},&quot;motion&quot;:{&quot;enable&quot;:true,&quot;async&quot;:false,&quot;transition&quot;:{&quot;post_block&quot;:&quot;fadeIn&quot;,&quot;post_header&quot;:&quot;fadeInDown&quot;,&quot;post_body&quot;:&quot;fadeInDown&quot;,&quot;coll_header&quot;:&quot;fadeInLeft&quot;,&quot;sidebar&quot;:&quot;fadeInUp&quot;}},&quot;prism&quot;:false,&quot;i18n&quot;:{&quot;placeholder&quot;:&quot;Searching...&quot;,&quot;empty&quot;:&quot;We didn&#39;t find any results for the search: ${query}&quot;,&quot;hits_time&quot;:&quot;${hits} results found in ${time} ms&quot;,&quot;hits&quot;:&quot;${hits} results found&quot;}}</script>
+<meta name="description" content="code.visualstudio.com Using C++ and WSL in VS CodeIn this tutorial, you will configure Visual Studio Code to use the GCC C++ compiler (g++) and GDB debugger on Ubuntu in the Windows Subsystem for Linu">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Get Started with C++ and Windows Subsystem for Linux in Visual Studio Code">
+<meta property="og:url" content="http://islet.space/2021/04/22/Programming/C++/2021-04-22-Get%20Started%20with%20C++%20and%20Windows%20Subsystem%20for%20Linux%20in%20Visual%20Studio%20Code/index.html">
+<meta property="og:site_name" content="Coder的孤岛">
+<meta property="og:description" content="code.visualstudio.com Using C++ and WSL in VS CodeIn this tutorial, you will configure Visual Studio Code to use the GCC C++ compiler (g++) and GDB debugger on Ubuntu in the Windows Subsystem for Linu">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://code.visualstudio.com/assets/docs/cpp/wsl/start-ubuntu.png">
+<meta property="og:image" content="https://code.visualstudio.com/assets/docs/cpp/wsl/bash-ubuntu.png">
+<meta property="og:image" content="c:/Users/431240/AppData/Roaming/Typora/typora-user-images/image-20210419161354074.png">
+<meta property="og:image" content="c:/Users/431240/AppData/Roaming/Typora/typora-user-images/image-20210419155740210.png">
+<meta property="og:image" content="https://code.visualstudio.com/assets/docs/cpp/wsl/file-explorer-wsl.png">
+<meta property="og:image" content="https://code.visualstudio.com/assets/docs/cpp/wsl/wsl-status-bar.png">
+<meta property="og:image" content="c:/Users/431240/AppData/Roaming/Typora/typora-user-images/image-20210419155444952.png">
+<meta property="og:image" content="https://code.visualstudio.com/assets/docs/cpp/wsl/new-file-button.png">
+<meta property="og:image" content="https://code.visualstudio.com/assets/docs/cpp/wsl/cpp-extension-notification.png">
+<meta property="og:image" content="https://code.visualstudio.com/assets/docs/cpp/wsl/install-in-wsl.png">
+<meta property="og:image" content="https://code.visualstudio.com/assets/docs/cpp/wsl/file-explorer-helloworld.png">
+<meta property="og:image" content="c:/Users/431240/AppData/Roaming/Typora/typora-user-images/image-20210419160838596.png">
+<meta property="og:image" content="https://code.visualstudio.com/assets/docs/cpp/wsl/msg-intellisense.png">
+<meta property="og:image" content="https://code.visualstudio.com/assets/docs/cpp/wsl/build-active-file.png">
+<meta property="og:image" content="https://code.visualstudio.com/assets/docs/cpp/wsl/wsl-task-in-terminal.png">
+<meta property="og:image" content="https://code.visualstudio.com/assets/docs/cpp/wsl/wsl-bash-terminal.png">
+<meta property="og:image" content="https://code.visualstudio.com/assets/docs/cpp/wsl/build-and-debug-active-file.png">
+<meta property="og:image" content="https://code.visualstudio.com/assets/docs/cpp/wsl/wsl-breakpoint-default.png">
+<meta property="og:image" content="https://code.visualstudio.com/assets/docs/cpp/cpp/debug-controls.png">
+<meta property="og:image" content="https://code.visualstudio.com/assets/docs/cpp/cpp/step-over-button.png">
+<meta property="og:image" content="https://code.visualstudio.com/assets/docs/cpp/wsl/debug-view-variables.png">
+<meta property="og:image" content="https://code.visualstudio.com/assets/docs/cpp/cpp/gcc-system-header-stepping.png">
+<meta property="og:image" content="https://code.visualstudio.com/assets/docs/cpp/cpp/breakpoint-in-main.png">
+<meta property="og:image" content="https://code.visualstudio.com/assets/docs/cpp/wsl/debug-console-output-wsl.png">
+<meta property="og:image" content="https://code.visualstudio.com/assets/docs/cpp/cpp/watch-window.png">
+<meta property="og:image" content="https://code.visualstudio.com/assets/docs/cpp/cpp/mouse-hover.png">
+<meta property="og:image" content="https://code.visualstudio.com/assets/docs/cpp/cpp/command-palette.png">
+<meta property="og:image" content="https://code.visualstudio.com/assets/docs/cpp/wsl/intellisense-configurations-wsl.png">
+<meta property="article:published_time" content="2021-04-22T15:58:32.000Z">
+<meta property="article:modified_time" content="2021-05-23T12:06:39.020Z">
+<meta property="article:author" content="Liewzheng">
+<meta property="article:tag" content="C++">
+<meta property="article:tag" content="Linux">
+<meta property="article:tag" content="VisualStudioCode">
+<meta property="article:tag" content="Subsystem">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://code.visualstudio.com/assets/docs/cpp/wsl/start-ubuntu.png">
+
+
+<link rel="canonical" href="http://islet.space/2021/04/22/Programming/C++/2021-04-22-Get%20Started%20with%20C++%20and%20Windows%20Subsystem%20for%20Linux%20in%20Visual%20Studio%20Code/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{&quot;sidebar&quot;:&quot;&quot;,&quot;isHome&quot;:false,&quot;isPost&quot;:true,&quot;lang&quot;:&quot;en&quot;,&quot;comments&quot;:true,&quot;permalink&quot;:&quot;http:&#x2F;&#x2F;islet.space&#x2F;2021&#x2F;04&#x2F;22&#x2F;Programming&#x2F;C++&#x2F;2021-04-22-Get%20Started%20with%20C++%20and%20Windows%20Subsystem%20for%20Linux%20in%20Visual%20Studio%20Code&#x2F;&quot;,&quot;path&quot;:&quot;2021&#x2F;04&#x2F;22&#x2F;Programming&#x2F;C++&#x2F;2021-04-22-Get Started with C++ and Windows Subsystem for Linux in Visual Studio Code&#x2F;&quot;,&quot;title&quot;:&quot;Get Started with C++ and Windows Subsystem for Linux in Visual Studio Code&quot;}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">&quot;&quot;</script>
+<title>Get Started with C++ and Windows Subsystem for Linux in Visual Studio Code | Coder的孤岛</title><script src="/js/config.js"></script>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Coder的孤岛</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">islet of the coder</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-文章"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>文章</a></li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Using-C-and-WSL-in-VS-Code"><span class="nav-number">1.</span> <span class="nav-text">Using C++ and WSL in VS Code</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Prerequisites"><span class="nav-number">2.</span> <span class="nav-text">Prerequisites</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Set-up-your-Linux-environment"><span class="nav-number">3.</span> <span class="nav-text">Set up your Linux environment</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Run-VS-Code-in-WSL"><span class="nav-number">4.</span> <span class="nav-text">Run VS Code in WSL</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Add-a-source-code-file"><span class="nav-number">5.</span> <span class="nav-text">Add a source code file</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Install-the-C-C-extension"><span class="nav-number">5.1.</span> <span class="nav-text">Install the C&#x2F;C++ extension</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Add-hello-world-source-code"><span class="nav-number">5.2.</span> <span class="nav-text">Add hello world source code</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Explore-IntelliSense"><span class="nav-number">6.</span> <span class="nav-text">Explore IntelliSense</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Build-helloworld-cpp"><span class="nav-number">7.</span> <span class="nav-text">Build helloworld.cpp</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Running-the-build"><span class="nav-number">7.1.</span> <span class="nav-text">Running the build</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Modifying-tasks-json"><span class="nav-number">7.2.</span> <span class="nav-text">Modifying tasks.json</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Debug-helloworld-cpp"><span class="nav-number">8.</span> <span class="nav-text">Debug helloworld.cpp</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Start-a-debugging-session"><span class="nav-number">8.1.</span> <span class="nav-text">Start a debugging session</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Step-through-the-code"><span class="nav-number">9.</span> <span class="nav-text">Step through the code</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Set-a-watch"><span class="nav-number">10.</span> <span class="nav-text">Set a watch</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#C-C-configurations"><span class="nav-number">11.</span> <span class="nav-text">C&#x2F;C++ configurations</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Closing-the-WSL-session"><span class="nav-number">12.</span> <span class="nav-text">Closing the WSL session</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Next-steps"><span class="nav-number">13.</span> <span class="nav-text">Next steps</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Liewzheng</p>
+  <div class="site-description" itemprop="description">笔记分享的旮旯孤岛而已</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">59</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">16</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">116</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="mailto:liewzheng@qq.com" title="E-Mail → mailto:liewzheng@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://islet.space/2021/04/22/Programming/C++/2021-04-22-Get%20Started%20with%20C++%20and%20Windows%20Subsystem%20for%20Linux%20in%20Visual%20Studio%20Code/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Liewzheng">
+      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coder的孤岛">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Get Started with C++ and Windows Subsystem for Linux in Visual Studio Code
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-04-22 23:58:32" itemprop="dateCreated datePublished" datetime="2021-04-22T23:58:32+08:00">2021-04-22</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2021-05-23 20:06:39" itemprop="dateModified" datetime="2021-05-23T20:06:39+08:00">2021-05-23</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Programming/" itemprop="url" rel="index"><span itemprop="name">Programming</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p><a target="_blank" rel="noopener" href="https://code.visualstudio.com/docs/cpp/config-wsl">code.visualstudio.com</a></p>
+<h2 id="Using-C-and-WSL-in-VS-Code"><a href="#Using-C-and-WSL-in-VS-Code" class="headerlink" title="Using C++ and WSL in VS Code"></a>Using C++ and WSL in VS Code</h2><p>In this tutorial, you will configure Visual Studio Code to use the GCC C++ compiler (g++) and GDB debugger on Ubuntu in the <a target="_blank" rel="noopener" href="https://docs.microsoft.com/windows/wsl/install-win10">Windows Subsystem for Linux</a> (WSL). GCC stands for GNU Compiler Collection; GDB is the GNU debugger. WSL is a Linux environment within Windows that runs directly on the  machine hardware, not in a virtual machine.</p>
+<blockquote>
+<p><strong>Note</strong>: Much of this tutorial is applicable to working with C++ and VS Code directly on a Linux machine.</p>
+</blockquote>
+<p>Visual Studio Code has support for working directly in WSL with the <a target="_blank" rel="noopener" href="https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-wsl">Remote - WSL extension</a>. We recommend this mode of <a target="_blank" rel="noopener" href="https://code.visualstudio.com/docs/remote/wsl">WSL development</a>, where all your source code files, in addition to the compiler, are hosted on the Linux distro. For more background, see <a target="_blank" rel="noopener" href="https://code.visualstudio.com/docs/remote/remote-overview">VS Code Remote Development</a>.</p>
+<p>After completing this tutorial, you will be ready to create and  configure your own C++ project, and to explore the VS Code documentation for further information about its many features. This tutorial does not teach you about GCC or Linux or the C++ language. For those subjects,  there are many good resources available on the Web.</p>
+<p>If you have any problems, feel free to file an issue for this tutorial in the <a target="_blank" rel="noopener" href="https://github.com/microsoft/vscode-docs/issues">VS Code documentation repository</a>.</p>
+<h2 id="Prerequisites"><a href="#Prerequisites" class="headerlink" title="Prerequisites#"></a>Prerequisites<a href="about:reader?url=https%3A%2F%2Fcode.visualstudio.com%2Fdocs%2Fcpp%2Fconfig-wsl#_prerequisites">#</a></h2><p>To successfully complete this tutorial, you must do the following steps:</p>
+<ol>
+<li>Install <a target="_blank" rel="noopener" href="https://code.visualstudio.com/download">Visual Studio Code</a>.</li>
+<li>Install the <a target="_blank" rel="noopener" href="https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-wsl">Remote - WSL extension</a>.</li>
+<li>Install <a target="_blank" rel="noopener" href="https://docs.microsoft.com/windows/wsl/install-win10">Windows Subsystem for Linux</a> and then use the links on that same page to install your Linux  distribution of choice. This tutorial uses Ubuntu. During installation,  remember your Linux user password because you’ll need it to install  additional software.</li>
+</ol>
+<h2 id="Set-up-your-Linux-environment"><a href="#Set-up-your-Linux-environment" class="headerlink" title="Set up your Linux environment#"></a>Set up your Linux environment<a href="about:reader?url=https%3A%2F%2Fcode.visualstudio.com%2Fdocs%2Fcpp%2Fconfig-wsl#_set-up-your-linux-environment">#</a></h2><ol>
+<li><p>Open the Bash shell for WSL. If you installed an Ubuntu distro, type  “Ubuntu” in the Windows search box and then click on it in the result  list. For Debian, type “Debian”, and so on.</p>
+<p> <img src="https://code.visualstudio.com/assets/docs/cpp/wsl/start-ubuntu.png" alt="Ubuntu in Start Menu"></p>
+<p> The shell appears with a command prompt that by default consists of  your user name and computer name, and puts you in your home directory.  For Ubuntu it looks like this:</p>
+<p> <img src="https://code.visualstudio.com/assets/docs/cpp/wsl/bash-ubuntu.png" alt="Bash Shell"></p>
+</li>
+<li><p>Make a directory called <code>projects</code> and then subdirectory under that called <code>helloworld</code>:</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mkdir projects</span><br><span class="line">cd projects</span><br><span class="line">mkdir helloworld</span><br></pre></td></tr></table></figure></li>
+<li><p>Although you will be using VS Code to edit your source code, you’ll  be <strong>compiling the source code on Linux using the g++ compiler</strong>. You’ll  also <strong>debug on Linux using GDB</strong>. These tools are not installed by default  on Ubuntu, so you have to install them. Fortunately, that task is quite  easy!</p>
+</li>
+<li><p>From the WSL command prompt, first run <code>apt-get update</code> to update the Ubuntu package lists. An out-of-date distro can sometimes interfere with attempts to install new packages.</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get update</span><br></pre></td></tr></table></figure>
+
+<p> If you like, you can run <code>sudo apt-get update &amp;&amp; sudo apt-get dist-upgrade</code> to also download the latest versions of the system packages, but this  can take significantly longer depending on your connection speed.</p>
+</li>
+<li><p>From the command prompt, install the GNU compiler tools and the GDB debugger by typing:</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install build-essential gdb</span><br></pre></td></tr></table></figure></li>
+</ol>
+<p><img src="C:\Users\431240\AppData\Roaming\Typora\typora-user-images\image-20210419161354074.png" alt="image-20210419161354074"></p>
+<ol start="6">
+<li>Verify that the install succeeded by locating g++ and gdb. If the filenames are not returned from the <code>whereis</code> command, try running the update command again.</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">whereis g++</span><br><span class="line">whereis gdb</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p><strong>Note</strong>: The setup steps for installing the g++  compiler and GDB debugger apply if you are working directly on a Linux  machine rather than in WSL. Running VS Code in your helloworld project,  as well as the editing, building, and debugging steps are the same.</p>
+</blockquote>
+<h2 id="Run-VS-Code-in-WSL"><a href="#Run-VS-Code-in-WSL" class="headerlink" title="Run VS Code in WSL#"></a>Run VS Code in WSL<a href="about:reader?url=https%3A%2F%2Fcode.visualstudio.com%2Fdocs%2Fcpp%2Fconfig-wsl#_run-vs-code-in-wsl">#</a></h2><p>Navigate to your helloworld project folder and launch VS Code from the WSL terminal with <code>code .</code>:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd $HOME&#x2F;projects&#x2F;helloworld</span><br><span class="line">code .</span><br></pre></td></tr></table></figure>
+
+<p>You’ll see a message about “Installing VS Code Server”. <strong>VS Code is  downloading and installing a small server on the Linux side that the  desktop VS Code will then talk to.</strong> </p>
+<p><img src="C:\Users\431240\AppData\Roaming\Typora\typora-user-images\image-20210419155740210.png" alt="image-20210419155740210"></p>
+<p>VS Code will then start and open the <code>helloWorld</code> folder. The File Explorer shows that VS Code is now running in the context of WSL with the title bar <strong>[WSL: Ubuntu]</strong>.</p>
+<p><img src="https://code.visualstudio.com/assets/docs/cpp/wsl/file-explorer-wsl.png" alt="File Explorer in WSL"></p>
+<p>You can also tell the remote context from the Status bar.</p>
+<p><img src="https://code.visualstudio.com/assets/docs/cpp/wsl/wsl-status-bar.png" alt="Remote context in the Status bar"></p>
+<p>If you click on the Remote Status bar item, you will see a dropdown  of Remote commands appropriate for the session. </p>
+<p><img src="C:\Users\431240\AppData\Roaming\Typora\typora-user-images\image-20210419155444952.png" alt="image-20210419155444952"></p>
+<p>For example, if you want to end your session running in WSL, you can select the <strong>Close Remote Connection</strong> command from the dropdown. </p>
+<p>Running <code>code .</code> from your <em>WSL command prompt</em> will restart VS Code running in WSL.</p>
+<p>The <strong>code .</strong> command opened VS Code in the current  working folder, which becomes your “workspace”. As you go through the  tutorial, you will see three files created in a <code>.vscode</code> folder in the workspace:</p>
+<ul>
+<li><code>c_cpp_properties.json</code> (compiler path and IntelliSense settings)</li>
+<li><code>tasks.json</code> (build instructions)</li>
+<li><code>launch.json</code> (debugger settings)</li>
+</ul>
+<h2 id="Add-a-source-code-file"><a href="#Add-a-source-code-file" class="headerlink" title="Add a source code file#"></a>Add a source code file<a href="about:reader?url=https%3A%2F%2Fcode.visualstudio.com%2Fdocs%2Fcpp%2Fconfig-wsl#_add-a-source-code-file">#</a></h2><p>In the File Explorer title bar, select the <strong>New File</strong> button and name the file <code>helloworld.cpp</code>.</p>
+<p><img src="https://code.visualstudio.com/assets/docs/cpp/wsl/new-file-button.png" alt="New File title bar button"></p>
+<h3 id="Install-the-C-C-extension"><a href="#Install-the-C-C-extension" class="headerlink" title="Install the C/C++ extension#"></a>Install the C/C++ extension<a href="about:reader?url=https%3A%2F%2Fcode.visualstudio.com%2Fdocs%2Fcpp%2Fconfig-wsl#_install-the-cc-extension">#</a></h3><p>Once you create the file and VS Code detects it is a C++ language file, you may be prompted to install the <a target="_blank" rel="noopener" href="https://marketplace.visualstudio.com/items?itemName=ms-vscode.cpptools">Microsoft C/C++ extension</a> if you don’t already have it installed.</p>
+<p><img src="https://code.visualstudio.com/assets/docs/cpp/wsl/cpp-extension-notification.png" alt="C++ extension notification"></p>
+<p>Choose <strong>Install</strong> and then <strong>Reload Required</strong> when the button is displayed in the Extensions view to complete installing the C/C++ extension.</p>
+<p>If you already have C/C++ language extensions installed locally in VS Code, you’ll need to go to the Extensions view (Ctrl+Shift+X) and install those extensions into WSL. Locally installed extensions can be installed into WSL by selecting the <strong>Install in WSL</strong> button and then <strong>Reload Required</strong>.</p>
+<p><img src="https://code.visualstudio.com/assets/docs/cpp/wsl/install-in-wsl.png" alt="Install in WSL button"></p>
+<h3 id="Add-hello-world-source-code"><a href="#Add-hello-world-source-code" class="headerlink" title="Add hello world source code#"></a>Add hello world source code<a href="about:reader?url=https%3A%2F%2Fcode.visualstudio.com%2Fdocs%2Fcpp%2Fconfig-wsl#_add-hello-world-source-code">#</a></h3><p>Now paste in this source code:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line">#include &lt;vector&gt;</span><br><span class="line">#include &lt;string&gt;</span><br><span class="line"></span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">   vector&lt;string&gt; msg &#123;&quot;Hello&quot;, &quot;C++&quot;, &quot;World&quot;, &quot;from&quot;, &quot;VS Code&quot;, &quot;and the C++ extension!&quot;&#125;;</span><br><span class="line"></span><br><span class="line">   for (const string&amp; word : msg)</span><br><span class="line">   &#123;</span><br><span class="line">      cout &lt;&lt; word &lt;&lt; &quot; &quot;;</span><br><span class="line">   &#125;</span><br><span class="line">   cout &lt;&lt; endl;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Now press Ctrl+S to save the file. Notice how the file you just added appears in the <strong>File Explorer</strong> view (Ctrl+Shift+E) in the side bar of VS Code:</p>
+<p><img src="https://code.visualstudio.com/assets/docs/cpp/wsl/file-explorer-helloworld.png" alt="File Explorer"></p>
+<p>You can also enable <a target="_blank" rel="noopener" href="https://code.visualstudio.com/docs/editor/codebasics#_saveauto-save">Auto Save</a> to automatically save your file changes, by checking <strong>Auto Save</strong> in the main <strong>File</strong> menu.</p>
+<p>The Activity Bar on the far left lets you open different views such as <strong>Search</strong>, <strong>Source Control</strong>, and <strong>Run</strong>. You’ll look at the <strong>Run</strong> view later in this tutorial. You can find out more about the other views in the VS Code <a target="_blank" rel="noopener" href="https://code.visualstudio.com/docs/getstarted/userinterface">User Interface documentation</a>.</p>
+<p>若在此处遇到未找到头文件的问题，请参照一下方法。</p>
+<img src="C:\Users\431240\AppData\Roaming\Typora\typora-user-images\image-20210419160838596.png" alt="image-20210419160838596"  />
+
+
+
+
+
+
+
+<h2 id="Explore-IntelliSense"><a href="#Explore-IntelliSense" class="headerlink" title="Explore IntelliSense#"></a>Explore IntelliSense<a href="about:reader?url=https%3A%2F%2Fcode.visualstudio.com%2Fdocs%2Fcpp%2Fconfig-wsl#_explore-intellisense">#</a></h2><p>In your new <code>helloworld.cpp</code> file, hover over <code>vector</code> or <code>string</code> to see type information. After the declaration of the <code>msg</code> variable, start typing <code>msg.</code> as you would when calling a member function. You should immediately see a completion list that shows all the member functions, and a window  that shows the type information for the <code>msg</code> object:</p>
+<p><img src="https://code.visualstudio.com/assets/docs/cpp/wsl/msg-intellisense.png" alt="Statement completion IntelliSense"></p>
+<p>You can press the Tab key to insert the selected member; then, when you add the opening parenthesis, you will see information about any arguments that the function requires.您可以按Tab键插入所选的成员;然后，当添加左括号时，您将看到关于函数所需的任何参数的信息。</p>
+<h2 id="Build-helloworld-cpp"><a href="#Build-helloworld-cpp" class="headerlink" title="Build helloworld.cpp#"></a>Build helloworld.cpp<a href="about:reader?url=https%3A%2F%2Fcode.visualstudio.com%2Fdocs%2Fcpp%2Fconfig-wsl#_build-helloworldcpp">#</a></h2><p>Next, you will create a <code>tasks.json</code> file to tell VS Code  how to build (compile) the program. This task will invoke the g++  compiler on WSL to create an executable file based on the source code.</p>
+<p>From the main menu, choose <strong>Terminal</strong> &gt; <strong>Configure Default Build Task</strong>. In the dropdown, which will display a tasks dropdown listing various predefined build tasks for C++ compilers. Choose <strong>g++ build active file</strong>, which will build the file that is currently displayed (active) in the editor.</p>
+<p><img src="https://code.visualstudio.com/assets/docs/cpp/wsl/build-active-file.png" alt="Tasks C++ build dropdown"></p>
+<p>This will create a <code>tasks.json</code> file in a <code>.vscode</code> folder and open it in the editor.</p>
+<p>Your new <code>tasks.json</code> file should look similar to the JSON below:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;version&quot;: &quot;2.0.0&quot;,</span><br><span class="line">  &quot;tasks&quot;: [</span><br><span class="line">    &#123;</span><br><span class="line">      &quot;type&quot;: &quot;shell&quot;,</span><br><span class="line">      &quot;label&quot;: &quot;g++ build active file&quot;,</span><br><span class="line">      &quot;command&quot;: &quot;&#x2F;usr&#x2F;bin&#x2F;g++&quot;,</span><br><span class="line">      &quot;args&quot;: [&quot;-g&quot;, &quot;$&#123;file&#125;&quot;, &quot;-o&quot;, &quot;$&#123;fileDirname&#125;&#x2F;$&#123;fileBasenameNoExtension&#125;&quot;],</span><br><span class="line">      &quot;options&quot;: &#123;</span><br><span class="line">        &quot;cwd&quot;: &quot;&#x2F;usr&#x2F;bin&quot;</span><br><span class="line">      &#125;,</span><br><span class="line">      &quot;problemMatcher&quot;: [&quot;$gcc&quot;],</span><br><span class="line">      &quot;group&quot;: &#123;</span><br><span class="line">        &quot;kind&quot;: &quot;build&quot;,</span><br><span class="line">        &quot;isDefault&quot;: true</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>The <code>command</code> setting specifies the program to run; in this case that is g++. The <code>args</code> array specifies the command-line arguments that will be passed to g++.  These arguments must be specified in the order expected by the compiler. This task tells g++ to take the active file (<code>$&#123;file&#125;</code>), compile it, and create an executable file in the current directory (<code>$&#123;fileDirname&#125;</code>) with the same name as the active file but without an extension (<code>$&#123;fileBasenameNoExtension&#125;</code>), resulting in <code>helloworld</code> for our example.</p>
+<blockquote>
+<p><strong>Note</strong>: You can learn more about <code>tasks.json</code> variables in the <a target="_blank" rel="noopener" href="https://code.visualstudio.com/docs/editor/variables-reference">variables reference</a>.</p>
+</blockquote>
+<p>The <code>label</code> value is what you will see in the tasks list; you can name this whatever you like.</p>
+<p>The <code>&quot;isDefault&quot;: true</code> value in the <code>group</code> object specifies that this task will be run when you press Ctrl+Shift+B. This property is for convenience only; if you set it to false, you can still run it from the Terminal menu with <strong>Tasks: Run Build Task</strong>.</p>
+<h3 id="Running-the-build"><a href="#Running-the-build" class="headerlink" title="Running the build#"></a>Running the build<a href="about:reader?url=https%3A%2F%2Fcode.visualstudio.com%2Fdocs%2Fcpp%2Fconfig-wsl#_running-the-build">#</a></h3><ol>
+<li><p>Go back to <code>helloworld.cpp</code>. Your task builds the active file and you want to build <code>helloworld.cpp</code>.</p>
+</li>
+<li><p>To run the build task defined in <code>tasks.json</code>, press Ctrl+Shift+B or from the <strong>Terminal</strong> main menu choose <strong>Tasks: Run Build Task</strong>.</p>
+</li>
+<li><p>When the task starts, you should see the Integrated Terminal panel  appear below the source code editor. After the task completes, the  terminal shows output from the compiler that indicates whether the build succeeded or failed. For a successful g++ build, the output looks  something like this:</p>
+<p> <img src="https://code.visualstudio.com/assets/docs/cpp/wsl/wsl-task-in-terminal.png" alt="G++ build output in terminal"></p>
+</li>
+<li><p>Create a new terminal using the <strong>+</strong> button and you’ll have a bash terminal running in the context of WSL with the <code>helloworld</code> folder as the working directory. Run <code>ls</code> and you should now see the executable <code>helloworld</code> (no file extension).</p>
+<p> <img src="https://code.visualstudio.com/assets/docs/cpp/wsl/wsl-bash-terminal.png" alt="WSL bash terminal"></p>
+</li>
+<li><p>You can run <code>helloworld</code> in the terminal by typing <code>./helloworld</code>.</p>
+</li>
+</ol>
+<h3 id="Modifying-tasks-json"><a href="#Modifying-tasks-json" class="headerlink" title="Modifying tasks.json#"></a>Modifying tasks.json<a href="about:reader?url=https%3A%2F%2Fcode.visualstudio.com%2Fdocs%2Fcpp%2Fconfig-wsl#_modifying-tasksjson">#</a></h3><p>You can modify your <code>tasks.json</code> to build multiple C++ files by using an argument like <code>&quot;$&#123;workspaceFolder&#125;/*.cpp&quot;</code> instead of <code>$&#123;file&#125;</code>. You can also modify the output filename by replacing <code>&quot;$&#123;fileDirname&#125;/$&#123;fileBasenameNoExtension&#125;&quot;</code> with a hard-coded filename (for example ‘helloworld.out’).</p>
+<h2 id="Debug-helloworld-cpp"><a href="#Debug-helloworld-cpp" class="headerlink" title="Debug helloworld.cpp#"></a>Debug helloworld.cpp<a href="about:reader?url=https%3A%2F%2Fcode.visualstudio.com%2Fdocs%2Fcpp%2Fconfig-wsl#_debug-helloworldcpp">#</a></h2><p>Next, you’ll create a <code>launch.json</code> file to configure VS Code to launch the GDB debugger when you press F5 to debug the program. From the main menu, choose <strong>Run</strong> &gt; <strong>Add Configuration…</strong> and then choose <strong>C++ (GDB/LLDB)</strong>.</p>
+<p>You’ll then see a dropdown for various predefined debugging configurations. Choose <strong>g++ build and debug active file</strong>.</p>
+<p><img src="https://code.visualstudio.com/assets/docs/cpp/wsl/build-and-debug-active-file.png" alt="C++ debug configuration dropdown"></p>
+<p>VS Code creates a <code>launch.json</code> file, opens it in the editor, and builds and runs ‘helloworld’.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;version&quot;: &quot;0.2.0&quot;,</span><br><span class="line">  &quot;configurations&quot;: [</span><br><span class="line">    &#123;</span><br><span class="line">      &quot;name&quot;: &quot;g++ build and debug active file&quot;,</span><br><span class="line">      &quot;type&quot;: &quot;cppdbg&quot;,</span><br><span class="line">      &quot;request&quot;: &quot;launch&quot;,</span><br><span class="line">      &quot;program&quot;: &quot;$&#123;fileDirname&#125;&#x2F;$&#123;fileBasenameNoExtension&#125;&quot;,</span><br><span class="line">      &quot;args&quot;: [],</span><br><span class="line">      &quot;stopAtEntry&quot;: false,</span><br><span class="line">      &quot;cwd&quot;: &quot;$&#123;workspaceFolder&#125;&quot;,</span><br><span class="line">      &quot;environment&quot;: [],</span><br><span class="line">      &quot;externalConsole&quot;: false,</span><br><span class="line">      &quot;MIMode&quot;: &quot;gdb&quot;,</span><br><span class="line">      &quot;setupCommands&quot;: [</span><br><span class="line">        &#123;</span><br><span class="line">          &quot;description&quot;: &quot;Enable pretty-printing for gdb&quot;,</span><br><span class="line">          &quot;text&quot;: &quot;-enable-pretty-printing&quot;,</span><br><span class="line">          &quot;ignoreFailures&quot;: true</span><br><span class="line">        &#125;</span><br><span class="line">      ],</span><br><span class="line">      &quot;preLaunchTask&quot;: &quot;g++ build active file&quot;,</span><br><span class="line">      &quot;miDebuggerPath&quot;: &quot;&#x2F;usr&#x2F;bin&#x2F;gdb&quot;</span><br><span class="line">    &#125;</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>The <code>program</code> setting specifies the program you want to debug. Here it is set to the active file folder <code>$&#123;fileDirname&#125;</code> and active filename without an extension <code>$&#123;fileBasenameNoExtension&#125;</code>, which if <code>helloworld.cpp</code> is the active file will be <code>helloworld</code>.</p>
+<p>By default, the C++ extension won’t add any breakpoints to your source code and the <code>stopAtEntry</code> value is set to <code>false</code>. Change the <code>stopAtEntry</code> value to <code>true</code> to cause the debugger to stop on the <code>main</code> method when you start debugging.</p>
+<p>The remaining steps are provided as an optional exercise to help you get familiar with the editing and debugging experience.</p>
+<h3 id="Start-a-debugging-session"><a href="#Start-a-debugging-session" class="headerlink" title="Start a debugging session#"></a>Start a debugging session<a href="about:reader?url=https%3A%2F%2Fcode.visualstudio.com%2Fdocs%2Fcpp%2Fconfig-wsl#_start-a-debugging-session">#</a></h3><ol>
+<li>Go back to <code>helloworld.cpp</code> so that it is the active file.</li>
+<li>Press F5 or from the main menu choose <strong>Run &gt; Start Debugging</strong>. Before you start stepping through the code, let’s take a moment to notice several changes in the user interface:</li>
+</ol>
+<ul>
+<li><p>The Integrated Terminal appears at the bottom of the source code editor. In the <strong>Debug Output</strong> tab, you see output that indicates the debugger is up and running.</p>
+</li>
+<li><p>The editor highlights the first statement in the <code>main</code> method. This is a breakpoint that the C++ extension automatically sets for you:</p>
+<p>  <img src="https://code.visualstudio.com/assets/docs/cpp/wsl/wsl-breakpoint-default.png" alt="Initial breakpoint"></p>
+</li>
+<li><p>The Run view on the left shows debugging information. You’ll see an example later in the tutorial.</p>
+</li>
+<li><p>At the top of the code editor, a debugging control panel appears. You can move this around the screen by grabbing the dots on the left side.</p>
+<p>  <img src="https://code.visualstudio.com/assets/docs/cpp/cpp/debug-controls.png" alt="Debugging controls"></p>
+</li>
+</ul>
+<h2 id="Step-through-the-code"><a href="#Step-through-the-code" class="headerlink" title="Step through the code#"></a>Step through the code<a href="about:reader?url=https%3A%2F%2Fcode.visualstudio.com%2Fdocs%2Fcpp%2Fconfig-wsl#_step-through-the-code">#</a></h2><p>Now you’re ready to start stepping through the code.</p>
+<ol>
+<li><p>Click or press the <strong>Step over</strong> icon in the debugging control panel.</p>
+<p> <img src="https://code.visualstudio.com/assets/docs/cpp/cpp/step-over-button.png" alt="Step over button"></p>
+<p> This will advance program execution to the first line of the for loop, and skip over all the internal function calls within the <code>vector</code> and <code>string</code> classes that are invoked when the <code>msg</code> variable is created and initialized. Notice the change in the <strong>Variables</strong> window on the left.</p>
+<p> <img src="https://code.visualstudio.com/assets/docs/cpp/wsl/debug-view-variables.png" alt="Debugging windows"></p>
+<p> In this case, the errors are expected because, although the variable  names for the loop are now visible to the debugger, the statement has  not executed yet, so there is nothing to read at this point. The  contents of <code>msg</code> are visible, however, because that statement has completed.</p>
+</li>
+<li><p>Press <strong>Step over</strong> again to advance to the next  statement in this program (skipping over all the internal code that is  executed to initialize the loop). Now, the <strong>Variables</strong> window shows information about the loop variables.</p>
+</li>
+<li><p>Press <strong>Step over</strong> again to execute the <code>cout</code> statement. (Note that as of the March 2019 release, the C++ extension does not print any output to the <strong>Debug Console</strong> until the loop exits.)</p>
+</li>
+<li><p>If you like, you can keep pressing <strong>Step over</strong> until all the words in the vector have been printed to the console. But if you are curious, try pressing the <strong>Step Into</strong> button to step through source code in the C++ standard library!</p>
+<p> <img src="https://code.visualstudio.com/assets/docs/cpp/cpp/gcc-system-header-stepping.png" alt="Breakpoint in gcc standard library header"></p>
+<p> To return to your own code, one way is to keep pressing <strong>Step over</strong>. Another way is to set a breakpoint in your code by switching to the <code>helloworld.cpp</code> tab in the code editor, putting the insertion point somewhere on the <code>cout</code> statement inside the loop, and pressing F9. A red dot appears in the gutter on the left to indicate that a breakpoint has been set on this line.</p>
+<p> <img src="https://code.visualstudio.com/assets/docs/cpp/cpp/breakpoint-in-main.png" alt="Breakpoint in main"></p>
+<p> Then press F5 to start execution from the current line in the standard library header. Execution will break on <code>cout</code>. If you like, you can press F9 again to toggle off the breakpoint.</p>
+<p> When the loop has completed, you can see the output in the <strong>Debug Console</strong> tab of the integrated terminal, along with some other diagnostic information that is output by GDB.</p>
+<p> <img src="https://code.visualstudio.com/assets/docs/cpp/wsl/debug-console-output-wsl.png" alt="Debug console display"></p>
+</li>
+</ol>
+<h2 id="Set-a-watch"><a href="#Set-a-watch" class="headerlink" title="Set a watch#"></a>Set a watch<a href="about:reader?url=https%3A%2F%2Fcode.visualstudio.com%2Fdocs%2Fcpp%2Fconfig-wsl#_set-a-watch">#</a></h2><p>Sometimes you might want to keep track of the value of a variable as your program executes. You can do this by setting a <strong>watch</strong> on the variable.</p>
+<ol>
+<li><p>Place the insertion point inside the loop. In the <strong>Watch</strong> window, click the plus sign and in the text box, type <code>word</code>, which is the name of the loop variable. Now view the Watch window as you step through the loop.</p>
+<p> <img src="https://code.visualstudio.com/assets/docs/cpp/cpp/watch-window.png" alt="Watch window"></p>
+</li>
+<li><p>Add another watch by adding this statement before the loop: <code>int i = 0;</code>. Then, inside the loop, add this statement: <code>++i;</code>. Now add a watch for <code>i</code> as you did in the previous step.</p>
+</li>
+<li><p>To quickly view the value of any variable while execution is paused  on a breakpoint, you can hover over it with the mouse pointer.</p>
+<p> <img src="https://code.visualstudio.com/assets/docs/cpp/cpp/mouse-hover.png" alt="Mouse hover"></p>
+</li>
+</ol>
+<h2 id="C-C-configurations"><a href="#C-C-configurations" class="headerlink" title="C/C++ configurations#"></a>C/C++ configurations<a href="about:reader?url=https%3A%2F%2Fcode.visualstudio.com%2Fdocs%2Fcpp%2Fconfig-wsl#_cc-configurations">#</a></h2><p>If you want more control over the C/C++ extension, you can create a <code>c_cpp_properties.json</code> file, which will allow you to change settings such as the path to the  compiler, include paths, C++ standard (default is C++17), and more.</p>
+<p>You can view the C/C++ configuration UI by running the command <strong>C/C++: Edit Configurations (UI)</strong> from the Command Palette (Ctrl+Shift+P).</p>
+<p><img src="https://code.visualstudio.com/assets/docs/cpp/cpp/command-palette.png" alt="Command Palette"></p>
+<p>This opens the <strong>C/C++ Configurations</strong> page. When you make changes here, VS Code writes them to a file called <code>c_cpp_properties.json</code> in the <code>.vscode</code> folder.</p>
+<p><img src="https://code.visualstudio.com/assets/docs/cpp/wsl/intellisense-configurations-wsl.png" alt="Command Palette"></p>
+<p>You only need to modify the <strong>Include path</strong> setting if your program includes header files that are not in your workspace or in the standard library path.</p>
+<p>Visual Studio Code places these settings in <code>.vscode/c_cpp_properties.json</code>. If you open that file directly, it should look something like this:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;configurations&quot;: [</span><br><span class="line">    &#123;</span><br><span class="line">      &quot;name&quot;: &quot;Linux&quot;,</span><br><span class="line">      &quot;includePath&quot;: [&quot;$&#123;workspaceFolder&#125;&#x2F;**&quot;],</span><br><span class="line">      &quot;defines&quot;: [],</span><br><span class="line">      &quot;compilerPath&quot;: &quot;&#x2F;usr&#x2F;bin&#x2F;gcc&quot;,</span><br><span class="line">      &quot;cStandard&quot;: &quot;c11&quot;,</span><br><span class="line">      &quot;cppStandard&quot;: &quot;c++17&quot;,</span><br><span class="line">      &quot;intelliSenseMode&quot;: &quot;clang-x64&quot;</span><br><span class="line">    &#125;</span><br><span class="line">  ],</span><br><span class="line">  &quot;version&quot;: 4</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Closing-the-WSL-session"><a href="#Closing-the-WSL-session" class="headerlink" title="Closing the WSL session#"></a>Closing the WSL session<a href="about:reader?url=https%3A%2F%2Fcode.visualstudio.com%2Fdocs%2Fcpp%2Fconfig-wsl#_closing-the-wsl-session">#</a></h2><p>When you are done working in WSL, you can close your remote session with the <strong>Close Remote Connection</strong> command available in the main <strong>File</strong> menu and the Command Palette (Ctrl+Shift+P). This will restart VS Code running locally. You can easily reopen your WSL session from the <strong>File</strong> &gt; <strong>Open Recent</strong> list by selecting folders with the <strong>[WSL]</strong> suffix.</p>
+<h2 id="Next-steps"><a href="#Next-steps" class="headerlink" title="Next steps#"></a>Next steps<a href="about:reader?url=https%3A%2F%2Fcode.visualstudio.com%2Fdocs%2Fcpp%2Fconfig-wsl#_next-steps">#</a></h2><ul>
+<li>Explore the <a target="_blank" rel="noopener" href="https://code.visualstudio.com/docs/editor/codebasics">VS Code User Guide</a>.</li>
+<li>Review the <a target="_blank" rel="noopener" href="https://code.visualstudio.com/docs/languages/cpp">Overview of the C++ extension</a>.</li>
+<li>Create a new workspace, copy your .json files to it, adjust the  necessary settings for the new workspace path, program name, and so on,  and start coding!</li>
+</ul>
+<p>11/22/2019</p>
+<p>​          </p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/C/" rel="tag"># C++</a>
+              <a href="/tags/Linux/" rel="tag"># Linux</a>
+              <a href="/tags/VisualStudioCode/" rel="tag"># VisualStudioCode</a>
+              <a href="/tags/Subsystem/" rel="tag"># Subsystem</a>
+          </div>
+
+    <div id="vcomment" style="margin: 20px 0 0 0"></div>
+    <script>
+        new Valine({
+            el: '#vcomment' ,
+            appId: 'vRGM12EcYxDSM2lat5qjjSeY-gzGzoHsz',
+            appKey: 'WBgAb6NTAFQ7DYtgH0uOPNNh'
+        });
+    </script>
+</body>
+
+
+
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/04/21/Signal/What%20is%20a%20Bypass%20Capacitor/" rel="prev" title="What is a Bypass Capacitor?">
+                  <i class="fa fa-chevron-left"></i> What is a Bypass Capacitor?
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/04/22/Linux/System/2021-04-22-Linux%E5%88%86%E5%8C%BA%E5%8F%8A%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/" rel="next" title="Linux分区及文件系统">
+                  Linux分区及文件系统 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+<script src="/js/comments.js"></script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">粤ICP备19004822号 </a>
+  </div>
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Liewzheng</span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

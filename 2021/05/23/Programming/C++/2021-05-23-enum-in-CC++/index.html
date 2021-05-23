@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="next-config" data-name="main" type="application/json">{&quot;hostname&quot;:&quot;islet.space&quot;,&quot;root&quot;:&quot;&#x2F;&quot;,&quot;images&quot;:&quot;&#x2F;images&quot;,&quot;scheme&quot;:&quot;Gemini&quot;,&quot;version&quot;:&quot;8.3.0&quot;,&quot;exturl&quot;:false,&quot;sidebar&quot;:{&quot;position&quot;:&quot;left&quot;,&quot;display&quot;:&quot;post&quot;,&quot;padding&quot;:18,&quot;offset&quot;:12},&quot;copycode&quot;:false,&quot;bookmark&quot;:{&quot;enable&quot;:false,&quot;color&quot;:&quot;#222&quot;,&quot;save&quot;:&quot;auto&quot;},&quot;fancybox&quot;:false,&quot;mediumzoom&quot;:false,&quot;lazyload&quot;:false,&quot;pangu&quot;:false,&quot;comments&quot;:{&quot;style&quot;:&quot;tabs&quot;,&quot;active&quot;:null,&quot;storage&quot;:true,&quot;lazyload&quot;:false,&quot;nav&quot;:null},&quot;motion&quot;:{&quot;enable&quot;:true,&quot;async&quot;:false,&quot;transition&quot;:{&quot;post_block&quot;:&quot;fadeIn&quot;,&quot;post_header&quot;:&quot;fadeInDown&quot;,&quot;post_body&quot;:&quot;fadeInDown&quot;,&quot;coll_header&quot;:&quot;fadeInLeft&quot;,&quot;sidebar&quot;:&quot;fadeInUp&quot;}},&quot;prism&quot;:false,&quot;i18n&quot;:{&quot;placeholder&quot;:&quot;Searching...&quot;,&quot;empty&quot;:&quot;We didn&#39;t find any results for the search: ${query}&quot;,&quot;hits_time&quot;:&quot;${hits} results found in ${time} ms&quot;,&quot;hits&quot;:&quot;${hits} results found&quot;}}</script>
+<meta name="description" content="enum 是 Enumeration &#x2F;&#x2F; 的缩写，是C&#x2F;C++中的 枚举 关键字。 特点符合以下场景时可能需要使用到枚举：  需要使用到的变量 数量较大，通过枚举以简写代码，提高代码可读性 使用整形（integer）进行定义（但不同于直接定义成 int 的 显式整形，使用枚举类型定义的话会变成 隐式整形） 所有值都是有固定范围的，是可人为预设的。 具有常量的特性（主要特点是：不可在定义之外的地方">
+<meta property="og:type" content="article">
+<meta property="og:title" content="enum in C&#x2F;C++">
+<meta property="og:url" content="http://islet.space/2021/05/23/Programming/C++/2021-05-23-enum-in-CC++/index.html">
+<meta property="og:site_name" content="Coder的孤岛">
+<meta property="og:description" content="enum 是 Enumeration &#x2F;&#x2F; 的缩写，是C&#x2F;C++中的 枚举 关键字。 特点符合以下场景时可能需要使用到枚举：  需要使用到的变量 数量较大，通过枚举以简写代码，提高代码可读性 使用整形（integer）进行定义（但不同于直接定义成 int 的 显式整形，使用枚举类型定义的话会变成 隐式整形） 所有值都是有固定范围的，是可人为预设的。 具有常量的特性（主要特点是：不可在定义之外的地方">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://pic.islet.space/2021/05/image-20210523204125878.png">
+<meta property="og:image" content="https://pic.islet.space/2021/05/image-20210523204041715.png">
+<meta property="og:image" content="https://pic.islet.space/2021/05/image-20210523182310296.png">
+<meta property="og:image" content="https://pic.islet.space/2021/05/image-20210523204224839.png">
+<meta property="og:image" content="https://pic.islet.space/2021/05/image-20210523202049638.png">
+<meta property="og:image" content="https://pic.islet.space/2021/05/image-20210523202501260.png">
+<meta property="og:image" content="https://pic.islet.space/2021/05/image-20210523202757582.png">
+<meta property="article:published_time" content="2021-05-23T10:22:00.000Z">
+<meta property="article:modified_time" content="2021-05-23T14:03:34.693Z">
+<meta property="article:author" content="Liewzheng">
+<meta property="article:tag" content="C">
+<meta property="article:tag" content="C++">
+<meta property="article:tag" content="enum">
+<meta property="article:tag" content="typedef">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://pic.islet.space/2021/05/image-20210523204125878.png">
+
+
+<link rel="canonical" href="http://islet.space/2021/05/23/Programming/C++/2021-05-23-enum-in-CC++/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{&quot;sidebar&quot;:&quot;&quot;,&quot;isHome&quot;:false,&quot;isPost&quot;:true,&quot;lang&quot;:&quot;en&quot;,&quot;comments&quot;:true,&quot;permalink&quot;:&quot;http:&#x2F;&#x2F;islet.space&#x2F;2021&#x2F;05&#x2F;23&#x2F;Programming&#x2F;C++&#x2F;2021-05-23-enum-in-CC++&#x2F;&quot;,&quot;path&quot;:&quot;2021&#x2F;05&#x2F;23&#x2F;Programming&#x2F;C++&#x2F;2021-05-23-enum-in-CC++&#x2F;&quot;,&quot;title&quot;:&quot;enum in C&#x2F;C++&quot;}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">&quot;&quot;</script>
+<title>enum in C/C++ | Coder的孤岛</title><script src="/js/config.js"></script>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Coder的孤岛</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">islet of the coder</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-文章"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>文章</a></li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%89%B9%E7%82%B9"><span class="nav-number">1.</span> <span class="nav-text">特点</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%9A%E4%B9%89"><span class="nav-number">2.</span> <span class="nav-text">定义</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E7%A4%BA%E4%BE%8B"><span class="nav-number">3.</span> <span class="nav-text">使用示例</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B5%B7%E5%A7%8B%E5%80%BC%E8%B5%8B%E5%80%BC"><span class="nav-number">3.1.</span> <span class="nav-text">起始值赋值</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%80%BC%E8%A1%A8%E4%B8%AD%E9%80%94%E8%B5%8B%E5%80%BC"><span class="nav-number">3.2.</span> <span class="nav-text">值表中途赋值</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Typedef-enum"><span class="nav-number">4.</span> <span class="nav-text">Typedef enum</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9E%9A%E4%B8%BE%E9%81%8D%E5%8E%86"><span class="nav-number">5.</span> <span class="nav-text">枚举遍历</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%94%99%E8%AF%AF%E7%A4%BA%E8%8C%83"><span class="nav-number">6.</span> <span class="nav-text">错误示范</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%87%8D%E5%A4%8D%E5%AE%9A%E4%B9%89"><span class="nav-number">6.1.</span> <span class="nav-text">重复定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E5%80%BC%E6%9B%B4%E6%94%B9"><span class="nav-number">6.2.</span> <span class="nav-text">数值更改</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Liewzheng</p>
+  <div class="site-description" itemprop="description">笔记分享的旮旯孤岛而已</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">59</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">16</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">116</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="mailto:liewzheng@qq.com" title="E-Mail → mailto:liewzheng@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://islet.space/2021/05/23/Programming/C++/2021-05-23-enum-in-CC++/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Liewzheng">
+      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coder的孤岛">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          enum in C/C++
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2021-05-23 18:22:00 / Modified: 22:03:34" itemprop="dateCreated datePublished" datetime="2021-05-23T18:22:00+08:00">2021-05-23</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Programming/" itemprop="url" rel="index"><span itemprop="name">Programming</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p><code>enum</code> 是 Enumeration // 的缩写，是C/C++中的 <strong>枚举</strong> 关键字。</p>
+<h1 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h1><p>符合以下场景时可能需要使用到枚举：</p>
+<ul>
+<li>需要使用到的变量 <strong>数量较大</strong>，通过枚举以简写代码，提高代码可读性</li>
+<li>使用整形（integer）进行定义（但不同于直接定义成 <code>int</code> 的 <strong>显式整形</strong>，使用枚举类型定义的话会变成 <strong>隐式整形</strong>）</li>
+<li>所有值都是有固定范围的，是可人为预设的。</li>
+<li>具有常量的特性（主要特点是：不可在定义之外的地方被修改）</li>
+</ul>
+<p>注意：</p>
+<ul>
+<li><em>在所有枚举值都未被赋值的情况下</em>，枚举值默认从 0 开始，往后逐个加 1（递增）。</li>
+</ul>
+<h1 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h1><p><strong>枚举格式</strong>：一般为 <code>enum 枚举名&#123; 枚举值表 &#125;;</code> ，也可以省略枚举名，写成如下格式：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">enum</span> <span class="title">typeName</span>&#123;</span> valueName1, valueName2, valueName3, ...... &#125;;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p><code>enum</code> 定义 <strong>枚举类型的关键字</strong>；</p>
+<p><code>typeName</code>是 枚举类型的名称，即 <strong>枚举名</strong>。</p>
+<p><code>valueName1, valueName2, valueName3, ......</code>是每个值对应的名字的列表，所有元素集合即为 <strong>枚举值表</strong></p>
+<p>注意：最后的<code>;</code>不能少。</p>
+</blockquote>
+<h1 id="使用示例"><a href="#使用示例" class="headerlink" title="使用示例"></a>使用示例</h1><h2 id="起始值赋值"><a href="#起始值赋值" class="headerlink" title="起始值赋值"></a>起始值赋值</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">enum</span> <span class="title">cats</span> &#123;</span></span><br><span class="line">    juran = <span class="number">3</span>,</span><br><span class="line">    guoran,</span><br><span class="line">    dala,</span><br><span class="line">    baomei,</span><br><span class="line">    baodi,</span><br><span class="line">    zhaofeng,</span><br><span class="line">    ainiao</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>结果如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">juran = 3</span><br><span class="line">guoran = 4</span><br><span class="line">dala = 5</span><br><span class="line">ainiao = 9</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="值表中途赋值"><a href="#值表中途赋值" class="headerlink" title="值表中途赋值"></a>值表中途赋值</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">enum</span> <span class="title">cats</span> &#123;</span></span><br><span class="line">    juran,</span><br><span class="line">    guoran,</span><br><span class="line">    dala = <span class="number">0</span>,</span><br><span class="line">    baomei,</span><br><span class="line">    baodi,</span><br><span class="line">    zhaofeng,</span><br><span class="line">    ainiao</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>给出如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">juran = 0</span><br><span class="line">guoran = 1</span><br><span class="line">dala = 0</span><br><span class="line">ainiao = 4</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="Typedef-enum"><a href="#Typedef-enum" class="headerlink" title="Typedef enum"></a>Typedef enum</h1><p>Typedef enum 的用法一般如：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">enum</span>&#123;</span>....&#125; a; </span><br></pre></td></tr></table></figure>
+
+<p>enum 的用法一般如：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">enum</span>&#123;</span>....&#125; a;</span><br></pre></td></tr></table></figure>
+
+<p>前者是将 <code>enum&#123;….&#125;</code> 定义成一个 <em><strong>a类型</strong></em>，声明变量的时候可以用 <code>a b</code> 格式;可以理解为类似 <code>int i</code>;</p>
+<p>后者是将 <code>enum&#123;….&#125;</code> 声明了一个 <em><strong>变量</strong></em><code>a</code>。</p>
+<h1 id="枚举遍历"><a href="#枚举遍历" class="headerlink" title="枚举遍历"></a>枚举遍历</h1><p> 在C 语言中，枚举类型是被当做 int 或者 unsigned int 类型来处理的，所以按照 C 语言规范是没有办法遍历枚举类型的。</p>
+<p>不过在一些特殊的情况下，枚举类型必须连续是可以实现有条件的遍历。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"> </span><br><span class="line"><span class="class"><span class="keyword">enum</span> <span class="title">DAY</span>&#123;</span></span><br><span class="line">      MON=<span class="number">1</span>, TUE, WED, THU, FRI, SAT, SUN</span><br><span class="line">&#125; day;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="comment">// 遍历枚举元素</span></span><br><span class="line">    <span class="keyword">for</span> (day = MON; day &lt;= SUN; day++) &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;枚举元素：%d \n&quot;</span>, day);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h1 id="错误示范"><a href="#错误示范" class="headerlink" title="错误示范"></a>错误示范</h1><p>以下错误示范给出的提示均由 Linux的 <em><strong>GNU</strong></em> 编译器 及 Mac的 <em><strong>Clang</strong></em>（*Apple clang version 11.0.0 (clang-1100.0.33.17)*）编译器给出。</p>
+<h2 id="重复定义"><a href="#重复定义" class="headerlink" title="重复定义"></a>重复定义</h2><p>不允许 <strong>在同一个作用域内</strong> 定义 <strong>一样的枚举名称</strong> ；也不允许 <strong>在同一个作用域内</strong> 的不同枚举变量中定义 <strong>名称一样的元素</strong>。</p>
+<p><img src="https://pic.islet.space/2021/05/image-20210523204125878.png" alt="image-20210523204125878"></p>
+<p><img src="https://pic.islet.space/2021/05/image-20210523204041715.png" alt="image-20210523204041715"></p>
+<p>以上两种情况的错误提示如下：</p>
+<p><img src="https://pic.islet.space/2021/05/image-20210523182310296.png" alt="image-20210523182310296"></p>
+<p><img src="https://pic.islet.space/2021/05/image-20210523204224839.png" alt="image-20210523204224839"></p>
+<p>也就是说 <strong>枚举名称和枚举元素都要绝对唯一</strong>。</p>
+<h2 id="数值更改"><a href="#数值更改" class="headerlink" title="数值更改"></a>数值更改</h2><p>枚举类数据不允许更改数值（包括自增和赋值都不允许），有点类似于常量（const）。</p>
+<p>枚举中的元素自增时的错误提示：</p>
+<p><img src="https://pic.islet.space/2021/05/image-20210523202049638.png" alt="image-20210523202049638"></p>
+<p>枚举中的元素赋值时的错误提示：</p>
+<p><img src="https://pic.islet.space/2021/05/image-20210523202501260.png" alt="image-20210523202501260"></p>
+<blockquote>
+<p>根据 <a target="_blank" rel="noopener" href="https://zhidao.baidu.com/question/142755629.html">网友的回答</a> : </p>
+<p>C支持枚举类型的自增操作，但C++不支持。</p>
+</blockquote>
+<p>以下为常量自增时给出的错误提示：</p>
+<p><img src="https://pic.islet.space/2021/05/image-20210523202757582.png" alt="image-20210523202757582"></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/C/" rel="tag"># C</a>
+              <a href="/tags/C/" rel="tag"># C++</a>
+              <a href="/tags/enum/" rel="tag"># enum</a>
+              <a href="/tags/typedef/" rel="tag"># typedef</a>
+          </div>
+
+    <div id="vcomment" style="margin: 20px 0 0 0"></div>
+    <script>
+        new Valine({
+            el: '#vcomment' ,
+            appId: 'vRGM12EcYxDSM2lat5qjjSeY-gzGzoHsz',
+            appKey: 'WBgAb6NTAFQ7DYtgH0uOPNNh'
+        });
+    </script>
+</body>
+
+
+
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/05/23/Programming/C++/2021-05-23-Difference-between-GCC,-gcc-and-g++/" rel="prev" title="Difference between GCC, gcc and g++">
+                  <i class="fa fa-chevron-left"></i> Difference between GCC, gcc and g++
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/05/23/Programming/C++/2021-05-23-%E5%9F%BA%E6%9C%AC%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B-%E4%B8%8E-%E6%9E%84%E9%80%A0%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/" rel="next" title="基本数据类型 与 构造数据类型">
+                  基本数据类型 与 构造数据类型 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+<script src="/js/comments.js"></script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">粤ICP备19004822号 </a>
+  </div>
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Liewzheng</span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
