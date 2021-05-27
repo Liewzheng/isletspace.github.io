@@ -1,0 +1,834 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="next-config" data-name="main" type="application/json">{&quot;hostname&quot;:&quot;islet.space&quot;,&quot;root&quot;:&quot;&#x2F;&quot;,&quot;images&quot;:&quot;&#x2F;images&quot;,&quot;scheme&quot;:&quot;Gemini&quot;,&quot;version&quot;:&quot;8.3.0&quot;,&quot;exturl&quot;:false,&quot;sidebar&quot;:{&quot;position&quot;:&quot;left&quot;,&quot;display&quot;:&quot;post&quot;,&quot;padding&quot;:18,&quot;offset&quot;:12},&quot;copycode&quot;:false,&quot;bookmark&quot;:{&quot;enable&quot;:false,&quot;color&quot;:&quot;#222&quot;,&quot;save&quot;:&quot;auto&quot;},&quot;fancybox&quot;:false,&quot;mediumzoom&quot;:false,&quot;lazyload&quot;:false,&quot;pangu&quot;:false,&quot;comments&quot;:{&quot;style&quot;:&quot;tabs&quot;,&quot;active&quot;:null,&quot;storage&quot;:true,&quot;lazyload&quot;:false,&quot;nav&quot;:null},&quot;motion&quot;:{&quot;enable&quot;:true,&quot;async&quot;:false,&quot;transition&quot;:{&quot;post_block&quot;:&quot;fadeIn&quot;,&quot;post_header&quot;:&quot;fadeInDown&quot;,&quot;post_body&quot;:&quot;fadeInDown&quot;,&quot;coll_header&quot;:&quot;fadeInLeft&quot;,&quot;sidebar&quot;:&quot;fadeInUp&quot;}},&quot;prism&quot;:false,&quot;i18n&quot;:{&quot;placeholder&quot;:&quot;Searching...&quot;,&quot;empty&quot;:&quot;We didn&#39;t find any results for the search: ${query}&quot;,&quot;hits_time&quot;:&quot;${hits} results found in ${time} ms&quot;,&quot;hits&quot;:&quot;${hits} results found&quot;}}</script>
+<meta name="description" content="TWI接口1234567891011void InitSRU(void);  &#x2F;&#x2F;用于引脚声明extern void initPLL_SDRAM(void);  &#x2F;&#x2F;为CCLK和HCLK初始化DSP的PLLvoid DPI_Isr(int dummy);  &#x2F;&#x2F;DPI引脚中断控制void Enable_DPI_Interrupt(void);  &#x2F;&#x2F;引脚中断使能void Master_TWI_In">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ADSP21479的TWI及相关寄存器操作">
+<meta property="og:url" content="http://islet.space/2021/05/25/Hardware/ADI/2021-05-25-ADSP21479%E7%9A%84TWI%E5%8F%8A%E7%9B%B8%E5%85%B3%E5%AF%84%E5%AD%98%E5%99%A8%E6%93%8D%E4%BD%9C/index.html">
+<meta property="og:site_name" content="Coder的孤岛">
+<meta property="og:description" content="TWI接口1234567891011void InitSRU(void);  &#x2F;&#x2F;用于引脚声明extern void initPLL_SDRAM(void);  &#x2F;&#x2F;为CCLK和HCLK初始化DSP的PLLvoid DPI_Isr(int dummy);  &#x2F;&#x2F;DPI引脚中断控制void Enable_DPI_Interrupt(void);  &#x2F;&#x2F;引脚中断使能void Master_TWI_In">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://pic.islet.space/2021/05/20210527144920.png">
+<meta property="og:image" content="https://pic.islet.space/2021/05/20210527150918.png">
+<meta property="og:image" content="https://pic.islet.space/2021/05/20210527151117.png">
+<meta property="og:image" content="https://pic.islet.space/2021/05/20210527151120.png">
+<meta property="og:image" content="https://pic.islet.space/2021/05/20210527151124.png">
+<meta property="og:image" content="https://pic.islet.space/2021/05/20210527152316.png">
+<meta property="og:image" content="https://pic.islet.space/2021/05/20210527152313.png">
+<meta property="og:image" content="https://pic.islet.space/2021/05/20210527152318.png">
+<meta property="og:image" content="https://pic.islet.space/2021/05/20210527152322.png">
+<meta property="og:image" content="https://pic.islet.space/2021/05/20210527170843.png">
+<meta property="og:image" content="https://pic.islet.space/2021/05/20210527171222.png">
+<meta property="og:image" content="https://pic.islet.space/2021/05/20210527171224.png">
+<meta property="og:image" content="https://pic.islet.space/2021/05/20210527171227.png">
+<meta property="og:image" content="https://pic.islet.space/2021/05/20210527172018.png">
+<meta property="og:image" content="https://pic.islet.space/2021/05/20210527172024.png">
+<meta property="og:image" content="https://pic.islet.space/2021/05/20210527172027.png">
+<meta property="og:image" content="https://pic.islet.space/2021/05/20210527172029.png">
+<meta property="og:image" content="https://pic.islet.space/2021/05/20210527095059.png">
+<meta property="og:image" content="https://pic.islet.space/2021/05/20210525135455.png">
+<meta property="og:image" content="https://pic.islet.space/2021/05/20210525135457.png">
+<meta property="og:image" content="https://pic.islet.space/2021/05/20210525143535.png">
+<meta property="og:image" content="https://pic.islet.space/2021/05/20210525143532.png">
+<meta property="og:image" content="https://pic.islet.space/2021/05/20210525143531.png">
+<meta property="og:image" content="https://pic.islet.space/2021/05/20210525143542.png">
+<meta property="og:image" content="https://pic.islet.space/2021/05/20210525144902.png">
+<meta property="og:image" content="https://pic.islet.space/2021/05/20210525144904.png">
+<meta property="og:image" content="https://pic.islet.space/2021/05/20210525163021.png">
+<meta property="og:image" content="https://pic.islet.space/2021/05/20210525164025.png">
+<meta property="og:image" content="https://pic.islet.space/2021/05/20210525164028.png">
+<meta property="og:image" content="https://pic.islet.space/2021/05/20210525164217.png">
+<meta property="og:image" content="https://pic.islet.space/2021/05/20210525150124.png">
+<meta property="og:image" content="https://pic.islet.space/2021/05/20210525164016.png">
+<meta property="og:image" content="https://pic.islet.space/2021/05/20210525161210.png">
+<meta property="og:image" content="https://pic.islet.space/2021/05/20210527133602.png">
+<meta property="og:image" content="https://pic.islet.space/2021/05/20210527100924.png">
+<meta property="og:image" content="https://pic.islet.space/2021/05/20210527133611.png">
+<meta property="og:image" content="https://pic.islet.space/2021/05/20210527102109.png">
+<meta property="og:image" content="https://pic.islet.space/2021/05/20210527102114.png">
+<meta property="og:image" content="https://pic.islet.space/2021/05/20210527102916.png">
+<meta property="og:image" content="https://pic.islet.space/2021/05/20210527133616.png">
+<meta property="og:image" content="https://pic.islet.space/2021/05/20210527133619.png">
+<meta property="og:image" content="https://pic.islet.space/2021/05/20210527105334.png">
+<meta property="og:image" content="https://pic.islet.space/2021/05/20210525153905.png">
+<meta property="article:published_time" content="2021-05-25T06:00:00.000Z">
+<meta property="article:modified_time" content="2021-05-27T16:30:37.419Z">
+<meta property="article:author" content="Liewzheng">
+<meta property="article:tag" content="ADI">
+<meta property="article:tag" content="21479">
+<meta property="article:tag" content="register">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://pic.islet.space/2021/05/20210527144920.png">
+
+
+<link rel="canonical" href="http://islet.space/2021/05/25/Hardware/ADI/2021-05-25-ADSP21479%E7%9A%84TWI%E5%8F%8A%E7%9B%B8%E5%85%B3%E5%AF%84%E5%AD%98%E5%99%A8%E6%93%8D%E4%BD%9C/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{&quot;sidebar&quot;:&quot;&quot;,&quot;isHome&quot;:false,&quot;isPost&quot;:true,&quot;lang&quot;:&quot;en&quot;,&quot;comments&quot;:true,&quot;permalink&quot;:&quot;http:&#x2F;&#x2F;islet.space&#x2F;2021&#x2F;05&#x2F;25&#x2F;Hardware&#x2F;ADI&#x2F;2021-05-25-ADSP21479%E7%9A%84TWI%E5%8F%8A%E7%9B%B8%E5%85%B3%E5%AF%84%E5%AD%98%E5%99%A8%E6%93%8D%E4%BD%9C&#x2F;&quot;,&quot;path&quot;:&quot;2021&#x2F;05&#x2F;25&#x2F;Hardware&#x2F;ADI&#x2F;2021-05-25-ADSP21479的TWI及相关寄存器操作&#x2F;&quot;,&quot;title&quot;:&quot;ADSP21479的TWI及相关寄存器操作&quot;}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">&quot;&quot;</script>
+<title>ADSP21479的TWI及相关寄存器操作 | Coder的孤岛</title><script src="/js/config.js"></script>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Coder的孤岛</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">islet of the coder</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-文章"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>文章</a></li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#TWI%E6%8E%A5%E5%8F%A3"><span class="nav-number">1.</span> <span class="nav-text">TWI接口</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ASM-%E2%80%9CNOP%E2%80%9D"><span class="nav-number">2.</span> <span class="nav-text">ASM(“NOP”)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#asm-%E4%BD%9C%E7%94%A8"><span class="nav-number">2.1.</span> <span class="nav-text">asm()作用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%97%B6%E9%92%9F%E5%91%A8%E6%9C%9F"><span class="nav-number">2.2.</span> <span class="nav-text">时钟周期</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%BA%E5%99%A8%E5%91%A8%E6%9C%9F"><span class="nav-number">2.3.</span> <span class="nav-text">机器周期</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8C%87%E4%BB%A4%E5%91%A8%E6%9C%9F"><span class="nav-number">2.4.</span> <span class="nav-text">指令周期</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BA%BF%E5%91%A8%E6%9C%9F"><span class="nav-number">2.5.</span> <span class="nav-text">总线周期</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Register-in-ADSP21479"><span class="nav-number">3.</span> <span class="nav-text">Register in ADSP21479</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%B4%E6%96%87%E4%BB%B6-%E5%A4%96%E5%9B%B4%E8%AE%BE%E5%A4%87%E5%8F%8A%E5%AF%84%E5%AD%98%E5%99%A8%E5%AE%8F%E5%AE%9A%E4%B9%89"><span class="nav-number">3.1.</span> <span class="nav-text">头文件-外围设备及寄存器宏定义</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#DEF21479-H"><span class="nav-number">3.1.1.</span> <span class="nav-text">DEF21479.H</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CDEF21479-H"><span class="nav-number">3.1.2.</span> <span class="nav-text">CDEF21479.H</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#PLL%E5%AF%84%E5%AD%98%E5%99%A8"><span class="nav-number">3.2.</span> <span class="nav-text">PLL寄存器</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#PMCTL"><span class="nav-number">3.2.1.</span> <span class="nav-text">PMCTL</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#PMCTL1"><span class="nav-number">3.2.2.</span> <span class="nav-text">PMCTL1</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%8D%E4%BD%8D%E5%AF%84%E5%AD%98%E5%99%A8"><span class="nav-number">3.3.</span> <span class="nav-text">复位寄存器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%AF%E7%BC%96%E7%A8%8B%E4%B8%AD%E6%96%AD%E4%BC%98%E5%85%88%E7%BA%A7%E6%8E%A7%E5%88%B6%E5%AF%84%E5%AD%98%E5%99%A8"><span class="nav-number">3.4.</span> <span class="nav-text">可编程中断优先级控制寄存器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87%E4%BF%A1%E5%8F%B7%E6%8E%A7%E5%88%B6%E5%AF%84%E5%AD%98%E5%99%A8"><span class="nav-number">3.5.</span> <span class="nav-text">目标信号控制寄存器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DAI-DPI%E4%B8%AD%E6%96%AD%E6%8E%A7%E5%88%B6%E5%AF%84%E5%AD%98%E5%99%A8"><span class="nav-number">3.6.</span> <span class="nav-text">DAI&#x2F;DPI中断控制寄存器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TWI%E5%AF%84%E5%AD%98%E5%99%A8"><span class="nav-number">3.7.</span> <span class="nav-text">TWI寄存器</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#TWIMITR"><span class="nav-number">3.7.1.</span> <span class="nav-text">TWIMITR</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#TWIDIV"><span class="nav-number">3.7.2.</span> <span class="nav-text">TWIDIV</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#TWIMCTL"><span class="nav-number">3.7.3.</span> <span class="nav-text">TWIMCTL</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#TWIMADDR"><span class="nav-number">3.7.4.</span> <span class="nav-text">TWIMADDR</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#TWIFIFOCTL"><span class="nav-number">3.7.5.</span> <span class="nav-text">TWIFIFOCTL</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#TWITXINT-interrupt"><span class="nav-number">3.7.5.1.</span> <span class="nav-text">TWITXINT interrupt</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#TWIIRPTL"><span class="nav-number">3.7.6.</span> <span class="nav-text">TWIIRPTL</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#TWIIMASK"><span class="nav-number">3.7.7.</span> <span class="nav-text">TWIIMASK</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#TXTWI8"><span class="nav-number">3.7.8.</span> <span class="nav-text">TXTWI8</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BE%8B%E7%A8%8B"><span class="nav-number">3.7.9.</span> <span class="nav-text">例程</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%BB%E5%AF%84%E5%AD%98%E5%99%A8%E5%88%9D%E5%A7%8B%E5%8C%96%E5%87%BD%E6%95%B0"><span class="nav-number">3.7.9.1.</span> <span class="nav-text">主寄存器初始化函数</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#TWI-IN-21479-MASTER-TX"><span class="nav-number">4.</span> <span class="nav-text">TWI IN 21479 (MASTER TX)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%89%B9%E6%80%A7"><span class="nav-number">4.1.</span> <span class="nav-text">特性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%92%88%E8%84%9A%E6%8F%8F%E8%BF%B0"><span class="nav-number">4.2.</span> <span class="nav-text">针脚描述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SRU%E7%BC%96%E7%A8%8B"><span class="nav-number">4.3.</span> <span class="nav-text">SRU编程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%97%B6%E9%92%9F%E9%A2%91%E7%8E%87"><span class="nav-number">4.4.</span> <span class="nav-text">时钟频率</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8A%9F%E8%83%BD%E6%8F%8F%E8%BF%B0"><span class="nav-number">4.5.</span> <span class="nav-text">功能描述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8%E4%BD%8D%E6%95%B0%E6%8D%AE%E5%AF%84%E5%AD%98%E5%99%A8"><span class="nav-number">4.6.</span> <span class="nav-text">8位数据寄存器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TWI%E4%B8%AD%E6%96%AD"><span class="nav-number">4.7.</span> <span class="nav-text">TWI中断</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%AD%E6%96%AD%E6%BA%90"><span class="nav-number">4.7.1.</span> <span class="nav-text">中断源</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Masking"><span class="nav-number">4.7.2.</span> <span class="nav-text">Masking</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Service"><span class="nav-number">4.7.3.</span> <span class="nav-text">Service</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BB%E8%AE%BE%E5%A4%87%E5%8F%91%E9%80%81%E6%A8%A1%E5%BC%8F"><span class="nav-number">4.8.</span> <span class="nav-text">主设备发送模式</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#LATENCY"><span class="nav-number">5.</span> <span class="nav-text">LATENCY</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#TWI-%E6%95%88%E6%9E%9C%E5%BB%B6%E8%BF%9F%EF%BC%88%E6%97%B6%E9%97%B4%EF%BC%89"><span class="nav-number">5.1.</span> <span class="nav-text">TWI 效果延迟（时间）</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Liewzheng</p>
+  <div class="site-description" itemprop="description">笔记分享的旮旯孤岛而已</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">64</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">16</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">126</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="mailto:liewzheng@qq.com" title="E-Mail → mailto:liewzheng@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://islet.space/2021/05/25/Hardware/ADI/2021-05-25-ADSP21479%E7%9A%84TWI%E5%8F%8A%E7%9B%B8%E5%85%B3%E5%AF%84%E5%AD%98%E5%99%A8%E6%93%8D%E4%BD%9C/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Liewzheng">
+      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coder的孤岛">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          ADSP21479的TWI及相关寄存器操作
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-05-25 14:00:00" itemprop="dateCreated datePublished" datetime="2021-05-25T14:00:00+08:00">2021-05-25</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2021-05-28 00:30:37" itemprop="dateModified" datetime="2021-05-28T00:30:37+08:00">2021-05-28</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Hardware/" itemprop="url" rel="index"><span itemprop="name">Hardware</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="TWI接口"><a href="#TWI接口" class="headerlink" title="TWI接口"></a>TWI接口</h1><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">InitSRU</span><span class="params">(<span class="keyword">void</span>)</span></span>;  <span class="comment">//用于引脚声明</span></span><br><span class="line"><span class="function"><span class="keyword">extern</span> <span class="keyword">void</span> <span class="title">initPLL_SDRAM</span><span class="params">(<span class="keyword">void</span>)</span></span>;  <span class="comment">//为CCLK和HCLK初始化DSP的PLL</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">DPI_Isr</span><span class="params">(<span class="keyword">int</span> dummy)</span></span>;  <span class="comment">//DPI引脚中断控制</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Enable_DPI_Interrupt</span><span class="params">(<span class="keyword">void</span>)</span></span>;  <span class="comment">//引脚中断使能</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Master_TWI_Init</span><span class="params">(<span class="keyword">void</span>)</span></span>;  <span class="comment">//主机初始化</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">InitBuffer</span><span class="params">(<span class="keyword">void</span>)</span></span>;   <span class="comment">//初始化TWI_Buffer，用于存储发送的数据</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">TWI_Transmit_Data_Polling</span><span class="params">(<span class="keyword">void</span>)</span></span>;  <span class="comment">//传输数据用的函数</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">Init_TWI</span><span class="params">(<span class="keyword">void</span>)</span></span>;  <span class="comment">//初始化TWI（类似于main()）</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<img src="https://pic.islet.space/2021/05/20210527144920.png" alt="image-20210524112141809" style="zoom:67%;" />
+
+
+
+
+
+
+
+<h1 id="ASM-“NOP”"><a href="#ASM-“NOP”" class="headerlink" title="ASM(“NOP”)"></a>ASM(“NOP”)</h1><p>[blog.csdn.net](<a target="_blank" rel="noopener" href="https://blog.csdn.net/Mr_White01/article/details/68488802#:~:text=asm">https://blog.csdn.net/Mr_White01/article/details/68488802#:~:text=asm</a> (“nop”)是内嵌汇编做空指令延时用的，其中asm ()的作用是指函数内部的参数翻译为汇编指令，其作用是在C语言环境下直接使用汇编指令执行。 nop是一个空等待汇编指令，这个指令执行时，单片机是什么也不做，仅仅起一个时间延时作用。,CC2530属于8051系列单片机，asm (“nop”)执行的是一条空指令（单周期指令），占用时间是一个机器周期，晶振为32Mhz。 于是，机器周期%3D12*1%2F32%3D0.375us。 即一句asm (“nop”)延时了0.375us。)</p>
+<h2 id="asm-作用"><a href="#asm-作用" class="headerlink" title="asm()作用"></a>asm()作用</h2><p>将函数内部的参数翻译为汇编指令，在C语言环境下直接使用汇编指令执行。</p>
+<ul>
+<li><p><code>asm(&quot;nop&quot;)</code>是内嵌汇编做空指令延时用的；</p>
+</li>
+<li><p><code>nop</code>是一个空等待汇编指令，这个指令执行时，单片机是什么也不做，仅仅起一个时间延时作用。 </p>
+</li>
+</ul>
+<blockquote>
+<p>CC2530属于8051系列单片机，asm(“nop”)执行的是一条空指令（单周期指令），占用时间是一个机器周期，晶振为32Mhz。 </p>
+<p>于是，机器周期=12*1/32=0.375us ; 即一句asm(“nop”)延时了0.375us。</p>
+</blockquote>
+<h2 id="时钟周期"><a href="#时钟周期" class="headerlink" title="时钟周期"></a>时钟周期</h2><p>时钟周期也称为振荡周期，定义为时钟脉冲的倒数(可以这样来理解，时钟周期就是单片机外接晶振的倒数，例如12M的晶振，它的时间周期就是1/12 us)，是计算机中最基本的、最小的时间单位。 </p>
+<p>在一个时钟周期内，CPU仅完成一个最基本的动作。对于某种单片机，若采用了1MHZ的时钟频率，则时钟周期为1us;若采用4MHZ的时钟频率，则时钟  周期为250us。由于时钟脉冲是计算机的基本工作脉冲，它控制着计算机的工作节奏(使计算机的每一步都统一到它的步调上来)。显然，对同一种机型的计算机，时钟频率越高，计算机的工作速度就越快。具体计算就是1/fosc。也就是说如果晶振为1MHz，那么时钟周期就为1us；6MHz的话，就是1/6us。 </p>
+<p> 8051单片机把一个时钟周期定义为一个节拍(用P表示)，二个节拍定义为一个状态周期(用S表示)。 </p>
+<h2 id="机器周期"><a href="#机器周期" class="headerlink" title="机器周期"></a>机器周期</h2><p>在计算机中，为了便于管理，常把一条指令的执行过程划分为若干个阶段，每一阶段完成一项工作。例如，取指令、存储器读、存储器写等，这每一项工作称为一个基本操作。完成一个基本操作所需要的时间称为机器周期。一般情况下，一个机器周期由若干个S周期(状态周期)组成。 </p>
+<p>8051系列单片机的一个机器周期同6个  S周期(状态周期)组成。前面已说过一个时钟周期定义为一个节拍(用P表示)，二个节拍定义为一个状态周期(用S表示)，8051单片机的机器周期由6个 状态周期组成，也就是说一个机器周期=6个状态周期=12个时钟周期。 具体计算为：时钟周期 X  cycles。如果单片机是12周期的话，那么机器周期就是T×12。假设晶振频率为12M，单片机为12周期的话，那么机器周期就是1us。 </p>
+<p>例如外接24M晶振的单片机，他的一个机器周期=12/24M 秒；52系列单片机一个机器周期等于12个时钟周期。设晶振频率为12MHz时，52单片机是12T的单片机，即频率要12分频。12M经过分频变为1M，由T=1/f,即一个机器周期变为1us。 </p>
+<h2 id="指令周期"><a href="#指令周期" class="headerlink" title="指令周期"></a>指令周期</h2><p>执行一条指令所需要的时间，一般由若干个机器周期组成。指令不同，所需的机器周期也不同。通常，包含一个机器周期的指令成为单周期指令，比如CLR,MOV等等。包含两个机器周期的指令称为双周期指令。另外还有4周期指令，比如乘法和除法指令。对于一些简单的的单字节指令，在取指令周期中，指令取出到指令寄存器后，立即译码执行，不再需要其它的机器周期。对于一些比较复杂的指令，例如转移指令、乘法指令，则需要两个或者两个以上的机器周期。 </p>
+<h2 id="总线周期"><a href="#总线周期" class="headerlink" title="总线周期"></a>总线周期</h2><p>由于存贮器和I/O端口是挂接在总线上的，CPU对存贮器和I/O接口的访问，是通过总线实现的。通常把CPU通过总线对微处理器外部(存贮器或 I/O接口)进行一次访问所需时间称为一个总线周期。</p>
+<p>总结一下，时钟周期是最小单位，机器周期需要1个或多个时钟周期，指令周期需要1个或多个机器周期;机器周期指的是完成一个基本操作的时间，这个基本操作有时可能包含总线读写，因而包含总线周期，但是有时可能与总线读写无关，所以，并无明确的相互包含的关系。  指令周期：是CPU的关键指标，指取出并执行一条指令的时间。一般以机器周期为单位，分单指令执行周期、双指令执行周期等。现在的处理器的大部分指令(ARM、DSP)均采用单指令执行周期。机器周期：完成一个基本操作的时间单元，如取指周期、取数周期。时钟周期：CPU的晶振的工作频率的倒数。</p>
+<p>​          </p>
+<h1 id="Register-in-ADSP21479"><a href="#Register-in-ADSP21479" class="headerlink" title="Register in ADSP21479"></a>Register in ADSP21479</h1><h2 id="头文件-外围设备及寄存器宏定义"><a href="#头文件-外围设备及寄存器宏定义" class="headerlink" title="头文件-外围设备及寄存器宏定义"></a>头文件-外围设备及寄存器宏定义</h2><p><code>&lt;def21479.h&gt;</code> 是关于外围设备（peripherals）和寄存器（registers）的子集。</p>
+<p><code>&lt;cdef21479.h&gt;</code> 包含了对IOP寄存器的宏定义，对C/C++可用。所有定义均和 <code>&lt;def21479.h&gt;</code> 一致，除了以 <code>p</code> 作为前缀的宏定义 和 （relevant casts）以外，它们的用法如 <code>*pSYSTAT = 0x12345678;</code>。</p>
+<h3 id="DEF21479-H"><a href="#DEF21479-H" class="headerlink" title="DEF21479.H"></a>DEF21479.H</h3><ul>
+<li><p>外部接口IOP寄存器（IOP registers for External Port）、SDRAM控制寄存器、AMI寄存器、DMA地址寄存器、SPORT（SP0~SP7）（包含串行接口寄存器、多通道发送接收（Multichannel tx/rx）、SPORT计数寄存器、错误中断控制寄存器、控制寄存器、多通道选择（Multichannel select））、SPI和SPIB寄存器、定时器寄存器、POWER MGT寄存器、外围设备中断优先级控制寄存器（Peripheral interrupt priority control register）、DAI寄存器（DAI参数寄存器、边缘中断锁存寄存器、中断优先级寄存器、（shadow）高/低优先级中断锁存寄存器、DAI状态寄存器、DAI针脚缓存状态寄存器、）、SRU寄存器（包括SRU时钟控制寄存器、数据控制寄存器、FS控制寄存器、针脚控制寄存器、外部Misc.A/B控制寄存器、针脚使能寄存器、shift寄存器的时钟控制和数据控制）、精度时钟控制寄存器（Precision Clock A/B Control Register 0/1）（包括脉冲宽度控制、幅度同步、脉冲宽度控制）、MTM寄存器、PWM寄存器、UART寄存器、TWI寄存器、FIR加速寄存器、IIR加速寄存器、FFT加速寄存器、MLB设备寄存器、WDT寄存器、Shift寄存器、RTC寄存器。</p>
+</li>
+<li><p>DPI、DTCP模块</p>
+</li>
+</ul>
+<hr>
+<ul>
+<li><p>系统寄存器位定义（MODE1和MMASK寄存器、MODE2寄存器、ASTAT、STKYx和STKYy寄存器、IRPTL寄存器、IMASK寄存器、IMASKP寄存器、LIRPTL寄存器、FLAGS寄存器）</p>
+</li>
+<li><p>IOP控制/状态寄存器位定义（EEMUSTAT寄存器、RUNRSTCTL寄存器、SYSCTL寄存器、BRKCTL寄存器、REVPID、SDCTL寄存器位、SDRRC（SDRAM刷新速率控制）寄存器、SDSTAT（SDRAM状态）寄存器、SDSTAT（SDRAM状态）寄存器2、EPCTL寄存器位）</p>
+</li>
+<li><p>AMICTL寄存器位（DMAC寄存器控制位、SPICTL寄存器、SPISTAT寄存器、SPCTL（0~5、N0~N7）寄存器、GP计时器状态寄存器、GP计时器控制寄存器、电源管理控制寄存器、外部时钟管理控制寄存器、DAI中断锁存寄存器、IDP控制寄存器、IDP PDAP控制寄存器、DAI针脚缓存状态寄存器（0~19）、DAI状态寄存器、DPI针脚缓存状态寄存器（0~13）、DPI中断锁存寄存器）</p>
+</li>
+<li><p>精度时钟控制寄存器（A0、A1、B0、B1、C0、C1、D0、D1）、精度时钟脉冲宽度控制寄存器、精度时钟幅度同步、精度时钟脉冲宽度控制寄存器</p>
+</li>
+<li><p>优先级中断控制（Priority Interrupt Control）寄存器（可编程中断（Programmable Interrupt）寄存器位）</p>
+</li>
+<li><p>PWM全局控制寄存器、PWM全局状态寄存器、PWM控制寄存器、PWM状态寄存器、PWM输出禁用、PWM调试状态、PWM极性选择寄存器（Polarity Select Register）</p>
+</li>
+<li><p>TWI寄存器、主设备内部时钟寄存器（TWIMITR）、TWI从设备控制寄存器（TWISCTL）、TWI从设备状态寄存器（TWISSTAT）、TWI主设备控制寄存器（TWIMCTL）、TWI主设备状态寄存器（TWIMSTAT）、TWI中断控制寄存器（TWIIMASK/TWIIRPTL）、TWI先进先出控制寄存器（TWIFIFOCTL）、TWI先进先出状态寄存器（TWIFIFOSTAT）</p>
+</li>
+<li><p>UART寄存器、UARTIIR、UARTLCR、UARTMODE、UARTLSR、UARTTXCTL/RXCTL、UARTTXSTAT/RXSTAT</p>
+</li>
+<li><p>SPDIF传输寄存器、SPDIF通道状态寄存器、SPDIF用户位状态寄存器、SPDIF接收器寄存器、SPDIF传输控制寄存器、SPDIF TX输入数据格式、SPDIF接收控制寄存器、SPDIF接收状态（只读）</p>
+</li>
+<li><p>采样率转换控制寄存器（0~3）、输入数据格式、输出数据格式、SRC频应复元（Deemphasis）设置、彩艳率转换率（0~3）、采样率转换静音（MUTE）寄存器（SRCMUTE）</p>
+</li>
+<li><p>FIR加速器、IIR加速器、FFT加速器</p>
+</li>
+<li><p>MLB位定义（DCCR/SSCR/SMCR/IBCR/CECR/CSCR）、WDT寄存器位定义、Shift寄存器位定义、RTC寄存器位定义（控制、初始化、状态、初始化状态）</p>
+</li>
+</ul>
+<h3 id="CDEF21479-H"><a href="#CDEF21479-H" class="headerlink" title="CDEF21479.H"></a>CDEF21479.H</h3><ul>
+<li>仿真、断点寄存器</li>
+<li>外部接口的IOP寄存器</li>
+<li>SDRAM控制寄存器</li>
+<li>AMI的IOP寄存器</li>
+<li>DAM地址寄存器</li>
+<li>SPORT（0~7）（串行接口寄存器、MT/MR寄存器、TDM寄存器、）</li>
+<li>SPI寄存器、SPIB寄存器（通过DAI进行路由）</li>
+<li>计时器寄存器</li>
+<li>电源管理寄存器</li>
+<li>外围中断优先级控制寄存器</li>
+<li>DAI寄存器（DMA参数寄存器、SRU寄存器、采样率转换寄存器）</li>
+<li>DPI寄存器</li>
+<li>DTCP模块</li>
+<li>SPDIF传输寄存器（通道状态缓存、用户位缓存、SPDIF接收寄存器）</li>
+<li>PCG精度时钟控制寄存器</li>
+<li>MTM（Memory to Memory）寄存器</li>
+<li>PWM脉冲调制寄存器</li>
+<li>UART寄存器</li>
+<li>TWI寄存器</li>
+<li>FIR加速寄存器</li>
+<li>IIR加速寄存器</li>
+<li>FFT加速寄存器</li>
+<li>MLB设备寄存器</li>
+<li>WDT寄存器</li>
+<li>Shift寄存器</li>
+<li>RTC寄存器</li>
+</ul>
+<h2 id="PLL寄存器"><a href="#PLL寄存器" class="headerlink" title="PLL寄存器"></a>PLL寄存器</h2><h3 id="PMCTL"><a href="#PMCTL" class="headerlink" title="PMCTL"></a>PMCTL</h3><p><code>PMCTL</code> 寄存器，Power management control register。（是的，没错，就是不知道为啥管PLL的要叫PMCTL）</p>
+<ul>
+<li>32位内存映射寄存器（32-bit memory-mapped register）</li>
+<li>包含控制位，可控制：锁相环（PLL, phase lock loop）(PLL乘法器值（multiplier）、PLL除法器值（divider）、锁相环旁路模式（PLL bypass mode） 和 外围设备使能时钟控制（clock control for enabling peripherals）)</li>
+<li>包含状态位，可追踪：CLK_CFG针脚（可读写）</li>
+<li>PMCTL 寄存器的复位值取决于 <code>CLK_CFG</code> 引脚（bits 5-0 &amp; 17-16）</li>
+<li>包含三选一的加速器（FIR、IIR、FFT）</li>
+</ul>
+<p><img src="https://pic.islet.space/2021/05/20210527150918.png" alt="image-20210527150852485"></p>
+<p style="text-align: center; color: gray; font-weight: 800;">图 A-2 PMCTL 寄存器</p>
+
+<p style="text-align: center; color: gray; font-weight: 800;">表A-3  PMCTL寄存器位功能描述</p>
+
+<p><img src="https://pic.islet.space/2021/05/20210527151117.png" alt="image-20210527151035867"></p>
+<p><img src="https://pic.islet.space/2021/05/20210527151120.png" alt="image-20210527151017770"></p>
+<p><img src="https://pic.islet.space/2021/05/20210527151124.png" alt="image-20210527151110432"></p>
+<h3 id="PMCTL1"><a href="#PMCTL1" class="headerlink" title="PMCTL1"></a>PMCTL1</h3><img src="https://pic.islet.space/2021/05/20210527152316.png" alt="image-20210527152044822" style="zoom:67%;" />
+
+<p style="text-align: center; color: gray; font-weight: 800;">图 A-3 PMCTL1 寄存器</p>
+
+<p style="text-align: center; color: gray; font-weight: 800;">表A-4  PMCTL1寄存器位功能描述</p>
+
+<p><img src="https://pic.islet.space/2021/05/20210527152313.png" alt="image-20210527152155406"></p>
+<p><img src="https://pic.islet.space/2021/05/20210527152318.png" alt="image-20210527152229763"></p>
+<p><img src="https://pic.islet.space/2021/05/20210527152322.png" alt="image-20210527152251696"></p>
+<h2 id="复位寄存器"><a href="#复位寄存器" class="headerlink" title="复位寄存器"></a>复位寄存器</h2><p>RUNRSTCTL，运行中复位控制寄存器（Running Reset Control Register）。</p>
+<p style="text-align: center; color: gray; font-weight: 800;">表A-5 RUNRSTCTL寄存器位功能描述</p>
+
+<p><img src="https://pic.islet.space/2021/05/20210527170843.png" alt="image-20210527170816951"></p>
+<h2 id="可编程中断优先级控制寄存器"><a href="#可编程中断优先级控制寄存器" class="headerlink" title="可编程中断优先级控制寄存器"></a>可编程中断优先级控制寄存器</h2><ul>
+<li><p>supports 19 programmable prioritized interrupts</p>
+</li>
+<li><p>任何外部中断输出都可能被连接至任何可编程优先级中断输入。</p>
+</li>
+</ul>
+<p style="text-align: center; color: gray; font-weight: 800;">表A-6 默认中断路由</p>
+
+<p><img src="https://pic.islet.space/2021/05/20210527171222.png" alt="image-20210527171119962"></p>
+<p><img src="https://pic.islet.space/2021/05/20210527171224.png" alt="image-20210527171204914"></p>
+<p><img src="https://pic.islet.space/2021/05/20210527171227.png" alt="image-20210527171219793"></p>
+<h2 id="目标信号控制寄存器"><a href="#目标信号控制寄存器" class="headerlink" title="目标信号控制寄存器"></a>目标信号控制寄存器</h2><p>本寄存器控制了：</p>
+<ul>
+<li><p>programmable priority interrupts</p>
+</li>
+<li><p>default interrupt sources</p>
+</li>
+</ul>
+<p><img src="https://pic.islet.space/2021/05/20210527172018.png" alt="image-20210527171809869"></p>
+<p style="text-align: center; color: gray; font-weight: 800;">图 A-4  PICR0 寄存器</p>
+
+
+
+
+
+<p><img src="https://pic.islet.space/2021/05/20210527172024.png" alt="image-20210527171824344"></p>
+<p style="text-align: center; color: gray; font-weight: 800;">图 A-5 PICR1 寄存器</p>
+
+
+
+
+
+<p><img src="https://pic.islet.space/2021/05/20210527172027.png" alt="image-20210527171841316"></p>
+<p style="text-align: center; color: gray; font-weight: 800;">图 A-6 PICR2 寄存器</p>
+
+
+
+
+
+<p><img src="https://pic.islet.space/2021/05/20210527172029.png" alt="image-20210527171852287"></p>
+<p style="text-align: center; color: gray; font-weight: 800;">图 A-7 PICR3 寄存器</p>
+
+
+
+<h2 id="DAI-DPI中断控制寄存器"><a href="#DAI-DPI中断控制寄存器" class="headerlink" title="DAI/DPI中断控制寄存器"></a>DAI/DPI中断控制寄存器</h2><h2 id="TWI寄存器"><a href="#TWI寄存器" class="headerlink" title="TWI寄存器"></a>TWI寄存器</h2><p>《ADSP-214xx SHARC Processor Hardware Reference》第1193页起定义了TWI的寄存器。</p>
+<p><code>&lt;cdef21479.h&gt;</code> 对TWI相关的寄存器定义如下，p为前缀的定义是该寄存器的地址位，通过与<code>&lt;def21479.h&gt;</code> 的定义进行 <code>或</code> 运算并赋值给对应的寄存器地址进行控制，如 <code>*pTWIMITR = (0x14) | TWIEN;</code> 。</p>
+<p>TWI中所有的Status相关寄存器都是 “只读” 状态，其《位描述》表上都有一个 <code>RO</code> 标志。凡是表上有 <code>RW1C</code> 标志的，则是说：可读可写，写入 <code>1</code> 来清除数据。</p>
+<p><img src="https://pic.islet.space/2021/05/20210527095059.png" alt="image-20210527095053483"></p>
+<h3 id="TWIMITR"><a href="#TWIMITR" class="headerlink" title="TWIMITR"></a>TWIMITR</h3><p>TWIMITR（<strong>Master Internal Time Register</strong>），即主机内部时间寄存器（如图A-143所示，并在表A-129中描述）。</p>
+<ul>
+<li>用于启用TWI模块，以及建立外围时钟（PCLK）和TWI控制器内部定时事件之间的关系。<ul>
+<li>内部时间参考是从PCLK得出的，使用的是预标定值。<code>PRESCALE = fPCLK / 10 MHz</code></li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>The internal time reference is <em><strong>derived from PCLK</strong></em> using the prescaled value shown below.</p>
+<p><code>PRESCALE = fPCLK/10 MHz</code></p>
+</blockquote>
+<img src="https://pic.islet.space/2021/05/20210525135455.png" alt="image-20210525133555377" style="zoom: 67%;" />
+
+<p style="text-align: center; color: gray; font-weight: 800;">图 A-143 TWIMITR 寄存器</p>
+
+
+
+<p style="text-align: center; color: gray; font-weight: 800;">表A-129 寄存器位功能描述</p>
+
+<table>
+<thead>
+<tr>
+<th>BITS</th>
+<th>NAME</th>
+<th>DESCRIPTION</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>6-0</td>
+<td>PRESCALE</td>
+<td><strong>预分频</strong><br>用于生成一个内部时间参考的外围时钟（PCLK）周期数。<br>必须设置PRESCALE的值，以创建一个周期为10MHz的内部时间参考。这表示为一个7位的二进制值。</td>
+</tr>
+<tr>
+<td>7</td>
+<td>TWIEN</td>
+<td><strong>TWI使能</strong><br>该位必须设置为从属或主模式操作。<br>建议在初始化PRESCALE时设置该位，并保持设置，以确保总线繁忙检测逻辑的精确运行。<br/>- 0 = 禁用TWI<br/>- 1 = 启用TWI主、从模式操作。<mark>如果该位从高电平过渡到低电平，缓冲器将被刷新，需要2个时钟周期。</mark></td>
+</tr>
+</tbody></table>
+<h3 id="TWIDIV"><a href="#TWIDIV" class="headerlink" title="TWIDIV"></a>TWIDIV</h3><p>在主模式运行期间，跟SCL相关的TWIDIV（<strong>Clock Divider Register</strong>），即时钟分频器寄存器（如图A-144所示，并在表A-130中描述）。</p>
+<ul>
+<li>被用来创建串行时钟（SCL）的 <strong>高</strong> 和 <strong>低</strong> 持续时间。</li>
+<li>串行时钟的频率可以从400KHz到小于20KHz不等。产生的时钟分辨率为1/10 MHz或100 ns。</li>
+</ul>
+<img src="https://pic.islet.space/2021/05/20210525135457.png" alt="image-20210525134728762" style="zoom: 67%;" />
+
+<p style="text-align: center; color: gray; font-weight: 800;">图 A-144 TWIDIV 寄存器</p>
+
+
+
+<p style="text-align: center; color: gray; font-weight: 800;">表A-130 TWIDIV 寄存器位功能描述</p>
+
+<table>
+<thead>
+<tr>
+<th>BITS</th>
+<th>NAME</th>
+<th>DESCRIPTION</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>7-0</td>
+<td>CLKLOW</td>
+<td>时钟低电平<br>该时间映射了串行时间低电平的周期。<br>以8位二进制数表示。</td>
+</tr>
+<tr>
+<td>15-8</td>
+<td>CLKHI</td>
+<td>时钟高电平<br>该时间映射了串行时钟在等到一个新时钟低电平到来之前的持续时间。<br>以8位二进制数表示。</td>
+</tr>
+</tbody></table>
+<h3 id="TWIMCTL"><a href="#TWIMCTL" class="headerlink" title="TWIMCTL"></a>TWIMCTL</h3><p>TWIMCTL（Master Control Register），即TWI主机控制寄存器。</p>
+<ul>
+<li>控制了控制与主机模式操作相关的逻辑。</li>
+<li>该寄存器内的操作不会影响到从寄设备的操作；且不应该被修改以控制从属模式的功能。</li>
+</ul>
+<blockquote>
+<p>The TWI master mode control register controls the logic associated with master mode  operation.</p>
+<p>Bits in this register do not affect slave mode operation and should not be modified to control slave mode functionality.</p>
+</blockquote>
+<img src="https://pic.islet.space/2021/05/20210525143535.png" alt="image-20210525140532502" style="zoom: 67%;" />
+
+<p style="text-align: center; color: gray; font-weight: 800;">图 A-145 TWIMCTL 寄存器</p>
+
+<p style="text-align: center; color: gray; font-weight: 800;">表A-131 TWIMCTL 寄存器位功能描述</p>
+
+<img src="https://pic.islet.space/2021/05/20210525143532.png" alt="image-20210525143454398" style="zoom: 67%;" />
+
+<img src="https://pic.islet.space/2021/05/20210525143531.png" alt="image-20210525143529519" style="zoom: 67%;" />
+
+
+
+<h3 id="TWIMADDR"><a href="#TWIMADDR" class="headerlink" title="TWIMADDR"></a>TWIMADDR</h3><p>在传输的寻址阶段中，TWI控制器的主机使能，并传输TWI主机模式地址寄存器中的内容。</p>
+<p>在对本寄存器进行编程时，忽略读/写位。只有从机地址的前7位（6-0）会被写入本寄存器。</p>
+<p>例如：从机的地址是 <code>1010 000x</code> ，则本寄存器的写入内容则是 <code>1010 000</code>（16进制的 <code>0x50</code> ）。<mark>将该地址发送至总线时，TWI控制器根据 主机控制寄存器上TWIMDIR 位来决定对从机的读写。</mark></p>
+<blockquote>
+<p>During the addressing phase of a transfer, the TWI controller, with its master enabled, transmits the contents of the TWI master mode address register.<br>When programming this register, omit the read/write bit. That is, only the upper 7 bits that make up the slave address should be written to this register.<br>For example, if the slave address is 1010000X, then TWIMADDR is programmed with 1010000, which corresponds to 0x50. When sending out the address on the bus, the TWI controller appends the read/write bit as appropriate, based on the state of the TWIMDIR bit in the master mode control register.</p>
+</blockquote>
+<img src="https://pic.islet.space/2021/05/20210525143542.png" alt="image-20210525140743855" style="zoom: 67%;" />
+
+<p style="text-align: center; color: gray; font-weight: 800;">图 A-146 TWIMADDR 寄存器</p>
+
+
+
+<h3 id="TWIFIFOCTL"><a href="#TWIFIFOCTL" class="headerlink" title="TWIFIFOCTL"></a>TWIFIFOCTL</h3><p>TWIFIFOCTL（<strong>FIFO Control Register</strong>），即先进先出控制寄存器，只控制FIFO，<mark>完全不与主机模式 或 从机模式操作绑定。</mark></p>
+<img src="https://pic.islet.space/2021/05/20210525144902.png" alt="image-20210525144403383" style="zoom: 67%;" />
+
+<p style="text-align: center; color: gray; font-weight: 800;">图 A-151 TWIFIFOCTL 寄存器</p>
+
+
+
+<p style="text-align: center; color: gray; font-weight: 800;">表A-135 TWIFIFOCTL 寄存器位功能描述</p>
+
+<img src="https://pic.islet.space/2021/05/20210525144904.png" alt="image-20210525144738016" style="zoom:67%;" />
+
+
+
+<h4 id="TWITXINT-interrupt"><a href="#TWITXINT-interrupt" class="headerlink" title="TWITXINT interrupt"></a>TWITXINT interrupt</h4><blockquote>
+<p>This interrupt is generated when there is one or two bytes of empty space in the FIFO. Simple data handling is all that is required.</p>
+</blockquote>
+<h3 id="TWIIRPTL"><a href="#TWIIRPTL" class="headerlink" title="TWIIRPTL"></a>TWIIRPTL</h3><p>TWIIRPTL（TWI interrupt sources register），即TWI中断源寄存器。</p>
+<ul>
+<li><p>包含了有关 <em>functional areas requiring servicing</em> 的信息。</p>
+</li>
+<li><p>大量的比特被当做鉴定器/指示器来使用，主要用于 <em>further read</em> 以及 为 不同的状态寄存器提供服务（service various status register）。</p>
+</li>
+<li><p>在维护了与位绑定的中断源后，用户需要清除该中断源位。</p>
+</li>
+<li><p>所有的位都是粘性的 （sticky）和 <em><strong>RW1C</strong></em>。</p>
+</li>
+</ul>
+<img src="https://pic.islet.space/2021/05/20210525163021.png" alt="image-20210525163016113" style="zoom: 50%;" />
+
+<p style="text-align: center; color: gray; font-weight: 800;">图 A-1534 TWIIRPTL 寄存器</p>
+
+
+
+<p style="text-align: center; color: gray; font-weight: 800;">表A-137 TWIIRPTL 寄存器位功能描述</p>
+
+<img src="https://pic.islet.space/2021/05/20210525164025.png" alt="image-20210525163933340" style="zoom:67%;" />
+
+<img src="https://pic.islet.space/2021/05/20210525164028.png" alt="image-20210525163959598" style="zoom:67%;" />
+
+<h3 id="TWIIMASK"><a href="#TWIIMASK" class="headerlink" title="TWIIMASK"></a>TWIIMASK</h3><p>TWIIMARK （<strong>TWI Interrupt mask register</strong>），即TWI中断<em><strong>隐藏</strong></em>寄存器。</p>
+<ul>
+<li>使能中断源（interrupt sources）插入中断输出（Interrupt output）</li>
+<li>每一个<strong>使能位</strong>（enable bit）都会与 <strong>TWI中断延迟寄存器</strong>（TWIIRPTL，即TWI interrupt latch register）一个<strong>中断延迟位</strong>（interrupt latch bit）通信。</li>
+<li>对TWIIMASK寄存器的读写不会影响 TWIIRPTL 寄存器的内容。</li>
+</ul>
+<img src="https://pic.islet.space/2021/05/20210525164217.png" alt="image-20210525145706357" style="zoom: 67%;" />
+
+<p style="text-align: center; color: gray; font-weight: 800;">图 A-154 TWIIMASK 寄存器</p>
+
+
+
+<p style="text-align: center; color: gray; font-weight: 800;">表A-138 TWIIMASK 寄存器位功能描述</p>
+
+<img src="https://pic.islet.space/2021/05/20210525150124.png" alt="image-20210525150058029" style="zoom:67%;" />
+
+<img src="https://pic.islet.space/2021/05/20210525164016.png" alt="image-20210525150122857" style="zoom:67%;" />
+
+
+
+<h3 id="TXTWI8"><a href="#TXTWI8" class="headerlink" title="TXTWI8"></a>TXTWI8</h3><p>8位传输用FIFO寄存器（TWI 8-bit transmit FIFO register），做数据缓存之用。</p>
+<ul>
+<li>存储数据以“先进先出”的顺序进入通信传输缓存。</li>
+<li>尽管外围总线写入带宽是32位，但是只有一个字节会被写入8位的 <em><strong>TXTWI8</strong></em>。</li>
+<li>伴随着每一次数据写入，<strong>TWIFIFOSTAT</strong> 寄存器中的 <strong>TWITXS</strong> 传输状态位都会被更新。</li>
+<li>当FIFO缓存存满时，仍有数据需要写入的话，核心就会让数据等着，直到转运缓存（TRANSMIT FIFO BUFFER）由至少一个字节的空间时才能完成写入操作。</li>
+</ul>
+<img src="https://pic.islet.space/2021/05/20210525161210.png" alt="image-20210525155309392" style="zoom:67%;" />
+
+<p style="text-align: center; color: gray; font-weight: 800;">图 22-7 8位传输FIFO寄存器</p>
+
+
+
+<img src="https://pic.islet.space/2021/05/20210527133602.png" alt="image-20210527114613231" style="zoom:67%;" />
+
+
+
+
+
+
+
+<h3 id="例程"><a href="#例程" class="headerlink" title="例程"></a>例程</h3><h4 id="主寄存器初始化函数"><a href="#主寄存器初始化函数" class="headerlink" title="主寄存器初始化函数"></a>主寄存器初始化函数</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">ADAU1772_1_ADDR = <span class="number">0X3C</span>;  <span class="comment">//第一个从设备的地址是0x3C，其ADDR1和ADDR0引脚均为0；</span></span><br><span class="line">ADAU1772_2_ADDR = <span class="number">0X3D</span>;  <span class="comment">//第一个从设备的地址是0x3D，其ADDR1和ADDR0引脚为0和1；</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Master_TWI_Init</span><span class="params">(<span class="keyword">void</span>)</span></span>&#123;</span><br><span class="line">	<span class="comment">// 预分频为 fPCLK/10 MHz</span></span><br><span class="line">	*pTWIMITR = (<span class="number">0x14</span>) | TWIEN;  <span class="comment">//0x14和0x80进行 位或操作，将结果148写入TWI主机时间寄存器中</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">// CLKDIV = TWI SCL period ? 10 MHz time reference</span></span><br><span class="line">	<span class="comment">// CLKDIV = (1/100 KHz) / 100 ns = 100</span></span><br><span class="line">	<span class="comment">// For 40 - 60 duty cycle, CLKHI = 40 and CLKLOW = 60</span></span><br><span class="line"></span><br><span class="line">	*pTWIDIV = (CLKHI &lt;&lt; <span class="number">8</span>) | CLKLOW;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 需要被访问的从设备的地址</span></span><br><span class="line">	*pTWIMADDR = ADAU1772_1_ADDR; </span><br><span class="line"></span><br><span class="line">	<span class="comment">// 传送至从属设备的第一个字节数据</span></span><br><span class="line">	*pTXTWI8 = <span class="number">0x00</span>;</span><br><span class="line">    *pTXTWI8 = <span class="number">0x85</span>; <span class="comment">//(0101 0101b)</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">/*  // 配置TWIFIFOCTL寄存器，为每个数据字节(byte)生成中断</span></span><br><span class="line"><span class="comment">	*pTWIFIFOCTL = TWITXFLUSH | TWIRXFLUSH;</span></span><br><span class="line"><span class="comment">	*pTWIFIFOCTL = 0;</span></span><br><span class="line"><span class="comment">	*/</span>  <span class="comment">//暂时禁用该数据写入寄存器配置（包括中断和写入读取规则等）</span></span><br><span class="line">    *pTWIFIFOCTL = <span class="number">0x15</span>;  <span class="comment">//即（0 1111b），详细配置信息请参照《ADSP-214xx SHARC Processor Hardware Reference》</span></span><br><span class="line">    </span><br><span class="line">	<span class="comment">// 中断使能位，上方已经写过了，有些重复</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">ifdef</span> INTERRUPT_MODE</span></span><br><span class="line">	*pTWIIMASK |= TWITXINT;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br><span class="line"></span><br><span class="line">	<span class="comment">// 打开TWI的控制寄存器</span></span><br><span class="line">	*pTWIMCTL = (N &lt;&lt; <span class="number">6</span>);  <span class="comment">//？？</span></span><br><span class="line">	*pTWIMCTL |= TWIMEN;  <span class="comment">// 打开主机模式（Master Mode enable）</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="TWI-IN-21479-MASTER-TX"><a href="#TWI-IN-21479-MASTER-TX" class="headerlink" title="TWI IN 21479 (MASTER TX)"></a>TWI IN 21479 (MASTER TX)</h1><h2 id="特性"><a href="#特性" class="headerlink" title="特性"></a>特性</h2><p>《ADSP-214xx SHARC Processor Hardware Reference》第855页起对TWI进行了描述。</p>
+<ul>
+<li>需要使用DPI进行针脚信号的路由，不能使用DAI</li>
+<li>支持主从模式</li>
+<li>支持数据缓存接入和核心数据接入，不支持DMA</li>
+<li>最大时钟频率400KHz</li>
+<li>7-bit 寻址</li>
+<li>支持多播主机仲裁</li>
+<li>主时钟同步和时钟低延伸支持</li>
+<li>低中断速率</li>
+<li>分离多字节接收和传输的FIFOs</li>
+<li>在总线锁死时，对数据和时钟线的独立复写控制</li>
+<li>峰值抑制的输入滤波器</li>
+</ul>
+<img src="https://pic.islet.space/2021/05/20210527100924.png" alt="image-20210527100834503" style="zoom: 67%;" />
+
+<img src="https://pic.islet.space/2021/05/20210527133611.png" alt="image-20210527100951355" style="zoom:67%;" />
+
+
+
+<h2 id="针脚描述"><a href="#针脚描述" class="headerlink" title="针脚描述"></a>针脚描述</h2><img src="https://pic.islet.space/2021/05/20210527102109.png" alt="image-20210527101956389" style="zoom:67%;" />
+
+<h2 id="SRU编程"><a href="#SRU编程" class="headerlink" title="SRU编程"></a>SRU编程</h2><img src="https://pic.islet.space/2021/05/20210527102114.png" alt="image-20210527102029529" style="zoom:67%;" />
+
+
+
+<h2 id="时钟频率"><a href="#时钟频率" class="headerlink" title="时钟频率"></a>时钟频率</h2><ul>
+<li>外围时钟是TWI时钟频率的基础。</li>
+<li>串行时钟频率最高400KHz，最低20KHz；其分辨率为 1/10MHz 或 100ns。</li>
+</ul>
+<p>分频数的计算案例如下：</p>
+<img src="https://pic.islet.space/2021/05/20210527102916.png" alt="image-20210527102754286" style="zoom:67%;" />
+
+
+
+<h2 id="功能描述"><a href="#功能描述" class="headerlink" title="功能描述"></a>功能描述</h2><img src="https://pic.islet.space/2021/05/20210527133616.png" alt="image-20210527103515471" style="zoom: 67%;" />
+
+
+
+
+
+
+
+<h2 id="8位数据寄存器"><a href="#8位数据寄存器" class="headerlink" title="8位数据寄存器"></a>8位数据寄存器</h2><h2 id="TWI中断"><a href="#TWI中断" class="headerlink" title="TWI中断"></a>TWI中断</h2><img src="https://pic.islet.space/2021/05/20210527133619.png" alt="image-20210527104039047" style="zoom:67%;" />
+
+<h3 id="中断源"><a href="#中断源" class="headerlink" title="中断源"></a>中断源</h3><h3 id="Masking"><a href="#Masking" class="headerlink" title="Masking"></a>Masking</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">bit <span class="built_in">set</span> IMASK P14I; <span class="comment">/* unmasks P14I interrupt */</span></span><br><span class="line">ustat1=dm(DPI_IMASK_RE); <span class="comment">/* set TWI Int */</span></span><br><span class="line">bit <span class="built_in">set</span> ustat1 TWI_INT;</span><br><span class="line">dm(DPI_IMASK_RE)=ustat1;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+<h3 id="Service"><a href="#Service" class="headerlink" title="Service"></a>Service</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">TWI_ISR:</span><br><span class="line">ustat1 = dm(TWIIRPTL); <span class="comment">/* read IRPTL to identify cause*/</span></span><br><span class="line">bit TST ustat1 TWITXINT; <span class="comment">/* test TX buffer bit*/</span></span><br><span class="line">IF TF jump TX_BUF;</span><br><span class="line"></span><br><span class="line">TX_BUF:</span><br><span class="line">dm(TWIIRPTL) = ustat1; <span class="comment">/* RW1C to clear TWI TX buffer </span></span><br><span class="line"><span class="comment"> interrupt */</span></span><br><span class="line">r0=dm(TWIMCTL); <span class="comment">/* dummy read*/</span></span><br><span class="line">instruction;</span><br><span class="line">rti;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="主设备发送模式"><a href="#主设备发送模式" class="headerlink" title="主设备发送模式"></a>主设备发送模式</h2><p>以下为单主机传输模式的的编程过程：</p>
+<ol>
+<li>Program the <code>TWIMADDR</code> register. <ul>
+<li>This defines the address transmitted during the address phase of the transfer.</li>
+</ul>
+</li>
+<li>Program the <code>TXTWI8</code> or <code>TXTWI16</code> registers. <ul>
+<li>This is the initial data transmitted. </li>
+<li>It is considered an error to complete the address phase of the transfer and not have data available in the transmit FIFO buffer. </li>
+</ul>
+</li>
+<li>Program the <code>TWIFIFOCTL</code> register. <ul>
+<li>Indicate if transmit FIFO buffer interrupts should occur with each byte transmitted (8 bits) or with each 2 bytes transmitted (16 bits). </li>
+</ul>
+</li>
+<li>Program the <code>TWIIMASK</code> register. <ul>
+<li>Enable the bits associated with the desired interrupt sources. </li>
+<li>For example, programming the value <code>0x0030</code> results in an interrupt output to the processor when the master transfer completes, or if a master transfer error has occurred. </li>
+</ul>
+</li>
+<li>Program the <code>TWIMCTL</code> register. <ul>
+<li>This prepares and enables master mode operation. </li>
+<li>As an example, programming the value <code>0x0201</code> enables master mode operation, generates a 7-bit address, sets the direction to master-transmit, uses standard mode timing, and transmits 8 data bytes before generating a stop condition. </li>
+</ul>
+</li>
+</ol>
+<img src="https://pic.islet.space/2021/05/20210527105334.png" alt="image-20210527104628291" style="zoom:67%;" />
+
+
+
+
+
+
+
+
+
+<h1 id="LATENCY"><a href="#LATENCY" class="headerlink" title="LATENCY"></a>LATENCY</h1><h2 id="TWI-效果延迟（时间）"><a href="#TWI-效果延迟（时间）" class="headerlink" title="TWI 效果延迟（时间）"></a>TWI 效果延迟（时间）</h2><p>在TWI寄存器设置后，其效果延迟大概是 1.5到2个PCLK周期。</p>
+<p><img src="https://pic.islet.space/2021/05/20210525153905.png" alt="image-20210525153855627"></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/ADI/" rel="tag"># ADI</a>
+              <a href="/tags/21479/" rel="tag"># 21479</a>
+              <a href="/tags/register/" rel="tag"># register</a>
+          </div>
+
+    <div id="vcomment" style="margin: 20px 0 0 0"></div>
+    <script>
+        new Valine({
+            el: '#vcomment' ,
+            appId: 'vRGM12EcYxDSM2lat5qjjSeY-gzGzoHsz',
+            appKey: 'WBgAb6NTAFQ7DYtgH0uOPNNh'
+        });
+    </script>
+</body>
+
+
+
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/05/24/Programming/C/2021-05-24-ISO-IEC_9899-2011-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" rel="prev" title="ISO-IEC_9899-2011 学习笔记">
+                  <i class="fa fa-chevron-left"></i> ISO-IEC_9899-2011 学习笔记
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/05/25/Hardware/2021-05-25-Type-C-%E6%89%A9%E5%B1%95%E5%99%A8-%E6%96%B9%E6%A1%88%E6%8C%87%E5%8D%97%EF%BC%88DP-Alternative-Mode-%E7%AF%87%EF%BC%89/" rel="next" title="Type-C 扩展器 方案指南（DP Alternative Mode 篇）">
+                  Type-C 扩展器 方案指南（DP Alternative Mode 篇） <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+<script src="/js/comments.js"></script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">粤ICP备19004822号 </a>
+  </div>
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Liewzheng</span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="next-config" data-name="main" type="application/json">{&quot;hostname&quot;:&quot;islet.space&quot;,&quot;root&quot;:&quot;&#x2F;&quot;,&quot;images&quot;:&quot;&#x2F;images&quot;,&quot;scheme&quot;:&quot;Gemini&quot;,&quot;version&quot;:&quot;8.3.0&quot;,&quot;exturl&quot;:false,&quot;sidebar&quot;:{&quot;position&quot;:&quot;left&quot;,&quot;display&quot;:&quot;post&quot;,&quot;padding&quot;:18,&quot;offset&quot;:12},&quot;copycode&quot;:false,&quot;bookmark&quot;:{&quot;enable&quot;:false,&quot;color&quot;:&quot;#222&quot;,&quot;save&quot;:&quot;auto&quot;},&quot;fancybox&quot;:false,&quot;mediumzoom&quot;:false,&quot;lazyload&quot;:false,&quot;pangu&quot;:false,&quot;comments&quot;:{&quot;style&quot;:&quot;tabs&quot;,&quot;active&quot;:null,&quot;storage&quot;:true,&quot;lazyload&quot;:false,&quot;nav&quot;:null},&quot;motion&quot;:{&quot;enable&quot;:true,&quot;async&quot;:false,&quot;transition&quot;:{&quot;post_block&quot;:&quot;fadeIn&quot;,&quot;post_header&quot;:&quot;fadeInDown&quot;,&quot;post_body&quot;:&quot;fadeInDown&quot;,&quot;coll_header&quot;:&quot;fadeInLeft&quot;,&quot;sidebar&quot;:&quot;fadeInUp&quot;}},&quot;prism&quot;:false,&quot;i18n&quot;:{&quot;placeholder&quot;:&quot;Searching...&quot;,&quot;empty&quot;:&quot;We didn&#39;t find any results for the search: ${query}&quot;,&quot;hits_time&quot;:&quot;${hits} results found in ${time} ms&quot;,&quot;hits&quot;:&quot;${hits} results found&quot;}}</script>
+<meta name="description" content="Core&#x2F;Shell首先，要理解Core &#x2F; shell的概念，系统内核一般被称之为core，而unix及类unix（即与unix类似）系统（如linux）都继承了这一概念，都有其内核。 古早时期，都是一台电脑就是一台服务器，为了提高服务器的利用率，大家都在用很多客户端登录系统，系统分时（电脑高效处理任务，看起来像是同时进行，其实还是存在先后顺序的）为许多客户端提供服务，即“一点对多点”式的服务模">
+<meta property="og:type" content="article">
+<meta property="og:title" content="UnixShell常用命令">
+<meta property="og:url" content="http://islet.space/2021/05/27/Linux/Shell/2021-05-27-UnixShell%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/index.html">
+<meta property="og:site_name" content="Coder的孤岛">
+<meta property="og:description" content="Core&#x2F;Shell首先，要理解Core &#x2F; shell的概念，系统内核一般被称之为core，而unix及类unix（即与unix类似）系统（如linux）都继承了这一概念，都有其内核。 古早时期，都是一台电脑就是一台服务器，为了提高服务器的利用率，大家都在用很多客户端登录系统，系统分时（电脑高效处理任务，看起来像是同时进行，其实还是存在先后顺序的）为许多客户端提供服务，即“一点对多点”式的服务模">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://pic.islet.space/2021/05/image-20210528002003445.png">
+<meta property="og:image" content="https://pic.islet.space/2021/05/image-20210528001730316.png">
+<meta property="og:image" content="https://pic.islet.space/2021/05/image-20210528001701289.png">
+<meta property="og:image" content="https://pic.islet.space/2021/05/image-20210528002252175.png">
+<meta property="og:image" content="https://pic.islet.space/2021/05/image-20210528002708689.png">
+<meta property="og:image" content="https://pic.islet.space/2021/05/image-20210528002757152.png">
+<meta property="og:image" content="https://pic.islet.space/2021/05/image-20210528002900901.png">
+<meta property="article:published_time" content="2021-05-27T15:55:00.000Z">
+<meta property="article:modified_time" content="2021-05-27T16:33:04.584Z">
+<meta property="article:author" content="Liewzheng">
+<meta property="article:tag" content="linux">
+<meta property="article:tag" content="unix">
+<meta property="article:tag" content="Mac">
+<meta property="article:tag" content="shell">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://pic.islet.space/2021/05/image-20210528002003445.png">
+
+
+<link rel="canonical" href="http://islet.space/2021/05/27/Linux/Shell/2021-05-27-UnixShell%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{&quot;sidebar&quot;:&quot;&quot;,&quot;isHome&quot;:false,&quot;isPost&quot;:true,&quot;lang&quot;:&quot;en&quot;,&quot;comments&quot;:true,&quot;permalink&quot;:&quot;http:&#x2F;&#x2F;islet.space&#x2F;2021&#x2F;05&#x2F;27&#x2F;Linux&#x2F;Shell&#x2F;2021-05-27-UnixShell%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4&#x2F;&quot;,&quot;path&quot;:&quot;2021&#x2F;05&#x2F;27&#x2F;Linux&#x2F;Shell&#x2F;2021-05-27-UnixShell常用命令&#x2F;&quot;,&quot;title&quot;:&quot;UnixShell常用命令&quot;}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">&quot;&quot;</script>
+<title>UnixShell常用命令 | Coder的孤岛</title><script src="/js/config.js"></script>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Coder的孤岛</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">islet of the coder</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-文章"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>文章</a></li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Core-Shell"><span class="nav-number">1.</span> <span class="nav-text">Core&#x2F;Shell</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%9B%AE%E5%BD%95%E6%93%8D%E4%BD%9C"><span class="nav-number">2.</span> <span class="nav-text">目录操作</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#cd"><span class="nav-number">2.1.</span> <span class="nav-text">cd</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mkdir"><span class="nav-number">2.2.</span> <span class="nav-text">mkdir</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mv"><span class="nav-number">2.3.</span> <span class="nav-text">mv</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ls"><span class="nav-number">2.4.</span> <span class="nav-text">ls</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E7%BC%96%E8%BE%91"><span class="nav-number">3.</span> <span class="nav-text">文件编辑</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#vim"><span class="nav-number">3.1.</span> <span class="nav-text">vim</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%E8%BF%90%E8%A1%8C"><span class="nav-number">4.</span> <span class="nav-text">代码运行</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#gcc"><span class="nav-number">4.1.</span> <span class="nav-text">gcc</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Liewzheng</p>
+  <div class="site-description" itemprop="description">笔记分享的旮旯孤岛而已</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">64</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">16</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">126</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="mailto:liewzheng@qq.com" title="E-Mail → mailto:liewzheng@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://islet.space/2021/05/27/Linux/Shell/2021-05-27-UnixShell%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Liewzheng">
+      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coder的孤岛">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          UnixShell常用命令
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-05-27 23:55:00" itemprop="dateCreated datePublished" datetime="2021-05-27T23:55:00+08:00">2021-05-27</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2021-05-28 00:33:04" itemprop="dateModified" datetime="2021-05-28T00:33:04+08:00">2021-05-28</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="Core-Shell"><a href="#Core-Shell" class="headerlink" title="Core/Shell"></a>Core/Shell</h1><p>首先，要理解Core / shell的概念，系统内核一般被称之为core，而unix及类unix（即与unix类似）系统（如linux）都继承了这一概念，都有其内核。</p>
+<p>古早时期，都是一台电脑就是一台服务器，为了提高服务器的利用率，大家都在用很多客户端登录系统，系统分时（电脑高效处理任务，看起来像是同时进行，其实还是存在先后顺序的）为许多客户端提供服务，即“一点对多点”式的服务模式，客户端都通过小黑窗进行操作。</p>
+<p>如今，独立PC都已经没了服务器这一概念，一台设备就只为一个客户服务（单点对单点），但是这个小黑窗的高效操作的理念却被保留了下来。</p>
+<p>因为所有的客户端对主机的使用都没有进入到内核层面，仅仅停留在表面，所以这种小黑窗的操作层被称为shell层，即外壳。</p>
+<p>逐渐衍生了终端的概念，即客户端即用户终端，即terminal；现在shell、terminal、command-line（命令行）这几个概念都可以被视为同一个概念。</p>
+<p>但shell的流行，逐渐衍生除了很多个人制作的版本，流行的有bash shell、zsh等。</p>
+<h1 id="目录操作"><a href="#目录操作" class="headerlink" title="目录操作"></a>目录操作</h1><h2 id="cd"><a href="#cd" class="headerlink" title="cd"></a>cd</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cd zplusplus</span><br></pre></td></tr></table></figure>
+
+<p>即Change directory，改变目录</p>
+<p>类unix中没有路径这个概念，只有目录。</p>
+<blockquote>
+<ul>
+<li><p><code>~</code> 主目录，个人目录</p>
+</li>
+<li><p><code>/</code> 根目录，硬盘目录</p>
+</li>
+</ul>
+</blockquote>
+<p>TIPS:</p>
+<ul>
+<li>按<code>tabs</code>键可以快速补全相符的目录名称</li>
+</ul>
+<p><code>cd ../</code>可以返回上一层文件目录</p>
+<p><img src="https://pic.islet.space/2021/05/image-20210528002003445.png" alt="image-20210528002003445"></p>
+<h2 id="mkdir"><a href="#mkdir" class="headerlink" title="mkdir"></a>mkdir</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkdir zplusplus</span><br></pre></td></tr></table></figure>
+
+<p>即make directory，创建目录</p>
+<p><img src="https://pic.islet.space/2021/05/image-20210528001730316.png" alt="image-20210528001730316"></p>
+<h2 id="mv"><a href="#mv" class="headerlink" title="mv"></a>mv</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mv zplusplus</span><br></pre></td></tr></table></figure>
+
+<p>即move，移动或删除</p>
+<blockquote>
+<ul>
+<li><code>-f</code> force 强制</li>
+</ul>
+</blockquote>
+<p>也可以用来改名，用法如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mv main.c test.c</span><br></pre></td></tr></table></figure>
+
+
+
+<p>其他类似的语句如 <code>rm</code>，可以参考手册</p>
+<h2 id="ls"><a href="#ls" class="headerlink" title="ls"></a>ls</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ls</span><br></pre></td></tr></table></figure>
+
+<p>即List，（展现）列表</p>
+<p>这个命令非常好用，学会了就基本忘不了，各别shell能够提供不同的色彩显示，对于文档类型识别来说非常高效。</p>
+<p><img src="https://pic.islet.space/2021/05/image-20210528001701289.png" alt="image-20210528001701289"></p>
+<h1 id="文件编辑"><a href="#文件编辑" class="headerlink" title="文件编辑"></a>文件编辑</h1><h2 id="vim"><a href="#vim" class="headerlink" title="vim"></a>vim</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim main.c</span><br></pre></td></tr></table></figure>
+
+<p><strong>注意</strong>：如果已经存在了<code>main.c</code> 他就不会新生成一个，否则就会新建。</p>
+<p><strong>操作方法</strong>：</p>
+<ol>
+<li>刚进去的时候需要按 <code>i</code> 进行插入（insert）操作</li>
+<li>编辑完毕之后需要先按 <code>ESC</code> 键，在依次输入 <code>:</code> 及其他指令进行退出，具体参考下方，可以看手册。</li>
+</ol>
+<blockquote>
+<p><code>:</code> instructor 指令输入</p>
+<p><code>w</code> wirte</p>
+<p><code>q</code> quit</p>
+<p><code>!</code> 强制</p>
+</blockquote>
+<p><strong>编辑界面如下</strong>：</p>
+<p><img src="https://pic.islet.space/2021/05/image-20210528002252175.png" alt="image-20210528002252175"></p>
+<p><strong>科普视频</strong>：</p>
+<iframe src="//player.bilibili.com/player.html?aid=55498503&bvid=BV164411P7tw&cid=97032762&page=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"> </iframe>
+
+
+
+<p><strong>自行科普</strong>：GUI，Graphic User Interface 图形用户界面</p>
+<h1 id="代码运行"><a href="#代码运行" class="headerlink" title="代码运行"></a>代码运行</h1><h2 id="gcc"><a href="#gcc" class="headerlink" title="gcc"></a>gcc</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gcc main.c </span><br></pre></td></tr></table></figure>
+
+<p>是<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/gnu/671972">GNU</a>下的GCC编译器之一，c的编译器是<code>gcc</code>，c++的编译器是<code>g++</code></p>
+<blockquote>
+<ul>
+<li><code>-o main</code> 参数</li>
+</ul>
+</blockquote>
+<p><img src="https://pic.islet.space/2021/05/image-20210528002708689.png" alt="image-20210528002708689"></p>
+<p>编译完成之后使用 <code>ls</code> 可以查看已生成的文件 <code>a.out</code>（默认命名）。</p>
+<p><img src="https://pic.islet.space/2021/05/image-20210528002757152.png" alt="image-20210528002757152"></p>
+<p>这个 <code>a.out</code> 文件是CPU能够直接识别和运行的文件，因此直接使用以下代码运行即可。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./a.out</span><br></pre></td></tr></table></figure>
+
+<p>运行效果如下：</p>
+<p><img src="https://pic.islet.space/2021/05/image-20210528002900901.png" alt="image-20210528002900901"></p>
+<p>遇到问题可以再进行调试。</p>
+<p>对GNU和开源的概念可以参考下方视频：</p>
+<iframe src="//player.bilibili.com/player.html?aid=413061830&bvid=BV1zV411d7La&cid=186095567&page=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"> </iframe>
+
+
+
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/linux/" rel="tag"># linux</a>
+              <a href="/tags/unix/" rel="tag"># unix</a>
+              <a href="/tags/Mac/" rel="tag"># Mac</a>
+              <a href="/tags/shell/" rel="tag"># shell</a>
+          </div>
+
+    <div id="vcomment" style="margin: 20px 0 0 0"></div>
+    <script>
+        new Valine({
+            el: '#vcomment' ,
+            appId: 'vRGM12EcYxDSM2lat5qjjSeY-gzGzoHsz',
+            appKey: 'WBgAb6NTAFQ7DYtgH0uOPNNh'
+        });
+    </script>
+</body>
+
+
+
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/05/25/Hardware/2021-05-25-Type-C-%E6%89%A9%E5%B1%95%E5%99%A8-%E6%96%B9%E6%A1%88%E6%8C%87%E5%8D%97%EF%BC%88DP-Alternative-Mode-%E7%AF%87%EF%BC%89/" rel="prev" title="Type-C 扩展器 方案指南（DP Alternative Mode 篇）">
+                  <i class="fa fa-chevron-left"></i> Type-C 扩展器 方案指南（DP Alternative Mode 篇）
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+<script src="/js/comments.js"></script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">粤ICP备19004822号 </a>
+  </div>
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Liewzheng</span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
