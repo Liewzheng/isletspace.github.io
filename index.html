@@ -126,7 +126,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">64</span>
+          <span class="site-state-item-count">68</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -135,7 +135,7 @@
         <span class="site-state-item-name">categories</span>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">126</span>
+        <span class="site-state-item-count">134</span>
         <span class="site-state-item-name">tags</span>
       </div>
   </nav>
@@ -169,6 +169,619 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://islet.space/2021/05/31/Programming/C++/2021-05-31-C++%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86%EF%BC%88try-catch-throw%EF%BC%89%E5%AE%8C%E5%85%A8%E6%94%BB%E7%95%A5/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Liewzheng">
+      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coder的孤岛">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/05/31/Programming/C++/2021-05-31-C++%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86%EF%BC%88try-catch-throw%EF%BC%89%E5%AE%8C%E5%85%A8%E6%94%BB%E7%95%A5/" class="post-title-link" itemprop="url">C++异常处理（try catch throw）完全攻略</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-05-31 23:05:00" itemprop="dateCreated datePublished" datetime="2021-05-31T23:05:00+08:00">2021-05-31</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2021-06-01 22:21:27" itemprop="dateModified" datetime="2021-06-01T22:21:27+08:00">2021-06-01</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Programming/" itemprop="url" rel="index"><span itemprop="name">Programming</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p><a target="_blank" rel="noopener" href="http://c.biancheng.net/view/422.html">c.biancheng.net</a></p>
+<p>程序运行时常会碰到一些异常情况，例如：</p>
+<ul>
+<li>做除法的时候除数为 0；</li>
+<li>用户输入年龄时输入了一个负数；</li>
+<li>用 new 运算符动态分配空间时，空间不够导致无法分配；</li>
+<li>访问数组元素时，下标越界；打开文件读取时，文件不存在。</li>
+</ul>
+<p>这些异常情况，如果不能发现并加以处理，很可能会导致程序崩溃。</p>
+<blockquote>
+<p>所谓“处理”，可以是给出错误提示信息，然后让程序沿一条不会出错的路径继续执行；</p>
+<p>也可能是不得不结束程序，但在结束前做一些必要的工作，如将内存中的数据写入文件、关闭打开的文件、释放动态分配的内存空间等。</p>
+</blockquote>
+<p><strong>一发现异常情况就立即处理未必妥当，因为在一个函数执行过程中发生的异常，在有的情况下由该函数的调用者决定如何处理更加合适。 尤其像库函数这类提供给程序员调用，用以完成与具体应用无关的通用功能的函数，执行过程中贸然对异常进行处理，未必符合调用它的程序的需要。</strong></p>
+<p><strong>此外，将异常分散在各处进行处理不利于代码的维护，尤其是对于在不同地方发生的同一种异常，都要编写相同的处理代码也是一种不必要的重复和冗余。如果能在发生各种异常时让程序都执行到同一个地方，这个地方能够对异常进行集中处理，则程序就会更容易编写、维护。</strong></p>
+<p>鉴于上述原因，<a target="_blank" rel="noopener" href="http://c.biancheng.net/cplus/">C++</a> 引入了异常处理机制。其基本思想是：</p>
+<blockquote>
+<p>函数 A 在执行过程中发现异常时可以不加处理，而只是“拋出一个异常”给 A 的调用者，假定为函数 B。</p>
+</blockquote>
+<p>拋出异常而不加处理会导致函数 A 立即中止，在这种情况下，函数 B 可以选择捕获 A 拋出的异常进行处理，也可以选择置之不理。如果置之不理，这个异常就会被拋给 B 的调用者，以此类推。</p>
+<p>【也就是说，在C++中，异常发生时，是否处理可以由函数的上一级调用函数去决定，如果选择不处理则会将该异常交给更上一级函数去决断。】</p>
+<p>如果一层层的函数都不处理异常，异常最终会被拋给最外层的 main 函数。main 函数应该处理异常。如果main函数也不处理异常，那么程序就会立即异常地中止。</p>
+<h1 id="C-异常处理基本语法"><a href="#C-异常处理基本语法" class="headerlink" title="C++异常处理基本语法"></a>C++异常处理基本语法</h1><h2 id="threw语法定义"><a href="#threw语法定义" class="headerlink" title="threw语法定义"></a>threw语法定义</h2><p>C++ 通过 <code>throw</code> 语句和 <code>try-catch</code> 语句实现对异常的处理。<code>throw</code> 语句的语法如下：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">throw</span>  <span class="comment">/*表达式*/</span>;</span><br></pre></td></tr></table></figure>
+
+<p>该语句拋出一个异常。异常是一个表达式，其值的类型可以是 <mark>基本类型</mark>，也可以是 <mark>类</mark>。</p>
+<h2 id="try-catch语法定义"><a href="#try-catch语法定义" class="headerlink" title="try-catch语法定义"></a>try-catch语法定义</h2><p><code>try-catch</code> 语句的语法如下：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">   <span class="comment">//语句组</span></span><br><span class="line"> &#125;</span><br><span class="line"> <span class="built_in"><span class="keyword">catch</span></span>(<span class="comment">/* 异常类型 */</span>) &#123;</span><br><span class="line">   <span class="comment">//异常处理代码</span></span><br><span class="line"> &#125;</span><br><span class="line"> ...</span><br><span class="line"> <span class="built_in"><span class="keyword">catch</span></span>( <span class="comment">/* 异常类型 */</span>) &#123;</span><br><span class="line">   <span class="comment">//异常处理代码</span></span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>catch</code> 可以有多个，但至少要有一个。</p>
+<p>不妨把 try 和其后<code>&#123;&#125;</code>中的内容称作“try块”，把 catch 和其后<code>&#123;&#125;</code>中的内容称作“catch块”。</p>
+<h2 id="try-catch执行过程"><a href="#try-catch执行过程" class="headerlink" title="try-catch执行过程"></a>try-catch执行过程</h2><p><code>try-catch</code> 语句的执行过程是：</p>
+<ul>
+<li>执行 try 块中的语句，如果执行的过程中没有异常拋出，那么执行完后就执行最后一个 catch 块后面的语句，所有 catch 块中的语句都不会被执行；</li>
+<li>如果 try 块执行的过程中拋出了异常，那么拋出异常后立即跳转到第一个“异常类型”和拋出的异常类型匹配的 catch 块中执行（称作异常被该 catch 块“捕获”），执行完后再跳转到最后一个 catch 块后面继续执行。</li>
+</ul>
+<h2 id="例程"><a href="#例程" class="headerlink" title="例程"></a>例程</h2><p>例如下面的程序：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;    </span><br><span class="line">	<span class="keyword">double</span> m ,n;    </span><br><span class="line">	cin &gt;&gt; m &gt;&gt; n;    </span><br><span class="line">	<span class="keyword">try</span> &#123;        </span><br><span class="line">		cout &lt;&lt; <span class="string">&quot;before dividing.&quot;</span> &lt;&lt; endl;        </span><br><span class="line">		<span class="keyword">if</span>( n == <span class="number">0</span>) <span class="keyword">throw</span> <span class="number">-1</span>;</span><br><span class="line">		<span class="keyword">else</span> cout &lt;&lt; m / n &lt;&lt; endl;</span><br><span class="line">		cout &lt;&lt; <span class="string">&quot;after dividing.&quot;</span> &lt;&lt; endl;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in"><span class="keyword">catch</span></span>(<span class="keyword">double</span> d)&#123;</span><br><span class="line">  	cout &lt;&lt; <span class="string">&quot;catch(double) &quot;</span> &lt;&lt; d &lt;&lt;  endl;    </span><br><span class="line">  &#125;    </span><br><span class="line">  <span class="built_in"><span class="keyword">catch</span></span>(<span class="keyword">int</span> e)&#123;</span><br><span class="line">  	cout &lt;&lt; <span class="string">&quot;catch(int) &quot;</span> &lt;&lt; e &lt;&lt; endl;    </span><br><span class="line">  &#125;    </span><br><span class="line">  cout &lt;&lt; <span class="string">&quot;finished&quot;</span> &lt;&lt; endl;    </span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>程序的运行结果如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">9 6</span><br><span class="line">before dividing.</span><br><span class="line">1.5</span><br><span class="line">after dividing.</span><br><span class="line">finished</span><br></pre></td></tr></table></figure>
+
+<p>说明当 n 不为 0 时，try 块中不会拋出异常。因此程序在 try 块正常执行完后，越过所有的 catch 块继续执行，catch 块一个也不会执行。</p>
+<p>程序的运行结果也可能如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">9 0</span><br><span class="line">before dividing.</span><br><span class="line">catch\(int) -1</span><br><span class="line">finished</span><br></pre></td></tr></table></figure>
+
+<p>当 n 为 0 时，try 块中会拋出一个整型异常。拋出异常后，try 块立即停止执行。该整型异常会被类型匹配的第一个 catch 块捕获，即进入<code>catch(int e)</code>块执行，该 catch 块执行完毕后，程序继续往后执行，直到正常结束。</p>
+<p>如果拋出的异常没有被 catch 块捕获，例如，将<code>catch(int e)</code>，改为<code>catch(char e)</code>，当输入的 n 为 0 时，拋出的整型异常就没有 catch 块能捕获，这个异常也就得不到处理，那么程序就会立即中止，try…catch 后面的内容都不会被执行。</p>
+<h1 id="能够捕获任何异常的-catch-语句"><a href="#能够捕获任何异常的-catch-语句" class="headerlink" title="能够捕获任何异常的 catch 语句"></a>能够捕获任何异常的 catch 语句</h1><p>如果希望不论拋出哪种类型的异常都能捕获，可以编写如下 catch 块：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in"><span class="keyword">catch</span></span>(...) &#123;</span><br><span class="line">   <span class="comment">//...</span></span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+
+<p>这样的 catch 块能够捕获任何还没有被捕获的异常。例如下面的程序：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="keyword">double</span> m, n;</span><br><span class="line">  cin &gt;&gt; m &gt;&gt; n;</span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;before dividing.&quot;</span> &lt;&lt; endl;</span><br><span class="line">    <span class="keyword">if</span> (n == <span class="number">0</span>) <span class="keyword">throw</span> - <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (m == <span class="number">0</span>) <span class="keyword">throw</span> - <span class="number">1.0</span>;</span><br><span class="line">    <span class="keyword">else</span> cout &lt;&lt; m / n &lt;&lt; endl;</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;after dividing.&quot;</span> &lt;&lt; endl;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in"><span class="keyword">catch</span></span> (<span class="keyword">double</span> d) &#123;</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;catch (double)&quot;</span> &lt;&lt; d &lt;&lt; endl;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in"><span class="keyword">catch</span></span> (...) &#123;</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;catch (...)&quot;</span> &lt;&lt; endl;</span><br><span class="line">  &#125;    </span><br><span class="line">  cout &lt;&lt; <span class="string">&quot;finished&quot;</span> &lt;&lt; endl;</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>程序的运行结果如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">9 0</span><br><span class="line">before dividing.</span><br><span class="line">catch (...)</span><br><span class="line">finished</span><br></pre></td></tr></table></figure>
+
+<p>当 n 为 0 时，拋出的整型异常被<code>catchy(...)</code>捕获。</p>
+<p>程序的运行结果也可能如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">0 6</span><br><span class="line">before dividing.</span><br><span class="line">catch (double) -1</span><br><span class="line">finished</span><br></pre></td></tr></table></figure>
+
+<p>当 m 为 0 时，拋出一个 double 类型的异常。虽然<code>catch (double)</code>和<code>catch(...)</code>都能匹配该异常，但是<code>catch(double)</code>是第一个能匹配的 catch 块，因此会执行它，而不会执行<code>catch(...)</code>块。</p>
+<p>由于<code>catch(...)</code>能匹配任何类型的异常，它后面的 catch 块实际上就不起作用，因此不要将它写在其他 catch 块前面。</p>
+<h1 id="异常的再拋出"><a href="#异常的再拋出" class="headerlink" title="异常的再拋出"></a>异常的再拋出</h1><p>如果一个函数在执行过程中拋出的异常在本函数内就被 catch 块捕获并处理，那么该异常就不会拋给这个函数的调用者（也称为“上一层的函数”）；如果异常在本函数中没有被处理，则它就会被拋给上一层的函数。例如下面的程序：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CException</span>&#123;</span></span><br><span class="line">  <span class="keyword">public</span>:    </span><br><span class="line">  string msg;    </span><br><span class="line">  <span class="built_in">CException</span>(string s) : <span class="built_in">msg</span>(s) &#123;&#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">double</span> <span class="title">Devide</span><span class="params">(<span class="keyword">double</span> x, <span class="keyword">double</span> y)</span></span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (y == <span class="number">0</span>) <span class="keyword">throw</span> <span class="built_in">CException</span>(<span class="string">&quot;devided by zero&quot;</span>);</span><br><span class="line">  cout &lt;&lt; <span class="string">&quot;in Devide&quot;</span> &lt;&lt; endl;    </span><br><span class="line">  <span class="keyword">return</span> x / y;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">CountTax</span><span class="params">(<span class="keyword">int</span> salary)</span></span>&#123;</span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (salary &lt; <span class="number">0</span>) <span class="keyword">throw</span> <span class="number">-1</span>;</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;counting tax&quot;</span> &lt;&lt; endl;</span><br><span class="line">  &#125;    </span><br><span class="line">  <span class="built_in"><span class="keyword">catch</span></span> (<span class="keyword">int</span>)&#123;</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;salary &lt; 0&quot;</span> &lt;&lt; endl;    </span><br><span class="line">  &#125;</span><br><span class="line">  cout &lt;&lt; <span class="string">&quot;tax counted&quot;</span> &lt;&lt; endl;</span><br><span class="line">  <span class="keyword">return</span> salary * <span class="number">0.15</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="keyword">double</span> f = <span class="number">1.2</span>;    </span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="built_in">CountTax</span>(<span class="number">-1</span>);  <span class="comment">//此处会报错，立即抛出错误被catch(int)捕获，并终止运行</span></span><br><span class="line">    f = <span class="built_in">Devide</span>(<span class="number">3</span>, <span class="number">0</span>);  <span class="comment">//此处也会报错，在”devided by zero“处立即停止，且没有返回值返回赋给f</span></span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;end of try block&quot;</span> &lt;&lt; endl;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in"><span class="keyword">catch</span></span> (CException e)&#123;</span><br><span class="line">    cout &lt;&lt; e.msg &lt;&lt; endl;    </span><br><span class="line">  &#125;    </span><br><span class="line">  cout &lt;&lt; <span class="string">&quot;f = &quot;</span> &lt;&lt; f &lt;&lt; endl;</span><br><span class="line">  cout &lt;&lt; <span class="string">&quot;finished&quot;</span> &lt;&lt; endl;</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>程序的输出结果如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">salary &lt; 0</span><br><span class="line">tax counted</span><br><span class="line">devided by zero</span><br><span class="line">f=1.2</span><br><span class="line">finished</span><br></pre></td></tr></table></figure>
+
+<p>CountTa 函数拋出异常后自行处理，这个异常就不会继续被拋给调用者，即 main 函数。因此在 main 函数的 try 块中，CountTax 之后的语句还能正常执行，即会执行<code>f = Devide(3, 0);</code>。</p>
+<p>第 33 行，Devide 函数拋出了异常却不处理，该异常就会被拋给 Devide 函数的调用者，即 main 函数。拋出此异常后，Devide 函数立即结束，第 13 行不会被执行，函数也不会返回一个值，这从第 33 行 f 的值不会被修改可以看出。</p>
+<p><code>Devide()</code>  中第 12 行 拋出的异常被 main 函数中类型匹配的 catch 块捕获。第 36 行中的 e 对象是用<strong>复制构造函数初始化</strong>的。</p>
+<p><mark>如果拋出的异常是派生类的对象，而 catch 块的异常类型是基类，那么这两者也能够匹配，因为派生类对象也是基类对象。</mark></p>
+<blockquote>
+<p>虽然函数也可以通过返回值或者传引用的参数通知调用者发生了异常，但采用这种方式的话，每次调用函数时都要判断是否发生了异常，这在函数被多处调用时比较麻烦。有了异常处理机制，可以将多处函数调用都写在一个 try 块中，任何一处调用发生异常都会被匹配的 catch 块捕获并处理，也就不需要每次调用后都判断是否发生了异常。</p>
+</blockquote>
+<p>有时，虽然在函数中对异常进行了处理，但是还是希望能够通知调用者，以便让调用者知道发生了异常，从而可以作进一步的处理。在 catch 块中拋出异常可以满足这种需要。例如：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">CountTax</span><span class="params">(<span class="keyword">int</span> salary)</span></span>&#123;</span><br><span class="line">	<span class="keyword">try</span> &#123;</span><br><span class="line">  	<span class="keyword">if</span>( salary &lt; <span class="number">0</span> ) <span class="keyword">throw</span> <span class="built_in">string</span>(<span class="string">&quot;zero salary&quot;</span>);</span><br><span class="line">  	cout &lt;&lt; <span class="string">&quot;counting tax&quot;</span> &lt;&lt; endl;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in"><span class="keyword">catch</span></span> (string s )&#123;</span><br><span class="line">  	cout &lt;&lt; <span class="string">&quot;CountTax error : &quot;</span> &lt;&lt; s &lt;&lt; endl;</span><br><span class="line">    <span class="keyword">throw</span>;  <span class="comment">//单写一个throw会把最近的错误传给上一级进行处理</span></span><br><span class="line">  &#125;</span><br><span class="line">  cout &lt;&lt; <span class="string">&quot;tax counted&quot;</span> &lt;&lt; endl;</span><br><span class="line">  <span class="keyword">return</span> salary * <span class="number">0.15</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="keyword">double</span> f = <span class="number">1.2</span>;    </span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="built_in">CountTax</span>(<span class="number">-1</span>);</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;end of try block&quot;</span> &lt;&lt; endl;</span><br><span class="line">  &#125;    </span><br><span class="line">  <span class="built_in"><span class="keyword">catch</span></span>(string s) &#123;</span><br><span class="line">    cout &lt;&lt; s &lt;&lt; endl;</span><br><span class="line">  &#125;    </span><br><span class="line">  cout &lt;&lt; <span class="string">&quot;finished&quot;</span> &lt;&lt; endl;</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>程序的输出结果如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">CountTax error:zero salary</span><br><span class="line">zero salary</span><br><span class="line">finished</span><br></pre></td></tr></table></figure>
+
+<p>第 12行的<code>throw;</code>没有指明拋出什么样的异常，因此<mark>拋出的就是 catch 块捕获到的异常</mark>，即 <code>string(&quot;zero salary”)</code> 。这个异常会被 <code>main</code> 函数中的 <code>catch</code> 块捕获。</p>
+<h1 id="函数的异常声明列表"><a href="#函数的异常声明列表" class="headerlink" title="函数的异常声明列表"></a>函数的异常声明列表</h1><p>为了增强程序的可读性和可维护性，使程序员在使用一个函数时就能看出这个函数可能会拋出哪些异常，C++ 允许在函数声明和定义时，加上它所能拋出的异常的列表，称为 <mark>异常声明列表</mark>，具体写法如下：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">func</span><span class="params">()</span> <span class="title">throw</span> <span class="params">(<span class="keyword">int</span>, <span class="keyword">double</span>, A, B, C)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<p>或</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">func</span><span class="params">()</span> <span class="title">throw</span> <span class="params">(<span class="keyword">int</span>, <span class="keyword">double</span>, A, B, C)</span></span>&#123;…&#125;</span><br></pre></td></tr></table></figure>
+
+<p>上面的写法表明 func 可能拋出 int 型、double 型以及 A、B、C 三种类型的异常。异常声明列表可以在函数声明时写，也可以在函数定义时写。如果两处都写，则两处应一致。</p>
+<p>如果异常声明列表如下编写：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">func</span><span class="params">()</span> <span class="title">throw</span> <span class="params">()</span></span>;</span><br></pre></td></tr></table></figure>
+
+<p>则说明 func 函数不会拋出任何异常。</p>
+<p><mark>一个函数如果不交待能拋出哪些类型的异常，就可以拋出任何类型的异常。</mark></p>
+<p>函数如果拋出了其异常声明列表中没有的异常，在编译时不会引发错误，但在运行时， Dev C++ 编译出来的程序会出错；用 Visual Studio 2010 编译出来的程序则不会出错，异常声明列表不起实际作用。</p>
+<h1 id="C-标准异常类"><a href="#C-标准异常类" class="headerlink" title="C++标准异常类"></a>C++标准异常类</h1><p>C++ 标准库中有一些类代表异常，这些类都是从 exception 类派生而来的。常用的几个异常类如图 1 所示。</p>
+<p><img src="https://pic.islet.space/2021/05/1-1P912101914246.jpg" alt="img"></p>
+<p style="font-weight: 900; text-align: center;"> 图1：常用的异常类 </p>
+
+<p>bad_typeid、bad_cast、bad_alloc、ios_base::failure、out_of_range 都是  exception 类的派生类。<mark>C++ 程序在碰到某些异常时，即使程序中没有写 throw  语句，也会自动拋出上述异常类的对象。这些异常类还都有名为 <code>what()</code> 的成员函数，返回字符串形式的异常描述信息。使用这些异常类需要包含头文件 <code> &lt;stdexcept&gt;</code> 。</mark></p>
+<p>下面分别介绍以上几个异常类。本节程序的输出以 Visual Studio 2010为准，Dev C++ 编译的程序输出有所不同。</p>
+<h2 id="1-bad-typeid"><a href="#1-bad-typeid" class="headerlink" title="1) bad_typeid"></a>1) bad_typeid</h2><p>使用 typeid 运算符时，如果其操作数是一个多态类的<a target="_blank" rel="noopener" href="http://c.biancheng.net/c/80/">指针</a>，而该指针的值为 NULL，则会拋出此异常。</p>
+<h2 id="2-bad-cast"><a href="#2-bad-cast" class="headerlink" title="2) bad_cast"></a>2) bad_cast</h2><p>在用 dynamic_cast 进行从多态基类对象（或引用）到派生类的引用的强制类型转换时，如果转换是不安全的，则会拋出此异常。程序示例如下：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdexcept&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Base</span>&#123;</span></span><br><span class="line">  <span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">func</span><span class="params">()</span> </span>&#123;&#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Derived</span> :</span> <span class="keyword">public</span> Base&#123;</span><br><span class="line">  <span class="keyword">public</span>:    </span><br><span class="line">  <span class="function"><span class="keyword">void</span> <span class="title">Print</span><span class="params">()</span> </span>&#123;&#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">PrintObj</span><span class="params">(Base &amp; b)</span></span>&#123;</span><br><span class="line">  <span class="keyword">try</span>&#123;</span><br><span class="line">    Derived &amp; rd = <span class="keyword">dynamic_cast</span> &lt;Derived &amp;&gt;(b);</span><br><span class="line">    rd.<span class="built_in">Print</span>();    </span><br><span class="line">  &#125;    </span><br><span class="line">  <span class="built_in"><span class="keyword">catch</span></span> (bad_cast &amp; e)&#123;</span><br><span class="line">    cerr &lt;&lt; e.<span class="built_in">what</span>() &lt;&lt; endl;    </span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">  Base b;    </span><br><span class="line">  <span class="built_in">PrintObj</span>(b);    </span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>程序的输出结果如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Bad dynamic_cast!</span><br></pre></td></tr></table></figure>
+
+<p>在 PrintObj 函数中，通过 dynamic_cast 检测 b 是否引用的是一个 Derived 对象，如果是，就调用其 <code>Print()</code> 成员函数；如果不是，就拋出异常，不会调用 <code>Derived::Print</code>。</p>
+<h2 id="3-bad-alloc"><a href="#3-bad-alloc" class="headerlink" title="3) bad_alloc"></a>3) bad_alloc</h2><p>在用 new 运算符进行动态内存分配时，如果没有足够的内存，则会引发此异常。程序示例如下：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdexcept&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;    </span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="keyword">char</span> * p = <span class="keyword">new</span> <span class="keyword">char</span>[<span class="number">0x7fffffff</span>];</span><br><span class="line">  &#125;    </span><br><span class="line">  <span class="built_in"><span class="keyword">catch</span></span> (bad_alloc &amp; e)&#123;</span><br><span class="line">    cerr &lt;&lt; e.<span class="built_in">what</span>() &lt;&lt; endl;    </span><br><span class="line">  &#125;    </span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>程序的输出结果如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">bad allocation</span><br><span class="line">ios_base::failure</span><br></pre></td></tr></table></figure>
+
+<p>在默认状态下，输入输出流对象不会拋出此异常。如果用流对象的 exceptions 成员函数设置了一些标志位，则在出现打开文件出错、读到输入流的文件尾等情况时会拋出此异常。此处不再赘述。</p>
+<h2 id="4-out-of-range"><a href="#4-out-of-range" class="headerlink" title="4) out_of_range"></a>4) out_of_range</h2><p>用 vector 或 string 的 at 成员函数根据下标访问元素时，如果下标越界，则会拋出此异常。例如：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdexcept&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;    </span><br><span class="line">  <span class="function">vector&lt;<span class="keyword">int</span>&gt; <span class="title">v</span><span class="params">(<span class="number">10</span>)</span></span>;</span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    v.<span class="built_in">at</span>(<span class="number">100</span>) = <span class="number">100</span>;</span><br><span class="line">  &#125;    </span><br><span class="line">  <span class="built_in"><span class="keyword">catch</span></span> (out_of_range &amp; e) &#123;</span><br><span class="line">    cerr &lt;&lt; e.<span class="built_in">what</span>() &lt;&lt; endl;</span><br><span class="line">  &#125;    </span><br><span class="line">  string s = <span class="string">&quot;hello&quot;</span>;</span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="keyword">char</span> c = s.<span class="built_in">at</span>(<span class="number">100</span>);</span><br><span class="line">  &#125;    </span><br><span class="line">  <span class="built_in"><span class="keyword">catch</span></span> (out_of_range &amp; e) &#123;</span><br><span class="line">    cerr &lt;&lt; e.<span class="built_in">what</span>() &lt;&lt; endl;    </span><br><span class="line">  &#125;    </span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>程序的输出结果如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">invalid vector subscript</span><br><span class="line">invalid string position</span><br></pre></td></tr></table></figure>
+
+<p>如果将<code>v.at(100)</code>换成<code>v[100]</code>，将<code>s.at(100)</code>换成<code>s[100]</code>，程序就不会引发异常（但可能导致程序崩溃）。因为 at 成员函数会检测下标越界并拋出异常，而 <code>operator[]</code> 则不会。<code>operator[]</code> 相比 at 的好处就是不用判断下标是否越界，因此执行速度更快。</p>
+<p>​          </p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://islet.space/2021/05/31/Programming/C++/2021-05-31-C%2011%E5%A4%9A%E7%BA%BF%E7%A8%8Bjoin()%E5%92%8Cdetach()%E7%9A%84%E7%90%86%E8%A7%A3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Liewzheng">
+      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coder的孤岛">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/05/31/Programming/C++/2021-05-31-C%2011%E5%A4%9A%E7%BA%BF%E7%A8%8Bjoin()%E5%92%8Cdetach()%E7%9A%84%E7%90%86%E8%A7%A3/" class="post-title-link" itemprop="url">C++11多线程join()和detach()的理解</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-05-31 20:05:00" itemprop="dateCreated datePublished" datetime="2021-05-31T20:05:00+08:00">2021-05-31</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2021-06-01 22:27:16" itemprop="dateModified" datetime="2021-06-01T22:27:16+08:00">2021-06-01</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Programming/" itemprop="url" rel="index"><span itemprop="name">Programming</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_36784975/article/details/87699113">blog.csdn.net</a></p>
+<h1 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h1><p>每一个程序至少拥有一个线程，那就是执行 <code>main()</code> 函数的主线程，而多线程则是出现两个或两个以上的线程并行运行，即主线程和子线程在同一时间段同时运行。而在这个过程中会出现几种情况：</p>
+<ol>
+<li>主线程先运行结束</li>
+<li>子线程先运行结束</li>
+<li>主子线程同时结束</li>
+</ol>
+<p>在一些情况下需要在子线程结束后主线程才能结束，而一些情况则不需要等待，但需注意一点，并不是主线程结束了其他子线程就立即停止，其他子线程会进入后台运行</p>
+<h1 id="join"><a href="#join" class="headerlink" title="join()"></a>join()</h1><p>join()函数是一个等待线程完成函数，<mark>主线程需要等待子线程运行结束了才可以结束</mark></p>
+<img src="https://pic.islet.space/2021/05/image-20210531223156398.png" alt="image-20210531223156398" style="zoom:80%;" />
+
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;thread&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">func</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">   <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">-10</span>; i &gt; <span class="number">-20</span>; i--)</span><br><span class="line">    &#123;</span><br><span class="line">        cout &lt;&lt; <span class="string">&quot;from func():&quot;</span> &lt;&lt; i &lt;&lt; endl;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span>  <span class="comment">//主线程</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	cout &lt;&lt; <span class="string">&quot;mian()&quot;</span> &lt;&lt; endl;</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;mian()&quot;</span> &lt;&lt; endl;</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;mian()&quot;</span> &lt;&lt; endl;</span><br><span class="line">	<span class="function">thread <span class="title">t</span><span class="params">(func)</span></span>;  <span class="comment">//子线程</span></span><br><span class="line">	t.<span class="built_in">join</span>();  <span class="comment">//等待子线程结束后才进入主线程</span></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://pic.islet.space/2021/05/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2Nzg0OTc1,size_16,color_FFFFFF,t_70.png" alt="在这里插入图片描述"></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;thread&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">func</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">   <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">-10</span>; i &gt; <span class="number">-20</span>; i--)</span><br><span class="line">    &#123;</span><br><span class="line">        cout &lt;&lt; <span class="string">&quot;from func():&quot;</span> &lt;&lt; i &lt;&lt; endl;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span>			<span class="comment">//主线程</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="function">thread <span class="title">t</span><span class="params">(func)</span></span>;	<span class="comment">//子线程</span></span><br><span class="line">	cout &lt;&lt; <span class="string">&quot;mian()&quot;</span> &lt;&lt; endl;</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;mian()&quot;</span> &lt;&lt; endl;</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;mian()&quot;</span> &lt;&lt; endl;</span><br><span class="line">	t.<span class="built_in">join</span>();		<span class="comment">//等待子线程结束后才进入主线程</span></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://pic.islet.space/2021/05/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2Nzg0OTc1,size_16,color_FFFFFF,t_70-20210531224629846.png" alt="在这里插入图片描述"></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;thread&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">func</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">   <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">-10</span>; i &gt; <span class="number">-20</span>; i--)</span><br><span class="line">    &#123;</span><br><span class="line">        cout &lt;&lt; <span class="string">&quot;from func():&quot;</span> &lt;&lt; i &lt;&lt; endl;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span>			<span class="comment">//主线程</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="function">thread <span class="title">t</span><span class="params">(func)</span></span>;	<span class="comment">//子线程</span></span><br><span class="line">	t.<span class="built_in">join</span>();		<span class="comment">//等待子线程结束后才进入主线程</span></span><br><span class="line">	cout &lt;&lt; <span class="string">&quot;mian()&quot;</span> &lt;&lt; endl;</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;mian()&quot;</span> &lt;&lt; endl;</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;mian()&quot;</span> &lt;&lt; endl;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://pic.islet.space/2021/05/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2Nzg0OTc1,size_16,color_FFFFFF,t_70-20210531224634866.png" alt="在这里插入图片描述"></p>
+<h1 id="detach"><a href="#detach" class="headerlink" title="detach()"></a>detach()</h1><p><img src="https://pic.islet.space/2021/06/image-20210601222337419.png" alt="image-20210601222337419"></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;thread&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">func</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">   <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">-10</span>; i &gt; <span class="number">-20</span>; i--)</span><br><span class="line">    &#123;</span><br><span class="line">        cout &lt;&lt; <span class="string">&quot;from func():&quot;</span> &lt;&lt; i &lt;&lt; endl;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span>			<span class="comment">//主线程</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	cout &lt;&lt; <span class="string">&quot;mian()&quot;</span> &lt;&lt; endl;</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;mian()&quot;</span> &lt;&lt; endl;</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;mian()&quot;</span> &lt;&lt; endl;</span><br><span class="line">	<span class="function">thread <span class="title">t</span><span class="params">(func)</span></span>;	<span class="comment">//子线程</span></span><br><span class="line">	t.<span class="built_in">detach</span>();		<span class="comment">//分离子线程</span></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p><img src="https://pic.islet.space/2021/05/20190220120254940.png" alt="在这里插入图片描述"></p>
+<p> 可以明显看到，主线程太快了，还没等子线程运行就结束了</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;thread&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">func</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">   <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">-10</span>; i &gt; <span class="number">-20</span>; i--)</span><br><span class="line">    &#123;</span><br><span class="line">        cout &lt;&lt; <span class="string">&quot;from func():&quot;</span> &lt;&lt; i &lt;&lt; endl;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span>			<span class="comment">//主线程</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="function">thread <span class="title">t</span><span class="params">(func)</span></span>;	<span class="comment">//子线程</span></span><br><span class="line">	cout &lt;&lt; <span class="string">&quot;mian()&quot;</span> &lt;&lt; endl;</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;mian()&quot;</span> &lt;&lt; endl;</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;mian()&quot;</span> &lt;&lt; endl;</span><br><span class="line">	t.<span class="built_in">detach</span>();		<span class="comment">//分离子线程</span></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://pic.islet.space/2021/05/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2Nzg0OTc1,size_16,color_FFFFFF,t_70-20210531224653683.png" alt="在这里插入图片描述"></p>
+<p>同样没等子线程运行完就结束了</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;thread&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">func</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">   <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">-10</span>; i &gt; <span class="number">-20</span>; i--)</span><br><span class="line">    &#123;</span><br><span class="line">        cout &lt;&lt; <span class="string">&quot;from func():&quot;</span> &lt;&lt; i &lt;&lt; endl;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span>			<span class="comment">//主线程</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="function">thread <span class="title">t</span><span class="params">(func)</span></span>;	<span class="comment">//子线程</span></span><br><span class="line">	cout &lt;&lt; <span class="string">&quot;mian()&quot;</span> &lt;&lt; endl;</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;mian()&quot;</span> &lt;&lt; endl;</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;mian()&quot;</span> &lt;&lt; endl;</span><br><span class="line">	t.<span class="built_in">detach</span>();		<span class="comment">//分离子线程</span></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://pic.islet.space/2021/05/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2Nzg0OTc1,size_16,color_FFFFFF,t_70-20210531224659144.png" alt="在这里插入图片描述"></p>
+<p>没等子线程运行完就结束</p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><ul>
+<li><p>如果想要分离一个线程，可以在线程启动后，直接使用 <code>detach()</code> 进行分离。如果打算等待对应线程，则需要细心挑选调用 <code>join()</code> 的位置。当在线程运行之后产生异常，在 <code>join()</code> 调用之前抛出，就意味着很这次调用会被跳过。 </p>
+</li>
+<li><p><code>join()</code> 函数是一个<strong>等待线程函数</strong>，主线程需等待子线程运行结束后才可以结束（注意不是才可以运行，运行是并行的），如果打算等待对应线程，<mark>则需要细心挑选调用 <code>join()</code> 的位置</mark></p>
+</li>
+<li><p><code>detach()</code> 函数是子线程的分离函数，当调用该函数后，线程就被分离到后台运行，<mark>主线程不需要等待该线程结束才结束</mark></p>
+</li>
+</ul>
+<p>​          </p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://islet.space/2021/05/29/Programming/C++/2021-05-29-C++11-lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F%E7%B2%BE%E8%AE%B2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Liewzheng">
+      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coder的孤岛">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/05/29/Programming/C++/2021-05-29-C++11-lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F%E7%B2%BE%E8%AE%B2/" class="post-title-link" itemprop="url">C++11 lambda表达式精讲</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2021-05-29 23:30:00 / Modified: 23:51:21" itemprop="dateCreated datePublished" datetime="2021-05-29T23:30:00+08:00">2021-05-29</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Programming/" itemprop="url" rel="index"><span itemprop="name">Programming</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p><a target="_blank" rel="noopener" href="http://c.biancheng.net/view/3741.html">c.biancheng.net</a></p>
+<h1 id="编译注意"><a href="#编译注意" class="headerlink" title="编译注意"></a>编译注意</h1><p><strong>注意</strong>：在clang上使用lambda表达式时可能会报错，编译时需要添加option <code>-std=c++11</code> 。</p>
+<blockquote>
+<p>This is because <strong>clang++</strong> <a target="_blank" rel="noopener" href="http://clang.llvm.org/cxx_status.html">by  default compiles your code using ISO C++ 1998 standard (including the  defects addressed in the ISO C++ 2003 standard) except for ‘export’  (which has been removed in C++11)</a></p>
+<p>Lambdas are part of <a target="_blank" rel="noopener" href="http://clang.llvm.org/">Clang’s</a> <a target="_blank" rel="noopener" href="http://clang.llvm.org/docs/LanguageExtensions.html#cxx11">C++11 Language Extension</a>, therefore you need to compile your code with <strong>-std=c++11</strong> or <strong>-std=gnu++11</strong></p>
+<p>——<a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/13351032/clangs-support-of-c-11-lambda#:~:text=Lambdas%20are%20part%20of%20Clang%27s%20C%2B%2B11%20Language%20Extension%2C,support%20status%20and%20Activating%20C%2B%2B11%20support%20in%20Clang">STACKOVERFLOW</a></p>
+</blockquote>
+<h1 id="Lambda介绍"><a href="#Lambda介绍" class="headerlink" title="Lambda介绍"></a>Lambda介绍</h1><p>lambda 表达式是 <a target="_blank" rel="noopener" href="http://c.biancheng.net/cplus/">C++</a>11 最重要也最常用的一个特性之一，<a target="_blank" rel="noopener" href="http://c.biancheng.net/csharp/">C#</a> 3.5 和 <a target="_blank" rel="noopener" href="http://c.biancheng.net/java/">Java</a> 8 中就引入了 lambda 表达式。</p>
+<p>lambda 来源于 <strong>函数式编程</strong> 的概念，也是现代编程语言的一个特点。C++11 这次终于把 lambda 加进来了。</p>
+<p>lambda表达式有如下优点：</p>
+<ul>
+<li><strong>声明式编程风格</strong>：就地匿名定义目标函数或函数对象，不需要额外写一个命名函数或者函数对象。以更直接的方式去写程序，好的可读性和可维护性。</li>
+<li><strong>简洁</strong>：不需要额外再写一个函数或者函数对象，避免了代码膨胀和功能分散，让开发者更加集中精力在手边的问题，同时也获取了更高的生产率。</li>
+<li>在需要的时间和地点实现功能闭包，使程序更灵活。</li>
+</ul>
+<p>下面，先从 lambda 表达式的基本功能开始介绍它。</p>
+<h1 id="Lambda-表达式的概念和基本用法"><a href="#Lambda-表达式的概念和基本用法" class="headerlink" title="Lambda 表达式的概念和基本用法"></a>Lambda 表达式的概念和基本用法</h1><p>lambda 表达式定义了一个 <strong>匿名函数</strong>，并且可以 <strong>捕获一定范围内的变量</strong>。lambda 表达式的语法形式可简单归纳如下：</p>
+<p><code>[ capture ] ( params ) opt -&gt; ret &#123; body; &#125;;</code></p>
+<blockquote>
+<ul>
+<li>capture 是捕获列表</li>
+<li>params 是参数表</li>
+<li>opt 是函数选项</li>
+<li>ret 是返回值类型</li>
+<li>body是函数体。</li>
+</ul>
+</blockquote>
+<p>因此，一个完整的 lambda 表达式看起来像这样：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">auto</span> f = [](<span class="keyword">int</span> a) -&gt; <span class="keyword">int</span> &#123; <span class="keyword">return</span> a + <span class="number">1</span>; &#125;;std::cout &lt;&lt; <span class="built_in">f</span>(<span class="number">1</span>) &lt;&lt; std::endl;  </span><br></pre></td></tr></table></figure>
+
+<p>可以看到，上面通过一行代码定义了一个小小的功能闭包，用来将输入加 1 并返回。</p>
+<p>在 C++11 中，lambda 表达式的返回值是通过前面介绍的《<a target="_blank" rel="noopener" href="http://c.biancheng.net/view/3727.html">C++返回值类型后置</a>》语法来定义的。</p>
+<p>其实很多时候，lambda 表达式的返回值是非常明显的，比如这个例子。因此，C++11 中允许省略 lambda 表达式的返回值定义：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">auto</span> f = [](<span class="keyword">int</span> a)&#123; <span class="keyword">return</span> a + <span class="number">1</span>; &#125;;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>这样编译器就会根据 return 语句自动推导出返回值类型。</p>
+<p>需要注意的是，初始化列表不能用于返回值的自动推导：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">auto</span> x1 = [](<span class="keyword">int</span> i)&#123; <span class="keyword">return</span> i; &#125;; <span class="comment">// OK: return type is int</span></span><br><span class="line"><span class="keyword">auto</span> x2 = []()&#123; <span class="keyword">return</span> &#123; <span class="number">1</span>, <span class="number">2</span> &#125;; &#125;; <span class="comment">// error: 无法推导出返回值类型</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p>这时我们需要显式给出具体的返回值类型。</p>
+<p>另外，lambda 表达式在没有参数列表时，参数列表是可以省略的。因此像下面的写法都是正确的：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">auto</span> f1 = []()&#123; <span class="keyword">return</span> <span class="number">1</span>; &#125;;</span><br><span class="line"><span class="keyword">auto</span> f2 = []&#123; <span class="keyword">return</span> <span class="number">1</span>; &#125;; <span class="comment">// 省略空参数表</span></span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+<h1 id="捕获列表"><a href="#捕获列表" class="headerlink" title="捕获列表"></a>捕获列表</h1><p>lambda 表达式还可以通过捕获列表捕获一定范围内的变量：</p>
+<ul>
+<li>[] 不捕获任何变量。</li>
+<li>[&amp;] 捕获外部作用域中所有变量，并作为引用在函数体中使用（按引用捕获）。</li>
+<li>[=] 捕获外部作用域中所有变量，并作为副本在函数体中使用（按值捕获）。</li>
+<li>[=，&amp;foo] 按值捕获外部作用域中所有变量，并按引用捕获 foo 变量。</li>
+<li>[bar] 按值捕获 bar 变量，同时不捕获其他变量。</li>
+<li>[this] 捕获当前类中的 this <a target="_blank" rel="noopener" href="http://c.biancheng.net/c/80/">指针</a>，让 lambda 表达式拥有和当前类成员函数同样的访问权限。如果已经使用了 &amp; 或者 =，就默认添加此选项。捕获 this 的目的是可以在 lamda 中使用当前类的成员函数和成员变量。</li>
+</ul>
+<p>下面看一下它的具体用法，如下所示。</p>
+<p>【实例】lambda 表达式的基本用法。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span>&#123;</span>    </span><br><span class="line"><span class="keyword">public</span>:    </span><br><span class="line">	<span class="keyword">int</span> i_ = <span class="number">0</span>;    </span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">func</span><span class="params">(<span class="keyword">int</span> x, <span class="keyword">int</span> y)</span></span>&#123;        </span><br><span class="line">		<span class="keyword">auto</span> x1 = []&#123; <span class="keyword">return</span> i_; &#125;;                            </span><br><span class="line">		<span class="keyword">auto</span> x2 = [=]&#123; <span class="keyword">return</span> i_ + x + y; &#125;;                   </span><br><span class="line">		<span class="keyword">auto</span> x3 = [&amp;]&#123; <span class="keyword">return</span> i_ + x + y; &#125;;                   </span><br><span class="line">		<span class="keyword">auto</span> x4 = [<span class="keyword">this</span>]&#123; <span class="keyword">return</span> i_; &#125;;                        </span><br><span class="line">		<span class="keyword">auto</span> x5 = [<span class="keyword">this</span>]&#123; <span class="keyword">return</span> i_ + x + y; &#125;;                </span><br><span class="line">		<span class="keyword">auto</span> x6 = [<span class="keyword">this</span>, x, y]&#123; <span class="keyword">return</span> i_ + x + y; &#125;;          </span><br><span class="line">		<span class="keyword">auto</span> x7 = [<span class="keyword">this</span>]&#123; <span class="keyword">return</span> i_++; &#125;;                  </span><br><span class="line">		&#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> a = <span class="number">0</span>, b = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">auto</span> f1 = []&#123; <span class="keyword">return</span> a; &#125;;               </span><br><span class="line"><span class="keyword">auto</span> f2 = [&amp;]&#123; <span class="keyword">return</span> a++; &#125;;            </span><br><span class="line"><span class="keyword">auto</span> f3 = [=]&#123; <span class="keyword">return</span> a; &#125;;              </span><br><span class="line"><span class="keyword">auto</span> f4 = [=]&#123; <span class="keyword">return</span> a++; &#125;;            </span><br><span class="line"><span class="keyword">auto</span> f5 = [a]&#123; <span class="keyword">return</span> a + b; &#125;;          </span><br><span class="line"><span class="keyword">auto</span> f6 = [a, &amp;b]&#123; <span class="keyword">return</span> a + (b++); &#125;;  </span><br><span class="line"><span class="keyword">auto</span> f7 = [=, &amp;b]&#123; <span class="keyword">return</span> a + (b++); &#125;;  </span><br></pre></td></tr></table></figure>
+
+<p>从上例中可以看到，lambda 表达式的捕获列表精细地控制了 lambda 表达式能够访问的外部变量，以及如何访问这些变量。</p>
+<p><strong>注意</strong>：默认状态下 lambda 表达式无法修改通过复制方式捕获的外部变量。如果希望修改这些变量的话，我们需要使用引用方式进行捕获。</p>
+<p>一个容易出错的细节是关于 lambda 表达式的延迟调用的：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> a = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">auto</span> f = [=]&#123; <span class="keyword">return</span> a; &#125;;      </span><br><span class="line">a += <span class="number">1</span>;                         </span><br><span class="line">std::cout &lt;&lt; <span class="built_in">f</span>() &lt;&lt; std::endl;  </span><br></pre></td></tr></table></figure>
+
+<p>在这个例子中，lambda 表达式按值捕获了所有外部变量。在捕获的一瞬间，a 的值就已经被复制到f中了。之后 a 被修改，但此时 f 中存储的 a 仍然还是捕获时的值，因此，最终输出结果是 0。</p>
+<p>如果希望 lambda 表达式在调用时能够即时访问外部变量，我们应当使用引用方式捕获。</p>
+<p>从上面的例子中我们知道，按值捕获得到的外部变量值是在 lambda 表达式定义时的值。此时所有外部变量均被复制了一份存储在 lambda 表达式变量中。此时虽然修改 lambda 表达式中的这些外部变量并不会真正影响到外部，我们却仍然无法修改它们。</p>
+<p>那么如果希望去修改按值捕获的外部变量应当怎么办呢？这时，需要显式指明 lambda 表达式为 mutable：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> a = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">auto</span> f1 = [=]&#123; <span class="keyword">return</span> a++; &#125;;             </span><br><span class="line"><span class="keyword">auto</span> f2 = [=]() <span class="keyword">mutable</span> &#123; <span class="keyword">return</span> a++; &#125;;  </span><br></pre></td></tr></table></figure>
+
+<p>需要注意的一点是，被 mutable 修饰的 lambda 表达式就算没有参数也要写明参数列表。</p>
+<h1 id="Lambda-表达式的类型"><a href="#Lambda-表达式的类型" class="headerlink" title="Lambda 表达式的类型"></a>Lambda 表达式的类型</h1><p>最后，介绍一下 lambda 表达式的类型。</p>
+<p>lambda 表达式的类型在 C++11 中被称为“闭包类型（Closure Type）”。它是一个特殊的，匿名的非 nunion 的类类型。</p>
+<p>因此，我们可以认为它是一个带有 operator() 的类，即仿函数。因此，我们可以使用 std::function 和 std::bind 来存储和操作 lambda 表达式：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">std::function&lt;<span class="built_in"><span class="keyword">int</span></span>(<span class="keyword">int</span>)&gt;  f1 = [](<span class="keyword">int</span> a)&#123; <span class="keyword">return</span> a; &#125;;std::function&lt;<span class="built_in"><span class="keyword">int</span></span>(<span class="keyword">void</span>)&gt; f2 = std::<span class="built_in">bind</span>([](<span class="keyword">int</span> a)&#123; <span class="keyword">return</span> a; &#125;, <span class="number">123</span>);</span><br></pre></td></tr></table></figure>
+
+<p>另外，对于没有捕获任何变量的 lambda 表达式，还可以被转换成一个普通的函数指针：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> <span class="keyword">func_t</span> = <span class="built_in"><span class="keyword">int</span></span>(*)(<span class="keyword">int</span>);</span><br><span class="line"><span class="keyword">func_t</span> f = [](<span class="keyword">int</span> a)&#123; <span class="keyword">return</span> a; &#125;;</span><br><span class="line"><span class="built_in">f</span>(<span class="number">123</span>);</span><br></pre></td></tr></table></figure>
+
+<p>lambda  表达式可以说是就地定义仿函数闭包的“语法糖”。它的捕获列表捕获住的任何外部变量，最终均会变为闭包类型的成员变量。而一个使用了成员变量的类的  operator()，如果能直接被转换为普通的函数指针，那么 lambda 表达式本身的 this 指针就丢失掉了。而没有捕获任何外部变量的  lambda 表达式则不存在这个问题。</p>
+<p>这里也可以很自然地解释为何按值捕获无法修改捕获的外部变量。因为按照 C++ 标准，lambda 表达式的 operator() 默认是  const 的。一个 const 成员函数是无法修改成员变量的值的。而 mutable 的作用，就在于取消 operator() 的  const。</p>
+<p>需要注意的是，没有捕获变量的 lambda 表达式可以直接转换为函数指针，而捕获变量的 lambda 表达式则不能转换为函数指针。看看下面的代码：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">typedef</span> <span class="title">void</span><span class="params">(*Ptr)</span><span class="params">(<span class="keyword">int</span>*)</span></span>;</span><br><span class="line">Ptr p = [](<span class="keyword">int</span>* p)&#123;<span class="keyword">delete</span> p;&#125;;  </span><br><span class="line">Ptr p1 = [&amp;](<span class="keyword">int</span>* p)&#123;<span class="keyword">delete</span> p;&#125;;  </span><br></pre></td></tr></table></figure>
+
+<p>上面第二行代码能编译通过，而第三行代码不能编译通过，因为第三行的代码捕获了变量，不能直接转换为函数指针。</p>
+<h1 id="声明式的编程风格，简洁的代码"><a href="#声明式的编程风格，简洁的代码" class="headerlink" title="声明式的编程风格，简洁的代码"></a>声明式的编程风格，简洁的代码</h1><p>就地定义匿名函数，不再需要定义函数对象，大大简化了标准库算法的调用。比如，在 C++11 之前，我们要调用 for_each 函数将 vector 中的偶数打印出来，如下所示。</p>
+<p>【实例】lambda 表达式代替函数对象的示例。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CountEven</span>&#123;</span>    </span><br><span class="line">	<span class="keyword">int</span>&amp; count_;<span class="keyword">public</span>:    </span><br><span class="line">	<span class="built_in">CountEven</span>(<span class="keyword">int</span>&amp; count) : <span class="built_in">count_</span>(count) &#123;&#125;    <span class="function"><span class="keyword">void</span> <span class="title">operator</span><span class="params">()</span><span class="params">(<span class="keyword">int</span> val)</span>    </span>&#123;        <span class="keyword">if</span> (!(val &amp; <span class="number">1</span>))               &#123;            ++ count_;        &#125;    &#125;&#125;;</span><br><span class="line">	std::vector&lt;<span class="keyword">int</span>&gt; v = &#123; <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span> &#125;;</span><br><span class="line">	<span class="keyword">int</span> even_count = <span class="number">0</span>;for_each(v.<span class="built_in">begin</span>(), v.<span class="built_in">end</span>(), <span class="built_in">CountEven</span>(even_count));std::cout &lt;&lt; <span class="string">&quot;The number of even is &quot;</span> &lt;&lt; even_count &lt;&lt; std::endl;</span><br></pre></td></tr></table></figure>
+
+<p>这样写既烦琐又容易出错。有了 lambda 表达式以后，我们可以使用真正的闭包概念来替换掉这里的仿函数，代码如下：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">std::vector&lt;<span class="keyword">int</span>&gt; v = &#123; <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span> &#125;;</span><br><span class="line"><span class="keyword">int</span> even_count = <span class="number">0</span>;</span><br><span class="line">for_each( v.<span class="built_in">begin</span>(), v.<span class="built_in">end</span>(), [&amp;even_count](<span class="keyword">int</span> val)        &#123;            <span class="keyword">if</span> (!(val &amp; <span class="number">1</span>))              &#123;                ++ even_count;            &#125;        &#125;);</span><br><span class="line">std::cout &lt;&lt; <span class="string">&quot;The number of even is &quot;</span> &lt;&lt; even_count &lt;&lt; std::endl;</span><br></pre></td></tr></table></figure>
+
+<p>lambda 表达式的价值在于，就地封装短小的功能闭包，可以极其方便地表达出我们希望执行的具体操作，并让上下文结合得更加紧密。</p>
+<p>​          </p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://islet.space/2021/05/29/Programming/C++/2021-05-29-C++%E5%A4%9A%E7%BA%BF%E7%A8%8B%E7%AC%94%E8%AE%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Liewzheng">
+      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coder的孤岛">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/05/29/Programming/C++/2021-05-29-C++%E5%A4%9A%E7%BA%BF%E7%A8%8B%E7%AC%94%E8%AE%B0/" class="post-title-link" itemprop="url">C++多线程笔记</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-05-29 21:28:00" itemprop="dateCreated datePublished" datetime="2021-05-29T21:28:00+08:00">2021-05-29</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2021-05-31 22:29:50" itemprop="dateModified" datetime="2021-05-31T22:29:50+08:00">2021-05-31</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Programming/" itemprop="url" rel="index"><span itemprop="name">Programming</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="线程创建"><a href="#线程创建" class="headerlink" title="线程创建"></a>线程创建</h1><p>C++中对线程的创建都需要使用到库函数 <code>&lt;thread&gt;</code> ，但是线程的启动和使用可以通过 <em><strong>函数</strong></em> 和 <em><strong>带有函数调用操作符的类实例</strong></em> 来进行。</p>
+<h2 id="函数式启动"><a href="#函数式启动" class="headerlink" title="函数式启动"></a>函数式启动</h2><h3 id="函数名启动"><a href="#函数名启动" class="headerlink" title="函数名启动"></a>函数名启动</h3><p>无论是从何处启用多线程，都需要从C++线程库 <code>&lt;thread&gt;</code> 来开始一个线程，通过构造一个 <code>std::thread</code> 对象来启动，以下为最常见的线程创建方法：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">threadHello</span><span class="params">(<span class="keyword">void</span>)</span></span>;</span><br><span class="line"><span class="function">std::thread <span class="title">thread1</span><span class="params">(threadHello)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p><code>threadHello()</code> 就是需要执行线程的函数；</p>
+<p><code>std::thread</code> 就是创建线程对象的类型；</p>
+<p><code>thread1</code> 就是被创造的线程对象，而 <code>()</code> 中则填写着被这个对象调用的函数。</p>
+</blockquote>
+<h3 id="函数启动"><a href="#函数启动" class="headerlink" title="函数启动"></a>函数启动</h3><p>不同于通过函数名启动，函数启动时会带上其括号 <code>()</code> ， 多个线程可被同时被一个线程对象启动。</p>
+<p>式1：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">std::thread <span class="title">my_thread</span><span class="params">((background_task()))</span></span>;</span><br></pre></td></tr></table></figure>
+
+<p>其中，通过第二层外层 <code>()</code> 将函数及其 <code>()</code> 括起来避免被解释为函数声明，即 <code>my_thread( ( f() ) )</code> 。</p>
+<p>式2：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">std::thread my_thread&#123; <span class="built_in">background_task</span>() &#125;;</span><br></pre></td></tr></table></figure>
+
+<p>通过将 <code>background()</code> 包括在 <code>&#123;&#125;</code> 中，同样是将 <code>background()</code> 声明为一个变量的方法。</p>
+<h3 id="Lambda表达式"><a href="#Lambda表达式" class="headerlink" title="Lambda表达式"></a>Lambda表达式</h3><p>lambda表达式是在C++11以后的新特性。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">```</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">## 类实例启动</span><br><span class="line"></span><br><span class="line">`std::thread` 可以与任何 可调用（callable）类型一同工作，因此可以将一个带有函数调用操作符的类的实例传递给 `std::thread` 的构造函数来进行代替。</span><br><span class="line"></span><br><span class="line">```c++</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">background_task</span>&#123;</span></span><br><span class="line">  <span class="keyword">public</span>:</span><br><span class="line">  <span class="function"><span class="keyword">void</span> <span class="title">operator</span><span class="params">()</span><span class="params">()</span> <span class="keyword">const</span></span>&#123;   <span class="comment">//带有函数调用操作符</span></span><br><span class="line">    <span class="built_in">do_something</span>();</span><br><span class="line">    <span class="built_in">do_something_else</span>();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">background_task threadF;  <span class="comment">//类实例</span></span><br><span class="line"></span><br><span class="line"><span class="function">std::thread <span class="title">thread1</span><span class="params">(threadF)</span></span>;  <span class="comment">//线程调用该类实例</span></span><br></pre></td></tr></table></figure>
+
+<p>这种情况下，所提供的函数对象被赋值（copied）到属于新创建的执行线程的存储器中，并从那里调用。因此，副本与原版有着灯箱的行为，否则结果可能与预期不符。</p>
+<h3 id="函数调用操作符"><a href="#函数调用操作符" class="headerlink" title="函数调用操作符"></a>函数调用操作符</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">AA</span>&#123;</span></span><br><span class="line">  <span class="function"><span class="keyword">void</span> <span class="title">operator</span><span class="params">()</span><span class="params">()</span></span>&#123;</span><br><span class="line">  	cout&lt;&lt;<span class="string">&quot;aa&quot;</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在 <code>AA()()</code> 中，<code>AA()</code> 是构造函数，调用了<code>()</code> 操作符。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -936,7 +1549,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-05-28 00:30:37" itemprop="dateModified" datetime="2021-05-28T00:30:37+08:00">2021-05-28</time>
+        <time title="Modified: 2021-06-02 23:41:06" itemprop="dateModified" datetime="2021-06-02T23:41:06+08:00">2021-06-02</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -958,45 +1571,25 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h1 id="TWI接口"><a href="#TWI接口" class="headerlink" title="TWI接口"></a>TWI接口</h1><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">InitSRU</span><span class="params">(<span class="keyword">void</span>)</span></span>;  <span class="comment">//用于引脚声明</span></span><br><span class="line"><span class="function"><span class="keyword">extern</span> <span class="keyword">void</span> <span class="title">initPLL_SDRAM</span><span class="params">(<span class="keyword">void</span>)</span></span>;  <span class="comment">//为CCLK和HCLK初始化DSP的PLL</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">DPI_Isr</span><span class="params">(<span class="keyword">int</span> dummy)</span></span>;  <span class="comment">//DPI引脚中断控制</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Enable_DPI_Interrupt</span><span class="params">(<span class="keyword">void</span>)</span></span>;  <span class="comment">//引脚中断使能</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Master_TWI_Init</span><span class="params">(<span class="keyword">void</span>)</span></span>;  <span class="comment">//主机初始化</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">InitBuffer</span><span class="params">(<span class="keyword">void</span>)</span></span>;   <span class="comment">//初始化TWI_Buffer，用于存储发送的数据</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">TWI_Transmit_Data_Polling</span><span class="params">(<span class="keyword">void</span>)</span></span>;  <span class="comment">//传输数据用的函数</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">Init_TWI</span><span class="params">(<span class="keyword">void</span>)</span></span>;  <span class="comment">//初始化TWI（类似于main()）</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+          <p>以下所有对寄存器的描述均来自于《ADSP-214xx SHARC Processor Hardware Reference》，后简称《HWR》。</p>
+<p>​    </p>
+<h1 id="Registers"><a href="#Registers" class="headerlink" title="Registers"></a>Registers</h1><h2 id="寄存器使用须知"><a href="#寄存器使用须知" class="headerlink" title="寄存器使用须知"></a>寄存器使用须知</h2><h3 id="位类型和操作"><a href="#位类型和操作" class="headerlink" title="位类型和操作"></a>位类型和操作</h3><p>许多寄存器旁边都会标注位类型和操作方法，位类型包括 可读可写（RW）、只读（RO）、只读清除（ROC）、只写清除（WOC）、可读可写1清除（RW1C）、 可读可写1设置（RW1S）。</p>
+<img src="https://pic.islet.space/2021/05/20210528141056.png" alt="image-20210528134312811" style="zoom: 80%;" />
+
+
+
+<p><strong>注意</strong>：<mark>不要尝试去写入这些 <em><strong>reversed位</strong></em> ，读取的值就会使这些位上的值进行更新或者复位。</mark></p>
+<img src="https://pic.islet.space/2021/05/20210528141255.png" alt="image-20210528134457084" style="zoom:67%;" />
 
 
 
 
 
-<img src="https://pic.islet.space/2021/05/20210527144920.png" alt="image-20210524112141809" style="zoom:67%;" />
-
-
-
-
-
-
-
-<h1 id="ASM-“NOP”"><a href="#ASM-“NOP”" class="headerlink" title="ASM(“NOP”)"></a>ASM(“NOP”)</h1><p>[blog.csdn.net](<a target="_blank" rel="noopener" href="https://blog.csdn.net/Mr_White01/article/details/68488802#:~:text=asm">https://blog.csdn.net/Mr_White01/article/details/68488802#:~:text=asm</a> (“nop”)是内嵌汇编做空指令延时用的，其中asm ()的作用是指函数内部的参数翻译为汇编指令，其作用是在C语言环境下直接使用汇编指令执行。 nop是一个空等待汇编指令，这个指令执行时，单片机是什么也不做，仅仅起一个时间延时作用。,CC2530属于8051系列单片机，asm (“nop”)执行的是一条空指令（单周期指令），占用时间是一个机器周期，晶振为32Mhz。 于是，机器周期%3D12*1%2F32%3D0.375us。 即一句asm (“nop”)延时了0.375us。)</p>
-<h2 id="asm-作用"><a href="#asm-作用" class="headerlink" title="asm()作用"></a>asm()作用</h2><p>将函数内部的参数翻译为汇编指令，在C语言环境下直接使用汇编指令执行。</p>
-<ul>
-<li><p><code>asm(&quot;nop&quot;)</code>是内嵌汇编做空指令延时用的；</p>
-</li>
-<li><p><code>nop</code>是一个空等待汇编指令，这个指令执行时，单片机是什么也不做，仅仅起一个时间延时作用。 </p>
-</li>
-</ul>
-<blockquote>
-<p>CC2530属于8051系列单片机，asm(“nop”)执行的是一条空指令（单周期指令），占用时间是一个机器周期，晶振为32Mhz。 </p>
-<p>于是，机器周期=12*1/32=0.375us ; 即一句asm(“nop”)延时了0.375us。</p>
-</blockquote>
-<h2 id="时钟周期"><a href="#时钟周期" class="headerlink" title="时钟周期"></a>时钟周期</h2><p>时钟周期也称为振荡周期，定义为时钟脉冲的倒数(可以这样来理解，时钟周期就是单片机外接晶振的倒数，例如12M的晶振，它的时间周期就是1/12 us)，是计算机中最基本的、最小的时间单位。 </p>
-<p>在一个时钟周期内，CPU仅完成一个最基本的动作。对于某种单片机，若采用了1MHZ的时钟频率，则时钟周期为1us;若采用4MHZ的时钟频率，则时钟  周期为250us。由于时钟脉冲是计算机的基本工作脉冲，它控制着计算机的工作节奏(使计算机的每一步都统一到它的步调上来)。显然，对同一种机型的计算机，时钟频率越高，计算机的工作速度就越快。具体计算就是1/fosc。也就是说如果晶振为1MHz，那么时钟周期就为1us；6MHz的话，就是1/6us。 </p>
-<p> 8051单片机把一个时钟周期定义为一个节拍(用P表示)，二个节拍定义为一个状态周期(用S表示)。 </p>
-<h2 id="机器周期"><a href="#机器周期" class="headerlink" title="机器周期"></a>机器周期</h2><p>在计算机中，为了便于管理，常把一条指令的执行过程划分为若干个阶段，每一阶段完成一项工作。例如，取指令、存储器读、存储器写等，这每一项工作称为一个基本操作。完成一个基本操作所需要的时间称为机器周期。一般情况下，一个机器周期由若干个S周期(状态周期)组成。 </p>
-<p>8051系列单片机的一个机器周期同6个  S周期(状态周期)组成。前面已说过一个时钟周期定义为一个节拍(用P表示)，二个节拍定义为一个状态周期(用S表示)，8051单片机的机器周期由6个 状态周期组成，也就是说一个机器周期=6个状态周期=12个时钟周期。 具体计算为：时钟周期 X  cycles。如果单片机是12周期的话，那么机器周期就是T×12。假设晶振频率为12M，单片机为12周期的话，那么机器周期就是1us。 </p>
-<p>例如外接24M晶振的单片机，他的一个机器周期=12/24M 秒；52系列单片机一个机器周期等于12个时钟周期。设晶振频率为12MHz时，52单片机是12T的单片机，即频率要12分频。12M经过分频变为1M，由T=1/f,即一个机器周期变为1us。 </p>
-<h2 id="指令周期"><a href="#指令周期" class="headerlink" title="指令周期"></a>指令周期</h2><p>执行一条指令所需要的时间，一般由若干个机器周期组成。指令不同，所需的机器周期也不同。通常，包含一个机器周期的指令成为单周期指令，比如CLR,MOV等等。包含两个机器周期的指令称为双周期指令。另外还有4周期指令，比如乘法和除法指令。对于一些简单的的单字节指令，在取指令周期中，指令取出到指令寄存器后，立即译码执行，不再需要其它的机器周期。对于一些比较复杂的指令，例如转移指令、乘法指令，则需要两个或者两个以上的机器周期。 </p>
-<h2 id="总线周期"><a href="#总线周期" class="headerlink" title="总线周期"></a>总线周期</h2><p>由于存贮器和I/O端口是挂接在总线上的，CPU对存贮器和I/O接口的访问，是通过总线实现的。通常把CPU通过总线对微处理器外部(存贮器或 I/O接口)进行一次访问所需时间称为一个总线周期。</p>
-<p>总结一下，时钟周期是最小单位，机器周期需要1个或多个时钟周期，指令周期需要1个或多个机器周期;机器周期指的是完成一个基本操作的时间，这个基本操作有时可能包含总线读写，因而包含总线周期，但是有时可能与总线读写无关，所以，并无明确的相互包含的关系。  指令周期：是CPU的关键指标，指取出并执行一条指令的时间。一般以机器周期为单位，分单指令执行周期、双指令执行周期等。现在的处理器的大部分指令(ARM、DSP)均采用单指令执行周期。机器周期：完成一个基本操作的时间单元，如取指周期、取数周期。时钟周期：CPU的晶振的工作频率的倒数。</p>
-<p>​          </p>
-<h1 id="Register-in-ADSP21479"><a href="#Register-in-ADSP21479" class="headerlink" title="Register in ADSP21479"></a>Register in ADSP21479</h1><h2 id="头文件-外围设备及寄存器宏定义"><a href="#头文件-外围设备及寄存器宏定义" class="headerlink" title="头文件-外围设备及寄存器宏定义"></a>头文件-外围设备及寄存器宏定义</h2><p><code>&lt;def21479.h&gt;</code> 是关于外围设备（peripherals）和寄存器（registers）的子集。</p>
+<h3 id="头文件-外围设备及寄存器宏定义"><a href="#头文件-外围设备及寄存器宏定义" class="headerlink" title="头文件-外围设备及寄存器宏定义"></a>头文件-外围设备及寄存器宏定义</h3><p><code>&lt;def21479.h&gt;</code> 是关于 <strong>外围设备</strong>（peripherals）和 <strong>寄存器</strong>（registers）的子集。</p>
 <p><code>&lt;cdef21479.h&gt;</code> 包含了对IOP寄存器的宏定义，对C/C++可用。所有定义均和 <code>&lt;def21479.h&gt;</code> 一致，除了以 <code>p</code> 作为前缀的宏定义 和 （relevant casts）以外，它们的用法如 <code>*pSYSTAT = 0x12345678;</code>。</p>
-<h3 id="DEF21479-H"><a href="#DEF21479-H" class="headerlink" title="DEF21479.H"></a>DEF21479.H</h3><ul>
+<p>《HWR》仅有第99页中提及了这两份文件。</p>
+<p><img src="https://pic.islet.space/2021/06/20210602171620.png" alt="image-20210602171608976"></p>
+<h4 id="DEF21479-H"><a href="#DEF21479-H" class="headerlink" title="DEF21479.H"></a>DEF21479.H</h4><ul>
 <li><p>外部接口IOP寄存器（IOP registers for External Port）、SDRAM控制寄存器、AMI寄存器、DMA地址寄存器、SPORT（SP0~SP7）（包含串行接口寄存器、多通道发送接收（Multichannel tx/rx）、SPORT计数寄存器、错误中断控制寄存器、控制寄存器、多通道选择（Multichannel select））、SPI和SPIB寄存器、定时器寄存器、POWER MGT寄存器、外围设备中断优先级控制寄存器（Peripheral interrupt priority control register）、DAI寄存器（DAI参数寄存器、边缘中断锁存寄存器、中断优先级寄存器、（shadow）高/低优先级中断锁存寄存器、DAI状态寄存器、DAI针脚缓存状态寄存器、）、SRU寄存器（包括SRU时钟控制寄存器、数据控制寄存器、FS控制寄存器、针脚控制寄存器、外部Misc.A/B控制寄存器、针脚使能寄存器、shift寄存器的时钟控制和数据控制）、精度时钟控制寄存器（Precision Clock A/B Control Register 0/1）（包括脉冲宽度控制、幅度同步、脉冲宽度控制）、MTM寄存器、PWM寄存器、UART寄存器、TWI寄存器、FIR加速寄存器、IIR加速寄存器、FFT加速寄存器、MLB设备寄存器、WDT寄存器、Shift寄存器、RTC寄存器。</p>
 </li>
 <li><p>DPI、DTCP模块</p>
@@ -1029,7 +1622,7 @@
 <li><p>MLB位定义（DCCR/SSCR/SMCR/IBCR/CECR/CSCR）、WDT寄存器位定义、Shift寄存器位定义、RTC寄存器位定义（控制、初始化、状态、初始化状态）</p>
 </li>
 </ul>
-<h3 id="CDEF21479-H"><a href="#CDEF21479-H" class="headerlink" title="CDEF21479.H"></a>CDEF21479.H</h3><ul>
+<h4 id="CDEF21479-H"><a href="#CDEF21479-H" class="headerlink" title="CDEF21479.H"></a>CDEF21479.H</h4><ul>
 <li>仿真、断点寄存器</li>
 <li>外部接口的IOP寄存器</li>
 <li>SDRAM控制寄存器</li>
@@ -1057,6 +1650,8 @@
 <li>Shift寄存器</li>
 <li>RTC寄存器</li>
 </ul>
+<p>在《HWR》“自己眼”中，可能自己就这么点儿寄存器。</p>
+<p><img src="https://pic.islet.space/2021/05/20210529114430.png" alt="image-20210528140017190"></p>
 <h2 id="PLL寄存器"><a href="#PLL寄存器" class="headerlink" title="PLL寄存器"></a>PLL寄存器</h2><h3 id="PMCTL"><a href="#PMCTL" class="headerlink" title="PMCTL"></a>PMCTL</h3><p><code>PMCTL</code> 寄存器，Power management control register。（是的，没错，就是不知道为啥管PLL的要叫PMCTL）</p>
 <ul>
 <li>32位内存映射寄存器（32-bit memory-mapped register）</li>
@@ -1130,10 +1725,15 @@
 
 
 
-<h2 id="DAI-DPI中断控制寄存器"><a href="#DAI-DPI中断控制寄存器" class="headerlink" title="DAI/DPI中断控制寄存器"></a>DAI/DPI中断控制寄存器</h2><h2 id="TWI寄存器"><a href="#TWI寄存器" class="headerlink" title="TWI寄存器"></a>TWI寄存器</h2><p>《ADSP-214xx SHARC Processor Hardware Reference》第1193页起定义了TWI的寄存器。</p>
+<h2 id="DAI-DPI中断控制寄存器"><a href="#DAI-DPI中断控制寄存器" class="headerlink" title="DAI/DPI中断控制寄存器"></a>DAI/DPI中断控制寄存器</h2><h2 id="TWI寄存器"><a href="#TWI寄存器" class="headerlink" title="TWI寄存器"></a>TWI寄存器</h2><p>《HWR》第1193页起定义了TWI的寄存器。第1244页同样给了TWI相关的寄存器一个列表。</p>
+<img src="https://pic.islet.space/2021/05/20210528140307.png" alt="image-20210528140209933" style="zoom:67%;" />
+
+
+
 <p><code>&lt;cdef21479.h&gt;</code> 对TWI相关的寄存器定义如下，p为前缀的定义是该寄存器的地址位，通过与<code>&lt;def21479.h&gt;</code> 的定义进行 <code>或</code> 运算并赋值给对应的寄存器地址进行控制，如 <code>*pTWIMITR = (0x14) | TWIEN;</code> 。</p>
-<p>TWI中所有的Status相关寄存器都是 “只读” 状态，其《位描述》表上都有一个 <code>RO</code> 标志。凡是表上有 <code>RW1C</code> 标志的，则是说：可读可写，写入 <code>1</code> 来清除数据。</p>
-<p><img src="https://pic.islet.space/2021/05/20210527095059.png" alt="image-20210527095053483"></p>
+<p>TWI中所有的Status相关寄存器都是 “只读” 状态，其《位描述》表上都有一个 <code>RO</code> 标志。</p>
+<img src="https://pic.islet.space/2021/05/20210527095059.png" alt="image-20210527095053483" style="zoom:80%;" />
+
 <h3 id="TWIMITR"><a href="#TWIMITR" class="headerlink" title="TWIMITR"></a>TWIMITR</h3><p>TWIMITR（<strong>Master Internal Time Register</strong>），即主机内部时间寄存器（如图A-143所示，并在表A-129中描述）。</p>
 <ul>
 <li>用于启用TWI模块，以及建立外围时钟（PCLK）和TWI控制器内部定时事件之间的关系。<ul>
@@ -1321,7 +1921,12 @@
 
 
 
-<h1 id="TWI-IN-21479-MASTER-TX"><a href="#TWI-IN-21479-MASTER-TX" class="headerlink" title="TWI IN 21479 (MASTER TX)"></a>TWI IN 21479 (MASTER TX)</h1><h2 id="特性"><a href="#特性" class="headerlink" title="特性"></a>特性</h2><p>《ADSP-214xx SHARC Processor Hardware Reference》第855页起对TWI进行了描述。</p>
+<h1 id="TWI-IN-MASTER-TX"><a href="#TWI-IN-MASTER-TX" class="headerlink" title="TWI IN MASTER-TX"></a>TWI IN MASTER-TX</h1><p><strong>Peripherals with Multiple Interrupt Request Signals</strong></p>
+<blockquote>
+<p>TWI和UART有分离的中断输出。两者都默认连接至P14I（DPI）。然而，两者都允许分离连接至默认不路由的PICR，反而提供了更多可通过DAI/DPI中断优先级更改的混合模型。</p>
+<p>The TWI and the UART have separate interrupt outputs. Both peripherals are already connected via the P14I (DPI) by default. However both peripherals allow separate connectivity into the PICR that are not routed by default. This provides more flexibility for priority change across the DAI/DPI interrupts.</p>
+</blockquote>
+<h2 id="特性"><a href="#特性" class="headerlink" title="特性"></a>特性</h2><p>《HWR》第855页起对TWI进行了描述。</p>
 <ul>
 <li>需要使用DPI进行针脚信号的路由，不能使用DAI</li>
 <li>支持主从模式</li>
@@ -1345,8 +1950,7 @@
 
 <h2 id="SRU编程"><a href="#SRU编程" class="headerlink" title="SRU编程"></a>SRU编程</h2><img src="https://pic.islet.space/2021/05/20210527102114.png" alt="image-20210527102029529" style="zoom:67%;" />
 
-
-
+<p>​    </p>
 <h2 id="时钟频率"><a href="#时钟频率" class="headerlink" title="时钟频率"></a>时钟频率</h2><ul>
 <li>外围时钟是TWI时钟频率的基础。</li>
 <li>串行时钟频率最高400KHz，最低20KHz；其分辨率为 1/10MHz 或 100ns。</li>
@@ -1412,10 +2016,212 @@
 
 
 
+<h2 id="TWI物理接口（引脚）确定"><a href="#TWI物理接口（引脚）确定" class="headerlink" title="TWI物理接口（引脚）确定"></a>TWI物理接口（引脚）确定</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">InitSRU</span><span class="params">(<span class="keyword">void</span>)</span></span>;  <span class="comment">//用于引脚声明</span></span><br><span class="line"><span class="function"><span class="keyword">extern</span> <span class="keyword">void</span> <span class="title">initPLL_SDRAM</span><span class="params">(<span class="keyword">void</span>)</span></span>;  <span class="comment">//为CCLK和HCLK初始化DSP的PLL</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">DPI_Isr</span><span class="params">(<span class="keyword">int</span> dummy)</span></span>;  <span class="comment">//DPI引脚中断控制</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Enable_DPI_Interrupt</span><span class="params">(<span class="keyword">void</span>)</span></span>;  <span class="comment">//引脚中断使能</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Master_TWI_Init</span><span class="params">(<span class="keyword">void</span>)</span></span>;  <span class="comment">//主机初始化</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">InitBuffer</span><span class="params">(<span class="keyword">void</span>)</span></span>;   <span class="comment">//初始化TWI_Buffer，用于存储发送的数据</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">TWI_Transmit_Data_Polling</span><span class="params">(<span class="keyword">void</span>)</span></span>;  <span class="comment">//传输数据用的函数</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">Init_TWI</span><span class="params">(<span class="keyword">void</span>)</span></span>;  <span class="comment">//初始化TWI（类似于main()）</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Init_TWI_SRU</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="comment">//TWI数据针脚路由</span></span><br><span class="line">	SRU(LOW, DPI_PB11_I); <span class="comment">/* input buffer is low */</span></span><br><span class="line">	SRU(TWI_DATA_PBEN_O, DPI_PBEN11_I); <span class="comment">/* TWI data output*/</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">// TWI时钟针脚路由</span></span><br><span class="line">	SRU2(LOW, DPI_PB12_I); <span class="comment">/* input buffer is low */</span></span><br><span class="line">	SRU2(TWI_CLK_PBEN_O, DPI_PBEN12_I); <span class="comment">/* TWI clock output*/</span></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<img src="https://pic.islet.space/2021/05/20210527144920.png" alt="image-20210524112141809" style="zoom:67%;" />
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 <h1 id="LATENCY"><a href="#LATENCY" class="headerlink" title="LATENCY"></a>LATENCY</h1><h2 id="TWI-效果延迟（时间）"><a href="#TWI-效果延迟（时间）" class="headerlink" title="TWI 效果延迟（时间）"></a>TWI 效果延迟（时间）</h2><p>在TWI寄存器设置后，其效果延迟大概是 1.5到2个PCLK周期。</p>
 <p><img src="https://pic.islet.space/2021/05/20210525153905.png" alt="image-20210525153855627"></p>
+<h1 id="ASM-“NOP”"><a href="#ASM-“NOP”" class="headerlink" title="ASM(“NOP”)"></a>ASM(“NOP”)</h1><p>[blog.csdn.net](<a target="_blank" rel="noopener" href="https://blog.csdn.net/Mr_White01/article/details/68488802#:~:text=asm">https://blog.csdn.net/Mr_White01/article/details/68488802#:~:text=asm</a> (“nop”)是内嵌汇编做空指令延时用的，其中asm ()的作用是指函数内部的参数翻译为汇编指令，其作用是在C语言环境下直接使用汇编指令执行。 nop是一个空等待汇编指令，这个指令执行时，单片机是什么也不做，仅仅起一个时间延时作用。,CC2530属于8051系列单片机，asm (“nop”)执行的是一条空指令（单周期指令），占用时间是一个机器周期，晶振为32Mhz。 于是，机器周期%3D12*1%2F32%3D0.375us。 即一句asm (“nop”)延时了0.375us。)</p>
+<h2 id="asm-作用"><a href="#asm-作用" class="headerlink" title="asm()作用"></a>asm()作用</h2><p>将函数内部的参数翻译为汇编指令，在C语言环境下直接使用汇编指令执行。</p>
+<ul>
+<li><p><code>asm(&quot;nop&quot;)</code>是内嵌汇编做空指令延时用的；</p>
+</li>
+<li><p><code>nop</code>是一个空等待汇编指令，这个指令执行时，单片机是什么也不做，仅仅起一个时间延时作用。 </p>
+</li>
+</ul>
+<blockquote>
+<p>CC2530属于8051系列单片机，asm(“nop”)执行的是一条空指令（单周期指令），占用时间是一个机器周期，晶振为32Mhz。 </p>
+<p>于是，机器周期=12*1/32=0.375us ; 即一句asm(“nop”)延时了0.375us。</p>
+</blockquote>
+<h2 id="时钟周期"><a href="#时钟周期" class="headerlink" title="时钟周期"></a>时钟周期</h2><p>时钟周期也称为振荡周期，定义为时钟脉冲的倒数(可以这样来理解，时钟周期就是单片机外接晶振的倒数，例如12M的晶振，它的时间周期就是1/12 us)，是计算机中最基本的、最小的时间单位。 </p>
+<p>在一个时钟周期内，CPU仅完成一个最基本的动作。对于某种单片机，若采用了1MHZ的时钟频率，则时钟周期为1us;若采用4MHZ的时钟频率，则时钟  周期为250us。由于时钟脉冲是计算机的基本工作脉冲，它控制着计算机的工作节奏(使计算机的每一步都统一到它的步调上来)。显然，对同一种机型的计算机，时钟频率越高，计算机的工作速度就越快。具体计算就是1/fosc。也就是说如果晶振为1MHz，那么时钟周期就为1us；6MHz的话，就是1/6us。 </p>
+<p> 8051单片机把一个时钟周期定义为一个节拍(用P表示)，二个节拍定义为一个状态周期(用S表示)。 </p>
+<h2 id="机器周期"><a href="#机器周期" class="headerlink" title="机器周期"></a>机器周期</h2><p>在计算机中，为了便于管理，常把一条指令的执行过程划分为若干个阶段，每一阶段完成一项工作。例如，取指令、存储器读、存储器写等，这每一项工作称为一个基本操作。完成一个基本操作所需要的时间称为机器周期。一般情况下，一个机器周期由若干个S周期(状态周期)组成。 </p>
+<p>8051系列单片机的一个机器周期同6个  S周期(状态周期)组成。前面已说过一个时钟周期定义为一个节拍(用P表示)，二个节拍定义为一个状态周期(用S表示)，8051单片机的机器周期由6个 状态周期组成，也就是说一个机器周期=6个状态周期=12个时钟周期。 具体计算为：时钟周期 X  cycles。如果单片机是12周期的话，那么机器周期就是T×12。假设晶振频率为12M，单片机为12周期的话，那么机器周期就是1us。 </p>
+<p>例如外接24M晶振的单片机，他的一个机器周期=12/24M 秒；52系列单片机一个机器周期等于12个时钟周期。设晶振频率为12MHz时，52单片机是12T的单片机，即频率要12分频。12M经过分频变为1M，由T=1/f,即一个机器周期变为1us。 </p>
+<h2 id="指令周期"><a href="#指令周期" class="headerlink" title="指令周期"></a>指令周期</h2><p>执行一条指令所需要的时间，一般由若干个机器周期组成。指令不同，所需的机器周期也不同。通常，包含一个机器周期的指令成为单周期指令，比如CLR,MOV等等。包含两个机器周期的指令称为双周期指令。另外还有4周期指令，比如乘法和除法指令。对于一些简单的的单字节指令，在取指令周期中，指令取出到指令寄存器后，立即译码执行，不再需要其它的机器周期。对于一些比较复杂的指令，例如转移指令、乘法指令，则需要两个或者两个以上的机器周期。 </p>
+<h2 id="总线周期"><a href="#总线周期" class="headerlink" title="总线周期"></a>总线周期</h2><p>由于存贮器和I/O端口是挂接在总线上的，CPU对存贮器和I/O接口的访问，是通过总线实现的。通常把CPU通过总线对微处理器外部(存贮器或 I/O接口)进行一次访问所需时间称为一个总线周期。</p>
+<p>总结一下，时钟周期是最小单位，机器周期需要1个或多个时钟周期，指令周期需要1个或多个机器周期;机器周期指的是完成一个基本操作的时间，这个基本操作有时可能包含总线读写，因而包含总线周期，但是有时可能与总线读写无关，所以，并无明确的相互包含的关系。  指令周期：是CPU的关键指标，指取出并执行一条指令的时间。一般以机器周期为单位，分单指令执行周期、双指令执行周期等。现在的处理器的大部分指令(ARM、DSP)均采用单指令执行周期。机器周期：完成一个基本操作的时间单元，如取指周期、取数周期。时钟周期：CPU的晶振的工作频率的倒数。</p>
+<h1 id="寄存器位操作"><a href="#寄存器位操作" class="headerlink" title="寄存器位操作"></a>寄存器位操作</h1><p>寄存器位操作也叫 <em>Bit Manipulation</em> 。</p>
+<h1 id="PLL代码分析"><a href="#PLL代码分析" class="headerlink" title="PLL代码分析"></a>PLL代码分析</h1><h2 id="官方示例"><a href="#官方示例" class="headerlink" title="官方示例"></a>官方示例</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Init_PLL</span><span class="params">(<span class="keyword">void</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> temp,i;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// Step 1 - change the PLLD to 4</span></span><br><span class="line">	temp=*pPMCTL;   <span class="comment">//备份PMCTL寄存器的值至temp</span></span><br><span class="line">	temp&amp;=~PLLD16 ;     <span class="comment">//0x20，将PLLD16的值和temp进行逐位“与”运算</span></span><br><span class="line">	temp|=(PLLD4 | DIVEN) ;   <span class="comment">//0x260    0010 0110 0000</span></span><br><span class="line">	*pPMCTL = temp;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// Step 2 - 等待分频器稳定</span></span><br><span class="line">	SysWait(<span class="number">16</span>);</span><br><span class="line"></span><br><span class="line">	<span class="comment">// Step 3 - set INDIV bit now to bring down the VCO speed and enter the bypass mode</span></span><br><span class="line">	temp&amp;=~DIVEN;</span><br><span class="line">	temp|=(INDIV | PLLBP);</span><br><span class="line">	*pPMCTL = temp;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// Step 4 -等待PLL锁定</span></span><br><span class="line">	SysWait(<span class="number">4096</span>);</span><br><span class="line"></span><br><span class="line">	<span class="comment">// Step 5 - come out of the bypass mode</span></span><br><span class="line">	temp=*pPMCTL;</span><br><span class="line">	temp&amp;=~PLLBP;</span><br><span class="line">	*pPMCTL = temp;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// Step 6 - 等待分频器稳定</span></span><br><span class="line">	SysWait(<span class="number">16</span>);</span><br><span class="line"></span><br><span class="line">	<span class="comment">// Step 7 - set the required PLLM and INDIV values here  and enter the bypass mode</span></span><br><span class="line">	 <span class="comment">//PLLM=16, INDIV=0,  fVCO=2*PLLM*CLKIN = 2*16*16.625 = 532 MHz</span></span><br><span class="line">	temp = *pPMCTL;</span><br><span class="line">	temp&amp;=~ (INDIV | PLLM63);</span><br><span class="line">	temp|= (PLL_MULT| PLLBP);</span><br><span class="line">	*pPMCTL = temp;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// Step 8 - wait for the PLL to lock</span></span><br><span class="line">	<span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;<span class="number">4096</span>;i++);</span><br><span class="line"></span><br><span class="line">	<span class="comment">// Step 9 - come out of the bypass mode</span></span><br><span class="line">	temp = *pPMCTL;</span><br><span class="line">	temp&amp;=~PLLBP;</span><br><span class="line">	*pPMCTL=temp;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// Step 10 - wait for dividers to stabilize</span></span><br><span class="line">	SysWait(<span class="number">16</span>);</span><br><span class="line">	</span><br><span class="line">	<span class="comment">// Step 11 - set the required values of PLLD(=2) and SDCKR (=2.5 for ADSP-21489 and 2 for ADSP-21479) here</span></span><br><span class="line">	<span class="comment">// fCCLK = fVCO/PLLD = 532/2 = 266 MHz, fSDCLK = fCCLK/SDCKR = 266/2 = 133 MHz</span></span><br><span class="line">	temp=*pPMCTL;</span><br><span class="line">	temp&amp;=~(PLLD16 | <span class="number">0x1C0000</span> );</span><br><span class="line">	temp|= (SDCKR2 | PLLD2 | DIVEN);</span><br><span class="line">	*pPMCTL=temp;</span><br><span class="line">	</span><br><span class="line">	<span class="comment">// Step 12 - wait for the dividers to stabilize</span></span><br><span class="line">	SysWait(<span class="number">16</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="步骤总结"><a href="#步骤总结" class="headerlink" title="步骤总结"></a>步骤总结</h2><p>从官方给出的示例代码中，可以将步骤总结如下：</p>
+<ol>
+<li><mark>设置PLLD</mark> - 等待分频器稳定</li>
+<li><mark>设置INDIV位以降低VCO速度，并进入旁路模式</mark> - 等待PLL锁定</li>
+<li><mark>从旁路模式出来</mark> - 等待分频器稳定</li>
+<li><mark>设置PLLM和INDIV，并进入旁路模式</mark> - 等待PLL锁定</li>
+<li><mark>从旁路模式出来</mark> - 等待分频器稳定</li>
+<li><mark>设置PLLD和SDCKR</mark> - 等待分频器稳定</li>
+</ol>
+<p>从以上步骤可以看出，PLL的初始化，主要是设置 <strong>PLLD</strong> 、 <strong>INDIV</strong> 、 <strong>PLLM</strong> 、 <strong>SDCKR</strong> 的值，途中反复等待 <strong>分频器稳定</strong> 和 <strong>PLL锁定</strong>。</p>
+<h2 id="问题总结"><a href="#问题总结" class="headerlink" title="问题总结"></a>问题总结</h2><ol>
+<li>进入旁路模式的意义：</li>
+</ol>
+<h1 id="时钟、仲裁、PLL、分频"><a href="#时钟、仲裁、PLL、分频" class="headerlink" title="时钟、仲裁、PLL、分频"></a>时钟、仲裁、PLL、分频</h1><p>《HWR》第884页——PLL</p>
+<p>PCLK</p>
+<p>CLKIN</p>
+<blockquote>
+<p>The PLLD bits define the VCO output clock to core clock ratio to build the processor core clock (CCLK). The post divider can be changed any time and new division ratios are implemented on the fly.</p>
+</blockquote>
+<blockquote>
+<p>The PCLK and CLKIN clocks are used in the arbitration logic for the shared external bus.</p>
+</blockquote>
+<blockquote>
+<p>The PLL bit settings PLLM/PLLD in PMCTL register need to be programmed such that the PLLM/PLLD ratio is integer (for example 15/2=7.5 fractional, is not allowed).</p>
+</blockquote>
+<h3 id="PLLD"><a href="#PLLD" class="headerlink" title="PLLD"></a>PLLD</h3><p><mark style="font-weight: 900;">Page 888:</mark> <strong>PLLD</strong>（PLL Divider）定义了 <strong>VCO输出时钟</strong> 和 <strong>核心时钟</strong> 的比值，以构建 <strong>处理器核心时钟</strong>（CCLK）。正在使用的分频器可以被随时改变，新的分频比率可以实时被应用。</p>
+<p><mark style="font-weight: 900;">Page 957:</mark> <strong>PLLD</strong>只有2位，可以设置为2、4、8、16。</p>
+<img src="https://pic.islet.space/2021/05/20210529113458.png" alt="image-20210529113003651" style="zoom:67%;" />
+
+<p><mark style="font-weight: 900;">&lt;def21479.h&gt;</mark>:<img src="https://pic.islet.space/2021/05/20210529113406.png" alt="image-20210529113403231"></p>
+<p>以下这几个操作中均需要用到PLLD，分别是：</p>
+<ul>
+<li>输出时钟生成器编程模型 （Output Clock Generator Programming Model）</li>
+<li>改变链接口时钟（Changing the Link Port Clock）</li>
+<li>发布分频器（Post Divider）</li>
+</ul>
+<img src="https://pic.islet.space/2021/05/20210529113238.png" alt="image-20210529111641680" style="zoom:67%;" />
+
+<img src="https://pic.islet.space/2021/05/20210529113241.png" alt="image-20210529111748944" style="zoom:67%;" />
+
+<img src="https://pic.islet.space/2021/05/20210529113244.png" alt="image-20210529112121464" style="zoom:67%;" />
+
+
+
+
+
+<h1 id="INTERRUPT-CONTROL-（中断控制）"><a href="#INTERRUPT-CONTROL-（中断控制）" class="headerlink" title="INTERRUPT CONTROL （中断控制）"></a>INTERRUPT CONTROL （中断控制）</h1><p><em>Page93</em>：</p>
+<blockquote>
+<p>For information on the IRPTL, LIRPTL, and IMASK registers, see <em>SHARC Processor Programming Reference</em>.</p>
+</blockquote>
+<p>下表2-1介绍了经过DAI和DPI的数据通道：</p>
+<ul>
+<li>DAI共有32个通道（22个外围设备通道，10个miscellaneous通道），DPI共有12个通道（3个外围设备通道，9个miscellaneous通道）</li>
+<li>DAI允许设置优先级，而DPI不允许</li>
+<li>DAI和DPI都能识别上升沿（Rising Edge）或下降沿（Falling Edge）</li>
+<li>到核心的中断（Interrupt to Core)，DAI为2，DPI为1</li>
+<li>DAI和DPI都是4分频</li>
+</ul>
+<p><img src="https://pic.islet.space/2021/06/20210602150124.png" alt="image-20210602150117965"></p>
+<h2 id="特征"><a href="#特征" class="headerlink" title="特征"></a>特征</h2><ul>
+<li><p>两个系统中断控制器（SIC, System Interrupt Controller），分别为DAI SIC 和 DPI SIC，连接至核心中断控制器（CIC, Core Interrupt Controller）。</p>
+</li>
+<li><p>DAI SIC 允许高/低中断优先级配置选项</p>
+</li>
+<li><p>DAI中断控制器提供最高32条独立可配置通道</p>
+</li>
+<li><p>DPI中断控制器提供最高12条独立可配置通道</p>
+</li>
+<li><p>DAI SIC和DPI SIC都允许针对波形的上升沿或下降沿进行锁存</p>
+</li>
+<li><p>与核心锁存中断一致的中断延迟</p>
+</li>
+<li><p>时钟：系统中断控制器的基础时钟是 <em>4分频</em> (f<del>PCLK</del>)/4 ；所有中断的确认响应速度为4分频最高。</p>
+</li>
+</ul>
+<h2 id="中断寄存器"><a href="#中断寄存器" class="headerlink" title="中断寄存器"></a>中断寄存器</h2><p><strong>可编程中断控制寄存器</strong>（<strong>PICR</strong>3 - 0）： 为了登记（assign）独立优先级（individual priorities）到各外围通道，19个外围设备可路由至可编程中断输入。</p>
+<p><strong>DAI 中断屏蔽寄存器</strong>（<strong>DAI_IMASK</strong>）：屏蔽上升或下降沿波形。因可屏蔽的边沿有上升沿或下降沿，因此DAI中断屏蔽寄存器分为 DAI_IMASK_RE 和  DAI_IMASK_FE。</p>
+<p><strong>DAI 中断屏蔽优先级寄存器</strong>（<strong>DAI_IMASK_PRI</strong>）：为DAI高/低中断优先级屏蔽中断。</p>
+<p><strong>DAI 中断锁存寄存器</strong>（<strong>DAI_IRPTL</strong>）: 为DAI高/低优先级中断锁存中断。</p>
+<p><strong>DPI 中断屏蔽寄存器</strong>（<strong>DPI_IMASK</strong>）：屏蔽上升或下降沿波形。因可屏蔽的边沿有上升沿或下降沿，因此DPI中断屏蔽寄存器分为 DPI_IMASK_RE 和  DPI_IMASK_FE。</p>
+<p><strong>DPI 中断锁存寄存器</strong>（<strong>DPI_IRPTL</strong>）：为DPI中断锁存中断。</p>
+<h2 id="功能描述-1"><a href="#功能描述-1" class="headerlink" title="功能描述"></a>功能描述</h2><h3 id="可编程中断优先级控制"><a href="#可编程中断优先级控制" class="headerlink" title="可编程中断优先级控制"></a>可编程中断优先级控制</h3><h4 id="外围中断"><a href="#外围中断" class="headerlink" title="外围中断"></a>外围中断</h4><h4 id="软件中断"><a href="#软件中断" class="headerlink" title="软件中断"></a>软件中断</h4><h4 id="多重中断请求信号的外围设备"><a href="#多重中断请求信号的外围设备" class="headerlink" title="多重中断请求信号的外围设备"></a>多重中断请求信号的外围设备</h4><h3 id="系统中断控制器"><a href="#系统中断控制器" class="headerlink" title="系统中断控制器"></a>系统中断控制器</h3><p>DAI/DPI外围相关事件发生时，这些针脚各自拥有能够指向核心的系统中断控制器。</p>
+<p>相对于SHARC核心，音频事件通常发生不频繁，DAI/DPI中断控制器将其所有中断减少到核心主中断系统中的三个中断信号上：</p>
+<ul>
+<li>一个映射为DAI低优先级</li>
+<li>一个映射为DAI高优先级</li>
+<li>第三个映射到DPI中断。</li>
+</ul>
+<p>以上这种操作，允许程序更加粗略地去表示优先级。</p>
+<p>输出总线中断信号可以有逻辑地导向（ORed）一个中断线并递交至（fed to）核心中断控制逻辑。</p>
+<blockquote>
+<p>The output bus interrupt signals are logically ORed into one interrupt line and fed to the core’s interrupt controller logic.</p>
+</blockquote>
+<p><img src="https://pic.islet.space/2021/06/20210602155414.png" alt="image-20210602154656729"></p>
+<p><strong>注意</strong>：DAI/DPI中断控制器拥有与核心中断控制器相同的中断延迟，或6个延时周期以相应异步中断。</p>
+<p>被用于配置DAI中断控制器的有3个寄存器，被用于配置DPI中断控制器的有2个寄存器。32个DAI中断源和12个DPI中断源中的任意一个都可以用于独立配置开关，来控制进入信号的上升沿、下降沿、上升下降沿（both edges）或无沿（neither edge）。</p>
+<p>需要注意的是，当核心中断寄存器是系统寄存器时，DAI/DPI中断控制寄存器是被内存映射的寄存器（memory mapped registers），且通过外围设备总线被接入（accessed via the peripheral bus）。</p>
+<h4 id="DAI-DPI中断源"><a href="#DAI-DPI中断源" class="headerlink" title="DAI/DPI中断源"></a>DAI/DPI中断源</h4><p>DAI有5个外围（中断）源都被多路复用至（multiplexed into）32个中断源里，并以 <code>DAI_INT 0 ~ 31</code> 作为标签名称。</p>
+<p>DPI有3个外围（中断）源都被多路复用至（multiplexed into）12个中断源里，并以 <code>DPI_INT 0 ~ 13</code> 作为标签名称。</p>
+<p>下表介绍了DAI/DPI在不同的通信方式和信号响应的关系。</p>
+<img src="https://pic.islet.space/2021/06/image-20210602195334432.png" alt="image-20210602195334432" style="zoom:67%;" />
+
+
+
+<h4 id="DAI中断锁存优先级设置"><a href="#DAI中断锁存优先级设置" class="headerlink" title="DAI中断锁存优先级设置"></a>DAI中断锁存优先级设置</h4><p>DAI系统中断控制器寄存器对（ <code>DAI_IRPTL_H</code> 和 <code>DAI_IRPTL_L</code>）取代了通常由核心中断控制器的IRPTL寄存器执行的功能。一个单一的寄存器（ <code>DAI_IRPTL_PRI</code>）指定了这些中断被映射到哪个锁存器中。</p>
+<p>当一个DAI中断被配置为低优先级（<code>DAI_IMASK_PRI</code> 位被清除，默认设置），它将被锁在 <code>DAI_IRPTL_L</code> 寄存器中。低优先级的DAI中断，<code>DAILI</code>，被连接到 <code>P12I</code> 核心中断上。默认情况下。<code>PICR</code> 寄存器可以改变这种连接。每当DAI的低优先级中断被设置，<code>LIRPTL </code>寄存器中的 <code>DAILI</code> 位就会被设置，核心就会为该低优先级中断服务。</p>
+<img src="https://pic.islet.space/2021/06/image-20210602200433030.png" alt="image-20210602200433030" style="zoom:67%;" />
+
+<p><strong>注意</strong>： DAI会在<strong>中断向量表</strong>中触发一个高优先级一个低优先级的中断。当任一来自DAI的中断需要服务时，两个核心ISR之一必须审查（interrogate）DAI的中断控制器以判定其中断源。</p>
+<blockquote>
+<p>中断向量表（Interrupt Vector Table, IVT）, Page 177</p>
+<img src="https://pic.islet.space/2021/06/image-20210602205507981.png" alt="image-20210602205507981" style="zoom:67%;" />
+</blockquote>
+<h4 id="DPI中断锁存"><a href="#DPI中断锁存" class="headerlink" title="DPI中断锁存"></a>DPI中断锁存</h4><p>DPI系统中断控制寄存器（<code>DPI_IRPTL</code>）取代了通常是由核心控制器寄存器（<code>IRPTL</code>）的功能。</p>
+<p>当DPI中断配置时，将被锁存在 <code>DPI_IRPTL</code> 寄存器中。默认情况下，DPI中断被连接至P14I核心中断。PICR寄存器可以改变其连接。无论何时，DPI中断一旦设置，<code>LIRPTL</code> 寄存器中已编程的DPI位会被设置，且核心将会为已编程优先级的中断服务。</p>
+<h4 id="DAI-DPI边沿触发中断屏蔽"><a href="#DAI-DPI边沿触发中断屏蔽" class="headerlink" title="DAI/DPI边沿触发中断屏蔽"></a>DAI/DPI边沿触发中断屏蔽</h4><p>DAI上升沿中断屏蔽寄存器 <code>DAI_IMASK_RE</code> 和 DAI下降沿中断屏蔽寄存器 <code>DAI_IMASK_FE</code> 取代了核心中断控制器 <code>IMASK</code> 的版本。与 <code>IMASK</code> 寄存器一样，这些DAI寄存器提供了一种指定（specify）哪条中断被确认和处理，哪条中断会被忽略的方法。这对寄存器的功能与 <code>IMASK</code> 一致，但具有更高程度的细化。</p>
+<p>对 <code>DAI_IMASK_RE</code> 、 <code>DAI_IMASK_FE</code> 、 <code>DPI_IMASK_RE</code>  、<code>DPI_IMASK_FE</code>这些寄存器的使用，能够使程序对上升沿、下降沿、上升下降沿、或者无沿（neither rising or falling edge）的程序确认或响应能够分别独立地屏蔽（masked separately）。</p>
+<p>从SRU过来的信号能够被用于生成中断。例如，当 <code>DAI_IMASK_FE</code> 寄存器的 <code>DAI_30_INT</code> 位被设置为1时，任何从外部通道过来的下降沿信号都能在核心中生成中断，且中断锁存器会被设定。对 <code>MASK</code> 寄存器的读取不会清除 <code>IRPTL</code> 寄存器。</p>
+<h4 id="DAI-DPI事件中断屏蔽"><a href="#DAI-DPI事件中断屏蔽" class="headerlink" title="DAI/DPI事件中断屏蔽"></a>DAI/DPI事件中断屏蔽</h4><p>系统中断控制器需要一个外设的中断源与事件信号相对应的信息（参考第2-8页中的表2-2）。如此一来，就只有上升沿被当做中断源。对于被标记为事件的DAI/DPI外设，程序可以只在上升沿解除中断源的屏蔽。</p>
+<h4 id="DAI-DPI中断服务"><a href="#DAI-DPI中断服务" class="headerlink" title="DAI/DPI中断服务"></a>DAI/DPI中断服务</h4><p>当多通道被复用至一个中断输出信号时，中断确认的操作方式不尽相同。当DAI/DPI中的服务必须被处理时，三者任一的中断服务路由（interrupt service routines）（<code>DAILI</code>, <code>DAIHI</code> 和 <code>DPII</code>）必须查询RIC以确定中断源。该中断源可能是一个或多个DAI/DPI通道（<code>DAI_INT31-0</code> 、 <code>DPI_INT13-0</code>）。</p>
+<ul>
+<li>当 <code>DAI_IRPTL_H</code> 被读取时，高优先级锁存的中断将会被清除。</li>
+<li>当 <code>DAI_IRPTL_L</code> 被读取时，低优先级锁存的中断将会被清除。</li>
+<li>当 <code>DPI_IRPTL</code> 被读取时，锁存中断将会被清除。</li>
+<li>当 <code>DAI_IRPTL_H/L</code> 寄存器被读取时， <code>IDP_FIFO_GTN_INT</code> 中断不会被清除。当中断需要离开的情况发生时，中断自然会被清除。（This interrupt is cleared automatically when the situation that caused the interrupt goes away.）</li>
+<li><code>DPI_IRPTL_SH</code> 是被用于读取主寄存器 <code>DPI_IRPTL</code>的影子寄存器。读取这些影子寄存器将会返回 <code>DPI_IRPTL</code> 寄存器中的数据却不会清除里面的内容。</li>
+</ul>
+<p>如果在清空锁存器的同一周期内发生中断，则该机制的优先级较低，新的中断器被注册。</p>
+<p><strong>注意</strong>：</p>
+<ul>
+<li>TWII 和UARTRXI 中断不遵循这条原则。确认信号将在这些外围锁存器中发生。</li>
+<li>读取中断锁存器（<code>DAI_IRPTL_X</code> 或 <code>DPI_IRPTL</code> ）将会清除中断（只读清除类型）。因此，ISR必须为所有已发现的中断提供服务。即如果复用中断（mumtiple interrupts）被锁存在复用屏蔽寄存器（multiple mask registers）中，必须在执行 <em><strong>RTI</strong></em> 指令前，对所有中断进行服务。</li>
+</ul>
+<blockquote>
+<p>RTI （interrupt return instruction）：中断指令</p>
+<p>在中断服务程序中用于返回中断指令，在运行中断之前，用JSR指令将PC（程序计数器）和SR（状态寄存器）压入堆栈，当中断服务程序结束时，执行RTI或RTIS指令，将PC和SR从堆栈中弹出。</p>
+<p>——<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/RTI/7461669">RTI</a></p>
+</blockquote>
+<h3 id="中断服务"><a href="#中断服务" class="headerlink" title="中断服务"></a>中断服务</h3><p>核心缓存服务请求（输入输出模式）</p>
+<p>DMA接入</p>
+<h3 id="中断延迟"><a href="#中断延迟" class="headerlink" title="中断延迟"></a>中断延迟</h3><p>DMA完成类型</p>
+<h2 id="调试特征"><a href="#调试特征" class="headerlink" title="调试特征"></a>调试特征</h2><h4 id="影子中断寄存器"><a href="#影子中断寄存器" class="headerlink" title="影子中断寄存器"></a>影子中断寄存器</h4><ul>
+<li><p>影子中断寄存器（Shadow Interrupt Register）可用于 IDP, S/PDIF, ASRC, UART, TWI 和 DAI/DPI。</p>
+</li>
+<li><p>DAI/DPI 中断控制器拥有可以简化调试活动且不会操纵状态控制（manipulate status control）的影子寄存器。</p>
+</li>
+<li><p>任何对 <code>DAI_IRPTL_x_SH</code> 或 <code>DPI_IRPTL_SH</code> 影子寄存器的读取都会提供 和 读取 <code>DAI_IRPTL_x</code> 或 <code>DPI_IRPTL</code> 寄存器一样的数据。</p>
+</li>
+<li><p>对DAI/DPI影子寄存器的读取不会改变核心中断控制器（core interrupt controller）对中断的确认状态。</p>
+</li>
+</ul>
 
       
     </div>
@@ -1704,598 +2510,6 @@
 <p>构造数据类型除了可以用常见的如int、float和double、char、bool等基本数据类型进行构造，也可以包含其他构造类型的数据。</p>
 <p>构造数据类型包括：数组类型、枚举类型enum、指针类型、引用类型、结构体struct、联合体union（又称联合，共用体）、class类等，他们可以通过其他的数据类型进行构造，由程序员自定义，所以又称为自定义数据类型。</p>
 <p>参考：<a target="_blank" rel="noopener" href="http://blog.csdn.net/u013174689/article/details/17484223">http://blog.csdn.net/u013174689/article/details/17484223</a></p>
-<p>​          </p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://islet.space/2021/05/23/Programming/C++/2021-05-23-enum-in-CC++/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Liewzheng">
-      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Coder的孤岛">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/05/23/Programming/C++/2021-05-23-enum-in-CC++/" class="post-title-link" itemprop="url">enum in C/C++</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
-    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-      
-
-      <time title="Created: 2021-05-23 18:22:00 / Modified: 22:03:34" itemprop="dateCreated datePublished" datetime="2021-05-23T18:22:00+08:00">2021-05-23</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Programming/" itemprop="url" rel="index"><span itemprop="name">Programming</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p><code>enum</code> 是 Enumeration // 的缩写，是C/C++中的 <strong>枚举</strong> 关键字。</p>
-<h1 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h1><p>符合以下场景时可能需要使用到枚举：</p>
-<ul>
-<li>需要使用到的变量 <strong>数量较大</strong>，通过枚举以简写代码，提高代码可读性</li>
-<li>使用整形（integer）进行定义（但不同于直接定义成 <code>int</code> 的 <strong>显式整形</strong>，使用枚举类型定义的话会变成 <strong>隐式整形</strong>）</li>
-<li>所有值都是有固定范围的，是可人为预设的。</li>
-<li>具有常量的特性（主要特点是：不可在定义之外的地方被修改）</li>
-</ul>
-<p>注意：</p>
-<ul>
-<li><em>在所有枚举值都未被赋值的情况下</em>，枚举值默认从 0 开始，往后逐个加 1（递增）。</li>
-</ul>
-<h1 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h1><p><strong>枚举格式</strong>：一般为 <code>enum 枚举名&#123; 枚举值表 &#125;;</code> ，也可以省略枚举名，写成如下格式：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">enum</span> <span class="title">typeName</span>&#123;</span> valueName1, valueName2, valueName3, ...... &#125;;</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p><code>enum</code> 定义 <strong>枚举类型的关键字</strong>；</p>
-<p><code>typeName</code>是 枚举类型的名称，即 <strong>枚举名</strong>。</p>
-<p><code>valueName1, valueName2, valueName3, ......</code>是每个值对应的名字的列表，所有元素集合即为 <strong>枚举值表</strong></p>
-<p>注意：最后的<code>;</code>不能少。</p>
-</blockquote>
-<h1 id="使用示例"><a href="#使用示例" class="headerlink" title="使用示例"></a>使用示例</h1><h2 id="起始值赋值"><a href="#起始值赋值" class="headerlink" title="起始值赋值"></a>起始值赋值</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">enum</span> <span class="title">cats</span> &#123;</span></span><br><span class="line">    juran = <span class="number">3</span>,</span><br><span class="line">    guoran,</span><br><span class="line">    dala,</span><br><span class="line">    baomei,</span><br><span class="line">    baodi,</span><br><span class="line">    zhaofeng,</span><br><span class="line">    ainiao</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-<p>结果如下：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">juran = 3</span><br><span class="line">guoran = 4</span><br><span class="line">dala = 5</span><br><span class="line">ainiao = 9</span><br></pre></td></tr></table></figure>
-
-
-
-<h2 id="值表中途赋值"><a href="#值表中途赋值" class="headerlink" title="值表中途赋值"></a>值表中途赋值</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">enum</span> <span class="title">cats</span> &#123;</span></span><br><span class="line">    juran,</span><br><span class="line">    guoran,</span><br><span class="line">    dala = <span class="number">0</span>,</span><br><span class="line">    baomei,</span><br><span class="line">    baodi,</span><br><span class="line">    zhaofeng,</span><br><span class="line">    ainiao</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-<p>给出如下：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">juran = 0</span><br><span class="line">guoran = 1</span><br><span class="line">dala = 0</span><br><span class="line">ainiao = 4</span><br></pre></td></tr></table></figure>
-
-
-
-<h1 id="Typedef-enum"><a href="#Typedef-enum" class="headerlink" title="Typedef enum"></a>Typedef enum</h1><p>Typedef enum 的用法一般如：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">enum</span>&#123;</span>....&#125; a; </span><br></pre></td></tr></table></figure>
-
-<p>enum 的用法一般如：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">enum</span>&#123;</span>....&#125; a;</span><br></pre></td></tr></table></figure>
-
-<p>前者是将 <code>enum&#123;….&#125;</code> 定义成一个 <em><strong>a类型</strong></em>，声明变量的时候可以用 <code>a b</code> 格式;可以理解为类似 <code>int i</code>;</p>
-<p>后者是将 <code>enum&#123;….&#125;</code> 声明了一个 <em><strong>变量</strong></em><code>a</code>。</p>
-<h1 id="枚举遍历"><a href="#枚举遍历" class="headerlink" title="枚举遍历"></a>枚举遍历</h1><p> 在C 语言中，枚举类型是被当做 int 或者 unsigned int 类型来处理的，所以按照 C 语言规范是没有办法遍历枚举类型的。</p>
-<p>不过在一些特殊的情况下，枚举类型必须连续是可以实现有条件的遍历。</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"> </span><br><span class="line"><span class="class"><span class="keyword">enum</span> <span class="title">DAY</span>&#123;</span></span><br><span class="line">      MON=<span class="number">1</span>, TUE, WED, THU, FRI, SAT, SUN</span><br><span class="line">&#125; day;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="comment">// 遍历枚举元素</span></span><br><span class="line">    <span class="keyword">for</span> (day = MON; day &lt;= SUN; day++) &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;枚举元素：%d \n&quot;</span>, day);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-
-
-<h1 id="错误示范"><a href="#错误示范" class="headerlink" title="错误示范"></a>错误示范</h1><p>以下错误示范给出的提示均由 Linux的 <em><strong>GNU</strong></em> 编译器 及 Mac的 <em><strong>Clang</strong></em>（*Apple clang version 11.0.0 (clang-1100.0.33.17)*）编译器给出。</p>
-<h2 id="重复定义"><a href="#重复定义" class="headerlink" title="重复定义"></a>重复定义</h2><p>不允许 <strong>在同一个作用域内</strong> 定义 <strong>一样的枚举名称</strong> ；也不允许 <strong>在同一个作用域内</strong> 的不同枚举变量中定义 <strong>名称一样的元素</strong>。</p>
-<p><img src="https://pic.islet.space/2021/05/image-20210523204125878.png" alt="image-20210523204125878"></p>
-<p><img src="https://pic.islet.space/2021/05/image-20210523204041715.png" alt="image-20210523204041715"></p>
-<p>以上两种情况的错误提示如下：</p>
-<p><img src="https://pic.islet.space/2021/05/image-20210523182310296.png" alt="image-20210523182310296"></p>
-<p><img src="https://pic.islet.space/2021/05/image-20210523204224839.png" alt="image-20210523204224839"></p>
-<p>也就是说 <strong>枚举名称和枚举元素都要绝对唯一</strong>。</p>
-<h2 id="数值更改"><a href="#数值更改" class="headerlink" title="数值更改"></a>数值更改</h2><p>枚举类数据不允许更改数值（包括自增和赋值都不允许），有点类似于常量（const）。</p>
-<p>枚举中的元素自增时的错误提示：</p>
-<p><img src="https://pic.islet.space/2021/05/image-20210523202049638.png" alt="image-20210523202049638"></p>
-<p>枚举中的元素赋值时的错误提示：</p>
-<p><img src="https://pic.islet.space/2021/05/image-20210523202501260.png" alt="image-20210523202501260"></p>
-<blockquote>
-<p>根据 <a target="_blank" rel="noopener" href="https://zhidao.baidu.com/question/142755629.html">网友的回答</a> : </p>
-<p>C支持枚举类型的自增操作，但C++不支持。</p>
-</blockquote>
-<p>以下为常量自增时给出的错误提示：</p>
-<p><img src="https://pic.islet.space/2021/05/image-20210523202757582.png" alt="image-20210523202757582"></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://islet.space/2021/05/23/Programming/C++/2021-05-23-Difference-between-GCC,-gcc-and-g++/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Liewzheng">
-      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Coder的孤岛">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/05/23/Programming/C++/2021-05-23-Difference-between-GCC,-gcc-and-g++/" class="post-title-link" itemprop="url">Difference between GCC, gcc and g++</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
-    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-      
-
-      <time title="Created: 2021-05-23 17:00:00 / Modified: 20:07:33" itemprop="dateCreated datePublished" datetime="2021-05-23T17:00:00+08:00">2021-05-23</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Programming/" itemprop="url" rel="index"><span itemprop="name">Programming</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>gcc 和 GCC 是两个不同的东西。</p>
-<blockquote>
-<p><strong>GCC</strong>：GNU Compiler Collection(GUN 编译器集合)，它可以编译C、C++、JAV、Fortran、Pascal、Object-C、Ada等语言。</p>
-<p><strong>gcc</strong>：GCC中的GUN C Compiler（C 编译器）</p>
-<p>**g++**：GCC中的GUN C++ Compiler（C++编译器）</p>
-</blockquote>
-<p>一个有趣的事实就是，就本质而言，gcc和g++并不是编译器，也不是编译器的集合，它们只是一种驱动器，根据参数中要编译的文件的类型，调用对应的GUN编译器而已，比如，用gcc编译一个c文件的话，会有以下几个步骤：</p>
-<blockquote>
-<p>Step1：Call a preprocessor, like cpp.</p>
-<p>Step2：Call an actual compiler, like cc or cc1.</p>
-<p>Step3：Call an assembler, like as.</p>
-<p>Step4：Call a linker, like ld</p>
-</blockquote>
-<p>由于编译器是可以更换的，所以gcc不仅仅可以编译C文件</p>
-<p>所以，更准确的说法是：gcc调用了C compiler，而g++调用了C++ compiler</p>
-<h1 id="gcc和g-的主要区别"><a href="#gcc和g-的主要区别" class="headerlink" title="gcc和g++的主要区别"></a>gcc和g++的主要区别</h1><ol>
-<li><p>对于 <em>.c和</em>.cpp文件，gcc分别当做c和cpp文件编译（c和cpp的语法强度是不一样的）</p>
-</li>
-<li><p>对于 <em>.c和</em>.cpp文件，g++则统一当做cpp文件编译</p>
-</li>
-<li><p>使用g++编译文件时，<strong>g++会自动链接标准库STL，而gcc不会自动链接STL</strong></p>
-</li>
-<li><p>gcc在编译C文件时，可使用的预定义宏是比较少的</p>
-</li>
-<li><p>gcc在编译cpp文件时/g++在编译c文件和cpp文件时（这时候gcc和g++调用的都是cpp文件的编译器），会加入一些额外的宏，这些宏如下：</p>
-</li>
-</ol>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> __GXX_WEAK__ 1</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> __cplusplus 1</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> __DEPRECATED 1</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> __GNUG__ 4</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> __EXCEPTIONS 1</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> __private_extern__ extern</span></span><br></pre></td></tr></table></figure>
-
-<ol start="6">
-<li>在用gcc编译c++文件时，为了能够使用STL，需要加参数 –lstdc++ ，但这并不代表 gcc –lstdc++ 和 g++等价，它们的区别不仅仅是这个</li>
-</ol>
-<p>其主要参数：</p>
-<blockquote>
-<p>-g - turn on debugging (so GDB gives morefriendly output)</p>
-<p>-Wall - turns on most warnings</p>
-<p>-O or -O2 - turn on optimizations</p>
-<p>-o - name of the output file</p>
-<p>-c - output an object file (.o)</p>
-<p>-I - specify an includedirectory</p>
-<p>-L - specify a libdirectory</p>
-<p>-l - link with librarylib.a</p>
-</blockquote>
-<p>使用示例：<code>g++ -ohelloworld -I/homes/me/randomplace/include helloworld.C</code></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://islet.space/2021/05/22/Linux/2021-05-21-Equipments_in_debian_linux/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Liewzheng">
-      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Coder的孤岛">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/05/22/Linux/2021-05-21-Equipments_in_debian_linux/" class="post-title-link" itemprop="url">Equipments in Debian Linux(KALI)</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
-    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2021-05-22 20:30:00" itemprop="dateCreated datePublished" datetime="2021-05-22T20:30:00+08:00">2021-05-22</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-05-23 23:51:40" itemprop="dateModified" datetime="2021-05-23T23:51:40+08:00">2021-05-23</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h1><p>作为一个日常开发的程序员，三大平台都在日常使用的软件（生产力工具及娱乐工具）如下：</p>
-<ul>
-<li>utools</li>
-<li>typora</li>
-<li>visual studio code</li>
-<li>picgo</li>
-<li>sogou pinyin</li>
-<li>snipaste(win) / flameshot(linux) / ishot(mac)</li>
-<li>cosbrowser</li>
-<li>nodejs 及 npm</li>
-<li>hexo</li>
-<li>qqmusic</li>
-</ul>
-<p>win和mac安装软件都相对简单，linux安装需要使用者自身具有一定的耐心和排除困难的经验，为了更好地体验linux的方便，这里对linux装机后的生产力工具安装做个简单记录，以下安装均在 <strong>KALI</strong> （Kali也属于Debian系Linux）上进行。</p>
-<p>使用Linux系统的最大好处是 “一个终端即可解决即可开启大部分软件和解决日常事务，最多再开启一个utools”。</p>
-<p>Linux上的软件安装方式通常分为四种方式：</p>
-<ul>
-<li>通过 <code>dpkg</code> 命令安装 <code>.deb</code> 文件</li>
-<li>通过 <code>apt</code> 或其他软件的软件安装命令（如，<code>npm</code> 和 <code>pip</code>）来安装</li>
-<li>通过 <code>ln</code> 链接将程序绑定至全局变量来 “安装” 和使用</li>
-<li>通过直接调用 <code>AppImage</code> 的方式直接使用软件，此类方式需要一般需要手动双击执行</li>
-</ul>
-<p>其中前三种方式的困难因系统而异，所说的困难是可能出现所安装的软件依赖不存在，需要使用者自行去定位（包括下载和添加源）和安装，或者链接方式错误等。而Linux源众多，每个节点的速度及其更新情况都不太一样，需要使用者判断。</p>
-<h1 id="uTools-amp-Flameshot"><a href="#uTools-amp-Flameshot" class="headerlink" title="uTools &amp; Flameshot"></a>uTools &amp; Flameshot</h1><p><a target="_blank" rel="noopener" href="https://res.u-tools.cn/currentversion/utools_1.3.5_amd64.deb">uTools</a> 使用的是 <code>.deb</code> 安装包安装，flameshot 使用 <code>apt</code> 命令进行安装。</p>
-<p><strong>依赖文件</strong>：</p>
-<ol>
-<li><code>libspdlog1-fmt7</code> 是 flameshot所需文件</li>
-<li><code>libappindicator3-1</code> 是 utools所需文件</li>
-</ol>
-<h2 id="libspdlog1"><a href="#libspdlog1" class="headerlink" title="libspdlog1"></a>libspdlog1</h2><p>尝试安装utools和flameshot后，apt会提示缺少文件。使用 <code>sudo apt-get install libspdlog1-fmt7</code> 来安装 <code>libspdlog1-fmt7</code> 。</p>
-<p>如果触发安装破损修复，使用<code>apt --fix-broken install</code> 可以让apt自动修复安装错误，自动补全依赖文件。</p>
-<h2 id="libappindicator3"><a href="#libappindicator3" class="headerlink" title="libappindicator3"></a>libappindicator3</h2><p><code>libappindicator3-1</code> 文件需要使用者往 <code>/etc/apt/source.list</code> 中添加debian源，需要使用者掌握基本的 <code>vim</code> 软件使用方法（包括插入、保存和退出）。</p>
-<ul>
-<li><p>使用 <code>sudo vim /etc/apt/sources.list</code> 命令打开 <code>source.list</code> 。</p>
-</li>
-<li><p>按 <code>i</code> 进入 <strong>插入模式</strong>，复制粘贴 <code>deb http://ftp.de.debian.org/debian sid main</code> 至空白处，按 <code>ESC</code> 键，再依次输入 <code>:wq</code> 进行保存和退出。</p>
-</li>
-<li><p>在终端输入 <code>sudo apt-get update</code> 进行源库软件列表更新，再次尝试 <code>sudo apt-get install libappindicator3</code> 来安装</p>
-<p> <code>libappindicator3-1</code> and <code>libappindicator3-7</code> 。</p>
-</li>
-</ul>
-<p>最后再次尝试以下两条语句即可成功安装 utools 和 flameshot 。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo dpkg -i utools_1.3.5_amd64.deb</span><br><span class="line">sudo apt-get install flameshot</span><br></pre></td></tr></table></figure>
-
-
-
-
-
-<h1 id="Typora"><a href="#Typora" class="headerlink" title="Typora"></a>Typora</h1><p><a target="_blank" rel="noopener" href="https://tyopra.io/">TYPORA.IO</a> 官方提供的安装代码如下：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys BA300B7755AFCFAE</span><br><span class="line">sudo add-apt-repository <span class="string">&#x27;deb https://typora.io/linux ./&#x27;</span></span><br><span class="line">sudo apt-get update</span><br><span class="line">sudo apt-get install typora</span><br></pre></td></tr></table></figure>
-
-
-
-<p>其中，向apt中添加源的第二条语句 <code>add-apt-repository</code> 会因缺乏 <code>PPA</code> 而无法执行，可以参考 <a target="_blank" rel="noopener" href="https://ywnz.com/linuxjc/7953.html#:~:text=%E6%9C%89%E4%BA%9B%E7%94%A8%E6%88%B7%E5%9C%A8UOS%E3%80%81Deepin%E7%AD%89%E6%9F%90%E4%BA%9BLinux%E5%8F%91%E8%A1%8C%E7%89%88%E7%BB%88%E7%AB%AF%E4%B8%AD%E8%BE%93%E5%85%A5PPA%E5%91%BD%E4%BB%A4%E6%97%B6%E4%BC%9A%E6%8F%90%E7%A4%BA%E2%80%9Csudo%3A%20add-apt-repository%EF%BC%9A%E6%89%BE%E4%B8%8D%E5%88%B0%E5%91%BD%E4%BB%A4%EF%BC%88command,not%20found%EF%BC%89%E2%80%9D%EF%BC%8C%E8%BF%99%E6%98%AF%E5%9B%A0%E4%B8%BA%E6%B2%A1%E6%9C%89%E5%AE%89%E8%A3%85PPA%E6%89%80%E8%87%B4%EF%BC%8C%E6%8A%8A%E5%AE%83%E5%AE%89%E8%A3%85%E4%B8%8A%E5%B0%B1%E5%8F%AF%E4%BB%A5%E4%BA%86%EF%BC%8C%E5%8F%AA%E9%9C%80%E8%A6%81%E5%9C%A8%E7%BB%88%E7%AB%AF%E4%B8%AD%E8%BF%90%E8%A1%8C%E4%B8%89%E6%9D%A1%E5%91%BD%E4%BB%A4%E3%80%82">sudo: add-apt-repository：找不到命令的解决方法</a> 进行安装。</p>
-<p>也可以参考 <code>libappindicator3</code> 的源添加方法，往 <code>source.list</code> 文件中添加 <code>deb https://typora.io/linux ./</code> 来添加源。</p>
-<p>添加成功后即可成功安装tyopra。</p>
-<h1 id="Sogou-Pinyin"><a href="#Sogou-Pinyin" class="headerlink" title="Sogou Pinyin"></a>Sogou Pinyin</h1><p> 从搜狗官方下载的 <a target="_blank" rel="noopener" href="https://ime.sogoucdn.com/dl/index/1612260778/sogoupinyin_2.4.0.3469_amd64.deb?st=USANnSZV6afzzi2u6c8J-g&e=1621603885&fn=sogoupinyin_2.4.0.3469_amd64.deb">Sogou</a> 安装包，需要用 <code>sudo dpkg -i sogoupinyin_2.4.0.3469_amd64.deb</code> 命令进行安装，会遇到以下缺乏库的提示，主要是因为缺少 <code>fcitx</code> 的提示。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">dpkg: 依赖关系问题使得 sogoupinyin 的配置工作不能继续：</span><br><span class="line"> sogoupinyin 依赖于 fcitx (&gt;= 1:4.2.8)；然而：</span><br><span class="line">  未安装软件包 fcitx</span><br><span class="line"> sogoupinyin 依赖于 fcitx-frontend-gtk2；然而：</span><br><span class="line">  未安装软件包 fcitx-frontend-gtk2。</span><br><span class="line"> sogoupinyin 依赖于 fcitx-frontend-gtk3；然而：</span><br><span class="line">  未安装软件包 fcitx-frontend-gtk3。</span><br><span class="line"> sogoupinyin 依赖于 fcitx-frontend-qt5；然而：</span><br><span class="line">  未安装软件包 fcitx-frontend-qt5。</span><br><span class="line"> sogoupinyin 依赖于 fcitx-module-kimpanel；然而：</span><br><span class="line">  未安装软件包 fcitx-module-kimpanel。</span><br><span class="line"> sogoupinyin 依赖于 fcitx-module-x11；然而：</span><br><span class="line">  未安装软件包 fcitx-module-x11。</span><br><span class="line"> sogoupinyin 依赖于 im-config；然而：</span><br><span class="line">  未安装软件包 im-config。</span><br><span class="line"> sogoupinyin 依赖于 fcitx-libs | libfcitx-config4；然而：</span><br><span class="line">  未安装软件包 fcitx-libs。</span><br><span class="line">  未安装软件包 libfcitx-config4。</span><br><span class="line"> sogoupinyin 依赖于 fcitx-libs | libfcitx-qt0；然而：</span><br><span class="line">  未安装软件包 fcitx-libs。</span><br><span class="line">  未安装软件包 libfcitx-qt0。</span><br><span class="line"> sogoupinyin 依赖于 fcitx-libs | libfcitx-utils0；然而：</span><br><span class="line">  未安装软件包 fcitx-libs。</span><br><span class="line">  未安装软件包 libfcitx-utils0。</span><br><span class="line"> sogoupinyin 依赖于 fcitx-ui-classic；然而：</span><br><span class="line">  未安装软件包 fcitx-ui-classic。</span><br><span class="line"> sogoupinyin 依赖于 libqt5quickwidgets5；然而：</span><br><span class="line">  未安装软件包 libqt5quickwidgets5。</span><br><span class="line"> sogoupinyin 依赖于 qml-module-qtquick2；然而：</span><br><span class="line">  未安装软件包 qml-module-qtquick2。</span><br></pre></td></tr></table></figure>
-
-
-
-<blockquote>
-<p>Fcitx[ˈfaɪtɪks]是 (Free Chinese Input Toy for X) 的英文缩写，中文名为小企鹅输入法，是一个以 GPL 方式发布的输入法框架， 编写它的目是为桌面环境提供一个灵活的输入方案，彻底解决在GNU/Linux下没有一个好的中文输入法的问题。</p>
-</blockquote>
-<h2 id="FCITX"><a href="#FCITX" class="headerlink" title="FCITX"></a>FCITX</h2><p>通过输入 <code>sudo apt-get install fcitx</code> 来尝试安装，会触发 apt fix broken install， 此时只要再次输入 <code>sudo apt --fix-broken install</code> 来修复。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">下列软件包有未满足的依赖关系：</span><br><span class="line"> fcitx : 依赖: fcitx-bin 但是它将不会被安装</span><br><span class="line">         依赖: fcitx-data 但是它将不会被安装</span><br><span class="line">         依赖: fcitx-modules 但是它将不会被安装</span><br><span class="line">         推荐: fcitx-config-gtk 但是它将不会被安装 或</span><br><span class="line">                 kde-config-fcitx 但是它将不会被安装</span><br><span class="line">         推荐: fcitx-frontend-all 但是它将不会被安装 或</span><br><span class="line">                 fcitx-frontend-fbterm 但是它将不会被安装</span><br><span class="line">         推荐: fcitx-ui-classic 但是它将不会被安装 或</span><br><span class="line">                 fcitx-ui-light 但是它将不会被安装</span><br><span class="line">         推荐: im-config (&gt;= 0.5) 但是它将不会被安装</span><br><span class="line"> sogoupinyin : 依赖: fcitx-frontend-gtk2 但是它将不会被安装</span><br><span class="line">               依赖: fcitx-frontend-gtk3 但是它将不会被安装</span><br><span class="line">               依赖: fcitx-frontend-qt5 但是它将不会被安装</span><br><span class="line">               依赖: fcitx-module-kimpanel 但是它将不会被安装</span><br><span class="line">               依赖: fcitx-module-x11 但是它将不会被安装</span><br><span class="line">               依赖: im-config 但是它将不会被安装</span><br><span class="line">               依赖: fcitx-libs 但是它将不会被安装 或</span><br><span class="line">                       libfcitx-config4 但是它将不会被安装</span><br><span class="line">               依赖: fcitx-libs 但是它将不会被安装 或</span><br><span class="line">                       libfcitx-qt0 但无法安装它</span><br><span class="line">               依赖: fcitx-libs 但是它将不会被安装 或</span><br><span class="line">                       libfcitx-utils0 但是它将不会被安装</span><br><span class="line">               依赖: fcitx-ui-classic 但是它将不会被安装</span><br><span class="line">               依赖: libqt5quickwidgets5 但是它将不会被安装</span><br><span class="line">               依赖: qml-module-qtquick2 但是它将不会被安装</span><br><span class="line">E: 有未能满足的依赖关系。请尝试不指明软件包的名字来运行“apt --fix-broken install”(也可以指定一个解决办法)。</span><br></pre></td></tr></table></figure>
-
-
-
-<h2 id="安装成功"><a href="#安装成功" class="headerlink" title="安装成功"></a>安装成功</h2><p>FIX-BROKEN 成功后，再次尝试安装 FCITX 就可以提示成功；接着安装sogou即可。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt-get install fcitx                   </span><br><span class="line">正在读取软件包列表... 完成</span><br><span class="line">正在分析软件包的依赖关系树... 完成</span><br><span class="line">正在读取状态信息... 完成                 </span><br><span class="line">fcitx 已经是最新版 (1:4.2.9.8-3)。</span><br><span class="line">fcitx 已设置为手动安装。</span><br><span class="line">升级了 0 个软件包，新安装了 0 个软件包，要卸载 0 个软件包，有 136 个软件包未被升级。</span><br><span class="line"></span><br><span class="line">$ sudo dpkg -i sogoupinyin_2.4.0.3469_amd64.deb</span><br><span class="line">(正在读取数据库 ... 系统当前共安装有 270000 个文件和目录。)</span><br><span class="line">准备解压 sogoupinyin_2.4.0.3469_amd64.deb  ...</span><br><span class="line">正在解压 sogoupinyin (2.4.0.3469) 并覆盖 (2.4.0.3469) ...</span><br><span class="line">正在设置 sogoupinyin (2.4.0.3469) ...</span><br><span class="line">正在处理用于 mailcap (3.69) 的触发器 ...</span><br><span class="line">正在处理用于 desktop-file-utils (0.26-1) 的触发器 ...</span><br><span class="line">正在处理用于 hicolor-icon-theme (0.17-2) 的触发器 ...</span><br></pre></td></tr></table></figure>
-
-
-
-
-
-<h2 id="依赖库"><a href="#依赖库" class="headerlink" title="依赖库"></a>依赖库</h2><p>sogou输入法依赖库具体如下：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">下列【新】软件包将被安装：</span><br><span class="line">  dbus-x11 fcitx fcitx-bin fcitx-config-common fcitx-config-gtk fcitx-data</span><br><span class="line">  fcitx-frontend-all fcitx-frontend-gtk2 fcitx-frontend-gtk3</span><br><span class="line">  fcitx-frontend-qt5 fcitx-libs fcitx-module-dbus fcitx-module-kimpanel</span><br><span class="line">  fcitx-module-lua fcitx-module-x11 fcitx-modules fcitx-ui-classic</span><br><span class="line">  fcitx5-module-quickphrase-editor im-config libfcitx-config4</span><br><span class="line">  libfcitx-core0 libfcitx-gclient1 libfcitx-qt5-1 libfcitx-qt5-data</span><br><span class="line">  libfcitx-utils0 libgettextpo0 libpresage-data libpresage1v5</span><br><span class="line">  libqt5qmlworkerscript5 libqt5quickwidgets5 libtinyxml2.6.2v5 presage</span><br><span class="line">  qml-module-qtquick2</span><br></pre></td></tr></table></figure>
-
-
-
-<h1 id="NodeJS-amp-Hexo"><a href="#NodeJS-amp-Hexo" class="headerlink" title="NodeJS &amp; Hexo"></a>NodeJS &amp; Hexo</h1><p>使用 <code>sudo apt-get install nodejs</code> 或 <code>sudo apt-get install node.js</code> 均可以实现node.js 的安装，但是只能安装V12版。</p>
-<p>可以在官方下载 <a target="_blank" rel="noopener" href="https://nodejs.org/dist/v16.2.0/node-v16.2.0-linux-x64.tar.xz">node-v16.2.0-linux-x64.tar.xz</a> ，并使用以下命令进行解压：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">xz -d node-v16.2.0-linux-x64.tar.xz</span><br><span class="line">tar -xvf node-v16.2.0-linux-x64.tar</span><br></pre></td></tr></table></figure>
-
-<p>解压完毕之后，以管理员身份将该文件移动至 <code>/usr/local/node</code> ，以下命令将 <code>node-v16.2.0-linux-x64</code> 拷贝的同时进行了 <strong>重命名</strong> 操作。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo mv /home/XXX/downloads/node-v16.2.0-linux-x64 /usr/<span class="built_in">local</span>/node</span><br></pre></td></tr></table></figure>
-
-<p style="color: gray; font-style: italic;">注：XXX是用户名</p>
-
-<p>然后进行软连接：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo ln -s /usr/<span class="built_in">local</span>/node/bin/node /usr/<span class="built_in">local</span>/bin</span><br><span class="line">sudo ln -s /usr/<span class="built_in">local</span>/node/bin/npm /usr/<span class="built_in">local</span>/bin</span><br></pre></td></tr></table></figure>
-
-
-
-<blockquote>
-<p>Linux ln（英文全拼：link files）命令是一个非常重要命令，它的功能是为某一个文件在另外一个位置建立一个同步的链接。</p>
-<p>当我们需要在不同的目录，用到相同的文件时，我们不需要在每一个需要的目录下都放一个必须相同的文件，我们只要在某个固定的目录，放上该文件，然后在 其它的目录下用ln命令链接（link）它就可以，不必重复的占用磁盘空间。</p>
-</blockquote>
-<p>以上是 <code>ln</code> 链接命令的解释，实际最重要的作用是将某个已下载的软件及其命令定义至全局，在终端的任意一个目录位置都可以使用该软件。</p>
-<h2 id="“安装”-成功"><a href="#“安装”-成功" class="headerlink" title="“安装” 成功"></a>“安装” 成功</h2><p>实际上新版的nodejs并不涉及 前述 <code>dpkg</code> 或 <code>apt</code> 命令的安装，但软连接该文件目录至 <code>/usr/local/bin</code> 后，能实现安装效果，使用 <code>node -v</code> 及 <code>npm -v</code> 命令即可进行测试。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ node -v</span><br><span class="line">v16.2.0</span><br><span class="line"></span><br><span class="line">$ npm -v                   </span><br><span class="line">7.14.0</span><br></pre></td></tr></table></figure>
-
-
-
-<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><p>对于使用此类安装方式进行安装的 依赖于nodejs的应用如果需要在全局进行使用可能也需要进行软连接，如 hexo。</p>
-<p>使用 <code>npm install hexo-cli -g</code> 成功安装hexo后提示如下：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ whereis hexo</span><br><span class="line">hexo:</span><br></pre></td></tr></table></figure>
-
-
-
-<p>此时需要将 <code>/usr/local/node/bin</code> 文件夹下安装的程序也拉到全局变量中 <code>/usr/local/bin</code> 中。再次使用 <code>whereis</code> 命令检测时即可成功。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ sudo ln -s /usr/<span class="built_in">local</span>/node/bin/hexo /usr/<span class="built_in">local</span>/bin/hexo</span><br><span class="line">                                                                             </span><br><span class="line">$ whereis hexo</span><br><span class="line">hexo: /usr/<span class="built_in">local</span>/bin/hexo</span><br></pre></td></tr></table></figure>
-
-
-
-<h1 id="Visual-Studio-Code"><a href="#Visual-Studio-Code" class="headerlink" title="Visual Studio Code"></a>Visual Studio Code</h1><p>VS code安装使用 <code>dpkg</code> 命令，最大的问题是微软的源下载太慢，以下提供个人下载点，安装过程不再记录。</p>
-<p>个人下载点： <a target="_blank" rel="noopener" href="https://storage.islet.space/02_Softwares/02_Microsoft/VisualStudioCode/Linux/code_1.55.2-1618307277_amd64.deb">Visual Studio Code Linux (deb)</a></p>
-<h1 id="PicGo"><a href="#PicGo" class="headerlink" title="PicGo"></a>PicGo</h1><p><a target="_blank" rel="noopener" href="https://support.typora.io/Upload-Image/#picgo-core-command-line-opensource">Typora_Picgo</a> 有 command-line 版 和 app 版，参考 <a target="_blank" rel="noopener" href="https://picgo.github.io/PicGo-Doc/zh/">PicGo官方文档</a> （GFW封锁了<em><strong>github.io</strong></em>域名后缀，需要梯子）进行安装吧。</p>
-<h1 id="QQmusic-amp-cosbrowser"><a href="#QQmusic-amp-cosbrowser" class="headerlink" title="QQmusic &amp; cosbrowser"></a>QQmusic &amp; cosbrowser</h1><p>这两个软件都是腾讯家产品，下载、安装和使用都很方便。</p>
-<p>其中，QQMusic使用 <code>dpkg</code> 命令进行安装即可， <code>cosbrowser</code> 是 <code>AppImage</code> 格式文件，直接打开即可使用，无需安装。</p>
-<p><strong>彩蛋</strong>：<code>sudo apt-get install cmatrix</code></p>
-<p>—EOF—</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://islet.space/2021/05/21/Programming/C++/2021-05-21-How-to-Use-the-C-Preprocessors-#error-Directive/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Liewzheng">
-      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Coder的孤岛">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/05/21/Programming/C++/2021-05-21-How-to-Use-the-C-Preprocessors-#error-Directive/" class="post-title-link" itemprop="url">How to Use the C Preprocessor's error Directive</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
-    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2021-05-21 23:40:32" itemprop="dateCreated datePublished" datetime="2021-05-21T23:40:32+08:00">2021-05-21</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-05-23 20:06:47" itemprop="dateModified" datetime="2021-05-23T20:06:47+08:00">2021-05-23</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Programming/" itemprop="url" rel="index"><span itemprop="name">Programming</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p><a target="_blank" rel="noopener" href="https://barrgroup.com/embedded-systems/how-to/c-preprocessor-error-directive">barrgroup.com</a></p>
-<p>One of the least used but potentially most useful features of the C  preprocessor is the <em><strong>ANSI-specified #error directive</strong></em>. Here’s a look at a couple of clever uses for <code>#error</code> that have proven invaluable in embedded software development.</p>
-<p>The syntax of <code>#error</code> is very straightforward:</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">error</span> <span class="meta-string">&lt;writer supplied error message&gt;</span>  <span class="comment">//开发者提供的错误信息</span></span></span><br></pre></td></tr></table></figure>
-
-<p><code>&lt;writer supplied error message&gt;</code> 中可包含任何可显示的文本，甚至不需要使用双引号 <code>&quot;&quot;</code> 。</p>
-<blockquote>
-<p>The <code> &lt;writer supplied error message&gt;</code> can consist of any  printable text. You don’t even have to enclose the text in quotes.  (Technically, the message is optional–though it rarely makes sense to omit it.)</p>
-</blockquote>
-<p>当C预处理器遇到 <code>#error</code> 语句时，会将停止编译，并将错误信息输出至 <code>stderr</code> 文件。C编译器的典型错误信息如下：</p>
-<blockquote>
-<p>When the C preprocessor encounters a <code>#error</code> statement, it causes  compilation to terminate and the writer-supplied error message to be  printed to <a target="_blank" rel="noopener" href="http://en.wikipedia.org/wiki/Standard_streams">stderr (link is external)</a>. A typical error message from a C compiler looks like this:</p>
-</blockquote>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Filename(line_number): Error! </span><br><span class="line">Ennnn: &lt;writer supplied error message&gt; </span><br></pre></td></tr></table></figure>
-
-<p>where Filename is the source file name, <code>line_number</code> is the line  number where the <code>#error</code> statement is located, and <code>Ennnn</code> is a  compiler-specific error number. Thus, the <code>#error</code> message is basically  indistinguishable from ordinary compiler error messages.</p>
-<p>“Wait a minute,” you might say. “I spend enough time trying to get  code to compile and now he wants me to do something that causes more  compiler errors?” Absolutely! The essential point is that code that compiles but is incorrect is worse than useless. I’ve found three  general areas in which this problem can arise and <code>#error</code> can help. Read  on and see if you agree with me.</p>
-<h2 id="Incomplete-code"><a href="#Incomplete-code" class="headerlink" title="Incomplete code"></a>Incomplete code</h2><p>I tend to code using a step-wise refinement approach, so it isn’t  unusual during development for me to have functions that do nothing, for loops that lack a body, and so forth. Consequently, I often have files  that are compilable but lack some essential functionality. Working this  way is fine, until I’m pulled off to work on something else (an  occupational hazard of being in the consulting business). Because these  distractions can occasionally run into weeks, I sometimes return to the  job with my memory a little hazy about what I haven’t completed. In the  worst-case scenario (which has occurred), I perform a make, which runs  happily, and then I attempt to use the code. The program, of course,  crashes and burns, and I’m left wondering where to start.</p>
-<p>In the past, I’d comment the file to note what had been done and what was still needed. However, I found this approach to be rather weak  because I then had to read all my comments (and I comment heavily) in  order to find what I was looking for. Now I simply enter something like  the following in an appropriate place in the file:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#error *** Nigel - Function incomplete. Fix before using *** </span><br></pre></td></tr></table></figure>
-
-<p>Thus, if I forget that I haven’t done the necessary work, an  inadvertent attempt to use the file will result in just about the most  meaningful compiler message I’ll ever receive. Furthermore, it saves me  from having to wade through pages of comments, trying to find what work I haven’t finished.</p>
-<h2 id="Compiler-dependent-code"><a href="#Compiler-dependent-code" class="headerlink" title="Compiler-dependent code"></a>Compiler-dependent code</h2><p>As much as I strive to write portable code, I often find myself  having to trade off performance for portability - and in the embedded  world, performance tends to win. However, what happens if a few years  later I reuse some code without remembering that the code has <em><strong>compiler-specific peculiarities</strong></em>? The result is a much longer debug  session than is necessary. But a <em><strong>judicious</strong></em> <code>#error</code> statement can prevent a lot of grief. A couple of examples may help.</p>
-<h3 id="Example-1"><a href="#Example-1" class="headerlink" title="Example 1"></a>Example 1</h3><p>Some floating-point code requires at least 12 digits of resolution to return the correct results. Accordingly, the various variables are defined as type long double. But <em><strong>ISO C</strong></em> only requires that <em><u>a long double have 10 digits of resolution</u></em>. Thus on certain machines, a long double may be <em><strong>inadequate</strong></em> to do the job. To protect against this, I would  include the following:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;float.h&gt;</span><br><span class="line">#if (LDBL_DIG &lt; 12) </span><br><span class="line">	#error *** long doubles need 12 digit resolution.</span><br><span class="line">	Do not use this compiler! *** </span><br><span class="line">#endif </span><br></pre></td></tr></table></figure>
-
-<p>This approach works by examining the value of an ANSI-mandated constant found in <a target="_blank" rel="noopener" href="http://en.wikipedia.org/wiki/Float.h">float.h (link is external)</a>.</p>
-<h3 id="Example-2"><a href="#Example-2" class="headerlink" title="Example 2"></a>Example 2</h3><p>An amazing amount of code makes invalid assumptions about the  underlying size of the various integer types. If you have code that has to use an int (as opposed to a user-specified data type such as <code>int16</code>),  and the code assumes that an int is 16 bits, you can do the following:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;limits.h&gt;</span><br><span class="line">#if (INT_MAX !&#x3D; 32767) </span><br><span class="line">	#error *** This file only works with 16-bit int.</span><br><span class="line">	Do not use this compiler! *** </span><br><span class="line">#endif </span><br></pre></td></tr></table></figure>
-
-<p>Again, this works by checking the value of an ANSI-mandated constant. This time the constant is found in the file <a target="_blank" rel="noopener" href="http://en.wikipedia.org/wiki/Limits.h">limits.h (link is external)</a>. This approach is a lot more useful than putting these limitations  inside a big comment that someone may or may not read. After all, you have to read the compiler error messages.</p>
-<h2 id="Conditionally-compiled-code"><a href="#Conditionally-compiled-code" class="headerlink" title="Conditionally-compiled code"></a>Conditionally-compiled code</h2><p>Since conditionally compiled code seems to be a necessary evil in embedded programming, it’s common to find code sequences such as the  following:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">#if defined OPT_1 </span><br><span class="line">	&#x2F;* Do option_1 *&#x2F; </span><br><span class="line">#else </span><br><span class="line">	&#x2F;* Do option_2 *&#x2F; </span><br><span class="line">#endif </span><br></pre></td></tr></table></figure>
-
-<p>As it is written, this code means the following: if and only if OPT_1 is defined, we will do option_1; otherwise we’ll do option_2. The  problem with this code is that a user of the code doesn’t know (without explicitly examining the code) that OPT_1 is a valid compiler switch.  Instead, the naive user will simply compile the code without defining OPT_1 and get the alternate implementation, irrespective of whether  that is what’s required or not. A more considerate coder might be aware  of this problem, and instead do the following:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">#if defined OPT_1 </span><br><span class="line">	&#x2F;* Do option 1 *&#x2F; </span><br><span class="line">#elif defined OPT_2 </span><br><span class="line">	&#x2F;* Do option 2*&#x2F; </span><br><span class="line">#endif </span><br></pre></td></tr></table></figure>
-
-<p>In this case, failure to define either OPT_1 or OPT_2 will typically  result in an obscure compiler error at a point later in the code. The  user of this code will then be stuck with trying to work out what must  be done to get the module to compile. This is where #error comes in.  Consider the following code sequence:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">#if defined OPT_1 </span><br><span class="line">	&#x2F;* Do option_1 *&#x2F; </span><br><span class="line">#elif defined OPT_2 </span><br><span class="line">	&#x2F;* Do option_2 *&#x2F; </span><br><span class="line">#else </span><br><span class="line">	#error *** You must define one of OPT_1 or OPT_2 *** </span><br><span class="line">#endif </span><br></pre></td></tr></table></figure>
-
-<p>Now the compilation fails, but at least it tells the user explicitly  what to do to make the module compile. I know that if this procedure had been adopted universally, I would have saved a lot of time over the  years trying to reuse other people’s code.</p>
-<p>So there you have it. Now tell me, don’t you agree that <code>#error</code> is a  really useful part of the preprocessor, worthy of your frequent use-and  occasional praise?</p>
 <p>​          </p>
 
       

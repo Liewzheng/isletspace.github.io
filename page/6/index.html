@@ -126,7 +126,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">64</span>
+          <span class="site-state-item-count">68</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -135,7 +135,7 @@
         <span class="site-state-item-name">categories</span>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">126</span>
+        <span class="site-state-item-count">134</span>
         <span class="site-state-item-name">tags</span>
       </div>
   </nav>
@@ -169,6 +169,470 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://islet.space/2019/02/22/Linux/ShadowsocksR/2019-02-22-Beyond%20the%20Wall/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Liewzheng">
+      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coder的孤岛">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2019/02/22/Linux/ShadowsocksR/2019-02-22-Beyond%20the%20Wall/" class="post-title-link" itemprop="url">Beyond the Wall</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2019-02-22 22:00:00" itemprop="dateCreated datePublished" datetime="2019-02-22T22:00:00+08:00">2019-02-22</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2021-05-20 22:47:25" itemprop="dateModified" datetime="2021-05-20T22:47:25+08:00">2021-05-20</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>本文几乎九成都是参考链接中的文章的摘写，很多前辈们都写得很好了，但是为了更好的适应现在的网络环境，还是做适当调整和补充说明。</p>
+<p>基础解释部分，完全转自前辈 <strong>@ThomasXu</strong> 的文章《<a target="_blank" rel="noopener" href="https://medium.com/@thomas_summon/%E6%B5%85%E8%B0%88vpn-vps-proxy%E4%BB%A5%E5%8F%8Ashadowsocks%E4%B9%8B%E9%97%B4%E7%9A%84%E8%81%94%E7%B3%BB%E5%92%8C%E5%8C%BA%E5%88%AB-b0198f92db1b">浅谈vpn、vps、Proxy以及shadowsocks之间的联系和区别</a>》。</p>
+<p>注意，本文不适合完全小白的受众阅读！实践操作部分，需要有一定的Linux基础和网络知识。</p>
+<p>亲自画了个图，示意墙以外的协议和墙以内的协议。<br><img src="http://uk-liewzheng-blog-pic.oss-eu-west-1.aliyuncs.com/2019/02/22/Beyond_the_Wall/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E5%8D%8F%E8%AE%AE%E7%90%86%E8%A7%A3.jpg"></p>
+<h1 id="基础解释"><a href="#基础解释" class="headerlink" title="基础解释"></a>基础解释</h1><h2 id="GFW"><a href="#GFW" class="headerlink" title="GFW"></a>GFW</h2><p>如果有机会，可以搜一下<strong>GFW</strong>，此处不做解释。</p>
+<p>GFW实现网络封锁的手段主要有两种：<strong>DNS劫持</strong>和<strong>IP封锁</strong>（除此之外，还有<strong>DNS污染</strong>和<strong>关键词过滤</strong>，此处不做解释）。</p>
+<ul>
+<li><p><strong>DNS劫持</strong>：IP是网络上各主机的“地址”，要想访问“别人家”，当然得要有地址。但IP是一串数字，是给电脑看的，人记起来太麻烦，所以就有了域名Domain（也就是我们常说的网址）和 DNS（网域名称系统，Domain Name System）。域名是一串英文字符串，方便人记忆。DNS将域名和IP关联起来，形成映射及映射表。用户访问域名所在的目标网站前，将域名发给DNS服务器询问这对映射关系，拿到对应的IP后就可以在茫茫网海中找到那个“她”了。而GFW所做的就是站在用户和DNS服务器之间，破坏它们的正常通讯，并向用户回传一个假IP。用户拿不到真正的IP，自然也就访问不到本想访问的网站了。DNS劫持是GFW早期唯一的技术手段，所以那个时候的用户通过修改Hosts文件的方式就可以零成本突破封锁了。</p>
+</li>
+<li><p><strong>IP封锁</strong>：DNS劫持之后，GFW引入了IP封锁，直接锁住了访问目标网站的去路，用户发往被封锁ip的任何数据都会被墙截断。这个时候，依靠类似于修改Hosts文件这种低成本方法突破封锁就显得有些天方夜谭了。那么，解决办法是什么呢？答案是：在第三方架设翻墙服务器，中转与目标服务器间的来往流量。目前为止，GFW采用的是黑名单模式，像Google、Facebook这种在黑名单上的网站的ip无法访问，而不在黑名单上的第三方不记名ip可以。于是，一切就很明朗了，我们目前几乎所有的翻墙手段都是基于上述原理实现的，VPN是，ShadowSocks是，还有一些比较冷门的（比如V2Ray）同样如此，只不过它们的技术细节不同（这个我们不会深入）。</p>
+</li>
+</ul>
+<h2 id="VPN"><a href="#VPN" class="headerlink" title="VPN"></a>VPN</h2><p>VPN，全称“虚拟私人网络（Virtual Private Network）”，是一种加密通讯技术。VPN是一个统称，它有很多的具体实现，比如PPTP、L2TP、IPSec和openvpn。vpn出现远早于GFW，所以它不是为了翻墙而生的，它被设计出来的目的是数据传输安全和网络匿名。</p>
+<p>而既然不是为翻墙而生，那从翻墙的角度上讲，VPN协议就存在诸多问题。最严重的一个就是流量特征过于明显。墙目前已经能够精确识别绝大部分VPN协议的流量特征并给予封锁，所以，VPN这种翻墙方式基本已经废了。</p>
+<p>但即便如此，VPN作为过去很长一段时间最主流最热门最常用最为人所知的翻墙手段，已然成为翻墙的代名词。即便是VPN已不再常用的今天，当人们谈及翻墙的时候，说得最多的仍是：“你有什么好用的VPN吗？”。</p>
+<h2 id="Proxy"><a href="#Proxy" class="headerlink" title="Proxy"></a>Proxy</h2><p>Proxy（代理）又分为<strong>正向代理</strong>和<strong>反向代理</strong>。翻墙所用的代理都是正向代理。</p>
+<h3 id="反向代理"><a href="#反向代理" class="headerlink" title="反向代理"></a>反向代理</h3><p><a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86"><strong>反向代理</strong></a>的作用主要是为服务器做缓存和负载均衡，此处不做解释。</p>
+<p>另外，Shadowsocks里也有负载均衡的概念，但Shadowsocks的负载均衡和反向代理的负载均衡不是一个概念。</p>
+<p>反向代理的负载均衡是指：在多个真正的服务器前架设一个代理服务器，用户所有的数据都发给代理服务器，然后代理服务器根据各个真实服务器的状态将数据转发给一个任务较少的服务器处理。这样，服务商既可以架设多个服务器分担任务、减轻压力，用户也只要记一个域名或ip就可以了。</p>
+<p>Shadowsocks的负载均衡是指：每隔一段时间更改一次翻墙服务器，将用户的数据平均发给多个不同的翻墙服务器，以避免发往某一个翻墙服务器的流量过多。</p>
+<h3 id="正向代理"><a href="#正向代理" class="headerlink" title="正向代理"></a>正向代理</h3><p>正向代理主要有<strong>HTTP</strong>、<strong>HTTP over TLS(HTTPS)<strong>、</strong>Socks</strong>、<strong>Socks over TLS</strong>几种。</p>
+<p>其中，HTTP和Socks无法用于翻墙，HTTPS和Socks over TLS可以用于翻墙。不过，Socks over TLS几乎没人用，我们这里就不多说了。</p>
+<p>Proxy的历史同样早于GFW，它最早被设计出来的目的当然也不是翻墙。正向代理最主要的目的和VPN差不多，都是用于匿名，但HTTP和Socks不能加密，只能匿名，HTTPS既可以匿名，也可以用于加密通信。</p>
+<p>从理论上讲，四种代理协议都可以通过“用户先将数据发给代理服务器，再由代理服务器转发给目的服务器”的方法达到翻墙目的。但由于HTTP和Socks都是明文协议，GFW可以通过检查数据包内的内容得知用户的真实意图，进而拦截数据包。所以，HTTP和Socks一般只用作本地代理。而HTTPS协议是加密通讯，GFW无法得知数据包内的真实内容，类似于<strong>关键词过滤</strong>的手段无法施展。</p>
+<h4 id="Socks"><a href="#Socks" class="headerlink" title="Socks"></a>Socks</h4><p><strong><a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/SOCKS">Socks</a></strong> 代理与其他类型的代理不同，它只是简单地传递数据包，而并不关心是何种应用协议，既可以是HTTP请求，所以SOCKS代理服务器比其他类型的代理服务器速度要快得多。</p>
+<p>Socks代理又分为<strong>Socks4</strong> 和 <strong>Socks5</strong> ，二者不同的是Socks4代理只支持TCP协议，而Socks5代理则既支持TCP协议又支持UDP协议，还支持各种身份验证机制、服务器端域名解析等。Socks4能做到的Socks5都可得到，但Socks5能够做到的Socks4则不一定能做到，比如我们常用的聊天工具QQ在使用代理时就要求用Socks5代理，因为它需要使用UDP协议来传输数据.</p>
+<h4 id="HTTPS和V2Ray"><a href="#HTTPS和V2Ray" class="headerlink" title="HTTPS和V2Ray"></a>HTTPS和V2Ray</h4><ul>
+<li>HTTPS代理最大的缺点就是配置复杂。即便能用默认参数就用默认参数，用户自己只作最低限度的配置，对新手而言，这也是一个无比痛苦的过程。更别说，想要正常使用HTTPS代理，你还要购买域名和证书这些，非常麻烦。所以，即便是在shadowsocks出现之前，HTTPS代理也没在大陆流行起来。HTTPS代理只能转发TCP流量，对UDP无能为力。</li>
+<li>V2Ray的VMess over tls也许能和HTTPS代理媲美。但V2Ray存在的时间较短、使用者较少、社区也没有HTTPS代理活跃（从全球范围上看）。相比于HTTPS代理，VMess协议潜在的安全漏洞可能要多。这也是v2ray的小众的主要原因之一（另一个是用户没有从shadowsocks迁移到V2Ray的动力），它的配置同样相当复杂。</li>
+</ul>
+<p><strong>HTTPS代理的流量特征和我们平时访问网站时所产生的HTTPS流量几乎一摸一样，GFW无法分辨，稳定性爆表。</strong></p>
+<p>理论上讲，HTTPS代理无论是安全性还是在隐匿性上，都要比目前最为流行的Shadowsocks好。事实上，在所有已知的翻墙协议中，无论是VPN协议，还是代理协议，它应该都是最好的。</p>
+<p>这里推荐刘亚晨先生的一篇文章「<a target="_blank" rel="noopener" href="https://medium.com/@Blankwonder/%E5%90%84%E7%A7%8D%E5%8A%A0%E5%AF%86%E4%BB%A3%E7%90%86%E5%8D%8F%E8%AE%AE%E7%9A%84%E7%AE%80%E5%8D%95%E5%AF%B9%E6%AF%94-1ed52bf7a803">各种加密代理协议的简单对比</a>」。</p>
+<h2 id="VPS"><a href="#VPS" class="headerlink" title="VPS"></a>VPS</h2><p>VPS（Virtual private server，虚拟专用服务器）是由VPS提供商维护，租用给站长使用的“不会关机的电脑”。vps不是一台台独立的电脑，而是将一台巨型服务器通过虚拟化技术分割成若干台看似独立的服务器。这台巨型服务器不间断运行，被分割出来的小服务器也跟着不停的运作，站长租用其中一台小服务器，搭载上自己的站点，就可以等着用户访问了。</p>
+<p>Q: VPS和VPN、Proxy以及我们后面会说的Shadowsocks有什么关系呢？<br>A: 很简单，VPS可以用来搭建网站，当然也可以用来承载VPN服务器、代理服务器或是Shadowsocks的服务器啦。建站固然是VPS最主要的作用，但绝对不是它唯一的作用，既然VPS本质上也是电脑，那电脑能做的事它当然也能做。</p>
+<h2 id="Shadowsocks"><a href="#Shadowsocks" class="headerlink" title="Shadowsocks"></a>Shadowsocks</h2><p><a target="_blank" rel="noopener" href="http://shadowsocks.org/en/index.html"><strong>Shadowsocks(SS)</strong></a>是既可以指一种基于<strong>Socks5</strong>代理方式的加密传输协议，也可以指实现这个协议的各种开发包。目前包使用 Python、C、C++、C#、Go 等编程语言开发，大部分主要实现（iOS 平台的除外）采用 Apache 许可证、GPL、MIT 许可证等多种自由软件许可协议开放源代码。</p>
+<p>在Shadowsocks之前，墙内网民主要依靠寻找现成的技术实现翻墙。比如VPN、HTTPS、TOR的中继网桥以及之后的MEEK插件等等，虽然也有自己的技术，比如一种依靠Google隐藏IP实现翻墙的技术（名字忘了）,但毕竟难成大器，再加上GFW逐渐加大对VPN的干扰，人们迫切需要一种简单可靠的技术来抵御GFW的进攻。</p>
+<p>于是，大概是在2013年吧（具体时间我也不太清楚），@clowwindy带着他的shadowsocks横空出世。</p>
+<p>Shadowsocks同样是一种代理协议，但是作为@clowwindy为国人设计的专门用于翻墙的代理协议，相对于VPN，Shadowsocks有着极强的隐匿性；相对于HTTP代理，Shadowsocks提供了较为完善的加密方案，虽然比不上HTTPS代理和VPN，但使用的也是成熟的工业级的加密算法，普通个人用户完全不用顾虑；相对于HTTPS代理，Shadowsocks的安装配置更为简单，中文社区更为活跃，中文文档教程更完善，更符合中国国情。</p>
+<p>Shdadowsocks最初的版本是由@clowwindy使用Python（一种目前非常热门的脚本编程语言）实现的。所以clowwindy的版本被称为Python版。shadowsocks有点名气之后，不同的开发者使用不同的编程语言为其写了很多分支版本。比如:</p>
+<ul>
+<li>@cyfdecyf开发维护的Go版本。</li>
+<li>@madeye开发维护的libev版本（由纯C语言编写，基于libev库开发）。</li>
+<li>@librehat开发维护的c++版。</li>
+<li>@zhou0开发维护的Perl版。</li>
+</ul>
+<p>这些版本的安装使用指南都可以在shadowsocks的官网上查阅。</p>
+<p>2015年，clowwindy因喝茶事件被迫停止了shadowsocks的维护，并删除了其开源在GitHub上的代码，Python版就此停滞。但其它版本仍处于维护更新中。其中，更新最频繁，新技术跟进最快的是由@madeye维护的libev版本。这里有必要说明下，目前，shadowsocks协议（请区分“shadowsocks协议”和“shadowsocks协议的具体实现”这两者的区别）是由shadowsocks社区内的成员共同维护，协议上任何新改进都是社区成员共同商讨的结果。但对这些变化，不同的版本的shadowsocks跟进速度不同。而跟进速度最快的就是我上面说的libev版。无论是SIP007确认的ADEA Ciphers（一种同时进行认证和加密的算法），还是SIP003引进的simple-obfs（tor开发的一种混淆插件），shadowsocks-libev都是最早引入自己软件的。</p>
+<p>Shadowsocks 分为服务器端和客户端，在使用之前，需要先将服务器端部署到服务器上面，然后通过客户端连接并创建本地代理。</p>
+<h2 id="ShadowsockR"><a href="#ShadowsockR" class="headerlink" title="ShadowsockR"></a>ShadowsockR</h2><p><strong>ShadowsocksR(SSR)</strong> 是 <strong>@breakwa11</strong> 发起的Shadowsocks分支，在Shadowsocks的基础上增加了一些数据混淆方式，称修复了部分安全问题并可以提高QoS优先级。后来贡献者@Librehat 也为 Shadowsocks 补上了一些此类特性，甚至增加了类似 Tor 的可插拔传输层功能。</p>
+<p>因为Shadowsocks在普及之后最大的缺点就是加密流量过多，防火墙一旦检测到你的加密流量过多之后，就会进一步开始限制你的IP。因此不适合长期使用，而ShadowsocksR在Shadowsocks的基础上加上了Potocol和Obfs功能，能够进一步伪装成HTTPS流量，让防火墙检测到你的难度加大，安全和稳定性都更高。如果你用SS，那么你被检测到的时间可能需要几个月，短则几天，甚至是几分钟（曾经发生过，一下子就被截胡了），但是SSR能更稳定。</p>
+<h2 id="VMess"><a href="#VMess" class="headerlink" title="VMess"></a>VMess</h2><p><strong><a target="_blank" rel="noopener" href="https://www.v2ray.com/chapter_02/protocols/vmess.html">VMess</a></strong> 协议是由 V2Ray 原创并使用于 V2Ray 的加密传输协议，如同 Shadowsocks 一样为了对抗墙的深度包检测而研发的。在 V2Ray 上客户端与服务器的通信主要是通过 VMess 协议通信。V2Ray 是 Project V 下的一个工具。Project V 是一个包含一系列构建特定网络环境工具的项目，而 V2Ray 属于最核心的一个。从时间上来说，先有 V2Ray 才有 Project V。Project V还包含其他的传输加密协议，如Shadowsocks和socks。</p>
+<p>VMess 依赖于系统时间，请确保使用 V2Ray 的系统 UTC 时间误差在 90 秒之内，时区无关。</p>
+<p>在 Linux 系统中可以安装ntp服务来自动同步系统时间。</p>
+<h1 id="部署实践"><a href="#部署实践" class="headerlink" title="部署实践"></a>部署实践</h1><p>请见文章《<a target="_blank" rel="noopener" href="https://blog.liewzheng.cn/2019/02/14/Linux/ShadowsocksR/SSR%E7%AE%80%E6%98%93%E6%95%99%E7%A8%8B/">SSR简易教程</a>》</p>
+<h1 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h1><ol>
+<li>《<a target="_blank" rel="noopener" href="https://medium.com/@thomas_summon/%E6%B5%85%E8%B0%88vpn-vps-proxy%E4%BB%A5%E5%8F%8Ashadowsocks%E4%B9%8B%E9%97%B4%E7%9A%84%E8%81%94%E7%B3%BB%E5%92%8C%E5%8C%BA%E5%88%AB-b0198f92db1b">浅谈vpn、vps、Proxy以及shadowsocks之间的联系和区别</a>》</li>
+<li>《<a target="_blank" rel="noopener" href="https://my.oschina.net/aiguozhe/blog/127279">http,socks4,socks5代理的区别</a>》</li>
+<li>《<a target="_blank" rel="noopener" href="https://toutyrater.github.io/basic/vmess.html">VMess协议·V2Ray配置指南|V2Ray白话文教程</a>》</li>
+<li>《<a target="_blank" rel="noopener" href="https://www.cnblogs.com/kreo/p/4368811.html">CentOS7安装iptables防火墙</a>》</li>
+<li>《<a target="_blank" rel="noopener" href="https://walesexcitedmei.github.io/2018/11/26/SSR-ShadowsocksR-%E9%85%8D%E7%BD%AE%E5%8F%8A%E4%BD%BF%E7%94%A8/">ShadowsocksR 配置及使用</a>》</li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://islet.space/2019/02/14/Linux/ShadowsocksR/2019-02-14-SSR%E7%AE%80%E6%98%93%E6%95%99%E7%A8%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Liewzheng">
+      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coder的孤岛">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2019/02/14/Linux/ShadowsocksR/2019-02-14-SSR%E7%AE%80%E6%98%93%E6%95%99%E7%A8%8B/" class="post-title-link" itemprop="url">SSR简易教程</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2019-02-14 12:00:00" itemprop="dateCreated datePublished" datetime="2019-02-14T12:00:00+08:00">2019-02-14</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2019-02-22 21:59:09" itemprop="dateModified" datetime="2019-02-22T21:59:09+08:00">2019-02-22</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>本文在参考了各家文章之所长的基础上，亲自实践折腾了1个小时左右，成功搭建科学上网之路。(并不图文并茂呢~)</p>
+<p>首先，本文应用到的工具有Vultr、Xshell、Terminal（windows平台下为cmd工具）、和SS（ShadowSocks）连接器,下文会对工具进行介绍。</p>
+<h1 id="一、工具介绍"><a href="#一、工具介绍" class="headerlink" title="一、工具介绍"></a>一、工具介绍</h1><h2 id="1-Vultr"><a href="#1-Vultr" class="headerlink" title="1. Vultr"></a>1. Vultr</h2><p>首先了解一下VPS的概念。<strong>VPS</strong>即Virtual private server，虚拟专享服务器，是指将一台服务器分割成多个虚拟专享服务器的服务。</p>
+<p>Vultr是国外的一个大型服务器提供商，可以低价租用他们的虚拟专享服务器。然后通过让我们自己的设备连接到他们的虚拟专享服务器来达到科学上网的目的。（PS：因为他们的虚拟专享服务器在国外）</p>
+<p>也有其他的VPS提供商，见文章《<a target="_blank" rel="noopener" href="https://www.vpser.net/ten-dollars-vps">10美元以下国内VPS/美国VPS推荐</a>》。</p>
+<h2 id="2-Xshell-和-Terminal"><a href="#2-Xshell-和-Terminal" class="headerlink" title="2. Xshell 和 Terminal"></a>2. Xshell 和 Terminal</h2><p>Xshell是个开启SSH服务工具。<strong>SSH</strong>即Secure Shell，是是一种加密的网络传输协议，可在不安全的网络中为网络服务提供安全的传输环境。SSH通过在网络中创建安全隧道来实现SSH客户端与服务器之间的连接。</p>
+<p>Terminal是个命令执行终端，跟Windows下的command窗口同理。我们只需要用Terminal执行一句<code>ping 0.0.0.0</code>而已。（0.0.0.0 更换为你部署的服务器地址）</p>
+<h2 id="3-SSR"><a href="#3-SSR" class="headerlink" title="3. SSR"></a>3. SSR</h2><p>见文章《<a target="_blank" rel="noopener" href="http://blog.liewzheng.cn/2019/02/22/Linux/ShadowsocksR/Beyond%20the%20Wall/">Beyond the Wall</a>》。</p>
+<h1 id="二、实践步骤"><a href="#二、实践步骤" class="headerlink" title="二、实践步骤"></a>二、实践步骤</h1><p>本篇文章也算是给自己下次部署SSR一个笔记，提醒自己有哪些步骤。</p>
+<h2 id="1-下载和安装SSR"><a href="#1-下载和安装SSR" class="headerlink" title="1. 下载和安装SSR"></a>1. 下载和安装SSR</h2><p>提供英文和中文两个版本，都分别有三条语句：<code>wget *****</code>，<code>chmod *****</code> 和 <code>./*****</code>。步骤分别是下载<code>*****.sh</code>文件，提升该文件的权限 和 运行该文件。</p>
+<p>注意：如提示<code>wget not found</code> ， 请先执行<code>yum install -y wget</code>。（CentOS下执行，其他系统请自行Google）</p>
+<h3 id="English-Edition"><a href="#English-Edition" class="headerlink" title="English Edition"></a>English Edition</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">wget --no-check-certificate https:&#x2F;&#x2F;raw.githubusercontent.com&#x2F;teddysun&#x2F;shadowsocks_install&#x2F;master&#x2F;shadowsocksR.sh</span><br><span class="line">chmod +x shadowsocksR.sh</span><br><span class="line">.&#x2F;shadowsocksR.sh 2&gt;&amp;1 | tee shadowsocksR.log</span><br></pre></td></tr></table></figure>
+
+<h3 id="Chinese-Edition"><a href="#Chinese-Edition" class="headerlink" title="Chinese Edition"></a>Chinese Edition</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">wget -N --no-check-certificate https:&#x2F;&#x2F;raw.githubusercontent.com&#x2F;ToyoDAdoubi&#x2F;doubi&#x2F;master&#x2F;ssr.sh </span><br><span class="line">chmod +x ssr.sh </span><br><span class="line">.&#x2F;ssr.sh</span><br></pre></td></tr></table></figure>
+
+<p>其实我也知道我很懒，也知道以下很多文章都是看不到的，但我不想写了，非常懒地放个链接好了，最怕的是写这些怕被请喝茶。</p>
+<h2 id="2-BBR加速"><a href="#2-BBR加速" class="headerlink" title="2. BBR加速"></a>2. BBR加速</h2><p>此步骤100%的概率建议用户操作，虽然不操作也能用，原因还是看文章吧。</p>
+<p>《<a href="%E4%BD%BF%E7%94%A8BBR%E4%B8%80%E9%94%AE%E8%84%9A%E6%9C%AC%E4%B8%BA%E4%BD%A0%E7%9A%84CentOS/Debian/Ubuntu%E7%B3%BB%E7%BB%9F%E5%8A%A0%E9%80%9F">使用BBR一键脚本为你的CentOS/Debian/Ubuntu系统加速</a>》</p>
+<h2 id="3-添加多用户（可选）"><a href="#3-添加多用户（可选）" class="headerlink" title="3. 添加多用户（可选）"></a>3. 添加多用户（可选）</h2><p>centOS使用的防火墙是firewalld不是iptables，添加完多用户之后要开启对应的端口。</p>
+<p>《<a target="_blank" rel="noopener" href="https://www.lutizi.com/ssr/">Linux VPS主机搭建ShadowsocksR(ssr)多用户一键脚本带Web查询面板</a>》</p>
+<p>《<a target="_blank" rel="noopener" href="https://www.cnblogs.com/kreo/p/4368811.html">CentOS7安装iptables防火墙</a>》</p>
+<h2 id="4-添加SSH服务端口（可选）"><a href="#4-添加SSH服务端口（可选）" class="headerlink" title="4. 添加SSH服务端口（可选）"></a>4. 添加SSH服务端口（可选）</h2><p>虽然是可选，但我还是100%建议这么做。为了防止被GFW屏蔽22端口，多添加几个端口备用，添加端口的方法见上面的文章。</p>
+<p>《<a target="_blank" rel="noopener" href="https://sebastianblade.com/how-to-modify-ssh-port-in-centos7/">怎样修改 CentOS 7 SSH 端口</a>》</p>
+<h2 id="5-检查端口"><a href="#5-检查端口" class="headerlink" title="5. 检查端口"></a>5. 检查端口</h2><p>在CentOS下查看端口需要先安装Net-tools: <code>yum install net-tools</code>，查看时使用<code>netstat -ntlp</code>。其他用法请参详：</p>
+<p>《<a target="_blank" rel="noopener" href="https://www.cnblogs.com/ggjucheng/archive/2012/01/08/2316661.html">Linux netstat命令详解</a>》</p>
+<h2 id="6-Google-Scholar（可选）"><a href="#6-Google-Scholar（可选）" class="headerlink" title="6. Google Scholar（可选）"></a>6. Google Scholar（可选）</h2><p>如果无法打开Google Scholar，可以尝试阅读以下文章。</p>
+<p>《<a target="_blank" rel="noopener" href="https://cao0507.github.io/2018/12/17/%E8%A7%A3%E5%86%B3vpn%E6%97%A0%E6%B3%95%E6%89%93%E5%BC%80%E8%B0%B7%E6%AD%8C%E5%AD%A6%E6%9C%AF%E7%9A%84%E9%97%AE%E9%A2%98/">解决 VPN 无法打开谷歌学术的问题</a>》</p>
+<h2 id="7-伪装SSR（可选）"><a href="#7-伪装SSR（可选）" class="headerlink" title="7. 伪装SSR（可选）"></a>7. 伪装SSR（可选）</h2><p>《<a target="_blank" rel="noopener" href="https://www.liuboping.com/%E5%87%A0%E6%AD%A5%E6%89%BE%E5%87%BAss%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E9%80%9F%E5%BA%A6%E6%85%A2%E7%9A%84%E5%8E%9F%E5%9B%A0/">几步找出ss科学上网速度慢的原因</a>》</p>
+<p>《<a target="_blank" rel="noopener" href="https://www.liuboping.com/ss%E9%80%9F%E5%BA%A6%E6%85%A2%E6%9C%80%E5%A4%A7%E7%9A%84%E5%8F%AF%E8%83%BD%E6%98%AF%E8%A2%AB%E8%BF%90%E8%90%A5%E5%95%86qos%E4%BA%86/">SS速度慢——最大的可能是被运营商QoS了</a>》</p>
+<h2 id="8-KCPTun（可选）"><a href="#8-KCPTun（可选）" class="headerlink" title="8. KCPTun（可选）"></a>8. KCPTun（可选）</h2><p>倒腾过，倒也不难，但是下载另外一个客户端麻烦，我就不弄了。推荐操作指数是50%。</p>
+<p>《<a target="_blank" rel="noopener" href="https://www.gblm.net/209.html">一步一步教你用Kcptun给Shadowsocks加速！看YouTube1080P一点都不卡！</a>》</p>
+<p>另外，不介绍VMess的使用方法了，感兴趣可以自行Google。<br>可以多部署几个Server（价格也就上去了），然后启用SSR的负载均衡，降低与某个Sever IP的通信数据过大，导致被防火墙封死。</p>
+<h1 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h1><ol>
+<li>《<a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000015558387">超详细 Vultr（VPS）搭建 SS / 新手图文指导教程</a>》</li>
+<li>《<a target="_blank" rel="noopener" href="https://blog.huihut.com/2016/12/03/BandwagonShadowsocksServer/">搬瓦工Shadowsocks安装及配置多用户(服务端)</a>》</li>
+<li>《<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/Shadowsocks">Shadowsocks</a>》</li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://islet.space/2019/02/13/Others/%E7%A1%AC%E4%BB%B6%E7%B3%BB%E7%BB%9F%E6%B5%8B%E8%AF%95/%E7%A1%AC%E4%BB%B6%E7%B3%BB%E7%BB%9F%E6%B5%8B%E8%AF%95%E6%9C%AF%E8%AF%AD%E6%95%B4%E7%90%86/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Liewzheng">
+      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coder的孤岛">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2019/02/13/Others/%E7%A1%AC%E4%BB%B6%E7%B3%BB%E7%BB%9F%E6%B5%8B%E8%AF%95/%E7%A1%AC%E4%BB%B6%E7%B3%BB%E7%BB%9F%E6%B5%8B%E8%AF%95%E6%9C%AF%E8%AF%AD%E6%95%B4%E7%90%86/" class="post-title-link" itemprop="url">硬件系统测试术语整理</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2019-02-13 15:30:00" itemprop="dateCreated datePublished" datetime="2019-02-13T15:30:00+08:00">2019-02-13</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2019-02-14 15:13:16" itemprop="dateModified" datetime="2019-02-14T15:13:16+08:00">2019-02-14</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/InternetOfThings/" itemprop="url" rel="index"><span itemprop="name">InternetOfThings</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="关于测试"><a href="#关于测试" class="headerlink" title="关于测试"></a>关于测试</h1><p>测试的目的决定了如何去组织测试。如果测试的目的是为了尽可能多的找出错误，那么测试就应该直接针对设计比较复杂的部分，或是以前出错比较多的位置。如果测试的目的是为了给最终用户提供具有一定可信度的质量评价，那么测试就应该直接针对在实际应用中经常用到的商业假设。</p>
+<p>测试并不仅仅是为了要找出错误。通过分析错误产生的原因和错误的分布特征，可以帮助项目管理者发现当前设计过程的缺陷，以便改进。同时，这种分析也能帮助测试人员 设计出有针对性的检测方法，改善测试的有效性。</p>
+<p>没有发现错误的测试也是有价值的，完整的测试时评定测试质量的一种方法。</p>
+<p>硬件系统测试分为 <strong>软件测试</strong> 及 <strong>硬件测试</strong> 两部分。</p>
+<p>软件部分可以依据现行软件测试的流行办法来测试。</p>
+<p>硬件测试部分分为 <strong>硬件基础测试</strong> 和 <strong>硬件功能级以上测试</strong> 两部分。即除了测试各项硬件参数性能是否符合设计要求以外，仍需要测量硬件功能及联动特性是否符合要求。</p>
+<h1 id="术语"><a href="#术语" class="headerlink" title="术语"></a>术语</h1><h2 id="单元测试"><a href="#单元测试" class="headerlink" title="单元测试"></a>单元测试</h2><p>Unit testing，也称为Module testing（模块测试）。是指对软件中的最小可测试单元进行检查和验证。对于单元测试中单元的含义，一般来说，要根据实际情况去判定其具体含义，如C语言中单元指一个函数，Java里单元指一个类，图形化的软件中可以指一个窗口或一个菜单等。总的来说，单元就是人为规定的最小的被测功能模块。</p>
+<p>单元测试是在软件开发过程中要进行的最低级别的测试活动，软件的独立单元将在与程序的其他部分相隔离的情况下进行测试。</p>
+<p>经常与单元测试联系起来的另外一些开发活动包括代码走读（Code review)，<strong>静态分析</strong>（Static analysis)和<strong>动态分析</strong>（Dynamic analysis)。<br><strong>静态分析</strong> 就是对软件的源代码进行研读，查找错误或收集一些度量数据，并不需要对代码进行编译和执行。<br><strong>动态分析</strong> 就是通过观察软件运行时的动作，来提供执行跟踪，时间分析，以及测试覆盖度方面的信息。</p>
+<h2 id="集成测试"><a href="#集成测试" class="headerlink" title="集成测试"></a>集成测试</h2><p>Assemble testing，也叫 <strong>组装测试</strong> 或 <strong>联合测试</strong> 。在单元测试的基础上，将所有模块按照设计要求（如根据结构图）组装成为子系统或系统，进行集成测试。</p>
+<p>实践表明，一些模块虽然能够单独地工作，但并不能保证连接起来也能正常的工作。一些局部反映不出来的问题，在全局上很可能暴露出来。</p>
+<h2 id="功能测试"><a href="#功能测试" class="headerlink" title="功能测试"></a>功能测试</h2><p>Functional testing，也称为Behavioral testing（行为测试）和Black Box testing（黑盒测试），根据产品特性、操作描述和用户方案，测试一个产品的特性和可操作行为以确定它们满足设计需求。</p>
+<h2 id="系统测试"><a href="#系统测试" class="headerlink" title="系统测试"></a>系统测试</h2><p>System Testing，是对整个系统的测试，将硬件、软件、操作人员看作一个整体，检验它是否有不符合系统说明书的地方。这种测试可以发现系统分析和设计中的错误。如安全测试是测试安全措施是否完善，能不能保证系统不受非法侵入。再例如，压力测试是测试系统在正常数据量以及超负荷量(如多个用户同时存取) 等情况下是否还能正常地工作。</p>
+<h2 id="冒烟测试"><a href="#冒烟测试" class="headerlink" title="冒烟测试"></a>冒烟测试</h2><p>Smoke testing，对一个硬件或硬件组件进行更改或修复后，直接给设备加电。如果没有冒烟，则该组件就通过了测试。在软件中，“冒烟测试”这一术语描述的是在将代码更改嵌入到产品的源树中之前对这些更改进行验证的过程。在检查了代码后，冒烟测试是确定和修复软件缺陷的最经济有效的方法。冒烟测试设计用于确认代码中的更改会按预期运行，且不会破坏整个版本的稳定性。</p>
+<h2 id="验收测试"><a href="#验收测试" class="headerlink" title="验收测试"></a>验收测试</h2><p>验收测试是部署软件之前的最后一个测试操作。在软件产品完成了单元测试、集成测试和系统测试之后，产品发布之前所进行的软件测试活动。它是技术测试的最后一个阶段，也称为交付测试。验收测试的目的是确保软件准备就绪，并且可以让最终用户将其用于执行软件的既定功能和任务。</p>
+<p>检验系统说明书的各项功能与性能是否实现和满足要求。常见的有α测试、β测试，都是由用户进行的。</p>
+<h1 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h1><p>1.《<a target="_blank" rel="noopener" href="https://zhidao.baidu.com/question/294458045.html">集成测试与联调测试的区别</a>》<br>2.《<a target="_blank" rel="noopener" href="https://blog.csdn.net/u012426327/article/details/78400045">软件测试方法——单元测试、集成测试、系统测试、确认测试</a>》<br>3.《<a target="_blank" rel="noopener" href="http://www.cqvip.com/read/read.aspx?id=32762184">浅谈电子产品的硬件测试技术</a>》</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://islet.space/2019/01/30/Hardware/STM32/2019-01-30-STM32%E5%88%9D%E8%AF%86%E5%8F%8A%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Liewzheng">
+      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coder的孤岛">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2019/01/30/Hardware/STM32/2019-01-30-STM32%E5%88%9D%E8%AF%86%E5%8F%8A%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/" class="post-title-link" itemprop="url">STM32初识及环境配置(未完待续)</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2019-01-30 19:00:00" itemprop="dateCreated datePublished" datetime="2019-01-30T19:00:00+08:00">2019-01-30</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2019-02-14 15:05:54" itemprop="dateModified" datetime="2019-02-14T15:05:54+08:00">2019-02-14</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/InternetOfThings/" itemprop="url" rel="index"><span itemprop="name">InternetOfThings</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="一、Some-Conception"><a href="#一、Some-Conception" class="headerlink" title="一、Some Conception"></a>一、Some Conception</h1><h2 id="1-ST"><a href="#1-ST" class="headerlink" title="1. ST"></a>1. ST</h2><p>ST是指意法半导体。意法半导体是一家法国-意大利跨国电子和半导体制造商，总部位于瑞士日内瓦。它通常被称为ST，它是欧洲最大的基于收入的半导体芯片制造商。</p>
+<h2 id="2-Programing-Method"><a href="#2-Programing-Method" class="headerlink" title="2. Programing Method"></a>2. Programing Method</h2><h3 id="2-1-基于寄存器的编程方式"><a href="#2-1-基于寄存器的编程方式" class="headerlink" title="2.1 基于寄存器的编程方式"></a>2.1 基于寄存器的编程方式</h3><p>“设置寄存器-&gt;操作寄存器-&gt;写用户代码”的编程方式通常被称为“基于寄存器的编程方式”，这种编程方式普遍适用于 51、AVR、PIC 或者 MSP430等平台，STM32 当然也可以通过此方式进行程序编写。<br>“基于寄存器的编程方式”有利于大家更好地对一块单片机设备进行操作，但是 这种方式也有以下几个不足:</p>
+<ol>
+<li>移植性差。即当你想把STM32F1的程序移植到STM32F0的单片机上面时，由于两者内核已经内部外设有很多不同，因此，需要修改很多地方才能完成移植;</li>
+<li>效率低下。由于 STM32整个系列的单片机具有非常多的外设，还有两个8位机从没有过的DMA，因此如果基于寄存器编程时，需要设置的寄存器有很多，需要花很长时间来查询用户手册才能完成。</li>
+</ol>
+<h3 id="2-2-基于固件库的编程方式"><a href="#2-2-基于固件库的编程方式" class="headerlink" title="2.2 基于固件库的编程方式"></a>2.2 基于固件库的编程方式</h3><p>基于固件库的变成方式是指，把所有STM32单片机的内部资源抽象成诸多函数，通过对这些函数的设置，即可完成相应固件的初始化以及操作。</p>
+<h2 id="3-IDE"><a href="#3-IDE" class="headerlink" title="3. IDE"></a>3. IDE</h2><h3 id="3-1-IAR-Embedded-Workbench-for-ARM"><a href="#3-1-IAR-Embedded-Workbench-for-ARM" class="headerlink" title="3.1 IAR Embedded Workbench for ARM"></a>3.1 IAR Embedded Workbench for ARM</h3><p>IAR Embedded Workbench 是一套用于编译和调试嵌入式系统应用程序的开发工具，支持汇编、C和C++语言。它提供完整的集成开发环境，包括工程管理器、编辑器、编译链接工具和C-SPY调试器。IAR Systems以其高度优化的编译器 而闻名。每个C/C++编译器不仅包含一般全局性的优化，也包含针对特定芯片的低级优化，以充分利用您所选芯片的所有特性，确保较小的代码尺寸。IAR Embedded Workbench 能够支持由不同的芯片制造商生产，且种类繁多的8位、16位或32位芯片。</p>
+<p>下载链接：<a target="_blank" rel="noopener" href="https://pan.baidu.com/s/1FhzyGrN0bkCP85pQAy79ug">IAR Embedded Workbench for IAR</a> 提取码：c4pm</p>
+<h3 id="3-2-RealView-MDK-ARM"><a href="#3-2-RealView-MDK-ARM" class="headerlink" title="3.2 RealView MDK - ARM"></a>3.2 RealView MDK - ARM</h3><p>RealView MDK开发工具源自德国Keil公司，被全球超过10万的嵌入式开发工程师验证和使用，是ARM公司目前最新推出的针对各种嵌入式处理器的软件开发工具。RealView MDK集成了业内最领先的技术，包括μVision集成开发环境与 RealView编译器。支持ARM7、ARM9和最新的Cortex-M3核处理器，自动配置启动代码，集成Flash烧写模块，强大的Simulation设备模拟，性能分析等功能，与ARM之前的工具包 ADS等相比，RealView编译器的最新版本可将性能改 善超过20%。</p>
+<p>下载链接：<a target="_blank" rel="noopener" href="https://pan.baidu.com/s/18Ni-4gxaqe-P-SIsGrVDIA">Keil MDK 5.24</a> 提取码：jrqc</p>
+<h2 id="4-Debug-Method"><a href="#4-Debug-Method" class="headerlink" title="4. Debug Method"></a>4. Debug Method</h2><p>STM32支持<strong>ISP</strong>和<strong>JTAG/SWD</strong>两种调试方式。</p>
+<h3 id="4-1-1-ISP"><a href="#4-1-1-ISP" class="headerlink" title="4.1.1 ISP"></a>4.1.1 ISP</h3><p>In-System Programmability，即在线系统编程。使用时需要先设置 <strong>BOOT0</strong> 和 <strong>BOOT1</strong> 两脚，然后通过串口 1进行程序烧写，烧写的软件为<strong>Flash_Loader_Demonstrator</strong>。此方法的好处是，可以无需外加编程口，但是只可以烧写程序，无法进行在线仿真。</p>
+<h3 id="4-2-JTAG模式-amp-SWD模式"><a href="#4-2-JTAG模式-amp-SWD模式" class="headerlink" title="4.2 JTAG模式 &amp; SWD模式"></a>4.2 JTAG模式 &amp; SWD模式</h3><p>JTAG，全称为Joint Test Action Group，联合测试工作组。是一种国际标准测试协议 (IEEE 1149.1兼容)， 主要用于芯片内部测试，早在ARM7上面就已经使用了JTAG作为调试和下载口。</p>
+<p>而SWD模式比JTAG 在高速模式下面更加可靠。 在大数据量的情况下面JTAG下载程序会失败, 但是SWD 发生的几率会小很多。基本使用JTAG仿真模式的情况下是可以直接使用SWD模式的。</p>
+<p>与 ISP 相比，SWD接口可以与大多数IDE完美兼容，比如IAR，并且可以通过IAR和调试器，进行程序的在线调试，这种调试方法可以直接追踪到当前代码处的各变量状态，寄存器状态等等。</p>
+<h2 id="5-Download-Tools"><a href="#5-Download-Tools" class="headerlink" title="5. Download Tools"></a>5. Download Tools</h2><h3 id="5-1-J-LINK"><a href="#5-1-J-LINK" class="headerlink" title="5.1 J-LINK"></a>5.1 J-LINK</h3><p>J-Link是SEGGER公司为支持仿真ARM内核芯片推出的仿真调试工具，支持JTAG和SWD两种模式进行调试。</p>
+<h3 id="5-2-U-LINK"><a href="#5-2-U-LINK" class="headerlink" title="5.2 U-LINK"></a>5.2 U-LINK</h3><p>ULINK是由Keil推出的ARM芯片仿真调试工具，是Keil下默认的调试工具，缺点是不支持IAR。<br>ULINK官方提供电路图等资料（半开源资料），可以自行制作仿真调试电路工具。</p>
+<h3 id="5-3-ST-LINK"><a href="#5-3-ST-LINK" class="headerlink" title="5.3 ST-LINK"></a>5.3 ST-LINK</h3><p>ST-LINK是由意法半导体开发的仿真调试工具。<br>(ST-LINKV2)适用于STM32与STM8。与STM32连接时支持JTAG与SWD模式，与STM8连接时支持SWIM模式。</p>
+<h1 id="二、IDE安装及配置"><a href="#二、IDE安装及配置" class="headerlink" title="二、IDE安装及配置"></a>二、IDE安装及配置</h1><h2 id="1-IAR"><a href="#1-IAR" class="headerlink" title="1. IAR"></a>1. IAR</h2><h2 id="2-MDK"><a href="#2-MDK" class="headerlink" title="2. MDK"></a>2. MDK</h2><h1 id="参考材料"><a href="#参考材料" class="headerlink" title="参考材料"></a>参考材料</h1><ol>
+<li>《<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/STMicroelectronics">意法半导体</a>》</li>
+<li>《<a target="_blank" rel="noopener" href="http://bbs.eeworld.com.cn/thread-431094-1-1.html">提问+J-LINK、U-LINK和ST-LINK有什么区别？</a>》</li>
+<li>《<a target="_blank" rel="noopener" href="https://www.eefocus.com/component/m/398663">JTAG与JLink有啥不同？看完这个你就知道了</a>》</li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -814,591 +1278,6 @@
 <li>《<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/Bash">bash</a>》</li>
 <li>《<a target="_blank" rel="noopener" href="https://wido.me/sunteya/understand-bashrc-and-profile">理解 bashrc 和 profile</a>》</li>
 </ol>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://islet.space/2019/01/10/Hardware/ESP32/2019-01-10-ESP32%20SDK%E7%9A%84%E9%85%8D%E7%BD%AE/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Liewzheng">
-      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Coder的孤岛">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2019/01/10/Hardware/ESP32/2019-01-10-ESP32%20SDK%E7%9A%84%E9%85%8D%E7%BD%AE/" class="post-title-link" itemprop="url">ESP32 SDK的配置</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
-    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2019-01-10 09:00:00" itemprop="dateCreated datePublished" datetime="2019-01-10T09:00:00+08:00">2019-01-10</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2019-01-11 13:43:18" itemprop="dateModified" datetime="2019-01-11T13:43:18+08:00">2019-01-11</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/InternetOfThings/" itemprop="url" rel="index"><span itemprop="name">InternetOfThings</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>本文将直接摘抄和引用<a target="_blank" rel="noopener" href="https://docs.espressif.com/projects/esp-idf/zh_CN/latest/get-started/index.html">ESPRESSIF官网文档</a>对ESP32 SDK配置的描述，并对具体执行步骤加一些自己的备注和注意事项。</p>
-<p>本文中以Ubuntu为Linux系统的代表，在所有安装步骤<code>apt-get install</code>及涉及到其他读写<code>cp</code>、<code>mkdir</code>或<code>rm</code>的操作中，如遇到<code>Permission denied</code>等权限不够的问题，请在命令开头添加<code>sudo</code>或直接另起一行输入<code>sudo -s</code>，然后输入密码(有些命令不需要输入密码)获取 <strong>root</strong> 权限。</p>
-<p>Eclipse的使用可以在三大平台上进行，但是用<code>.bin</code>文件烧录到开发板的过程目前仅在Windows平台找得到烧录工具，望悉知。</p>
-<p>为方便描述，本文定义<code>终端</code>为MSYS2及Terminal的统称，<code>XXXXX</code>为你电脑的用户名，<code>*</code>为你的端口号数字。</p>
-<p>本文分为三部分：</p>
-<ul>
-<li>工具及SDK的下载及配置</li>
-<li>使用终端运行工程</li>
-<li>使用Eclipse运行工程</li>
-</ul>
-<h1 id="一、工具及SDK的下载及配置"><a href="#一、工具及SDK的下载及配置" class="headerlink" title="一、工具及SDK的下载及配置"></a>一、工具及SDK的下载及配置</h1><p>本节共有五部分：</p>
-<ul>
-<li>工具(MSYS2和Git)</li>
-<li>ESP-IDF</li>
-<li>Xtensa</li>
-<li>环境变量设置</li>
-<li>python依赖包</li>
-</ul>
-<h2 id="1-工具"><a href="#1-工具" class="headerlink" title="1. 工具"></a>1. 工具</h2><p>此部分在官方文档里面称为“设置工具链”。</p>
-<h3 id="1-1-MSYS2-for-Windows-only"><a href="#1-1-MSYS2-for-Windows-only" class="headerlink" title="1.1 MSYS2(for Windows only)"></a>1.1 MSYS2(for Windows only)</h3><p>跟Git Bash Shell同理，直接从<a target="_blank" rel="noopener" href="http://www.msys2.org/">MSYS2官网</a>下载和安装到C盘根目录<code>C:/</code>下即可。或者直接下载ESPRESSIF提供的<a target="_blank" rel="noopener" href="https://dl.espressif.com/dl/esp32_win32_msys2_environment_and_toolchain-20181001.zip">.zip文件</a>，解压到<code>C:/</code>。</p>
-<p>能不能放到其他盘，暂时没有试验过，对于使用MSYS2的开发者而言，最好是到<code>C:\msys32\mingw32.exe</code>文件属性中设置好管理员权限。</p>
-<p>本下载仅用于windows平台，对于Mac及Linux平台而言，可以直接调用Terminal进行后续步骤。</p>
-<h3 id="1-2-Git-for-Mac-amp-Linux"><a href="#1-2-Git-for-Mac-amp-Linux" class="headerlink" title="1.2 Git(for Mac &amp; Linux)"></a>1.2 Git(for Mac &amp; Linux)</h3><p>此步骤要在Terminal中进行，便于将ESPRESSIF保存在Github的ESP-IDF下载到本地。</p>
-<p>运行以下命令安装（Debian/Ubuntu）：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt-get install git</span><br></pre></td></tr></table></figure>
-<p>以及（Mac）：<a target="_blank" rel="noopener" href="https://git-scm.com/download/mac">Git下载</a></p>
-<p><strong>ESP-IDF</strong> 是ESP32设备的SDK，另外，MSYS2自带Git工具。如果已经安装过Git工具了，可以使用<code>git</code>或<code>git version</code>语句进行查看。</p>
-<h2 id="2-ESP-IDF"><a href="#2-ESP-IDF" class="headerlink" title="2. ESP-IDF"></a>2. ESP-IDF</h2><p>在创建文件夹<code>esp</code>的过程中，确保自己没有使用到root权限来创建文件夹，查看的方法是打开<code>Files</code>应用，看看<code>esp</code>文件夹上面是否有个锁的图表。因为后续添加的环境变量局限于 <strong>XXXXX</strong> 用户，而执行文件因为在创建的过程中就属于 <strong>root</strong> 用户了，就不能够识别个人用户创建的环境变量<code>IDF_PATH</code>。为ESP-IDF的获取创建好文件夹，运行以下命令：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cd ~&#x2F;</span><br><span class="line">mkdir -p esp</span><br><span class="line">cd esp</span><br></pre></td></tr></table></figure>
-<p>如果使用了 <strong>root</strong> 权限来创建esp文件夹，请使用命令<code>rm -d -f ~/esp</code>来删除 空的esp文件夹 或 使用命令<code>rm -r -f ~/esp</code>非空的esp文件夹。然后重启终端，使用普通用户权限再次创建。</p>
-<p><img src="https://docs.espressif.com/projects/esp-idf/zh_CN/latest/_images/msys2-terminal-window.png" alt="msys2-terminal-window"><br>然后运行下面语句，ESP-IDF 将会被下载到 <code>~/esp/esp-idf</code> 目录下。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone --recursive https:&#x2F;&#x2F;github.com&#x2F;espressif&#x2F;esp-idf.git</span><br></pre></td></tr></table></figure>
-
-<p><strong>注意：</strong><br>上面克隆仓库的语句中有个 <code>--recursive</code> 选项。如果你克隆 ESP-IDF 时 <em><strong>没有带这个选项</strong></em> ，你还需要运行额外的命令（如下）来获取子模块：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd esp-idf</span><br><span class="line">git submodule update --init</span><br></pre></td></tr></table></figure>
-
-<h2 id="3-Xtensa-for-MAC-amp-Linux-only"><a href="#3-Xtensa-for-MAC-amp-Linux-only" class="headerlink" title="3. Xtensa(for MAC &amp; Linux only)"></a>3. Xtensa(for MAC &amp; Linux only)</h2><p><strong>Windows平台因为使用MSYS2的原因，自带了Xtensa，因此可以忽略此步骤。</strong></p>
-<p><strong>Linux平台</strong><br><a target="_blank" rel="noopener" href="https://dl.espressif.com/dl/xtensa-esp32-elf-linux64-1.22.0-80-g6c4433a-5.2.0.tar.gz">Xtensa-Linux-64bit</a>下载解压。<br>执行如下命令：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd ~&#x2F;esp</span><br><span class="line">tar -xzf ~&#x2F;Downloads&#x2F;xtensa-esp32-elf-linux64-1.22.0-80-g6c4433a-5.2.0.tar.gz</span><br></pre></td></tr></table></figure>
-
-<p><strong>MAC平台</strong><br><a target="_blank" rel="noopener" href="https://dl.espressif.com/dl/xtensa-esp32-elf-osx-1.22.0-80-g6c4433a-5.2.0.tar.gz">Xtensa-MAC</a></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd ~&#x2F;esp</span><br><span class="line">tar -xzf ~&#x2F;Downloads&#x2F;xtensa-esp32-elf-osx-1.22.0-80-g6c4433a-5.2.0.tar.gz</span><br></pre></td></tr></table></figure>
-
-<h2 id="4-环境变量设置"><a href="#4-环境变量设置" class="headerlink" title="4. 环境变量设置"></a>4. 环境变量设置</h2><p><strong>Windows平台：</strong><br>寻找到路径<code>C:/msys32/etc/profile.d/</code>，然后使用记事本或其他文本工具新建一个名为<code>export_idf_path.sh</code>的文件，然后将你的<code>esp-idf</code>路径写入文件中，如：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">export IDF_PATH&#x3D;&quot;C:&#x2F;msys32&#x2F;home&#x2F;XXXXX&#x2F;esp&#x2F;esp-idf&quot;</span><br></pre></td></tr></table></figure>
-
-<p>安装vim工具或使用其他文本工具，打开<code>~/.profile</code>文件。使用vim工具的话，单击<code>i</code>健进行插入，鼠标点击粘贴以下代码后，按<code>ESC</code>键，然后输入<code>:w</code>进行保存，再次输入<code>:q</code>推出vim工具，ubuntu平台的vim工具安装命令：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt-get install vim</span><br></pre></td></tr></table></figure>
-
-<p><strong>Linux平台</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">export PATH&#x3D;&quot;$HOME&#x2F;esp&#x2F;xtensa-esp32-elf&#x2F;bin:$PATH&quot;</span><br><span class="line">export IDF_PATH&#x3D;~&#x2F;esp&#x2F;esp-idf</span><br></pre></td></tr></table></figure>
-
-<p><strong>MAC平台</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">export PATH&#x3D;$HOME&#x2F;esp&#x2F;xtensa-esp32-elf&#x2F;bin:$PATH</span><br><span class="line">export IDF_PATH&#x3D;~&#x2F;esp&#x2F;esp-idf</span><br></pre></td></tr></table></figure>
-
-<p>完成修改后重启终端，并在终端中输入以下命令可以查看是否设置成功，如果不成功或者后续步骤中出现<code>No such file or directory</code>的错误提示，请尝试重启系统。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">printenv IDF_PATH</span><br><span class="line">printenv PATH</span><br></pre></td></tr></table></figure>
-
-<p><img src="http://uk-liewzheng-blog-pic.oss-eu-west-1.aliyuncs.com/2019/01/10/ESP32_SDK%E7%9A%84%E9%85%8D%E7%BD%AE/Environment_Setting_PATH.png" alt="Environment_Setting_PATH"></p>
-<h2 id="5-python依赖包安装"><a href="#5-python依赖包安装" class="headerlink" title="5. python依赖包安装"></a>5. python依赖包安装</h2><p>直接输入以下命令，安装依赖于Python的软件包：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python -m pip install --user -r $IDF_PATH&#x2F;requirements.txt</span><br></pre></td></tr></table></figure>
-
-<p><strong>注意</strong><br>在终端输入<code>python</code>可查看版本，如果你的电脑安装的是不同版本的Python，则调用不同的语句进行安装，如<code>python2</code> <code>python2.7</code>。<br><img src="http://uk-liewzheng-blog-pic.oss-eu-west-1.aliyuncs.com/2019/01/10/ESP32_SDK%E7%9A%84%E9%85%8D%E7%BD%AE/Tools_Downloads_Python.png" alt="Tools_Downloads_Python"></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python2.7 -m pip install --user -r $IDF_PATH&#x2F;requirements.txt</span><br></pre></td></tr></table></figure>
-
-<p>如果在此步骤出现<code>/usr/bin/python2.7: No module named pip</code>的问题，则输入以下命令进行pip module安装：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt-get install python-pip</span><br></pre></td></tr></table></figure>
-
-<h1 id="二、使用终端运行工程"><a href="#二、使用终端运行工程" class="headerlink" title="二、使用终端运行工程"></a>二、使用终端运行工程</h1><p>本节共有四部分：</p>
-<ul>
-<li>工程样例复制</li>
-<li>开发板连接</li>
-<li>工程参数设置</li>
-<li>命令行烧录</li>
-</ul>
-<h2 id="1-工程样例复制"><a href="#1-工程样例复制" class="headerlink" title="1. 工程样例复制"></a>1. 工程样例复制</h2><p>在<code>C:/msys32/home/XXXXX/esp/esp-idf/examples/</code>下面会有很多ESP-IDF自带的工程样例，按照用途分类。本节将使用<code>/get-started/hello_world</code>作为示范。</p>
-<p>拷贝样例：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd ~&#x2F;esp</span><br><span class="line">cp -r $IDF_PATH&#x2F;examples&#x2F;get-started&#x2F;hello_world .</span><br></pre></td></tr></table></figure>
-
-<p>要注意的是，拷贝样例的语句中，那个点<code>.</code>必不可少，且和前面的路径中有个空格<code> </code>。</p>
-<h2 id="2-开发板连接"><a href="#2-开发板连接" class="headerlink" title="2. 开发板连接"></a>2. 开发板连接</h2><p>将 ESP32 开发板连接到 PC，然后检查串口号，看看它能否正常通信。</p>
-<h3 id="2-1-驱动"><a href="#2-1-驱动" class="headerlink" title="2.1 驱动"></a>2.1 驱动</h3><p>以下是乐鑫 ESP32 开发板驱动程序的链接：</p>
-<p>ESP32-PICO-KIT 和 ESP32-DevKitC - <a target="_blank" rel="noopener" href="https://www.silabs.com/products/development-tools/software/usb-to-uart-bridge-vcp-drivers">CP210x USB to UART Bridge VCP Drivers</a><br>ESP32-WROVER-KIT 和 ESP32 Demo Board - <a target="_blank" rel="noopener" href="https://www.ftdichip.com/Drivers/VCP.htm">FTDI Virtual COM Port Drivers</a></p>
-<p>装完驱动之后，Windows平台的设备管理器中是如下显示的：<br><img src="https://docs.espressif.com/projects/esp-idf/zh_CN/latest/_images/esp32-devkitc-in-device-manager1.png" alt="esp32-devkitc-in-device-manager1"></p>
-<h3 id="2-2-端口号"><a href="#2-2-端口号" class="headerlink" title="2.2 端口号"></a>2.2 端口号</h3><p><strong>Windows平台：</strong><br>在<code>设备管理器</code>中查看<code>端口</code>并记录下其设备尾部标注的端口号<code>COM*</code>。<br><img src="https://docs.espressif.com/projects/esp-idf/zh_CN/latest/_images/esp32-devkitc-in-device-manager1.png" alt="esp32-devkitc-in-device-manager1"></p>
-<p><strong>Linux和Mac的平台：</strong><br>在终端里面，分别运行查看端口命令两次，一次是在插入开发板前，一次是在插入开发板后。<br><strong>Linux:</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ls &#x2F;dev&#x2F;tty*</span><br></pre></td></tr></table></figure>
-<p><strong>Mac:</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ls &#x2F;dev&#x2F;cu.*</span><br></pre></td></tr></table></figure>
-<p>另外，Linux平台还需要为登录用户添加串口读写权限：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo usermod -a -G dialout $XXXXX</span><br></pre></td></tr></table></figure>
-
-<p><strong>Putty工具</strong><br>下载和使用<a target="_blank" rel="noopener" href="https://www.putty.org/">Putty工具</a>对开发板进行串口连接确认。</p>
-<p>运行终端，设置串口：波特率 = 115200，数据位 = 8，停止位 = 1，奇偶校验 = N。</p>
-<p>以下是设置串口和在 Windows 和 Linux 上传输参数（如 115200-8-1-N）的一些截屏示例。注意选择上述步骤中确认的串口进行设置。</p>
-<p><img src="https://docs.espressif.com/projects/esp-idf/zh_CN/latest/_images/putty-settings-windows1.png" alt="putty-settings-windows1"><br><img src="https://docs.espressif.com/projects/esp-idf/zh_CN/latest/_images/putty-settings-linux1.png" alt="putty-settings-linux1"></p>
-<h2 id="3-工程参数设置"><a href="#3-工程参数设置" class="headerlink" title="3. 工程参数设置"></a>3. 工程参数设置</h2><p>在终端窗口中，输入<code>cd ~/esp/hello_world</code>进入<code>hello_world</code>所在目录，然后启动工程配置工具:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">make menuconfig</span><br></pre></td></tr></table></figure>
-<p><img src="https://docs.espressif.com/projects/esp-idf/zh_CN/latest/_images/project-configuration1.png" alt="project-configuration1"></p>
-<p>在菜单中，进入<code>Serial flasher config</code>&gt;<code>Default serial port</code>输入之前记录下来的串口号(<code>/dev/tty*</code>，<code>/dev/cu.*</code>或<code>/COM*</code>)，工程会加载到该串口上。输入回车确认选择，选择<code>&lt; Save &gt;</code>保存配置，然后选择<code>&lt; Exit &gt;</code>退出应用程序。</p>
-<p>以下是<code>menuconfig</code>的使用小技巧：</p>
-<ol>
-<li>使用 <strong>up &amp; down</strong> 组合键在菜单中上下移动</li>
-<li>使用 <strong>Enter</strong> 键进入一个子菜单，<strong>Escape</strong> 键退出子菜单或退出整个菜单</li>
-<li>输入 <code>?</code> 查看帮助信息，<strong>Enter</strong> 键退出帮助屏幕</li>
-<li>使用空格键或 <code>Y</code> 和 <code>N</code> 键来使能 (Yes) 和禁止 (No) 带有复选框 “<code>[*]</code>” 的配置项</li>
-<li>当光标在某个配置项上面高亮时，输入 <code>?</code> 可以直接查看该项的帮助信息</li>
-<li>输入 <code>/</code> 搜索配置项</li>
-</ol>
-<p><strong>注意</strong><br>如果再此步骤出现<code>&lt;command-line&gt;:0:12: fatal error: curses.h: No such file or directory</code>的错误提示，则</p>
-<h2 id="4-命令行烧录"><a href="#4-命令行烧录" class="headerlink" title="4. 命令行烧录"></a>4. 命令行烧录</h2><h3 id="4-1-烧录"><a href="#4-1-烧录" class="headerlink" title="4.1 烧录"></a>4.1 烧录</h3><p>这条命令会编译应用程序和所有的 ESP-IDF 组件，生成 bootloader、分区表和应用程序 bin 文件，并将这些 bin 文件烧写到 ESP32 板子上。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">make flash</span><br></pre></td></tr></table></figure>
-<p>烧写成功的话，板子将会复位，应用程序 “hello_world” 开始启动，在终端显示如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">esptool.py v2.0-beta2</span><br><span class="line">Flashing binaries to serial port &#x2F;dev&#x2F;ttyUSB0 (app at offset 0x10000)...</span><br><span class="line">esptool.py v2.0-beta2</span><br><span class="line">Connecting........___</span><br><span class="line">Uploading stub...</span><br><span class="line">Running stub...</span><br><span class="line">Stub running...</span><br><span class="line">Changing baud rate to 921600</span><br><span class="line">Changed.</span><br><span class="line">Attaching SPI flash...</span><br><span class="line">Configuring flash size...</span><br><span class="line">Auto-detected Flash size: 4MB</span><br><span class="line">Flash params set to 0x0220</span><br><span class="line">Compressed 11616 bytes to 6695...</span><br><span class="line">Wrote 11616 bytes (6695 compressed) at 0x00001000 in 0.1 seconds (effective 920.5 kbit&#x2F;s)...</span><br><span class="line">Hash of data verified.</span><br><span class="line">Compressed 408096 bytes to 171625...</span><br><span class="line">Wrote 408096 bytes (171625 compressed) at 0x00010000 in 3.9 seconds (effective 847.3 kbit&#x2F;s)...</span><br><span class="line">Hash of data verified.</span><br><span class="line">Compressed 3072 bytes to 82...</span><br><span class="line">Wrote 3072 bytes (82 compressed) at 0x00008000 in 0.0 seconds (effective 8297.4 kbit&#x2F;s)...</span><br><span class="line">Hash of data verified.</span><br><span class="line"></span><br><span class="line">Leaving...</span><br><span class="line">Hard resetting...</span><br></pre></td></tr></table></figure>
-
-<h3 id="4-2-端口监控"><a href="#4-2-端口监控" class="headerlink" title="4.2 端口监控"></a>4.2 端口监控</h3><p>如果要查看 “hello_world” 程序是否真的在运行，输入命令 make monitor。这个命令会启动 IDF Monitor 程序（ESP-IDF自带工具），也可以使用其他串口助手进行查看。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">make monitor</span><br></pre></td></tr></table></figure>
-<p>串口启动时，在终端显示如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">$ make monitor</span><br><span class="line">MONITOR</span><br><span class="line">--- idf_monitor on &#x2F;dev&#x2F;ttyUSB0 115200 ---</span><br><span class="line">--- Quit: Ctrl+] | Menu: Ctrl+T | Help: Ctrl+T followed by Ctrl+H ---</span><br><span class="line">ets Jun  8 2016 00:22:57</span><br><span class="line"></span><br><span class="line">rst:0x1 (POWERON_RESET),boot:0x13 (SPI_FAST_FLASH_BOOT)</span><br><span class="line">ets Jun  8 2016 00:22:57</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
-<p>开发板输出到串口的信息，在终端显示如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line">Hello world!</span><br><span class="line">Restarting in 10 seconds...</span><br><span class="line">I (211) cpu_start: Starting scheduler on APP CPU.</span><br><span class="line">Restarting in 9 seconds...</span><br><span class="line">Restarting in 8 seconds...</span><br><span class="line">Restarting in 7 seconds...</span><br></pre></td></tr></table></figure>
-
-<h1 id="三、-使用Eclipse运行工程"><a href="#三、-使用Eclipse运行工程" class="headerlink" title="三、 使用Eclipse运行工程"></a>三、 使用Eclipse运行工程</h1><p>本节共有四部分：</p>
-<ul>
-<li>JRE &amp; Eclipse</li>
-<li>Eclipse项目运行</li>
-<li>Build Project</li>
-<li>Flash tools烧录</li>
-</ul>
-<h2 id="1-JRE-amp-Eclipse"><a href="#1-JRE-amp-Eclipse" class="headerlink" title="1. JRE &amp; Eclipse"></a>1. JRE &amp; Eclipse</h2><h3 id="1-1-JRE安装"><a href="#1-1-JRE安装" class="headerlink" title="1.1 JRE安装"></a>1.1 JRE安装</h3><p><a target="_blank" rel="noopener" href="https://www.oracle.com/technetwork/java/javase/downloads/jre8-downloads-2133155.html">JRE(Java Runtime Environment)</a>要在Eclipse之前安装，并在终端使用如下命令验证是否安装成功并查看版本：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java -version</span><br></pre></td></tr></table></figure>
-
-<h3 id="1-2-Eclipse安装"><a href="#1-2-Eclipse安装" class="headerlink" title="1.2 Eclipse安装"></a>1.2 Eclipse安装</h3><p>Eclipse IDE 是一个可视化的集成开发环境，可用于编写、编译和调试 ESP-IDF 项目。</p>
-<p>下载相应的Eclipse并安装到电脑：<a target="_blank" rel="noopener" href="https://www.eclipse.org/">eclipse.org</a>,在安装的过程中记得要选择<code>Eclipse for C/C++ Development</code>(有的版本也可能显示为 CDT)。</p>
-<h2 id="2-Eclipse项目运行"><a href="#2-Eclipse项目运行" class="headerlink" title="2. Eclipse项目运行"></a>2. Eclipse项目运行</h2><h3 id="2-1-导入工程样例"><a href="#2-1-导入工程样例" class="headerlink" title="2.1 导入工程样例"></a>2.1 导入工程样例</h3><ol>
-<li><p>运行 Eclipse，选择 <strong>File</strong> -&gt; <strong>Import…</strong>。</p>
-</li>
-<li><p>弹出的对话框中选择 <strong>C/C++</strong> -&gt; <strong>Existing Code as Makefile Project</strong>，然后点击 <strong>Next</strong>。</p>
-</li>
-<li><p>在下个界面中 <strong>Existing Code Location</strong> 位置输入您的 IDF 项目的路径（如：<strong>C:/msys32/home/XXXXX/esp/hello_world</strong>）。</p>
-</li>
-</ol>
-<p>  <em>注意：这里应输入 ESP-IDF 项目的路径，而非 ESP-IDF 本身的路径。</em></p>
-<ol start="4">
-<li>在本界面，找到 <strong>Toolchain for Indexer Settings</strong>，选择 <strong>Cross GCC</strong>，最后点击 <strong>Finish</strong>。</li>
-</ol>
-<h3 id="2-2-设置工程项目属性"><a href="#2-2-设置工程项目属性" class="headerlink" title="2.2 设置工程项目属性"></a>2.2 设置工程项目属性</h3><p><img src="http://uk-liewzheng-blog-pic.oss-eu-west-1.aliyuncs.com/2019/01/10/ESP32_SDK%E7%9A%84%E9%85%8D%E7%BD%AE/Eclipse_Project_Properties.png" alt="Eclipse_Project_Properties"></p>
-<p>在本小节中，会 <strong>添加或修改三个主要的环境变量</strong> ：<code>BTACH_BUILD</code>、<code>IDF_PATH</code>和<code>PATH</code>。这些变量可以只在 <strong>项目属性</strong> 中修改，也可以直接到 <strong>系统环境变量</strong> 中修改。（添加到系统环境变量中的方法本文无讲解）</p>
-<p><img src="http://uk-liewzheng-blog-pic.oss-eu-west-1.aliyuncs.com/2019/01/10/ESP32_SDK%E7%9A%84%E9%85%8D%E7%BD%AE/Eclipse_Project_Properties_Environment_Value.png" alt="Eclipse_Project_Properties_Environment_Value"></p>
-<ol>
-<li><p>新项目将出现在Eclipse左侧的 <strong>Project Explorer</strong> 选项卡中。选择导入的项目，在右键菜单中选择 <strong>Properties</strong>。</p>
-</li>
-<li><p>点击 <strong>C/C++ Build</strong> 下的 <strong>Environment</strong> 属性页，点击 <strong>Add…</strong> 按钮，输入 <code>BATCH_BUILD</code> 和 <code>1</code>。</p>
-</li>
-<li><p>点击 <strong>Add…</strong>，输入 <strong>IDF_PATH</strong> 中输入 ESP-IDF 所在的完整安装路径 <code>C:/msys32/home/XXXXX/esp/esp-idf</code> 。Linux及MAC平台的安装路径 <code>/home/XXXXX/esp/esp-idf</code> .</p>
-</li>
-<li><p>选择 <code>PATH</code> 环境变量，不要改变默认值。</p>
-</li>
-</ol>
-<p>  <strong>Windows 用户：</strong><br>  将 <code>C:\msys32\mingw32\bin;C:\msys32\opt\xtensa-esp32-elf\bin;C:\msys32\usr\bi</code> 添加到 <code>PATH</code> 环境变量的靠前位置（如果您将 msys32 安装到了其它目录，则需要更改对应的路径以匹配您的本地环境）。</p>
-<ol start="5">
-<li>在 macOS 平台上，增加一个 <code>PYTHONPATH</code> 环境变量，并将其设置为 <code>/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages</code>， 保证系统中预先安装的 Python （需安装 pyserial 模块）可以覆盖 Eclipse 内置的任何 Python。</li>
-</ol>
-<p><img src="http://uk-liewzheng-blog-pic.oss-eu-west-1.aliyuncs.com/2019/01/10/ESP32_SDK%E7%9A%84%E9%85%8D%E7%BD%AE/Eclipse_Project_Properties_Preprocessor_Include.png" alt="Eclipse_Project_Properties_Preprocessor_Include"></p>
-<ol start="6">
-<li>前往 <strong>C/C++ General</strong> -&gt; <strong>Preprocessor Include Paths</strong> 属性页面，点击 <strong>Providers</strong> 选项卡:</li>
-</ol>
-<p>  选择 <strong>CDT Cross GCC Built-in Compiler Settings</strong>，将 <strong>Command to get compiler specs</strong> 修改为 <code>xtensa-esp32-elf-gcc $&#123;FLAGS&#125; -std=c++11 -E -P -v -dD &quot;$&#123;INPUTS&#125;&quot;</code>。</p>
-<p>  选择 <strong>“CDT GCC Build Output Parser</strong>，将 <strong>Compiler command pattern</strong> 修改为 <code>xtensa-esp32-elf-(gcc|g\+\+|c\+\+|cc|cpp|clang)</code>。</p>
-<p><img src="http://uk-liewzheng-blog-pic.oss-eu-west-1.aliyuncs.com/2019/01/10/ESP32_SDK%E7%9A%84%E9%85%8D%E7%BD%AE/Eclipse_Project_Properties_Indexer.png" alt="Eclipse_Project_Properties_Indexer"></p>
-<ol start="7">
-<li>前往 <strong>C/C++ General</strong> -&gt; <strong>Indexer</strong> 属性页面，选择 <strong>Enable project specific settings</strong> 以启用本页上的其他设置。然后去除  <strong>Allow heuristic resolution of includes</strong> 勾选，因为启用此选项时，Eclipse 有时无法找到正确的头文件目录。</li>
-</ol>
-<p><img src="http://uk-liewzheng-blog-pic.oss-eu-west-1.aliyuncs.com/2019/01/10/ESP32_SDK%E7%9A%84%E9%85%8D%E7%BD%AE/Eclipse_Project_Properties_Build_Behavior.png" alt="Eclipse_Project_Properties_Build_Behavior"></p>
-<ol start="8">
-<li><p>点击 <strong>C/C++ Build</strong> -&gt; <strong>Behavior</strong> 属性页，选中 <strong>Enable parallel build</strong> 以启用多任务并行构建。</p>
-</li>
-<li><p>保存项目属性并退出属性设置界面。</p>
-</li>
-</ol>
-<h2 id="3-Build-Project"><a href="#3-Build-Project" class="headerlink" title="3. Build Project"></a>3. Build Project</h2><p>选择菜单栏中的 <strong>Project</strong> -&gt; <strong>Build Project</strong>。在此步骤中，将会调用ESP-IDF生成三个文件：<code>bootloader.bin</code>、<code>partition_singleapp.bin</code>和<code>hello_world.bin</code>。分别对应的是启动程序、分区程序和应用主程序。</p>
-<p>成功构建工程项目之后，Eclipse下方的 <strong>Console</strong> 选项卡将会显示如下：<br><img src="http://uk-liewzheng-blog-pic.oss-eu-west-1.aliyuncs.com/2019/01/10/ESP32_SDK%E7%9A%84%E9%85%8D%E7%BD%AE/build_successfully.png" alt="build_successfully"></p>
-<h2 id="4-Flash-tools烧录"><a href="#4-Flash-tools烧录" class="headerlink" title="4. Flash tools烧录"></a>4. Flash tools烧录</h2><p><a target="_blank" rel="noopener" href="https://www.espressif.com/sites/default/files/tools/flash_download_tools_v3.6.5.zip">Flash tools</a>（仅在<a target="_blank" rel="noopener" href="https://www.espressif.com/zh-hans/products/hardware/esp32/resources">ESPRESSIF官网</a>上找到Windows版本）下载并解压到相应位置，打开后进行如下配置。<br>正确配置后便可成功烧录，要注意的是，<code>bootloader.bin</code>对应放在地址<code>0x1000</code>的位置,<code>partition_singleapp.bin</code>对应放在地址<code>0x8000</code>的位置,<code>helloworld.bin</code>对应放在地址<code>0x10000</code>的位置。<br><img src="http://uk-liewzheng-blog-pic.oss-eu-west-1.aliyuncs.com/2019/01/10/ESP32_SDK%E7%9A%84%E9%85%8D%E7%BD%AE/flash_download.png" alt="flash_download"></p>
-<h1 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h1><ol>
-<li>《<a target="_blank" rel="noopener" href="https://blog.csdn.net/sergeycao/article/details/8210849">ubuntu下文件拷贝命令cp命令</a>》</li>
-<li>《<a target="_blank" rel="noopener" href="https://blog.csdn.net/hotmocha/article/details/7354630">ubuntu rm命令</a>》</li>
-<li>《<a target="_blank" rel="noopener" href="http://www.cnblogs.com/peida/archive/2012/10/25/2738271.html">mkdir命令</a>》</li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://islet.space/2019/01/09/Hardware/Bluetooth/2019-01-09-%E4%BA%86%E8%A7%A3%E4%B8%8D%E5%90%8C%E7%B1%BB%E5%9E%8B%E7%9A%84BLE_Beacon/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Liewzheng">
-      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Coder的孤岛">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2019/01/09/Hardware/Bluetooth/2019-01-09-%E4%BA%86%E8%A7%A3%E4%B8%8D%E5%90%8C%E7%B1%BB%E5%9E%8B%E7%9A%84BLE_Beacon/" class="post-title-link" itemprop="url">了解不同类型的BLE Beacon</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
-    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2019-01-09 15:00:00" itemprop="dateCreated datePublished" datetime="2019-01-09T15:00:00+08:00">2019-01-09</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-05-20 22:37:03" itemprop="dateModified" datetime="2021-05-20T22:37:03+08:00">2021-05-20</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Communication/" itemprop="url" rel="index"><span itemprop="name">Communication</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p><a target="_blank" rel="noopener" href="https://os.mbed.com/blog/entry/BLE-Beacons-URIBeacon-AltBeacons-iBeacon/">原文</a>中的URIBeacon已被Google Eddystone替代，因此本文并非完全由原文转载，有小幅度更改。</p>
-<h1 id="蓝牙低功耗（BLE）信标"><a href="#蓝牙低功耗（BLE）信标" class="headerlink" title="蓝牙低功耗（BLE）信标"></a>蓝牙低功耗（BLE）信标</h1><p>有几种类型（Eddystone，AltBeacon，iBeacon），每种类型都有自己的标准和优势。有些是开放和免费的，有些是封闭的，需要花钱。本文将介绍可用信标的三种主要类型，它们的优点，缺点，衍生物以及有关信标如何工作的一些低级实现细节。确保查看所有可用作BLE信标的已启用mbed的BLE平台。</p>
-<h1 id="概观"><a href="#概观" class="headerlink" title="概观"></a>概观</h1><p>蓝牙低功耗（BLE）能够以两种状态之一交换数据：连接和广告模式。连接模式使用通用属性（GATT）层以一对一的方式传输数据。广告模式使用通用访问配置文件（GAP）层向正在收听的任何人广播数据。广告模式是一对多转移，无法保证数据的一致性。</p>
-<p>BLE Beacons利用GAP广告模式以定期的，特殊格式的广告包广播数据。每种类型的信标都使用自定义规范来对广告数据进行分区，从而赋予其意义。我将看看三种现有类型的信标，URI Beacons，iBeacons和AltBeacons。mbed BLE团队页面支持所有信标类型，如果您想尝试它们，请提供包含文档的示例项目。</p>
-<h1 id="iBeacon"><a href="#iBeacon" class="headerlink" title="iBeacon"></a>iBeacon</h1><p>Apple的iBeacon是第一款出现的BLE Beacon技术，因此大多数信标都从iBeacon数据格式中获取灵感。iBeacons在几个Apple SDK中启用，可以从任何支持BLE的iDevice读取和广播。iBeacon是一种专有的封闭式标准。iBeacons有一个庞大的生态系统，并为开发人员提供了大量资源，但您必须成为Apple开发人员社区的一员。</p>
-<h2 id="数据规格"><a href="#数据规格" class="headerlink" title="数据规格"></a>数据规格</h2><p>iBeacons播放了四条信息：</p>
-<ol>
-<li>标识信标的UUID。</li>
-<li>标识大组中信标子集的主要编号。</li>
-<li>标识特定信标的次要编号。</li>
-<li>TX功率电平为2的补码，表示距设备一米的信号强度。必须由用户或制造商为每个设备校准此编号。</li>
-</ol>
-<p>扫描应用程序读取UUID，主要编号和次要编号，并针对数据库引用它们以获取有关信标的信息; 信标本身不包含描述性信息 - 它要求此外部数据库有用。TX功率字段与测量的信号强度一起使用以确定信标距智能电话的距离。请注意，用户必须在信标的基础上校准TxPower才能准确。</p>
-<p>  <img src="http://uk-liewzheng-blog-pic.oss-eu-west-1.aliyuncs.com/2019/01/09/%E4%BA%86%E8%A7%A3%E4%B8%8D%E5%90%8C%E7%B1%BB%E5%9E%8B%E7%9A%84BLE_Beacon/diagramredo.png" alt="iBeacon-Diagramredo"></p>
-<p>iBeacon前缀包含十六进制数据：0x02 01 06 1A FF 00 4C 02 15。这分解如下：</p>
-<ul>
-<li>0x020106将广告包定义为BLE General Discoverable和BR / EDR高速不兼容。实际上它说它只是广播，而不是连接。</li>
-<li>0x1AFF表示以下数据长度为26个字节，并且是制造商特定数据。</li>
-<li>0x004C是Apple的蓝牙Sig ID，是该规范的一部分，使其依赖于Apple。</li>
-<li>0x02是表示邻近信标的辅助ID，由所有iBeacons使用。</li>
-<li>0x15将剩余长度定义为21个字节（16 + 2 + 2 + 1）。</li>
-</ul>
-<p>其余的字段相当自我解释。邻近UUID是标准的16byte / 128bit BLE UUID，通常是公司独有的。主要和次要数字用于表示UUID内的资产; 常见用途是主要数字是商店（因此可能有65,536个商店），其中次要数字是商店内的单个标签（每个商店还有65,536个可能的标签）。</p>
-<h2 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h2><ol>
-<li>一家咖啡店在一个咖啡架和一个寄存器上放置了iBeacons。当顾客走进咖啡店足够近时，智能手机应用程序会看到iBeacon，搜索咖啡店的iBeacon数据库，将iBeacon识别为属于coffeeShop X，然后看到咖啡有效的优惠券，并通知优惠券的用户。</li>
-<li>iDevices可以广播iBeacon。这可用于在活动中自动登记并跟踪整个场地的移动。</li>
-<li>请参阅mbed iBeacon设备页面上的嵌入式设备代码。</li>
-</ol>
-<p>这是如何设置iBeacon设备以使用mbed BLE_API广播具有主要和次要号码的UUID的示例。请注意，tx功率水平应根据设备的1米测量用户校准。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">#include &quot;mbed.h&quot;</span><br><span class="line">#include &quot;iBeaconService.h&quot;</span><br><span class="line">...</span><br><span class="line">BLEDevice ble;</span><br><span class="line">const uint8_t uuid[] &#x3D; &#123;0xE2, 0x0A, 0x39, 0xF4, 0x73, 0xF5, 0x4B, 0xC4,     &#x2F;&#x2F; 16Byte UUID</span><br><span class="line">                        0xA1, 0x2F, 0x17, 0xD1, 0xAD, 0x07, 0xA9, 0x61</span><br><span class="line">                       &#125;;</span><br><span class="line">uint16_t majorNumber &#x3D; 1122;  &#x2F;&#x2F; 2 byte major number</span><br><span class="line">uint16_t minorNumber &#x3D; 3344;  &#x2F;&#x2F; 2 byte minor number</span><br><span class="line">uint16_t txPower &#x3D; 0xC8;      &#x2F;&#x2F; 1 byte tx power level</span><br><span class="line">...</span><br><span class="line">int main(void)&#123;</span><br><span class="line">    ...</span><br><span class="line">    iBeaconService ibeacon(ble, uuid, majorNumber, minorNumber, txPower);</span><br><span class="line">    ....</span><br><span class="line">    while(1)&#123;</span><br><span class="line">        ble.waitForEvent();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="思考"><a href="#思考" class="headerlink" title="思考"></a>思考</h2><p>iBeacons非常酷，得到广泛支持，因为它们是Apple产品，所以每个人都在与它们合作，生态系统尽可能健壮。唯一的限制是需要数据库来为iBeacon数据赋予意义。没有数据库，UUID就毫无意义。你可以在这里找到mbed iBeacon的例子。</p>
-<h2 id="衍生品"><a href="#衍生品" class="headerlink" title="衍生品"></a>衍生品</h2><p>一个流行的衍生产品是用不同的公司代码替换0x004C代码，例如分配给Nordic Semiconductor的0x0059。该NRF烽火台应用和nrf51822蓝牙智能灯塔套件就是这样的例子。<br>一些公司提供的示例未明确使用iBeacon规范。</p>
-<h1 id="AltBeacon"><a href="#AltBeacon" class="headerlink" title="AltBeacon"></a>AltBeacon</h1><p>AltBeacons是Radius Networks提供的开放式免费信标设计。它似乎正在获得一些动力。AltBeacon规范似乎是对Apple正在使用的闭源iBeacon规范的直接反应; 它涵盖了与iBeacon相同的功能，但不是公司特定的。也就是说，它尚未获得广泛支持。</p>
-<p>值得注意的是，虽然iBeacons有20个27字节可用于用户数据（UUID + Major + Minor），但AltBeacons有28个28字节可用（MFG ID，BeaconCode，BeaconID，MFG RSVD）。这意味着每条消息可以传送更多数据。</p>
-<h2 id="数据规格-1"><a href="#数据规格-1" class="headerlink" title="数据规格"></a>数据规格</h2><p>所述AltBeacon规格是28bytes（26B是用户可修改的）。AltBeacon的前两个字节不是用户可修改的，而是由BLE堆栈设置的。ADV长度为0x1B，ADV类型为0xFF; 这些将分别指定广告数据包的长度和类型作为制造数据。之后，一切都由用户决定，可以推送到广告制造商数据字段。请注意，在大多数情况下，MFG ID将与Bluetooth Sig分配的号码文档相关联。</p>
-<p>  <img src="http://uk-liewzheng-blog-pic.oss-eu-west-1.aliyuncs.com/2019/01/09/%E4%BA%86%E8%A7%A3%E4%B8%8D%E5%90%8C%E7%B1%BB%E5%9E%8B%E7%9A%84BLE_Beacon/altbeacon-spec-exploded-view.png" alt="altbeacon-spec-exploded-view"></p>
-<h2 id="例子-1"><a href="#例子-1" class="headerlink" title="例子"></a>例子</h2><p>用于iBeacons的相同示例适用于AltBeacons，具有以下修改：</p>
-<ol>
-<li>具有不同制造商ID的能力。</li>
-<li>具有不同信标码的能力。</li>
-<li>最后保留数据的一个字节，用于保存特定的制造商信息。</li>
-</ol>
-<p>使用AltBeacon，可以使用特定于应用程序的UUID而不是特定于公司的UUID，从而可以更改公司ID。虽然目前没有任何东西正在利用这一点，但我可以想象信标广播UUID用于信标服务，比如温度服务，然后提供制造公司的信息和温度，这样提供任何人的温度值。步行可以查看。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">#include &quot;mbed.h&quot;</span><br><span class="line">#include &quot;AltBeaconService.h&quot;</span><br><span class="line">...</span><br><span class="line">BLEDevice ble;</span><br><span class="line">uint8_t beaconID[] &#x3D; &#123;  0x00,0x01,0x02,0x03,0x04,0x05,0x06,0x07,0x08,0x09,     &#x2F;&#x2F; 16B of UUID + 4B subdivided as needed.</span><br><span class="line">                        0x10,0x11,0x12,0x13,0x14,0x15,0x00,0x01,0x00,0x02 &#125;;</span><br><span class="line">uint16_t manufacturerID &#x3D; 0x5900; &#x2F;&#x2F;Nordic SIG ID</span><br><span class="line">int8_t rssi &#x3D; -122;</span><br><span class="line">...</span><br><span class="line">int main(void)&#123;</span><br><span class="line">    ...</span><br><span class="line">    AltBeaconService altbeacon(ble, manufacturerID, beaconID, rssi); &#x2F;&#x2F; Add AltBeacon service to BLE object</span><br><span class="line">    ...</span><br><span class="line">    while(1)&#123;</span><br><span class="line">        ble.waitForEvent();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="思考-1"><a href="#思考-1" class="headerlink" title="思考"></a>思考</h2><p>AltBeacons有很大的可能性。它们充分利用了它们所拥有的空间，或多或少地向后兼容iBeacons，并且是开源的。这说它是一个非常新的规范，几乎没有人使用它，并且它与iBeacons的市场渗透作斗争是一场艰苦的战斗。我认为，越来越多的人会使用AltBeacons，因为他们可以携带更多的数据并拥有更广泛的用例 - 这是开放式蛋糕上的一个樱桃。您可以在此处找到mbed AltBeacon示例代码。</p>
-<h1 id="Eddystone"><a href="#Eddystone" class="headerlink" title="Eddystone"></a>Eddystone</h1><p><a target="_blank" rel="noopener" href="https://github.com/google/eddystone">Eddystone</a>前身为<a target="_blank" rel="noopener" href="https://github.com/google/uribeacon">URIBeacon</a>（发音为YUR-ee-BEE-kun）</p>
-<p>Eddystone是由Google开发的开放式信标格式，其设计考虑了透明度和稳健性。Android和iOS设备都可以检测到Eddystone。Eddystone格式建立在现有部署中与行业合作伙伴合作的经验教训的基础上，以及更广泛的灯塔社区。帧格式中可以包含几种不同类型的有效载荷，包括：</p>
-<ul>
-<li>Eddystone-UID：一个唯一的静态ID，带有一个10字节的命名空间组件和一个6字节的实例组件。</li>
-<li>Eddystone-URL：经过解析和解压缩后，可由客户端直接使用的压缩URL。</li>
-<li>Eddystone-TLM：信标状态数据，可用于信标队维护，并为Google Proximity Beacon API的诊断端点提供支持。-TLM应与识别帧交错，例如Eddystone-UID或Eddystone-EID（加密的eTLM版本保留安全性）。</li>
-<li>Eddystone-EID：时变信标帧，可通过链接解析器（例如Proximity Beacon API）解析为稳定标识符。</li>
-</ul>
-<p>此外，Eddystone还包括配置服务和品牌材料。为确保您的部署完全支持Google信标平台，您应该使用Eddystone-UID或-EID设置信标，并可选择添加-URL和-TLM。</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://islet.space/2019/01/09/Hardware/Bluetooth/%202019-01-09-iBeacon%E4%B8%93%E6%9C%89%E5%90%8D%E8%AF%8D/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Liewzheng">
-      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Coder的孤岛">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2019/01/09/Hardware/Bluetooth/%202019-01-09-iBeacon%E4%B8%93%E6%9C%89%E5%90%8D%E8%AF%8D/" class="post-title-link" itemprop="url">iBeacon专有名词</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
-    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-      
-
-      <time title="Created: 2019-01-09 14:00:00 / Modified: 17:13:30" itemprop="dateCreated datePublished" datetime="2019-01-09T14:00:00+08:00">2019-01-09</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Communication/" itemprop="url" rel="index"><span itemprop="name">Communication</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="ADV-PDU-Type"><a href="#ADV-PDU-Type" class="headerlink" title="ADV_PDU Type"></a>ADV_PDU Type</h1><h2 id="PDU"><a href="#PDU" class="headerlink" title="PDU"></a>PDU</h2><p>Protocol Data Unit, 协议数据单元。</p>
-<h1 id="ADV-IND"><a href="#ADV-IND" class="headerlink" title="ADV_IND"></a>ADV_IND</h1><p>可连接的无向广告</p>
-<h1 id="ADV-NONCONN-IND"><a href="#ADV-NONCONN-IND" class="headerlink" title="ADV_NONCONN_IND"></a>ADV_NONCONN_IND</h1><p>不可连接的无向广告</p>
-<h1 id="ADV-DIR-IND"><a href="#ADV-DIR-IND" class="headerlink" title="ADV_DIR_IND"></a>ADV_DIR_IND</h1><h1 id="ADV-DISC"><a href="#ADV-DISC" class="headerlink" title="ADV_DISC"></a>ADV_DISC</h1><h1 id="ADV-CONNREQ"><a href="#ADV-CONNREQ" class="headerlink" title="ADV_CONNREQ"></a>ADV_CONNREQ</h1><h1 id="ADV-SCANREQ"><a href="#ADV-SCANREQ" class="headerlink" title="ADV_SCANREQ"></a>ADV_SCANREQ</h1><h1 id="ADV-SCANRSP"><a href="#ADV-SCANRSP" class="headerlink" title="ADV_SCANRSP"></a>ADV_SCANRSP</h1><h1 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h1><ol>
-<li>《<a target="_blank" rel="noopener" href="https://support.kontakt.io/hc/en-gb/articles/201492492-iBeacon-advertising-packet-structure">iBeacon advertising packet structure</a>》</li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://islet.space/2019/01/07/Networking/%E7%BD%91%E7%BB%9C%20-%20TCP-IP%E4%B8%93%E6%9C%89%E5%90%8D%E8%AF%8D/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Liewzheng">
-      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Coder的孤岛">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2019/01/07/Networking/%E7%BD%91%E7%BB%9C%20-%20TCP-IP%E4%B8%93%E6%9C%89%E5%90%8D%E8%AF%8D/" class="post-title-link" itemprop="url">TCP/IP专有名词</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
-    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2019-01-07 19:38:13" itemprop="dateCreated datePublished" datetime="2019-01-07T19:38:13+08:00">2019-01-07</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2019-01-09 16:12:38" itemprop="dateModified" datetime="2019-01-09T16:12:38+08:00">2019-01-09</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Communication/" itemprop="url" rel="index"><span itemprop="name">Communication</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="DHCP"><a href="#DHCP" class="headerlink" title="DHCP"></a>DHCP</h1><p>  Dynamic Host Configuration Protocol, 动态主机设置协议, 是一个局域网的网络协议，使用UDP协议工作，主要有两个用途：</p>
-<ol>
-<li>用于内部网或网络服务供应商自动分配IP地址给用户</li>
-<li>用于内部网管理员作为对所有计算机作中央管理的手段</li>
-</ol>
-<h1 id="TCP-IP-Stack-Library-LwIP"><a href="#TCP-IP-Stack-Library-LwIP" class="headerlink" title="TCP/IP Stack Library (LwIP)"></a>TCP/IP Stack Library (LwIP)</h1><p>  LwIP是瑞典计算机科学院的一个开源的TCP/IP协议栈实现。</p>
-<p>  LwIP协议栈主要关注的是怎么样减少内存的使用和代码的大小，这样就可以让lwIP适用于资源有限的小型平台例如嵌入式系统。为了简化处理过程和内存要求，lwIP对API进行了裁减，可以不需要复制一些数据。</p>
-<p>  lwIP是TCP / IP协议套件的一个小型独立实现，最初由Adam Dunkels开发，现在继续在这里。</p>
-<p>  lwIP TCP / IP实现的重点是减少资源使用，同时仍然具有全面的TCP。这使得lwIP适用于具有数十千字节空闲RAM的嵌入式系统，并且可以容纳大约40千字节的代码ROM。</p>
-<h2 id="lwIP主要功能"><a href="#lwIP主要功能" class="headerlink" title="lwIP主要功能"></a>lwIP主要功能</h2><h3 id="协议"><a href="#协议" class="headerlink" title="协议"></a>协议</h3><p>  IP，IPv6，ICMP，ND，MLD，UDP，TCP，IGMP，ARP，PPPoS，PPPoE</p>
-<h3 id="客户端"><a href="#客户端" class="headerlink" title="客户端"></a>客户端</h3><p>DHCP客户端 DNS客户端（包括mDNS主机名解析器），AutoIP / APIPA（Zeroconf），SNMP agent（v1，v2c，v3，私有MIB支持和MIB编译器）</p>
-<h3 id="API"><a href="#API" class="headerlink" title="API"></a>API</h3><p>  用于增强性能的专用API，可选的Berkeley-socket套接字API</p>
-<h3 id="扩展功能"><a href="#扩展功能" class="headerlink" title="扩展功能"></a>扩展功能</h3><p>  通过多个网络接口进行IP转发，TCP拥塞控制，RTT估计和快速恢复/ fast retransmit</p>
-<h3 id="Addon应用程序"><a href="#Addon应用程序" class="headerlink" title="Addon应用程序"></a>Addon应用程序</h3><p>  HTTP(S)服务器，SNTP客户端，SMTP(S)客户端，ping，NetBIOS名称服务器，mDNS响应器，MQTT客户端，TFTP服务器</p>
-<p>  lwIP根据BSD风格许可证授权：<a target="_blank" rel="noopener" href="http://lwip.wikia.com/wiki/License">http://lwip.wikia.com/wiki/License</a></p>
-<h1 id="TTL"><a href="#TTL" class="headerlink" title="TTL"></a>TTL</h1><p>  TTL(Time- To-Live)，简单的说它表示一条域名解析记录在DNS服务器上缓存时间.当各地的DNS服务器接受到解析请求时，就会向域名指定的DNS服务器发出解析请求从而获得解析记录；在获得这个记录之后，记录会在DNS服务器中保存一段时间，这段时间内如果再接到这个域名的解析请求，DNS服务器将不再向DNS服务器发出请求，而是直接返回刚才获得的记录；而这个记录在DNS服务器上保留的时间，就是TTL值。</p>
-<h1 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h1><p>1.《<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/LwIP">lwIP</a>》<br>2.《<a target="_blank" rel="noopener" href="https://savannah.nongnu.org/projects/lwip/">lwIP - A Lightweight TCP/IP stack - Summary</a>》<br>3.《<a target="_blank" rel="noopener" href="https://blog.csdn.net/ysdaniel/article/details/6922097">TTL值的含义以及与域名DNS TTL值的区别</a>》</p>
 
       
     </div>
