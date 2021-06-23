@@ -126,7 +126,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">68</span>
+          <span class="site-state-item-count">70</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -135,7 +135,7 @@
         <span class="site-state-item-name">categories</span>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">134</span>
+        <span class="site-state-item-count">141</span>
         <span class="site-state-item-name">tags</span>
       </div>
   </nav>
@@ -169,6 +169,267 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://islet.space/2021/06/21/Programming/C/2021-06-21-%E5%AD%98%E5%82%A8%E7%B1%BB%E5%88%AB%E3%80%81%E9%93%BE%E6%8E%A5%E5%92%8C%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Liewzheng">
+      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coder的孤岛">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/06/21/Programming/C/2021-06-21-%E5%AD%98%E5%82%A8%E7%B1%BB%E5%88%AB%E3%80%81%E9%93%BE%E6%8E%A5%E5%92%8C%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/" class="post-title-link" itemprop="url">存储类别、链接和内存管理</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2021-06-21 21:50:00 / Modified: 22:12:11" itemprop="dateCreated datePublished" datetime="2021-06-21T21:50:00+08:00">2021-06-21</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Programming/" itemprop="url" rel="index"><span itemprop="name">Programming</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="存储类别"><a href="#存储类别" class="headerlink" title="存储类别"></a>存储类别</h1><p>即 stroage class，C语言提供了多种不同的模型和存储类别在内存中存储数据。</p>
+<blockquote>
+<p>从硬件方面看， 被存储的每个值都占有一定的物理内存，C语言称之为对象（object）。</p>
+<p>与面向对象编程中的对象不同，面向对象编程的对象指的是“类对象”。</p>
+</blockquote>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> entity = <span class="number">3</span>;</span><br></pre></td></tr></table></figure>
+
+<p>该声明创造了一个名为 entity 的 <strong>标识符</strong>（identifier）。标识符可以用来 <strong>指定</strong>（desingate）特定对象的内容，且须遵循变量的命名规则。</p>
+<p>标识符即 软件（C语言）指定硬件内存中的对象（内存区块）的方式。</p>
+<p>同时，那些指定对象的表达式被称为 <strong>左值</strong>。</p>
+<p>左值可以被理解为是 “有具体存储位置的 <strong>对象</strong> ”，区别于 “仅有值而没有具体存储位置” 的数据。</p>
+<p>另，左值中也有可修改的 <strong>普通左值</strong>， 和不能支持修改的 <strong>常量左值</strong>。</p>
+<blockquote>
+<p><em>“左”(left)的原意是指可以放在赋值符号“=”的左边，但其实也表示能作为&amp;和++等操作符的操作数（B语言中已经如此）。而且，现代C/C++中的含义已经不局限于此。lvalue的 <code>l</code> 被重新解释为location。这也对应于ISO C11/ISO C++11的 <strong>内存位置</strong>(memory location)。</em></p>
+<p>——百度百科</p>
+</blockquote>
+<p>从一个左值中必定可以解析出对应对象的地址，除非该对象是位字段（bit-field）或者被声明为寄存器存储类。生成左值的运算符包括下标运算符（subscript operator）[]和间接运算符（indirection operator）*，如下表所示（如果 array 已被声明为数组，而 ptr 被声明为指针变量）。</p>
+<table>
+<thead>
+<tr>
+<th>表达式</th>
+<th>是左值吗</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>array[1]</td>
+<td>是；一个数组元素是一个具有位置的对象</td>
+</tr>
+<tr>
+<td>&amp;array[1]</td>
+<td>否；此对象的位置，并非一个具有位置的对象</td>
+</tr>
+<tr>
+<td>ptr</td>
+<td>是；此指针变量是一个具有位詈的对象</td>
+</tr>
+<tr>
+<td>*ptr</td>
+<td>是；指针所指的地方是一个具有位置的对象</td>
+</tr>
+<tr>
+<td>ptr+1</td>
+<td>否；此加法产生一个新的地址值，但不是一个对象</td>
+</tr>
+<tr>
+<td>*ptr+l</td>
+<td>否；此加法产生一个新的算术值，但不是一个对象</td>
+</tr>
+</tbody></table>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><ol>
+<li>《C Primer Plus》, Stephen Prata</li>
+<li><a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E5%B7%A6%E5%80%BC">左值</a></li>
+<li><a target="_blank" rel="noopener" href="http://c.biancheng.net/view/281.html">C语言左值与右值详解</a></li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://islet.space/2021/06/07/Communication/2021-06-07-I2C%E6%80%BB%E7%BA%BF%E4%BF%A1%E5%8F%B7%E6%97%B6%E5%BA%8F%E6%80%BB%E7%BB%93+%E8%AF%95%E9%AA%8C%E5%BF%83%E5%BE%97/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Liewzheng">
+      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coder的孤岛">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/06/07/Communication/2021-06-07-I2C%E6%80%BB%E7%BA%BF%E4%BF%A1%E5%8F%B7%E6%97%B6%E5%BA%8F%E6%80%BB%E7%BB%93+%E8%AF%95%E9%AA%8C%E5%BF%83%E5%BE%97/" class="post-title-link" itemprop="url">I2C总线信号时序总结+试验心得</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-06-07 13:55:00" itemprop="dateCreated datePublished" datetime="2021-06-07T13:55:00+08:00">2021-06-07</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2021-06-23 20:58:57" itemprop="dateModified" datetime="2021-06-23T20:58:57+08:00">2021-06-23</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Signal/" itemprop="url" rel="index"><span itemprop="name">Signal</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="本文用语"><a href="#本文用语" class="headerlink" title="本文用语"></a>本文用语</h1><ul>
+<li>被控器： 即从机、从设备、slave。</li>
+<li>主控器： 即主机、主设备、master。</li>
+</ul>
+<p><img src="https://pic.islet.space/2021/06/image-20210607135810974.png" alt="image-20210607135810974"></p>
+<h1 id="总线空闲状态"><a href="#总线空闲状态" class="headerlink" title="总线空闲状态"></a>总线空闲状态</h1><p>I2C总线总线的SDA和SCL两条信号线同时处于高电平时，规定为总线的空闲状态。<strong>此时各个器件的输出级场效应管均处在截止状态，即释放总线</strong>，由两条信号线各自的上拉电阻把电平拉高。</p>
+<h1 id="启动信号"><a href="#启动信号" class="headerlink" title="启动信号"></a>启动信号</h1><p>时钟线SCL保持高电平期间，数据线SDA上的电平被拉低（即负跳变），定义为I2C总线总线的启动信号，它标志着一次数据传输的开始。启动信号是一种电平跳变时序信号，而不是一个电平信号。启动信号是由主控器主动建立的，在建立该信号之前I2C总线必须处于空闲状态。</p>
+<h1 id="重启动信号"><a href="#重启动信号" class="headerlink" title="重启动信号"></a>重启动信号</h1><p>在主控器控制总线期间完成了一次数据通信（发送或接收）之后，如果想继续占用总线再进行一次数据通信（发送或接收），而又不释放总线，就需要利用重启动Sr信号时序。重启动信号Sr既作为前一次数据传输的结束，又作为后一次数据传输的开始。</p>
+<p><mark>利用重启动信号的优点是，在前后两次通信之间主控器不需要释放总线，这样就不会丢失总线的控制权，即不让其他主器件节点抢占总线。</mark></p>
+<h1 id="停止信号"><a href="#停止信号" class="headerlink" title="停止信号"></a>停止信号</h1><p>在时钟线SCL保持高电平期间，数据线SDA被释放，使得SDA返回高电平（即正跳变），称为I2C总线的停止信号，它标志着一次数据传输的终止。停止信号也是一种<mark>电平跳变时序信号</mark>，而不是一个电平信号，停止信号也是由主控器主动建立的，建立该信号之后，I2C总线将返回空闲状态。</p>
+<p>不是在数据有效性中规定在SDA只能在SCL的低电平的时候变化，为何STAR，STOP不一样？首先STAR和STOP不是数据，所以可以不遵守数据有效性中的规定，其它数据都遵守，而STAR和STOP“不遵守”导致STAR和STOP更容易被识别。这样不是不遵守而是更有优势。</p>
+<p>起始和停止条件一般由主机产生，总线在起始条件后被认为处于忙的状态，在停止条件的某段时间后总线被认为再次处于空闲状态。</p>
+<p>如果产生重复起始(Sr) 条件而不产生停止条件，总线会一直处于忙的状态。此时的起始条件(S)和重复起始(Sr) 条件在功能上是一样的。 </p>
+<p>如果连接到总线的器件合并了必要的接口硬件，那么用它们检测起始和停止条件十分简便。但是没有这种接口的微控制器在每个时钟周期至少要采样SDA 线两次来判别有没有发生电平切换。</p>
+<p><img src="https://pic.islet.space/2021/06/image-20210607140319380.png" alt="image-20210607140319380"></p>
+<h1 id="数据位传送"><a href="#数据位传送" class="headerlink" title="数据位传送"></a>数据位传送</h1><p>在I2C总线上传送的每一位数据都有一个时钟脉冲相对应（或同步控制），即在SCL串行时钟的配合下，在SDA上逐位地串行传送每一位数据。进行数据传送时，在SCL呈现高电平期间，SDA上的电平必须保持稳定，低电平为数据0，高电平为数据1。只有在SCL为低电平期间，才允许SDA上的电平改变状态。逻辑0的电平为低电压，而逻辑1的电平取决于器件本身的正电源电压VDD（当使用独立电源时）。<mark>数据位的传输是边沿触发。</mark></p>
+<p><img src="https://pic.islet.space/2021/06/image-20210607141003501.png" alt="image-20210607141003501"></p>
+<p>需要注意的是，在示波器上可能会看到SDA和SCL的波形在横向时间上基本上保持等长（一致），但实际上在代码上体现时，仍然是需要注意操作顺序。</p>
+<p>如，在数据位需要跳变时，应先将SCL拉低，再跳变SDA。否则就会出现启动（重启）或结束信号。</p>
+<h1 id="应答信号"><a href="#应答信号" class="headerlink" title="应答信号"></a>应答信号</h1><p>I2C总线上的所有数据都是以8位字节传送的，发送器每发送一个字节，就在时钟脉冲9期间释放数据线，由接收器反馈一个应答信号。</p>
+<p>应答信号为低电平时，规定为有效应答位（ACK简称应答位），表示接收器已经成功地接收了该字节；应答信号为高电平时，规定为非应答位（NACK），一般表示接收器接收该字节没有成功。 对于反馈有效应答位ACK的要求是，接收器在第9个时钟脉冲之前的低电平期间将SDA线拉低，并且确保在该时钟的高电平期间为稳定的低电平。  如果接收器是主控器，则在它收到最后一个字节后，发送一个NACK信号，以通知被控发送器结束数据发送，并释放SDA线，以便主控接收器发送一个停止信号P。</p>
+<p><img src="https://pic.islet.space/2021/06/image-20210607141115024.png" alt="image-20210607141115024"></p>
+<p>需要注意的是，所有的应答比特位（波形上）都是完整的一个高电平（NACK）或低电平（ACK），如果在一个SCL高电平内出现SDA信号跳变，就会出现错误，此时需要进行代码或硬件问题排查。</p>
+<h1 id="插入等待时间"><a href="#插入等待时间" class="headerlink" title="插入等待时间"></a>插入等待时间</h1><p>如果被控器需要延迟下一个数据字节开始传送的时间，则可以通过把时钟线SCL电平拉低并且保持，使主控器进入等待状态。一旦被控器释放时钟线，数据传输就得以继续下去，这样就使得被控器得到足够时间转移已经收到的数据字节，或者准备好即将发送的数据字节。</p>
+<p>带有CPU的被控器在对收到的地址字节做出应答之后，需要一定的时间去执行中断服务子程序，来分析或比较地址码，其间就把SCL线钳位在低电平上，直到处理妥当后才释放SCL线，进而使主控器继续后续数据字节的发送。</p>
+<p><img src="https://pic.islet.space/2021/06/image-20210607141150278.png" alt="image-20210607141150278"></p>
+<h1 id="总线封锁状态"><a href="#总线封锁状态" class="headerlink" title="总线封锁状态"></a>总线封锁状态</h1><p>在特殊情况下，如果需要禁止所有发生在I2C总线上的通信活动，封锁或关闭总线是一种可行途径，只要挂接于该总线上的任意一个器件将时钟线SCL锁定在低电平上即可。</p>
+<h1 id="总线竞争的仲裁"><a href="#总线竞争的仲裁" class="headerlink" title="总线竞争的仲裁"></a>总线竞争的仲裁</h1><p>总线上可能挂接有多个器件，有时会发生两个或多个主器件同时想占用总线的情况，这种情况叫做总线竞争。I2C总线具有多主控能力，可以对发生在SDA线上的总线竞争进行仲裁，其仲裁原则是这样的：当多个主器件同时想占用总线时，如果某个主器件发送高电平，而另一个主器件发送低电平，则发送电平与此时SDA总线电平不符的那个器件将自动关闭其输出级。总线竞争的仲裁是在两个层次上进行的。<strong>首先是地址位的比较，如果主器件寻址同一个从器件，则进入数据位的比较，从而确保了竞争仲裁的可靠性。由于是利用I2C总线上的信息进行仲裁，因此不会造成信息的丢失。</strong></p>
+<p>​     为何识别到“0”将丢失仲裁呢？因为对于OD门，只能驱动到低电平，释放总线只能通过不驱动总线释放，停止驱动即产生“1”，但是发现总线还是“0”，这说明还有主机在跟自己竞争总线使用权，自己线驱动到“1”，确检测到“0”，那代表自己已经失去了仲裁。</p>
+<ul>
+<li>主机只能在总线空闲的时侯启动传送。两个或多个主机可能在起始条件的最小持续时间tHD;STA 内产生一个起始条件，结果在总线上产生一个规定的起始条件。</li>
+<li>当SCL 线是高电平时，仲裁在SDA 线发生；这样，在其他主机发送低电平时，发送高电平的主机将断开它的数据输出级，因为总线上的电平与它自己的电平不相同。然后，进一步获得其的判定条件：</li>
+<li>仲裁可以持续多位。首先是比较地址位。如果每个主机都试图寻址同一的器件，仲裁会继续比较数据位（假设主机是发送器），或者比较响应位（假设主机是接收器）。</li>
+<li>I2C 总线的地址和数据信息由赢得仲裁的主机决定，在仲裁过程中不会丢失信息。丢失仲裁的主机可以产生时钟脉冲直到丢失仲裁的该字节末尾。</li>
+<li>在串行传输过程中时，一旦有重复的起始条件或停止条件发送到I2C 总线的时侯，仲裁过程仍在进行。如果可能产生这样的情况，有关的主机必须在帧格式相同位置发送这个重复起始条件或停止条件。 </li>
+<li>此外，如果主机也结合了从机功能，而且在寻址阶段丢失仲裁，它很可能就是赢得仲裁的主机在寻址的器件。那么，丢失仲裁的主机必须立即切换到它的从机模式。</li>
+<li>I2C 总线的控制只由地址或主机码以及竞争主机发送的数据决定，没有中央主机，总线也没有任何定制的优先权。</li>
+</ul>
+<p><img src="https://pic.islet.space/2021/06/image-20210607141214939.png" alt="image-20210607141214939"></p>
+<p>上图显示了两个主机的仲裁过程当然可能包含更多的内容由连接到总线的主机数量决定此时产生DATA1 的主机的内部数据电平与SDA 线的实际电平有一些差别如果关断数据输出这就意味着总线连接了一个高输出电平这不会影响由赢得仲裁的主机初始化的数据传输。 </p>
+<h1 id="时钟信号的同步"><a href="#时钟信号的同步" class="headerlink" title="时钟信号的同步"></a>时钟信号的同步</h1><p>在I2C总线上传送信息时的时钟同步信号是由挂接在SCL线上的所有器件的逻辑“与”完成的。SCL线上由高电平到低电平的跳变将影响到这些器件，一旦某个器件的时钟信号下跳为低电平，将使SCL线一直保持低电平，使SCL线上的所有器件开始低电平期。此时，低电平周期短的器件的时钟由低至高的跳变并不能影响SCL线的状态，于是这些器件将进入高电平等待的状态。当所有器件的时钟信号都上跳为高电平时，低电平期结束，SCL线被释放返回高电平，即所有的器件都同时开始它们的高电平期。其后，第一个结束高电平期的器件又将SCL线拉成低电平。这样就在SCL线上产生一个同步时钟。<strong>可见，时钟低电平时间由时钟低电平期最长的器件确定，而时钟高电平时间由时钟高电平期最短的器件确定。</strong></p>
+<p><img src="https://pic.islet.space/2021/06/image-20210607141243588.png" alt="image-20210607141243588"></p>
+<h1 id="试验"><a href="#试验" class="headerlink" title="试验"></a>试验</h1><p>下面是我自己在下面抓的一个波形，data 线当时没有夹子，就直接用手捏和了，所以SDA波形看起来，很不好看。不过还是不影响我们看的。在下面的I2C的始终频率是322K左右，其实这在设置的时候，设置的是400K。</p>
+<p>我测试的试验是Camera sensor 的I2C，当时测试sensor 的I2C地址是0x6E，但是I2C地址一般有7位，最后一位用来表示读写位（0:写、1:读)。这里sensor的读写高七位就是<br> 0x6E&gt;&gt;1 = 0x37.则  <strong>read_addr</strong> = 0x37&lt;&lt;1 +1，  <strong>write_add</strong>=0x37&lt;&lt;1 +0; </p>
+<img src="https://pic.islet.space/2021/06/20160910144504669" alt="img" style="zoom:80%;" />
+
+<p>上图波形刚开始就是sensor 发送的slave_addr =0x6E; </p>
+<p>camera sensor 地址由sensor内部的S_ID表示，有2个IO。具体的地址要看芯片怎么连的了。 </p>
+<p><img src="https://pic.islet.space/2021/06/20160910145215884" alt="img"></p>
+<p><strong>这里是MSB模式，高位在前，低位在后</strong> </p>
+<p><img src="https://pic.islet.space/2021/06/20160910145427107.png" alt="img"></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1549,7 +1810,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-06-02 23:41:06" itemprop="dateModified" datetime="2021-06-02T23:41:06+08:00">2021-06-02</time>
+        <time title="Modified: 2021-06-23 20:51:37" itemprop="dateModified" datetime="2021-06-23T20:51:37+08:00">2021-06-23</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -1572,8 +1833,9 @@
     
     <div class="post-body" itemprop="articleBody">
           <p>以下所有对寄存器的描述均来自于《ADSP-214xx SHARC Processor Hardware Reference》，后简称《HWR》。</p>
-<p>​    </p>
-<h1 id="Registers"><a href="#Registers" class="headerlink" title="Registers"></a>Registers</h1><h2 id="寄存器使用须知"><a href="#寄存器使用须知" class="headerlink" title="寄存器使用须知"></a>寄存器使用须知</h2><h3 id="位类型和操作"><a href="#位类型和操作" class="headerlink" title="位类型和操作"></a>位类型和操作</h3><p>许多寄存器旁边都会标注位类型和操作方法，位类型包括 可读可写（RW）、只读（RO）、只读清除（ROC）、只写清除（WOC）、可读可写1清除（RW1C）、 可读可写1设置（RW1S）。</p>
+<p>本笔记主要是针对芯片 ADSP21479 的TWI通信及其他相关寄存器（PLL、SDRAM、SRU、中断等）进行总结和记录。</p>
+<p>[TOC]</p>
+<h1 id="Register-View"><a href="#Register-View" class="headerlink" title="Register View"></a>Register View</h1><h2 id="寄存器使用须知"><a href="#寄存器使用须知" class="headerlink" title="寄存器使用须知"></a>寄存器使用须知</h2><h3 id="位类型和操作"><a href="#位类型和操作" class="headerlink" title="位类型和操作"></a>位类型和操作</h3><p>许多寄存器旁边都会标注位类型和操作方法，位类型包括 可读可写（RW）、只读（RO）、只读清除（ROC）、只写清除（WOC）、可读可写1清除（RW1C）、 可读可写1设置（RW1S）。</p>
 <img src="https://pic.islet.space/2021/05/20210528141056.png" alt="image-20210528134312811" style="zoom: 80%;" />
 
 
@@ -1585,11 +1847,11 @@
 
 
 
-<h3 id="头文件-外围设备及寄存器宏定义"><a href="#头文件-外围设备及寄存器宏定义" class="headerlink" title="头文件-外围设备及寄存器宏定义"></a>头文件-外围设备及寄存器宏定义</h3><p><code>&lt;def21479.h&gt;</code> 是关于 <strong>外围设备</strong>（peripherals）和 <strong>寄存器</strong>（registers）的子集。</p>
-<p><code>&lt;cdef21479.h&gt;</code> 包含了对IOP寄存器的宏定义，对C/C++可用。所有定义均和 <code>&lt;def21479.h&gt;</code> 一致，除了以 <code>p</code> 作为前缀的宏定义 和 （relevant casts）以外，它们的用法如 <code>*pSYSTAT = 0x12345678;</code>。</p>
-<p>《HWR》仅有第99页中提及了这两份文件。</p>
+<h3 id="头文件"><a href="#头文件" class="headerlink" title="头文件"></a>头文件</h3><p>此处两份头文件是关于外围设备及寄存器宏定义的，其中，<code>&lt;def21479.h&gt;</code> 是关于 <strong>外围设备</strong>（peripherals）和 <strong>寄存器</strong>（registers）的子集。另一份文件，<code>&lt;cdef21479.h&gt;</code> 包含了对IOP寄存器的宏定义，对C/C++可用。所有定义均和 <code>&lt;def21479.h&gt;</code> 一致，除了以 <code>p</code> 作为前缀的宏定义 和 （relevant casts）以外，它们的用法如 <code>*pSYSTAT = 0x12345678;</code>。</p>
+<p>在《HWR》中，仅有第99页中提及了这两份文件。</p>
 <p><img src="https://pic.islet.space/2021/06/20210602171620.png" alt="image-20210602171608976"></p>
-<h4 id="DEF21479-H"><a href="#DEF21479-H" class="headerlink" title="DEF21479.H"></a>DEF21479.H</h4><ul>
+<h4 id="DEF21479-H"><a href="#DEF21479-H" class="headerlink" title="DEF21479.H"></a>DEF21479.H</h4><p>本头文件接口涉及到的接口如下：</p>
+<ul>
 <li><p>外部接口IOP寄存器（IOP registers for External Port）、SDRAM控制寄存器、AMI寄存器、DMA地址寄存器、SPORT（SP0~SP7）（包含串行接口寄存器、多通道发送接收（Multichannel tx/rx）、SPORT计数寄存器、错误中断控制寄存器、控制寄存器、多通道选择（Multichannel select））、SPI和SPIB寄存器、定时器寄存器、POWER MGT寄存器、外围设备中断优先级控制寄存器（Peripheral interrupt priority control register）、DAI寄存器（DAI参数寄存器、边缘中断锁存寄存器、中断优先级寄存器、（shadow）高/低优先级中断锁存寄存器、DAI状态寄存器、DAI针脚缓存状态寄存器、）、SRU寄存器（包括SRU时钟控制寄存器、数据控制寄存器、FS控制寄存器、针脚控制寄存器、外部Misc.A/B控制寄存器、针脚使能寄存器、shift寄存器的时钟控制和数据控制）、精度时钟控制寄存器（Precision Clock A/B Control Register 0/1）（包括脉冲宽度控制、幅度同步、脉冲宽度控制）、MTM寄存器、PWM寄存器、UART寄存器、TWI寄存器、FIR加速寄存器、IIR加速寄存器、FFT加速寄存器、MLB设备寄存器、WDT寄存器、Shift寄存器、RTC寄存器。</p>
 </li>
 <li><p>DPI、DTCP模块</p>
@@ -1622,7 +1884,8 @@
 <li><p>MLB位定义（DCCR/SSCR/SMCR/IBCR/CECR/CSCR）、WDT寄存器位定义、Shift寄存器位定义、RTC寄存器位定义（控制、初始化、状态、初始化状态）</p>
 </li>
 </ul>
-<h4 id="CDEF21479-H"><a href="#CDEF21479-H" class="headerlink" title="CDEF21479.H"></a>CDEF21479.H</h4><ul>
+<h4 id="CDEF21479-H"><a href="#CDEF21479-H" class="headerlink" title="CDEF21479.H"></a>CDEF21479.H</h4><p>本头文件中涉及的寄存器如下：</p>
+<ul>
 <li>仿真、断点寄存器</li>
 <li>外部接口的IOP寄存器</li>
 <li>SDRAM控制寄存器</li>
@@ -1650,16 +1913,26 @@
 <li>Shift寄存器</li>
 <li>RTC寄存器</li>
 </ul>
-<p>在《HWR》“自己眼”中，可能自己就这么点儿寄存器。</p>
+<p>但是，在《HWR》“自己眼”中，可能自己就这么点儿寄存器。</p>
 <p><img src="https://pic.islet.space/2021/05/20210529114430.png" alt="image-20210528140017190"></p>
 <h2 id="PLL寄存器"><a href="#PLL寄存器" class="headerlink" title="PLL寄存器"></a>PLL寄存器</h2><h3 id="PMCTL"><a href="#PMCTL" class="headerlink" title="PMCTL"></a>PMCTL</h3><p><code>PMCTL</code> 寄存器，Power management control register。（是的，没错，就是不知道为啥管PLL的要叫PMCTL）</p>
 <ul>
-<li>32位内存映射寄存器（32-bit memory-mapped register）</li>
-<li>包含控制位，可控制：锁相环（PLL, phase lock loop）(PLL乘法器值（multiplier）、PLL除法器值（divider）、锁相环旁路模式（PLL bypass mode） 和 外围设备使能时钟控制（clock control for enabling peripherals）)</li>
-<li>包含状态位，可追踪：CLK_CFG针脚（可读写）</li>
-<li>PMCTL 寄存器的复位值取决于 <code>CLK_CFG</code> 引脚（bits 5-0 &amp; 17-16）</li>
+<li> Controls the <em><strong>SDCLK</strong></em> to core clock ratio <mark>or</mark> <em><strong>DDR2CLK</strong></em> to core clock ratio related to the external port timing.</li>
+<li>The fundamental timing clock of the external port is <em><strong>SDRAM clock</strong></em> (SDCLK). The SDRAM clock ratio settings are independent from the peripheral clock (PCLK).<ul>
+<li>The AMI/SDRAM controller is capable of running at up to <em><strong>133 MHz</strong></em> for ADSP-2147x processors. See Table 4-2 for more information about <em>EXTERNAL PORT CLOCK FREQUENCIES</em>.</li>
+</ul>
+</li>
+<li>The fundamental timing clock of the external port is <em><strong>DDR2 clock</strong></em> (DDR2_CLK). The DDR2 clock ratio settings are independent from the <em><strong>peripheral clock</strong></em> (PCLK).</li>
+<li> 32位内存映射寄存器（32-bit memory-mapped register）</li>
+<li> 包含控制位，可控制：锁相环（PLL, phase lock loop）(PLL乘法器值（multiplier）、PLL除法器值（divider）、锁相环旁路模式（PLL bypass mode） 和 外围设备使能时钟控制（clock control for enabling peripherals）)</li>
+<li> 包含状态位，可追踪：CLK_CFG针脚（可读写）</li>
+<li> PMCTL 寄存器的复位值取决于 <code>CLK_CFG</code> 引脚（bits 5-0 &amp; 17-16）</li>
 <li>包含三选一的加速器（FIR、IIR、FFT）</li>
 </ul>
+<img src="https://pic.islet.space/2021/06/20210608103432.png" alt="image-20210608101359924" style="zoom: 67%;" />
+
+
+
 <p><img src="https://pic.islet.space/2021/05/20210527150918.png" alt="image-20210527150852485"></p>
 <p style="text-align: center; color: gray; font-weight: 800;">图 A-2 PMCTL 寄存器</p>
 
@@ -1677,7 +1950,41 @@
 <p><img src="https://pic.islet.space/2021/05/20210527152313.png" alt="image-20210527152155406"></p>
 <p><img src="https://pic.islet.space/2021/05/20210527152318.png" alt="image-20210527152229763"></p>
 <p><img src="https://pic.islet.space/2021/05/20210527152322.png" alt="image-20210527152251696"></p>
-<h2 id="复位寄存器"><a href="#复位寄存器" class="headerlink" title="复位寄存器"></a>复位寄存器</h2><p>RUNRSTCTL，运行中复位控制寄存器（Running Reset Control Register）。</p>
+<h3 id="PLLD"><a href="#PLLD" class="headerlink" title="PLLD"></a>PLLD</h3><p>PLLD是锁相环分频器（PLL Divider）。</p>
+<p><mark style="font-weight: 900;">Page 888:</mark> <strong>PLLD</strong>（PLL Divider）定义了 <strong>VCO输出时钟</strong> 和 <strong>核心时钟</strong> 的比值，以构建 <strong>处理器核心时钟</strong>（CCLK）。正在使用的分频器可以被随时改变，新的分频比率可以实时被应用。</p>
+<p><mark style="font-weight: 900;">Page 957:</mark> <strong>PLLD</strong>只有2位，可以设置为2、4、8、16。</p>
+<img src="https://pic.islet.space/2021/05/20210529113458.png" alt="image-20210529113003651" style="zoom:67%;" />
+
+<p><mark style="font-weight: 900;">&lt;def21479.h&gt;</mark>:<img src="https://pic.islet.space/2021/05/20210529113406.png" alt="image-20210529113403231"></p>
+<p>以下这几个操作中均需要用到PLLD，分别是：</p>
+<ul>
+<li>输出时钟生成器编程模型 （Output Clock Generator Programming Model）</li>
+<li>改变链接口时钟（Changing the Link Port Clock）</li>
+<li>发布分频器（Post Divider）</li>
+</ul>
+<img src="https://pic.islet.space/2021/05/20210529113238.png" alt="image-20210529111641680" style="zoom:67%;" />
+
+<img src="https://pic.islet.space/2021/05/20210529113241.png" alt="image-20210529111748944" style="zoom:67%;" />
+
+<img src="https://pic.islet.space/2021/05/20210529113244.png" alt="image-20210529112121464" style="zoom:67%;" />
+
+
+
+<h3 id="官方代码示例"><a href="#官方代码示例" class="headerlink" title="官方代码示例"></a>官方代码示例</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Init_PLL</span><span class="params">(<span class="keyword">void</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> temp,i;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// Step 1 - change the PLLD to 4</span></span><br><span class="line">	temp=*pPMCTL;   <span class="comment">//备份PMCTL寄存器的值至temp</span></span><br><span class="line">	temp&amp;=~PLLD16 ;     <span class="comment">//0x20，将PLLD16的值和temp进行逐位“与”运算</span></span><br><span class="line">	temp|=(PLLD4 | DIVEN) ;   <span class="comment">//0x260    0010 0110 0000</span></span><br><span class="line">	*pPMCTL = temp;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// Step 2 - 等待分频器稳定</span></span><br><span class="line">	SysWait(<span class="number">16</span>);</span><br><span class="line"></span><br><span class="line">	<span class="comment">// Step 3 - set INDIV bit now to bring down the VCO speed and enter the bypass mode</span></span><br><span class="line">	temp&amp;=~DIVEN;</span><br><span class="line">	temp|=(INDIV | PLLBP);</span><br><span class="line">	*pPMCTL = temp;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// Step 4 -等待PLL锁定</span></span><br><span class="line">	SysWait(<span class="number">4096</span>);</span><br><span class="line"></span><br><span class="line">	<span class="comment">// Step 5 - come out of the bypass mode</span></span><br><span class="line">	temp=*pPMCTL;</span><br><span class="line">	temp&amp;=~PLLBP;</span><br><span class="line">	*pPMCTL = temp;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// Step 6 - 等待分频器稳定</span></span><br><span class="line">	SysWait(<span class="number">16</span>);</span><br><span class="line"></span><br><span class="line">	<span class="comment">// Step 7 - set the required PLLM and INDIV values here  and enter the bypass mode</span></span><br><span class="line">	 <span class="comment">//PLLM=16, INDIV=0,  fVCO=2*PLLM*CLKIN = 2*16*16.625 = 532 MHz</span></span><br><span class="line">	temp = *pPMCTL;</span><br><span class="line">	temp&amp;=~ (INDIV | PLLM63);</span><br><span class="line">	temp|= (PLL_MULT| PLLBP);</span><br><span class="line">	*pPMCTL = temp;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// Step 8 - wait for the PLL to lock</span></span><br><span class="line">	<span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;<span class="number">4096</span>;i++);</span><br><span class="line"></span><br><span class="line">	<span class="comment">// Step 9 - come out of the bypass mode</span></span><br><span class="line">	temp = *pPMCTL;</span><br><span class="line">	temp&amp;=~PLLBP;</span><br><span class="line">	*pPMCTL=temp;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// Step 10 - wait for dividers to stabilize</span></span><br><span class="line">	SysWait(<span class="number">16</span>);</span><br><span class="line">	</span><br><span class="line">	<span class="comment">// Step 11 - set the required values of PLLD(=2) and SDCKR (=2.5 for ADSP-21489 and 2 for ADSP-21479) here</span></span><br><span class="line">	<span class="comment">// fCCLK = fVCO/PLLD = 532/2 = 266 MHz, fSDCLK = fCCLK/SDCKR = 266/2 = 133 MHz</span></span><br><span class="line">	temp=*pPMCTL;</span><br><span class="line">	temp&amp;=~(PLLD16 | <span class="number">0x1C0000</span> );</span><br><span class="line">	temp|= (SDCKR2 | PLLD2 | DIVEN);</span><br><span class="line">	*pPMCTL=temp;</span><br><span class="line">	</span><br><span class="line">	<span class="comment">// Step 12 - wait for the dividers to stabilize</span></span><br><span class="line">	SysWait(<span class="number">16</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>问题</strong>1： 为啥一定要使用temp变量来进行处理，直接使用 <code>*pPMCTL</code> 不是更方便吗？</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">initPLL</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="comment">/********************************************************************************************/</span></span><br><span class="line"></span><br><span class="line">	<span class="keyword">int</span> i, pmctlsetting;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// Set INDIV bit in PMCTL register</span></span><br><span class="line">	pmctlsetting = *pPMCTL; <span class="comment">// 备份PMCTL寄存器的原始值</span></span><br><span class="line">	pmctlsetting |= INDIV;	<span class="comment">//设置锁相环输出的分频率，0则是1分频，1则是2分频，此处通过或运算设置为二分频</span></span><br><span class="line">	*pPMCTL = pmctlsetting; <span class="comment">// 将至重新写入PMCTL寄存器</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">// Program PLL multiplier to same value as CLK_CFGx pins/previously programmed value in software……</span></span><br><span class="line">	*pPMCTL = pmctlsetting;</span><br><span class="line">	pmctlsetting |= PLLBP; <span class="comment">//设置锁相环旁路模式</span></span><br><span class="line">	*pPMCTL = pmctlsetting;</span><br><span class="line"></span><br><span class="line">	<span class="comment">//Wait for recommended number of cycles</span></span><br><span class="line">	<span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; <span class="number">4096</span>; i++)</span><br><span class="line">		NOP;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// Bring PLL out of bypass mode by clearing PLLBP bit</span></span><br><span class="line">	*pPMCTL ^= PLLBP; <span class="comment">// 通过异或操作 取消旁路模式</span></span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; <span class="number">16</span>; i++)</span><br><span class="line">		NOP;</span><br><span class="line"></span><br><span class="line">	pmctlsetting = *pPMCTL;</span><br><span class="line">	pmctlsetting &amp;= ~PLLM63; <span class="comment">//通过按位取反操作和与操作，清除PLLM所有位</span></span><br><span class="line">	pmctlsetting &amp;= ~INDIV;	 <span class="comment">//通过按位取反操作和与操作，清除分频</span></span><br><span class="line">	<span class="comment">// *pMCTL |= INDIV;</span></span><br><span class="line">	*pPMCTL = pmctlsetting;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// CLKIN = 16.625 MHz, PLLM=32, PLLD = 1, INDIV= 1 =&gt; fINPUT = 16.625/2 = 8.3125 MHz</span></span><br><span class="line">	<span class="comment">// CCLK = 2*PLLM*fINPUT/2*PLLD = (2*32*8.3125)/(2*1) = 266 MHz, SDCLK = CCLK/2 = 133 MHz</span></span><br><span class="line">	<span class="comment">// VCO frequency = 2*fINPUT*PLLM = 2*8.3125*32 = 532 &lt;= fVCOmax (532 MHz)</span></span><br><span class="line"></span><br><span class="line">	pmctlsetting = SDCKR2 | PLLM32 | INDIV | DIVEN; <span class="comment">//设置</span></span><br><span class="line">	*pPMCTL = pmctlsetting;</span><br><span class="line"></span><br><span class="line">	pmctlsetting |= PLLBP;	<span class="comment">//Setting the Bypass bit</span></span><br><span class="line">	pmctlsetting ^= DIVEN;	<span class="comment">//Clearing the DIVEN bit</span></span><br><span class="line">	*pPMCTL = pmctlsetting; <span class="comment">// Putting the PLL into bypass mode</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">//Wait for around 4096 cycles for the pll to lock.</span></span><br><span class="line">	<span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; <span class="number">5000</span>; i++)</span><br><span class="line">		NOP;</span><br><span class="line"></span><br><span class="line">	pmctlsetting = *pPMCTL;</span><br><span class="line">	pmctlsetting ^= PLLBP; <span class="comment">//清除旁路模式</span></span><br><span class="line">	*pPMCTL = pmctlsetting;</span><br><span class="line"></span><br><span class="line">	<span class="comment">//Wait for around 15 cycles for the output dividers to stabilize.</span></span><br><span class="line">	<span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; <span class="number">16</span>; i++)</span><br><span class="line">		NOP;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>更改之后：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">SystemWait</span><span class="params">(<span class="keyword">unsigned</span> <span class="keyword">int</span> MAX)</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> i;</span><br><span class="line">    <span class="keyword">for</span>(i = <span class="number">0</span>; i &lt; MAX; i++) NOP;</span><br><span class="line">&#125;</span><br><span class="line">	</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">initPLL</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	*pPMCTL |= INDIV;	<span class="comment">//设置锁相环输出的分频率，0则是1分频，1则是2分频，此处通过或运算设置为二分频</span></span><br><span class="line">	*pPMCTL |= PLLBP; <span class="comment">//设置锁相环旁路模式</span></span><br><span class="line">	SystemWait(<span class="number">4096</span>);</span><br><span class="line">	</span><br><span class="line">    *pPMCTL ^= PLLBP; <span class="comment">// 通过异或操作 取消旁路模式</span></span><br><span class="line">	SystemWait(<span class="number">16</span>);</span><br><span class="line"></span><br><span class="line">    *pPMCTL &amp;= ~( PLLM63 | INDIV );  <span class="comment">//PLLM和INDIV位全部或操作后取反，再与原PMCTL里的数据与操作，清除该两个定义位的数据</span></span><br><span class="line">	*pPMCTL = SDCKR2 | PLLM32 | INDIV | DIVEN; <span class="comment">//设置这几个位置的值</span></span><br><span class="line">    *pPMCTL = (*pPMCTL | PLLBP) ^ DIVEN</span><br><span class="line">	SystemWait(<span class="number">4096</span>);</span><br><span class="line"></span><br><span class="line">	*pPMCTL ^= PLLBP; <span class="comment">//清除旁路模式</span></span><br><span class="line">	SystemWait(<span class="number">16</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>当使用乘法器（multipliers）和已发布的分频器（post dividers）对PLL进行编程时，<code>DIVEN</code> 和 <code>PLLBP</code> 不可以在同一个时钟周期内被编程。注意：<code>DIVEN</code> 位会自动清零（self clearing）。</p>
+<blockquote>
+<p>∵ CLKIN = 16.625 MHz, PLLM=32, PLLD = 1, INDIV= 1<br>∴ f<del>INPUT</del> = 16.625/2 = 8.3125 MHz<br>∴ CCLK = 2*PLLM *f<del>INPUT</del>/2*PLLD = (2*32*8.3125)/(2*1) = 266 MHz<br>∴ SDCLK = CCLK/2 = 133 MHz， 符合 2147X 对 SDRAM 时钟的要求<br>VCO frequency = 2*f<del>INPUT</del>*PLLM = 2<em>8.3125</em>32 = 532 &lt;= f<del>VCOmax</del> (532 MHz)</p>
+</blockquote>
+<h2 id="复位寄存器"><a href="#复位寄存器" class="headerlink" title="复位寄存器"></a>复位寄存器</h2><p><em><strong>RUNRSTCTL</strong></em>，运行中复位控制寄存器（Running Reset Control Register）。</p>
 <p style="text-align: center; color: gray; font-weight: 800;">表A-5 RUNRSTCTL寄存器位功能描述</p>
 
 <p><img src="https://pic.islet.space/2021/05/20210527170843.png" alt="image-20210527170816951"></p>
@@ -1734,6 +2041,10 @@
 <p>TWI中所有的Status相关寄存器都是 “只读” 状态，其《位描述》表上都有一个 <code>RO</code> 标志。</p>
 <img src="https://pic.islet.space/2021/05/20210527095059.png" alt="image-20210527095053483" style="zoom:80%;" />
 
+
+
+<p>在VisualDSP++这款IDE中，也可以通过 直接观察到所有TWI的寄存器值。</p>
+<p><img src="https://pic.islet.space/2021/06/20210607103819.png" alt="image-20210607103816755" style="zoom:80%;" /> <img src="https://pic.islet.space/2021/06/20210607103750.png" alt="image-20210607103747655"></p>
 <h3 id="TWIMITR"><a href="#TWIMITR" class="headerlink" title="TWIMITR"></a>TWIMITR</h3><p>TWIMITR（<strong>Master Internal Time Register</strong>），即主机内部时间寄存器（如图A-143所示，并在表A-129中描述）。</p>
 <ul>
 <li>用于启用TWI模块，以及建立外围时钟（PCLK）和TWI控制器内部定时事件之间的关系。<ul>
@@ -1837,6 +2148,22 @@
 
 
 
+<h3 id="TWIMSTAT"><a href="#TWIMSTAT" class="headerlink" title="TWIMSTAT"></a>TWIMSTAT</h3><ul>
+<li>Not directly associated with the generation of interrupts but offer information on the current transfer.</li>
+<li>Slave mode operation does not affect master mode status bits.</li>
+</ul>
+<p><img src="https://pic.islet.space/2021/06/20210603153454.png" alt="image-20210603153452903"></p>
+<p>如果TWIMSTAT寄存器中的第2位是1</p>
+<img src="https://pic.islet.space/2021/06/20210603153720.png" alt="image-20210603153655529" style="zoom:80%;" />
+
+<img src="https://pic.islet.space/2021/06/20210603153724.png" alt="image-20210603153719024" style="zoom:80%;" />
+
+
+
+
+
+
+
 <h3 id="TWIFIFOCTL"><a href="#TWIFIFOCTL" class="headerlink" title="TWIFIFOCTL"></a>TWIFIFOCTL</h3><p>TWIFIFOCTL（<strong>FIFO Control Register</strong>），即先进先出控制寄存器，只控制FIFO，<mark>完全不与主机模式 或 从机模式操作绑定。</mark></p>
 <img src="https://pic.islet.space/2021/05/20210525144902.png" alt="image-20210525144403383" style="zoom: 67%;" />
 
@@ -1850,8 +2177,26 @@
 
 
 
-<h4 id="TWITXINT-interrupt"><a href="#TWITXINT-interrupt" class="headerlink" title="TWITXINT interrupt"></a>TWITXINT interrupt</h4><blockquote>
-<p>This interrupt is generated when there is one or two bytes of empty space in the FIFO. Simple data handling is all that is required.</p>
+
+
+<h3 id="TWIFIFOSTAT"><a href="#TWIFIFOSTAT" class="headerlink" title="TWIFIFOSTAT"></a>TWIFIFOSTAT</h3><ul>
+<li>指示FIFO缓冲区的接收和发送内容的状态。</li>
+<li>FIFO缓冲器不区分主数据和从数据。</li>
+<li>可以对FIFO进行管理，允许同时进行主、从操作。</li>
+</ul>
+<p><img src="https://pic.islet.space/2021/06/20210603152241.png" alt="image-20210603152156841"></p>
+<p><img src="https://pic.islet.space/2021/06/20210603152239.png" alt="image-20210603152211766"></p>
+<p><img src="https://pic.islet.space/2021/06/20210603152242.png" alt="image-20210603152235432"></p>
+<blockquote>
+<p><strong>TWITXS</strong>: 传输FIFO状态。</p>
+<p>这些只读位表示FIFO缓冲器中有效数据字节的数量。该状态在每次使用外围数据总线写入FIFO缓冲区或通过传输移位寄存器读取时被更新。</p>
+<p>在每次使用外设数据总线写FIFO缓冲区或通过传输移位寄存器读访问时更新。允许同时访问。</p>
+<ul>
+<li>00 = FIFO是空的。无论是单字节还是双字节的FIFO外设写入都会立即通过。</li>
+<li>01 = FIFO包含一个字节的数据。对FIFO的单字节外围写立即通过。一个双字节的外设写入要等到FIFO为空时才进行。</li>
+<li>11 = FIFO已满，包含两个字节的数据。</li>
+<li>10 = 保留</li>
+</ul>
 </blockquote>
 <h3 id="TWIIRPTL"><a href="#TWIIRPTL" class="headerlink" title="TWIIRPTL"></a>TWIIRPTL</h3><p>TWIIRPTL（TWI interrupt sources register），即TWI中断源寄存器。</p>
 <ul>
@@ -1876,6 +2221,18 @@
 
 <img src="https://pic.islet.space/2021/05/20210525164028.png" alt="image-20210525163959598" style="zoom:67%;" />
 
+<h4 id="TWITXINT"><a href="#TWITXINT" class="headerlink" title="TWITXINT"></a>TWITXINT</h4><p>首先要搞清楚，这个TWITXINT 是寄存器还是寄存器位，如果是寄存器位，哪它来自于哪个寄存器呢。目前已知包含TWITXINT的寄存器有：<code>TWIIRPTL</code> 、 <code>TWIIMASK</code> 、 <code>TWIFIFOCTL</code>(TWITXINT<em><strong>2</strong></em>)</p>
+<blockquote>
+<p>在TWIIRPT寄存器中的TWITXINT寄存器位：</p>
+<p>发送FIFO服务。</p>
+<p>如果 TWIFIFOCTL 寄存器中的 <code>XMTINTLEN2</code> 为 0，则每次 TWIFOSTAT 寄存器中的 TWITXS 字段被更新为 01 或 00 时，该位都被设置。</p>
+<p>如果 <code>XMTINTLEN</code> 为 1，则每次 TWITXS 被更新为 00 时，该位都被设置。</p>
+<p>1 = 发送 FIFO 缓冲区有一个或两个 8 位位置可供写入。</p>
+<p>0 = FIFO不需要服务或TWITXS字段在该位最后被清除后没有变化。</p>
+</blockquote>
+<h5 id="TWITXINT-interrupt"><a href="#TWITXINT-interrupt" class="headerlink" title="TWITXINT interrupt"></a>TWITXINT interrupt</h5><blockquote>
+<p>This interrupt is generated when there is one or two bytes of empty space in the FIFO. Simple data handling is all that is required.</p>
+</blockquote>
 <h3 id="TWIIMASK"><a href="#TWIIMASK" class="headerlink" title="TWIIMASK"></a>TWIIMASK</h3><p>TWIIMARK （<strong>TWI Interrupt mask register</strong>），即TWI中断<em><strong>隐藏</strong></em>寄存器。</p>
 <ul>
 <li>使能中断源（interrupt sources）插入中断输出（Interrupt output）</li>
@@ -1926,7 +2283,8 @@
 <p>TWI和UART有分离的中断输出。两者都默认连接至P14I（DPI）。然而，两者都允许分离连接至默认不路由的PICR，反而提供了更多可通过DAI/DPI中断优先级更改的混合模型。</p>
 <p>The TWI and the UART have separate interrupt outputs. Both peripherals are already connected via the P14I (DPI) by default. However both peripherals allow separate connectivity into the PICR that are not routed by default. This provides more flexibility for priority change across the DAI/DPI interrupts.</p>
 </blockquote>
-<h2 id="特性"><a href="#特性" class="headerlink" title="特性"></a>特性</h2><p>《HWR》第855页起对TWI进行了描述。</p>
+<h2 id="特性-Features"><a href="#特性-Features" class="headerlink" title="特性 Features"></a>特性 Features</h2><p>《HWR》第855页起对TWI进行了描述。</p>
+<p><img src="https://pic.islet.space/2021/06/20210603140236.png" alt="image-20210603140215469"></p>
 <ul>
 <li>需要使用DPI进行针脚信号的路由，不能使用DAI</li>
 <li>支持主从模式</li>
@@ -1946,13 +2304,46 @@
 
 
 
-<h2 id="针脚描述"><a href="#针脚描述" class="headerlink" title="针脚描述"></a>针脚描述</h2><img src="https://pic.islet.space/2021/05/20210527102109.png" alt="image-20210527101956389" style="zoom:67%;" />
+<h2 id="针脚描述-Pin-Descriptions"><a href="#针脚描述-Pin-Descriptions" class="headerlink" title="针脚描述 Pin Descriptions"></a>针脚描述 Pin Descriptions</h2><img src="https://pic.islet.space/2021/05/20210527102109.png" alt="image-20210527101956389" style="zoom:67%;" />
 
-<h2 id="SRU编程"><a href="#SRU编程" class="headerlink" title="SRU编程"></a>SRU编程</h2><img src="https://pic.islet.space/2021/05/20210527102114.png" alt="image-20210527102029529" style="zoom:67%;" />
+<h2 id="SRU编程-SRU-Programming"><a href="#SRU编程-SRU-Programming" class="headerlink" title="SRU编程 SRU Programming"></a>SRU编程 SRU Programming</h2><p>TWI信号可以通过 <code>SRU2</code> ，如表22-3所示进行路由。</p>
+<img src="https://pic.islet.space/2021/05/20210527102114.png" alt="image-20210527102029529" style="zoom:67%;" />
 
-<p>​    </p>
-<h2 id="时钟频率"><a href="#时钟频率" class="headerlink" title="时钟频率"></a>时钟频率</h2><ul>
-<li>外围时钟是TWI时钟频率的基础。</li>
+
+
+<blockquote>
+<p>Identify the peripherals that you are trying to connect to the SHARC DSP, and count the unique signals. List the unique I/O signals and look carefully to see what else you may be able to eliminate.</p>
+<ul>
+<li><p>如果时钟或帧同步连接至多个设备，算作一个信号。If the same <em><strong>clock</strong></em> or <em><strong>frame</strong></em> sync is connected to multiple devices, it counts as one signal. </p>
+</li>
+<li><p>如果与一个串行数据流驱动多个设备，也算作一个信号。When a <em><strong>serial data stream</strong></em> drives multiple output devices, it also counts as a single signal. </p>
+</li>
+<li><p>如果两个信号相同，但极性相反（倒置），算作一个信号。（因为SRU可以从另一个信号中产生任何一个）</p>
+</li>
+<li><p>如果一个时钟信号是另一个时钟信号的相位对齐的整数子倍数，则将它们组合在一起。</p>
+</li>
+</ul>
+<p>大多数引脚缓冲区在给定的设计中只在一个方向上使用。请注意，许多外设都具有能够实现双向操作的引脚，但仅在系统中的一个方向上使用。当针脚缓冲区是单向的时，SRU的编程会大大简化。</p>
+<p>如果针是双向的，确定方向改变的原因。这是另一个别针的状态吗？它是处理器级控制寄存器的状态吗？它是一个端口的软件配置吗？想想当SHARC将逻辑值驱动到双向针上时，以及当针刚刚读取逻辑输入时，可能会控制什么。</p>
+<p><em><strong>注意</strong></em> 下图中的 <code>PBxx_O</code> / <code>PBxx_I</code> / <code>PBENxx_I</code> 。针脚缓冲器就像一个小型缓冲器放大器，可以提供足够的电流来驱动针脚和电路板上的痕迹。打开时（即当其启用输入为逻辑高时），针缓冲输入处的逻辑值被驱动到针缓冲输出上。当关闭时（即，当其启用输入为逻辑低时），缓冲器放大器为高阻抗，并且引脚缓冲器输出的逻辑电平很容易由外部源控制。引脚缓冲区是与DAI相关联的物理IC包引线的逻辑网关。</p>
+<img src="https://pic.islet.space/2021/06/20210603170450.png" alt="image-20210603170447943" style="zoom: 80%;" />
+
+<p>由于引脚缓冲器是一个片上外设，连接到物理封装上的信号被称为引脚缓冲器的输出。虽然它是SHARC的一个输入，但它是引脚缓冲器的一个输出。请注意，图1显示了两个连接的轨迹，它们被标记为 <code>PBxx_O</code>（引脚缓冲器输出）。其中一个是SRU接口的一部分，另一个是外部封装连接引脚。当引脚缓冲器被用作输入时，信号会沿着这个路径。换句话说，SRU内的引脚缓冲器输出总是等于外部引脚的逻辑值。</p>
+<p>——《<em>Configuring the Signal Routing Unit of ADSP-2126x SHARC® DSPs</em>》</p>
+<p><mark>只有DAI有 PBEN ，DPI只有 PB。</mark></p>
+</blockquote>
+<p><em>PAGE 874</em>  - <em><strong>SRU PROGRAMMING MODE</strong></em></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">SRU(LOW, DPI_PBxx_I); <span class="comment">/* input buffer is low */</span></span><br><span class="line">SRU(TWI_DATA_PBEN_O, DPI_PBENxx_I); <span class="comment">/* TWI data output*/</span></span><br><span class="line"><span class="comment">//SRU(DPI_PBxx_O, TWI_DATA_I); /* TWI data input */</span></span><br><span class="line"></span><br><span class="line">SRU2(LOW, DPI_PByy_I); <span class="comment">/* input buffer is low */</span></span><br><span class="line">SRU2(TWI_CLK_PBEN_O, DPI_PBENyy_I); <span class="comment">/* TWI clock output*/</span></span><br><span class="line"><span class="comment">//SRU2(DPI_PByy_O, TWI_CLK_I); /* TWI clock input*/</span></span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+<p>​        </p>
+<h2 id="时钟频率-Clocking"><a href="#时钟频率-Clocking" class="headerlink" title="时钟频率 Clocking"></a>时钟频率 Clocking</h2><ul>
+<li>外围时钟（f<del>PCLK</del>）是TWI时钟频率的基础。</li>
 <li>串行时钟频率最高400KHz，最低20KHz；其分辨率为 1/10MHz 或 100ns。</li>
 </ul>
 <p>分频数的计算案例如下：</p>
@@ -1960,17 +2351,87 @@
 
 
 
-<h2 id="功能描述"><a href="#功能描述" class="headerlink" title="功能描述"></a>功能描述</h2><img src="https://pic.islet.space/2021/05/20210527133616.png" alt="image-20210527103515471" style="zoom: 67%;" />
+<h2 id="功能描述-Functional-Description"><a href="#功能描述-Functional-Description" class="headerlink" title="功能描述 Functional Description"></a>功能描述 Functional Description</h2><p>下图22-1展示了TWI控制器的架构。</p>
+<ul>
+<li><strong>外围接口</strong>（peripheral interface）支持32位宽的数据传输，并被处理器用于支持寄存器和FIFO缓冲器的读写。</li>
+<li><strong>寄存器块</strong> 包含了所有的控制和状态位，并依托程序模型来反映了可以写入或读取的内容。状态位可由其各自的（respective）功能块更新。</li>
+<li><strong>FIFO缓冲器</strong> 被配置为一个1字节宽、2字节深的发送/接收FIFO缓冲器。</li>
+</ul>
+<img src="https://pic.islet.space/2021/05/20210527133616.png" alt="image-20210527103515471"  />
+
+<ul>
+<li><strong>发送移位寄存器</strong>（transmit shift）串行地将其数据从外部移出芯片（shift its data out externally off chip）。该输出可以被控制以产生确认，也可以被手动改写。</li>
+<li><strong>接收移位寄存器</strong>（receive shift）从片外串行接收其数据（receive its data serially from off chip）。接收移位寄存器的宽度为1个字节，收到的数据可以被转移到FIFO缓冲区或用于地址比较（address comparison）。</li>
+<li><strong>地址比较块</strong> （address compare block）支持在TWI控制器模块作为从机访问时的地址比较。</li>
+<li><strong>预分频器块</strong> （prescaler block）必须被编程以产生一个相对于外设时钟的 <code>10MHz</code> 时间基准。这个时间基准用于过滤数据和数据表中电气参数指定的定时事件（见飞利浦的I2C总线规范），以及 <code>TWI_CLOCK</code> 的时钟信号生成。</li>
+<li><strong>时钟生成模块</strong> （clock generation module）用于在主模式下生成一个外部串行时钟（<code>TWI_CLOCK</code>）。它包括在多主时钟配置中进行同步所需的逻辑，以及在从属模式下配置时的时钟拉伸。</li>
+</ul>
+<h3 id="时钟输出"><a href="#时钟输出" class="headerlink" title="时钟输出"></a>时钟输出</h3><p>TWI控制器的时钟输出遵循以下规则。</p>
+<ol>
+<li><p>一旦时钟高电平（<code>CLKHI</code>）计数完成，串行时钟输出（serial clock output）被驱动为低电平，时钟低电平（<code>CLKLOW</code>）计数开始。</p>
+</li>
+<li><p>一旦时钟低电平计数完成，串行时钟线被三振（three-stated），时钟同步逻辑进入延迟模式（阴影区），直到 <code>TWI_CLOCK</code> 线被检测到逻辑1电平。这时，时钟高电平计数开始。</p>
+</li>
+</ol>
+<p><mark>TWI控制器只在主控模式运行时发出时钟，而且只在传输启动时发出</mark>。如果总线的仲裁（arbitration）丢失，串行时钟输出立即进入三态（three-states）。如果多个时钟试图驱动串行时钟线，TWI控制器将其时钟与其他剩余的时钟同步。这在图22-2中有所说明。</p>
+<blockquote>
+<p>The TWI controller only issues a clock during master mode operation and only at the time a transfer has been initiated.</p>
+</blockquote>
+<img src="https://pic.islet.space/2021/06/20210603144929.png" alt="image-20210603144317584" style="zoom:80%;" />
 
 
 
+<p>TWI控制器遵守《<em>Philips I2C Bus Specification version 2.1 dated January 2000</em>》传输协议。图22-3是简易的TWI传输示意。</p>
+<img src="https://pic.islet.space/2021/06/20210603172309.png" alt="image-20210603145223033" style="zoom:80%;" />
+
+<p>图22-4是TWI控制器在传输过程中的寄存器映射。</p>
+<img src="https://pic.islet.space/2021/06/20210603172312.png" alt="image-20210603145235075" style="zoom: 80%;" />
 
 
 
+<h3 id="总线仲裁-Bus-Arbitration"><a href="#总线仲裁-Bus-Arbitration" class="headerlink" title="总线仲裁 Bus Arbitration"></a>总线仲裁 Bus Arbitration</h3><p>略</p>
+<img src="https://pic.islet.space/2021/06/20210603145741.png" alt="image-20210603145739629" style="zoom:67%;" />
 
-<h2 id="8位数据寄存器"><a href="#8位数据寄存器" class="headerlink" title="8位数据寄存器"></a>8位数据寄存器</h2><h2 id="TWI中断"><a href="#TWI中断" class="headerlink" title="TWI中断"></a>TWI中断</h2><img src="https://pic.islet.space/2021/05/20210527133619.png" alt="image-20210527104039047" style="zoom:67%;" />
+<h3 id="开始与结束情景-Start-amp-Stop-condition"><a href="#开始与结束情景-Start-amp-Stop-condition" class="headerlink" title="开始与结束情景 Start &amp; Stop condition"></a>开始与结束情景 Start &amp; Stop condition</h3><p>略</p>
+<p>​    </p>
+<h2 id="操作模式-Operating-Modes"><a href="#操作模式-Operating-Modes" class="headerlink" title="操作模式 Operating Modes"></a>操作模式 Operating Modes</h2><h3 id="通用呼叫寻址-General-Call-Addressing"><a href="#通用呼叫寻址-General-Call-Addressing" class="headerlink" title="通用呼叫寻址 General Call Addressing"></a>通用呼叫寻址 General Call Addressing</h3><p>如果TWI控制器被启用为从机（TWISEN），并且使用TWIGCE位启用了一般呼叫，则TWI控制器总是解码并确认一般呼叫地址。一般呼叫寻址（0x00）由GCALL位的设置表示，根据传输的性质，TWI控制器是一个从属接收者。如果与传输相关的数据不被确认（NAKed），TWINAK位可以被设置。</p>
+<p>如果TWI控制器作为主发射器发出一个总调用，可以设置适当的地址和传输方向，同时加载发送FIFO数据。</p>
+<blockquote>
+<p>The TWI controller always decodes and acknowledges a general call address if it is enabled as a slave (TWISEN) and if general call is enabled using the TWIGCE bit. General call addressing (0x00) is indicated by the setting of the GCALL bit, and by the nature of the transfer, the TWI controller is a slave-receiver. If the data associated with the transfer is to be not acknowledged (NAKed), the TWINAK bit can be set.</p>
+<p>If the TWI controller is to issue a general call as a master-transmitter, the appropriate address and transfer direction can be set along with loading transmit FIFO data.</p>
+</blockquote>
+<h3 id="从设备模式寻址-Slave-Mode-Addressing"><a href="#从设备模式寻址-Slave-Mode-Addressing" class="headerlink" title="从设备模式寻址 Slave Mode Addressing"></a>从设备模式寻址 Slave Mode Addressing</h3><blockquote>
+<p>With the appropriate selection of 7-bit addressing using the TWISLEN bit, the corresponding number of address bits (SADDR) are referenced during the address phase of a transfer.</p>
+</blockquote>
+<h3 id="主设备模式寻址-Master-Mode-Addressing"><a href="#主设备模式寻址-Master-Mode-Addressing" class="headerlink" title="主设备模式寻址 Master Mode Addressing"></a>主设备模式寻址 Master Mode Addressing</h3><p>无论是启用主发送器还是使用 <em><strong>TWIMLEN</strong></em> 位进行7位寻址的主接收器，TWI主站都会按要求执行所有寻址和数据传输。这包括产生重复启动条件，重新传输第一个地址字节的7位，以及确认和产生一个新的传输方向变化（由 <em><strong>TWIMLEN</strong></em> 位指示）。</p>
+<blockquote>
+<p>Whether enabled as a master-transmitter or master-receiver with 7-bit addressing using the <em><strong>TWIMLEN</strong></em> bit, the TWI master performs all addressing and data transfers as required. This includes generating the repeated start condition, re-transmission of the 7-bits of the first address byte, and acknowledgement and generation of a new transfer direction change (indicated by the <em><strong>TWIMLEN</strong></em> bit). </p>
+</blockquote>
+<h3 id="快速模式-Fast-Mode"><a href="#快速模式-Fast-Mode" class="headerlink" title="快速模式 Fast Mode"></a>快速模式 Fast Mode</h3><blockquote>
+<p>Fast mode (400 kHz) uses essentially the same mechanics as standard mode (100 kHz). It is the electrical specifications and timing that are different. When fast mode is enabled using the <em><strong>TWIFAST</strong></em> bit, the following timings are modified to meet the electrical requirements.</p>
+<ul>
+<li>Serial data rise times before arbitration evaluation (tr)</li>
+<li>Stop condition setup time from serial clock to serial data (tSUSTO)</li>
+<li>Bus free time between a stop and start condition (tBUF)</li>
+</ul>
+</blockquote>
+<h2 id="数据传输-Data-Transfer"><a href="#数据传输-Data-Transfer" class="headerlink" title="数据传输 Data Transfer"></a>数据传输 Data Transfer</h2><p>PAGE867:</p>
+<p>数据传输部分介绍 <strong>3个寄存器</strong>、<strong>4个缓冲区域</strong> 和 <strong>3个缓存状态</strong>。</p>
+<h3 id="寄存器-Register"><a href="#寄存器-Register" class="headerlink" title="寄存器 Register"></a>寄存器 Register</h3><p><strong>Serial Shift Register</strong>： TWI有一个输入和输出的串行移位器，下面将介绍。</p>
+<p><strong>Output Shift Register</strong>： 发送移位寄存器接收字节宽的缓冲区数据或寄存器数据（地址），并将其数据从外部串行移出芯片。该输出可以被控制以产生确认信号，也可以被手动改写。</p>
+<p><strong>Input Shift Register</strong>： 接收移位寄存器从芯片外串行地接收数据。在内部，接收移位寄存器是字节宽的，收到的数据可以被转移到缓冲区或用于地址比较。</p>
+<h3 id="缓存区域-Buffer"><a href="#缓存区域-Buffer" class="headerlink" title="缓存区域 Buffer"></a>缓存区域 Buffer</h3><p>TWI有多个用于8位和16位数据的接收和发送数据缓冲区，每个缓冲区都是独立访问的，可以同时访问。</p>
+<p>例如，在接收移位寄存器向接收缓冲区写入数据的同时，可以向发送缓冲区写入数据。</p>
+<p><strong>8-Bit Transmit Buffer</strong>： </p>
+<p><strong>16-Bit Transmit Buffer</strong>： </p>
+<p><strong>8-Bit Receive Buffer</strong>： </p>
+<p><strong>16-Bit Receive Buffer</strong>： </p>
+<h3 id="缓存状态-Buffer-Status"><a href="#缓存状态-Buffer-Status" class="headerlink" title="缓存状态 Buffer Status"></a>缓存状态 Buffer Status</h3><p><strong>Buffer Error</strong>： </p>
+<p><strong>Flushing the Buffer</strong>： </p>
+<p><strong>Buffer Hang Disable</strong>： </p>
+<h2 id="中断-Interrupt"><a href="#中断-Interrupt" class="headerlink" title="中断 Interrupt"></a>中断 Interrupt</h2><img src="https://pic.islet.space/2021/05/20210527133619.png" alt="image-20210527104039047" style="zoom:67%;" />
 
-<h3 id="中断源"><a href="#中断源" class="headerlink" title="中断源"></a>中断源</h3><h3 id="Masking"><a href="#Masking" class="headerlink" title="Masking"></a>Masking</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">bit <span class="built_in">set</span> IMASK P14I; <span class="comment">/* unmasks P14I interrupt */</span></span><br><span class="line">ustat1=dm(DPI_IMASK_RE); <span class="comment">/* set TWI Int */</span></span><br><span class="line">bit <span class="built_in">set</span> ustat1 TWI_INT;</span><br><span class="line">dm(DPI_IMASK_RE)=ustat1;</span><br></pre></td></tr></table></figure>
+<h3 id="中断源"><a href="#中断源" class="headerlink" title="中断源"></a>中断源</h3><h2 id="Effect-Latency"><a href="#Effect-Latency" class="headerlink" title="Effect Latency"></a>Effect Latency</h2><h2 id="编程模型-Programming-Model"><a href="#编程模型-Programming-Model" class="headerlink" title="编程模型 Programming Model"></a>编程模型 Programming Model</h2><h2 id="电气特性-Electrical-Specifications"><a href="#电气特性-Electrical-Specifications" class="headerlink" title="电气特性 Electrical Specifications"></a>电气特性 Electrical Specifications</h2><h2 id="调试特征-Debug-Feature"><a href="#调试特征-Debug-Feature" class="headerlink" title="调试特征 Debug Feature"></a>调试特征 Debug Feature</h2><h3 id="Masking"><a href="#Masking" class="headerlink" title="Masking"></a>Masking</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">bit <span class="built_in">set</span> IMASK P14I; <span class="comment">/* unmasks P14I interrupt */</span></span><br><span class="line">ustat1=dm(DPI_IMASK_RE); <span class="comment">/* set TWI Int */</span></span><br><span class="line">bit <span class="built_in">set</span> ustat1 TWI_INT;</span><br><span class="line">dm(DPI_IMASK_RE)=ustat1;</span><br></pre></td></tr></table></figure>
 
 
 
@@ -2016,22 +2477,14 @@
 
 
 
-<h2 id="TWI物理接口（引脚）确定"><a href="#TWI物理接口（引脚）确定" class="headerlink" title="TWI物理接口（引脚）确定"></a>TWI物理接口（引脚）确定</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">InitSRU</span><span class="params">(<span class="keyword">void</span>)</span></span>;  <span class="comment">//用于引脚声明</span></span><br><span class="line"><span class="function"><span class="keyword">extern</span> <span class="keyword">void</span> <span class="title">initPLL_SDRAM</span><span class="params">(<span class="keyword">void</span>)</span></span>;  <span class="comment">//为CCLK和HCLK初始化DSP的PLL</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">DPI_Isr</span><span class="params">(<span class="keyword">int</span> dummy)</span></span>;  <span class="comment">//DPI引脚中断控制</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Enable_DPI_Interrupt</span><span class="params">(<span class="keyword">void</span>)</span></span>;  <span class="comment">//引脚中断使能</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Master_TWI_Init</span><span class="params">(<span class="keyword">void</span>)</span></span>;  <span class="comment">//主机初始化</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">InitBuffer</span><span class="params">(<span class="keyword">void</span>)</span></span>;   <span class="comment">//初始化TWI_Buffer，用于存储发送的数据</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">TWI_Transmit_Data_Polling</span><span class="params">(<span class="keyword">void</span>)</span></span>;  <span class="comment">//传输数据用的函数</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">Init_TWI</span><span class="params">(<span class="keyword">void</span>)</span></span>;  <span class="comment">//初始化TWI（类似于main()）</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h2 id="TWI物理接口（引脚）确定"><a href="#TWI物理接口（引脚）确定" class="headerlink" title="TWI物理接口（引脚）确定"></a>TWI物理接口（引脚）确定</h2><p>TWI物理引脚的确定请参考另一篇文章《AnalogDeviceSigmaStudio》，以下为ADI官方提供的TWI物理引脚定义代码样例。</p>
+<p>需要注意的是，在实操时，若使用DPI_12作为SCL，会出现12引脚因 SW （Switch）调整不到位或其他原因导致无法使用该引脚，可更换其他引脚进行使用。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">InitSRU</span><span class="params">(<span class="keyword">void</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	SRU(LOW, DPI_PB11_I);				<span class="comment">//定义DPI_PB11为数据输出引脚，即SDA，TWI针脚连接至逻辑电平0，TWI输出是open-drain输出</span></span><br><span class="line">	SRU(TWI_DATA_PBEN_O, DPI_PBEN11_I); <span class="comment">//TWI数据输出连接至DPI_11输入</span></span><br><span class="line">	SRU(DPI_PB11_O, TWI_DATA_I);		<span class="comment">//DPI_11输出连接至TWI数据输入</span></span><br><span class="line">										<span class="comment">//TWI设备不论主从，其数据口SDA都需要双向发送和接收，因为主设备在发送的时候也需要接收从设备发过来的ACK确认信标</span></span><br><span class="line"></span><br><span class="line">	SRU(LOW, DPI_PB12_I);				<span class="comment">//定义DPI_PB12为时钟输出引脚，即SDA，TWI针脚连接至逻辑电平0，TWI输出是open-drain输出</span></span><br><span class="line">	SRU2(TWI_CLK_PBEN_O, DPI_PBEN12_I); <span class="comment">//TWI时钟输出，连接至DPI_12输入</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 
 
-
-
-
-
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Init_TWI_SRU</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="comment">//TWI数据针脚路由</span></span><br><span class="line">	SRU(LOW, DPI_PB11_I); <span class="comment">/* input buffer is low */</span></span><br><span class="line">	SRU(TWI_DATA_PBEN_O, DPI_PBEN11_I); <span class="comment">/* TWI data output*/</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">// TWI时钟针脚路由</span></span><br><span class="line">	SRU2(LOW, DPI_PB12_I); <span class="comment">/* input buffer is low */</span></span><br><span class="line">	SRU2(TWI_CLK_PBEN_O, DPI_PBEN12_I); <span class="comment">/* TWI clock output*/</span></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<img src="https://pic.islet.space/2021/05/20210527144920.png" alt="image-20210524112141809" style="zoom:67%;" />
-
-
-
+<p>即 <strong>DPI_P11</strong> 为 <em><strong>SDA</strong></em>，<strong>DPI_P12</strong> 为 <em><strong>SCLK</strong></em>。（已更新为其他引脚）</p>
+ <img src="https://pic.islet.space/2021/05/20210527144920.png" alt="image-20210524112141809" style="zoom:67%;" />
 
 
 
@@ -2041,53 +2494,7 @@
 
 
 
-
-
-<h1 id="LATENCY"><a href="#LATENCY" class="headerlink" title="LATENCY"></a>LATENCY</h1><h2 id="TWI-效果延迟（时间）"><a href="#TWI-效果延迟（时间）" class="headerlink" title="TWI 效果延迟（时间）"></a>TWI 效果延迟（时间）</h2><p>在TWI寄存器设置后，其效果延迟大概是 1.5到2个PCLK周期。</p>
-<p><img src="https://pic.islet.space/2021/05/20210525153905.png" alt="image-20210525153855627"></p>
-<h1 id="ASM-“NOP”"><a href="#ASM-“NOP”" class="headerlink" title="ASM(“NOP”)"></a>ASM(“NOP”)</h1><p>[blog.csdn.net](<a target="_blank" rel="noopener" href="https://blog.csdn.net/Mr_White01/article/details/68488802#:~:text=asm">https://blog.csdn.net/Mr_White01/article/details/68488802#:~:text=asm</a> (“nop”)是内嵌汇编做空指令延时用的，其中asm ()的作用是指函数内部的参数翻译为汇编指令，其作用是在C语言环境下直接使用汇编指令执行。 nop是一个空等待汇编指令，这个指令执行时，单片机是什么也不做，仅仅起一个时间延时作用。,CC2530属于8051系列单片机，asm (“nop”)执行的是一条空指令（单周期指令），占用时间是一个机器周期，晶振为32Mhz。 于是，机器周期%3D12*1%2F32%3D0.375us。 即一句asm (“nop”)延时了0.375us。)</p>
-<h2 id="asm-作用"><a href="#asm-作用" class="headerlink" title="asm()作用"></a>asm()作用</h2><p>将函数内部的参数翻译为汇编指令，在C语言环境下直接使用汇编指令执行。</p>
-<ul>
-<li><p><code>asm(&quot;nop&quot;)</code>是内嵌汇编做空指令延时用的；</p>
-</li>
-<li><p><code>nop</code>是一个空等待汇编指令，这个指令执行时，单片机是什么也不做，仅仅起一个时间延时作用。 </p>
-</li>
-</ul>
-<blockquote>
-<p>CC2530属于8051系列单片机，asm(“nop”)执行的是一条空指令（单周期指令），占用时间是一个机器周期，晶振为32Mhz。 </p>
-<p>于是，机器周期=12*1/32=0.375us ; 即一句asm(“nop”)延时了0.375us。</p>
-</blockquote>
-<h2 id="时钟周期"><a href="#时钟周期" class="headerlink" title="时钟周期"></a>时钟周期</h2><p>时钟周期也称为振荡周期，定义为时钟脉冲的倒数(可以这样来理解，时钟周期就是单片机外接晶振的倒数，例如12M的晶振，它的时间周期就是1/12 us)，是计算机中最基本的、最小的时间单位。 </p>
-<p>在一个时钟周期内，CPU仅完成一个最基本的动作。对于某种单片机，若采用了1MHZ的时钟频率，则时钟周期为1us;若采用4MHZ的时钟频率，则时钟  周期为250us。由于时钟脉冲是计算机的基本工作脉冲，它控制着计算机的工作节奏(使计算机的每一步都统一到它的步调上来)。显然，对同一种机型的计算机，时钟频率越高，计算机的工作速度就越快。具体计算就是1/fosc。也就是说如果晶振为1MHz，那么时钟周期就为1us；6MHz的话，就是1/6us。 </p>
-<p> 8051单片机把一个时钟周期定义为一个节拍(用P表示)，二个节拍定义为一个状态周期(用S表示)。 </p>
-<h2 id="机器周期"><a href="#机器周期" class="headerlink" title="机器周期"></a>机器周期</h2><p>在计算机中，为了便于管理，常把一条指令的执行过程划分为若干个阶段，每一阶段完成一项工作。例如，取指令、存储器读、存储器写等，这每一项工作称为一个基本操作。完成一个基本操作所需要的时间称为机器周期。一般情况下，一个机器周期由若干个S周期(状态周期)组成。 </p>
-<p>8051系列单片机的一个机器周期同6个  S周期(状态周期)组成。前面已说过一个时钟周期定义为一个节拍(用P表示)，二个节拍定义为一个状态周期(用S表示)，8051单片机的机器周期由6个 状态周期组成，也就是说一个机器周期=6个状态周期=12个时钟周期。 具体计算为：时钟周期 X  cycles。如果单片机是12周期的话，那么机器周期就是T×12。假设晶振频率为12M，单片机为12周期的话，那么机器周期就是1us。 </p>
-<p>例如外接24M晶振的单片机，他的一个机器周期=12/24M 秒；52系列单片机一个机器周期等于12个时钟周期。设晶振频率为12MHz时，52单片机是12T的单片机，即频率要12分频。12M经过分频变为1M，由T=1/f,即一个机器周期变为1us。 </p>
-<h2 id="指令周期"><a href="#指令周期" class="headerlink" title="指令周期"></a>指令周期</h2><p>执行一条指令所需要的时间，一般由若干个机器周期组成。指令不同，所需的机器周期也不同。通常，包含一个机器周期的指令成为单周期指令，比如CLR,MOV等等。包含两个机器周期的指令称为双周期指令。另外还有4周期指令，比如乘法和除法指令。对于一些简单的的单字节指令，在取指令周期中，指令取出到指令寄存器后，立即译码执行，不再需要其它的机器周期。对于一些比较复杂的指令，例如转移指令、乘法指令，则需要两个或者两个以上的机器周期。 </p>
-<h2 id="总线周期"><a href="#总线周期" class="headerlink" title="总线周期"></a>总线周期</h2><p>由于存贮器和I/O端口是挂接在总线上的，CPU对存贮器和I/O接口的访问，是通过总线实现的。通常把CPU通过总线对微处理器外部(存贮器或 I/O接口)进行一次访问所需时间称为一个总线周期。</p>
-<p>总结一下，时钟周期是最小单位，机器周期需要1个或多个时钟周期，指令周期需要1个或多个机器周期;机器周期指的是完成一个基本操作的时间，这个基本操作有时可能包含总线读写，因而包含总线周期，但是有时可能与总线读写无关，所以，并无明确的相互包含的关系。  指令周期：是CPU的关键指标，指取出并执行一条指令的时间。一般以机器周期为单位，分单指令执行周期、双指令执行周期等。现在的处理器的大部分指令(ARM、DSP)均采用单指令执行周期。机器周期：完成一个基本操作的时间单元，如取指周期、取数周期。时钟周期：CPU的晶振的工作频率的倒数。</p>
-<h1 id="寄存器位操作"><a href="#寄存器位操作" class="headerlink" title="寄存器位操作"></a>寄存器位操作</h1><p>寄存器位操作也叫 <em>Bit Manipulation</em> 。</p>
-<h1 id="PLL代码分析"><a href="#PLL代码分析" class="headerlink" title="PLL代码分析"></a>PLL代码分析</h1><h2 id="官方示例"><a href="#官方示例" class="headerlink" title="官方示例"></a>官方示例</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Init_PLL</span><span class="params">(<span class="keyword">void</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> temp,i;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// Step 1 - change the PLLD to 4</span></span><br><span class="line">	temp=*pPMCTL;   <span class="comment">//备份PMCTL寄存器的值至temp</span></span><br><span class="line">	temp&amp;=~PLLD16 ;     <span class="comment">//0x20，将PLLD16的值和temp进行逐位“与”运算</span></span><br><span class="line">	temp|=(PLLD4 | DIVEN) ;   <span class="comment">//0x260    0010 0110 0000</span></span><br><span class="line">	*pPMCTL = temp;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// Step 2 - 等待分频器稳定</span></span><br><span class="line">	SysWait(<span class="number">16</span>);</span><br><span class="line"></span><br><span class="line">	<span class="comment">// Step 3 - set INDIV bit now to bring down the VCO speed and enter the bypass mode</span></span><br><span class="line">	temp&amp;=~DIVEN;</span><br><span class="line">	temp|=(INDIV | PLLBP);</span><br><span class="line">	*pPMCTL = temp;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// Step 4 -等待PLL锁定</span></span><br><span class="line">	SysWait(<span class="number">4096</span>);</span><br><span class="line"></span><br><span class="line">	<span class="comment">// Step 5 - come out of the bypass mode</span></span><br><span class="line">	temp=*pPMCTL;</span><br><span class="line">	temp&amp;=~PLLBP;</span><br><span class="line">	*pPMCTL = temp;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// Step 6 - 等待分频器稳定</span></span><br><span class="line">	SysWait(<span class="number">16</span>);</span><br><span class="line"></span><br><span class="line">	<span class="comment">// Step 7 - set the required PLLM and INDIV values here  and enter the bypass mode</span></span><br><span class="line">	 <span class="comment">//PLLM=16, INDIV=0,  fVCO=2*PLLM*CLKIN = 2*16*16.625 = 532 MHz</span></span><br><span class="line">	temp = *pPMCTL;</span><br><span class="line">	temp&amp;=~ (INDIV | PLLM63);</span><br><span class="line">	temp|= (PLL_MULT| PLLBP);</span><br><span class="line">	*pPMCTL = temp;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// Step 8 - wait for the PLL to lock</span></span><br><span class="line">	<span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;<span class="number">4096</span>;i++);</span><br><span class="line"></span><br><span class="line">	<span class="comment">// Step 9 - come out of the bypass mode</span></span><br><span class="line">	temp = *pPMCTL;</span><br><span class="line">	temp&amp;=~PLLBP;</span><br><span class="line">	*pPMCTL=temp;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// Step 10 - wait for dividers to stabilize</span></span><br><span class="line">	SysWait(<span class="number">16</span>);</span><br><span class="line">	</span><br><span class="line">	<span class="comment">// Step 11 - set the required values of PLLD(=2) and SDCKR (=2.5 for ADSP-21489 and 2 for ADSP-21479) here</span></span><br><span class="line">	<span class="comment">// fCCLK = fVCO/PLLD = 532/2 = 266 MHz, fSDCLK = fCCLK/SDCKR = 266/2 = 133 MHz</span></span><br><span class="line">	temp=*pPMCTL;</span><br><span class="line">	temp&amp;=~(PLLD16 | <span class="number">0x1C0000</span> );</span><br><span class="line">	temp|= (SDCKR2 | PLLD2 | DIVEN);</span><br><span class="line">	*pPMCTL=temp;</span><br><span class="line">	</span><br><span class="line">	<span class="comment">// Step 12 - wait for the dividers to stabilize</span></span><br><span class="line">	SysWait(<span class="number">16</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<h2 id="步骤总结"><a href="#步骤总结" class="headerlink" title="步骤总结"></a>步骤总结</h2><p>从官方给出的示例代码中，可以将步骤总结如下：</p>
-<ol>
-<li><mark>设置PLLD</mark> - 等待分频器稳定</li>
-<li><mark>设置INDIV位以降低VCO速度，并进入旁路模式</mark> - 等待PLL锁定</li>
-<li><mark>从旁路模式出来</mark> - 等待分频器稳定</li>
-<li><mark>设置PLLM和INDIV，并进入旁路模式</mark> - 等待PLL锁定</li>
-<li><mark>从旁路模式出来</mark> - 等待分频器稳定</li>
-<li><mark>设置PLLD和SDCKR</mark> - 等待分频器稳定</li>
-</ol>
-<p>从以上步骤可以看出，PLL的初始化，主要是设置 <strong>PLLD</strong> 、 <strong>INDIV</strong> 、 <strong>PLLM</strong> 、 <strong>SDCKR</strong> 的值，途中反复等待 <strong>分频器稳定</strong> 和 <strong>PLL锁定</strong>。</p>
-<h2 id="问题总结"><a href="#问题总结" class="headerlink" title="问题总结"></a>问题总结</h2><ol>
-<li>进入旁路模式的意义：</li>
-</ol>
-<h1 id="时钟、仲裁、PLL、分频"><a href="#时钟、仲裁、PLL、分频" class="headerlink" title="时钟、仲裁、PLL、分频"></a>时钟、仲裁、PLL、分频</h1><p>《HWR》第884页——PLL</p>
-<p>PCLK</p>
-<p>CLKIN</p>
-<blockquote>
+<h2 id="Clock"><a href="#Clock" class="headerlink" title="Clock"></a>Clock</h2><blockquote>
 <p>The PLLD bits define the VCO output clock to core clock ratio to build the processor core clock (CCLK). The post divider can be changed any time and new division ratios are implemented on the fly.</p>
 </blockquote>
 <blockquote>
@@ -2096,28 +2503,9 @@
 <blockquote>
 <p>The PLL bit settings PLLM/PLLD in PMCTL register need to be programmed such that the PLLM/PLLD ratio is integer (for example 15/2=7.5 fractional, is not allowed).</p>
 </blockquote>
-<h3 id="PLLD"><a href="#PLLD" class="headerlink" title="PLLD"></a>PLLD</h3><p><mark style="font-weight: 900;">Page 888:</mark> <strong>PLLD</strong>（PLL Divider）定义了 <strong>VCO输出时钟</strong> 和 <strong>核心时钟</strong> 的比值，以构建 <strong>处理器核心时钟</strong>（CCLK）。正在使用的分频器可以被随时改变，新的分频比率可以实时被应用。</p>
-<p><mark style="font-weight: 900;">Page 957:</mark> <strong>PLLD</strong>只有2位，可以设置为2、4、8、16。</p>
-<img src="https://pic.islet.space/2021/05/20210529113458.png" alt="image-20210529113003651" style="zoom:67%;" />
-
-<p><mark style="font-weight: 900;">&lt;def21479.h&gt;</mark>:<img src="https://pic.islet.space/2021/05/20210529113406.png" alt="image-20210529113403231"></p>
-<p>以下这几个操作中均需要用到PLLD，分别是：</p>
-<ul>
-<li>输出时钟生成器编程模型 （Output Clock Generator Programming Model）</li>
-<li>改变链接口时钟（Changing the Link Port Clock）</li>
-<li>发布分频器（Post Divider）</li>
-</ul>
-<img src="https://pic.islet.space/2021/05/20210529113238.png" alt="image-20210529111641680" style="zoom:67%;" />
-
-<img src="https://pic.islet.space/2021/05/20210529113241.png" alt="image-20210529111748944" style="zoom:67%;" />
-
-<img src="https://pic.islet.space/2021/05/20210529113244.png" alt="image-20210529112121464" style="zoom:67%;" />
-
-
-
-
-
-<h1 id="INTERRUPT-CONTROL-（中断控制）"><a href="#INTERRUPT-CONTROL-（中断控制）" class="headerlink" title="INTERRUPT CONTROL （中断控制）"></a>INTERRUPT CONTROL （中断控制）</h1><p><em>Page93</em>：</p>
+<h3 id="IOP-Clock-PCLK"><a href="#IOP-Clock-PCLK" class="headerlink" title="IOP Clock (PCLK)"></a>IOP Clock (PCLK)</h3><p>The <em><strong>peripheral clock</strong></em> is derived from the <em><strong>core clock</strong></em> with <em><strong>a fixed post divisor of 2</strong></em>. </p>
+<p>This clock is the <em><strong>master clock for</strong></em> most peripherals including the <em><strong>I/O processor</strong></em> (IOP).</p>
+<h1 id="Interrupt-Control-of-PINs"><a href="#Interrupt-Control-of-PINs" class="headerlink" title="Interrupt Control of PINs"></a>Interrupt Control of PINs</h1><p><em>Page93</em>：</p>
 <blockquote>
 <p>For information on the IRPTL, LIRPTL, and IMASK registers, see <em>SHARC Processor Programming Reference</em>.</p>
 </blockquote>
@@ -2152,7 +2540,9 @@
 <p><strong>DAI 中断锁存寄存器</strong>（<strong>DAI_IRPTL</strong>）: 为DAI高/低优先级中断锁存中断。</p>
 <p><strong>DPI 中断屏蔽寄存器</strong>（<strong>DPI_IMASK</strong>）：屏蔽上升或下降沿波形。因可屏蔽的边沿有上升沿或下降沿，因此DPI中断屏蔽寄存器分为 DPI_IMASK_RE 和  DPI_IMASK_FE。</p>
 <p><strong>DPI 中断锁存寄存器</strong>（<strong>DPI_IRPTL</strong>）：为DPI中断锁存中断。</p>
-<h2 id="功能描述-1"><a href="#功能描述-1" class="headerlink" title="功能描述"></a>功能描述</h2><h3 id="可编程中断优先级控制"><a href="#可编程中断优先级控制" class="headerlink" title="可编程中断优先级控制"></a>可编程中断优先级控制</h3><h4 id="外围中断"><a href="#外围中断" class="headerlink" title="外围中断"></a>外围中断</h4><h4 id="软件中断"><a href="#软件中断" class="headerlink" title="软件中断"></a>软件中断</h4><h4 id="多重中断请求信号的外围设备"><a href="#多重中断请求信号的外围设备" class="headerlink" title="多重中断请求信号的外围设备"></a>多重中断请求信号的外围设备</h4><h3 id="系统中断控制器"><a href="#系统中断控制器" class="headerlink" title="系统中断控制器"></a>系统中断控制器</h3><p>DAI/DPI外围相关事件发生时，这些针脚各自拥有能够指向核心的系统中断控制器。</p>
+<p><img src="https://pic.islet.space/2021/06/20210603134601.png" alt="image-20210603134437928"></p>
+<p><img src="https://pic.islet.space/2021/06/20210603134603.png" alt="image-20210603134453465"></p>
+<h2 id="功能描述"><a href="#功能描述" class="headerlink" title="功能描述"></a>功能描述</h2><h3 id="可编程中断优先级控制"><a href="#可编程中断优先级控制" class="headerlink" title="可编程中断优先级控制"></a>可编程中断优先级控制</h3><h4 id="外围中断"><a href="#外围中断" class="headerlink" title="外围中断"></a>外围中断</h4><h4 id="软件中断"><a href="#软件中断" class="headerlink" title="软件中断"></a>软件中断</h4><h4 id="多重中断请求信号的外围设备"><a href="#多重中断请求信号的外围设备" class="headerlink" title="多重中断请求信号的外围设备"></a>多重中断请求信号的外围设备</h4><h3 id="系统中断控制器"><a href="#系统中断控制器" class="headerlink" title="系统中断控制器"></a>系统中断控制器</h3><p>DAI/DPI外围相关事件发生时，这些针脚各自拥有能够指向核心的系统中断控制器。</p>
 <p>相对于SHARC核心，音频事件通常发生不频繁，DAI/DPI中断控制器将其所有中断减少到核心主中断系统中的三个中断信号上：</p>
 <ul>
 <li>一个映射为DAI低优先级</li>
@@ -2190,7 +2580,7 @@
 <p>对 <code>DAI_IMASK_RE</code> 、 <code>DAI_IMASK_FE</code> 、 <code>DPI_IMASK_RE</code>  、<code>DPI_IMASK_FE</code>这些寄存器的使用，能够使程序对上升沿、下降沿、上升下降沿、或者无沿（neither rising or falling edge）的程序确认或响应能够分别独立地屏蔽（masked separately）。</p>
 <p>从SRU过来的信号能够被用于生成中断。例如，当 <code>DAI_IMASK_FE</code> 寄存器的 <code>DAI_30_INT</code> 位被设置为1时，任何从外部通道过来的下降沿信号都能在核心中生成中断，且中断锁存器会被设定。对 <code>MASK</code> 寄存器的读取不会清除 <code>IRPTL</code> 寄存器。</p>
 <h4 id="DAI-DPI事件中断屏蔽"><a href="#DAI-DPI事件中断屏蔽" class="headerlink" title="DAI/DPI事件中断屏蔽"></a>DAI/DPI事件中断屏蔽</h4><p>系统中断控制器需要一个外设的中断源与事件信号相对应的信息（参考第2-8页中的表2-2）。如此一来，就只有上升沿被当做中断源。对于被标记为事件的DAI/DPI外设，程序可以只在上升沿解除中断源的屏蔽。</p>
-<h4 id="DAI-DPI中断服务"><a href="#DAI-DPI中断服务" class="headerlink" title="DAI/DPI中断服务"></a>DAI/DPI中断服务</h4><p>当多通道被复用至一个中断输出信号时，中断确认的操作方式不尽相同。当DAI/DPI中的服务必须被处理时，三者任一的中断服务路由（interrupt service routines）（<code>DAILI</code>, <code>DAIHI</code> 和 <code>DPII</code>）必须查询RIC以确定中断源。该中断源可能是一个或多个DAI/DPI通道（<code>DAI_INT31-0</code> 、 <code>DPI_INT13-0</code>）。</p>
+<h4 id="DAI-DPI中断服务"><a href="#DAI-DPI中断服务" class="headerlink" title="DAI/DPI中断服务"></a>DAI/DPI中断服务</h4><p>当多通道被复用至一个中断输出信号时，中断确认的操作方式不尽相同。当DAI/DPI中的服务必须被处理时，三者任一的中断服务程序（interrupt service routines）（<code>DAILI</code>, <code>DAIHI</code> 和 <code>DPII</code>）必须查询RIC以确定中断源。该中断源可能是一个或多个DAI/DPI通道（<code>DAI_INT31-0</code> 、 <code>DPI_INT13-0</code>）。</p>
 <ul>
 <li>当 <code>DAI_IRPTL_H</code> 被读取时，高优先级锁存的中断将会被清除。</li>
 <li>当 <code>DAI_IRPTL_L</code> 被读取时，低优先级锁存的中断将会被清除。</li>
@@ -2205,13 +2595,54 @@
 <li>读取中断锁存器（<code>DAI_IRPTL_X</code> 或 <code>DPI_IRPTL</code> ）将会清除中断（只读清除类型）。因此，ISR必须为所有已发现的中断提供服务。即如果复用中断（mumtiple interrupts）被锁存在复用屏蔽寄存器（multiple mask registers）中，必须在执行 <em><strong>RTI</strong></em> 指令前，对所有中断进行服务。</li>
 </ul>
 <blockquote>
-<p>RTI （interrupt return instruction）：中断指令</p>
+<p><strong>RTI</strong> （(interrupt) return instruction）：中断返回指令</p>
 <p>在中断服务程序中用于返回中断指令，在运行中断之前，用JSR指令将PC（程序计数器）和SR（状态寄存器）压入堆栈，当中断服务程序结束时，执行RTI或RTIS指令，将PC和SR从堆栈中弹出。</p>
 <p>——<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/RTI/7461669">RTI</a></p>
 </blockquote>
-<h3 id="中断服务"><a href="#中断服务" class="headerlink" title="中断服务"></a>中断服务</h3><p>核心缓存服务请求（输入输出模式）</p>
-<p>DMA接入</p>
-<h3 id="中断延迟"><a href="#中断延迟" class="headerlink" title="中断延迟"></a>中断延迟</h3><p>DMA完成类型</p>
+<h3 id="中断服务"><a href="#中断服务" class="headerlink" title="中断服务"></a>中断服务</h3><p>中断服务部分主要描述了中断服务程序操作（interrupt service routines operate）如何正确清除中断请求。</p>
+<p>中断驱动I/O是较为有利（advantageous）的，因为核心并不需要去轮询（poll）输入信号。当一次中断触发时，定序器（sequencer）通常会完成其现有的指令并跳转至中断向量表（IVT）。（向量）地址（the address）通常会从向量表里指向ISR程序。定序器（sequencer）跳转至该程序，完成程序执行并通过执行RTI指令退出程序。然而，这条规则并不对所有情况适用，在ISR程序中，有三种中断确认机制，均取决于外围设备：</p>
+<ul>
+<li>RTI指令</li>
+<li>只读清除（ROC）状态位 + RTI指令</li>
+<li>写1清除（W1C，Write-1-to-clear）状态为 + RTI指令</li>
+</ul>
+<p><mark>锁存器必须在被读取的时候清除中断源</mark>，因此DAI/DPI被设计来正确地执行此项工作。需要注意的是，锁存器读取操作会在退出中断程序（exiting an interrupt routine）前自动确认请求（automatically acknowledges the request）。在W1C机制，程序必须写入锁存器的特定位（specific bit）以正确清除中断（terminate the interrupt properly）。</p>
+<p><strong>注意</strong>：如果确认机制没有被正确遵守，中断将可能在未可预知且频率不定（unwanted and sporadic）的情况下发生。</p>
+<h4 id="核心缓存服务请求（输入输出模式）"><a href="#核心缓存服务请求（输入输出模式）" class="headerlink" title="核心缓存服务请求（输入输出模式）"></a>核心缓存服务请求（输入输出模式）</h4><p>如果数据流外围设备通过核心访问各自DMA FIFO的数据缓存，则缓存（器）在中断确认过程中发挥着重要作用。</p>
+<p>例如，一个接收缓存已满，中断生成时ISR中的缓存被读取，就会触发清除请求（ROC + RTI）。同样的，如果一个传输缓存已空，中断生成时，写入操作将会清除请求（WOC + RTI）。</p>
+<h4 id="DMA接入"><a href="#DMA接入" class="headerlink" title="DMA接入"></a>DMA接入</h4><p>如果外设通过DMA访问缓冲区，逻辑操作就不同了。在DMA中，缓存状态对中断没有影响。相反，每当DMA计数寄存器达到0时就会产生一个中断。不同的外围设备所使用的中断确认机制都不同。</p>
+<blockquote>
+<p><strong>DMA</strong> Direct Memory Access 直接内存访问</p>
+<p>是所有现代电脑的重要特色，它允许不同速度的硬件装置来沟通，而不需要依赖于 CPU 的大量中断负载。否则，CPU 需要从来源把每一片段的资料复制到暂存器，然后把它们再次写回到新的地方。在这个时间中，CPU 对于其他的工作来说就无法使用。</p>
+</blockquote>
+<h3 id="中断延迟"><a href="#中断延迟" class="headerlink" title="中断延迟"></a>中断延迟</h3><p>优秀的编程会要求一条（完整的）中断服务 <em>确认</em> 中断请求尽可能简洁地返回至外围设备。这种（中断）响应允许外围设备尽可能快地感知到其他事件。</p>
+<p>此（中断确认）服务程序（routine）必须去确保（中断）请求在RTI指令执行前被释放，否则（中断）服务程序会在执行完RTI指令后被立即调用。</p>
+<p>有些中断请求通过W1C操作来清除，该写入指令并没有让核心停滞（stall the core）。相反，该操作被自动锁存在写缓存中，并在被发送至外围总线前会通过外围时钟（<em><strong>PCLK</strong></em>）进行同步。</p>
+<p>在W1C操作到达外围设备前，此操作可能会需要多个 <em><strong>CCLK</strong></em> 周期（cycles）。如果 W1C 操作在服务程序的结束点进行操作，一个 dummy 读取操作需要在RTI指令前被执行，以确保外围设备能够在RTI之前释放请求。</p>
+<p>下列案例描述了中断延迟：</p>
+<ul>
+<li>对于具有W1C确认机制的外设来说，写入外设的状态寄存器以清除中断会导致一定的延迟（因为寄存器的写入效应延迟）。</li>
+<li>中断驱动的数据传输（核心或DMA）来自任何产生中断和使用ISR程序（routine）的外设，写入外设数据缓冲区（以清除中断）或控制寄存器会导致一定的延迟（因为存在寄存器写入效果延迟和缓冲区时钟域）。</li>
+</ul>
+<p>如果像案例所示，程序在延迟的周期内（最多10个CCLK周期），程序从中断服务程序（RTI指令）中生成，中断再次出现。为了避免中断多次出现，需要采取下列其中一种措施：（<strong>注意</strong>：中断再生的限制（interrupt regeneration restriction）不适用于DMA操作模式下的任何SPORT。）</p>
+<ol>
+<li><strong>在中断返回（RTI）前，从相同的外围区块中读取IOP寄存器。读取操作（的同时）会强制写入，如下列样例所示。</strong></li>
+</ol>
+<p><strong>SPI中断服务程序</strong>：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">R0 &#x3D; dm(i0,m0);</span><br><span class="line">dm(TXSPI) &#x3D; R0; &#x2F;&#x2F; 写入SPI数据缓存</span><br><span class="line">R0 &#x3D; dm(SPICTL); &#x2F;* this dummy read forces the previous write to complete *&#x2F;</span><br><span class="line">rti;</span><br></pre></td></tr></table></figure>
+
+<p><strong>PWM中断服务程</strong>序：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">r1 &#x3D; PWM_STAT3;</span><br><span class="line">dm(PWMGSTAT)&#x3D;r1; &#x2F;* W1C to PWM status reg *&#x2F;</span><br><span class="line">r0&#x3D;dm(PWMGSTAT); &#x2F;* this dummy read forces the previous write to complete *&#x2F;</span><br><span class="line">rti;</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li><strong>在写入操作后添加足够的NOP指令。在最坏的情况下，程序需要在写入后添加10条NOP指令，如下面的示例代码所示。</strong></li>
+</ol>
+<p><strong>中断服务程序</strong>：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">R0 &#x3D; 0x0;</span><br><span class="line">dm(SPICTL) &#x3D; R0; &#x2F;* or disable SPI control *&#x2F;</span><br><span class="line">nop; nop; nop; nop; nop; </span><br><span class="line">nop; nop; nop; nop; nop; </span><br><span class="line">rti;</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="DMA完成类型"><a href="#DMA完成类型" class="headerlink" title="DMA完成类型"></a>DMA完成类型</h4><p>在SHARC处理器中，中断在内部传输完成（此时DMA计数器过期（expired））后被生成。但是，在某些案例中，传输可能尚未完成（不同通道优先级的原因）且有效的数据仍然存在于（resides in）外设的缓冲区中等待着被传输。为了解决此问题，引入了中断访问完成模式（interrupt access completion mode），在此模式下，上一个数据离开缓存时，中断会被生成。此模式可用于 SPORT 、 SPI 、 连接口 和 外部接口DMA。</p>
 <h2 id="调试特征"><a href="#调试特征" class="headerlink" title="调试特征"></a>调试特征</h2><h4 id="影子中断寄存器"><a href="#影子中断寄存器" class="headerlink" title="影子中断寄存器"></a>影子中断寄存器</h4><ul>
 <li><p>影子中断寄存器（Shadow Interrupt Register）可用于 IDP, S/PDIF, ASRC, UART, TWI 和 DAI/DPI。</p>
 </li>
@@ -2222,6 +2653,45 @@
 <li><p>对DAI/DPI影子寄存器的读取不会改变核心中断控制器（core interrupt controller）对中断的确认状态。</p>
 </li>
 </ul>
+<h2 id="术语总结"><a href="#术语总结" class="headerlink" title="术语总结"></a>术语总结</h2><p>中断确认</p>
+<p>中断请求</p>
+<p>中断服务</p>
+<p>中断延迟</p>
+<h1 id="Others"><a href="#Others" class="headerlink" title="Others"></a>Others</h1><h2 id="LATENCY"><a href="#LATENCY" class="headerlink" title="LATENCY"></a>LATENCY</h2><h3 id="TWI-效果延迟（时间）"><a href="#TWI-效果延迟（时间）" class="headerlink" title="TWI 效果延迟（时间）"></a>TWI 效果延迟（时间）</h3><p>在TWI寄存器设置后，其效果延迟大概是 1.5到2个PCLK周期。</p>
+<p><img src="https://pic.islet.space/2021/05/20210525153905.png" alt="image-20210525153855627"></p>
+<h2 id="ASM-“NOP”"><a href="#ASM-“NOP”" class="headerlink" title="ASM(“NOP”)"></a>ASM(“NOP”)</h2><p>[blog.csdn.net](<a target="_blank" rel="noopener" href="https://blog.csdn.net/Mr_White01/article/details/68488802#:~:text=asm">https://blog.csdn.net/Mr_White01/article/details/68488802#:~:text=asm</a> (“nop”)是内嵌汇编做空指令延时用的，其中asm ()的作用是指函数内部的参数翻译为汇编指令，其作用是在C语言环境下直接使用汇编指令执行。 nop是一个空等待汇编指令，这个指令执行时，单片机是什么也不做，仅仅起一个时间延时作用。,CC2530属于8051系列单片机，asm (“nop”)执行的是一条空指令（单周期指令），占用时间是一个机器周期，晶振为32Mhz。 于是，机器周期%3D12*1%2F32%3D0.375us。 即一句asm (“nop”)延时了0.375us。)</p>
+<h3 id="asm-作用"><a href="#asm-作用" class="headerlink" title="asm()作用"></a>asm()作用</h3><p>将函数内部的参数翻译为汇编指令，在C语言环境下直接使用汇编指令执行。</p>
+<ul>
+<li><p><code>asm(&quot;nop&quot;)</code>是内嵌汇编做空指令延时用的；</p>
+</li>
+<li><p><code>nop</code>是一个空等待汇编指令，这个指令执行时，单片机是什么也不做，仅仅起一个时间延时作用。 </p>
+</li>
+</ul>
+<blockquote>
+<p>CC2530属于8051系列单片机，asm(“nop”)执行的是一条空指令（单周期指令），占用时间是一个机器周期，晶振为32Mhz。 </p>
+<p>于是，机器周期=12*1/32=0.375us ; 即一句asm(“nop”)延时了0.375us。</p>
+</blockquote>
+<h3 id="时钟周期"><a href="#时钟周期" class="headerlink" title="时钟周期"></a>时钟周期</h3><p>时钟周期也称为振荡周期，定义为时钟脉冲的倒数(可以这样来理解，时钟周期就是单片机外接晶振的倒数，例如12M的晶振，它的时间周期就是1/12 us)，是计算机中最基本的、最小的时间单位。 </p>
+<p>在一个时钟周期内，CPU仅完成一个最基本的动作。对于某种单片机，若采用了1MHZ的时钟频率，则时钟周期为1us;若采用4MHZ的时钟频率，则时钟  周期为250us。由于时钟脉冲是计算机的基本工作脉冲，它控制着计算机的工作节奏(使计算机的每一步都统一到它的步调上来)。显然，对同一种机型的计算机，时钟频率越高，计算机的工作速度就越快。具体计算就是1/fosc。也就是说如果晶振为1MHz，那么时钟周期就为1us；6MHz的话，就是1/6us。 </p>
+<p> 8051单片机把一个时钟周期定义为一个节拍(用P表示)，二个节拍定义为一个状态周期(用S表示)。 </p>
+<h3 id="机器周期"><a href="#机器周期" class="headerlink" title="机器周期"></a>机器周期</h3><p>在计算机中，为了便于管理，常把一条指令的执行过程划分为若干个阶段，每一阶段完成一项工作。例如，取指令、存储器读、存储器写等，这每一项工作称为一个基本操作。完成一个基本操作所需要的时间称为机器周期。一般情况下，一个机器周期由若干个S周期(状态周期)组成。 </p>
+<p>8051系列单片机的一个机器周期同6个  S周期(状态周期)组成。前面已说过一个时钟周期定义为一个节拍(用P表示)，二个节拍定义为一个状态周期(用S表示)，8051单片机的机器周期由6个 状态周期组成，也就是说一个机器周期=6个状态周期=12个时钟周期。 具体计算为：时钟周期 X  cycles。如果单片机是12周期的话，那么机器周期就是T×12。假设晶振频率为12M，单片机为12周期的话，那么机器周期就是1us。 </p>
+<p>例如外接24M晶振的单片机，他的一个机器周期=12/24M 秒；52系列单片机一个机器周期等于12个时钟周期。设晶振频率为12MHz时，52单片机是12T的单片机，即频率要12分频。12M经过分频变为1M，由T=1/f,即一个机器周期变为1us。 </p>
+<h3 id="指令周期"><a href="#指令周期" class="headerlink" title="指令周期"></a>指令周期</h3><p>执行一条指令所需要的时间，一般由若干个机器周期组成。指令不同，所需的机器周期也不同。通常，包含一个机器周期的指令成为单周期指令，比如CLR,MOV等等。包含两个机器周期的指令称为双周期指令。另外还有4周期指令，比如乘法和除法指令。对于一些简单的的单字节指令，在取指令周期中，指令取出到指令寄存器后，立即译码执行，不再需要其它的机器周期。对于一些比较复杂的指令，例如转移指令、乘法指令，则需要两个或者两个以上的机器周期。 </p>
+<h3 id="总线周期"><a href="#总线周期" class="headerlink" title="总线周期"></a>总线周期</h3><p>由于存贮器和I/O端口是挂接在总线上的，CPU对存贮器和I/O接口的访问，是通过总线实现的。通常把CPU通过总线对微处理器外部(存贮器或 I/O接口)进行一次访问所需时间称为一个总线周期。</p>
+<p>总结一下，时钟周期是最小单位，机器周期需要1个或多个时钟周期，指令周期需要1个或多个机器周期;机器周期指的是完成一个基本操作的时间，这个基本操作有时可能包含总线读写，因而包含总线周期，但是有时可能与总线读写无关，所以，并无明确的相互包含的关系。  指令周期：是CPU的关键指标，指取出并执行一条指令的时间。一般以机器周期为单位，分单指令执行周期、双指令执行周期等。现在的处理器的大部分指令(ARM、DSP)均采用单指令执行周期。机器周期：完成一个基本操作的时间单元，如取指周期、取数周期。时钟周期：CPU的晶振的工作频率的倒数。</p>
+<h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p>个人对TWI作为主设备时，数据的发送流程框图的理解如下：</p>
+<ul>
+<li>TWI在需要发送数据时，才生成TWI时钟信号，通过SCLK线（对应评估板上的 <em><strong>DPI11</strong></em>， 以及下图的  <em><strong>TWI_CLK_PBEN_O</strong></em> ）输出。</li>
+<li>需要传输的数据通过TWI接口写入FIFO中（对应的寄存器是<code>TXTWI8</code> ），并通过SDA线（对应21479评估板上的 <em><strong>DPI12</strong></em> , 以及下图的 <em><strong>TWI_DATA_PBEN_O</strong></em> ）输出，从机收到数据后通过SDA线（对应下图的 <em><strong>TWI_DATA_ I</strong></em>）返回确认（ACK）信息。<ul>
+<li>在 <code>TWIIRPTL</code> 寄存器中，<code>TWIMCOM</code> 位为1则指示TWI初始化完毕，<code>TWITXINT</code> 为1则指示FIFO寄存器有空位，如果为0则说明 <code>TWIFIFOSTAT</code> 寄存器中的 <code>TWITXS</code> 位没有变化，即数据无法通过SDA发送出去；<code>TWIMERR</code> 则指示主设备传输过程中存在错误，具体错误需要查看 <code>TWIMSTAT</code> 寄存器。</li>
+</ul>
+</li>
+<li>查看 <code>TWIMSTAT</code> 寄存器可知，<code>TWIMSTAT_REER</code> 位为1，该位为1则指示传输缓冲区读取错误，传输移位寄存器需要数据而缓冲区为空。</li>
+<li>检查显示，<code>TXTWI8</code> 写入存在问题，写入语句 <code>*pTXTWI8 = 0xAA;</code> 执行后，观察寄存器窗口查看到数据仍为0x00。</li>
+</ul>
+<p><img src="https://pic.islet.space/2021/06/20210607155909.png" alt="image-20210607155906359"></p>
+<p><img src="https://pic.islet.space/2021/06/20210607163901.png" alt="image-20210607163859502"></p>
 
       
     </div>
@@ -2317,200 +2787,6 @@
 
 <p>如果将UTF-8转换成更为精简的GBK字符集，则会输出不同的结果。</p>
 <p><img src="https://pic.islet.space/2021/05/image-20210526002630693.png" alt="image-20210526002630693"></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://islet.space/2021/05/23/Programming/2021-05-23-POSIX/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Liewzheng">
-      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Coder的孤岛">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/05/23/Programming/2021-05-23-POSIX/" class="post-title-link" itemprop="url">POSIX</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
-    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-      
-
-      <time title="Created: 2021-05-23 22:05:00 / Modified: 22:17:37" itemprop="dateCreated datePublished" datetime="2021-05-23T22:05:00+08:00">2021-05-23</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Programming/" itemprop="url" rel="index"><span itemprop="name">Programming</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <blockquote>
-<p><em>可移植操作系统接口（英语：Portable Operating System Interface，缩写为POSIX）是IEEE为要在各种UNIX操作系统上运行软件，而定义API的一系列互相关联的标准的总称，其正式称呼为IEEE Std 1003，而国际标准名称为ISO/IEC 9945。此标准源于一个大约开始于1985年的项目。POSIX这个名称是由理查德·斯托曼（RMS）应IEEE的要求而提议的一个易于记忆的名称。它基本上是Portable Operating System Interface（可移植操作系统接口）的缩写，而X则表明其对Unix API的传承。</em></p>
-<p><em>Linux基本上逐步实现了POSIX兼容，但并没有参加正式的POSIX认证。[1]</em></p>
-<p><em>微软的Windows NT声称部分实现了POSIX标准。</em></p>
-<p><em>当前的POSIX主要分为四个部分[2]：Base Definitions、System Interfaces、Shell and Utilities和Rationale。</em> </p>
-<p>——Wikipedia.org的 <a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E5%8F%AF%E7%A7%BB%E6%A4%8D%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E6%8E%A5%E5%8F%A3">可移植操作系统接口</a></p>
-</blockquote>
-<blockquote>
-<p><em>一般情况下，应用程序通过应用编程接口(API)而不是直接通过系统调用来编程。这点很重要，因为应用程序使用的这种编程接口实际上并不需要和内核 提供的系统调用对应。一个API定义了一组应用程序使用的编程接口。它们可以实现成一个系统调用，也可以通过调用多个系统调用来实现，而完全不使用任何系 统调用也不存在问题。实际上，API可以在各种不同的操作系统上实现，给应用程序提供完全相同的接口，而它们本身在这些系统上的实现却可能迥异。</em></p>
-<p><em>在Unix世界中，最流行的应用编程接口是基于POSIX标准的。从纯技术的角度看，POSIX是由IEEE的一组标准组成，其目标是提供一套大体上基于Unix的可移植操作系统标准。Linux是与POSIX兼容的。</em></p>
-<p><em>POSIX是说明API和系统调用之间关系的一个极好例子。在大多数Unix系统上，根据POSIX而定义的API函数和系统调用之间有着直接关 系。实际上，POSIX标准就是仿照早期Unix系统的界面建立的。另一方面，许多操作系统，像Windows NT，尽管和Unix没有什么关系，也提供了与POSIX兼容的库。</em></p>
-<p><em>Linux的系统调用像大多数Unix系统一样，作为C库的一部分提供如图5-1所示。如图5-1所示C库实现了Unix系统的主要API，包括标 准C库函数和系统调用。所有的C程序都可以使用C库，而由于C语言本身的特点，其他语言也可以很方便地把它们封装起来使用。此外，C库提供了POSIX的 绝大部分API。</em></p>
-<p><em>从程序员的角度看，系统调用无关紧要；他们只需要跟API打交道就可以了。相反，内核只跟系统调用打交道；库函数及应用程序是怎么使用系统调用不是内核所关心的。</em></p>
-<p>——《Linux内核设计与实现（第2版）》第5章</p>
-</blockquote>
-<p><strong>简单总结</strong></p>
-<p>完成同一功能，不同内核提供的系统调用（也就是一个函数）是不同的，例如创建进程，linux下是fork函数，windows下是creatprocess函数。好，我现在在linux下写一个程序，用到fork函数，那么这个程序该怎么往windows上移植？我需要把源代码里的fork通通改成creatprocess，然后重新编译…</p>
-<p>posix标准的出现就是为了解决这个问题。linux和windows都要实现基本的posix标准，linux把fork函数封装成posix_fork（随便说的），windows把creatprocess函数也封装成posix_fork，都声明在unistd.h里。这样，程序员编写普通应用时候，只用包含unistd.h，调用posix_fork函数，程序就在源代码级别可移植了</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://islet.space/2021/05/23/Programming/C++/2021-05-23-%E5%9F%BA%E6%9C%AC%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B-%E4%B8%8E-%E6%9E%84%E9%80%A0%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Liewzheng">
-      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Coder的孤岛">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/05/23/Programming/C++/2021-05-23-%E5%9F%BA%E6%9C%AC%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B-%E4%B8%8E-%E6%9E%84%E9%80%A0%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/" class="post-title-link" itemprop="url">基本数据类型 与 构造数据类型</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
-    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-      
-
-      <time title="Created: 2021-05-23 19:21:00 / Modified: 23:50:04" itemprop="dateCreated datePublished" datetime="2021-05-23T19:21:00+08:00">2021-05-23</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Programming/" itemprop="url" rel="index"><span itemprop="name">Programming</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>[cnblogs.com](<a target="_blank" rel="noopener" href="https://www.cnblogs.com/ybtools/p/6432464.html#:~:text=%E6%9E%84%E9%80%A0%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E6%8C%87%E5%8F%AF%E4%BB%A5%E9%80%9A%E8%BF%87%E5%85%B6%E4%BB%96%E7%9A%84%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E8%BF%9B%E8%A1%8C%E6%9E%84%E9%80%A0%EF%BC%8C%E5%8F%AF%E7%94%B1%E7%A8%8B%E5%BA%8F%E5%91%98%E8%87%AA%E5%AE%9A%E4%B9%89%EF%BC%8C%E6%95%85%E5%8F%88%E7%A7%B0%E4%B8%BA">https://www.cnblogs.com/ybtools/p/6432464.html#:~:text=构造数据类型指可以通过其他的数据类型进行构造，可由程序员自定义，故又称为</a> “,自定义数据类型 “。 基本数据类型包括整型（short%2Cint%2Clong）、实型（又称浮点型）（float和double）、字符型char、布尔型bool等，他们都可以用于定义常量和变量。)</p>
-<p>PS：本文以C++为例介绍数据类型。</p>
-<h1 id="数据类型"><a href="#数据类型" class="headerlink" title="数据类型"></a>数据类型</h1><p>从广义上根据量的值是否可变，可分为<strong>常量</strong>和<strong>变量</strong>两种数据类型。</p>
-<p>根据数据复杂程度，划分为<strong>基本数据类型</strong>和<strong>构造数据类型</strong>这两大类。</p>
-<p><strong>基本数据类型</strong> 包括：整型（short,int,long）、实型（又称浮点型）（float和double）、字符型char、布尔型bool等。</p>
-<p><strong>构造数据类型</strong> 包括：数组类型、枚举类型enum、指针类型、引用类型、结构体struct、联合体union（又称联合，共用体）、类class等。</p>
-<p>构造数据类型指可以通过其他的数据类型进行构造，可由程序员自定义，故又称为 “<strong>自定义数据类型</strong>“。</p>
-<h1 id="基本数据类型"><a href="#基本数据类型" class="headerlink" title="基本数据类型"></a>基本数据类型</h1><p>基本数据类型包括整型（short,int,long）、实型（又称浮点型）（float和double）、字符型char、布尔型bool等，他们都可以用于定义常量和变量。</p>
-<p>基本数据类型，也叫做基础类型，或内置类型。</p>
-<p><strong>1、整型（short,int,long）</strong></p>
-<p>整型量，包括短整型short、整型int、长整型long，而且3种类型都可以分别再细分为：有符号(signed)以及无符号(unsigned)。 </p>
-<p><strong>2、实型（又称浮点型）（float和double）</strong></p>
-<p>实型，又称为浮点型，它包括两种数据类型：单精度浮点数float和双精度浮点数double。他们都是有符号数据类型。如果一个数值常量，包含小数点、指数部分（字符e），则为浮点数。</p>
-<p>双精度浮点型，还可细分为双精度（double型）、长双精度（long double）</p>
-<p><strong>3、字符型char</strong></p>
-<p>字符型char类型定义的常量，必须要用单括号括起来。</p>
-<p>例如：char ch=’a’ ; //把字符常量’a’存储到ch中。</p>
-<p>字符型char类型量也可以细分为有符号(char)和无符号(unsigned char)。</p>
-<p><strong>4、布尔型bool</strong></p>
-<p>布尔型的取值为true或者false。</p>
-<p>布尔型变量的说明：例：bool flag，则布尔型数据的变量flag取值：只有 false 和 true 两个值，即分别是0和1。</p>
-<h1 id="构造数据类型"><a href="#构造数据类型" class="headerlink" title="构造数据类型"></a>构造数据类型</h1><p>有些比较复杂的数据，单纯用基本数据类型未能表示，在C++中程序员可以用基本数据类型来自定义构造出新的数据类型，称构造数据类型，也称作 <em><strong>构造类型</strong></em>、<em><strong>构造数据类型</strong></em>。</p>
-<p>构造数据类型除了可以用常见的如int、float和double、char、bool等基本数据类型进行构造，也可以包含其他构造类型的数据。</p>
-<p>构造数据类型包括：数组类型、枚举类型enum、指针类型、引用类型、结构体struct、联合体union（又称联合，共用体）、class类等，他们可以通过其他的数据类型进行构造，由程序员自定义，所以又称为自定义数据类型。</p>
-<p>参考：<a target="_blank" rel="noopener" href="http://blog.csdn.net/u013174689/article/details/17484223">http://blog.csdn.net/u013174689/article/details/17484223</a></p>
-<p>​          </p>
 
       
     </div>
