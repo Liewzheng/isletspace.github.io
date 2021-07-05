@@ -126,16 +126,16 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">70</span>
+          <span class="site-state-item-count">74</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
-        <span class="site-state-item-count">16</span>
+        <span class="site-state-item-count">17</span>
         <span class="site-state-item-name">categories</span>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">141</span>
+        <span class="site-state-item-count">143</span>
         <span class="site-state-item-name">tags</span>
       </div>
   </nav>
@@ -169,6 +169,845 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://islet.space/2021/05/19/Web/2021-05-19-What-is-the-meaning-of--savefor-NPM-install-/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Liewzheng">
+      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coder的孤岛">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/05/19/Web/2021-05-19-What-is-the-meaning-of--savefor-NPM-install-/" class="post-title-link" itemprop="url">What is the meaning of '-save' for NPM install ?</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2021-05-19 20:10:00 / Modified: 20:14:41" itemprop="dateCreated datePublished" datetime="2021-05-19T20:10:00+08:00">2021-05-19</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/web/" itemprop="url" rel="index"><span itemprop="name">web</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p><a target="_blank" rel="noopener" href="https://www.geeksforgeeks.org/what-is-the-meaning-of-save-for-npm-install/">geeksforgeeks.org</a></p>
+<p><strong><a target="_blank" rel="noopener" href="https://www.geeksforgeeks.org/node-js-npm-node-package-manager/">NPM (Node Package Manager)</a></strong> is the default package manager employed in JavaScript runtime environment in Node.js. It has a very frequently used command <strong>npm install [Package Name] –save</strong>. But the fact is there is no difference between <strong>npm install [Package Name]</strong> and <strong>npm install [Package Name] –save</strong> in the later version after npm 5.0.0 onwards.</p>
+<p>Before npm 5.0.0, it was necessary to add <code>--save</code> after package name because it will save the installed package to  package.json file in the dependency section. If you are using a recent  version of npm save yourself from unnecessary typing and use <strong>npm install [Package Name]</strong> instead of <strong>npm install [Package Name] <code>--save</code></strong> by default it will add the installed package to the dependency list in the package.json file.</p>
+<p><strong>NPM has several commands which are listed below:</strong></p>
+<ol>
+<li><p>–save or -S:</p>
+<p> When the following command is used with npm install this will save all  your installed core packages into the dependency section in the  package.json file. Core dependencies are those packages without which  your application will not give desired results. But as mentioned  earlier, it is an unnecessary feature in the npm 5.0.0 version onwards.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install --save</span><br></pre></td></tr></table></figure></li>
+<li><p>–save-prod or -P:</p>
+<p> The following command is introduced in the later version of npm it will perform the same task as the </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">--save</span><br></pre></td></tr></table></figure>
+
+<p> command unless any other command such as </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-D</span><br></pre></td></tr></table></figure>
+
+<p> or </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-O</span><br></pre></td></tr></table></figure>
+
+<p> is present.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install --save-prod</span><br></pre></td></tr></table></figure></li>
+<li><p>–save-dev or -D:</p>
+<p> With </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">--save-dev</span><br></pre></td></tr></table></figure>
+
+<p> or </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-D</span><br></pre></td></tr></table></figure>
+
+<p> command your installed packages will be added to devDependency section  of the package.json file. Development dependencies are those packages  which only meant for development purpose it will not affect the  application’s result.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install --save-dev</span><br></pre></td></tr></table></figure></li>
+<li><p>–save-optional or -O:</p>
+<p> When this command is used the install the that packages will be listed  under the optional Dependency section of the package.json file. Optional dependencies are those packages which are only used when a particular  feature of the application is used and will not be required if that  functionality isn’t used.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install --save-optional</span><br></pre></td></tr></table></figure></li>
+<li><p>–no-save:</p>
+<p> When this command is used with npm install it will not allow the  installed packages from being saved into the dependency section.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install --no-save</span><br></pre></td></tr></table></figure></li>
+</ol>
+<p><strong>Note:</strong> NPM provides two additional options to save dependencies into package.json file.</p>
+<ol>
+<li><p>–save-exact or -E:</p>
+<p> This is an additional or optional command provided by the npm that will save the exact version of the installed packages which are configured  at the time of development. It will not download the dependencies from  npm’s default server range operator.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install --save-exact</span><br></pre></td></tr></table></figure></li>
+<li><p>–save-bundle or -B:</p>
+<p> The following command is also an optional command when </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">--save-bundle</span><br></pre></td></tr></table></figure>
+
+<p> or </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-B</span><br></pre></td></tr></table></figure>
+
+<p> is used. This will also add the saved dependencies under the bundleDependency list.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install --save-bundle</span><br></pre></td></tr></table></figure></li>
+</ol>
+<p>​          </p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://islet.space/2021/05/17/Computer/2021-05-17-%E5%86%85%E5%AD%98%E5%9C%B0%E5%9D%80%E5%AF%B9%E9%BD%90/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Liewzheng">
+      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coder的孤岛">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/05/17/Computer/2021-05-17-%E5%86%85%E5%AD%98%E5%9C%B0%E5%9D%80%E5%AF%B9%E9%BD%90/" class="post-title-link" itemprop="url">内存地址对齐</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2021-05-17 20:10:00 / Modified: 20:32:07" itemprop="dateCreated datePublished" datetime="2021-05-17T20:10:00+08:00">2021-05-17</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Computer/" itemprop="url" rel="index"><span itemprop="name">Computer</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/mhq-martin/p/11537873.html">cnblogs.com</a></p>
+<h1 id="对齐定义"><a href="#对齐定义" class="headerlink" title="对齐定义"></a>对齐定义</h1><p>内存地址对齐，是一种在计算机内存中排列数据、访问数据的一种方式。</p>
+<h1 id="对齐分类"><a href="#对齐分类" class="headerlink" title="对齐分类"></a>对齐分类</h1><p>内存地址对齐包含了两种相互独立又相互关联的部分：<strong>基本数据对齐</strong> 和 <strong>结构体数据对齐</strong>。</p>
+<p>当今的计算机在计算机内存中读写数据时都是 <mark>按字(word)大小块来进行操作</mark> 的。在32位系统中，数据总线宽度为32位，每次能读取4bytes，地址总线宽度为32，因此最大的寻址空间为2^32^bits=4GB，但是最低2位A[0]、A[1]是不用于寻址，A[2-31]才能存储器相连，因此只能访问4的倍数地址空间，但是总的寻址空间还是2^30^bits字长=4GB，因此在 <mark>内存中所有存放的基本类型数据的首地址的最低两位都是0，除结构体中的成员变量</mark> 。</p>
+<blockquote>
+<p>基本类型数据对齐就是数据在内存中的 <mark>偏移地址必须等于一个字的倍数</mark>，按这种存储数据的方式，可以提升系统在读取数据时的性能。<mark>为了对齐数据，可能必须在上一个数据结束和下一个数据开始的地方插入一些没有用处字节，这就是结构体数据对齐</mark>。</p>
+</blockquote>
+<h2 id="基本数据对齐示例"><a href="#基本数据对齐示例" class="headerlink" title="基本数据对齐示例"></a>基本数据对齐示例</h2><p>例如，假设计算机的字大小为4bytes，因此变量在内存中的首地址都是满足4地址对齐，CPU只能对4的倍数的地址进行读取，而每次能读取4个字节大小的数据。</p>
+<p>假设有一个整型的数据a的首地址不是4的倍数(如下图所示)，不妨设为 <code>0X00FFFFF3</code>，则该整型数据存储在地址范围为<code>0X00FFFFF3</code> ~`0X00FFFFF6<code>的存储空间中，而CPU每次只能对4的倍数内存地址进行读取，因此想读取a的数据，CPU要分别在 </code>0X00FFFFF0<code>和</code>0X00FFFFF4` 进行两次内存读取，而且还要对两次读取的数据进行处理才能得到a的数据，而一个程序的瓶颈往往不是CPU的速度，而是取决于内存的带宽，因为CPU得处理速度要远大于从内存中读取数据的速度，因此减少对内存空间的访问是提高程序性能的关键。从上例可以看出，采取内存地址对齐策略是提高程序性能的关键。</p>
+<p><mark>也就是说，不对齐内存地址的话会造成CPU对内存中数据访问范围的增大，造成性能浪费。</mark></p>
+<h2 id="结构体对齐示例"><a href="#结构体对齐示例" class="headerlink" title="结构体对齐示例"></a>结构体对齐示例</h2><p>首先我们先看看下面的C语言的结构体：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">typedef struct MemAlign</span><br><span class="line">&#123;</span><br><span class="line">    int a;</span><br><span class="line">    char b[3];</span><br><span class="line">    int c;</span><br><span class="line">&#125;MemAlign;</span><br></pre></td></tr></table></figure>
+
+<p>以上这个结构体占用内存多少空间呢？</p>
+<p>也许你会说，这个简单，计算每个类型的大小，将它们相加就行了，以32bit平台为例，int类型占4bytes，char占用1byte，所以：4 + 3 + 4 =  11bytes，那么这个结构体一共占用11字节空间。</p>
+<p>实际上用sizeof运算符来求出这个结构体占用内存空间大小，sizeof(MemAlign)，出乎意料的是，结果居然为12？</p>
+<p>是因为这个结构体被优化了，这个优化有个另外一个名字叫“对齐”，那么这个对齐到底做了什么样的优化呢。</p>
+<p><img src="https://pic.islet.space/2021/05/1231881-20190917224404418-1265388453.png" alt="img"></p>
+<p>相信学过汇编的朋友都很熟悉这张图，这张图就是CPU与内存如何进行数据交换的模型，其中，左边蓝色的方框是CPU，右边绿色的方框是内存，内存上面的0～3是内存地址。</p>
+<p>上图以32位CPU作为代表，<mark>32位CPU是以双字（DWORD）为单位进行数据传输的</mark>，因此 <mark>在32位系统中，无论是8位、16位还是32位都是以双字进行数据传输</mark> 。</p>
+<h2 id="非32位数据非对齐传输示例"><a href="#非32位数据非对齐传输示例" class="headerlink" title="非32位数据非对齐传输示例"></a>非32位数据非对齐传输示例</h2><p>8位或16位一样可以传输，但是事情并非像我们想象的那么简单。</p>
+<p>一个int类型4字节的数据如果放在上图内存地址1开始的位置，那么这个数据占用的内存地址为1～4，那么这个数据就被分为了2个部分，一个部分在地址0～3中，另外一部分在地址4～7中，又由于32位CPU以双字进行传输，所以，CPU会分2次进行读取，一次先读取地址0～3中内容，再一次读取地址4～7中数据，最后CPU提取并组合出正确的int类型数据，舍弃掉无关数据。那么反过来，如果我们把这个int类型4字节的数据放在上图从地址0开始的位置会怎样呢？读到这里，也许你明白了，CPU只要进行一次读取就可以得到这个int类型数据了。没错，就是这样，这次CPU只用了一个周期就得到了数据，由此可见，对内存数据的摆放是多么重要啊，<mark>摆放正确位置可以减少CPU的使用资源</mark>。</p>
+<h1 id="对齐原则"><a href="#对齐原则" class="headerlink" title="对齐原则"></a>对齐原则</h1><ul>
+<li><p>第一个成员的首地址为0</p>
+</li>
+<li><p>每个成员的首地址是自身大小的整数倍</p>
+<ul>
+<li>以4bytes对齐为例，如果自身大小大于4bytes，都以4bytes整数倍为基准对齐。</li>
+</ul>
+</li>
+<li><p>最后以结构总体对齐。</p>
+<ul>
+<li>以4字节bytes为例，取结构体中最大成员类型倍数，如果超过4字节，都以4字节整数倍为基准对齐。（其中这一条还有个名字叫：“补齐”，补齐的目的就是多个结构变量挨着摆放的时候也满足对齐的要求。）</li>
+</ul>
+</li>
+</ul>
+<h2 id="基本数据对齐与结构补齐示例"><a href="#基本数据对齐与结构补齐示例" class="headerlink" title="基本数据对齐与结构补齐示例"></a>基本数据对齐与结构补齐示例</h2><p>上述的三原则听起来还是比较抽象，那么接下来我们通过一个例子来加深对内存对齐概念的理解，下面是一个结构体，我们动手算出下面结构体一共占用多少内存？假设我们以32位平台并且以4字节对齐方式：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">#pragma pack(4)</span><br><span class="line">typedef struct MemAlign</span><br><span class="line">&#123;</span><br><span class="line">    char a[18];</span><br><span class="line">    double b;    </span><br><span class="line">    char c;</span><br><span class="line">    int d;    </span><br><span class="line">    short e;    </span><br><span class="line">&#125;MemAlign;</span><br></pre></td></tr></table></figure>
+
+<p>下图为对齐后结构如下：</p>
+<p><img src="https://pic.islet.space/2021/05/1231881-20190917224631323-2009020349.png" alt="img"></p>
+<p>我们就以这个图来讲解是如何对齐的：</p>
+<p>第一个成员（char a[18]）：首先，假设我们把它放到内存开始地址为0的位置，由于第一个成员占18个字节，所以第一个成员占用内存地址范围为0～18。</p>
+<p>第二个成员（double b）：由于double类型占8字节，又因为8字节大于4字节，所以就以4字节对齐为基准。由于第一个成员结束地址为18，那么地址18并不是4的整数倍，我们需要再加2个字节，也就是从地址20开始摆放第二个成员。</p>
+<p>第三个成员（char c）：由于char类型占1字节，任意地址是1字节的整数倍，所以我们就直接将其摆放到紧接第二个成员之后即可。</p>
+<p>第四个成员（int d）：由于int类型占4字节，但是地址29并不是4的整数倍，所以我们需要再加3个字节，也就是从地址32开始摆放这个成员。</p>
+<p>第五个成员（short e）：由于short类型占2字节，地址36正好是2的整数倍，这样我们就可以直接摆放，无需填充字节,紧跟其后即可。</p>
+<p>这样我们内存对齐就完成了。但是离成功还差那么一步，那是什么呢？对，是对整个结构体补齐，接下来我们就补齐整个结构体。那么，先让我们回顾一下补齐的原则：“以4字节对齐为例，取结构体中最大成员类型倍数，如果超过4字节，都以4字节整数倍为基准对齐。”在这个结构体中最大类型为double类型（占8字节），又由于8字节大于4字  节，所以我们还是以4字节补齐为基准，整个结构体结束地址为38，而地址38并不是4的整数倍，所以我们还需要加额外2个字节来填充结构体，如下图红色的就是补齐出来的空间：</p>
+<p><img src="https://pic.islet.space/2021/05/1231881-20190917224653471-2076639760.png" alt="img"></p>
+<p> 到此为止，我们内存对齐与补齐就完毕了！接下来我们用实验来证明真理，程序如下：</p>
+<p><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;stdio.h&gt;</span><br><span class="line">#include &lt;memory.h&gt;</span><br><span class="line"> </span><br><span class="line">&#x2F;&#x2F; 由于VS2010默认是8字节对齐，我们</span><br><span class="line">&#x2F;&#x2F; 通过预编译来通知编译器我们以4字节对齐</span><br><span class="line">#pragma pack(4)</span><br><span class="line"> </span><br><span class="line">&#x2F;&#x2F; 用于测试的结构体</span><br><span class="line">typedef struct MemAlign</span><br><span class="line">&#123;</span><br><span class="line">    char a[18];    &#x2F;&#x2F; 18 bytes</span><br><span class="line">    double b;    &#x2F;&#x2F; 08 bytes    </span><br><span class="line">    char c;        &#x2F;&#x2F; 01 bytes</span><br><span class="line">    int d;        &#x2F;&#x2F; 04 bytes</span><br><span class="line">    short e;    &#x2F;&#x2F; 02 bytes</span><br><span class="line">&#125;MemAlign;</span><br><span class="line"> </span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    &#x2F;&#x2F; 定义一个结构体变量</span><br><span class="line">    MemAlign m;</span><br><span class="line">    &#x2F;&#x2F; 定义个以指向结构体指针</span><br><span class="line">    MemAlign *p &#x3D; &amp;m;</span><br><span class="line">    &#x2F;&#x2F; 依次对各个成员进行填充，这样我们可以</span><br><span class="line">    &#x2F;&#x2F; 动态观察内存变化情况</span><br><span class="line">    memset( &amp;m.a, 0x11, sizeof(m.a) );</span><br><span class="line">    memset( &amp;m.b, 0x22, sizeof(m.b) );</span><br><span class="line">    memset( &amp;m.c, 0x33, sizeof(m.c) );</span><br><span class="line">    memset( &amp;m.d, 0x44, sizeof(m.d) );</span><br><span class="line">    memset( &amp;m.e, 0x55, sizeof(m.e) );</span><br><span class="line">    &#x2F;&#x2F; 由于有补齐原因，所以我们需要对整个</span><br><span class="line">    &#x2F;&#x2F; 结构体进行填充，补齐对齐剩下的字节</span><br><span class="line">    &#x2F;&#x2F; 以便我们可以观察到变化</span><br><span class="line">    memset( &amp;m, 0x66, sizeof(m) );</span><br><span class="line">    &#x2F;&#x2F; 输出结构体大小</span><br><span class="line">    printf( &quot;sizeof(MemAlign) &#x3D; %d&quot;, sizeof(m) );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"></p>
+<p>程序运行过程中，查看内存如下：</p>
+<p><img src="https://pic.islet.space/2021/05/1231881-20190917225512389-1581088258.png" alt="img"></p>
+<p>其中，各种颜色带下划线的代表各个成员变量，蓝色方框的代表为内存对齐时候填补的多余字节，由于这里看不到补齐效果，我们接下来看下图，下图篮框包围的字节就是与上图的交集以外的部分就是补齐所填充的字节。</p>
+<p><img src="https://pic.islet.space/2021/05/1231881-20190917225534651-684741719.png" alt="img"></p>
+<p> 在最后，我在谈一谈关于补齐的作用，<mark>补齐其实就是为了让这个结构体定义的数组变量时候，数组内部，也同样满足内存对齐的要求</mark>，为了更好的理解这点，我做了一个跟本例子相对照的图：</p>
+<p><img src="https://pic.islet.space/2021/05/1231881-20190917225553591-1418591054.png" alt="img"></p>
+<h1 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h1><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/donkeylong/article/details/4909720">https://blog.csdn.net/donkeylong/article/details/4909720</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/cyousui/article/details/17655051">https://blog.csdn.net/cyousui/article/details/17655051</a></p>
+<p>​          </p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://islet.space/2021/05/17/Computer/2021-05-17-%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Liewzheng">
+      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coder的孤岛">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/05/17/Computer/2021-05-17-%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80/" class="post-title-link" itemprop="url">汇编语言</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-05-17 20:00:00" itemprop="dateCreated datePublished" datetime="2021-05-17T20:00:00+08:00">2021-05-17</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2021-05-20 22:50:31" itemprop="dateModified" datetime="2021-05-20T22:50:31+08:00">2021-05-20</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Computer/" itemprop="url" rel="index"><span itemprop="name">Computer</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="X86指令集介绍"><a href="#X86指令集介绍" class="headerlink" title="X86指令集介绍"></a>X86指令集介绍</h1><h2 id="X86指令集的基本特色"><a href="#X86指令集的基本特色" class="headerlink" title="X86指令集的基本特色"></a>X86指令集的基本特色</h2><ul>
+<li>向下兼容</li>
+<li>变长指令<ul>
+<li>1-15字节，多为2-3字节长度</li>
+</ul>
+</li>
+<li>多种寻址方式（可访问不对齐内存地址）</li>
+</ul>
+<p><img src="https://pic.islet.space/2021/05/image-20210517203416861.png" alt="image-20210517203416861"></p>
+<h2 id="X86寄存器"><a href="#X86寄存器" class="headerlink" title="X86寄存器"></a>X86寄存器</h2><p>指令集的通用寄存器个数有限</p>
+<blockquote>
+<p>X86-32下指令集通用寄存器数量为8个，x86-64下为16个</p>
+</blockquote>
+<p>至多只有一个操作数在内存中，另一个操作数为立即数或寄存器</p>
+<p><img src="https://pic.islet.space/2021/05/image-20210517204354665.png" alt="image-20210517204354665"></p>
+<p><img src="https://pic.islet.space/2021/05/image-20210517204446891.png" alt="image-20210517204446891"></p>
+<p><em>源自 网络PDF</em>——<a target="_blank" rel="noopener" href="https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=&cad=rja&uact=8&ved=2ahUKEwimmc7O39DwAhV5yYsBHdS2CHMQFjAAegQIAxAD&url=http://images.china-pub.com/ebook4930001-4935000/4934543/ch02.pdf&usg=AOvVaw0yJuRWmzjtj41FR6ld_Vmm">X86处理器架构</a></p>
+<h1 id="SHARC汇编"><a href="#SHARC汇编" class="headerlink" title="SHARC汇编"></a>SHARC汇编</h1><p><a href="">《Assembler and Preprocessor Manual(including the ADSP-BFxxx, ADSP-21xxx, ADSP-TSxxx)》</a></p>
+<h2 id="VisualDSP"><a href="#VisualDSP" class="headerlink" title="VisualDSP++"></a>VisualDSP++</h2><p>以下是ADI官网对VisualDSP++（以下简称VDSP）的解释，本质上是个集成软件开发和调试环境（IDDE）。</p>
+<p><img src="https://pic.islet.space/2021/05/image-20210520005659254.png" alt="image-20210520005659254"></p>
+<p>汇编器的操作取决于两种类型的控制：汇编器指令和汇编器开关。</p>
+<blockquote>
+<p>Assembler operations depend on two types of controls: <strong>assembler directives</strong> and <strong>assembler switches</strong>.</p>
+</blockquote>
+<p>VDSP支持以下三种不同的汇编器：</p>
+<img src="https://pic.islet.space/2021/05/image-20210520010438229.png" alt="image-20210520010438229" style="zoom: 67%;" />
+
+
+
+<p>DSP汇编开发者需要先熟悉以下内容：</p>
+<blockquote>
+<ul>
+<li><p>“<em>Writing Assembly Programs</em>” on page 1-3</p>
+</li>
+<li><p> “<em>Using Assembler Support for C Structs</em>” on page 1-21</p>
+</li>
+<li><p> “<em>Preprocessing a Program</em>” on page 1-24</p>
+</li>
+<li><p>“<em>Using Assembler Feature Macros</em>” on page 1-25</p>
+</li>
+<li><p>“<em>Generating Make Dependencies</em>” on page 1-37</p>
+</li>
+<li><p>“<em>Reading a Listing File</em>” on page 1-38</p>
+</li>
+<li><p>“<em>Enabling Statistical Profiling for Assembly Functions</em>” on page 1-38</p>
+</li>
+<li><p>“*Specifying Assembler Options in VisualDSP++*” on page 1-173</p>
+</li>
+</ul>
+</blockquote>
+<h2 id="总览"><a href="#总览" class="headerlink" title="总览"></a>总览</h2><p>汇编器 将 <strong>汇编源(.asm)<strong>、</strong>数据(.dat)</strong> 和 <strong>头文件(.h)</strong> 三者整理成可执行可链接的格式（ELF），也就是一个标准的 **二进制文件(.doj)**。</p>
+<p>另外，汇编器还将生成一个 **列表文件(.lst)**，展示二进制文件和源文件之间的联系。</p>
+<p>也就是说，编译成功后，.doj和.lst文件就是其编译结果。</p>
+<img src="https://pic.islet.space/2021/05/image-20210520011656751.png" alt="image-20210520011656751" style="zoom:67%;" />
+
+<blockquote>
+<p>Figure 1-1 shows a graphical overview of the assembly process. The figure shows the preprocessor processing the assembly source (.asm) and header (.h) files.</p>
+<p>By default, the assembler processes an intermediate file to produce a binary object file (.doj) and an optional listing file (.lst). </p>
+</blockquote>
+<img src="https://pic.islet.space/2021/05/image-20210520012328329.png" alt="image-20210520012328329" style="zoom:67%;" />
+
+
+
+<h2 id="编写"><a href="#编写" class="headerlink" title="编写"></a>编写</h2><ul>
+<li><p>Assembler directives are coded in assembly source files. </p>
+</li>
+<li><p>The directives allow you to <strong>define variables</strong>, <strong>set up hardware features</strong>, and <strong>identify program sections</strong> for placement within processor memory. </p>
+</li>
+<li><p>The assembler uses directives for guidance as it translates a source program into object code. </p>
+</li>
+</ul>
+<p>注意：</p>
+<blockquote>
+<ul>
+<li><p>Do not use a <em><strong>word processor</strong></em> that embeds special control codes in the text. </p>
+</li>
+<li><p>Use an <code>.asm</code> extension to source file names to identify them as assembly source files.</p>
+</li>
+</ul>
+</blockquote>
+<p>可以使用像 <code>batch-file</code> 和 <code>makefile</code> 这样的命令行工具来汇编你的源文件。</p>
+<p>列表文件还提供了关于导入的C语言数据结构的信息。</p>
+<h2 id="问题解决"><a href="#问题解决" class="headerlink" title="问题解决"></a>问题解决</h2><h3 id="问题一"><a href="#问题一" class="headerlink" title="问题一"></a>问题一</h3><p><strong>现象</strong>：出现如下图所示的头文件缺少</p>
+<p><img src="https://pic.islet.space/2021/05/20210520095711.png" alt="image-20210520090023689"></p>
+<p><strong>原因</strong>：<code>.boj </code>文件和其所依赖的 <code>.h</code> 头文件相对路径不一致，或项目文件的绝对路径与原来创建时不一致。</p>
+<p><strong>例如</strong>：从文件 <code>Debug/system/startup_Idf/app_IVT.doj</code> 中可以看出，该文件的创作者是将其放置在 <code>D:\ADSP\workspace\LED_test\Debug</code> 下的，因此需要改变该项目文件的位置。</p>
+<p><strong>解决方法</strong>：在原创作者的绝对路径下放置该项目文件。</p>
+<p><img src="https://pic.islet.space/2021/05/20210520095708.png" alt="image-20210520090936369"></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://islet.space/2021/05/14/Communication/2021-05-14-I2C%E3%80%81SPI%E3%80%81TDM%E5%8F%8AI2S/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Liewzheng">
+      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coder的孤岛">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/05/14/Communication/2021-05-14-I2C%E3%80%81SPI%E3%80%81TDM%E5%8F%8AI2S/" class="post-title-link" itemprop="url">I^2^C、SPI、TDM及I2S</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-05-14 10:55:00" itemprop="dateCreated datePublished" datetime="2021-05-14T10:55:00+08:00">2021-05-14</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2021-05-22 18:29:45" itemprop="dateModified" datetime="2021-05-22T18:29:45+08:00">2021-05-22</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Signal/" itemprop="url" rel="index"><span itemprop="name">Signal</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="I-2-C"><a href="#I-2-C" class="headerlink" title="I^2^C"></a>I^2^C</h1><p><strong>标准</strong>：<a target="_blank" rel="noopener" href="https://www.nxp.com/docs/en/user-guide/UM10204.pdf">《NXP_UM10204_I^2^C-bus specification and user manual》</a></p>
+<blockquote>
+<p><em>I^2^C总线是一个事实上的世界标准，现在已经在50多家公司生产的1000多种不同的IC中实施。</em></p>
+<p><em>此外，多功能的I^2^C总线被用于各种控制架构，如系统管理总线（SMBus）、电源管理总线（PMBus）、智能平台管理接口（IPMI）、显示数据通道（DDC）和高级电信计算架构（ATCA）。</em></p>
+<p><em>本文件帮助设备和系统设计者了解I^2^C总线的工作原理并实现工作应用。描述了各种操作模式。它包含了对I^2^C<strong>总线数据传输</strong>、握手和总线仲裁方案的全面介绍。详细的章节涵盖了I^2^C总线在每种工作模式下的时序和电气规范。</em></p>
+<p><em>I^2^C兼容芯片的设计者应将该文件作为参考，并确保新设备满足该文件中规定的所有限制。包含I^2^C器件的系统的设计者应审查本文件，并参考各个组件的数据表。</em></p>
+<p>——翻译自标准文件</p>
+</blockquote>
+<p>I^2^C(Inter－Integrated Circuit)是一种通用的总线协议。它是由Philips(飞利浦)公司，现NXP(恩智浦)半导体开发的一种简单的双向两线制总线协议标准。</p>
+<p>对于硬件设计人员来说，只需要2个管脚，极少的连接线和面积，就可以实现芯片间的通讯，对于软件开发者来说，可以使用同一个I^2^C驱动库，来实现实现不同器件的驱动，大大减少了软件的开发时间。极低的工作电流，降低了系统的功耗，完善的应答机制大大增强通讯的可靠性。</p>
+<h2 id="术语"><a href="#术语" class="headerlink" title="术语"></a>术语</h2><img src="https://pic.islet.space/2021/05/image-20210514111033910.png" alt="image-20210514111033910" style="zoom: 67%;" />
+
+<table>
+<thead>
+<tr>
+<th>术语</th>
+<th>释义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>总线</td>
+<td>传输数据的通路</td>
+</tr>
+<tr>
+<td>传送者</td>
+<td>传输数据至总线的设备</td>
+</tr>
+<tr>
+<td>接收者</td>
+<td>从总线上接受数据的设备</td>
+</tr>
+<tr>
+<td>主（机）</td>
+<td>主动开启传输、生成时钟信号 并 主动结束传输的设备</td>
+</tr>
+<tr>
+<td>从（机）</td>
+<td>由主机寻址的设备</td>
+</tr>
+<tr>
+<td>多主（机）</td>
+<td>在不损坏数据传输的情况下允许多主机可以试图同时控制总线</td>
+</tr>
+<tr>
+<td>仲裁</td>
+<td>确保在有多个主机同时试图控制总线的情况下，只允许一个主机这样做，而且仲裁成功的信息不会被（其他设备）破坏的程序。</td>
+</tr>
+<tr>
+<td>同步</td>
+<td>确保两个及以上设备其时钟信号的同步</td>
+</tr>
+</tbody></table>
+<p>以下这个图应该可以较好地解释“多主机”的概念，多个主机可以同时向外发出传输数据的申请，也可以主动结束其数据传输。虽然，I^2^C降低了总线复用的成本，但仍需要“仲裁”机制来解决多个主机之间的无序竞争状态。</p>
+<img src="https://pic.islet.space/2021/05/image-20210514112114667.png" alt="image-20210514112114667" style="zoom:67%;" />
+
+<h2 id="总线特征"><a href="#总线特征" class="headerlink" title="总线特征"></a>总线特征</h2><h3 id="总线硬件要求"><a href="#总线硬件要求" class="headerlink" title="总线硬件要求"></a>总线硬件要求</h3><p>通过 <strong>串行数据</strong>（SDA，Serial Data）和 <strong>串行时钟</strong>（SCL，Serial Clock）两条线路对设备进行连接。</p>
+<p>每个设备都通过自身的通信设备地址进行互相辨别，且每个设备都可以当发送者或接收者，取决于设备自身的功能定义。</p>
+<h3 id="标准传输速率"><a href="#标准传输速率" class="headerlink" title="标准传输速率"></a>标准传输速率</h3><p>各模式、速率及其传输方向见下方表格。</p>
+<blockquote>
+<p>Data on the I^2^C-bus can be transferred at rates of up to 100 kbit/s in the Standard-mode, up to 400 kbit/s in the Fast-mode, up to 1 Mbit/s in Fast-mode Plus, or up to 3.4 Mbit/s in the High-speed mode. </p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>MODE</th>
+<th>RATE</th>
+<th>TRANSFER DIRECTION</th>
+<th>DOWNWARD COMPATIBLE WITH</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>STANDARD</td>
+<td>100 Kbit/s</td>
+<td>bidirectional</td>
+<td>/</td>
+</tr>
+<tr>
+<td>FAST</td>
+<td>400 Kbit/s</td>
+<td>bidirectional</td>
+<td>STANDARD</td>
+</tr>
+<tr>
+<td>FAST-PLUS</td>
+<td>1 Mbit/s</td>
+<td>bidirectional</td>
+<td>STANDARD / FAST</td>
+</tr>
+<tr>
+<td>HIGH-SPEED</td>
+<td>3.4 Mbit/s</td>
+<td>bidirectional</td>
+<td>STANDARD / FAST / FAST-PLUS</td>
+</tr>
+<tr>
+<td>ULTRA-FAST</td>
+<td>5 Mbit/s</td>
+<td>unidirectional</td>
+<td>/</td>
+</tr>
+</tbody></table>
+<p><img src="https://pic.islet.space/2021/05/image-20210522182927364.png" alt="image-20210522182927364"></p>
+<h2 id="协议要求"><a href="#协议要求" class="headerlink" title="协议要求"></a>协议要求</h2><p>以下协议要求适用于双向通信模式（不包括ULTRA-FAST模式下的单向通信）</p>
+<h3 id="逻辑电平规定"><a href="#逻辑电平规定" class="headerlink" title="逻辑电平规定"></a>逻辑电平规定</h3><p>由于I^2^C的接入设备众多（如CMOS、NMOS、Bipolar等），因此逻辑电平0和逻辑电平1（的电压）并不是固定不变的，这取决于VDD的电平。</p>
+<p>输入参考电平会被控制在VDD电平的30%<del>70%之间。 V</del>IL~ = 0.3 * V<del>DD</del>；V<del>IH</del> = 0.7 * V<del>DD</del> 。</p>
+<p>某些传统设备的输入电平会被固定在1.5V（V<del>IL</del>）和3.0V（V<del>IH</del>），但新设备都要求是 30%V<del>DD</del> 及 70%V<del>DD</del> 。</p>
+<p><strong>注意</strong>：V<del>IL</del>、V<del>IH</del>、V<del>OL</del>、V<del>OH</del>都是以参考电压作为基准的，即要达到某个电压的百分之多少时，才能够被认为是 <strong>逻辑电平0</strong> 或 <strong>逻辑电平1</strong> 。例如，可将V<del>IL</del> 视作当V<del>DD</del>下降到只有30%及以下时，为逻辑电平0，30%V<del>DD</del>是其逻辑电平的最高阈值；同理可得 V<del>IH</del> ；超过这个值而未到达70%的中间态则为不确定态。</p>
+<blockquote>
+<p>Due to the variety of different technology devices (CMOS, NMOS, bipolar) that can be connected to the I^2^C-bus, the levels of the logical ‘0’ (LOW) and ‘1’ (HIGH) are not fixed and depend on the associated level of VDD . Input reference levels are set as 30 % and 70 % of VDD ; VIL is 0.3VDD and VIH is 0.7V DD .</p>
+<p>See Figure 38, timing diagram. Some legacy device input levels were fixed at V<del>IL</del> = 1.5 V and V<del>IH</del> = 3.0 V, but all new devices require this 30 %/70 % specification. </p>
+</blockquote>
+<img src="https://pic.islet.space/2021/05/image-20210514134830615.png" alt="image-20210514134830615" style="zoom: 67%;" />
+
+
+
+<h3 id="时序正确性"><a href="#时序正确性" class="headerlink" title="时序正确性"></a>时序正确性</h3><ul>
+<li>SDA上的数据必须在SCL高电平期间保持稳定，即不能在SCL高电平期间发生翻转（后见原因），只有在SCL低电平时可以翻转。</li>
+<li>时钟脉冲信号生成要先于数据传送。</li>
+</ul>
+<blockquote>
+<p>The data on the SDA line must be stable during the HIGH period of the clock. The HIGH or LOW state of the data line can only change when the clock signal on the SCL line is LOW (see Figure 4). One clock pulse is generated for each data bit transferred.</p>
+</blockquote>
+<img src="https://pic.islet.space/2021/05/image-20210514141512136.png" alt="image-20210514141512136" style="zoom: 80%;" />
+
+
+
+<h3 id="开始及结束标志"><a href="#开始及结束标志" class="headerlink" title="开始及结束标志"></a>开始及结束标志</h3><ul>
+<li><p>传输开始时必须以一个 <strong>开始</strong> 信号作为标志，结束时必须以一个 <strong>结束</strong> 信号作为标志。</p>
+</li>
+<li><p><strong>开始信号 <strong>是以SCL为高电平时的 <strong>SDA电平的由高转低</strong> 作为标志，</strong>结束信号</strong> 是以SCL高电平时的 <strong>SDA电平的由低转高</strong> 作为标志。</p>
+</li>
+<li><p>开始和结束标志必须由主设备控制。</p>
+</li>
+</ul>
+<blockquote>
+<p>All transactions begin with a START (S) and are terminated by a STOP (P) (see Figure 5). A HIGH to LOW transition on the SDA line while SCL is HIGH defines a START condition. A LOW to HIGH transition on the SDA line while SCL is HIGH defines a STOP condition.</p>
+</blockquote>
+<img src="https://pic.islet.space/2021/05/image-20210514142116674.png" alt="image-20210514142116674" style="zoom: 80%;" />
+
+
+
+<h4 id="开始字节"><a href="#开始字节" class="headerlink" title="开始字节"></a>开始字节</h4><img src="https://pic.islet.space/2021/05/image-20210515150526897.png" alt="image-20210515150526897" style="zoom:67%;" />
+
+<blockquote>
+<p>dummy acknowledge (HIGH) : 无声确认？？？</p>
+</blockquote>
+<h3 id="总线状态"><a href="#总线状态" class="headerlink" title="总线状态"></a>总线状态</h3><p>总线具有两种状态，<strong>繁忙</strong>（Busy）和 <strong>空闲</strong>（Free），即 SDA电平 “开始” 后，总线进入繁忙状态， SDA电平 “结束” 后，总线进入空闲状态。</p>
+<p><strong>注意</strong>：在总线繁忙期间，发生重复的“开始”状态（而不是“结束”状态），由于“重复开始”和 “开始” 功能相同，为了方便，统称为 “开始”，除非特殊说明为 “重复开始”。</p>
+<blockquote>
+<p>The bus stays busy if a repeated START (Sr) is generated instead of a STOP condition. In this respect, the START (S) and repeated START (Sr) conditions are functionally identical. For the remainder of this document, therefore, the S symbol is used as a generic term to represent both the START and repeated START conditions, unless Sr is particularly relevant.</p>
+</blockquote>
+<h3 id="传输比特位"><a href="#传输比特位" class="headerlink" title="传输比特位"></a>传输比特位</h3><ul>
+<li>SDA线上的字节传输必须满足8位长度。</li>
+<li>每次传输数据的字节数不受限制。</li>
+<li>每个字节数后都需要跟一个<strong>确认位（Acknowledge bit）</strong>。</li>
+<li>当从机无法完整接收或传输一个完整的数据字节时，例如正在产生内部中断等，除非其完成内部的某些功能，否则该从机将能够一直拉低SCL的电平，<strong>强制让主机一直处于等待状态</strong>。只有当从机准备好接收下一个完整的字节并释放SCL时，数据传输才会继续。</li>
+</ul>
+<blockquote>
+<p>Every byte put on the SDA line must be eight bits long. The number of bytes that can be transmitted per transfer is unrestricted. Each byte must be followed by an Acknowledge bit.</p>
+<p><strong>Data is transferred with the Most Significant Bit (MSB) first</strong> (see Figure 6). If a slave cannot receive or transmit another complete byte of data until it has performed some other function, for example servicing an internal interrupt, it can hold the clock line SCL LOW to force the master into a wait state. Data transfer then continues when the slave is ready for another byte of data and releases clock line SCL.</p>
+</blockquote>
+<img src="https://pic.islet.space/2021/05/image-20210514144620803.png" alt="image-20210514144620803" style="zoom:80%;" />
+
+
+
+<h3 id="确认标志"><a href="#确认标志" class="headerlink" title="确认标志"></a>确认标志</h3><ul>
+<li>每个字节（8比特）后都跟着一个确认位，即前8位数据，第9位确认。</li>
+<li><strong>SCL上的时钟信号由主机产生，包括确认位的的第九个时钟脉冲</strong>。</li>
+<li>SDA线并不是由主机一直占有的，每发送完一个完整字节后，主机都会释放SDA线，由从机进行数据确认。</li>
+<li>发送者在确认时钟脉冲期间释放SDA线，以便接收者可以将SDA线拉低，并且在该时钟脉冲的高电平期间保持稳定的低电平（见图4）。</li>
+<li>对于设置（set-up）和保持（Hold）的时间，都应该依照表10中只针对各种不同模式的要求进行设置。</li>
+<li>如果SDA电平在第九个时钟脉冲时仍保持高电平，则被定义为 “未确认状态”。则此时主机可以发送一个“结束”标志来结束当前连接，或发送一个“开始”标志来开启一次新的传送。</li>
+</ul>
+<img src="/home/kali/.config/Typora/typora-user-images/image-20210514154506246.png" alt="image-20210514154506246" style="zoom: 80%;" />
+
+<blockquote>
+<p>The acknowledge takes place after every byte. The acknowledge bit allows the receiver to signal the transmitter that the byte was successfully received and another byte may be sent. The master generates all clock pulses, including the acknowledge ninth clock pulse.</p>
+<p>The Acknowledge signal is defined as follows: the transmitter releases the SDA line during the acknowledge clock pulse so the <em><strong>receiver can pull the SDA line LOW</strong></em> and it remains stable LOW during the HIGH period of this clock pulse (see Figure 4). Set-up and hold times (specified in Section 6) must also be taken into account.</p>
+<p>When SDA remains HIGH during this ninth clock pulse, this is defined as the Not Acknowledge signal. The master can then generate either a STOP condition to abort the transfer, or a repeated START condition to start a new transfer. </p>
+</blockquote>
+<p><strong>以下为五种“未确认/未应答”的可能情况</strong>：There are five conditions that lead to the generation of a NACK:</p>
+<ol>
+<li><strong>传输地址错误</strong>：No receiver is present on the bus with the transmitted address so there is no device to respond with an acknowledge.</li>
+<li><strong>实时处理中</strong>：The receiver is unable to receive or transmit because it is performing some real-time function and is not ready to start communication with the master.</li>
+<li><strong>数据/代码未定义</strong>：During the transfer, the receiver <strong>gets data or commands that it does not understand.</strong></li>
+<li><strong>正在传输中</strong>：During the transfer, the receiver <strong>cannot receive any more data bytes</strong>.</li>
+<li><strong>未收到结束信号（收发身份未转换）</strong>：A master-receiver must signal the end of the transfer to the slave transmitter.</li>
+</ol>
+<h3 id="时钟同步"><a href="#时钟同步" class="headerlink" title="时钟同步"></a>时钟同步</h3><p>任意几个主机都可能同时发起数据传输请求，此时只有一个主机和一个从机可以掌握总线进行通信，此时需要通过 <strong>时间同步</strong> 和 <strong>仲裁</strong> 完成对总线的调配。</p>
+<p><strong>在单机系统（Single Master System）中，不需要时钟同步和仲裁。</strong></p>
+<p>时钟同步是通过I^2^C接口与SCL线的有线-AND连接进行的。</p>
+<p>这意味着SCL线上的高电平到低电平的转换会导致相关的主站开始对其低电平周期进行计数（如图7的CLK<del>2</del>），一旦一个主站时钟 CLK<del>1</del> 变为低电平，它就会将SCL线电平拉低，并保持在这个状态，直到另一个时钟 CLK<del>2</del> 达到高电平状态。</p>
+<p>然而，如果时钟 CLK<del>2</del> 仍在其低电平周期内，CLK<del>1</del> 的低电平到高电平转换可能不会改变SCL线的状态。</p>
+<p>因为SCL线被具有最长的低电平周期的主站 CLK<del>2</del> 保持为低电平，而在这段时间内，低电平周期较短的主站 CLK<del>1</del> 进入高电平等待状态。</p>
+<blockquote>
+<p>Clock synchronization is performed using the wired-AND connection of I^2^C interfaces to the SCL line. This means that a HIGH to LOW transition on the SCL line causes the masters concerned to start counting off their LOW period and, once a master clock has gone LOW, it holds the SCL line in that state until the clock HIGH state is reached (see Figure 7). However, if another clock is still within its LOW period, the LOW to HIGH transition of this clock may not change the state of the SCL line. The SCL line is therefore held LOW by the master with the longest LOW period. Masters with  shorter LOW periods enter a HIGH wait-state during this time.</p>
+</blockquote>
+<p>当所有相关的主控器都结束了他们的低电平周期，时钟线被释放并变成高电平。</p>
+<p>然后，在主站时钟和SCL线的状态之间没有差异，所有的主站开始计算他们的高电平周期。</p>
+<p><strong>第一个完成其高电平周期的主站再次将SCL线拉到低电平</strong>。这样，就产生了一个<strong>同步的SCL时钟</strong>，<strong>其低电平周期由具有最长时钟低电平周期的主站决定</strong>，<strong>其高电平周期由具有最短时钟高电平周期的主站决定</strong>。</p>
+<img src="https://pic.islet.space/2021/05/image-20210514170202184.png" alt="image-20210514170202184" style="zoom: 67%;" />
+
+
+
+<h3 id="竞争仲裁"><a href="#竞争仲裁" class="headerlink" title="竞争仲裁"></a>竞争仲裁</h3><p>仲裁和同步一样，是指只有在系统中使用一个以上的主站时才需要的协议的一个部分。注意，从机不参与仲裁程序。</p>
+<p>一个主站只有在总线空闲时才可以开始传输。两个主站可以在START条件的最小保持时间（tHD;STA）内产生一个START条件，从而在总线上产生一个有效的START条件。然后需要进行仲裁，以确定哪个主站将完成其传输。</p>
+<p>仲裁是逐位进行的。在每个比特期间，当SCL为高电平时，每个主站检查SDA电平是否与其所发送的内容相符，期间可能需要很多比特，只要传输的内容相同，两个主站实际上可以无误地完成整个信息传输过程。</p>
+<p><mark>当一个主站第一次试图发送一个高电平，但检测到SDA电平为低电平时，主站知道它已经失去了仲裁，并关闭其SDA输出驱动器</mark>。在其他主站被仲裁过程中，正在传输其信息的主站将继续其传输，没有信息丢失。</p>
+<p>失去仲裁的主站可以产生时钟脉冲，直到它失去仲裁的字节结束，并且必须在总线空闲时重新尝试传输。</p>
+<p><mark>如果一个主站也包含了一个从站功能，并且它在寻址阶段失去了仲裁，有可能获胜的主站正试图对它进行寻址。因此，失败的主站必须立即切换到其从站模式。</mark></p>
+<p>图8显示了两个主站的仲裁程序。可能涉及更多，这取决于有多少个主站连接到总线上。</p>
+<p><mark>当产生DATA1的主站的内部数据电平与SDA线上的实际电平有差异时，DATA1的输出被关闭。这并不影响由获胜主站发起的数据传输。</mark></p>
+<img src="https://pic.islet.space/2021/05/image-20210515142633906.png" alt="image-20210515142633906" style="zoom: 67%;" />
+
+
+
+<h3 id="时间拉伸"><a href="#时间拉伸" class="headerlink" title="时间拉伸"></a>时间拉伸</h3><h3 id="从机地址和读取位"><a href="#从机地址和读取位" class="headerlink" title="从机地址和读取位"></a>从机地址和读取位</h3><h3 id="10位寻址"><a href="#10位寻址" class="headerlink" title="10位寻址"></a>10位寻址</h3><h3 id="反转地址"><a href="#反转地址" class="headerlink" title="反转地址"></a>反转地址</h3><h3 id="通用寻址"><a href="#通用寻址" class="headerlink" title="通用寻址"></a>通用寻址</h3><p><img src="https://pic.islet.space/2021/05/image-20210515172907284.png" alt="image-20210515172907284"></p>
+<p><img src="https://pic.islet.space/2021/05/image-20210515172945861.png" alt="image-20210515172945861"></p>
+<p><img src="https://pic.islet.space/2021/05/image-20210515172958184.png" alt="image-20210515172958184"></p>
+<h3 id="软复位"><a href="#软复位" class="headerlink" title="软复位"></a>软复位</h3><p>在发送general call (0000 0000)后，再发送一个 0000 0110 (06h) ，这样两个具有先后顺序的字节来定义软复位。</p>
+<p>首先，这种软复位是可选 ，并不是所有设备都会对软复位指令进行响应。</p>
+<p>在收到这2个字节的序列时，所有被设计为响应一般调用地址的设备都会复位，并接收其地址的可编程部分。</p>
+<blockquote>
+<p>On receiving this 2-byte sequence, all devices designed to respond to the general call address reset and take in the programmable part of their address.</p>
+</blockquote>
+<p>必须采取预防措施，确保设备在施加电源电压后没有拉低SDA或SCL线，因为这些低电平会阻断总线。</p>
+<h3 id="总线复位"><a href="#总线复位" class="headerlink" title="总线复位"></a>总线复位</h3><p>SCK信号一直卡在低电平的事件较少发生。</p>
+<ul>
+<li>如果I^2^C总线设备拥有硬件复位输入，则可以通过优先程序启用硬件中断复位来重置总线。</li>
+<li>如果没有硬件复位输入，则通过给设备循环供电，激活强制性的内部开机复位（POR）电路。</li>
+</ul>
+<p>SDA信号如果一直卡在低电平。</p>
+<ul>
+<li><p>则主机应该发送九次SCL时钟脉冲，此时令SDA保持低电平的设备在收到九次脉冲后应主动释放总线。</p>
+</li>
+<li><p>如果九次脉冲没有用，则启用硬件中断复位或循环供电来清除总线。</p>
+</li>
+</ul>
+<h3 id="设备ID"><a href="#设备ID" class="headerlink" title="设备ID"></a>设备ID</h3><p>可选的3字节只读设备ID编码（an optional 3-byte read-only ）：</p>
+<ul>
+<li>12位是设备制造商编号，具有独一无二性</li>
+<li>9位零件ID，由设备制造商写入</li>
+<li>3位模具/晶元版本，由设备制造商写入</li>
+</ul>
+<img src="https://pic.islet.space/2021/05/image-20210515152141963.png" alt="image-20210515152141963" style="zoom:67%;" />
+
+<ol>
+<li><p>启动条件</p>
+</li>
+<li><p> 主站发送保留设备ID的 I^2^C 总线地址，后面的R/W位设置为<code>0</code>（写）：<code>1111 1000</code>。</p>
+</li>
+<li><p> 主站发送从属地址。LSB是一个 “不关心”的值，只有一个设备必须确认这个字节（拥有I^2^C总线从属地址的设备）。</p>
+</li>
+<li><p> 主站发送一个 Re-START 条件。</p>
+</li>
+</ol>
+<blockquote>
+<p>备注：在 STOP 条件之后，再加上一个 START 条件，就会重置从属状态机，无法进行设备ID读取。另外，在 STOP 条件或 Re-START 条件之后，对另一个从属设备的访问也会重置从属状态机，无法执行Device ID读取。</p>
+</blockquote>
+<ol start="5">
+<li><p> 主站发送保留设备ID的 I^2^C 总线地址，后面的R/W位设置为 <code>1</code>（读）：<code>1111 1001</code>。</p>
+</li>
+<li><p> 可以进行设备ID读取，从12个制造商位开始（第一个字节+第二个字节的4个MSB），然后是9个部件识别位（第二个字节的4个LSB+第三个字节的5个MSB），然后是三个芯片修订位（第三个字节的3个LSB）。</p>
+</li>
+<li><p>主站通过NACKing最后一个字节来结束读取序列，从而重置从属设备的状态机，允许主站发送 STOP 条件。</p>
+<blockquote>
+<p>备注：设备ID的读取可以随时通过发送NACK来停止。</p>
+</blockquote>
+</li>
+</ol>
+<p>如果主站在第三个字节之后继续ACK，从站就会滚回第一个字节，并继续发送设备ID序列，直到检测到 NACK。</p>
+<h1 id="SPI"><a href="#SPI" class="headerlink" title="SPI"></a>SPI</h1><p>标准：</p>
+<h2 id="术语-1"><a href="#术语-1" class="headerlink" title="术语"></a>术语</h2><h2 id="SPI和I-2-C的对比"><a href="#SPI和I-2-C的对比" class="headerlink" title="SPI和I^2^C的对比"></a>SPI和I^2^C的对比</h2><table>
+<thead>
+<tr>
+<th></th>
+<th>SPI</th>
+<th>I^2^C</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>通信模式</td>
+<td>全双工<br><em>（是指单主从设备之间的全双工，从设备之间无法进行通信）</em></td>
+<td>半双工<br><em>（任意主从设备可以分时复用同一条通信线路）</em></td>
+</tr>
+<tr>
+<td>主从模式</td>
+<td>一主多从</td>
+<td>多主多从</td>
+</tr>
+<tr>
+<td>引脚占用</td>
+<td>从设备越多，对主机占用的引脚较多<br>主设备占用引脚：3+n<br>从设备占用引脚：4<br><em>（n为从设备数）</em></td>
+<td>主从设备均占用：2</td>
+</tr>
+<tr>
+<td>应答响应</td>
+<td>无</td>
+<td>有</td>
+</tr>
+<tr>
+<td>传输速率</td>
+<td>最高：</td>
+<td>最高：3.4Mbps</td>
+</tr>
+<tr>
+<td>从机选择</td>
+<td>通过 <strong>CS(SS)选择引脚</strong> 来选择</td>
+<td>通过 <strong>器件地址</strong> 来选择</td>
+</tr>
+<tr>
+<td>数据采样</td>
+<td>在SCLK边沿采样</td>
+<td>在SCL高电平采样</td>
+</tr>
+<tr>
+<td>通信距离</td>
+<td>短</td>
+<td>短</td>
+</tr>
+</tbody></table>
+<h1 id="UART"><a href="#UART" class="headerlink" title="UART"></a>UART</h1><p>标准：</p>
+<h1 id="TDM"><a href="#TDM" class="headerlink" title="TDM"></a>TDM</h1><p>标准：</p>
+<h1 id="I-2-S"><a href="#I-2-S" class="headerlink" title="I^2^S"></a>I^2^S</h1><p>标准：</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1442,709 +2281,8 @@
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://islet.space/2021/05/05/Signal/2021-05-05-%E5%88%86%E8%B4%9D/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Liewzheng">
-      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Coder的孤岛">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/05/05/Signal/2021-05-05-%E5%88%86%E8%B4%9D/" class="post-title-link" itemprop="url">分贝</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
-    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2021-05-05 14:30:32" itemprop="dateCreated datePublished" datetime="2021-05-05T14:30:32+08:00">2021-05-05</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-05-09 13:01:39" itemprop="dateModified" datetime="2021-05-09T13:01:39+08:00">2021-05-09</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Signal/" itemprop="url" rel="index"><span itemprop="name">Signal</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p><a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E5%88%86%E8%B2%9D">Wikipedia</a></p>
-<h1 id="分貝"><a href="#分貝" class="headerlink" title="分貝"></a>分貝</h1><p><strong>分贝</strong>（decibel）是量度两个相同单位之数量<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E6%AF%94%E4%BE%8B">比例</a>的单位，常用<strong>dB</strong>表示。“<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E5%88%86">分</a>”（deci-）指十分之一，个位是“贝”或“贝尔”（bel，纪念发明家<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E4%BA%9A%E5%8E%86%E5%B1%B1%E5%A4%A7%C2%B7%E6%A0%BC%E6%8B%89%E6%B1%89%E5%A7%86%C2%B7%E8%B4%9D%E5%B0%94">亚历山大·格拉汉姆·贝尔</a>），但一般只用分贝。</p>
-<table>
-<thead>
-<tr>
-<th>dB</th>
-<th>声能比</th>
-<th>声压比</th>
-<th></th>
-<th></th>
-</tr>
-</thead>
-<tbody><tr>
-<td>100</td>
-<td>10 000 000 000</td>
-<td></td>
-<td>100 000</td>
-<td></td>
-</tr>
-<tr>
-<td>90</td>
-<td>1 000 000 000</td>
-<td></td>
-<td>31 623</td>
-<td></td>
-</tr>
-<tr>
-<td>80</td>
-<td>100 000 000</td>
-<td></td>
-<td>10 000</td>
-<td></td>
-</tr>
-<tr>
-<td>70</td>
-<td>10 000 000</td>
-<td></td>
-<td>3 162</td>
-<td></td>
-</tr>
-<tr>
-<td>60</td>
-<td>1 000 000</td>
-<td></td>
-<td>1 000</td>
-<td></td>
-</tr>
-<tr>
-<td>50</td>
-<td>100 000</td>
-<td></td>
-<td>316</td>
-<td>.2</td>
-</tr>
-<tr>
-<td>40</td>
-<td>10 000</td>
-<td></td>
-<td>100</td>
-<td></td>
-</tr>
-<tr>
-<td>30</td>
-<td>1 000</td>
-<td></td>
-<td>31</td>
-<td>.62</td>
-</tr>
-<tr>
-<td>20</td>
-<td>100</td>
-<td></td>
-<td>10</td>
-<td></td>
-</tr>
-<tr>
-<td>10</td>
-<td>10</td>
-<td></td>
-<td>3</td>
-<td>.162</td>
-</tr>
-<tr>
-<td>6</td>
-<td>3</td>
-<td>.981（≈4）</td>
-<td>1</td>
-<td>.995（≈2）</td>
-</tr>
-<tr>
-<td>3</td>
-<td>1</td>
-<td>.995（≈2）</td>
-<td>1</td>
-<td>.413（≈√2）</td>
-</tr>
-<tr>
-<td>1</td>
-<td>1</td>
-<td>.259</td>
-<td>1</td>
-<td>.122</td>
-</tr>
-<tr>
-<td>0</td>
-<td>1</td>
-<td></td>
-<td>1</td>
-<td></td>
-</tr>
-<tr>
-<td>-3</td>
-<td>0</td>
-<td>.501（≈½）</td>
-<td>0</td>
-<td>.708（≈√½）</td>
-</tr>
-<tr>
-<td>-6</td>
-<td>0</td>
-<td>.251（≈¼）</td>
-<td>0</td>
-<td>.501（≈½）</td>
-</tr>
-<tr>
-<td>-10</td>
-<td>0</td>
-<td>.1</td>
-<td>0</td>
-<td>.316 2</td>
-</tr>
-<tr>
-<td>-20</td>
-<td>0</td>
-<td>.01</td>
-<td>0</td>
-<td>.1</td>
-</tr>
-<tr>
-<td>-30</td>
-<td>0</td>
-<td>.001</td>
-<td>0</td>
-<td>.031 62</td>
-</tr>
-<tr>
-<td>-40</td>
-<td>0</td>
-<td>.000 1</td>
-<td>0</td>
-<td>.01</td>
-</tr>
-<tr>
-<td>-50</td>
-<td>0</td>
-<td>.000 01</td>
-<td>0</td>
-<td>.003 162</td>
-</tr>
-<tr>
-<td>-60</td>
-<td>0</td>
-<td>.000 001</td>
-<td>0</td>
-<td>.001</td>
-</tr>
-<tr>
-<td>-70</td>
-<td>0</td>
-<td>.000 000 1</td>
-<td>0</td>
-<td>.000 316 2</td>
-</tr>
-<tr>
-<td>-80</td>
-<td>0</td>
-<td>.000 000 01</td>
-<td>0</td>
-<td>.000 1</td>
-</tr>
-<tr>
-<td>-90</td>
-<td>0</td>
-<td>.000 000 001</td>
-<td>0</td>
-<td>.000 031 62</td>
-</tr>
-<tr>
-<td>-100</td>
-<td>0</td>
-<td>.000 000 000 1</td>
-<td>0</td>
-<td>.000 01</td>
-</tr>
-</tbody></table>
-<p>这是一个说明声源能量 (<img src="https://wikimedia.org/api/rest_v1/media/math/render/svg/87f9e315fd7e2ba406057a97300593c4802b53e4" alt="x">), 声压 (<img src="https://wikimedia.org/api/rest_v1/media/math/render/svg/d62b24be305beff66cba9bfbcc01a362ba390f44" alt="{\sqrt {x}}">)，与声音分贝数 dB (<img src="https://wikimedia.org/api/rest_v1/media/math/render/svg/be2b0b75f65fbc06b19e6e8548ce8ec33b0c0c4f" alt="{\displaystyle 10\log _{10}{x}}">) 正比关系的对照表 从声音分贝数 dB 只有 2<del>3 个数字的差异，相比声源或声压 9</del>10 个数字的差异，dB可<strong>帮助人们更快的理解数字代表的意义</strong>。</p>
-<h2 id="计算方法"><a href="#计算方法" class="headerlink" title="计算方法"></a>计算方法</h2><p>分贝（dB）是十分之一贝尔（B）：<code>1B = 10dB</code>。1贝尔的两个功率量的比值是10:1，1贝尔的两个场量的比值是<img src="https://wikimedia.org/api/rest_v1/media/math/render/svg/2f35055a56f97ce282bf4797deddb716cfa8a924" alt="{\sqrt {10}}:1">[<a href="about:reader?url=https%3A%2F%2Fzh.wikipedia.org%2Fwiki%2F%E5%88%86%E8%B2%9D#cite_note-1">1]</a>。’</p>
-<p>场量（field quantity）是诸如<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E7%94%B5%E5%8E%8B">电压</a>、<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E7%94%B5%E6%B5%81">电流</a>、<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E5%A3%B0%E5%8E%8B">声压</a>、<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E7%94%B5%E5%9C%BA%E5%BC%BA%E5%BA%A6">电场强度</a>、<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E9%80%9F%E5%BA%A6">速度</a>、<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E9%9B%BB%E8%8D%B7%E5%AF%86%E5%BA%A6">电荷密度</a>等量值，其平方值在一个线性系统中与功率成比例。功率量（power quantity）是功率值或者直接与功率值成比例的其它量，如<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E8%83%BD%E9%87%8F%E5%AF%86%E5%BA%A6">能量密度</a>、<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E9%9F%B3%E5%BC%BA">音强</a>、<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E5%8F%91%E5%85%89%E5%BC%BA%E5%BA%A6">发光强度</a>等。 </p>
-<p>分贝的计算，依赖于是 <strong>功率量</strong> 还是 <strong>场量</strong> 而不同。 </p>
-<p>两个信号具有1分贝的差异，那么其功率比值是1.25892（即<img src="https://wikimedia.org/api/rest_v1/media/math/render/svg/99d92002d56747705f253a7c0aac2c7e4c310f20" alt="10^{\frac {1}{10}}\,">）而幅值之比是1.12202（即<img src="https://wikimedia.org/api/rest_v1/media/math/render/svg/a515a9617441696adc7fb0f3a2cd1f74210cee64" alt="{\sqrt {10}}^{\frac {1}{10}}\,">）[<a href="about:reader?url=https%3A%2F%2Fzh.wikipedia.org%2Fwiki%2F%E5%88%86%E8%B2%9D#cite_note-2">2]</a>。</p>
-<h2 id="好处"><a href="#好处" class="headerlink" title="好处"></a>好处</h2><p>使用分贝有很多便利之处：</p>
-<ul>
-<li>分贝实际上是对数值，因此可以用常用的数量来表示非常大的比值，可以清楚地表示非常大的数量变化。</li>
-<li>多部件系统的整体增益（如级联的<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E6%94%BE%E5%A4%A7%E5%99%A8">放大器</a>）可以直接用各部件的增益分贝相加而求得。不必把这些增益值相乘（例如log(A × B × C) = log(A) + log(B) + log(C)）。</li>
-<li>人对强度的感知，如声音或者光照，更接近与强度的对数成正比而不是强度值本身，依据<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E9%9F%8B%E4%BC%AF%E5%AE%9A%E7%90%86">韦伯定理</a>，因此分贝值可用于描述感知级别或级差。</li>
-</ul>
-<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><h3 id="声学"><a href="#声学" class="headerlink" title="声学"></a>声学</h3><p>声学中，<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E5%A3%B0%E5%BC%BA">声音的强度</a>定义为声压。计算分贝值时采用20微帕斯卡为参考值[<a href="about:reader?url=https%3A%2F%2Fzh.wikipedia.org%2Fwiki%2F%E5%88%86%E8%B2%9D#cite_note-ElectronicEngineersHandbook-5">5]</a>。这一参考值是人类对声音能够感知的阈值下限。声压是场量，因此使用声压计算分贝时使用下述版本的公式： </p>
-<p><img src="https://wikimedia.org/api/rest_v1/media/math/render/svg/3994b439a75418d133c3c75063bdea671f5f16ae" alt="声音强度公式"></p>
-<p>在空气中 <strong>1帕斯卡等于94分贝声压级</strong>。在其他介质，如水下，1微帕斯卡更为普遍[<a href="about:reader?url=https%3A%2F%2Fzh.wikipedia.org%2Fwiki%2F%E5%88%86%E8%B2%9D#cite_note-Morfey-6">6]</a>。这些标准被<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/ANSI">ANSI</a>S1.1-1994.所收录[<a href="about:reader?url=https%3A%2F%2Fzh.wikipedia.org%2Fwiki%2F%E5%88%86%E8%B2%9D#cite_note-7">7]</a>。</p>
-<p>人耳对声音感知具有很大的<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E5%8A%A8%E6%80%81%E8%8C%83%E5%9B%B4">动态范围</a>。从短期暴露即会永久损害听力的声强到最静的人耳能听到的声强，其比值是1万亿（10^12^）。[<a href="about:reader?url=https%3A%2F%2Fzh.wikipedia.org%2Fwiki%2F%E5%88%86%E8%B2%9D#cite_note-8">8]</a>这么大的比值范围表示为对数度量：1万亿（10^12^）基于10的对数为12，用分贝表示是240。人的听力并不是对所有频率都是相同敏感，最敏感的频率范围是20<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E8%B5%AB%E5%85%B9">Hz</a>~20<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E5%8D%83%E8%B5%AB%E5%85%B9">kHz</a>.</p>
-<p>当一个空间受外来声音干扰，而影响预期的正常作息时，需要建置一个六面结构的宁静空间，而当宁静空间建置完成后，能否达到预期的效果，则于施工前制定一个规范，此规范即为声学规范。</p>
-<h3 id="电子学"><a href="#电子学" class="headerlink" title="电子学"></a>电子学</h3><p>电子学中，通常用分贝表示功率或幅值之比（<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E5%A2%9E%E7%9B%8A">增益</a>），而不常用算术比或者百分比。一项好处是一些列部件组成的系统的总增益是各部件增益之和。类似的，电信领域中，从一个发射器到一个接收器通过一些媒介（<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/w/index.php?title=%E5%85%89%E6%97%A0%E7%BA%BF%E9%80%9A%E4%BF%A1&action=edit&redlink=1">光无线通信</a>、<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E6%B3%A2%E5%AF%BC">波导</a>、<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E5%90%8C%E8%BD%B4%E7%94%B5%E7%BC%86">同轴电缆</a>、<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E5%85%89%E7%BA%A4">光纤</a>等等）的信号增益用分贝表示，用于<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E9%93%BE%E8%B7%AF%E9%A2%84%E7%AE%97">链路预算</a>。</p>
-<p>分贝也可以组合一些后缀，表示电功率的绝对单位。例如，后缀”m”表示”毫瓦”组合出”dBm”，0 dBm等于1毫瓦，1 dBm约为1.259 毫瓦。</p>
-<p>在专业声学领域，常用单位是dBu。”u”代表”unloaded”。dBu是电压的<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E5%B9%B3%E6%96%B9%E5%B9%B3%E5%9D%87%E6%95%B0">平方平均数</a>（RMS）度量的单位，其参考电压约为 0.775 VRMS。由于历史原因，此参考电压是在600欧姆电阻上耗散1 mW功率的电压，用于电话音频电路的标准阻抗。</p>
-<h2 id="后缀与参考值"><a href="#后缀与参考值" class="headerlink" title="后缀与参考值"></a>后缀与参考值</h2><p>dB与后缀的组合，指出计算比值时的参考值。例如dBm指示功率值与1毫瓦的比值的分贝数。 </p>
-<p>如果计算分贝时的参考值明确、确切地给出，那么分贝数值可以作为绝对量，如同被测量的功率量或者场量。例如，20dBm即为100毫瓦。 </p>
-<p>SI国际单位制不允许使用分贝与后缀的组合形式如dBm, dBu, dBA，等等[<a href="about:reader?url=https%3A%2F%2Fzh.wikipedia.org%2Fwiki%2F%E5%88%86%E8%B2%9D#cite_note-13">13]</a>。但这种不遵从SI单位制的表示却广泛应用于很多场合。 </p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://islet.space/2021/05/05/Signal/2021-05-05-%E4%BD%BF%E7%94%A8ADAU1761-PGA%E3%80%81ALC-%E7%9A%84DSP%E6%8E%A7%E5%88%B6%E6%A8%A1%E5%BC%8F/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Liewzheng">
-      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Coder的孤岛">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/05/05/Signal/2021-05-05-%E4%BD%BF%E7%94%A8ADAU1761-PGA%E3%80%81ALC-%E7%9A%84DSP%E6%8E%A7%E5%88%B6%E6%A8%A1%E5%BC%8F/" class="post-title-link" itemprop="url">使用ADAU1761 PGA、ALC 的DSP控制模式</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
-    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2021-05-05 11:00:32" itemprop="dateCreated datePublished" datetime="2021-05-05T11:00:32+08:00">2021-05-05</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-05-09 13:01:38" itemprop="dateModified" datetime="2021-05-09T13:01:38+08:00">2021-05-09</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Signal/" itemprop="url" rel="index"><span itemprop="name">Signal</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="使用ADAU1761-PGA-ALC的DSP控制模式"><a href="#使用ADAU1761-PGA-ALC的DSP控制模式" class="headerlink" title="使用ADAU1761 PGA / ALC的DSP控制模式"></a>使用ADAU1761 PGA / ALC的DSP控制模式</h1><p>ADAU1761模拟前端具有ALC（自动电平控制）功能，可根据输入信号的电平动态设置差分输入路径的增益。但是，可以绕过ALC，DSP程序可以直接控制应用于 <strong>差分输入</strong> 的增益量。</p>
-<p>为此，一个或两个通道的差分路径需要<strong>启用和取消静音</strong>。为了启用 <strong>差分路径</strong>，还应根据需要将<strong>LDBOOST</strong>（和/或<strong>RDBOOST</strong>）设置为0 dB或20 dB。</p>
-<p><a target="_blank" rel="noopener" href="https://ez.analog.com/cfs-file/__key/communityserver-wikis-components-files/00-00-00-01-75/1e169c85b74a88a01485d3c18fecd396.jpg"><img src="https://ez.analog.com/cfs-filesystemfile/__key/communityserver-components-secureimagefileviewer/communityserver-wikis-components-files-00-00-00-01-75/1e169c85b74a88a01485d3c18fecd396.jpg_2D00_373x238.jpg?_=636716033579270573" alt="img"></a></p>
-<p>然后，<strong>应将ALCSEL</strong>位设置为<strong>DSP控制</strong>模式。</p>
-<p><a target="_blank" rel="noopener" href="https://ez.analog.com/cfs-file/__key/communityserver-wikis-components-files/00-00-00-01-75/be2493be5fd62ceb941ade31bb1c2ea2.jpg"><img src="https://ez.analog.com/cfs-filesystemfile/__key/communityserver-components-secureimagefileviewer/communityserver-wikis-components-files-00-00-00-01-75/be2493be5fd62ceb941ade31bb1c2ea2.jpg_2D00_136x228.jpg?_=636716033581410640" alt="img"></a></p>
-<p>现在，在DSP程序原理图中，用户可以将<strong>AIGC输出</strong>单元添加到项目中：</p>
-<p><a target="_blank" rel="noopener" href="https://ez.analog.com/cfs-file/__key/communityserver-wikis-components-files/00-00-00-01-75/a6abc0254ac0020e47fd1b347f706504.jpg"><img src="https://ez.analog.com/cfs-filesystemfile/__key/communityserver-components-secureimagefileviewer/communityserver-wikis-components-files-00-00-00-01-75/a6abc0254ac0020e47fd1b347f706504.jpg_2D00_215x49.jpg?_=636716033575290474" alt="img"></a></p>
-<p>通道0映射到左侧的PGA。</p>
-<p><a target="_blank" rel="noopener" href="https://ez.analog.com/cfs-file/__key/communityserver-wikis-components-files/00-00-00-01-75/524d0fbf699c770a6e85e142dd636b3b.png"><img src="https://ez.analog.com/cfs-filesystemfile/__key/communityserver-components-secureimagefileviewer/communityserver-wikis-components-files-00-00-00-01-75/524d0fbf699c770a6e85e142dd636b3b.png_2D00_91x54.png?_=636716033578360546" alt="img"></a></p>
-<p>通道1映射到右侧的PGA。</p>
-<p><a target="_blank" rel="noopener" href="https://ez.analog.com/cfs-file/__key/communityserver-wikis-components-files/00-00-00-01-75/3a9410be5a75f96f99e4087743e69d2f.jpg"><img src="https://ez.analog.com/cfs-filesystemfile/__key/communityserver-components-secureimagefileviewer/communityserver-wikis-components-files-00-00-00-01-75/3a9410be5a75f96f99e4087743e69d2f.jpg_2D00_94x57.jpg?_=636716033575450467" alt="img"></a></p>
-<p>现在，馈送到这些单元中每个单元的5.23信号确定了相应PGA的增益。</p>
-<p>作为一个简单的示例，要将每个PGA的增益设置为0.5（或-6 dB），请从<strong>Sources</strong>库创建一个<strong>DC Input Entry</strong>单元并将其设置为0.5，然后将其连接到<strong>AIGC输出</strong>。</p>
-<p><a target="_blank" rel="noopener" href="https://ez.analog.com/cfs-file/__key/communityserver-wikis-components-files/00-00-00-01-75/462b7691a9c4c01ab55c2f09825bd18e.jpg"><img src="https://ez.analog.com/cfs-filesystemfile/__key/communityserver-components-secureimagefileviewer/communityserver-wikis-components-files-00-00-00-01-75/462b7691a9c4c01ab55c2f09825bd18e.jpg_2D00_208x103.jpg?_=636716033578360546" alt="img"></a></p>
-<p>在下一个示例中，使用“<strong>乘”</strong>和“<strong>加”</strong>单元缩放并移动10 Hz的<strong>正弦音调</strong>，使其范围在0到1之间，然后将其发送到<strong>AIGC输出</strong>单元。这会导致PGA增益在0 dB和静音之间快速来回移动，从而产生颤音效果。</p>
-<p><a target="_blank" rel="noopener" href="https://ez.analog.com/cfs-file/__key/communityserver-wikis-components-files/00-00-00-01-75/8f391a0c6d528ce961e9f54617503cd9.jpg"><img src="https://ez.analog.com/cfs-filesystemfile/__key/communityserver-components-secureimagefileviewer/communityserver-wikis-components-files-00-00-00-01-75/8f391a0c6d528ce961e9f54617503cd9.jpg_2D00_349x178.jpg?_=636716033575530468" alt="img"></a></p>
-<p>在下面的示例中，每个输入的峰值电平由“<strong>峰值包络”</strong>单元检测，并且使用“<strong>除法”</strong>单元和“ <strong>DC输入条目”</strong>单元创建该信号的反相。结果发送到<strong>AIGC输出</strong>单元。这意味着输入峰值电平的倒数用于缩放PGA增益。结果是，当输入信号为低电平时，增益较高；但是，当输入电平增加时，增益将降低以避免削波。</p>
-<p><a target="_blank" rel="noopener" href="https://ez.analog.com/cfs-file/__key/communityserver-wikis-components-files/00-00-00-01-75/d24015ce9b3e9d247f8a8fb1e43943a3.jpg"><img src="https://ez.analog.com/cfs-filesystemfile/__key/communityserver-components-secureimagefileviewer/communityserver-wikis-components-files-00-00-00-01-75/d24015ce9b3e9d247f8a8fb1e43943a3.jpg_2D00_400x379.jpg?_=636716033578810577" alt="img"></a></p>
-<p>这些只是在ADAU1761的PGA上使用DSP控制模式可以完成的操作的几个示例。</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://islet.space/2021/05/03/Signal/2021-05-03-%E9%9F%B3%E9%A2%91%E8%AE%BE%E5%A4%87%E8%BF%9E%E6%8E%A5%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Liewzheng">
-      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Coder的孤岛">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/05/03/Signal/2021-05-03-%E9%9F%B3%E9%A2%91%E8%AE%BE%E5%A4%87%E8%BF%9E%E6%8E%A5%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" class="post-title-link" itemprop="url">音频设备连接基础知识</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
-    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2021-05-03 17:08:00" itemprop="dateCreated datePublished" datetime="2021-05-03T17:08:00+08:00">2021-05-03</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-05-09 13:01:38" itemprop="dateModified" datetime="2021-05-09T13:01:38+08:00">2021-05-09</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/signal/" itemprop="url" rel="index"><span itemprop="name">signal</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>​    </p>
-<p><a target="_blank" rel="noopener" href="https://www.sohu.com/a/418986148_142772">sohu.com</a></p>
-<h1 id="阻抗介绍"><a href="#阻抗介绍" class="headerlink" title="阻抗介绍"></a>阻抗介绍</h1><p>仅针对音频系统中的电路进行说明</p>
-<ul>
-<li>在对电路施加电压时，电阻抗是 <strong>对电路中交流电的抵抗力的度量</strong>。</li>
-<li>阻抗以欧姆为单位（类似于电阻）测量，并且 <strong>可以认为是交流电路中的一种“交流电阻”</strong>。</li>
-<li>音频信号是交流电压，因为它们同时具有负电压和正电压（信号的正振幅和负振幅）。<strong>因此，音频信号是交流电</strong>（具有负电流和正电流）。</li>
-<li>仅当<strong>上级设备</strong>输出连接到前置放大器（或串联的下一个音频设备）时，音频信号才会通过。（上级设备的输出必须创建一个带有负载的电路，以使音频信号流动。）</li>
-</ul>
-<img src="https://pic.islet.space/2021/05/a0fcf0d70d88400289cafcd70441614e.png" alt="img" style="zoom:33%;" />
-
-
-
-<p>在音频系统的连接中，有各式各样的设备进行设备串联，首先说两个概念：</p>
-<blockquote>
-<p><strong>输出阻抗</strong>： 音频设备输出端上的固有阻抗。</p>
-<p><strong>负载阻抗</strong>： 音频设备下一级（通常是前置放大器）的输入阻抗，该阻抗与上级的输出共同构成电路。</p>
-</blockquote>
-<p>在音频行业内，行业规定 <mark>输入接口的阻抗应为输出阻抗的10倍以上，这样才能保证音频信号的传输质量</mark>。</p>
-<p><mark>这样的 “<strong>阻抗匹配</strong>” 其实是为了 “<strong>电压匹配</strong>” ，而不是传统电学概念中的输入输出等阻抗的“阻抗匹配”。</mark></p>
-<p>源输出阻抗和输入阻抗之间的电压传递公式：</p>
-<p><strong>V<del>L</del>= Z<del>L</del>·V<del>S</del> / (Z<del>S</del>+ Z<del>L</del>)</strong></p>
-<blockquote>
-<p>V<del>L</del>输入端 =前置放大器输入端的电压。</p>
-<p>V<del>S</del>输出端 =麦克风输出端的电压。 </p>
-<p>Z<del>L</del>输入端 =前置放大器的输入阻抗（麦克风负载阻抗）。 </p>
-<p>Z<del>S</del>输出端 =麦克风输出阻抗。 </p>
-</blockquote>
-<p>可以将其可视化为简单的分压器：</p>
-<img src="https://pic.islet.space/2021/05/db9e3783f23c47a4b3529b34e2d8710a.png" alt="img" style="zoom: 33%;" />
-
-<div style="text-align: center; font-size: 10px; color: #aaa;">图 简化电路</div>
-
-
-
-<p>不难推算，如果其他所有条件保持不变，增加负载阻抗“ Z输入端”可使上级设备的输出电压与前置放大器的输入电压之间的匹配度更高。</p>
-<p>Z输入端起码要达到Z输出端的10倍以上，电压才可达到源输出端电压的90%，但是我们也不希望输入端的阻抗过大，因为阻抗过高会增加线路出现噪音的可能。</p>
-<p>这种最大化的电压传输称为“阻抗桥接”，或者称为“电压匹配”。</p>
-<h1 id="音频信号"><a href="#音频信号" class="headerlink" title="音频信号"></a>音频信号</h1><p>HOLA，在了解完阻抗的秘密之后，在这里我们简单说一下各个种类的信号等级和阻抗的差异。我们在这说下经常遇到的三类信号：<strong>麦克风信号</strong>、<strong>线路信号</strong>、<strong>乐器信号</strong>。</p>
-<div style="text-align: center; font-size: 10px; color: #aaa;">表 各类信号参数表</div>
-
-<img src="https://pic.islet.space/2021/05/0a2b0b9619794c908f565d648a72eec6.png" alt="img" style="zoom:50%;" />
-
-<p><strong>麦克风信号</strong>，就是麦克风输出的信号，其电平大概在 <strong>-60dBV和-40dBV（0.001V -  0.010V)之间</strong>，通常需要前级放大器的放大才能正常使用，麦克风的<strong>输出阻抗通常在150Ω至200Ω之间</strong>。</p>
-<p>所以呢，你的声卡或者话放的Mic  Input（麦克风输入）接口的阻值应至少该有1500Ω。</p>
-<img src="https://pic.islet.space/2021/05/d969f365edb84996b66525d18320fe3c.jpeg" alt="img" style="zoom:50%;" />
-
-<div style="text-align: center; font-size: 10px; color: #aaa;">图 麦克风信号输入接口</div>
-
-<p><strong>线路信号</strong>也就是Line Level  Signal，一般由TRS（大三芯）平衡线缆传递，比如一些播放器、效果器的输出信号都为线路信号，<strong>其电平约为0dBV（1V）</strong>，<strong>是麦克风信号电平的100倍-1000倍</strong>；<strong>其输出阻抗通常在100Ω至600Ω之间</strong>，Line Input（线路信号输入）接口的阻抗通常大于10,000Ω。有些音频接口有独立的Line Input，有的则是复合型。比如M-Audio  Air192 | 4</p>
-<img src="https://pic.islet.space/2021/05/image-20210503171654739.png" alt="M-Audio  Air192|4" style="zoom: 50%;" />
-
-<div style="text-align: center; font-size: 10px; color: #aaa;">图 M-Audio  Air192 | 4</div>
-
-<p><strong>乐器信号</strong> - Instrument Level  Signal，乐器信号的电平位于麦克风信号和线路信号之间，通常以TS（大两芯）线缆传递，通常需要<strong>前级放大器</strong>将其提升到合适的<strong>线路电平等级</strong>；电吉他、电贝斯、带有拾音器的原声乐器输出的信号均为乐器信号，通常这些乐器的输出阻抗非常高，约在7,000Ω至15,000Ω甚至更高。因此你经常能看到话放、声卡的线路输入通道上有“Hi-Z(高阻抗）”或者“Line/Instrument”切换开关，能使线路输入接口的阻值增加，以适配乐器信号输入，有些音频接口则直接独立出来高阻乐器输入接口。乐器输入接口阻值通常在1MΩ（100万欧姆）左右。</p>
-<p>在前文说过，如果<strong>乐器输入接口阻值过低时，信号会失真、高频丢失，声音听起来会很沉闷</strong>；而<strong>阻值过高时，会增加线路出现噪音</strong>的可能。而有一类设备能完美的解决这一问题，让你随心所欲的调节满意的音色。比如：</p>
-<p>IK  Multimedia的Z‑Tone系列产品可对这些变量进行控制，通过使用高质量的前置放大器，并配备可调的输入阻抗，以使各种拾音器都能发出其完美的声音。Z-Tone系列有两款相关产品，有体积较大的Z‑Tone DI和更紧凑的Z‑Tone Buffer Boost。</p>
-<p><img src="https://pic.islet.space/2021/05/image-20210503172016745.png" alt="Z‑Tone Buffer Boost"></p>
-<div style="text-align: center; font-size: 10px; color: #aaa;">图 Z‑Tone Buffer Boost</div>
-
-
-
-<h1 id="实际应用"><a href="#实际应用" class="headerlink" title="实际应用"></a>实际应用</h1><p>如果<strong>将高阻抗输出输入到低阻抗麦克风电平输入中，它通常会使前置放大器过载</strong>。这将导致<strong>失真</strong>，甚至可能<strong>损坏前置放大器的电路</strong>！</p>
-<p>例如，如果你想将合成器、吉他等高阻信号插入调音台、音频接口的麦克风（XLR）输入，建议你使用<strong>DI盒转换</strong>，将高阻抗信号转换为低阻抗信号。</p>
-<img src="https://pic.islet.space/2021/05/c9178428f8ad4ecf8272344c07e24c02.jpeg" alt="img" style="zoom:50%;" />
-
-<div style="text-align: center; font-size: 10px; color: #aaa;">图 使用Z-Tone DI录制箱琴</div>
-
-
-
-<p><strong>注意</strong>：最好将DI盒尽可能靠近高阻抗输出源，较长的走线应将转换后的低阻抗信号传送到调音台或声卡。通俗点说就是，连接时，两芯线短，卡农线长。这将有助于节省更多的音频信号高端频率。</p>
-<p>那么有的好奇的同学会问，低阻抗的输出接入高阻抗会怎样呢？按理论来说，低阻出，高阻入，很完美呀！但是…</p>
-<p>举个栗子🌰，我们的麦克风是低阻输出，你的吉他单块效果器是高阻输入，串联在一起是理想的选择，也有一些朋友想实现这样的操作，让声音变得更有意思。但是你直接拿XLR卡农转TS大两芯，从麦克风插到效果器上，这样是有问题的。</p>
-<p>问题在于，线路或乐器输入需要线路或乐器信号等级。线路和乐器信号的电压比麦克风信号高得多。</p>
-<p><strong>将低阻抗麦克风插入高阻抗乐器或线路输入会产生很低的电平信号。音频信号将接近接收端设备本底噪声，因此当你提升放大器的增益时也会产生更大噪声，这种不良的信噪比是很令人绝望的。</strong></p>
-<p>这时候你就需要Re-amp盒或者类似AXE I/O这种带有Re-amp功能的音频接口来实现你的这一想法。</p>
-<img src="https://pic.islet.space/2021/05/cb59d2afa93b469b91fe410bbc38df23.jpeg" alt="img" style="zoom:50%;" />
-
-<div style="text-align: center; font-size: 10px; color: #aaa;">图 IK Multimedia AXE I/O</div>
-
-<p>​          </p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://islet.space/2021/05/01/Computer/2021-05-01-Fixed-Point-and-Floating-Point-Number-Representations/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Liewzheng">
-      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Coder的孤岛">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/05/01/Computer/2021-05-01-Fixed-Point-and-Floating-Point-Number-Representations/" class="post-title-link" itemprop="url">Fixed Point and Floating Point Number Representations</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
-    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2021-05-01 10:05:00" itemprop="dateCreated datePublished" datetime="2021-05-01T10:05:00+08:00">2021-05-01</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-05-09 13:12:08" itemprop="dateModified" datetime="2021-05-09T13:12:08+08:00">2021-05-09</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Computer/" itemprop="url" rel="index"><span itemprop="name">Computer</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>​    </p>
-<p>[tutorialspoint.com](<a target="_blank" rel="noopener" href="https://www.tutorialspoint.com/fixed-point-and-floating-point-number-representations#:~:text=In">https://www.tutorialspoint.com/fixed-point-and-floating-point-number-representations#:~:text=In</a> fixed point notation%2C there are a fixed,varying number of digits after the decimal point.)</p>
-<p><em>Arjun Thakur</em></p>
-<p>Digital Computers use Binary number system to represent all types of  information inside the computers. Alphanumeric characters are  represented using binary bits (i.e., 0 and 1). Digital representations  are easier to design, storage is easy, accuracy and precision are  greater.</p>
-<p>There are various types of number representation  techniques for digital number representation, for example: Binary number system, octal number system, decimal number system, and hexadecimal  number system etc. But Binary number system is most relevant and popular for representing numbers in digital computer system.</p>
-<h1 id="Storing-Real-Number"><a href="#Storing-Real-Number" class="headerlink" title="Storing Real Number"></a>Storing Real Number</h1><p>These are structures as following below −</p>
-<p><img src="https://pic.islet.space/2021/05/36_1.jpg" alt="img"></p>
-<p>There are two major approaches to store real numbers (i.e., numbers with  fractional component) in modern computing. These are (i) Fixed Point  Notation and (ii) Floating Point Notation. </p>
-<p><mark>In fixed point notation,  there are a fixed number of digits after the decimal point, whereas  floating point number allows for a varying number of digits after the  decimal point.</mark> 在定点表示法中，小数点后有固定位数，而浮点数允许小数点后有不同位数。</p>
-<h1 id="Fixed-Point-Representation"><a href="#Fixed-Point-Representation" class="headerlink" title="Fixed-Point Representation"></a>Fixed-Point Representation</h1><p>This representation has fixed number of bits for integer part and for  fractional part. For example, if given fixed-point representation is  <code>IIII.FFFF</code>, then you can store minimum value is <code>0000.0001</code> and maximum  value is <code>9999.9999</code>. There are three parts of a fixed-point number  representation: <em><strong>the sign field</strong></em>, <em><strong>integer field</strong></em>, and <em><strong>fractional field</strong></em>.</p>
-<p><img src="https://pic.islet.space/2021/05/36_2.jpg" alt="img"></p>
-<p>We can represent these numbers using:</p>
-<ul>
-<li>Signed representation: range from -(2^(k-1)^-1) to (2^(k-1)^-1), for k bits.</li>
-<li>1’s complement representation: range from -(2^(k-1)^-1) to (2^(k-1)^-1), for k bits.</li>
-<li>2’s complementation representation: range from -(2^(k-1)^) to (2^(k-1)^-1), for k bits.</li>
-</ul>
-<p>2’s complementation representation is preferred in computer system because  of unambiguous property and easier for arithmetic operations.</p>
-<h3 id="Example"><a href="#Example" class="headerlink" title="Example"></a>Example</h3><p>Assume number is using 32-bit format which reserve 1 bit for the sign, 15 bits for the integer part and 16 bits for the fractional part.</p>
-<p>Then, <code>-43.625</code> is represented as following:</p>
-<p><img src="https://pic.islet.space/2021/05/36_3.jpg" alt="img"></p>
-<p>Where, <mark>0 is used to represent plus(+) and 1 is used to represent minus(-) </mark>. 000000000101011 is 15 bit binary value for decimal 43 and 1010000000000000 is 16 bit  binary value for fractional 0.625.</p>
-<p>The advantage of using a  fixed-point representation is performance and disadvantage is  relatively limited range of values that they can represent. So, <mark>it is  usually inadequate for numerical analysis as it does not allow enough  numbers and accuracy</mark>. A number whose representation exceeds 32 bits  would have to be stored inexactly. </p>
-<p><img src="https://pic.islet.space/2021/05/36_4.jpg" alt="img"></p>
-<p>These are above smallest positive number and largest positive number which  can be store in 32-bit representation as given above format. Therefore,  the smallest positive number is 2^-16^ ≈  0.000015 approximate and the largest positive number is (2^15^-1)+(1-2^-16^)=2^15^(1-2^-16^) =32768, and gap between these numbers is 2^-16^.</p>
-<p>We can move the radix point either left or right with the help of only integer field is 1.</p>
-<h1 id="Floating-Point-Representation"><a href="#Floating-Point-Representation" class="headerlink" title="Floating-Point Representation"></a>Floating-Point Representation</h1><p>This representation does not reserve a specific number of bits for the  integer part or the fractional part. Instead it reserves a certain  number of bits for the number (called the mantissa or significand) and a certain number of bits to say where within that number the decimal  place sits (called the exponent).</p>
-<p>The floating number  representation of a number has two part: the first part represents a  signed fixed point number called mantissa. The second part of designates the position of the decimal (or binary) point and is called the  exponent. The fixed point mantissa（定点尾数） may be fraction or an integer.  Floating -point is always interpreted to represent a number in the  following form: Mxr^e^.</p>
-<p>Only the mantissa m and the  exponent e are physically represented in the register (including their  sign). A floating-point binary number is represented in a similar manner except that is uses base 2 for the exponent. A floating-point number is said to be normalized if the most significant digit of the mantissa is  <code>1</code>.</p>
-<p><img src="https://pic.islet.space/2021/05/36_5.jpg" alt="img"></p>
-<p>So, actual number is (-1)^s^ (1+m) x2^(e-Bias)^, where <em>s</em> is the sign bit, <em>m</em> is the mantissa, <em>e</em> is the exponent value, and <em>Bias</em> is the bias number.</p>
-<p>Note that signed integers and exponent are represented by either sign  representation, or one’s complement representation, or two’s complement  representation.</p>
-<p>The floating point representation is more flexible. Any non-zero number can be represented in the normalized form of  ±(1.b<del>1</del>b<del>2</del>b<del>3</del> …)<del>2</del> x2^n^ This is normalized form of a number <code>x</code>.</p>
-<h3 id="Example-1"><a href="#Example-1" class="headerlink" title="Example"></a>Example</h3><p>Suppose number is using 32-bit format: the 1 bit sign bit（符号位）, 8 bits for signed  exponent（符号数）, and 23 bits for the fractional part（小数）. The leading bit 1 is not  stored (as it is always 1 for a normalized number) and is referred to as a <em>“hidden bit</em>”.</p>
-<p>Then −53.5 is normalized as  -53.5=(-110101.1)<del>2</del>=(-1.101011) x2^5^ , which is represented as following below,</p>
-<p><img src="https://pic.islet.space/2021/05/36_6.jpg" alt="img"></p>
-<p>Where <code>00000101</code> is the 8-bit binary value of exponent value <code>+5</code>.</p>
-<p>Note that 8-bit exponent ﬁeld is used to store integer exponents <code>-126 ≤  n ≤ 127</code>.</p>
-<p>The smallest normalized positive number that ﬁts into 32 bits is (1.000,000,000,000,000,000,000,00)2x26^-126^=2^-126^≈1.18x10^-38^ , and  largest normalized positive number that ﬁts into 32 bits is (1.111,111,111,111,111,111,111,11)2x2^127^=(224-1)x2^104^ ≈ 3.40x10^38^. These numbers are represented as following below,</p>
-<p><img src="https://pic.islet.space/2021/05/36_7.jpg" alt="img"></p>
-<p>The precision of a ﬂoating-point format is the number of positions reserved for binary digits plus one (for the hidden bit). In the examples  considered here the precision is <code>23+1=24</code>.</p>
-<p>The gap between 1 and the next normalized ﬂoating-point number is known as machine epsilon. the gap is (1+2^-23^)-1=2^-23^ for above example, but this is same as the smallest positive ﬂoating-point  number because of non-uniform spacing unlike in the ﬁxed-point scenario.</p>
-<p>Note that non-terminating binary numbers can be represented in floating point representation, e.g., 1/3 = (0.010101 …)^2^ cannot be a ﬂoating-point number as its binary representation is non-terminating.</p>
-<h1 id="IEEE-Floating-point-Number-Representation"><a href="#IEEE-Floating-point-Number-Representation" class="headerlink" title="IEEE Floating point Number Representation"></a>IEEE Floating point Number Representation</h1><p>IEEE (Institute of Electrical and Electronics Engineers) has standardized Floating-Point Representation as following diagram.</p>
-<p><img src="https://pic.islet.space/2021/05/36_8.jpg" alt="img"></p>
-<p>So, actual number is (-1)^s^(1+m)x2^(e-Bias)^, where <em>s</em> is the sign bit, <em>m</em> is the mantissa, <em>e</em> is the exponent value, and <em>Bias</em> is the bias number. The sign bit is 0 for positive number and 1 for  negative number. Exponents are represented by or two’s complement  representation.</p>
-<p><strong>According to IEEE 754 standard, the floating-point number is represented in following ways:</strong></p>
-<ul>
-<li>Half Precision (16 bit): 1 sign bit, 5 bit exponent, and 10 bit mantissa</li>
-<li>Single Precision (32 bit): 1 sign bit, 8 bit exponent, and 23 bit mantissa</li>
-<li>Double Precision (64 bit): 1 sign bit, 11 bit exponent, and 52 bit mantissa</li>
-<li>Quadruple Precision (128 bit): 1 sign bit, 15 bit exponent, and 112 bit mantissa</li>
-</ul>
-<h1 id="Special-Value-Representation"><a href="#Special-Value-Representation" class="headerlink" title="Special Value Representation"></a><strong>Special Value Representation</strong></h1><p>There are some special values depended upon different values of the exponent and mantissa in the IEEE 754 standard.</p>
-<ul>
-<li>All the exponent bits 0 with all mantissa bits 0 represents 0. If sign bit is 0, then +0, else -0.</li>
-<li>All the exponent bits 1 with all mantissa bits 0 represents infinity. If sign bit is 0, then +∞, else -∞.</li>
-<li>All the exponent bits 0 and mantissa bits non-zero represents <strong>denormalized number</strong>.</li>
-<li>All the exponent bits 1 and mantissa bits non-zero represents <strong>error</strong>.</li>
-</ul>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/2/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><a class="extend next" rel="next" href="/page/4/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <a class="extend prev" rel="prev" href="/page/2/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><a class="extend next" rel="next" href="/page/4/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 <script src="/js/comments.js"></script>
 </div>

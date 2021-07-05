@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="next-config" data-name="main" type="application/json">{&quot;hostname&quot;:&quot;islet.space&quot;,&quot;root&quot;:&quot;&#x2F;&quot;,&quot;images&quot;:&quot;&#x2F;images&quot;,&quot;scheme&quot;:&quot;Gemini&quot;,&quot;version&quot;:&quot;8.3.0&quot;,&quot;exturl&quot;:false,&quot;sidebar&quot;:{&quot;position&quot;:&quot;left&quot;,&quot;display&quot;:&quot;post&quot;,&quot;padding&quot;:18,&quot;offset&quot;:12},&quot;copycode&quot;:false,&quot;bookmark&quot;:{&quot;enable&quot;:false,&quot;color&quot;:&quot;#222&quot;,&quot;save&quot;:&quot;auto&quot;},&quot;fancybox&quot;:false,&quot;mediumzoom&quot;:false,&quot;lazyload&quot;:false,&quot;pangu&quot;:false,&quot;comments&quot;:{&quot;style&quot;:&quot;tabs&quot;,&quot;active&quot;:null,&quot;storage&quot;:true,&quot;lazyload&quot;:false,&quot;nav&quot;:null},&quot;motion&quot;:{&quot;enable&quot;:true,&quot;async&quot;:false,&quot;transition&quot;:{&quot;post_block&quot;:&quot;fadeIn&quot;,&quot;post_header&quot;:&quot;fadeInDown&quot;,&quot;post_body&quot;:&quot;fadeInDown&quot;,&quot;coll_header&quot;:&quot;fadeInLeft&quot;,&quot;sidebar&quot;:&quot;fadeInUp&quot;}},&quot;prism&quot;:false,&quot;i18n&quot;:{&quot;placeholder&quot;:&quot;Searching...&quot;,&quot;empty&quot;:&quot;We didn&#39;t find any results for the search: ${query}&quot;,&quot;hits_time&quot;:&quot;${hits} results found in ${time} ms&quot;,&quot;hits&quot;:&quot;${hits} results found&quot;}}</script>
+<meta name="description" content="通过在Linux上编写代码，计算求解ADAU1772在 输入时钟（MCLK Input）为16.6MHz时，如何设置内部的4个参数，以达到符合输出时钟要求的目的。 据《ADAU1772》和SigmaStudio，1772 Codec 内部可修改的参数有 输入时钟分频（Input Clock Divider）、整数设置（Integer Setting）、分子（Numerator） 和 分母（Deno">
+<meta property="og:type" content="article">
+<meta property="og:title" content="在linux上编写求解ADAU1772的PLL系数">
+<meta property="og:url" content="http://islet.space/2021/07/05/Programming/C++/2021-07-05-%E5%9C%A8linux%E4%B8%8A%E7%BC%96%E5%86%99%E6%B1%82%E8%A7%A3ADAU1772%E7%9A%84PLL%E7%B3%BB%E6%95%B0/index.html">
+<meta property="og:site_name" content="Coder的孤岛">
+<meta property="og:description" content="通过在Linux上编写代码，计算求解ADAU1772在 输入时钟（MCLK Input）为16.6MHz时，如何设置内部的4个参数，以达到符合输出时钟要求的目的。 据《ADAU1772》和SigmaStudio，1772 Codec 内部可修改的参数有 输入时钟分频（Input Clock Divider）、整数设置（Integer Setting）、分子（Numerator） 和 分母（Deno">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://pic.islet.space/2021/07/image-20210706002255187.png">
+<meta property="og:image" content="https://pic.islet.space/2021/07/image-20210706002412136.png">
+<meta property="og:image" content="https://pic.islet.space/2021/07/image-20210706001243698.png">
+<meta property="og:image" content="https://pic.islet.space/2021/07/image-20210706001350802.png">
+<meta property="article:published_time" content="2021-07-05T12:00:00.000Z">
+<meta property="article:modified_time" content="2021-07-05T17:01:05.456Z">
+<meta property="article:author" content="Liewzheng">
+<meta property="article:tag" content="ADI">
+<meta property="article:tag" content="Linux">
+<meta property="article:tag" content="1772">
+<meta property="article:tag" content="cofficient">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://pic.islet.space/2021/07/image-20210706002255187.png">
+
+
+<link rel="canonical" href="http://islet.space/2021/07/05/Programming/C++/2021-07-05-%E5%9C%A8linux%E4%B8%8A%E7%BC%96%E5%86%99%E6%B1%82%E8%A7%A3ADAU1772%E7%9A%84PLL%E7%B3%BB%E6%95%B0/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{&quot;sidebar&quot;:&quot;&quot;,&quot;isHome&quot;:false,&quot;isPost&quot;:true,&quot;lang&quot;:&quot;en&quot;,&quot;comments&quot;:true,&quot;permalink&quot;:&quot;http:&#x2F;&#x2F;islet.space&#x2F;2021&#x2F;07&#x2F;05&#x2F;Programming&#x2F;C++&#x2F;2021-07-05-%E5%9C%A8linux%E4%B8%8A%E7%BC%96%E5%86%99%E6%B1%82%E8%A7%A3ADAU1772%E7%9A%84PLL%E7%B3%BB%E6%95%B0&#x2F;&quot;,&quot;path&quot;:&quot;2021&#x2F;07&#x2F;05&#x2F;Programming&#x2F;C++&#x2F;2021-07-05-在linux上编写求解ADAU1772的PLL系数&#x2F;&quot;,&quot;title&quot;:&quot;在linux上编写求解ADAU1772的PLL系数&quot;}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">&quot;&quot;</script>
+<title>在linux上编写求解ADAU1772的PLL系数 | Coder的孤岛</title><script src="/js/config.js"></script>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Coder的孤岛</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">islet of the coder</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-文章"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>文章</a></li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8E%9F%E5%85%AC%E5%BC%8F"><span class="nav-number">1.</span> <span class="nav-text">原公式</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%E7%BC%96%E5%86%99"><span class="nav-number">2.</span> <span class="nav-text">代码编写</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%BF%90%E8%A1%8C%E7%BB%93%E6%9E%9C"><span class="nav-number">3.</span> <span class="nav-text">运行结果</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Liewzheng</p>
+  <div class="site-description" itemprop="description">笔记分享的旮旯孤岛而已</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">74</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">143</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="mailto:liewzheng@qq.com" title="E-Mail → mailto:liewzheng@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://islet.space/2021/07/05/Programming/C++/2021-07-05-%E5%9C%A8linux%E4%B8%8A%E7%BC%96%E5%86%99%E6%B1%82%E8%A7%A3ADAU1772%E7%9A%84PLL%E7%B3%BB%E6%95%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Liewzheng">
+      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coder的孤岛">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          在linux上编写求解ADAU1772的PLL系数
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-07-05 20:00:00" itemprop="dateCreated datePublished" datetime="2021-07-05T20:00:00+08:00">2021-07-05</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2021-07-06 01:01:05" itemprop="dateModified" datetime="2021-07-06T01:01:05+08:00">2021-07-06</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Programming/" itemprop="url" rel="index"><span itemprop="name">Programming</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>通过在Linux上编写代码，计算求解ADAU1772在 <strong>输入时钟</strong>（MCLK Input）为16.6MHz时，如何设置内部的4个参数，以达到符合输出时钟要求的目的。</p>
+<p>据《ADAU1772》和SigmaStudio，1772 Codec 内部可修改的参数有 <strong>输入时钟分频</strong>（Input Clock Divider）、<strong>整数设置</strong>（Integer Setting）、<strong>分子</strong>（Numerator） 和 <strong>分母</strong>（Denominator）四个。</p>
+<p><strong>目标输出时钟</strong>（VCO Output） 是 24.576MHz。</p>
+<h1 id="原公式"><a href="#原公式" class="headerlink" title="原公式"></a>原公式</h1><p>以下为《ADAU1772》第30页中，关于PLL计算的公式描述：</p>
+<p><img src="https://pic.islet.space/2021/07/image-20210706002255187.png" alt="image-20210706002255187"></p>
+<p>以下为SigmaStudio中的PLL设定界面参数设定：</p>
+<p><img src="https://pic.islet.space/2021/07/image-20210706002412136.png" alt="image-20210706002412136"></p>
+<h1 id="代码编写"><a href="#代码编写" class="headerlink" title="代码编写"></a>代码编写</h1><p>注意：本代码在Linux上，以C++17的版本进行编译运行。</p>
+<p>编译代码如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">g++ main.cpp -std=c++17 -lpthread</span><br></pre></td></tr></table></figure>
+
+<p>在编写代码时，考虑到SigmaStudio和数据手册之间可能存在表述差异，因此计算PLL的源代码中，也包含了开启 <code>1/2</code> 系数的宏定义 <code>#define HALFCOFF 1</code> ，具体代码如下：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*---------------------------------------------------------</span></span><br><span class="line"><span class="comment"> * HEADER FILES</span></span><br><span class="line"><span class="comment"> *-------------------------------------------------------*/</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;math.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;thread&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="comment">/*---------------------------------------------------------</span></span><br><span class="line"><span class="comment"> * MACRO DEFINITION</span></span><br><span class="line"><span class="comment"> *-------------------------------------------------------*/</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> ACCURACY 1000000000   <span class="comment">//输出时钟精度，小数点后9个0</span></span></span><br><span class="line"><span class="comment">// #define HALFCOFF 1            //打开1/2系数进行计算，SigmaStudio图示中有该系数，但《ADAU1772》数据手册中没有该系数</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/*---------------------------------------------------------</span></span><br><span class="line"><span class="comment"> * MACRO DEFINITION FOR DEBUG</span></span><br><span class="line"><span class="comment"> *-------------------------------------------------------*/</span></span><br><span class="line"><span class="comment">// #define DEBUG_MODE         //Debug模式</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">/*---------------------------------------------------------</span></span><br><span class="line"><span class="comment"> * DATA TYPES</span></span><br><span class="line"><span class="comment"> *-------------------------------------------------------*/</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">double</span> CLK;           <span class="comment">//数据类型_时钟</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">unsigned</span> <span class="keyword">short</span> COFF;  <span class="comment">//数据类型_系数</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">/*---------------------------------------------------------</span></span><br><span class="line"><span class="comment"> * FILE DOMAIN DATA DECLARATION</span></span><br><span class="line"><span class="comment"> *-------------------------------------------------------*/</span></span><br><span class="line">CLK CLK_IN = <span class="number">16.6</span>;            <span class="comment">//输入时钟</span></span><br><span class="line">CLK CLK_OUT = <span class="number">24.576</span>;         <span class="comment">//输出时钟</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">TargetCofficient</span> &#123;</span></span><br><span class="line">    COFF Numerator;</span><br><span class="line">    COFF Denominator;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">COFF Maxiator = <span class="number">65535</span>;</span><br><span class="line">COFF InputClockDivider = <span class="number">4</span>;</span><br><span class="line">COFF IntegerSetting = <span class="number">8</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*---------------------------------------------------------</span></span><br><span class="line"><span class="comment"> * FUNCTIONS DECLARATION</span></span><br><span class="line"><span class="comment"> *-------------------------------------------------------*/</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">isSafe</span><span class="params">(COFF, COFF)</span></span>;      <span class="comment">//判断系数的分子和分母相除是否满足要求</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">isOK</span><span class="params">(CLK)</span></span>;               <span class="comment">//判断输出结果是否符合输出时钟的精度要求</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">CofficientCalculate</span><span class="params">(CLK, COFF, COFF)</span></span>;         <span class="comment">//计算</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">ICD1</span><span class="params">(<span class="keyword">void</span>)</span></span>;             <span class="comment">//子线程</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">ICD2</span><span class="params">(<span class="keyword">void</span>)</span></span>;             <span class="comment">//子线程</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">ICD3</span><span class="params">(<span class="keyword">void</span>)</span></span>;             <span class="comment">//子线程</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">ICD4</span><span class="params">(<span class="keyword">void</span>)</span></span>;             <span class="comment">//子线程</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">SysPrintf</span><span class="params">(<span class="keyword">void</span>)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*---------------------------------------------------------</span></span><br><span class="line"><span class="comment"> * MAIN FUNCTIONS</span></span><br><span class="line"><span class="comment"> *-------------------------------------------------------*/</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    </span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;SYSTEM: Procedure starts.&quot;</span> &lt;&lt; endl;</span><br><span class="line">    <span class="function">thread <span class="title">thread1</span><span class="params">(ICD1)</span></span>;</span><br><span class="line">    <span class="function">thread <span class="title">thread2</span><span class="params">(ICD2)</span></span>;</span><br><span class="line">    <span class="function">thread <span class="title">thread3</span><span class="params">(ICD3)</span></span>;</span><br><span class="line">    <span class="function">thread <span class="title">thread4</span><span class="params">(ICD4)</span></span>;</span><br><span class="line"></span><br><span class="line">    thread1.<span class="built_in">join</span>();</span><br><span class="line">    thread2.<span class="built_in">join</span>();</span><br><span class="line">    thread3.<span class="built_in">join</span>();</span><br><span class="line">    thread4.<span class="built_in">join</span>();</span><br><span class="line"></span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;SYSTEM: Procedure ends up.&quot;</span> &lt;&lt; endl;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">/*---------------------------------------------------------</span></span><br><span class="line"><span class="comment"> * FUNCTIONS DEFINITION</span></span><br><span class="line"><span class="comment"> *-------------------------------------------------------*/</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">isSafe</span><span class="params">(COFF N, COFF D)</span></span>&#123;</span><br><span class="line">    <span class="keyword">double</span> result = (<span class="keyword">double</span>)N / (<span class="keyword">double</span>)D;</span><br><span class="line">    <span class="keyword">if</span>( (result &gt;= <span class="number">0.1</span>) &amp;&amp; (result &lt;= <span class="number">0.9</span>) ) <span class="keyword">return</span> <span class="number">1</span>;       <span class="comment">//判断系数是否满足要求，满足则返回1</span></span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">isOK</span><span class="params">(CLK clock)</span></span>&#123;</span><br><span class="line">    CLK integerClock , fractClock;</span><br><span class="line">    fractClock = <span class="built_in">modf</span>(clock , &amp;integerClock);                <span class="comment">//分别取出整数和小数部分</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>( ((<span class="keyword">int</span>)(fractClock * ACCURACY) == (<span class="keyword">int</span>)(<span class="number">576</span>/(<span class="keyword">double</span>)<span class="number">1000</span> * ACCURACY)) &amp;&amp; ((<span class="keyword">int</span>)integerClock == (<span class="keyword">int</span>)CLK_OUT) ) &#123;  <span class="comment">//如果小数点精度满足要求，且整数部分相同</span></span><br><span class="line">        <span class="keyword">return</span> <span class="number">1</span>;                                           <span class="comment">//则返回1</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">CofficientCalculate</span><span class="params">(CLK ClockInput, COFF ICD, COFF IS)</span></span>&#123;</span><br><span class="line">    CLK tempCLK;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>(COFF i = <span class="number">0</span>; i &lt; Maxiator; i++)&#123;                     <span class="comment">//分母</span></span><br><span class="line">        <span class="keyword">for</span>(COFF j = <span class="number">0</span>; j &lt; Maxiator; j++)&#123;                 <span class="comment">//分子</span></span><br><span class="line">            <span class="keyword">if</span>(<span class="built_in">isSafe</span>(j, i))&#123;</span><br><span class="line">                <span class="meta">#<span class="meta-keyword">ifdef</span> HALFCOFF</span></span><br><span class="line">                tempCLK = ClockInput /(<span class="keyword">double</span>)ICD * ((<span class="keyword">double</span>)IS + ((<span class="keyword">double</span>)j/(<span class="keyword">double</span>)i)) *<span class="number">1</span>/<span class="number">2</span>;   <span class="comment">//有系数时</span></span><br><span class="line">                <span class="meta">#<span class="meta-keyword">else</span> </span></span><br><span class="line">                tempCLK = ClockInput /(<span class="keyword">double</span>)ICD * ((<span class="keyword">double</span>)IS + ((<span class="keyword">double</span>)j/(<span class="keyword">double</span>)i)) ;       <span class="comment">//无系数时</span></span><br><span class="line">                <span class="meta">#<span class="meta-keyword">endif</span></span></span><br><span class="line"></span><br><span class="line">                <span class="meta">#<span class="meta-keyword">ifdef</span> DEBUG_MODE</span></span><br><span class="line">                cout &lt;&lt; <span class="string">&quot;SYSTEM:IDC = &quot;</span> &lt;&lt; ICD &lt;&lt; <span class="string">&quot;, IS = &quot;</span> &lt;&lt; IS &lt;&lt; hex &lt;&lt;<span class="string">&quot;, Numerator = 0x&quot;</span>&lt;&lt; j &lt;&lt; <span class="string">&quot;, Denominator = 0x&quot;</span> &lt;&lt; i &lt;&lt; <span class="string">&quot;, OutputClock = &quot;</span> &lt;&lt; tempCLK &lt;&lt; endl;</span><br><span class="line">                <span class="meta">#<span class="meta-keyword">endif</span></span></span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">continue</span>;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span>( <span class="built_in">isOK</span>(tempCLK)) &#123;</span><br><span class="line">                cout &lt;&lt; <span class="string">&quot;SYSTEM:IDC = &quot;</span> &lt;&lt; ICD &lt;&lt; <span class="string">&quot;, IS = &quot;</span> &lt;&lt; IS &lt;&lt; hex &lt;&lt;<span class="string">&quot;, Numerator = 0x&quot;</span>&lt;&lt; j &lt;&lt; <span class="string">&quot;, Denominator = 0x&quot;</span> &lt;&lt; i &lt;&lt; <span class="string">&quot;, OutputClock = &quot;</span> &lt;&lt; tempCLK &lt;&lt; endl;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">/*---------------------------------------------------------</span></span><br><span class="line"><span class="comment"> * THREAD _ CALCULATOR</span></span><br><span class="line"><span class="comment"> *-------------------------------------------------------*/</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">ICD1</span><span class="params">(<span class="keyword">void</span>)</span></span>&#123;</span><br><span class="line">    <span class="keyword">for</span>(COFF enumIS = <span class="number">2</span>; enumIS &lt;= IntegerSetting; enumIS++) <span class="built_in">CofficientCalculate</span>(CLK_IN , <span class="number">1</span>, enumIS);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">ICD2</span><span class="params">(<span class="keyword">void</span>)</span></span>&#123;</span><br><span class="line">    <span class="keyword">for</span>(COFF enumIS = <span class="number">2</span>; enumIS &lt;= IntegerSetting; enumIS++) <span class="built_in">CofficientCalculate</span>(CLK_IN , <span class="number">2</span>, enumIS);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">ICD3</span><span class="params">(<span class="keyword">void</span>)</span></span>&#123;</span><br><span class="line">    <span class="keyword">for</span>(COFF enumIS = <span class="number">2</span>; enumIS &lt;= IntegerSetting; enumIS++) <span class="built_in">CofficientCalculate</span>(CLK_IN , <span class="number">3</span>, enumIS);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">ICD4</span><span class="params">(<span class="keyword">void</span>)</span></span>&#123;</span><br><span class="line">    <span class="keyword">for</span>(COFF enumIS = <span class="number">2</span>; enumIS &lt;= IntegerSetting; enumIS++) <span class="built_in">CofficientCalculate</span>(CLK_IN , <span class="number">4</span>, enumIS);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">SysPrintf</span><span class="params">(<span class="keyword">void</span>)</span></span>&#123;</span><br><span class="line">    <span class="comment">// while(1) cout &lt;&lt; &quot;Calculating...&quot;;</span></span><br><span class="line">    <span class="keyword">while</span>(<span class="number">1</span>)&#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;Calculating...&quot;</span>);</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;\r\003&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="运行结果"><a href="#运行结果" class="headerlink" title="运行结果"></a>运行结果</h1><p>通过自行编写的代码，遍历所有可更改的系数进行计算求解，取得小数点后9位精度，并且符合要求的系数如下（含1/2系数）：</p>
+<p><img src="https://pic.islet.space/2021/07/image-20210706001243698.png" alt="image-20210706001243698"></p>
+<p>以下为不含1/2系数的结果：</p>
+<p><img src="https://pic.islet.space/2021/07/image-20210706001350802.png" alt="image-20210706001350802"></p>
+<p>经过手工计算，结果（小数点后9位）确实满足要求。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/ADI/" rel="tag"># ADI</a>
+              <a href="/tags/Linux/" rel="tag"># Linux</a>
+              <a href="/tags/1772/" rel="tag"># 1772</a>
+              <a href="/tags/cofficient/" rel="tag"># cofficient</a>
+          </div>
+
+    <div id="vcomment" style="margin: 20px 0 0 0"></div>
+    <script>
+        new Valine({
+            el: '#vcomment' ,
+            appId: 'vRGM12EcYxDSM2lat5qjjSeY-gzGzoHsz',
+            appKey: 'WBgAb6NTAFQ7DYtgH0uOPNNh'
+        });
+    </script>
+</body>
+
+
+
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/06/30/Hardware/ADI/2021-06-30-ADSP%E6%B7%B7%E5%90%88%E7%BC%96%E7%A8%8B/" rel="prev" title="ADSP混合编程">
+                  <i class="fa fa-chevron-left"></i> ADSP混合编程
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/07/06/Programming/C++/2021-07-06-Linux%E4%B8%8AC++%E5%A4%9A%E7%BA%BF%E7%A8%8B%E6%8A%A5%E9%94%99%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/" rel="next" title="Linux上C++多线程报错解决办法">
+                  Linux上C++多线程报错解决办法 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+<script src="/js/comments.js"></script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">粤ICP备19004822号 </a>
+  </div>
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Liewzheng</span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
