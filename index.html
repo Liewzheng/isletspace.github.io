@@ -135,7 +135,7 @@
         <span class="site-state-item-name">categories</span>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">143</span>
+        <span class="site-state-item-count">141</span>
         <span class="site-state-item-name">tags</span>
       </div>
   </nav>
@@ -493,7 +493,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://islet.space/2021/06/28/Communication/2021-06-28-I2S%EF%BC%88ADAU1939%E7%A7%BB%E6%A4%8D%E8%87%B3ADAU1772%E5%85%BC%E5%AE%B9%EF%BC%89/">
+    <link itemprop="mainEntityOfPage" href="http://islet.space/2021/06/28/Communication/2021-06-28-I2S%E9%80%9A%E4%BF%A1/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -506,7 +506,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/06/28/Communication/2021-06-28-I2S%EF%BC%88ADAU1939%E7%A7%BB%E6%A4%8D%E8%87%B3ADAU1772%E5%85%BC%E5%AE%B9%EF%BC%89/" class="post-title-link" itemprop="url">I2S_ADAU1939移植至ADAU1772兼容</a>
+          <a href="/2021/06/28/Communication/2021-06-28-I2S%E9%80%9A%E4%BF%A1/" class="post-title-link" itemprop="url">I2S通信</a>
         </h2>
 
         <div class="post-meta-container">
@@ -526,7 +526,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-07-06 01:13:38" itemprop="dateModified" datetime="2021-07-06T01:13:38+08:00">2021-07-06</time>
+        <time title="Modified: 2021-07-09 00:15:13" itemprop="dateModified" datetime="2021-07-09T00:15:13+08:00">2021-07-09</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -534,7 +534,7 @@
       </span>
       <span class="post-meta-item-text">In</span>
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Communications/" itemprop="url" rel="index"><span itemprop="name">Communications</span></a>
+          <a href="/categories/Communication/" itemprop="url" rel="index"><span itemprop="name">Communication</span></a>
         </span>
     </span>
 
@@ -612,10 +612,11 @@
 <li><code>WS=1</code> ，表示正在传输的是 <strong>右声道</strong> 的数据。</li>
 </ul>
 <p>WS可以在串行时钟的上升沿或者下降沿发生改变，并且WS信号不需要一定是对称的。在从属装置端，WS<mark>在时钟信号的上升沿发生改变</mark>。WS总是<mark>在最高位传输前的一个时钟周期发生改变</mark>，这样可以使从属装置得到与被传输的串行数据同步的时间，并且使接收端存储当前的命令以及为下次的命令清除空间。</p>
-<h1 id="ADI代码移植"><a href="#ADI代码移植" class="headerlink" title="ADI代码移植"></a>ADI代码移植</h1><p>以下文章/教程仅针对官方提供的例程《AD1939_I2S_Sample_Based_Talkthru》进行修改。</p>
+<h1 id="ADI-Codec-I2S移植"><a href="#ADI-Codec-I2S移植" class="headerlink" title="ADI-Codec I2S移植"></a>ADI-Codec I2S移植</h1><p>以下文章/教程仅针对官方提供的例程《AD1939_I2S_Sample_Based_Talkthru》进行修改。</p>
 <blockquote>
 <ul>
 <li><code>&lt;ad1939.h&gt;</code> 定义了ADAU1939的宏定义，包括锁相环、时钟、DAC、ADC等的寄存器，与直接从SigmaStudio导出的文件并没有太大差别，应该经过精简。</li>
+<li></li>
 </ul>
 </blockquote>
 <p>首先，需要清晰认识1939和1772的硬件差异。ADAU1939和ADAU1772硬件上的异同，都有4个差分输入，但是1939有8个差分输出，1772有2个双声道输出（4个差分输出）。</p>
@@ -627,7 +628,8 @@
 <p>通过 <em><strong>Sport1 A</strong></em> 从Codec接收数据，并通过 <em><strong>Sport0 A/B</strong></em> 和 <em><strong>Sport2 A/B</strong></em> 将音频数据传输至Codec的四个立体声DAC接口。Sport1 接收中断服务程序以在 DMA接收缓存 <code>rx1a_buf</code> 上完成算术运算（arithmetic computations），并将计算结果存放至 DMA传输缓存 <code>tx0a_buf</code> 。</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/******************************************************************************************************</span></span><br><span class="line"><span class="comment">/                                                                                                     /</span></span><br><span class="line"><span class="comment">/                            AD1939 - SPORT1 RX INTERRUPT SERVICE ROUTINE                             /</span></span><br><span class="line"><span class="comment">/                                                                                                     /</span></span><br><span class="line"><span class="comment">/    Receives input data from the AD1939 ADCs via SPORT1 A and transmits processed audio data         /</span></span><br><span class="line"><span class="comment">/    back out to the four AD1939 Stereo DACs/Line Outputs through SPORT0 A/B and SPORT2 A/B           /</span></span><br><span class="line"><span class="comment">/                                                                                                     /</span></span><br><span class="line"><span class="comment">/                                                                                                     /</span></span><br><span class="line"><span class="comment">/   This Serial Port 1 Recieve Interrupt Service Routine performs arithmetic computations on          /</span></span><br><span class="line"><span class="comment">/   the SPORT1 receive DMA buffer (rx1a_buf) and places results to SPORT0 transmit                    /</span></span><br><span class="line"><span class="comment">/   DMA buffer (tx0a_buf)                                                                             /</span></span><br><span class="line"><span class="comment">/                                                                                                     /</span></span><br><span class="line"><span class="comment">/  rx1a_buf[2] - DSP SPORT0 A receive buffer - AD1939 ASDATA1                                         /</span></span><br><span class="line"><span class="comment">/  Slot # Description                             DSP Data Memory Address                             /</span></span><br><span class="line"><span class="comment">/  ------ --------------------------------------  --------------------------------------------------  /</span></span><br><span class="line"><span class="comment">/  0      Internal ADC 0 Left Channel             DM(_rx1a_buf + 0) = DM(_rx1a_buf + Internal_ADC_L1) /</span></span><br><span class="line"><span class="comment">/  1      Internal ADC 0 Right Channel            DM(_rx1a_buf + 1) = DM(_rx1a_buf + Internal_ADC_R1) /</span></span><br><span class="line"><span class="comment">/                                                                                                     /</span></span><br><span class="line"><span class="comment">/  rx1b_buf[2] - DSP SPORT0 B receive buffer - AD1939 ASDATA2                                         /</span></span><br><span class="line"><span class="comment">/  Slot # Description                             DSP Data Memory Address                             /</span></span><br><span class="line"><span class="comment">/  ------ --------------------------------------  --------------------------------------------------  /</span></span><br><span class="line"><span class="comment">/  0      Internal ADC 1 Left Channel             DM(_rx1b_buf + 2) = DM(_rx1b_buf + Internal_ADC_L2) /</span></span><br><span class="line"><span class="comment">/  1      Internal ADC 1 Right Channel            DM(_rx1b_buf + 3) = DM(_rx1b_buf + Internal_ADC_R2) /</span></span><br><span class="line"><span class="comment">/                                                                                                     /</span></span><br><span class="line"><span class="comment">/  tx0a_buf[2] - DSP SPORT0 A transmit buffer - AD1939 DSDATA1                                        /</span></span><br><span class="line"><span class="comment">/  Slot # Description                             DSP Data Memory Address                             /</span></span><br><span class="line"><span class="comment">/  ------ --------------------------------------  --------------------------------------------------  /</span></span><br><span class="line"><span class="comment">/  0      Internal DAC 1 Left Channel             DM(_tx0a_buf + 0) = DM(_tx0a_buf + Internal_DAC_L1) /</span></span><br><span class="line"><span class="comment">/  1      Internal DAC 1 Right Channel            DM(_tx0a_buf + 1) = DM(_tx0a_buf + Internal_DAC_R1) /</span></span><br><span class="line"><span class="comment">/                                                                                                     /</span></span><br><span class="line"><span class="comment">/  tx0a_buf[2] - DSP SPORT0 B transmit buffer - AD1939 DSDATA2                                        /</span></span><br><span class="line"><span class="comment">/  Slot # Description                             DSP Data Memory Address                             /</span></span><br><span class="line"><span class="comment">/  ------ --------------------------------------  --------------------------------------------------  /</span></span><br><span class="line"><span class="comment">/  2      Internal DAC 2 Left Channel             DM(_tx0b_buf + 2) = DM(_tx0b_buf + Internal_DAC_L2) /</span></span><br><span class="line"><span class="comment">/  3      Internal DAC 2 Right Channel            DM(_tx0b_buf + 3) = DM(_tx0b_buf + Internal_DAC_R2) /</span></span><br><span class="line"><span class="comment">/                                                                                                     /</span></span><br><span class="line"><span class="comment">/  tx2a_buf[2] - DSP SPORT2 A transmit buffer - AD1939 DSDATA3                                        /</span></span><br><span class="line"><span class="comment">/  Slot # Description                             DSP Data Memory Address                             /</span></span><br><span class="line"><span class="comment">/  ------ --------------------------------------  --------------------------------------------------  /</span></span><br><span class="line"><span class="comment">/  4      Internal DAC 3 Left Channel             DM(_tx2a_buf + 4) = DM(_tx2a_buf + Internal_DAC_L3) /</span></span><br><span class="line"><span class="comment">/  5      Internal DAC 3 Right Channel            DM(_tx2a_buf + 5) = DM(_tx2a_buf + Internal_DAC_R3) /</span></span><br><span class="line"><span class="comment">/                                                                                                     /</span></span><br><span class="line"><span class="comment">/  tx2b_buf[2] - DSP SPORT2 B transmit buffer - AD1939 DSDATA4                                        /</span></span><br><span class="line"><span class="comment">/  Slot # Description                             DSP Data Memory Address                             /</span></span><br><span class="line"><span class="comment">/  ------ --------------------------------------  --------------------------------------------------  /</span></span><br><span class="line"><span class="comment">/  6      Internal DAC 4 Left Channel             DM(_tx2b_buf + 6) = DM(_tx2b_buf + Internal_DAC_L4) /</span></span><br><span class="line"><span class="comment">/  7      Internal DAC 4 Right Channel            DM(_tx2b_buf + 7) = DM(_tx2b_buf + Internal_DAC_R4) /</span></span><br><span class="line"><span class="comment">/                                                                                                     /</span></span><br><span class="line"><span class="comment">******************************************************************************************************/</span></span><br></pre></td></tr></table></figure>
 
-<h2 id="SPTCL寄存器操作"><a href="#SPTCL寄存器操作" class="headerlink" title="SPTCL寄存器操作"></a>SPTCL寄存器操作</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">*pSPCTL0 = (SPTRAN | OPMODE | SLEN32 | SPEN_A | SCHEN_A | SDEN_A | SPEN_B | SCHEN_B | SDEN_B);</span><br><span class="line">*pSPCTL1 = (OPMODE | SLEN32 | SPEN_A | SCHEN_A | SDEN_A | SPEN_B | SCHEN_B | SDEN_B);</span><br><span class="line">*pSPCTL2 = (OPMODE | SLEN32 | SPEN_A | SCHEN_A | SDEN_A | SPEN_B | SCHEN_B | SDEN_B);</span><br></pre></td></tr></table></figure>
+<h2 id="SPTCL寄存器操作"><a href="#SPTCL寄存器操作" class="headerlink" title="SPTCL寄存器操作"></a>SPTCL寄存器操作</h2><p>下方代码是官方示例给出，并经过唐昊整合修改过，其寄存器设置的功能解读和验证如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">*pSPCTL0 = (SPTRAN | OPMODE | SLEN32 | SPEN_A | SCHEN_A | SDEN_A | SPEN_B | SCHEN_B | SDEN_B);</span><br><span class="line">*pSPCTL1 = (OPMODE | SLEN32 | SPEN_A | SCHEN_A | SDEN_A | SPEN_B | SCHEN_B | SDEN_B);</span><br><span class="line">*pSPCTL2 = (OPMODE | SLEN32 | SPEN_A | SCHEN_A | SDEN_A | SPEN_B | SCHEN_B | SDEN_B);</span><br></pre></td></tr></table></figure>
 
 <p><strong>SPTRAN</strong>: Serial port Data Transfer Direction. Transfer / Receive from both Channel A and Channel B. 需要注意的是，传输和接收功能只有一个会在 <code>SOPRTx_CLK</code> 和 <code>SPORTx_FS</code> 控制 <em><strong>传输/接收位移寄存器</strong></em>（Transmit/Receive shift register） 时被激活。</p>
 <p><strong>OPMODE</strong>: SPORT Operation Mode, <em><strong>I2S</strong></em> / <em><strong>packed</strong></em>, <em><strong>left-justified</strong></em> mode</p>
@@ -738,12 +740,20 @@
 <li><code>PLL_CTRL4</code> 控制着 <strong>PLL类型</strong>（整数型/分数型）、<strong>输入时钟分频</strong>（1 - 4）和 PLL设置的 <strong>整数部分</strong>。</li>
 <li><code>PLL_CTRL5</code> 目前只能是 <code>0x00</code> 或 <code>0x01</code> 。</li>
 </ul>
+<p>以下为PLL_CTRL4寄存器的位描述：n</p>
+<p><img src="https://pic.islet.space/2021/07/image-20210706101429733.png" alt="image-20210706101429733"></p>
 <p>至于 <code>CLK_CONTROL</code> 寄存器，主要是数值 <code>0x89</code> 和 <code>0x8F</code> 的差别。见下表可知，是关于PLL分频的问题。</p>
 <p><img src="https://pic.islet.space/2021/07/image-20210705153843902.png" alt="image-20210705153843902"></p>
 <p>通过自行编写的代码，遍历所有可更改的系数进行计算求解，取得小数点后9位精度，并且符合要求的系数如下（含1/2系数）：</p>
+<p>根据PLL_CTRL4寄存器，ICD=3、IS=8时，该寄存器的值为 <code>01000101</code> ，即 <code>0x45</code> 。（下图IDC更正为ICD）</p>
 <p><img src="https://pic.islet.space/2021/07/image-20210706001243698.png" alt="image-20210706001243698"></p>
 <p>以下为不含1/2系数的结果：</p>
+<p>根据PLL_CTRL4寄存器，ICD=3、IS=4时，该寄存器的值为 <code>00100101</code> ，即 <code>0x25</code> 。</p>
 <p><img src="https://pic.islet.space/2021/07/image-20210706001350802.png" alt="image-20210706001350802"></p>
+<ul>
+<li>CLK_IN mean value is 16.6Mhz</li>
+<li>LRCLK mean value is 45.92Khz</li>
+</ul>
 <h1 id="ANC主板硬件（量产）"><a href="#ANC主板硬件（量产）" class="headerlink" title="ANC主板硬件（量产）"></a>ANC主板硬件（量产）</h1><p>以下为ADAU1772的特征：</p>
 <p><strong>Master clock</strong> = <strong>core clock</strong> = 12.288 MHz</p>
 <p><strong>serial input sample rate</strong> = 48 kHz</p>
@@ -983,138 +993,6 @@
 <li><a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E5%B7%A6%E5%80%BC">左值</a></li>
 <li><a target="_blank" rel="noopener" href="http://c.biancheng.net/view/281.html">C语言左值与右值详解</a></li>
 </ol>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://islet.space/2021/06/07/Communication/2021-06-07-I2C%E6%80%BB%E7%BA%BF%E4%BF%A1%E5%8F%B7%E6%97%B6%E5%BA%8F%E6%80%BB%E7%BB%93+%E8%AF%95%E9%AA%8C%E5%BF%83%E5%BE%97/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Liewzheng">
-      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Coder的孤岛">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/06/07/Communication/2021-06-07-I2C%E6%80%BB%E7%BA%BF%E4%BF%A1%E5%8F%B7%E6%97%B6%E5%BA%8F%E6%80%BB%E7%BB%93+%E8%AF%95%E9%AA%8C%E5%BF%83%E5%BE%97/" class="post-title-link" itemprop="url">I2C总线信号时序总结+试验心得</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
-    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2021-06-07 13:55:00" itemprop="dateCreated datePublished" datetime="2021-06-07T13:55:00+08:00">2021-06-07</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-06-23 20:58:57" itemprop="dateModified" datetime="2021-06-23T20:58:57+08:00">2021-06-23</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Signal/" itemprop="url" rel="index"><span itemprop="name">Signal</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="本文用语"><a href="#本文用语" class="headerlink" title="本文用语"></a>本文用语</h1><ul>
-<li>被控器： 即从机、从设备、slave。</li>
-<li>主控器： 即主机、主设备、master。</li>
-</ul>
-<p><img src="https://pic.islet.space/2021/06/image-20210607135810974.png" alt="image-20210607135810974"></p>
-<h1 id="总线空闲状态"><a href="#总线空闲状态" class="headerlink" title="总线空闲状态"></a>总线空闲状态</h1><p>I2C总线总线的SDA和SCL两条信号线同时处于高电平时，规定为总线的空闲状态。<strong>此时各个器件的输出级场效应管均处在截止状态，即释放总线</strong>，由两条信号线各自的上拉电阻把电平拉高。</p>
-<h1 id="启动信号"><a href="#启动信号" class="headerlink" title="启动信号"></a>启动信号</h1><p>时钟线SCL保持高电平期间，数据线SDA上的电平被拉低（即负跳变），定义为I2C总线总线的启动信号，它标志着一次数据传输的开始。启动信号是一种电平跳变时序信号，而不是一个电平信号。启动信号是由主控器主动建立的，在建立该信号之前I2C总线必须处于空闲状态。</p>
-<h1 id="重启动信号"><a href="#重启动信号" class="headerlink" title="重启动信号"></a>重启动信号</h1><p>在主控器控制总线期间完成了一次数据通信（发送或接收）之后，如果想继续占用总线再进行一次数据通信（发送或接收），而又不释放总线，就需要利用重启动Sr信号时序。重启动信号Sr既作为前一次数据传输的结束，又作为后一次数据传输的开始。</p>
-<p><mark>利用重启动信号的优点是，在前后两次通信之间主控器不需要释放总线，这样就不会丢失总线的控制权，即不让其他主器件节点抢占总线。</mark></p>
-<h1 id="停止信号"><a href="#停止信号" class="headerlink" title="停止信号"></a>停止信号</h1><p>在时钟线SCL保持高电平期间，数据线SDA被释放，使得SDA返回高电平（即正跳变），称为I2C总线的停止信号，它标志着一次数据传输的终止。停止信号也是一种<mark>电平跳变时序信号</mark>，而不是一个电平信号，停止信号也是由主控器主动建立的，建立该信号之后，I2C总线将返回空闲状态。</p>
-<p>不是在数据有效性中规定在SDA只能在SCL的低电平的时候变化，为何STAR，STOP不一样？首先STAR和STOP不是数据，所以可以不遵守数据有效性中的规定，其它数据都遵守，而STAR和STOP“不遵守”导致STAR和STOP更容易被识别。这样不是不遵守而是更有优势。</p>
-<p>起始和停止条件一般由主机产生，总线在起始条件后被认为处于忙的状态，在停止条件的某段时间后总线被认为再次处于空闲状态。</p>
-<p>如果产生重复起始(Sr) 条件而不产生停止条件，总线会一直处于忙的状态。此时的起始条件(S)和重复起始(Sr) 条件在功能上是一样的。 </p>
-<p>如果连接到总线的器件合并了必要的接口硬件，那么用它们检测起始和停止条件十分简便。但是没有这种接口的微控制器在每个时钟周期至少要采样SDA 线两次来判别有没有发生电平切换。</p>
-<p><img src="https://pic.islet.space/2021/06/image-20210607140319380.png" alt="image-20210607140319380"></p>
-<h1 id="数据位传送"><a href="#数据位传送" class="headerlink" title="数据位传送"></a>数据位传送</h1><p>在I2C总线上传送的每一位数据都有一个时钟脉冲相对应（或同步控制），即在SCL串行时钟的配合下，在SDA上逐位地串行传送每一位数据。进行数据传送时，在SCL呈现高电平期间，SDA上的电平必须保持稳定，低电平为数据0，高电平为数据1。只有在SCL为低电平期间，才允许SDA上的电平改变状态。逻辑0的电平为低电压，而逻辑1的电平取决于器件本身的正电源电压VDD（当使用独立电源时）。<mark>数据位的传输是边沿触发。</mark></p>
-<p><img src="https://pic.islet.space/2021/06/image-20210607141003501.png" alt="image-20210607141003501"></p>
-<p>需要注意的是，在示波器上可能会看到SDA和SCL的波形在横向时间上基本上保持等长（一致），但实际上在代码上体现时，仍然是需要注意操作顺序。</p>
-<p>如，在数据位需要跳变时，应先将SCL拉低，再跳变SDA。否则就会出现启动（重启）或结束信号。</p>
-<h1 id="应答信号"><a href="#应答信号" class="headerlink" title="应答信号"></a>应答信号</h1><p>I2C总线上的所有数据都是以8位字节传送的，发送器每发送一个字节，就在时钟脉冲9期间释放数据线，由接收器反馈一个应答信号。</p>
-<p>应答信号为低电平时，规定为有效应答位（ACK简称应答位），表示接收器已经成功地接收了该字节；应答信号为高电平时，规定为非应答位（NACK），一般表示接收器接收该字节没有成功。 对于反馈有效应答位ACK的要求是，接收器在第9个时钟脉冲之前的低电平期间将SDA线拉低，并且确保在该时钟的高电平期间为稳定的低电平。  如果接收器是主控器，则在它收到最后一个字节后，发送一个NACK信号，以通知被控发送器结束数据发送，并释放SDA线，以便主控接收器发送一个停止信号P。</p>
-<p><img src="https://pic.islet.space/2021/06/image-20210607141115024.png" alt="image-20210607141115024"></p>
-<p>需要注意的是，所有的应答比特位（波形上）都是完整的一个高电平（NACK）或低电平（ACK），如果在一个SCL高电平内出现SDA信号跳变，就会出现错误，此时需要进行代码或硬件问题排查。</p>
-<h1 id="插入等待时间"><a href="#插入等待时间" class="headerlink" title="插入等待时间"></a>插入等待时间</h1><p>如果被控器需要延迟下一个数据字节开始传送的时间，则可以通过把时钟线SCL电平拉低并且保持，使主控器进入等待状态。一旦被控器释放时钟线，数据传输就得以继续下去，这样就使得被控器得到足够时间转移已经收到的数据字节，或者准备好即将发送的数据字节。</p>
-<p>带有CPU的被控器在对收到的地址字节做出应答之后，需要一定的时间去执行中断服务子程序，来分析或比较地址码，其间就把SCL线钳位在低电平上，直到处理妥当后才释放SCL线，进而使主控器继续后续数据字节的发送。</p>
-<p><img src="https://pic.islet.space/2021/06/image-20210607141150278.png" alt="image-20210607141150278"></p>
-<h1 id="总线封锁状态"><a href="#总线封锁状态" class="headerlink" title="总线封锁状态"></a>总线封锁状态</h1><p>在特殊情况下，如果需要禁止所有发生在I2C总线上的通信活动，封锁或关闭总线是一种可行途径，只要挂接于该总线上的任意一个器件将时钟线SCL锁定在低电平上即可。</p>
-<h1 id="总线竞争的仲裁"><a href="#总线竞争的仲裁" class="headerlink" title="总线竞争的仲裁"></a>总线竞争的仲裁</h1><p>总线上可能挂接有多个器件，有时会发生两个或多个主器件同时想占用总线的情况，这种情况叫做总线竞争。I2C总线具有多主控能力，可以对发生在SDA线上的总线竞争进行仲裁，其仲裁原则是这样的：当多个主器件同时想占用总线时，如果某个主器件发送高电平，而另一个主器件发送低电平，则发送电平与此时SDA总线电平不符的那个器件将自动关闭其输出级。总线竞争的仲裁是在两个层次上进行的。<strong>首先是地址位的比较，如果主器件寻址同一个从器件，则进入数据位的比较，从而确保了竞争仲裁的可靠性。由于是利用I2C总线上的信息进行仲裁，因此不会造成信息的丢失。</strong></p>
-<p>​     为何识别到“0”将丢失仲裁呢？因为对于OD门，只能驱动到低电平，释放总线只能通过不驱动总线释放，停止驱动即产生“1”，但是发现总线还是“0”，这说明还有主机在跟自己竞争总线使用权，自己线驱动到“1”，确检测到“0”，那代表自己已经失去了仲裁。</p>
-<ul>
-<li>主机只能在总线空闲的时侯启动传送。两个或多个主机可能在起始条件的最小持续时间tHD;STA 内产生一个起始条件，结果在总线上产生一个规定的起始条件。</li>
-<li>当SCL 线是高电平时，仲裁在SDA 线发生；这样，在其他主机发送低电平时，发送高电平的主机将断开它的数据输出级，因为总线上的电平与它自己的电平不相同。然后，进一步获得其的判定条件：</li>
-<li>仲裁可以持续多位。首先是比较地址位。如果每个主机都试图寻址同一的器件，仲裁会继续比较数据位（假设主机是发送器），或者比较响应位（假设主机是接收器）。</li>
-<li>I2C 总线的地址和数据信息由赢得仲裁的主机决定，在仲裁过程中不会丢失信息。丢失仲裁的主机可以产生时钟脉冲直到丢失仲裁的该字节末尾。</li>
-<li>在串行传输过程中时，一旦有重复的起始条件或停止条件发送到I2C 总线的时侯，仲裁过程仍在进行。如果可能产生这样的情况，有关的主机必须在帧格式相同位置发送这个重复起始条件或停止条件。 </li>
-<li>此外，如果主机也结合了从机功能，而且在寻址阶段丢失仲裁，它很可能就是赢得仲裁的主机在寻址的器件。那么，丢失仲裁的主机必须立即切换到它的从机模式。</li>
-<li>I2C 总线的控制只由地址或主机码以及竞争主机发送的数据决定，没有中央主机，总线也没有任何定制的优先权。</li>
-</ul>
-<p><img src="https://pic.islet.space/2021/06/image-20210607141214939.png" alt="image-20210607141214939"></p>
-<p>上图显示了两个主机的仲裁过程当然可能包含更多的内容由连接到总线的主机数量决定此时产生DATA1 的主机的内部数据电平与SDA 线的实际电平有一些差别如果关断数据输出这就意味着总线连接了一个高输出电平这不会影响由赢得仲裁的主机初始化的数据传输。 </p>
-<h1 id="时钟信号的同步"><a href="#时钟信号的同步" class="headerlink" title="时钟信号的同步"></a>时钟信号的同步</h1><p>在I2C总线上传送信息时的时钟同步信号是由挂接在SCL线上的所有器件的逻辑“与”完成的。SCL线上由高电平到低电平的跳变将影响到这些器件，一旦某个器件的时钟信号下跳为低电平，将使SCL线一直保持低电平，使SCL线上的所有器件开始低电平期。此时，低电平周期短的器件的时钟由低至高的跳变并不能影响SCL线的状态，于是这些器件将进入高电平等待的状态。当所有器件的时钟信号都上跳为高电平时，低电平期结束，SCL线被释放返回高电平，即所有的器件都同时开始它们的高电平期。其后，第一个结束高电平期的器件又将SCL线拉成低电平。这样就在SCL线上产生一个同步时钟。<strong>可见，时钟低电平时间由时钟低电平期最长的器件确定，而时钟高电平时间由时钟高电平期最短的器件确定。</strong></p>
-<p><img src="https://pic.islet.space/2021/06/image-20210607141243588.png" alt="image-20210607141243588"></p>
-<h1 id="试验"><a href="#试验" class="headerlink" title="试验"></a>试验</h1><p>下面是我自己在下面抓的一个波形，data 线当时没有夹子，就直接用手捏和了，所以SDA波形看起来，很不好看。不过还是不影响我们看的。在下面的I2C的始终频率是322K左右，其实这在设置的时候，设置的是400K。</p>
-<p>我测试的试验是Camera sensor 的I2C，当时测试sensor 的I2C地址是0x6E，但是I2C地址一般有7位，最后一位用来表示读写位（0:写、1:读)。这里sensor的读写高七位就是<br> 0x6E&gt;&gt;1 = 0x37.则  <strong>read_addr</strong> = 0x37&lt;&lt;1 +1，  <strong>write_add</strong>=0x37&lt;&lt;1 +0; </p>
-<img src="https://pic.islet.space/2021/06/20160910144504669" alt="img" style="zoom:80%;" />
-
-<p>上图波形刚开始就是sensor 发送的slave_addr =0x6E; </p>
-<p>camera sensor 地址由sensor内部的S_ID表示，有2个IO。具体的地址要看芯片怎么连的了。 </p>
-<p><img src="https://pic.islet.space/2021/06/20160910145215884" alt="img"></p>
-<p><strong>这里是MSB模式，高位在前，低位在后</strong> </p>
-<p><img src="https://pic.islet.space/2021/06/20160910145427107.png" alt="img"></p>
 
       
     </div>
@@ -1728,6 +1606,178 @@
 <h3 id="函数调用操作符"><a href="#函数调用操作符" class="headerlink" title="函数调用操作符"></a>函数调用操作符</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">AA</span>&#123;</span></span><br><span class="line">  <span class="function"><span class="keyword">void</span> <span class="title">operator</span><span class="params">()</span><span class="params">()</span></span>&#123;</span><br><span class="line">  	cout&lt;&lt;<span class="string">&quot;aa&quot;</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>在 <code>AA()()</code> 中，<code>AA()</code> 是构造函数，调用了<code>()</code> 操作符。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://islet.space/2021/05/27/Linux/Shell/2021-05-27-UnixShell%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Liewzheng">
+      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coder的孤岛">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/05/27/Linux/Shell/2021-05-27-UnixShell%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/" class="post-title-link" itemprop="url">UnixShell常用命令</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-05-27 23:55:00" itemprop="dateCreated datePublished" datetime="2021-05-27T23:55:00+08:00">2021-05-27</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2021-05-28 00:33:04" itemprop="dateModified" datetime="2021-05-28T00:33:04+08:00">2021-05-28</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="Core-Shell"><a href="#Core-Shell" class="headerlink" title="Core/Shell"></a>Core/Shell</h1><p>首先，要理解Core / shell的概念，系统内核一般被称之为core，而unix及类unix（即与unix类似）系统（如linux）都继承了这一概念，都有其内核。</p>
+<p>古早时期，都是一台电脑就是一台服务器，为了提高服务器的利用率，大家都在用很多客户端登录系统，系统分时（电脑高效处理任务，看起来像是同时进行，其实还是存在先后顺序的）为许多客户端提供服务，即“一点对多点”式的服务模式，客户端都通过小黑窗进行操作。</p>
+<p>如今，独立PC都已经没了服务器这一概念，一台设备就只为一个客户服务（单点对单点），但是这个小黑窗的高效操作的理念却被保留了下来。</p>
+<p>因为所有的客户端对主机的使用都没有进入到内核层面，仅仅停留在表面，所以这种小黑窗的操作层被称为shell层，即外壳。</p>
+<p>逐渐衍生了终端的概念，即客户端即用户终端，即terminal；现在shell、terminal、command-line（命令行）这几个概念都可以被视为同一个概念。</p>
+<p>但shell的流行，逐渐衍生除了很多个人制作的版本，流行的有bash shell、zsh等。</p>
+<h1 id="目录操作"><a href="#目录操作" class="headerlink" title="目录操作"></a>目录操作</h1><h2 id="cd"><a href="#cd" class="headerlink" title="cd"></a>cd</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cd zplusplus</span><br></pre></td></tr></table></figure>
+
+<p>即Change directory，改变目录</p>
+<p>类unix中没有路径这个概念，只有目录。</p>
+<blockquote>
+<ul>
+<li><p><code>~</code> 主目录，个人目录</p>
+</li>
+<li><p><code>/</code> 根目录，硬盘目录</p>
+</li>
+</ul>
+</blockquote>
+<p>TIPS:</p>
+<ul>
+<li>按<code>tabs</code>键可以快速补全相符的目录名称</li>
+</ul>
+<p><code>cd ../</code>可以返回上一层文件目录</p>
+<p><img src="https://pic.islet.space/2021/05/image-20210528002003445.png" alt="image-20210528002003445"></p>
+<h2 id="mkdir"><a href="#mkdir" class="headerlink" title="mkdir"></a>mkdir</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkdir zplusplus</span><br></pre></td></tr></table></figure>
+
+<p>即make directory，创建目录</p>
+<p><img src="https://pic.islet.space/2021/05/image-20210528001730316.png" alt="image-20210528001730316"></p>
+<h2 id="mv"><a href="#mv" class="headerlink" title="mv"></a>mv</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mv zplusplus</span><br></pre></td></tr></table></figure>
+
+<p>即move，移动或删除</p>
+<blockquote>
+<ul>
+<li><code>-f</code> force 强制</li>
+</ul>
+</blockquote>
+<p>也可以用来改名，用法如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mv main.c test.c</span><br></pre></td></tr></table></figure>
+
+
+
+<p>其他类似的语句如 <code>rm</code>，可以参考手册</p>
+<h2 id="ls"><a href="#ls" class="headerlink" title="ls"></a>ls</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ls</span><br></pre></td></tr></table></figure>
+
+<p>即List，（展现）列表</p>
+<p>这个命令非常好用，学会了就基本忘不了，各别shell能够提供不同的色彩显示，对于文档类型识别来说非常高效。</p>
+<p><img src="https://pic.islet.space/2021/05/image-20210528001701289.png" alt="image-20210528001701289"></p>
+<h1 id="文件编辑"><a href="#文件编辑" class="headerlink" title="文件编辑"></a>文件编辑</h1><h2 id="vim"><a href="#vim" class="headerlink" title="vim"></a>vim</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim main.c</span><br></pre></td></tr></table></figure>
+
+<p><strong>注意</strong>：如果已经存在了<code>main.c</code> 他就不会新生成一个，否则就会新建。</p>
+<p><strong>操作方法</strong>：</p>
+<ol>
+<li>刚进去的时候需要按 <code>i</code> 进行插入（insert）操作</li>
+<li>编辑完毕之后需要先按 <code>ESC</code> 键，在依次输入 <code>:</code> 及其他指令进行退出，具体参考下方，可以看手册。</li>
+</ol>
+<blockquote>
+<p><code>:</code> instructor 指令输入</p>
+<p><code>w</code> wirte</p>
+<p><code>q</code> quit</p>
+<p><code>!</code> 强制</p>
+</blockquote>
+<p><strong>编辑界面如下</strong>：</p>
+<p><img src="https://pic.islet.space/2021/05/image-20210528002252175.png" alt="image-20210528002252175"></p>
+<p><strong>科普视频</strong>：</p>
+<iframe src="//player.bilibili.com/player.html?aid=55498503&bvid=BV164411P7tw&cid=97032762&page=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"> </iframe>
+
+
+
+<p><strong>自行科普</strong>：GUI，Graphic User Interface 图形用户界面</p>
+<h1 id="代码运行"><a href="#代码运行" class="headerlink" title="代码运行"></a>代码运行</h1><h2 id="gcc"><a href="#gcc" class="headerlink" title="gcc"></a>gcc</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gcc main.c </span><br></pre></td></tr></table></figure>
+
+<p>是<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/gnu/671972">GNU</a>下的GCC编译器之一，c的编译器是<code>gcc</code>，c++的编译器是<code>g++</code></p>
+<blockquote>
+<ul>
+<li><code>-o main</code> 参数</li>
+</ul>
+</blockquote>
+<p><img src="https://pic.islet.space/2021/05/image-20210528002708689.png" alt="image-20210528002708689"></p>
+<p>编译完成之后使用 <code>ls</code> 可以查看已生成的文件 <code>a.out</code>（默认命名）。</p>
+<p><img src="https://pic.islet.space/2021/05/image-20210528002757152.png" alt="image-20210528002757152"></p>
+<p>这个 <code>a.out</code> 文件是CPU能够直接识别和运行的文件，因此直接使用以下代码运行即可。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./a.out</span><br></pre></td></tr></table></figure>
+
+<p>运行效果如下：</p>
+<p><img src="https://pic.islet.space/2021/05/image-20210528002900901.png" alt="image-20210528002900901"></p>
+<p>遇到问题可以再进行调试。</p>
+<p>对GNU和开源的概念可以参考下方视频：</p>
+<iframe src="//player.bilibili.com/player.html?aid=413061830&bvid=BV1zV411d7La&cid=186095567&page=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"> </iframe>
+
+
+
 
       
     </div>

@@ -135,7 +135,7 @@
         <span class="site-state-item-name">categories</span>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">143</span>
+        <span class="site-state-item-count">141</span>
         <span class="site-state-item-name">tags</span>
       </div>
   </nav>
@@ -1011,7 +1011,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://islet.space/2021/04/23/Hardware/ADI/2021-04-23-AnalogDeviceSignmaStudio/">
+    <link itemprop="mainEntityOfPage" href="http://islet.space/2021/04/23/Hardware/ADI/2021-04-23-ADI%E5%BC%80%E5%8F%91%E7%AC%94%E8%AE%B0/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -1024,7 +1024,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/04/23/Hardware/ADI/2021-04-23-AnalogDeviceSignmaStudio/" class="post-title-link" itemprop="url">ADI开发笔记</a>
+          <a href="/2021/04/23/Hardware/ADI/2021-04-23-ADI%E5%BC%80%E5%8F%91%E7%AC%94%E8%AE%B0/" class="post-title-link" itemprop="url">ADI开发笔记</a>
         </h2>
 
         <div class="post-meta-container">
@@ -1044,7 +1044,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-06-02 18:40:33" itemprop="dateModified" datetime="2021-06-02T18:40:33+08:00">2021-06-02</time>
+        <time title="Modified: 2021-07-08 22:41:04" itemprop="dateModified" datetime="2021-07-08T22:41:04+08:00">2021-07-08</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -1116,7 +1116,9 @@
 <img src="https://pic.islet.space/2021/05/image-20210518114358905.png" alt="image-20210518114358905" style="zoom:80%;" />
 
 <blockquote>
-<h2 id="USBi在I2-C总线上有一个EEPROM，地址为0x51。它用来向PC显示其供应商ID和产品ID，以及启动其内部程序。应该避免在你的系统设计中在这个地址上有任何其他的EEPROMs。这个EEPROM没有写保护；因此，如果你试图写到地址0x51，你将覆盖USBi的板载EEPROM，USBi将停止工作。如果不把板子还给Analog-Devices，就不能对USBi进行重新编程。大多数EEPROM被设置为地址0x51的方法是将其引脚A0-1-和A1-A2-0。"><a href="#USBi在I2-C总线上有一个EEPROM，地址为0x51。它用来向PC显示其供应商ID和产品ID，以及启动其内部程序。应该避免在你的系统设计中在这个地址上有任何其他的EEPROMs。这个EEPROM没有写保护；因此，如果你试图写到地址0x51，你将覆盖USBi的板载EEPROM，USBi将停止工作。如果不把板子还给Analog-Devices，就不能对USBi进行重新编程。大多数EEPROM被设置为地址0x51的方法是将其引脚A0-1-和A1-A2-0。" class="headerlink" title="USBi在I2 C总线上有一个EEPROM，地址为0x51。它用来向PC显示其供应商ID和产品ID，以及启动其内部程序。应该避免在你的系统设计中在这个地址上有任何其他的EEPROMs。这个EEPROM没有写保护；因此，如果你试图写到地址0x51，你将覆盖USBi的板载EEPROM，USBi将停止工作。如果不把板子还给Analog Devices，就不能对USBi进行重新编程。大多数EEPROM被设置为地址0x51的方法是将其引脚A0 = 1 和A1 = A2 = 0。"></a>USBi在I2 C总线上有一个EEPROM，地址为0x51。它用来向PC显示其供应商ID和产品ID，以及启动其内部程序。应该避免在你的系统设计中在这个地址上有任何其他的EEPROMs。这个EEPROM没有写保护；因此，如果你试图写到地址0x51，你将覆盖USBi的板载EEPROM，USBi将停止工作。如果不把板子还给Analog Devices，就不能对USBi进行重新编程。大多数EEPROM被设置为地址0x51的方法是将其引脚A0 = 1 和A1 = A2 = 0。</h2></blockquote>
+<p>USBi在I2C总线上有一个EEPROM，地址为0x50。它用来向PC显示其供应商ID和产品ID，以及启动其内部程序。应该避免在你的系统设计中在这个地址上有任何其他的EEPROMs。</p>
+<p>这个EEPROM没有写保护；因此，如果你试图写到地址0x50，你将覆盖USBi的板载EEPROM，USBi将停止工作。如果不把板子还给Analog Devices，就不能对USBi进行重新编程。大多数EEPROM被设置为地址0x50的方法是将其引脚A0 = 1 和A1 = A2 = 0。</p>
+</blockquote>
 <h2 id="Algorithms-Add-Remove-Grow-Reduce"><a href="#Algorithms-Add-Remove-Grow-Reduce" class="headerlink" title="Algorithms: Add/Remove, Grow/Reduce"></a>Algorithms: Add/Remove, Grow/Reduce</h2><p>每个原理图块代表一种或多种信号处理算法。算法的范围从非常简单的<a target="_blank" rel="noopener" href="https://wiki.analog.com/resources/tools-software/sigmastudio/toolbox/basicdsp/signaladd">信号添加</a>（如<a target="_blank" rel="noopener" href="https://wiki.analog.com/resources/tools-software/sigmastudio/toolbox/basicdsp/signaladd">Signal Add</a>）到高级系统组件（如<a target="_blank" rel="noopener" href="https://wiki.analog.com/resources/tools-software/sigmastudio/toolbox/adialgorithms/dynamicbassboost">Dynamic Bass Boost）</a>。您可以从块中添加或删除算法以满足您的特定要求。如下所述，算法也可以增长。</p>
 <hr>
 <p><strong>添加算法：</strong></p>
@@ -1171,7 +1173,8 @@
 <p><a target="_blank" rel="noopener" href="https://wiki.analog.com/_detail/resources/tools-software/sigmastudio/usingsigmastudio/buildingschematics/wirespic8.png?id=resources:tools-software:sigmastudio:usingsigmastudio:buildingschematics:wiresandaliases"><img src="https://wiki.analog.com/_media/resources/tools-software/sigmastudio/usingsigmastudio/buildingschematics/wirespic8.png" alt="img"></a></p>
 <h3 id="Hardware-Configuration-Tab"><a href="#Hardware-Configuration-Tab" class="headerlink" title="Hardware Configuration Tab"></a>Hardware Configuration Tab</h3><p>硬件配置工作区允许您为设计选择一个或多个处理器。它还允许您设置SigmaStudio与硬件之间的通信。</p>
 <p>要了解可以在“硬件配置”选项卡中访问的高级操作（包括“输出捕获”，“ Flash / E2Prom下载”，“寄存器控制”窗口和“寄存器读/写”窗口），请参阅“硬件Windows”部分中的主题。</p>
-<h4 id="要将处理器（IC-DSP）插入设计中："><a href="#要将处理器（IC-DSP）插入设计中：" class="headerlink" title="要将处理器（IC / DSP）插入设计中："></a>要将处理器（IC / DSP）插入设计中：</h4><ol>
+<p><strong>要将处理器（IC / DSP）插入设计中：</strong></p>
+<ol>
 <li><p>用鼠标左键从工具箱中选择一个“处理器”：</p>
 <ol>
 <li><a target="_blank" rel="noopener" href="https://wiki.analog.com/_detail/resources/tools-software/sigmastudio/developmentenvironment/hardwareconfpic1.png?id=resources:tools-software:sigmastudio:developmentenvironment:hardwareconfigurationtab"><img src="https://wiki.analog.com/_media/resources/tools-software/sigmastudio/developmentenvironment/hardwareconfpic1.png" alt="img"></a></li>
@@ -1182,7 +1185,8 @@
 </li>
 </ol>
 <p><strong>注意：</strong>一旦在“硬件配置”窗口中插入DSP，就会出现“原理图（Schematic）”选项卡。</p>
-<h4 id="在DSP处理器和硬件之间建立连接："><a href="#在DSP处理器和硬件之间建立连接：" class="headerlink" title="在DSP处理器和硬件之间建立连接："></a>在DSP处理器和硬件之间建立连接：</h4><ol>
+<p><strong>在DSP处理器和硬件之间建立连接：</strong></p>
+<ol>
 <li>单击“通信渠道（Communication Channel）”类别（在“工具箱”列的底部）。</li>
 <li>从列表中选择评估板或USB设备，并将其拖放到工作区中。</li>
 <li>通过在通信通道和处理器模块之间画线来连接两个模块，从蓝色菱形到绿色菱形。对于使用AD1940的USB连接，工作空间中的单元格应如下所示：</li>
@@ -1195,7 +1199,8 @@
 <p><a target="_blank" rel="noopener" href="https://wiki.analog.com/_detail/resources/tools-software/sigmastudio/developmentenvironment/hardwareconfpic5.png?id=resources:tools-software:sigmastudio:developmentenvironment:hardwareconfigurationtab"><img src="https://wiki.analog.com/_media/resources/tools-software/sigmastudio/developmentenvironment/hardwareconfpic5.png" alt="img"></a></p>
 <p><a target="_blank" rel="noopener" href="https://wiki.analog.com/_detail/resources/tools-software/sigmastudio/gettingstarted/usbinterfaces/usbpic4.png?id=resources:tools-software:sigmastudio:gettingstarted:usbinterfaces:usbserialconverter">https://wiki.analog.com/_detail/resources/tools-software/sigmastudio/gettingstarted/usbinterfaces/usbpic4.png?id=resources%3Atools-software%3Asigmastudio%3Agettingstarted%3Ausbinterfaces%3Ausbserialconverter</a>)</p>
 <hr>
-<h4 id="EVAL-ADUSB1板开关和跳线："><a href="#EVAL-ADUSB1板开关和跳线：" class="headerlink" title="EVAL-ADUSB1板开关和跳线："></a>EVAL-ADUSB1板开关和跳线：</h4><ul>
+<p><strong>EVAL-ADUSB1板开关和跳线：</strong></p>
+<ul>
 <li>S1-将闪存中保存的程序加载到SigmaDSP。</li>
 <li>S2-选择当按下S1时将加载八个SigmaDSP程序中的哪一个。</li>
 <li>S3-重置USB适配器板。</li>
@@ -1333,57 +1338,9 @@
 </ol>
 <h1 id="CHIP-ADAU1772"><a href="#CHIP-ADAU1772" class="headerlink" title="CHIP-ADAU1772"></a>CHIP-ADAU1772</h1><ul>
 <li>ADAU1772以下简称1772</li>
-<li>《Evaluation Board User Guide<br>  UG-477》以下简称UG</li>
+<li>《Evaluation Board User Guide UG-477》以下简称UG</li>
 </ul>
-<h2 id="评估板结构"><a href="#评估板结构" class="headerlink" title="评估板结构"></a>评估板结构</h2><p>以下描述均以评估板为例，DIY板不一定适用。</p>
-<h3 id="插口（Jumper）定义"><a href="#插口（Jumper）定义" class="headerlink" title="插口（Jumper）定义"></a>插口（Jumper）定义</h3><img src="https://pic.islet.space/2021/04/image-20210427165847934.png" alt="image-20210427165847934" style="zoom: 67%;" />
-
-
-
-<h3 id="时钟及PLL"><a href="#时钟及PLL" class="headerlink" title="时钟及PLL"></a>时钟及PLL</h3><ol>
-<li>1772的工作频率为12.288兆赫，而如果过要设置PLL，<strong>PLL输出一定是24.576兆赫。</strong></li>
-<li>通过 <code>MCLKIN</code> 端为codec提供核心时钟信号，可接入8至27兆赫信号。</li>
-<li>通过对 <code>0x0000</code> 到 <code>0x0005</code> 的寄存器进行写入修改PLL。</li>
-<li>PLL模式要被设置为分数或整数，则取决于MCLK的输入频率。</li>
-<li>在时钟信号达到PLL前，时钟信号会经过整数时间分频器以确保时钟频率符合要求；可以通过设置 0x0005 的bit[2:1]来设置其分频率。</li>
-<li>要使用PLL时，<strong>首先要明确PLL输出频率是多少</strong>，当PLL信号与时钟信号是整数倍关系时才需要使用整数分频器。</li>
-</ol>
-<p><img src="https://pic.islet.space/2021/05/image-20210513093158863.png" alt="image-20210513093158863"></p>
-<p>以下列举了整数型及分数型分频器的参数设置：</p>
-<img src="https://pic.islet.space/2021/05/image-20210513093047973.png" alt="image-20210513093047973" style="zoom:67%;" />
-
-
-
-<h4 id="评估板电路图"><a href="#评估板电路图" class="headerlink" title="评估板电路图"></a>评估板电路图</h4><img src="https://pic.islet.space/2021/05/image-20210513092007130.png" alt="image-20210513092007130" style="zoom:67%;" />
-
-
-
-
-
-<h3 id="输入输出"><a href="#输入输出" class="headerlink" title="输入输出"></a>输入输出</h3><h4 id="评估板电路图-1"><a href="#评估板电路图-1" class="headerlink" title="评估板电路图"></a>评估板电路图</h4><img src="https://pic.islet.space/2021/05/image-20210513090414605.png" alt="image-20210513090414605" style="zoom: 67%;" />
-
-<h4 id="第0及第1通道"><a href="#第0及第1通道" class="headerlink" title="第0及第1通道"></a>第0及第1通道</h4><p>以下为codec芯片对引脚的定义，在提供一个接地端，构成TRS是完全没有问题，但是codec的定义和其评估板的外围电路设计有所区别。</p>
-<p><img src="https://pic.islet.space/2021/05/image-20210513083636462.png" alt="image-20210513083636462"></p>
-<p>正常3.5mm音频接口为TRS接口，其中T虽然为VCC（通常是），R作为音频信号输入，而S为接地端，且T和R可共同作为左右声道分别进行输入。（也有T和S定义相反的设计）</p>
-<p>但是按上述电路进行接线时，相当于TS接口（单声道）接线模式，却又不完全相同：</p>
-<ul>
-<li>使用 MICBIAS<del>x</del> 对14接口进行供电，此时Tip端是VCC。</li>
-<li>Ring端接13接口，充当Sleeve端（而实际上的Sleeve端因已经接地，可以不进行连接）。</li>
-<li>由Ring(AIN1REF)和Tip(AIN1)共同构成了TS单声道接线模式。</li>
-</ul>
-<h4 id="第2及第3通道"><a href="#第2及第3通道" class="headerlink" title="第2及第3通道"></a>第2及第3通道</h4><ul>
-<li>2/3输入通道是复用立体声通道，即1通道和0通道都可以单独接入音源，在物理音频接口上独立，但第2/3通道是在一起的，共用一个物理通道。UG第7页中也有提到。</li>
-</ul>
-<img src="https://pic.islet.space/2021/04/image-20210427104818097.png" alt="image-20210427104818097" style="zoom:50%;" />
-
-
-
-<img src="https://pic.islet.space/2021/04/image-20210427105655639.png" alt="image-20210427105655639" style="zoom:67%;" />
-
-<ul>
-<li>有四个单端输入通道可以设置为麦克风信号或线路信号，一个双立体声数字输入信号通道和也可被用于单端输出的两个差分(differential)输出。</li>
-</ul>
-<h4 id="I2S及I2C接口"><a href="#I2S及I2C接口" class="headerlink" title="I2S及I2C接口"></a>I2S及I2C接口</h4><img src="https://pic.islet.space/2021/06/20210601105550.png" alt="image-20210513171416187" style="zoom:67%;" />
+<h2 id="I2S及I2C接口"><a href="#I2S及I2C接口" class="headerlink" title="I2S及I2C接口"></a>I2S及I2C接口</h2><img src="https://pic.islet.space/2021/06/20210601105550.png" alt="image-20210513171416187" style="zoom:67%;" />
 
 <img src="https://pic.islet.space/2021/06/20210601105615.png" alt="image-20210513171524562" style="zoom:67%;" />
 
@@ -1391,7 +1348,7 @@
 
 
 
-<h3 id="USBi-仿真器"><a href="#USBi-仿真器" class="headerlink" title="USBi 仿真器"></a>USBi 仿真器</h3><ul>
+<h2 id="USBi-仿真器"><a href="#USBi-仿真器" class="headerlink" title="USBi 仿真器"></a>USBi 仿真器</h2><ul>
 <li>USBi驱动安装：进入设备管理器，安装驱动在SigmaStudio安装目录 <code>\Analog Devices\SigmaStudio 4.6\USB drivers\</code> 下。</li>
 <li>连接到USBi未成功时是红色，设备驱动安装且连接成功时，USBi 在sigma中会由红变绿。</li>
 <li>USBi作为中间板对1772进行控制，在USBi右键可以控制1772设备开断，开断时板上D1区的VDD指示灯也会通断（见page10）。</li>
@@ -1435,18 +1392,68 @@
 
 
 
-<h2 id="输入输出控制"><a href="#输入输出控制" class="headerlink" title="输入输出控制"></a>输入输出控制</h2><h3 id="HP输出"><a href="#HP输出" class="headerlink" title="HP输出"></a>HP输出</h3><p>HP即Headphone缩写，HP输出有两个输出端，分别是DAC0 和 DAC1，分别对应为 EVAL板 上的 OUT R(HP Right) 和 OUT L(HP Left)。</p>
+<h2 id="输入输出控制"><a href="#输入输出控制" class="headerlink" title="输入输出控制"></a>输入输出控制</h2><h3 id="供电电压"><a href="#供电电压" class="headerlink" title="供电电压"></a>供电电压</h3><p>以下为实际测量数值</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>USB_5V</th>
+<th>SCL/SDA(H)</th>
+<th></th>
+<th>VDD</th>
+<th>IOVDD</th>
+<th>AVDD</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>接USBi实测电压(V)-3.3V档</td>
+<td>3.471</td>
+<td>1.961</td>
+<td></td>
+<td>1.997</td>
+<td>1.997</td>
+<td>1.988</td>
+</tr>
+<tr>
+<td>接21479实测电压(V)-3.3V档</td>
+<td>4.463</td>
+<td>3.518</td>
+<td></td>
+<td>3.518</td>
+<td>3.518</td>
+<td>3.518</td>
+</tr>
+<tr>
+<td>接21479实测电压(V)-1.8V档</td>
+<td>4.468</td>
+<td>2.260</td>
+<td></td>
+<td>1.934</td>
+<td>1.934</td>
+<td>1.933</td>
+</tr>
+<tr>
+<td>接21479实测电压(V)-3.3V档</td>
+<td>3.3</td>
+<td>3.3088</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<h2 id="HP输出"><a href="#HP输出" class="headerlink" title="HP输出"></a>HP输出</h2><p>HP即Headphone缩写，HP输出有两个输出端，分别是DAC0 和 DAC1，分别对应为 EVAL板 上的 OUT R(HP Right) 和 OUT L(HP Left)。</p>
 <img src="https://pic.islet.space/2021/04/image-20210427152251539.png" alt="image-20210427152251539" style="zoom:50%;" />
 
 <img src="https://pic.islet.space/2021/04/image-20210427143628880.png" alt="image-20210427143628880" style="zoom: 33%;" />
 
-<h4 id="输出静音"><a href="#输出静音" class="headerlink" title="输出静音"></a>输出静音</h4><img src="https://pic.islet.space/2021/04/image-20210427153425633.png" alt="image-20210427153425633" style="zoom:50%;" />
+<h3 id="输出静音"><a href="#输出静音" class="headerlink" title="输出静音"></a>输出静音</h3><img src="https://pic.islet.space/2021/04/image-20210427153425633.png" alt="image-20210427153425633" style="zoom:50%;" />
 
-<h4 id="输出断电"><a href="#输出断电" class="headerlink" title="输出断电"></a>输出断电</h4><p>关于HP输出的寄存器 <code>HP_EN_R</code> 及 <code>HP_EN_L</code> 说明：</p>
+<h3 id="输出断电"><a href="#输出断电" class="headerlink" title="输出断电"></a>输出断电</h3><p>关于HP输出的寄存器 <code>HP_EN_R</code> 及 <code>HP_EN_L</code> 说明：</p>
 <img src="https://pic.islet.space/2021/04/image-20210427152528194.png" alt="image-20210427152528194" style="zoom:50%;" />
 
 <p><code>0x31</code> 即 <code>0011 0001</code> ，最后两位 <code>01</code> 即 <code>HP_PDN_L</code> 中的 <code>01</code> 。    </p>
-<h4 id="输出音量控制"><a href="#输出音量控制" class="headerlink" title="输出音量控制"></a>输出音量控制</h4><ul>
+<h3 id="输出音量控制"><a href="#输出音量控制" class="headerlink" title="输出音量控制"></a>输出音量控制</h3><ul>
 <li>对输出音量进行控制需要先对S5、S6进行跳针。</li>
 </ul>
 <img src="https://pic.islet.space/2021/04/image-20210427110159648.png" alt="image-20210427110159648" style="zoom:67%;" />
@@ -1471,41 +1478,6 @@
 </ul>
 <p>The DSP bypass signal path<br>is from the output of ADCx to the input of the DAC(s).<br>When DSP bypass is enabled, the current DAC volume setting<br>is ramped down to −95.625 dB and the DSP bypass volume<br>setting is ramped up to avoid pops when switching paths.</p>
 </blockquote>
-<h3 id="I-2-C通信"><a href="#I-2-C通信" class="headerlink" title="I^2^C通信"></a>I^2^C通信</h3><h4 id="时序"><a href="#时序" class="headerlink" title="时序"></a>时序</h4><p>图85展示了 <strong>单字主写模式</strong> 的时序。每9个时钟脉冲，1772都会拉低一次SDA的电平以表示确认收到。</p>
-<p>图86展示了 多字主写模式 的时序。此图展示了2个字节大小数据（例如程序）的写入过程。<mark>1772会在每两个字节后增加一次子地址寄存器，因为被使用的子地址对应着 2字节 长度的寄存器或内存区域</mark>。</p>
-<p>图87展示了 单字主写模式后转变为 单字主读模式 的时序。1772作为从机接受数据后发送确认标志，主机立即发起重复开始的 单字主读模式，由从机发送至主机。</p>
-<p>图88展示了 多字主读模式 的时序，展示了读取目标字节为2bytes的示例。*<u>此处上述黄底字重复</u>*。其他地址范围可能有不同的字长，从一个到四个字节不等。ADAU1772总是对子地址进行解码，并设置自动递增电路，使地址在适当的字节数后递增。</p>
-<img src="https://pic.islet.space/2021/05/image-20210518105918652.png" alt="image-20210518105918652" style="zoom: 67%;" />
-
-<blockquote>
-<p>S = 开始 标志</p>
-<p>P = 停止 标志</p>
-<p>AM = 主机确认标志</p>
-<p>AS = 从机确认标志</p>
-</blockquote>
-<h4 id="接口"><a href="#接口" class="headerlink" title="接口"></a>接口</h4><h5 id="USBi接口"><a href="#USBi接口" class="headerlink" title="USBi接口"></a>USBi接口</h5><p>​    《SigmaStudio_USBi_to_EZ-Board_Adapter_Schematic-Rel_0.1.pdf》中对接口的定义，总共需要4个引脚，分别是1、3、4、10，对应着 SCL / SDA / VCC / GND；</p>
-<img src="https://pic.islet.space/2021/05/image-20210518112823329.png" alt="image-20210518112823329" style="zoom:67%;" />
-
-<h5 id="1772接口"><a href="#1772接口" class="headerlink" title="1772接口"></a>1772接口</h5><p>需要用到的接口是 <code>SCL/SCLK</code> 和 <code>SDA/MISO</code> 。</p>
-<p><img src="https://pic.islet.space/2021/06/20210601105623.png" alt="image-20210518192233133"></p>
-<h5 id="21479接口"><a href="#21479接口" class="headerlink" title="21479接口"></a>21479接口</h5><p>《ADSP-21479 EZ-Board Evaluation System Manual》，需要用到的接口是 <code>SPI_CLK(DPI_P3)</code> 和 <code>SPI_MISO(DPI_P2)</code> 。</p>
-<img src="https://pic.islet.space/2021/05/image-20210518113240492.png" alt="image-20210518113240492" style="zoom:67%;" />
-
-<p>对应评估板上的针脚接口如下图示 24（DPI_P3） 和 27（DPI_P2） 接口。</p>
-<p><img src="https://pic.islet.space/2021/05/20210519114409.png" alt="image-20210519114333234"></p>
-<h4 id="设备地址"><a href="#设备地址" class="headerlink" title="设备地址"></a>设备地址</h4><p>主机每次发送8位数据，其中最低的一位由主机发送标识读/写位。逻辑电平1是读，逻辑电平0是写。</p>
-<p>通过I2C方式进行连接的从机，其设备地址是7位数（1-7，对应表21是<code>bit0-bit6</code>），表21提供了1772的设备地址，<strong>ADDR1</strong> 和 <strong>ADDR0</strong> 位置可以通过接入pin的方式自由设置，即输入引脚的电平不同，每个1772都能够拥有4个独特的地址。此类方式允许多块1772接入同一I2C总线。</p>
-<ul>
-<li>即，默认情况下从机地址为 <code>0x3C</code> ，可以设置成其他：<code>0x3D</code> , <code>0x3E</code>,  <code>0x3F</code>。</li>
-<li>每个SDA和SCL线都应该接入一个2.0KΩ的升压电阻，但不应该高过IOVDD。</li>
-</ul>
-<p><img src="https://pic.islet.space/2021/06/20210601105537.png" alt="image-20210519093557617"></p>
-<img src="https://pic.islet.space/2021/06/20210601105628.png" alt="image-20210519094454381" style="zoom: 67%;" />
-
-
-
-
-
 <h1 id="CHIP-ADSP21479"><a href="#CHIP-ADSP21479" class="headerlink" title="CHIP-ADSP21479"></a>CHIP-ADSP21479</h1><h2 id="芯片及评估板资料"><a href="#芯片及评估板资料" class="headerlink" title="芯片及评估板资料"></a>芯片及评估板资料</h2><p><strong>关于芯片特性</strong>：《ADSP-21477 / ADSP-21478 / ADSP-21479》</p>
 <p><strong>关于评估板</strong>：《ADSP-21479 EZ-Board® Evaluation System Manual》</p>
 <h2 id="仿真器配置"><a href="#仿真器配置" class="headerlink" title="仿真器配置"></a>仿真器配置</h2><p>与《HPUSB, USB, and HPPCI Emulators User’s Guide》所描述的并不完全一致。</p>
@@ -1538,23 +1510,7 @@
 <img src="https://pic.islet.space/2021/05/20210519112440.png" alt="image-20210519112357298" style="zoom:67%;" />
 
 <p>21479没有针对TWI做专门的驱动，Blackfin系列大部分产品都提供了。</p>
-<h3 id="BLACKFIN-TWI-I2C"><a href="#BLACKFIN-TWI-I2C" class="headerlink" title="BLACKFIN_TWI(I2C)"></a>BLACKFIN_TWI(I2C)</h3><p>Blackfin-TWI驱动的依赖路径及文件如下：</p>
-<ul>
-<li><code>TWI.c</code><ul>
-<li><code>TWI.h</code></li>
-<li><code>init_platform.h</code><ul>
-<li><code>blackfin.h</code></li>
-<li><code>nBlackfin.h</code></li>
-<li><code>system.h</code></li>
-<li><code>libdsp.h</code></li>
-<li><code>macros.h</code></li>
-<li><code>ezkitBFxxx_initcode.h</code></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<h3 id="SHARC-TWI-I2C"><a href="#SHARC-TWI-I2C" class="headerlink" title="SHARC_TWI(I2C)"></a>SHARC_TWI(I2C)</h3><h2 id="DAI接口"><a href="#DAI接口" class="headerlink" title="DAI接口"></a>DAI接口</h2><p><strong>Digital Application Interface</strong>，即数字应用接口。所有数字应用接口都以SRU的方式连接至处理器。</p>
+<h2 id="DAI接口"><a href="#DAI接口" class="headerlink" title="DAI接口"></a>DAI接口</h2><p><strong>Digital Application Interface</strong>，即数字应用接口。所有数字应用接口都以SRU的方式连接至处理器。</p>
 <p><strong>SRU</strong>（Signal Routing Unit），即信号路由单元。SRU是处理器内部的一个提供超大系统信号流的复杂路由系统。通过SRU可以将DAI针脚利用不同组合路由至不同的内部设备。DAI所能连接的设备在每块评估板上都不同。下图展示了DAI接口的针脚、所连接的设备及其网络、所连接的开关和默认设置。</p>
 <p><mark>要在扩展II接口上使用DAI，请先用相关开关禁用驱动DAI引脚上的任何信号。</mark></p>
 <img src="https://pic.islet.space/2021/05/20210520110351.png" alt="image-20210520110207578" style="zoom:67%;" />
@@ -1573,6 +1529,16 @@
 
 
 
+
+
+
+<img src="https://pic.islet.space/2021/06/20210612111612.png" alt="image-20210612111607855" style="zoom:67%;" />
+
+
+
+
+
+<img src="https://pic.islet.space/2021/06/20210612111852.png" alt="image-20210612111848897" style="zoom:67%;" />
 
 <h2 id="SRU-H"><a href="#SRU-H" class="headerlink" title="SRU.H"></a>SRU.H</h2><h3 id="SRU"><a href="#SRU" class="headerlink" title="SRU()"></a>SRU()</h3><p>以下是 <code>&lt;sru21479.h&gt;</code> 中对 <code>SRU()</code> 的宏定义，<code>SRU2()</code> 与其相同 ：<code>#define SRU2(out,in)   SRU(out,in)</code>。</p>
 <p>读取、修改和写回一个特定的SRU寄存器，以改变一个SRU的分配（即选择一个输入到一个输出）。</p>
@@ -1599,10 +1565,27 @@
 
 
 
+<h2 id="定时器"><a href="#定时器" class="headerlink" title="定时器"></a>定时器</h2><p>《ADSP-21477_21478_21479_cn》</p>
+<p><img src="https://pic.islet.space/2021/06/20210611170206.png" alt="image-20210611170204474"></p>
+<p><img src="https://pic.islet.space/2021/06/20210611170307.png" alt="image-20210611170253655"></p>
+<p><img src="https://pic.islet.space/2021/06/20210611170344.png" alt="image-20210611170342735"></p>
+<p><img src="https://pic.islet.space/2021/06/20210611170357.png" alt="image-20210611170355842"></p>
+<h3 id="创建定时器"><a href="#创建定时器" class="headerlink" title="创建定时器"></a>创建定时器</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * Install and enable a handler for the high priority core timer interrupt.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">adi_int_InstallHandler(ADI_CID_TMZHI, <span class="comment">/*iid - high priority core timer */</span></span><br><span class="line">		               timer_isr,     <span class="comment">/*handler*/</span></span><br><span class="line">		               (<span class="keyword">void</span> *)&amp;timer_isr_count1, <span class="comment">/*handler parameter*/</span></span><br><span class="line">		                <span class="literal">true</span>           <span class="comment">/*do enable*/</span></span><br><span class="line">);</span><br></pre></td></tr></table></figure>
 
 
 
 
+
+
+
+
+
+<h3 id="定时器中断句柄"><a href="#定时器中断句柄" class="headerlink" title="定时器中断句柄"></a>定时器中断句柄</h3><p>来自实例《core_timer》:</p>
+<ul>
+<li>在定时器中断句柄 <code>timer_isr</code> 里面，不能调用标准IO函数，或者更新非volatile全局变量</li>
+<li>可以使用处理程序参数来识别被处理的中断 <code>iid</code>，并通过中断特定的回调指针参数 <code>handlerArg</code> 来访问数据。</li>
+</ul>
+<p><img src="https://pic.islet.space/2021/06/20210621154021.png" alt="image-20210612151008408"></p>
 <h1 id="EXAMPLES"><a href="#EXAMPLES" class="headerlink" title="EXAMPLES"></a>EXAMPLES</h1><h2 id="EXP1"><a href="#EXP1" class="headerlink" title="EXP1"></a>EXP1</h2><p>本案例使用麦克风采集信号并从前两个通道输入，经过信号增益放大器调整后经过立体声通道输出。</p>
 <p>具体步骤如下：</p>
 <ol>
@@ -1661,9 +1644,10 @@
 <p>首先启用PLL，点击<img src="https://pic.islet.space/2021/05/image-20210513100438475.png" alt="image-20210513100438475" style="zoom: 67%;" />，然后通过对 <code>PLL M and N Calculator</code> 进行设置，并点击 <code>Load Parameters</code> 进行自动计算和加载即可。</p>
 <p>在主时钟源选项（Main Clock Source）中选择经过PLL处理的时钟源，并设置主时钟和核心时钟的分频率为 1/2即可。</p>
 <p>从旁边也可以看到自动计算出来的分频系数：<img src="https://pic.islet.space/2021/05/image-20210513100800163.png" alt="image-20210513100800163"></p>
-<p>、<img src="https://pic.islet.space/2021/05/image-20210513100908671.png" alt="image-20210513100908671"></p>
-<h2 id="EXP3"><a href="#EXP3" class="headerlink" title="EXP3"></a>EXP3</h2><p>利用ADI官方提供的C代码，通过I2C向ADAU芯片写入寄存器。</p>
-<p>在ADAU寄存器写入的C代码中，依赖头文件<code>&lt;SigmaStudioFW.h&gt;</code>，其所有宏定义类型的函数都需要用户自行定义。</p>
+<p><img src="https://pic.islet.space/2021/05/image-20210513100908671.png" alt="image-20210513100908671"></p>
+<p>除了可以直接应用 SigmaStudio 的 <code>load parameters</code> 直接进行参数计算外，可以参考《在linux上编写求解ADAU1772的PLL系数》文章，自行系数计算。</p>
+<h2 id="EXP3"><a href="#EXP3" class="headerlink" title="EXP3"></a>EXP3</h2><p>本例中主要完成TWI代码的编写，具体可以参见《I2C通信》笔记。以下是一开始的开发思路：</p>
+<p>利用ADI官方提供（导出）的C代码，通过I2C协议向ADAU1772 codec芯片写入寄存器值，在ADAU寄存器写入的C代码中，依赖头文件<code>&lt;SigmaStudioFW.h&gt;</code>，其所有宏定义类型的函数都需要用户自行定义。</p>
 <p><img src="https://pic.islet.space/2021/05/20210520095649.png" alt="image-20210520095648245"></p>
 <h3 id="Arduino示例"><a href="#Arduino示例" class="headerlink" title="Arduino示例"></a>Arduino示例</h3><p>在Github上的 <strong><a target="_blank" rel="noopener" href="https://github.com/ColeMahlowitz/ADAU1761-Self-Boot-With-Arduino">ADAU1761-Self-Boot-With-Arduino</a></strong> 中，适用于 Arduino 和 ADAU1761 的寄存器块（WRITE_REGISTER_BLOCK）定义实例：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">void SIGMA_WRITE_REGISTER_BLOCK(byte IC_address, word subAddress, int dataLength, byte pdata[]) &#123;</span><br><span class="line"></span><br><span class="line">  &#x2F;&#x2F; start I2C transfer</span><br><span class="line">  if (!i2c_start((IC_address)|I2C_WRITE)) &#123; </span><br><span class="line">    Serial.println(&quot;I2C device busy for WRITE REGISTER BLOCK&quot;);</span><br><span class="line">    return;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  &#x2F;&#x2F; write subAddresses. (ADAU1761 needs the 16 bit subAddress written as two 8 bit bytes with an &quot;ACK&quot; inbetween</span><br><span class="line">  uint8_t addressLowByte &#x3D; subAddress &amp; 0xff;</span><br><span class="line">  uint8_t addressHighByte &#x3D; (subAddress &gt;&gt; 8);</span><br><span class="line"></span><br><span class="line">  i2c_write(addressHighByte); </span><br><span class="line">  i2c_write(addressLowByte); </span><br><span class="line"></span><br><span class="line">  if (dataLength &lt; 50 ) &#123;</span><br><span class="line">    for (int i&#x3D;0; i&lt;dataLength; i++) &#123; </span><br><span class="line">      i2c_write(pdata[i]); &#x2F;&#x2F;write data bytes</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  else &#123; </span><br><span class="line">    for (int i&#x3D;0; i&lt;dataLength; i++) &#123;</span><br><span class="line">      i2c_write(pgm_read_byte_near(pdata + i)); &#x2F;&#x2F;write data bytes from PROGMEM (for param and program data)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  i2c_stop(); &#x2F;&#x2F; stop the I2C communication</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -1674,6 +1658,15 @@
 <p>将宏定义改为函数形式：</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">SIGMA_WRITE_REGISTER_BLOCK</span><span class="params">(<span class="keyword">int</span> devAddress, <span class="keyword">int</span> address, <span class="keyword">int</span> length, ADI_REG_TYPE *pData )</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> ii = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">int</span> zz = <span class="number">0</span>;</span><br><span class="line">    Tx_Idx = <span class="number">0</span>;</span><br><span class="line"> </span><br><span class="line"><span class="comment">/*----- Transmission Phase -----*/</span></span><br><span class="line">    ThisBufferSize = Address_Length + length; </span><br><span class="line"> </span><br><span class="line">    I2C1_Buffer_Tx[<span class="number">0</span>] =   (address &amp; <span class="number">0xFF00</span>)&gt;&gt;<span class="number">8</span>;</span><br><span class="line">    I2C1_Buffer_Tx[<span class="number">1</span>] =   address &amp; <span class="number">0x00FF</span>;</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">for</span>(zz=<span class="number">0</span>;zz&lt;length;zz++)&#123;</span><br><span class="line">    	I2C1_Buffer_Tx [zz + Address_Length] =   pData[zz];</span><br><span class="line">    &#125; </span><br><span class="line">    Tx_Idx = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span>(ii =<span class="number">0</span>;ii &lt; ThisBufferSize;ii++)&#123;    </span><br><span class="line">        NextBufferEnd =  ThisBufferSize;<span class="comment">//I2C1_numbytes[ii];    </span></span><br><span class="line">        <span class="keyword">if</span>(ii == <span class="number">0</span>)&#123;</span><br><span class="line">            I2C_GenerateSTART(I2C1, ENABLE);</span><br><span class="line">        &#125; </span><br><span class="line">        <span class="comment">/* Send data */</span></span><br><span class="line">        <span class="keyword">while</span>(Tx_Idx &lt; NextBufferEnd)   </span><br><span class="line">        &#123;</span><br><span class="line"></span><br><span class="line">        &#125;   </span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">SIGMA_WRITE_DELAY</span><span class="params">(<span class="keyword">int</span> devAddress, <span class="keyword">int</span> length, ADI_REG_TYPE *pData )</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> nCount=<span class="number">0</span>;</span><br><span class="line">    nCount=<span class="number">0xFFFFF</span>;</span><br><span class="line">    <span class="keyword">for</span>(; nCount != <span class="number">0</span>; nCount--);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
+
+
+<p>具体的代码已经贴在《I2C通信》了，21478和21479支持TWI的寄存器控制，但是更为复杂，官方没有给示例，因此使用了引脚高低高低电平的控制来实现通信。</p>
+<h3 id="数字逻辑分析仪"><a href="#数字逻辑分析仪" class="headerlink" title="数字逻辑分析仪"></a>数字逻辑分析仪</h3><p>在EXP3中会频繁采集I2C、I2S、SPI等通信协议发过来的数据，因此需要使用数字逻辑分析仪进行数据采集和分析，在本次开发过程中使用了两种数字逻辑分析仪，分别是 <em><strong>USBee Suite</strong></em> 和 <em><strong>Saleae Logic</strong></em> ，推荐使用后者，软件更夹稳定、成熟和易使用。如果采用前者，那么软件经常崩溃。后者在采集I2S等高速通信协议中的电平信号时，需要将采样速率提升一下，24MS/s 的速度仍然能会采样变形。</p>
+<p><img src="https://pic.islet.space/2021/06/20210623161904.png" alt="image-20210623134058687"></p>
+<p><img src="https://pic.islet.space/2021/06/20210623161909.png" alt="image-20210623134114244"></p>
+<p><img src="https://pic.islet.space/2021/06/20210623161911.png" alt="image-20210623133953887"></p>
+<p>​    </p>
+<p><img src="https://pic.islet.space/2021/06/20210623161914.png" alt="image-20210623134006076"></p>
 
       
     </div>

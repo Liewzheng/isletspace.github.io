@@ -22,8 +22,8 @@
 <script class="next-config" data-name="main" type="application/json">{&quot;hostname&quot;:&quot;islet.space&quot;,&quot;root&quot;:&quot;&#x2F;&quot;,&quot;images&quot;:&quot;&#x2F;images&quot;,&quot;scheme&quot;:&quot;Gemini&quot;,&quot;version&quot;:&quot;8.3.0&quot;,&quot;exturl&quot;:false,&quot;sidebar&quot;:{&quot;position&quot;:&quot;left&quot;,&quot;display&quot;:&quot;post&quot;,&quot;padding&quot;:18,&quot;offset&quot;:12},&quot;copycode&quot;:false,&quot;bookmark&quot;:{&quot;enable&quot;:false,&quot;color&quot;:&quot;#222&quot;,&quot;save&quot;:&quot;auto&quot;},&quot;fancybox&quot;:false,&quot;mediumzoom&quot;:false,&quot;lazyload&quot;:false,&quot;pangu&quot;:false,&quot;comments&quot;:{&quot;style&quot;:&quot;tabs&quot;,&quot;active&quot;:null,&quot;storage&quot;:true,&quot;lazyload&quot;:false,&quot;nav&quot;:null},&quot;motion&quot;:{&quot;enable&quot;:true,&quot;async&quot;:false,&quot;transition&quot;:{&quot;post_block&quot;:&quot;fadeIn&quot;,&quot;post_header&quot;:&quot;fadeInDown&quot;,&quot;post_body&quot;:&quot;fadeInDown&quot;,&quot;coll_header&quot;:&quot;fadeInLeft&quot;,&quot;sidebar&quot;:&quot;fadeInUp&quot;}},&quot;prism&quot;:false,&quot;i18n&quot;:{&quot;placeholder&quot;:&quot;Searching...&quot;,&quot;empty&quot;:&quot;We didn&#39;t find any results for the search: ${query}&quot;,&quot;hits_time&quot;:&quot;${hits} results found in ${time} ms&quot;,&quot;hits&quot;:&quot;${hits} results found&quot;}}</script>
 <meta name="description" content="数字音频信号的传输标准，如：  I2S、PCM  (Pulse Code Modulation) 和 PDM (Pulse Density Modulation)主要用于同一块电路板上芯片之间音频信号的传输； Intel HDA (Intel High Definition Audio) 用于PC的Audio子系统（声卡）应用；  S&#x2F;PDIF 和 Ethernet AVB 主要应用于板间长距离及">
 <meta property="og:type" content="article">
-<meta property="og:title" content="I2S_ADAU1939移植至ADAU1772兼容">
-<meta property="og:url" content="http://islet.space/2021/06/28/Communication/2021-06-28-I2S%EF%BC%88ADAU1939%E7%A7%BB%E6%A4%8D%E8%87%B3ADAU1772%E5%85%BC%E5%AE%B9%EF%BC%89/index.html">
+<meta property="og:title" content="I2S通信">
+<meta property="og:url" content="http://islet.space/2021/06/28/Communication/2021-06-28-I2S%E9%80%9A%E4%BF%A1/index.html">
 <meta property="og:site_name" content="Coder的孤岛">
 <meta property="og:description" content="数字音频信号的传输标准，如：  I2S、PCM  (Pulse Code Modulation) 和 PDM (Pulse Density Modulation)主要用于同一块电路板上芯片之间音频信号的传输； Intel HDA (Intel High Definition Audio) 用于PC的Audio子系统（声卡）应用；  S&#x2F;PDIF 和 Ethernet AVB 主要应用于板间长距离及">
 <meta property="og:locale" content="en_US">
@@ -45,6 +45,7 @@
 <meta property="og:image" content="https://pic.islet.space/2021/07/image-20210705143246050.png">
 <meta property="og:image" content="https://pic.islet.space/2021/07/image-20210705143606164.png">
 <meta property="og:image" content="https://pic.islet.space/2021/07/image-20210705145709904.png">
+<meta property="og:image" content="https://pic.islet.space/2021/07/image-20210706101429733.png">
 <meta property="og:image" content="https://pic.islet.space/2021/07/image-20210705153843902.png">
 <meta property="og:image" content="https://pic.islet.space/2021/07/image-20210706001243698.png">
 <meta property="og:image" content="https://pic.islet.space/2021/07/image-20210706001350802.png">
@@ -52,21 +53,22 @@
 <meta property="og:image" content="https://pic.islet.space/2021/07/20210702101017.png">
 <meta property="og:image" content="https://pic.islet.space/2021/07/20210702101020.png">
 <meta property="article:published_time" content="2021-06-28T00:40:00.000Z">
-<meta property="article:modified_time" content="2021-07-05T17:13:38.158Z">
+<meta property="article:modified_time" content="2021-07-08T16:15:13.479Z">
 <meta property="article:author" content="Liewzheng">
 <meta property="article:tag" content="I2S">
+<meta property="article:tag" content="ADI">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://pic.islet.space/2021/06/20210629145837.png">
 
 
-<link rel="canonical" href="http://islet.space/2021/06/28/Communication/2021-06-28-I2S%EF%BC%88ADAU1939%E7%A7%BB%E6%A4%8D%E8%87%B3ADAU1772%E5%85%BC%E5%AE%B9%EF%BC%89/">
+<link rel="canonical" href="http://islet.space/2021/06/28/Communication/2021-06-28-I2S%E9%80%9A%E4%BF%A1/">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{&quot;sidebar&quot;:&quot;&quot;,&quot;isHome&quot;:false,&quot;isPost&quot;:true,&quot;lang&quot;:&quot;en&quot;,&quot;comments&quot;:true,&quot;permalink&quot;:&quot;http:&#x2F;&#x2F;islet.space&#x2F;2021&#x2F;06&#x2F;28&#x2F;Communication&#x2F;2021-06-28-I2S%EF%BC%88ADAU1939%E7%A7%BB%E6%A4%8D%E8%87%B3ADAU1772%E5%85%BC%E5%AE%B9%EF%BC%89&#x2F;&quot;,&quot;path&quot;:&quot;2021&#x2F;06&#x2F;28&#x2F;Communication&#x2F;2021-06-28-I2S（ADAU1939移植至ADAU1772兼容）&#x2F;&quot;,&quot;title&quot;:&quot;I2S_ADAU1939移植至ADAU1772兼容&quot;}</script>
+<script class="next-config" data-name="page" type="application/json">{&quot;sidebar&quot;:&quot;&quot;,&quot;isHome&quot;:false,&quot;isPost&quot;:true,&quot;lang&quot;:&quot;en&quot;,&quot;comments&quot;:true,&quot;permalink&quot;:&quot;http:&#x2F;&#x2F;islet.space&#x2F;2021&#x2F;06&#x2F;28&#x2F;Communication&#x2F;2021-06-28-I2S%E9%80%9A%E4%BF%A1&#x2F;&quot;,&quot;path&quot;:&quot;2021&#x2F;06&#x2F;28&#x2F;Communication&#x2F;2021-06-28-I2S通信&#x2F;&quot;,&quot;title&quot;:&quot;I2S通信&quot;}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">&quot;&quot;</script>
-<title>I2S_ADAU1939移植至ADAU1772兼容 | Coder的孤岛</title><script src="/js/config.js"></script>
+<title>I2S通信 | Coder的孤岛</title><script src="/js/config.js"></script>
   
 
 
@@ -142,7 +144,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Philips-I2S-%E6%A0%87%E5%87%86"><span class="nav-number">1.</span> <span class="nav-text">Philips I2S 标准</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%89%B9%E7%82%B9"><span class="nav-number">1.1.</span> <span class="nav-text">特点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A1%AC%E4%BB%B6%E7%89%B9%E6%80%A7"><span class="nav-number">1.2.</span> <span class="nav-text">硬件特性</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%BB%E7%BA%BF%E4%BB%8B%E7%BB%8D"><span class="nav-number">1.2.1.</span> <span class="nav-text">总线介绍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%94%B5%E5%8E%8B%E8%A6%81%E6%B1%82"><span class="nav-number">1.2.2.</span> <span class="nav-text">电压要求</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%B2%E8%A1%8C%E6%95%B0%E6%8D%AE"><span class="nav-number">1.3.</span> <span class="nav-text">串行数据</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AD%97%E9%80%89%E6%8B%A9"><span class="nav-number">1.4.</span> <span class="nav-text">字选择</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ADI%E4%BB%A3%E7%A0%81%E7%A7%BB%E6%A4%8D"><span class="nav-number">2.</span> <span class="nav-text">ADI代码移植</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#SPTCL%E5%AF%84%E5%AD%98%E5%99%A8%E6%93%8D%E4%BD%9C"><span class="nav-number">2.1.</span> <span class="nav-text">SPTCL寄存器操作</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ASRC-OF-ADAU1772"><span class="nav-number">3.</span> <span class="nav-text">ASRC OF ADAU1772</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%80%9A%E4%BF%A1%E6%97%B6%E9%92%9F%E8%A6%81%E6%B1%82"><span class="nav-number">3.1.</span> <span class="nav-text">通信时钟要求</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ANC%E4%B8%BB%E6%9D%BF%E7%A1%AC%E4%BB%B6%EF%BC%88%E9%87%8F%E4%BA%A7%EF%BC%89"><span class="nav-number">4.</span> <span class="nav-text">ANC主板硬件（量产）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#TWI-I2C"><span class="nav-number">4.1.</span> <span class="nav-text">TWI (I2C)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#I2S"><span class="nav-number">4.2.</span> <span class="nav-text">I2S</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SPI"><span class="nav-number">4.3.</span> <span class="nav-text">SPI</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">5.</span> <span class="nav-text">参考</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Philips-I2S-%E6%A0%87%E5%87%86"><span class="nav-number">1.</span> <span class="nav-text">Philips I2S 标准</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%89%B9%E7%82%B9"><span class="nav-number">1.1.</span> <span class="nav-text">特点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A1%AC%E4%BB%B6%E7%89%B9%E6%80%A7"><span class="nav-number">1.2.</span> <span class="nav-text">硬件特性</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%BB%E7%BA%BF%E4%BB%8B%E7%BB%8D"><span class="nav-number">1.2.1.</span> <span class="nav-text">总线介绍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%94%B5%E5%8E%8B%E8%A6%81%E6%B1%82"><span class="nav-number">1.2.2.</span> <span class="nav-text">电压要求</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%B2%E8%A1%8C%E6%95%B0%E6%8D%AE"><span class="nav-number">1.3.</span> <span class="nav-text">串行数据</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AD%97%E9%80%89%E6%8B%A9"><span class="nav-number">1.4.</span> <span class="nav-text">字选择</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ADI-Codec-I2S%E7%A7%BB%E6%A4%8D"><span class="nav-number">2.</span> <span class="nav-text">ADI-Codec I2S移植</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#SPTCL%E5%AF%84%E5%AD%98%E5%99%A8%E6%93%8D%E4%BD%9C"><span class="nav-number">2.1.</span> <span class="nav-text">SPTCL寄存器操作</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ASRC-OF-ADAU1772"><span class="nav-number">3.</span> <span class="nav-text">ASRC OF ADAU1772</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%80%9A%E4%BF%A1%E6%97%B6%E9%92%9F%E8%A6%81%E6%B1%82"><span class="nav-number">3.1.</span> <span class="nav-text">通信时钟要求</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ANC%E4%B8%BB%E6%9D%BF%E7%A1%AC%E4%BB%B6%EF%BC%88%E9%87%8F%E4%BA%A7%EF%BC%89"><span class="nav-number">4.</span> <span class="nav-text">ANC主板硬件（量产）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#TWI-I2C"><span class="nav-number">4.1.</span> <span class="nav-text">TWI (I2C)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#I2S"><span class="nav-number">4.2.</span> <span class="nav-text">I2S</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SPI"><span class="nav-number">4.3.</span> <span class="nav-text">SPI</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">5.</span> <span class="nav-text">参考</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -164,7 +166,7 @@
         <span class="site-state-item-name">categories</span>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">143</span>
+        <span class="site-state-item-count">141</span>
         <span class="site-state-item-name">tags</span>
       </div>
   </nav>
@@ -208,7 +210,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://islet.space/2021/06/28/Communication/2021-06-28-I2S%EF%BC%88ADAU1939%E7%A7%BB%E6%A4%8D%E8%87%B3ADAU1772%E5%85%BC%E5%AE%B9%EF%BC%89/">
+    <link itemprop="mainEntityOfPage" href="http://islet.space/2021/06/28/Communication/2021-06-28-I2S%E9%80%9A%E4%BF%A1/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -221,7 +223,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          I2S_ADAU1939移植至ADAU1772兼容
+          I2S通信
         </h1>
 
         <div class="post-meta-container">
@@ -241,7 +243,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-07-06 01:13:38" itemprop="dateModified" datetime="2021-07-06T01:13:38+08:00">2021-07-06</time>
+        <time title="Modified: 2021-07-09 00:15:13" itemprop="dateModified" datetime="2021-07-09T00:15:13+08:00">2021-07-09</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -249,7 +251,7 @@
       </span>
       <span class="post-meta-item-text">In</span>
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Communications/" itemprop="url" rel="index"><span itemprop="name">Communications</span></a>
+          <a href="/categories/Communication/" itemprop="url" rel="index"><span itemprop="name">Communication</span></a>
         </span>
     </span>
 
@@ -327,10 +329,11 @@
 <li><code>WS=1</code> ，表示正在传输的是 <strong>右声道</strong> 的数据。</li>
 </ul>
 <p>WS可以在串行时钟的上升沿或者下降沿发生改变，并且WS信号不需要一定是对称的。在从属装置端，WS<mark>在时钟信号的上升沿发生改变</mark>。WS总是<mark>在最高位传输前的一个时钟周期发生改变</mark>，这样可以使从属装置得到与被传输的串行数据同步的时间，并且使接收端存储当前的命令以及为下次的命令清除空间。</p>
-<h1 id="ADI代码移植"><a href="#ADI代码移植" class="headerlink" title="ADI代码移植"></a>ADI代码移植</h1><p>以下文章/教程仅针对官方提供的例程《AD1939_I2S_Sample_Based_Talkthru》进行修改。</p>
+<h1 id="ADI-Codec-I2S移植"><a href="#ADI-Codec-I2S移植" class="headerlink" title="ADI-Codec I2S移植"></a>ADI-Codec I2S移植</h1><p>以下文章/教程仅针对官方提供的例程《AD1939_I2S_Sample_Based_Talkthru》进行修改。</p>
 <blockquote>
 <ul>
 <li><code>&lt;ad1939.h&gt;</code> 定义了ADAU1939的宏定义，包括锁相环、时钟、DAC、ADC等的寄存器，与直接从SigmaStudio导出的文件并没有太大差别，应该经过精简。</li>
+<li></li>
 </ul>
 </blockquote>
 <p>首先，需要清晰认识1939和1772的硬件差异。ADAU1939和ADAU1772硬件上的异同，都有4个差分输入，但是1939有8个差分输出，1772有2个双声道输出（4个差分输出）。</p>
@@ -342,7 +345,8 @@
 <p>通过 <em><strong>Sport1 A</strong></em> 从Codec接收数据，并通过 <em><strong>Sport0 A/B</strong></em> 和 <em><strong>Sport2 A/B</strong></em> 将音频数据传输至Codec的四个立体声DAC接口。Sport1 接收中断服务程序以在 DMA接收缓存 <code>rx1a_buf</code> 上完成算术运算（arithmetic computations），并将计算结果存放至 DMA传输缓存 <code>tx0a_buf</code> 。</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/******************************************************************************************************</span></span><br><span class="line"><span class="comment">/                                                                                                     /</span></span><br><span class="line"><span class="comment">/                            AD1939 - SPORT1 RX INTERRUPT SERVICE ROUTINE                             /</span></span><br><span class="line"><span class="comment">/                                                                                                     /</span></span><br><span class="line"><span class="comment">/    Receives input data from the AD1939 ADCs via SPORT1 A and transmits processed audio data         /</span></span><br><span class="line"><span class="comment">/    back out to the four AD1939 Stereo DACs/Line Outputs through SPORT0 A/B and SPORT2 A/B           /</span></span><br><span class="line"><span class="comment">/                                                                                                     /</span></span><br><span class="line"><span class="comment">/                                                                                                     /</span></span><br><span class="line"><span class="comment">/   This Serial Port 1 Recieve Interrupt Service Routine performs arithmetic computations on          /</span></span><br><span class="line"><span class="comment">/   the SPORT1 receive DMA buffer (rx1a_buf) and places results to SPORT0 transmit                    /</span></span><br><span class="line"><span class="comment">/   DMA buffer (tx0a_buf)                                                                             /</span></span><br><span class="line"><span class="comment">/                                                                                                     /</span></span><br><span class="line"><span class="comment">/  rx1a_buf[2] - DSP SPORT0 A receive buffer - AD1939 ASDATA1                                         /</span></span><br><span class="line"><span class="comment">/  Slot # Description                             DSP Data Memory Address                             /</span></span><br><span class="line"><span class="comment">/  ------ --------------------------------------  --------------------------------------------------  /</span></span><br><span class="line"><span class="comment">/  0      Internal ADC 0 Left Channel             DM(_rx1a_buf + 0) = DM(_rx1a_buf + Internal_ADC_L1) /</span></span><br><span class="line"><span class="comment">/  1      Internal ADC 0 Right Channel            DM(_rx1a_buf + 1) = DM(_rx1a_buf + Internal_ADC_R1) /</span></span><br><span class="line"><span class="comment">/                                                                                                     /</span></span><br><span class="line"><span class="comment">/  rx1b_buf[2] - DSP SPORT0 B receive buffer - AD1939 ASDATA2                                         /</span></span><br><span class="line"><span class="comment">/  Slot # Description                             DSP Data Memory Address                             /</span></span><br><span class="line"><span class="comment">/  ------ --------------------------------------  --------------------------------------------------  /</span></span><br><span class="line"><span class="comment">/  0      Internal ADC 1 Left Channel             DM(_rx1b_buf + 2) = DM(_rx1b_buf + Internal_ADC_L2) /</span></span><br><span class="line"><span class="comment">/  1      Internal ADC 1 Right Channel            DM(_rx1b_buf + 3) = DM(_rx1b_buf + Internal_ADC_R2) /</span></span><br><span class="line"><span class="comment">/                                                                                                     /</span></span><br><span class="line"><span class="comment">/  tx0a_buf[2] - DSP SPORT0 A transmit buffer - AD1939 DSDATA1                                        /</span></span><br><span class="line"><span class="comment">/  Slot # Description                             DSP Data Memory Address                             /</span></span><br><span class="line"><span class="comment">/  ------ --------------------------------------  --------------------------------------------------  /</span></span><br><span class="line"><span class="comment">/  0      Internal DAC 1 Left Channel             DM(_tx0a_buf + 0) = DM(_tx0a_buf + Internal_DAC_L1) /</span></span><br><span class="line"><span class="comment">/  1      Internal DAC 1 Right Channel            DM(_tx0a_buf + 1) = DM(_tx0a_buf + Internal_DAC_R1) /</span></span><br><span class="line"><span class="comment">/                                                                                                     /</span></span><br><span class="line"><span class="comment">/  tx0a_buf[2] - DSP SPORT0 B transmit buffer - AD1939 DSDATA2                                        /</span></span><br><span class="line"><span class="comment">/  Slot # Description                             DSP Data Memory Address                             /</span></span><br><span class="line"><span class="comment">/  ------ --------------------------------------  --------------------------------------------------  /</span></span><br><span class="line"><span class="comment">/  2      Internal DAC 2 Left Channel             DM(_tx0b_buf + 2) = DM(_tx0b_buf + Internal_DAC_L2) /</span></span><br><span class="line"><span class="comment">/  3      Internal DAC 2 Right Channel            DM(_tx0b_buf + 3) = DM(_tx0b_buf + Internal_DAC_R2) /</span></span><br><span class="line"><span class="comment">/                                                                                                     /</span></span><br><span class="line"><span class="comment">/  tx2a_buf[2] - DSP SPORT2 A transmit buffer - AD1939 DSDATA3                                        /</span></span><br><span class="line"><span class="comment">/  Slot # Description                             DSP Data Memory Address                             /</span></span><br><span class="line"><span class="comment">/  ------ --------------------------------------  --------------------------------------------------  /</span></span><br><span class="line"><span class="comment">/  4      Internal DAC 3 Left Channel             DM(_tx2a_buf + 4) = DM(_tx2a_buf + Internal_DAC_L3) /</span></span><br><span class="line"><span class="comment">/  5      Internal DAC 3 Right Channel            DM(_tx2a_buf + 5) = DM(_tx2a_buf + Internal_DAC_R3) /</span></span><br><span class="line"><span class="comment">/                                                                                                     /</span></span><br><span class="line"><span class="comment">/  tx2b_buf[2] - DSP SPORT2 B transmit buffer - AD1939 DSDATA4                                        /</span></span><br><span class="line"><span class="comment">/  Slot # Description                             DSP Data Memory Address                             /</span></span><br><span class="line"><span class="comment">/  ------ --------------------------------------  --------------------------------------------------  /</span></span><br><span class="line"><span class="comment">/  6      Internal DAC 4 Left Channel             DM(_tx2b_buf + 6) = DM(_tx2b_buf + Internal_DAC_L4) /</span></span><br><span class="line"><span class="comment">/  7      Internal DAC 4 Right Channel            DM(_tx2b_buf + 7) = DM(_tx2b_buf + Internal_DAC_R4) /</span></span><br><span class="line"><span class="comment">/                                                                                                     /</span></span><br><span class="line"><span class="comment">******************************************************************************************************/</span></span><br></pre></td></tr></table></figure>
 
-<h2 id="SPTCL寄存器操作"><a href="#SPTCL寄存器操作" class="headerlink" title="SPTCL寄存器操作"></a>SPTCL寄存器操作</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">*pSPCTL0 = (SPTRAN | OPMODE | SLEN32 | SPEN_A | SCHEN_A | SDEN_A | SPEN_B | SCHEN_B | SDEN_B);</span><br><span class="line">*pSPCTL1 = (OPMODE | SLEN32 | SPEN_A | SCHEN_A | SDEN_A | SPEN_B | SCHEN_B | SDEN_B);</span><br><span class="line">*pSPCTL2 = (OPMODE | SLEN32 | SPEN_A | SCHEN_A | SDEN_A | SPEN_B | SCHEN_B | SDEN_B);</span><br></pre></td></tr></table></figure>
+<h2 id="SPTCL寄存器操作"><a href="#SPTCL寄存器操作" class="headerlink" title="SPTCL寄存器操作"></a>SPTCL寄存器操作</h2><p>下方代码是官方示例给出，并经过唐昊整合修改过，其寄存器设置的功能解读和验证如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">*pSPCTL0 = (SPTRAN | OPMODE | SLEN32 | SPEN_A | SCHEN_A | SDEN_A | SPEN_B | SCHEN_B | SDEN_B);</span><br><span class="line">*pSPCTL1 = (OPMODE | SLEN32 | SPEN_A | SCHEN_A | SDEN_A | SPEN_B | SCHEN_B | SDEN_B);</span><br><span class="line">*pSPCTL2 = (OPMODE | SLEN32 | SPEN_A | SCHEN_A | SDEN_A | SPEN_B | SCHEN_B | SDEN_B);</span><br></pre></td></tr></table></figure>
 
 <p><strong>SPTRAN</strong>: Serial port Data Transfer Direction. Transfer / Receive from both Channel A and Channel B. 需要注意的是，传输和接收功能只有一个会在 <code>SOPRTx_CLK</code> 和 <code>SPORTx_FS</code> 控制 <em><strong>传输/接收位移寄存器</strong></em>（Transmit/Receive shift register） 时被激活。</p>
 <p><strong>OPMODE</strong>: SPORT Operation Mode, <em><strong>I2S</strong></em> / <em><strong>packed</strong></em>, <em><strong>left-justified</strong></em> mode</p>
@@ -453,12 +457,20 @@
 <li><code>PLL_CTRL4</code> 控制着 <strong>PLL类型</strong>（整数型/分数型）、<strong>输入时钟分频</strong>（1 - 4）和 PLL设置的 <strong>整数部分</strong>。</li>
 <li><code>PLL_CTRL5</code> 目前只能是 <code>0x00</code> 或 <code>0x01</code> 。</li>
 </ul>
+<p>以下为PLL_CTRL4寄存器的位描述：n</p>
+<p><img src="https://pic.islet.space/2021/07/image-20210706101429733.png" alt="image-20210706101429733"></p>
 <p>至于 <code>CLK_CONTROL</code> 寄存器，主要是数值 <code>0x89</code> 和 <code>0x8F</code> 的差别。见下表可知，是关于PLL分频的问题。</p>
 <p><img src="https://pic.islet.space/2021/07/image-20210705153843902.png" alt="image-20210705153843902"></p>
 <p>通过自行编写的代码，遍历所有可更改的系数进行计算求解，取得小数点后9位精度，并且符合要求的系数如下（含1/2系数）：</p>
+<p>根据PLL_CTRL4寄存器，ICD=3、IS=8时，该寄存器的值为 <code>01000101</code> ，即 <code>0x45</code> 。（下图IDC更正为ICD）</p>
 <p><img src="https://pic.islet.space/2021/07/image-20210706001243698.png" alt="image-20210706001243698"></p>
 <p>以下为不含1/2系数的结果：</p>
+<p>根据PLL_CTRL4寄存器，ICD=3、IS=4时，该寄存器的值为 <code>00100101</code> ，即 <code>0x25</code> 。</p>
 <p><img src="https://pic.islet.space/2021/07/image-20210706001350802.png" alt="image-20210706001350802"></p>
+<ul>
+<li>CLK_IN mean value is 16.6Mhz</li>
+<li>LRCLK mean value is 45.92Khz</li>
+</ul>
 <h1 id="ANC主板硬件（量产）"><a href="#ANC主板硬件（量产）" class="headerlink" title="ANC主板硬件（量产）"></a>ANC主板硬件（量产）</h1><p>以下为ADAU1772的特征：</p>
 <p><strong>Master clock</strong> = <strong>core clock</strong> = 12.288 MHz</p>
 <p><strong>serial input sample rate</strong> = 48 kHz</p>
@@ -579,6 +591,7 @@
     <footer class="post-footer">
           <div class="post-tags">
               <a href="/tags/I2S/" rel="tag"># I2S</a>
+              <a href="/tags/ADI/" rel="tag"># ADI</a>
           </div>
 
     <div id="vcomment" style="margin: 20px 0 0 0"></div>
