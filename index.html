@@ -126,16 +126,16 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">74</span>
+          <span class="site-state-item-count">80</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
-        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-count">18</span>
         <span class="site-state-item-name">categories</span>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">141</span>
+        <span class="site-state-item-count">151</span>
         <span class="site-state-item-name">tags</span>
       </div>
   </nav>
@@ -169,6 +169,1300 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://islet.space/2021/07/15/Hardware/TI/2021-07-15-IGBT%E5%8F%8A%E5%85%B6%E9%A9%B1%E5%8A%A8%E8%8A%AF%E7%89%87%E8%A7%84%E6%A0%BC%E5%AD%A6%E4%B9%A0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Liewzheng">
+      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coder的孤岛">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/07/15/Hardware/TI/2021-07-15-IGBT%E5%8F%8A%E5%85%B6%E9%A9%B1%E5%8A%A8%E8%8A%AF%E7%89%87%E8%A7%84%E6%A0%BC%E5%AD%A6%E4%B9%A0/" class="post-title-link" itemprop="url">IGBT及其驱动芯片规格学习</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2021-07-15 08:50:00 / Modified: 21:11:22" itemprop="dateCreated datePublished" datetime="2021-07-15T08:50:00+08:00">2021-07-15</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Hardware/" itemprop="url" rel="index"><span itemprop="name">Hardware</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>IGBT和其驱动芯片的电气特性、引脚等参数的开发记录。</p>
+<h1 id="IGBT"><a href="#IGBT" class="headerlink" title="IGBT"></a>IGBT</h1><p>IGBT芯片选型为 IKW50N65WR5。</p>
+<p><img src="https://pic.islet.space/2021/07/image-20210715090401339.png" alt="image-20210715090401339"></p>
+<p><img src="https://pic.islet.space/2021/07/image-20210715093221500.png" alt="image-20210715093221500"></p>
+<p>IGBT有三个极，发射极、集电极 和 栅极。</p>
+<p>从其电气性能表格中，可以看出：</p>
+<ul>
+<li>集电极到发射极的击穿电压 <em>最小</em> 为650V</li>
+<li>在 V<span style="font-size: 0.8rem; font-weight: 500;">GE</span> 完全导通（最高15V）时，集电极到发射极的饱和电压为1.8V以下，此时 IGBT 处于截止状态</li>
+<li>在 V<span style="font-size: 0.8rem; font-weight: 500;">GE</span> 完全截止（0V）时，二极管的正向电压为1.9V以下。<mark> 此时，V<span style="font-size: 0.8rem; font-weight: 500;">CE</span> 处于导通状态。</mark></li>
+</ul>
+<p><img src="https://pic.islet.space/2021/07/image-20210715094151439.png" alt="image-20210715094151439"></p>
+<p>从上方表中可以看出，在官方的《开关特性测试情况》下，V<span style="font-size: 0.8rem; font-weight: 500;">GE</span> 的通电情况是 0V 或者 15V，故此推断给此IGBT的栅极电源输入信号应该是0V ~ 15V的方波。</p>
+<p>因此，下图中IGBT器件的电路连接方式为：G 接0/15V方波信号，C 接最高650V电源，E 接地。</p>
+<p><img src="https://pic.islet.space/2021/07/image-20210715095656309.png" alt="image-20210715095656309"></p>
+<h1 id="DRIVER-IC"><a href="#DRIVER-IC" class="headerlink" title="DRIVER IC"></a>DRIVER IC</h1><p><img src="https://pic.islet.space/2021/07/image-20210715102359830.png" alt="image-20210715102359830"></p>
+<p>选用芯片型号为 2EDL05I06PF，根据表1索引可得，芯片封装类型为DSO-8，目标驱动芯片是 IGBT，而非 MOSFET。</p>
+<p><img src="https://pic.islet.space/2021/07/image-20210715102251417.png" alt="image-20210715102251417"></p>
+<p>再根据图3可得芯片引脚分布，根据表2可得所有引脚描述。</p>
+<p><img src="https://pic.islet.space/2021/07/image-20210715095931941.png" alt="image-20210715095931941"></p>
+<p>结合表2和图3，再根据图1的典型应用电路，可以大致知道芯片的连接方法。</p>
+<table>
+<thead>
+<tr>
+<th>针脚</th>
+<th>功能描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>VDD</td>
+<td>芯片供电接口</td>
+</tr>
+<tr>
+<td>GND</td>
+<td>芯片接地接口</td>
+</tr>
+<tr>
+<td>HIN</td>
+<td>调制波形输入接口——高位</td>
+</tr>
+<tr>
+<td>LIN</td>
+<td>调制波形输入接口——低位</td>
+</tr>
+<tr>
+<td>VB</td>
+<td>高位正电</td>
+</tr>
+<tr>
+<td>HO</td>
+<td>控制高位IGBT栅极的信号输出接口</td>
+</tr>
+<tr>
+<td>VS</td>
+<td>高位负电</td>
+</tr>
+<tr>
+<td>LO</td>
+<td>控制低位IGBT栅极的信号输出接口</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>还是不太明白VB和VS的作用</p>
+</blockquote>
+<p>表4给出了 V<span style="font-size: 0.8rem; font-weight: 500;">DD</span> 和 V<span style="font-size: 0.8rem; font-weight: 500;">B</span> 的供电范围：</p>
+<p><img src="https://pic.islet.space/2021/07/image-20210715105358524.png" alt="image-20210715105358524"></p>
+<p><img src="https://pic.islet.space/2021/07/image-20210715105816397.png" alt="image-20210715105816397"></p>
+<p>表6 给出了输入 V<span style="font-size: 0.8rem; font-weight: 500;">IN</span> 的逻辑电平高低的电压范围，高电平为1.7 ~ 2.4 V， 低电平为0.7 ~ 1.1V。</p>
+<p><img src="https://pic.islet.space/2021/07/image-20210715103507327.png" alt="image-20210715103507327"></p>
+<p>图2 提供了驱动芯片内部结构示意图</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://islet.space/2021/07/14/Hardware/2021-07-14-Semiconductor/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Liewzheng">
+      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coder的孤岛">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/07/14/Hardware/2021-07-14-Semiconductor/" class="post-title-link" itemprop="url">Semiconductor</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-07-14 20:30:00" itemprop="dateCreated datePublished" datetime="2021-07-14T20:30:00+08:00">2021-07-14</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2021-07-16 00:45:31" itemprop="dateModified" datetime="2021-07-16T00:45:31+08:00">2021-07-16</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Semiconductor/" itemprop="url" rel="index"><span itemprop="name">Semiconductor</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>本文章用于记录半导体（晶体管的工作原理等blablabla的知识）。</p>
+<h1 id="半导体的定义"><a href="#半导体的定义" class="headerlink" title="半导体的定义"></a>半导体的定义</h1><p><strong>半导体</strong> 是指常温下导电性能介于导体与绝缘体之间的材料。 按照国际通行的半导体产品标准方式进行分类，半导体可以分为四类：<strong>集成电路</strong>（Integer Circuit），<strong>分立器件</strong>（Discrete Device），<strong>传感器</strong>（Sensor） 和 <strong>光电子器件</strong>（Optoelectronic Devices） ，统称为半导体元件。</p>
+<p>分立器件按照功率转换进行分类，可以分为 <strong>功率器件</strong> 和 <strong>非功率器件</strong>，其中，<strong>传感器</strong> 和 <strong>光电器件</strong> 属于 分立器件下的 <strong>非功率器件</strong>，剩下的均是 <strong>功率器件</strong>，包含大部分晶体管，如 Zener Diode、BJT、IGFET、IGBT、Thyristor等。</p>
+<p><strong>注意</strong>：功率器件的概念很大，不仅在分立器件中存在功率半导体，在IC中也存在功率半导体的产品。</p>
+<h2 id="本征半导体"><a href="#本征半导体" class="headerlink" title="本征半导体"></a>本征半导体</h2><p><mark>导电性介于导体与绝缘体之间的物质</mark>称为 <strong>半导体</strong>。</p>
+<p><strong>导体</strong>：如铁、铝、铜等金属元素等低价元素，其最外层电子在外电场作用下很容易产生定向移动，形成电流。</p>
+<p><strong>绝缘体</strong>：如惰性气体、橡胶等，其原子的最外层电子受原子核的束缚力很强，只有在外电场强到一定程度时才可能导电。</p>
+<p><strong>半导体</strong>：如硅（Si）、锗（Ge），均为四价元素，它们原子的最外层电子受原子核的束缚力介于导体与绝缘体之间。</p>
+<p><strong>本征半导体</strong>：intrinsic semiconductor， 是 <strong>纯净</strong>（Purity）的 <strong>晶体结构</strong>（Crystal Texture）的 半导体；intrinsic 具有 “本质，固有” 之意。<strong>纯净</strong>，即无杂质之意；<strong>晶体结构</strong>，即稳定的结构。</p>
+<h2 id="P-N型半导体"><a href="#P-N型半导体" class="headerlink" title="P/N型半导体"></a>P/N型半导体</h2><p>纯净的硅晶体不带电荷，不显示出任何导电特性。</p>
+<p><strong>自由电子</strong>（Electron）：由于热运动，具有足够能量的价电子挣脱共价键的束缚而成为自由电子</p>
+<p><strong>空穴</strong>（Hole）：自由电子的产生使共价键中留有一个空位置</p>
+<p><strong>复合</strong>：自由电子与空穴相碰同时消失</p>
+<p><strong>电荷</strong>：电子和空穴都是电荷，电子呈现负电荷，空穴呈现正电荷</p>
+<p><strong>载流子</strong>（Carrier）：运载电荷的粒子称为载流子</p>
+<p><strong>导电性</strong>：物体呈现出的传导电流的能力</p>
+<p><strong>多数载流子</strong>：在纯净硅晶体中掺杂数量较多的电荷称为多数载流子。</p>
+<p><strong>少数载流子</strong>：在纯净硅晶体中掺杂数量较少的电荷称为少数载流子。</p>
+<p>外加电场时，带负电的自由电子和带正电的空穴均参与导电，且运动方向相反。由于载流子数目很少，故导电性很差。温度升高，热运动加剧，载流子浓度增大，导电性增强。热力学温度0K时不导电。</p>
+<img src="/Users/liewzheng/Library/Application Support/typora-user-images/image-20210714204623205.png" alt="image-20210714204623205" style="zoom: 33%;" />
+
+<div style="text-align: center; font-weight:900;">图 N型半导体结构</div>
+
+
+
+<img src="/Users/liewzheng/Library/Application Support/typora-user-images/image-20210714204653816.png" alt="image-20210714204653816" style="zoom: 33%;" />
+
+<div style="text-align: center; font-weight:900;">图 P型半导体结构</div>
+
+
+
+<p>往纯净的硅晶体中掺杂一定浓度的 <strong>磷</strong>（P）或 <strong>硼</strong>（B）即可获得 使得硅晶半导体带上电子或空穴，即获得了 <strong>N型半导体</strong> 和 <strong>P型半导体</strong>。</p>
+<p><strong>杂质半导体</strong>：在本征的基础上掺杂其他元素。</p>
+<p><strong>P型半导体</strong>：掺杂了硼元素的硅晶体，空穴为多数载流子。</p>
+<p><strong>N型半导体</strong>：掺杂了磷元素的硅晶体。自由电子为多数载流子。</p>
+<h2 id="PN结"><a href="#PN结" class="headerlink" title="PN结"></a>PN结</h2><p><strong>结</strong>：即 Junction，在纯净硅晶体中掺杂两种不同电荷所形成的杂质接触截面。</p>
+<p><strong>扩散运动</strong>：物质 <mark>因浓度差而产生</mark> 的运动。气体、液体、固体均有之。扩散运动使靠近接触面P区的空穴浓度降低、靠近接触面N区的自由电子浓度降低，产生内电场。</p>
+<p><strong>漂移运动</strong>：因 <mark>电场作用</mark> 所产生的运动。</p>
+<p><strong>动态平衡</strong>：结处因空穴和电子一刻不停地复合和分离（官方：参与扩散运动和漂移运动的载流子数目相同）而形成 “无多数载流子” 的状态。</p>
+<blockquote>
+<p><strong>注意</strong>：扩散运动和漂移运动是相反的， </p>
+</blockquote>
+<img src="/Users/liewzheng/Library/Application Support/typora-user-images/image-20210714210922380.png" alt="image-20210714210922380" style="zoom:50%;" />
+
+<div style="text-align: center; font-weight:900;">图 扩散运动</div>
+
+
+
+<img src="/Users/liewzheng/Library/Application Support/typora-user-images/image-20210714210942004.png" alt="image-20210714210942004" style="zoom:67%;" />
+
+<div style="text-align: center; font-weight:900;">图 漂移运动</div>
+
+<p><strong>耗尽层</strong>：PN结处，因动态平衡而达到的“无多数载流子”的状态，该结的大小称为耗尽层。</p>
+<p>如果此时让P区的多数载流子，即空穴尽量往N区移动，让N区的多数载流子，即自由电子尽量往P区移动，则两种电荷进行复合，形成更宽的耗尽层，此时因为耗尽层因为没有多数载流子而呈现不导电特性。</p>
+<p>反之，让P区的多数载流子尽量往P区靠拢，让N区的多数载流子尽量往N区靠拢（注意，这里用的是“靠拢”，因为中间已经有耗尽层的形成，此时的“靠拢”是让耗尽层中已经复合消失的电子和空穴重新拆开，分别往各自原来的反向回归。），耗尽层的宽度会逐渐缩小，显现出导电特性。</p>
+<p><strong>正向</strong>：电源的正、负极分别对准半导体的P、N极进行连接。</p>
+<p><strong>反向</strong>：电源的正、负极分别对准半导体的N、P极进行连接。</p>
+<p><strong>正向导通</strong>：耗尽层变窄，扩散运动加剧，由于外电源的作用，形成扩散电流，PN结处于导通状态。</p>
+<p><strong>反向截止</strong>：耗尽层变宽，阻止扩散运动，有利于漂移运动，形成漂移电流。由于电流很小，故可近似认为其截止。</p>
+<img src="/Users/liewzheng/Library/Application Support/typora-user-images/image-20210714212136379.png" alt="image-20210714212136379" style="zoom:33%;" />
+
+<div style="text-align: center; font-weight:900;">图 正向导通</div>
+
+
+
+<img src="/Users/liewzheng/Library/Application Support/typora-user-images/image-20210714212143706.png" alt="image-20210714212143706" style="zoom:33%;" />
+
+<div style="text-align: center; font-weight:900;">图 反向截止</div>
+
+
+
+<h3 id="电容效应"><a href="#电容效应" class="headerlink" title="电容效应"></a>电容效应</h3><p><strong>势垒电容</strong>：PN结外加电压变化时，空间电荷区的宽度将发生变化，有电荷的积累和释放的过程，与电容的充放电相同，其等效电容称为势垒电容Cb。</p>
+<p><strong>扩散电容</strong>：PN结外加的正向电压变化时，在扩散路程中载流子的浓度及其梯度均有变化，也有电荷的积累和释放的过程，其等效电容称为扩散电容Cd。</p>
+<p><strong>结电容</strong>：等于 势垒电容 与 扩散电容 之和。但 <mark>结电容不是常量！</mark> 若PN结外加电压频率高到一定程度，则失去单向导电性！</p>
+<h1 id="二极管"><a href="#二极管" class="headerlink" title="二极管"></a>二极管</h1><p>The diode is the most used semiconductor device in electronics circuits. <em><strong>It is a two-terminal electrical check valve that allows the flow of current in one direction.</strong></em> They are mostly made up of <em><strong>silicon</strong></em> but <em><strong>germanium</strong></em> is also used. Usually, they are used for <em><strong>rectification</strong></em>. But there are different properties &amp; characteristics of diodes which can be used for different application. These characteristics are modified to form different types of diodes. </p>
+<p><img src="https://pic.islet.space/2021/07/image-20210713102126884.png" alt="image-20210713102126884"></p>
+<img src="https://pic.islet.space/2021/07/Types-of-Diodes-and-Their-Applications.jpg" alt="Types of Diodes and Their Applications" style="zoom:67%;" />
+
+<div style="text-align: center; font-weight: 900;">图 二极管的几种外形</div>
+
+
+
+<p><img src="https://pic.islet.space/2021/07/image-20210713102141393.png" alt="image-20210713102141393"></p>
+<div style="text-align: center; font-weight: 900;">图 二极管的几种常见结构和符号</div>
+
+<h2 id="主要特征参数"><a href="#主要特征参数" class="headerlink" title="主要特征参数"></a>主要特征参数</h2><ol>
+<li>最大整流电流（Maximum Rectification Current）</li>
+<li>最高反向工作电压（Maximum Reverse Voltage）</li>
+<li>反向电流（Reverse Current）</li>
+<li>最高工作频率（Maximum Frequency）</li>
+</ol>
+<h1 id="晶体管"><a href="#晶体管" class="headerlink" title="晶体管"></a>晶体管</h1><p>晶体管主要分为两种类型，BJT 和 FET。</p>
+<p><strong>工作区域</strong>：晶体管的导通状态，分为三种，分别是饱和、截止和放大，分别是指</p>
+<h2 id="BJT"><a href="#BJT" class="headerlink" title="BJT"></a>BJT</h2><p>BJT，即 Bioplar Junction Transistor，双极性结型晶体管。</p>
+<p>![image-20210714213248733](/Users/liewzheng/Library/Application Support/typora-user-images/image-20210714213248733.png)</p>
+<div style="text-align: center; font-weight:900;">图 晶体管内部结构和符号示意</div>
+
+<p><strong>注意</strong>：晶体管的符号示意中，箭头的方向永远是从P指向N的，此时先不用管c、b、e是怎么接，确定好。</p>
+<blockquote>
+<p>BJT结构特点：三极三区两PN结，发射区多子浓度高，基区多子浓度低且薄，集电区 面积大。</p>
+</blockquote>
+<p><strong>发射区</strong>：多数载流子较高的区域，自由电子流出的方向。</p>
+<p><strong>基区</strong>：多数载流子浓度较低且薄的区域。</p>
+<p><strong>集电区</strong>：面积大的区域，空穴流出的反向。</p>
+<blockquote>
+<p>某极 是根导线，与BJT中的物理区不同。</p>
+</blockquote>
+<p><strong>发射结</strong>：发射区和基区之间的PN结。</p>
+<p><strong>集电结</strong>：集电区和基区之间的PN结。</p>
+<blockquote>
+<p><strong>注意</strong>：以上多数载流子可以是 空穴 或 自由电子，因此 BJT 可以有 NPN 和 PNP 两种类型的BJT。</p>
+</blockquote>
+<p>联系到实际电路连接中，一般情况下，<strong>集电区</strong> 都是接 <strong>供电电源</strong> ， <strong>基区</strong> 都是接 <strong>控制电源</strong>， <strong>发射区</strong> 都是接 <strong>负端/地</strong>。控制电源的电压会低于供电电源的电压，但会大于发射区的电压。</p>
+<p>基区所连接的控制电源 为BJT提供 高电平或低电平 予以控制半导体的导通或截止，<mark>半导体所控制的负载的最大电压取决于发射极的供电电源电压 和 基区的控制电源电压</mark>。</p>
+<img src="https://pic.islet.space/2021/07/image-20210713104805683.png" alt="image-20210713104805683" style="zoom:67%;" />
+
+<div style="text-align: center; font-weight: 900;">图 BJT的几种常见外形</div>
+
+
+
+<img src="https://pic.islet.space/2021/07/image-20210713105054978.png" alt="image-20210713105054978" style="zoom:67%;" />
+
+<div style="text-align: center; font-weight: 900;">图 BJT的结构和符号</div>
+
+
+
+<h3 id="工作原理"><a href="#工作原理" class="headerlink" title="工作原理"></a>工作原理</h3><p>从下图可以看出，下图 BJT 为 NPN 型半导体，集电区接正电，发射区接地，基区接地。集电区与基区为反向截止状态，集电结的耗尽层增大，进一步阻止集电区和发射区之间的电流导通。</p>
+<p>若此时向基区施加正向电流，基区电压高于发射区电压，发射结正偏导通，发射区多子（电子）往基区流动，。发射区的电子能够顺利往集电区流动，集电区的电流往发射区流动，从而导通 该BJT。</p>
+<img src="/Users/liewzheng/Library/Application Support/typora-user-images/image-20210714215347959.png" alt="image-20210714215347959" style="zoom:33%;" />
+
+<div style="text-align: center; font-weight:900;">图 BJT导通时的内部电荷流向示意</div>
+
+
+
+<p>集电极电流是漂移形成的，发射极电流是扩散形成的。</p>
+<p><strong>发射区电流</strong> I<span style="font-size: 0.8rem;">E</span> 是由 扩散运动形成的。</p>
+<p><strong>基区电流</strong> I<span style="font-size: 0.8rem;">B</span> 是由 复合运动形成的。</p>
+<p><strong>集电区电流</strong> I<span style="font-size: 0.8rem;">C</span> 是由 漂移运动形成的。</p>
+<img src="/Users/liewzheng/Library/Application Support/typora-user-images/image-20210714222731446.png" alt="image-20210714222731446" style="zoom:33%;" />
+
+<div style="text-align: center; font-weight:900;">图 BJT输入特性曲线</div>
+
+
+
+<img src="/Users/liewzheng/Library/Application Support/typora-user-images/image-20210714222645318.png" alt="image-20210714222645318" style="zoom: 33%;" />
+
+<div style="text-align: center; font-weight:900;">图 BJT输出特性曲线</div>
+
+
+
+<h3 id="工作区域"><a href="#工作区域" class="headerlink" title="工作区域"></a>工作区域</h3><img src="/Users/liewzheng/Library/Application Support/typora-user-images/image-20210714223024773.png" alt="image-20210714223024773" style="zoom:67%;" />
+
+<div style="text-align: center; font-weight:900;">图 BJT工作区域</div>
+
+<p>饱和 和 放大的区别：</p>
+<p>共射极电路、共基电路</p>
+<h2 id="FET"><a href="#FET" class="headerlink" title="FET"></a>FET</h2><p><strong>场效应晶体管</strong> 简称 <strong>场效应管</strong>。主要有 <strong>结型场效应管</strong>（JFET）和 <strong>金属氧化物半导体场效应管</strong>（MOSFET）两种类型。</p>
+<h3 id="JFET"><a href="#JFET" class="headerlink" title="JFET"></a>JFET</h3><img src="https://pic.islet.space/2021/07/image-20210713105852012.png" alt="image-20210713105852012" style="zoom:67%;" />
+
+<div style="text-align: center; font-weight: 900;">图 JFET的结构和符号</div>
+
+
+
+<h3 id="MOSFET"><a href="#MOSFET" class="headerlink" title="MOSFET"></a>MOSFET</h3><p>在MOS管工作原理图上可以看到，漏极和源极之间有一个寄生二极管。这个叫体二极管，在驱动感性负载(如马达)，这个二极管很重要。顺便说一句，体二极管只在单个的MOS管中存在，在集成电路芯片内部通常是没有的。</p>
+<p>下图a中，为增强型P衬底N沟道MOS，其栅极接 <u>高电平</u> 即导通。</p>
+<img src="https://pic.islet.space/2021/07/image-20210713110023509.png" alt="image-20210713110023509" style="zoom:67%;" />
+
+<div style="text-align: center; font-weight: 900;">图 N沟道增强型MOS管结构示意图 及 增强型MOS管的符号</div>
+
+
+
+<img src="https://pic.islet.space/2021/07/image-20210713110146838.png" alt="image-20210713110146838" style="zoom:67%;" />
+
+<div style="text-align: center; font-weight: 900;">图 N沟道耗尽型MOS管结构示意图 及 耗尽型MOS管的符号</div>
+
+<h4 id="NMOS工作原理"><a href="#NMOS工作原理" class="headerlink" title="NMOS工作原理"></a>NMOS工作原理</h4><iframe src="//player.bilibili.com/player.html?aid=931455726&bvid=BV1DM4y1T7Yx&cid=363622918&page=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"> </iframe>
+
+<p>MOS管有4个端子，其符号也是四个端子组成的，以下用NMOS举例：</p>
+<p>NMOS底部端子连接到基板/主体（Substrate/Body），称为基板、衬底端子 或 <em><strong>主体端子</strong></em>。上方各有两个N沟道，各自连接 <em><strong>源极端子</strong></em> 和 <em><strong>漏极端子</strong></em>。两个端子中间添加了一层 薄绝缘体或电介质，在此层绝缘体上加了一个 <em><strong>栅极端子</strong></em>。</p>
+<img src="https://pic.islet.space/2021/07/image-20210716001316182.png" alt="image-20210716001316182" style="zoom:50%;" />
+
+<p>在NMOS内部构造中，源极端子 和 衬底端子 在内部连接，因此外露出来的端子只有三个。此时因 源极 和 衬底 的电位相同，阻止了任何电流从衬底流向源极。</p>
+<img src="https://pic.islet.space/2021/07/image-20210716001716986.png" alt="image-20210716001716986" style="zoom:50%;" />
+
+<p>在MOS中，希望电子从漏极流向源极，在两个极连接一个电源，其电压称为 V<span style="font-size: 0.6rem;">DS</span> ，此时加大电压，电流却不会增大，因为漏极沟道附近的耗尽层不断增大。</p>
+<img src="https://pic.islet.space/2021/07/image-20210716002453710.png" alt="image-20210716002453710" style="zoom:50%;" />
+
+<p>栅极端子 和 主体端子 都有绝缘材料，当给栅极端子接电压较小的电压 V<span style="font-size: 0.6rem;">GS</span> 时，两个绝缘材料形成电容效应，栅极处的多子不断吸引自由电子往栅极移动，暂时形成带自由电子较多的N区，从而导通了 源极 和 漏极，暂时形成了回路。因为 栅极处的N区是暂时连接 源极和漏极的通道，因此也被称为 N沟道。随着电压的增大或减小，沟道的大小也会随着变化。足以形成沟道的最低栅极电压被称为 阈值电压。</p>
+<img src="https://pic.islet.space/2021/07/image-20210716002900372.png" alt="image-20210716002900372" style="zoom:50%;" />
+
+<p>当不断增加栅极电压，漏极 和 衬底之间的耗尽层将因为 反向偏置 而不断增加。靠近漏极一侧的N沟道宽度将不断减小，直到某个电压点时，称为夹断效应。夹断下映实际上是说，沟道并未完全关闭，许多电子将保留通道，并不是停止了电流流动，而是出现了恒定的饱和电流，其电压被称为 饱和电压。</p>
+<img src="https://pic.islet.space/2021/07/image-20210716004255087.png" alt="image-20210716004255087" style="zoom:50%;" />
+
+
+
+<div style="text-align: center; font-weight: 900;">表 FET的符号和特性</div>
+
+<p><img src="https://pic.islet.space/2021/07/image-20210713105437061.png" alt="image-20210713105437061"></p>
+<p><img src="https://pic.islet.space/2021/07/image-20210713105533255.png" alt="image-20210713105533255"></p>
+<h2 id="FET-and-BJT"><a href="#FET-and-BJT" class="headerlink" title="FET and BJT"></a>FET and BJT</h2><p>FET 的 <strong>栅极</strong>、<strong>源极</strong> 和 <strong>漏极</strong> 对应 BJT的 <strong>基极</strong>、<strong>发射极</strong> 和 <strong>集电极</strong>，其作用类似。</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>FET</th>
+<th>BJT</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>电流索取</td>
+<td>用“栅-源”电压控制漏极电流，栅极基本不取电流<br>【输入电阻高的电路选用】</td>
+<td>工作时基极总要索取一定的电流<br>【信号源若提供电流的选用】</td>
+</tr>
+<tr>
+<td>导电情况</td>
+<td>仅多子参与导电</td>
+<td>多子少子均参与导电</td>
+</tr>
+<tr>
+<td>稳定性</td>
+<td>较好</td>
+<td>较差<br>【因少子数目受温度、辐射等因素影响较大，温度稳定性和抗辐射的能力较差些。】</td>
+</tr>
+<tr>
+<td>噪声系数</td>
+<td>小<br>【低噪声放大器的输入级和信噪比要求高的电路选用】</td>
+<td>大</td>
+</tr>
+<tr>
+<td>源-漏互换</td>
+<td>可以互换，互换后特性变化不大</td>
+<td>互换后特性差异很大，特殊需求时互换</td>
+</tr>
+<tr>
+<td>电压范围</td>
+<td>宽</td>
+<td>窄</td>
+</tr>
+<tr>
+<td>工艺</td>
+<td>简单</td>
+<td>复杂</td>
+</tr>
+<tr>
+<td>耗电</td>
+<td>低</td>
+<td>高</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>IGFET / MOS / MOSFET 是同一个东西，还有个词叫 MISFET（Metal-Insulated-Semiconductor Field Effect Transistor，金属绝缘半导体场效应管）</p>
+</blockquote>
+<h1 id="功率半导体"><a href="#功率半导体" class="headerlink" title="功率半导体"></a>功率半导体</h1><p><strong>功率半导体</strong> 器件大致分为两类： <strong>可控功率半导体</strong> 和 <strong>不可控功率半导体</strong>。<strong>可控功率半导体</strong> 如 Thyristor（晶闸管）、BJT（双极型晶体管）、功率MOSFET 和 IGBT 。不可控功率半导体 包括各种类型的功率二极管。</p>
+<img src="https://pic.islet.space/2021/07/image-20210713112224602.png" alt="image-20210713112224602" style="zoom:67%;" />
+
+<div style="text-align: center; font-weight: 900;">图 常见功率半导体器件及其典型的功率范围、阻断电压和开关频率</div>
+
+
+
+<h1 id="IGBT"><a href="#IGBT" class="headerlink" title="IGBT"></a>IGBT</h1><p><strong>绝缘栅型双极晶体管</strong>，即 <strong>IGBT</strong>（Insulated Gate Bipolar Transistor），是由 <em><strong>BJT</strong></em>（双极型三极管)）和 <em><strong>MOS</strong></em>（绝缘栅型场效应管）组成的 <strong>复合全控型电压驱动式功率半导体</strong> 器件, 兼有 <strong>MOSFET</strong>的 <u>高输入阻抗</u> 和 <strong>GTR</strong>的 <u>低导通压降</u> 两方面的优点。IGBT综合了以上两种器件的优点，驱动功率小而饱和压降低。非常适合应用于直流电压为600V及以上的变流系统如交流电机、变频器、开关电源、照明电路、牵引传动等领域。</p>
+<blockquote>
+<p>GTR 具有饱和压降低，载流密度大，但驱动电流较大的优点；</p>
+<p>MOSFET 具有驱动功率很小，开关速度快，但导通压降大，载流密度小的优点。</p>
+</blockquote>
+<p><strong>IGBT模块</strong> 是由 IGBT（绝缘栅双极型晶体管芯片）与FWD（续流二极管芯片）通过特定的电路桥接封装而成的模块化半导体产品；封装后的IGBT模块直接应用于变频器、UPS不间断电源等设备上；IGBT模块 具有节能、安装维修方便、散热稳定等特点；当前市场上销售的多为此类模块化产品，一般所说的IGBT也指IGBT模块；随着节能环保等理念的推进，此类产品在市场上将越来越多见；</p>
+<img src="https://pic.islet.space/2021/07/image-20210713142410853.png" alt="image-20210713142410853" style="zoom: 80%;" />
+
+<div style="text-align: center; font-weight: 900;">图 IGBT内部结构和等效电路</div>
+
+<p>因为IGBT的构造所致，最好还是不要让IGBT长期工作在放大区，会让其降低使用寿命，因开关开断时而进入放大区无可避免，仅工作在 饱和区 和 截止区 即可。</p>
+<img src="https://pic.islet.space/2021/07/image-20210715221251088.png" alt="image-20210715221251088" style="zoom:80%;" />
+
+
+
+<p>三个英文符号分别表示为 <strong>栅极</strong>（Gate）、<strong>集电极</strong>（Collector）、<strong>发射极</strong>（Emitter）。</p>
+<p>在漏极侧增加了高掺杂的P+层，称之为 <strong>集电极</strong>。</p>
+<ul>
+<li><p>当栅极接近 <u>负电压</u> 或 <u>零电压</u> 时，PN结 J2 阻断，发射极电压远低于集电极电压，IGBT 关断 （正向阻断）；但是此刻 结J1 和 结J3 <strong>正偏导通</strong>。</p>
+</li>
+<li><p>当栅极接到 <u>正电压</u>（通常是15V）时，氧化层下方的 P区 建立 <strong>反型导电沟道</strong>，为 N-区 提供导电通路，电子从发射极到 N-区 降低了 N-区 的电位，PN结 J1导通，IGBT导通。 </p>
+</li>
+</ul>
+<p>如果栅极电压不够大，形成的反型层较弱，流入漂移区的电子数相对较少，IGBT压降增大，即进入特性曲线的 <strong>线性放大区</strong>。工作在线性放大区会加剧损耗或损坏 IGBT，因而除了开关瞬间，应避免进入线性放大区。</p>
+<img src="https://pic.islet.space/2021/07/image-20210713144038325.png" alt="image-20210713144038325" style="zoom:67%;" />
+
+<div style="text-align: center; font-weight: 900;">图 IGBT的输出特性</div>
+
+<p>IGBT 的关断电流分为 <strong>MOSFET关断阶段</strong> 和 <strong>BJT关断阶段</strong>。第一个阶段时，关断反型沟道，电流迅速下降；第二个阶段时，会产生持续时间较长的拖尾电流。</p>
+<p>拖尾电流使得 IGBT 的关断损耗 高于 MOSFET 的关断损耗。</p>
+<img src="https://pic.islet.space/2021/07/image-20210713144838981.png" alt="image-20210713144838981" style="zoom: 67%;" />
+
+<div style="text-align: center; font-weight: 900;">图 MOSFET和IGBT的主要开通和关断特性比较</div>
+
+
+
+<p>截止电压：</p>
+<p>饱和电压：</p>
+<p>击穿电压：</p>
+<p>（栅极和发射极）阈值电压</p>
+<p>漏电流：泄露电流，leakage current。主要是指栅极和发射极的在反向偏执状态的泄露电流，此处特性与二极管相近。</p>
+<h2 id="分类"><a href="#分类" class="headerlink" title="分类"></a>分类</h2><p>IGBT可以分为 <strong>穿通型</strong>（PT）IGBT、<strong>非穿通型</strong>（NPT）IGBT、<strong>场终止型</strong>（FS）IGBT、<strong>沟槽栅</strong>（Trench）IGBT、<strong>载流子存储沟槽栅双极晶体管</strong>（CSTBT）、<strong>注入增强晶体管</strong>（IEGT）、<strong>沟槽栅终止</strong>（Trench-FS）IGBT、<strong>逆导型</strong>（RC）IGBT。</p>
+<p><strong>平面栅极结构</strong> 的IGBT设计，形成了JFET结构，以及发射极区软弱的电导调制效应，载流子的浓度从集电极到发射极之间逐步降低。</p>
+<p><strong>沟槽型栅极结构</strong> 的IGBT设计，在平面型的基础上保持载流子浓度平均分布或逐步增加载流子浓度，进一步降低通态损耗，而不影响拖尾电流和关断损耗。</p>
+<p>载流子越少越有助于降低关断损耗。</p>
+<table>
+<thead>
+<tr>
+<th>TYPE</th>
+<th>内部构造（原理）</th>
+<th>温度系数</th>
+<th>优点</th>
+<th>缺点</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>PT-IGBT<BR>穿通型IGBT</td>
+<td><img src="https://pic.islet.space/2021/07/image-20210713112637086.png" alt="image-20210713112637086" style="zoom:67%;" /></td>
+<td>正温度系数<br>负温度系数</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>NPT-IGBT<BR>非穿通型IGBT</td>
+<td><img src="https://pic.islet.space/2021/07/image-20210713112654444.png" alt="image-20210713112654444" style="zoom:67%;" /></td>
+<td>正温度系数</td>
+<td>1. 有利于IGBT并联</td>
+<td>1. 随着温度上升，损耗增大</td>
+</tr>
+<tr>
+<td>FS-IGBT<BR>场终止型IGBT</td>
+<td><img src="https://pic.islet.space/2021/07/image-20210713112712678.png" alt="image-20210713112712678" style="zoom:67%;" /></td>
+<td>正温度系数</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Trench-IGBT<br>沟槽栅IGBT</td>
+<td><img src="https://pic.islet.space/2021/07/image-20210713112728045.png" alt="image-20210713112728045" style="zoom:67%;" /></td>
+<td></td>
+<td></td>
+<td>1. 更宽的导电沟道会增加IGBT短路时的电流</td>
+</tr>
+<tr>
+<td>CSTBT<br>载流子存储沟槽双极晶体管</td>
+<td><img src="https://pic.islet.space/2021/07/image-20210713122039519.png" alt="image-20210713122039519" style="zoom:67%;" /></td>
+<td></td>
+<td>1. 降低了IGBT的饱和压降</td>
+<td></td>
+</tr>
+<tr>
+<td>IEGT<BR>注入增强栅晶体管</td>
+<td><img src="https://pic.islet.space/2021/07/image-20210713112841613.png" alt="image-20210713112841613" style="zoom:67%;" /></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Trench-FS IGBT<br>沟槽栅终止IGBT</td>
+<td><img src="https://pic.islet.space/2021/07/image-20210713112933604.png" alt="image-20210713112933604" style="zoom:67%;" /></td>
+<td></td>
+<td></td>
+<td>1. 保持鲁棒性，通态损耗和开关损耗降低<br>2. 功率密度提升，即电流密度增大<br>3. 单位IGBT所需硅材料降低</td>
+</tr>
+<tr>
+<td>RC-IGBT<BR>逆导型IGBT</td>
+<td><img src="https://pic.islet.space/2021/07/image-20210713122011473.png" alt="image-20210713122011473" style="zoom:67%;" /></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<h1 id="术语总结"><a href="#术语总结" class="headerlink" title="术语总结"></a>术语总结</h1><p><strong>FET</strong>： Filed Effect Transistor，即 <strong>场效应管</strong>，是 <mark>利用输入回路的电场效应来控制输出回路电流</mark> 的一种半导体器件，故此得名。由于其仅靠半导体中的多数载流子导电，因此也称为 <strong>单极型晶体管</strong>。</p>
+<p><strong>JFET</strong>： Junction Filed Effect Transistor，即 <strong>结型场效应管</strong>，有 P沟道 和 N沟道 两种类型。</p>
+<p><strong>IGFET</strong>： Insulated Gate Field Effect Transistor，即 <strong>绝缘栅型场效应管</strong>。因栅极与源极、栅极与漏极之间均采用二氧化硅绝缘层进行阻隔而得名如此。又因栅极为金属铝，故又称为MOS管。具有 高输入阻抗、高开关频率 和 低驱动功率 的优点。</p>
+<p><strong>MOS</strong>： Metal-Oxide-Semiconductor，即 <strong>金属氧化物半导体</strong>。同上。</p>
+<p><strong>MOSFET</strong>： Metal-Oxide-Semiconductor Field Effect Transistor，即 <strong>金属氧化物半导体场效应管</strong>。同上。</p>
+<p><strong>BJT</strong>： Bipolar Junction Transistor， 即 <strong>双极结型晶体管</strong>。因带有两种不同极性电荷的载流子参与导电，故得名如此，或称 <strong>半导体三极管</strong>，简称 <strong>双极晶体管</strong> 或 <strong>晶体管</strong>。</p>
+<p><strong>UJT</strong>： Unijunction Transistor，即 <strong>单结晶体管</strong>。因有两个基极，也称为 <strong>双基极晶体管</strong>。</p>
+<p><strong>GTR</strong>： Giant Transistor，即 <strong>巨型晶体管</strong>。BJT的一种，亦称为 Power BJT（<strong>电力晶体管</strong>）。具有自关断、无须辅助关断电路、 高电流密度、低保和电压 和 耐高压 的优点。</p>
+<p><strong>IGBT</strong>： Insulated Gate Bipolar Transistor，即 <strong>绝缘栅双极型晶体管</strong>。</p>
+<p><strong>Thyristor</strong>：即 <strong>半导体闸流管</strong> 、<strong>晶闸管</strong>，又称为 <strong>硅可控元件</strong>（Silicon Controlled Rectifier）， 由按顺序排列的PNPN四层半导体组成。最外层的P区和N区构成了正负极，中间的P区构成了控制极（栅极），可以控制导通。具有耐压高、电流大、耐浪涌能力强 且 价格便宜 等优点。</p>
+<p><strong>GTO</strong>： Gate Turn-Off Thyristor，即 <strong>可关断晶闸管</strong>。是一种通过门极来控制器件导通和关断的电力半导体器件。具有 普通晶闸管 和 GTR的优点，是应用于高压大容量场合中的一种大功率开关器件。</p>
+<p><strong>PT</strong>： Power Transistor， 即 <strong>功率晶体管</strong> / <strong>功率管</strong>。</p>
+<p><strong>IPM</strong>： Intelligent Power Module，即 <strong>智能功率模块</strong>。具有GTR 和 MOSFET 的优点。而且IPM内部集成了逻辑、控制、检测和保护电路，使用起来方便,不仅减小了系统的体积以及开发时间，也大大增强了系统的可靠性。</p>
+<img src="https://pic.islet.space/2021/07/d4628535e5dde711c5d042b5a7efce1b9d166176" alt="img" style="zoom: 25%;" />
+
+<div style="text-align: center; font-weight: 900;">图 IPM器件示意</div>
+
+
+
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><ol>
+<li>《模拟电子技术基础》高等教育出版社，童师白</li>
+<li>《IGBT模块：技术、驱动和应用》机械工业出版社，Andreas Volke and Michael Hornkamp</li>
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/366981878">逆变器的分类方式有哪些</a></li>
+<li><a target="_blank" rel="noopener" href="https://baike.baidu.com/item/IGBT/2078902?fromtitle=%E7%BB%9D%E7%BC%98%E6%A0%85%E5%8F%8C%E6%9E%81%E5%9E%8B%E6%99%B6%E4%BD%93%E7%AE%A1&fromid=12731336">IGBT</a></li>
+<li><a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E5%9C%BA%E6%95%88%E5%BA%94%E7%AE%A1">场效应管</a></li>
+<li><a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E6%99%B6%E4%BD%93%E4%BA%8C%E6%9E%81%E7%AE%A1">晶体二极管</a></li>
+<li><a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E6%99%B6%E4%BD%93%E7%AE%A1/569042#:~:text=%E6%99%B6%E4%BD%93%E7%AE%A1%E6%9C%89%E6%97%B6%E5%A4%9A%E6%8C%87%E6%99%B6%E4%BD%93%E4%B8%89%E6%9E%81%E7%AE%A1%E3%80%82%20%E4%B8%89%E7%AB%AF%E5%AD%90%E6%99%B6%E4%BD%93%E7%AE%A1%E4%B8%BB%E8%A6%81%E5%88%86%E4%B8%BA%E4%B8%A4%E5%A4%A7%E7%B1%BB%EF%BC%9A%20%E5%8F%8C%E6%9E%81%E6%80%A7%E6%99%B6%E4%BD%93%E7%AE%A1,%EF%BC%88BJT%EF%BC%89%E5%92%8C%20%E5%9C%BA%E6%95%88%E5%BA%94%E6%99%B6%E4%BD%93%E7%AE%A1%20%EF%BC%88FET%EF%BC%8C%E5%8D%95%E6%9E%81%E6%80%A7%EF%BC%89%E3%80%82">晶体管</a></li>
+<li><a target="_blank" rel="noopener" href="https://circuitglobe.com/difference-between-diode-and-transistor.html">Difference Between Diode &amp; Transistor</a></li>
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/150177944">半导体分类知识大全</a></li>
+<li><a target="_blank" rel="noopener" href="https://xueqiu.com/3593206238/153075165">IGBT—功率半导体皇冠上的明珠</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.electricaltechnology.org/2018/12/types-of-diodes-their-applications.html">Types of Diodes and Their Applications - 24 Types of Diodes</a></li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://islet.space/2021/07/11/Hardware/2021-07-11-%E5%B5%8C%E5%85%A5%E5%BC%8F%E8%8A%AF%E7%89%87%E5%A4%96%E8%AE%BE/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Liewzheng">
+      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coder的孤岛">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/07/11/Hardware/2021-07-11-%E5%B5%8C%E5%85%A5%E5%BC%8F%E8%8A%AF%E7%89%87%E5%A4%96%E8%AE%BE/" class="post-title-link" itemprop="url">嵌入式芯片外设</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-07-11 13:50:00" itemprop="dateCreated datePublished" datetime="2021-07-11T13:50:00+08:00">2021-07-11</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2021-07-15 21:11:03" itemprop="dateModified" datetime="2021-07-15T21:11:03+08:00">2021-07-15</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Hardware/" itemprop="url" rel="index"><span itemprop="name">Hardware</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>嵌入式芯片（如MCU、DSP等）内部包含众多的模块化外设，如 串口控制模块，SPI模块，I2C模块，A/D模块，PWM模块，CAN模块，EEPROM，比较器模块，等等，它们都集成在芯片内部，有相对应的内部控制寄存器，可通过指令直接控制。</p>
+<p>按照控制信号类别对外设进行分类，可以分为 <strong>模拟外设</strong>（Analog Peripherals）、<strong>控制外设</strong>（Control Peripherals） 和 <strong>通信外设</strong>（Communication Peripherals）。</p>
+<p><strong>模拟外设</strong> 的常见外设如 <strong>模数转换器</strong>（Analog-to-Digital Convertor, ADC）、<strong>可编程增益放大器</strong>（Programmable Gain Amplifier, PGA）、<strong>温度传感器</strong>（Temperature Sensor）、<strong>缓冲数模转换器</strong>（Buffered Digital-to-Analog Convertor, DAC）和 <strong>比较器</strong>（Comparator Subsystem）。</p>
+<p><strong>控制外设</strong> 的常见设备如 <strong>捕获器</strong>（Capture, CAP）、<strong>脉冲幅频调制器</strong>（Pulse Width Modulator, PWM）、<strong>正交编码器脉冲</strong>（ Quadrature Encoder Pulse, QEP）和 **西格玛-德尔塔滤波器模块 **（Sigma-Delta Filter Module, SDFM）。</p>
+<p><strong>通信外设</strong> 的常见设备如 （Controller Area Network, CAN）、<strong>双线通信</strong>（Inter-Integrated Circuit, I2C）、<strong>电源管理总线接口</strong>（Power Management Bus Interface, PMBus）、<strong>串行通信接口</strong>（Serial Communications Interface, SCI）、<strong>串行外设接口</strong>（Serial Peripheral Interface, SPI）、<strong>局域互联网络</strong>（Local Interconnect Network, LIN） 和 <strong>高速串行接口</strong>（Fast Serial Interface, FSI）。</p>
+<h1 id="CLA"><a href="#CLA" class="headerlink" title="CLA"></a>CLA</h1><p>为了解决DSP在对实时控制要求比较高的场合中CPU计算速度不足以及计算负担过重，TI很早之前就已经推出了具有CLA功能的DSP。</p>
+<p>CLA，即Control Law  Accelerator，是一个32位浮点数计算加速器，可以理解为一个专门为浮点数运算而优化的CPU。其可以 <strong>独立</strong> 于CPU进行运算操作，并 <mark>可以同时访问</mark> 到ePWM，eCAP，eQEP，ADC result以及Comparator <mark>寄存器</mark>。相当于两个CPU并行工作，从而减少了主CPU的运算负担。</p>
+<p>也就是说 CLA可以同时访问所有模拟外设的寄存器。</p>
+<p>可以将CLA看作是辅助CPU进行计算的浮点运算协处理器（co-processor）。</p>
+<p>一个典型的应用场景如下：</p>
+<p><img src="https://pic.islet.space/2021/07/v2-9fdd0b85b26f7ff8074a8c58b1aba945_720w.jpg" alt="img">闭环控制电路</p>
+<p>CPU通过ADC采集主电路的电压、电流信息，计算得到控制逻辑（包括频率以及占空比等），从而控制电路工作。因此如果CPU的计算负担很大，比如说需要计算傅里叶分解，比如说需要计算反三角函数等，那么就造成了极大的控制时延。而CLA应运而生，专门为计算浮点数进行优化，且不会造成CPU阻塞于计算而对异常情况无法响应的情况。</p>
+<p><img src="https://pic.islet.space/2021/07/v2-2d0d2214e132b1a9982d3ab50db429ff_720w.jpg" alt="img"></p>
+<div style="text-align: center; font-weight: 900;">图 28069和28027对比</div>
+
+<p>上图则对比了具有CLA功能的28069和不具有CLA功能的28027的控制延时。对于没有CLA功能的28027，其CPU在ADC采样结束之后触发SOC中断，随后进行闭环计算，最后再结束一个周期的控制，开始下一个周期。而具有<mark>CLA</mark>功能的28069则<mark>可以在采样结束之后立即自主触发CLA计算</mark>（由于没有菊花链，所以触发迅速），并且由于<mark>CLA针对浮点数计算进行优化，因此计算时间更短</mark>。更重要的是，<mark>CPU不需要进行任何操作，因此CPU可以有空闲完成其他任务，比如异常检测，比如故障上报等等</mark>。</p>
+<p>简单来说，采用CLA的系统具有<strong>更小的计算时延</strong>，<strong>CPU负担更小，</strong>因此其系统更加迅速稳定。</p>
+<h1 id="CLB"><a href="#CLB" class="headerlink" title="CLB"></a>CLB</h1><p>The C2000 configurable logic block (CLB) is a collection of configurable blocks that interconnect through software to implement custom digital logic functions.</p>
+<p>The CLB subsystem contains a number of identical tiles.</p>
+<h1 id="GPIO"><a href="#GPIO" class="headerlink" title="GPIO"></a>GPIO</h1><p>GPIO，即General-purpose input/output，通用型之输入输出（接口）。功能类似8051的P0—P3，其接脚可以供使用者由程控自由使用，PIN脚依现实考量可作为通用输入（GPI）或通用输出（GPO）或通用输入与输出（GPIO），如当clk generator, chip select等。<br>既然一个引脚可以用于输入、输出或其他特殊功能，那么一定有寄存器用来选择这些功能。对于输入，一定可以通过读取某个寄存器来确定引脚电位的高低；对于输出，一定可以通过写入某个寄存器来让这个引脚输出高电位或者低电位；对于其他特殊功能，则有另外的寄存器来控制它们。</p>
+<h1 id="CMPSS"><a href="#CMPSS" class="headerlink" title="CMPSS"></a>CMPSS</h1><p>CMPSS，即Comparator Subsystem，比较器子系统。由模拟比较器和支持电路组成，可用于峰值电流模式控制、开关电源、功率因数校正、电压跳闸监测等应用。</p>
+<p>每个CMPSS包含两个比较器、两个12位DAC参考、两个数字滤波器和一个斜坡发生器。比较器在每个模块中表示为“H”或“L”，其中“H”和“L”分别表示高和低。每个比较器产生一个数字输出，指示正输入端的电压是否大于负输入端的电压。比较器的正输入由外部引脚或PGA驱动，负输入可由外部引脚或可编程参考12位DAC驱动。每个比较器输出通过一个可编程的数字滤波器，可以消除假跳闸信号。如果不需要滤波，也可以使用未滤波的输出。一个可选的斜坡发生器电路可用于控制高比较器的12位参考DAC值。</p>
+<p><img src="https://pic.islet.space/2021/07/20200416154658460.png"></p>
+<h1 id="CAN"><a href="#CAN" class="headerlink" title="CAN"></a>CAN</h1><p>A controller area network(CAN) is ideally suited to the many high-level industrial protocols embracing CAN and <em><strong>ISO-11898:2003</strong></em> as their physical layer.</p>
+<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><ul>
+<li><p>The CAN bus was developed by BOSCH as a <em><strong>multi-master</strong></em>, <em><strong>message broadcast</strong></em> system that specifies a maximum signaling rate of <em><strong>1 megabit per second</strong></em>(bps).</p>
+</li>
+<li><p>CAN is an International Standardization Organization (ISO) defined serial communications bus originally developed for the automotive industry to replace the complex wiring harness with a two-wire bus.</p>
+</li>
+<li><p>CAN <em>does not</em> send large blocks of data point-to-point from node A to Node B under the supervision of the central bus master.</p>
+</li>
+<li><p>In a CAN network, <mark>many short messages</mark> like temperature or RPM <mark>are broadcast to the entire network</mark>, which provides for <mark>data consistency in every node of the system</mark>. 保证系统中各节点的数据一致性。</p>
+</li>
+<li><p>CAN’s specification calls for high immunity to electrical interface and the ability to self-diagnose and repair data errors.</p>
+</li>
+</ul>
+<p>以下为ISO 11898 对 CAN 标准架构层级解释框图：</p>
+<p><img src="C:\Users\431240.IT2004\AppData\Roaming\Typora\typora-user-images\image-20210711162150611.png" alt="image-20210711162150611"></p>
+<p>The CAN communication protocol is a <em><strong>carrier-sense</strong></em>, <em><strong>multiple-access</strong></em> protocol with <em><strong>collision detection</strong></em> and <em><strong>arbitration on message priority</strong></em> (<em><strong>CSMA</strong></em> / <em><strong>CD+AMP</strong></em>). <em><strong>CSMA</strong></em> means that each node on a bus must wait for a prescribed period of inactivity before attempting to send a message. <em><strong>CD+AMP</strong></em> means that collisions are resolved through a bit-wise arbitration, based on a preprogrammed priority of each message in the identifier field of a message. The higher priority identifier always wins bus access.</p>
+<p>CAN 包含 standard CAN 和 Extended CAN。</p>
+<p><img src="C:\Users\431240.IT2004\AppData\Roaming\Typora\typora-user-images\image-20210711163535822.png" alt="image-20210711163535822"></p>
+<p><img src="C:\Users\431240.IT2004\AppData\Roaming\Typora\typora-user-images\image-20210711163548817.png" alt="image-20210711163548817"></p>
+<h1 id="术语"><a href="#术语" class="headerlink" title="术语"></a>术语</h1><p><strong>菊花链</strong>：在电子电气工程中菊花链代表一种配线方案，例如设备A和设备B用电缆相连，设备B再用电缆和设备C相连，设备C用电缆和设备D相连，在这种连接方法中不会形成网状的拓扑结构，只有相邻的设备之间才能直接通信，例如在上例中设备A是不能和设备C直接通信的，它们必须通过设备B来中转，这种方法同样不会形成环路。因为最后一个设备不会连向第一个设备。这种连线方法能够用来传输电力，数字信号和模拟信号。</p>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><ol>
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/72232829">CLA介绍及使用指南</a></li>
+<li><a target="_blank" rel="noopener" href="https://baike.baidu.com/item/gpio">GPIO</a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/whyorwhnt/article/details/105547472">TMS320F280049C 学习笔记16 比较器子系统(CMPSS)</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.ti.com/lit/an/sloa101b/sloa101b.pdf">《Introduction to the Controller Area Network(CAN)》</a></li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://islet.space/2021/07/10/Communication/2021-07-10-JTAG%E9%80%9A%E4%BF%A1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Liewzheng">
+      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coder的孤岛">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/07/10/Communication/2021-07-10-JTAG%E9%80%9A%E4%BF%A1/" class="post-title-link" itemprop="url">JTAG通信</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2021-07-10 21:00:00 / Modified: 21:28:00" itemprop="dateCreated datePublished" datetime="2021-07-10T21:00:00+08:00">2021-07-10</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Communication/" itemprop="url" rel="index"><span itemprop="name">Communication</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="入门"><a href="#入门" class="headerlink" title="入门"></a>入门</h1><p>以下为 B站up主——“蛋饼的爹地” 制作上传的JTAG科普视频。</p>
+<iframe src="//player.bilibili.com/player.html?aid=503270942&bvid=BV1iN411Z7jk&cid=346887915&page=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"> </iframe>
+
+
+
+
+
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><ol>
+<li><a target="_blank" rel="noopener" href="https://xploreqa.ieee.org/stampPDF/getPDF.jsp?tp=&arnumber=6515989&ref=aHR0cHM6Ly94cGxvcmVxYS5pZWVlLm9yZy9kb2N1bWVudC82NTE1OTg5">《IEEE 1149.1-2013 Test Access Port and Boundary Scan Architecture》</a></li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://islet.space/2021/07/10/Hardware/2021-07-10-VCC%E3%80%81VDD%E3%80%81VEE%E3%80%81VSS%E7%9A%84%E5%8C%BA%E5%88%AB/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Liewzheng">
+      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coder的孤岛">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/07/10/Hardware/2021-07-10-VCC%E3%80%81VDD%E3%80%81VEE%E3%80%81VSS%E7%9A%84%E5%8C%BA%E5%88%AB/" class="post-title-link" itemprop="url">VCC、VDD、VEE、VSS的区别</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-07-10 15:00:00" itemprop="dateCreated datePublished" datetime="2021-07-10T15:00:00+08:00">2021-07-10</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2021-07-15 21:10:58" itemprop="dateModified" datetime="2021-07-15T21:10:58+08:00">2021-07-15</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Hardware/" itemprop="url" rel="index"><span itemprop="name">Hardware</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="对于晶体管"><a href="#对于晶体管" class="headerlink" title="对于晶体管"></a>对于晶体管</h2><p><em><strong>Vcc</strong></em>：来源于集电极电源电压， <em>Collector Voltage</em>， 一般用于双极型晶体管， PNP 管时为负电源电压， 有时也标成 -Vcc， NPN 管时为正电压</p>
+<p><em><strong>Vdd</strong></em>：来源于漏极电源电压， <em>Drain Voltage</em>， 用于 MOS 晶体管电路， 一般指正电源。 因为很少单独用 PMOS 晶体管， 所以在 CMOS 电路中 Vdd 经常接在 PMOS 管的源极上。</p>
+<p><em><strong>Vss</strong></em>：源极电源电压， 在 CMOS 电路中指负电源， 在单电源时指零伏或接地。</p>
+<p><em><strong>Vee</strong></em>：发射极电源电压， <em>Emitter Voltage</em>， 一般用于 ECL 电路的负电源电压。</p>
+<p><em><strong>Vbb</strong></em>：基极电源电压， 用于双极晶体管的共基电路。</p>
+<h2 id="对于电路及芯片"><a href="#对于电路及芯片" class="headerlink" title="对于电路及芯片"></a>对于电路及芯片</h2><p><em><strong>VDD</strong></em>：电源电压(单极器件)；芯片电源电压。（Device）</p>
+<p><em><strong>VCC</strong></em>：电源电压(双极器件)；电路电源电压。（Circuit）</p>
+<p><em><strong>VSS</strong></em>：接地端、负极。（Series）</p>
+<p><em><strong>VEE</strong></em>：负电压供电；</p>
+<p><em><strong>VPP</strong></em>：编程/擦除电压。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://islet.space/2021/07/10/Hardware/TI/2021-07-10-F280041PM%E5%BC%80%E5%8F%91%E7%AC%94%E8%AE%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Liewzheng">
+      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coder的孤岛">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/07/10/Hardware/TI/2021-07-10-F280041PM%E5%BC%80%E5%8F%91%E7%AC%94%E8%AE%B0/" class="post-title-link" itemprop="url">F280041PM开发笔记</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-07-10 11:10:00" itemprop="dateCreated datePublished" datetime="2021-07-10T11:10:00+08:00">2021-07-10</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2021-07-15 21:11:29" itemprop="dateModified" datetime="2021-07-15T21:11:29+08:00">2021-07-15</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Hardware/" itemprop="url" rel="index"><span itemprop="name">Hardware</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>TMS320F28004x 下称 本系列芯片。</p>
+<h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><p>C28004x 共有2种芯片封装形式： LQFP 和 VQFN 。VQFN 仅有56针，LQFP 有 100针和 64针的区别。分别用 PZ 、PM 和 RSH 三种型号尾缀与 100-pin 、64-pin 和 56-pin 相关联。根据section4.3，可以知道还有个64PMQ的尾缀。</p>
+<p>如型号TMS320F280041PM，仅有64针脚，引脚分布如下图所示：</p>
+<img src="https://pic.islet.space/2021/07/image-20210710144933414.png" alt="image-20210710144933414"  />
+
+
+
+<h1 id="Specification"><a href="#Specification" class="headerlink" title="Specification"></a>Specification</h1><p>下图应该是F280049的系统功能框图，与F280041PM仍有些出入。</p>
+<p><img src="https://pic.islet.space/2021/07/image-20210710141413564.png" alt="image-20210710141413564"></p>
+<p><strong>注意</strong>：F280041PM不支持 CLA（可编程控制Law加速器，Programmable Control Law Accelerator），Flash为128KB（64KW），GPIO数量为26，AIO数量为14，ADC通道为14，同时280041支持5个PGA</p>
+<p>TMS320F28004x 所支持外设如下：</p>
+<img src="https://pic.islet.space/2021/07/image-20210710142641475.png" alt="image-20210710142641475" style="zoom:110%;" />
+
+
+
+<blockquote>
+<p><strong>Q</strong>: 为什么要区分type？</p>
+<p><strong>A</strong>: 就同一类功能而言，在C2000系列上，都会有许多不同的增强/阉割版本，就出现了支持全部基础功能的、出现支持部分扩展功能的 和 支持全部扩展功能的等各种版本，那么就需要从功能范围的本质上去描述这些区别，再用相应的 “功能+type x” 的方式来表示其支持的类别。如下图所示，为《spru556n》page 24 所描述的关于CLA的功能类别。</p>
+<p><code>CLA type 0</code>，表示的是支持原始CLA功能的模块类型。</p>
+<p><code>CLA type 2</code> ，表示在原始功能的基础上，增加了后台代码模式，可以在后台运行通信和清理程序等任务；后台任务持续运行，直到禁用或设备/软复位；后台任务可以由外设或软件触发；其他前台任务可以按照定义的优先顺序中断后台任务；增加了使后台代码部分不被中断的规定；增加了调试功能，具有真正的软件断点支持，在调试停止期间，CLA从同一地址重新获取数据会被停止。</p>
+<img src="https://pic.islet.space/2021/07/image-20210712141632913.png" alt="image-20210712141632913" style="zoom: 67%;" />
+</blockquote>
+<h2 id="引脚"><a href="#引脚" class="headerlink" title="引脚"></a>引脚</h2><h3 id="引脚分配"><a href="#引脚分配" class="headerlink" title="引脚分配"></a>引脚分配</h3><p>Page17 4.2 <em><strong>Pin Attributes</strong></em> 下可以查看各封装芯片引脚的名称、编号 及 功能。</p>
+<h3 id="引脚路由"><a href="#引脚路由" class="headerlink" title="引脚路由"></a>引脚路由</h3><p>Page30 4.3 <em><strong>Signal Routing</strong></em> 下可以查看引脚的路由信息。</p>
+<h3 id="引脚复用"><a href="#引脚复用" class="headerlink" title="引脚复用"></a>引脚复用</h3><p>Page41 4.4 <em><strong>Pin Multiplexing</strong></em> 下可以查看引脚的复用信息，GPIO口的默认功能就是GPIO，除了GPIO35 和 GPIO37（默认情况下是TDI 和 TDO）。GPIO口的次级功能可以通过设置 <code>GPyGMUXn.GPIOz</code> 和 <code>GPyMUXn.GPIOz</code> 寄存器位来进行。</p>
+<p><strong>注意</strong>： </p>
+<ul>
+<li><code>GPyGMUXn</code> 寄存器应在 <code>GPyMUXn</code> 之前配置，以避免交替复用选择对GPIO产生瞬时脉冲。</li>
+<li>GPIO20 , GPIO21 和 GPIO41 至 GPIO55在任何封装上都不可复用。</li>
+</ul>
+<p>表6 为GPIO的针脚复用说明，表中未列明项为GPIO复用设置保留位。</p>
+<p><img src="https://pic.islet.space/2021/07/image-20210712094430159.png" alt="image-20210712094430159"></p>
+<p><img src="https://pic.islet.space/2021/07/image-20210712094455163.png" alt="image-20210712094455163"></p>
+<h3 id="引脚置高-低"><a href="#引脚置高-低" class="headerlink" title="引脚置高/低"></a>引脚置高/低</h3><p>部分引脚可以被置高/低，下表展示了各引脚的设置类型。默认情况下，GPIO不可置高，但是可以通过软件进行使能。</p>
+<p><img src="https://pic.islet.space/2021/07/image-20210712093251720.png" alt="image-20210712093251720"></p>
+<h3 id="X-BAR"><a href="#X-BAR" class="headerlink" title="X-BAR"></a>X-BAR</h3><p>X-BAR 即 Crossbar。</p>
+<h4 id="输入X-BAR"><a href="#输入X-BAR" class="headerlink" title="输入X-BAR"></a>输入X-BAR</h4><p>输入X-BAR被用于从GPIO口引导信号至许多不同的IP块，如ADC、eCAP、ePWM 和 外部中断。图5 展示了X-BAR的架构，表8 展示了各X-BAR输入可能的路由目的地。</p>
+<p><img src="https://pic.islet.space/2021/07/image-20210712095049189.png" alt="image-20210712095049189"></p>
+<p><img src="https://pic.islet.space/2021/07/image-20210712095346292.png" alt="image-20210712095346292"></p>
+<h4 id="输出X-BAR-和-ePWM-X-BAR"><a href="#输出X-BAR-和-ePWM-X-BAR" class="headerlink" title="输出X-BAR 和 ePWM X-BAR"></a>输出X-BAR 和 ePWM X-BAR</h4><p>输出X-BAR有8个可以路由至各GPIO模块的输出口。ePWM X-BAR 有8个可以路由至各ePWM模块的输出口。</p>
+<p>图6 展示了 两个X-BAR的 信号源。</p>
+<p><img src="https://pic.islet.space/2021/07/image-20210712095838640.png" alt="image-20210712095838640"></p>
+<h2 id="电压"><a href="#电压" class="headerlink" title="电压"></a>电压</h2><p>本系列芯片支持以下三种之一的电源供应（在要求核心电压VDD = 1.2V 的情况下）：</p>
+<ul>
+<li>外接电源（不支持56针RSH封装）</li>
+<li>内部 1.2V LDO电压整流器</li>
+<li>内部 1.2V 开关整流器</li>
+</ul>
+<p><strong>注意</strong>：必须使用同一个系统电压调节器来驱动VDDIO和VDDIO_SW。</p>
+<p>下方是有关两个电压调节器的详细描述：</p>
+<p><img src="https://pic.islet.space/2021/07/image-20210710154834139.png" alt="image-20210710154834139"></p>
+<h2 id="复位"><a href="#复位" class="headerlink" title="复位"></a>复位</h2><h2 id="时钟"><a href="#时钟" class="headerlink" title="时钟"></a>时钟</h2><p>下图展示了本系列芯片的时钟系统，本系列芯片支持两个独立的内部振荡器，直接映射为 <strong>INTOSC1</strong> 和 <strong>INTOSC2</strong> 。默认情况下，都会在芯片启动时开启，且 <strong>INTOSC2</strong> 才是系统参考时钟源，<strong>INTOSC1</strong> 是备用时钟源。<u>这一点可以手动修改</u>。</p>
+<img src="https://pic.islet.space/2021/07/image-20210710155206953.png" alt="image-20210710155206953" style="zoom:67%;" />
+
+<p>下图展示了系统PLL的设置框图。</p>
+<img src="https://pic.islet.space/2021/07/image-20210710155140640.png" alt="image-20210710155140640" style="zoom:67%;" />
+
+
+
+<p>表13 展示了（外部）输入时钟频率的范围要求</p>
+<p>表14 展示了（外部）晶体振荡器的电气特性</p>
+<p>表15 展示了X1的计时要求</p>
+<p>表16 展示了PLL锁定的时间</p>
+<p>表17 展示了内部时钟频率</p>
+<p>表18 展示了输出时钟XCLKOUT的开断性能</p>
+<p>表19 展示了（外部）晶体振荡器参数</p>
+<p>表20 展示了（外部）晶体振荡器的等效电阻要求</p>
+<p>表21 展示了（外部）晶体振荡器的电气特性</p>
+<p>表22 展示了（内部）晶体振荡器的电气特性</p>
+<p><img src="https://pic.islet.space/2021/07/image-20210710155540889.png" alt="image-20210710155540889"></p>
+<p><img src="https://pic.islet.space/2021/07/image-20210710160134644.png" alt="image-20210710160134644"></p>
+<p><img src="https://pic.islet.space/2021/07/image-20210710160150517.png" alt="image-20210710160150517"></p>
+<p><img src="https://pic.islet.space/2021/07/image-20210711172100592.png" alt="image-20210711172100592"></p>
+<p><img src="https://pic.islet.space/2021/07/image-20210711173148615.png" alt="image-20210711173148615"></p>
+<p>图 5-12 至 5-14 展示了三种不同的外部时钟源电路：</p>
+<p><img src="https://pic.islet.space/2021/07/image-20210711172426297.png" alt="image-20210711172426297"></p>
+<p><strong>注意</strong>：当X1接口被当作时钟接口使用时，X2接口也不可用作GPIO口。</p>
+<h3 id="时钟配置方法"><a href="#时钟配置方法" class="headerlink" title="时钟配置方法"></a>时钟配置方法</h3><p>Once the application requirements are understood, a specific clock configuration can be determined. The default configuration is for <em><strong>INTOSC2</strong></em> to be used as the system clock (<em><strong>PLLSYSCLK</strong></em>) with a divider of 1. The following procedure can be used to set up the desired application configuration:</p>
+<ol>
+<li><p>Select the reference clock source (<em><strong>OSCCLK</strong></em>) by writing to <em><strong>CLKSRCCTL1.OSCCLKSRCSEL</strong></em>. To enable XTAL, follow the instructions in the previous sections.</p>
+</li>
+<li><p>Select the reference clock source (<em><strong>OSCCLK</strong></em>) by writing to <em><strong>CLKSRCCTL1.OSCCLKSRCSEL</strong></em>. Allow at least 300 <em><u>NOP instructions</u></em> for this to take effect.</p>
+</li>
+<li><p>Set up the system PLL if desired. TI recommends using the C2000Ware <code>SysCtl:setClock()</code> function for proper configuration of the PLL clock.</p>
+</li>
+<li><p>Select the <em><strong>LSPCLK</strong></em> divider by writing to <em><strong>LOSPCP</strong></em>.</p>
+</li>
+<li><p>If an alternate CAN bit clock is needed, select it by writing to <em><strong>CLKSRCCTL2.CANABCLKSEL</strong></em> and <em><strong>CLKSRCCTL2.CANBBCLKSEL</strong></em>.</p>
+</li>
+<li><p>Enable the desired peripheral clocks by writing to the <em><strong>PCLKCRx</strong></em> registers.</p>
+</li>
+</ol>
+<p>The system clock configuration can be changed at run time. Changing the <em><strong>OSCCLK</strong></em> source will automatically bypass the PLL and set the multiplier to zero. Changing the multiplier from one non-zero value to another will temporarily bypass the PLL until it re-locks.</p>
+<p><mark style="font-weight: 900;">注意： At least a 300 CPU clock cycles delay is needed after OSSCLK source is changed. </mark></p>
+<h2 id="闪存"><a href="#闪存" class="headerlink" title="闪存"></a>闪存</h2><p>表23 展示了不同时钟源和频率下所需的最小闪存等待状态</p>
+<p>表24 展示了闪存的性能参数</p>
+<p><img src="https://pic.islet.space/2021/07/image-20210711173614732.png" alt="image-20210711173614732"></p>
+<p><img src="https://pic.islet.space/2021/07/image-20210711173721809.png" alt="image-20210711173721809"></p>
+<h2 id="JTAG"><a href="#JTAG" class="headerlink" title="JTAG"></a>JTAG</h2><h2 id="GPIO"><a href="#GPIO" class="headerlink" title="GPIO"></a>GPIO</h2><p>在复位时，GPIO会被配置为输入。对于特定的输入，用户还可以选择 <strong>输入鉴定周期</strong>（input qualification cycles）的数量来过滤不需要的 <strong>噪声突变</strong>（unwanted noise glitches）。</p>
+<p>表29 展示了GPIO的特性参数，需要注意的是，GPIO的频率只有25MHz最高。</p>
+<p>表30 展示了GPIO的输入时间要求</p>
+<p><img src="https://pic.islet.space/2021/07/image-20210711174357812.png" alt="image-20210711174357812"></p>
+<p><img src="https://pic.islet.space/2021/07/image-20210711174530164.png" alt="image-20210711174530164"></p>
+<h2 id="中断"><a href="#中断" class="headerlink" title="中断"></a>中断</h2><p>C28x系列芯片有14条外围中断可用，其中13和14中断被直接关联至CPU定时器1和定时器2。剩余12条中断可以通过 <strong>增强型外围中断扩展</strong>（enhanced Peripheral Interrupt Expansion，ePIE)模块进行信号引导。本模块将最多16个外设中断复用到每个CPU中断线中，并扩展了向量表，允许每个中断有自己的ISR。允许芯片支持数量众多的外围设备。</p>
+<p>中断路径一共有三个阶段——外围设备、ePIE模块 和 CPU。每个阶段都有其使能和标志寄存器。本系统允许CPU在其他中断等待时处理一个中断，在软件中实现并优先处理嵌套中断，并在某些关键任务中禁用中断。</p>
+<p>下图展示了本系列芯片的中断架构。</p>
+<p><img src="https://pic.islet.space/2021/07/image-20210711175336942.png" alt="image-20210711175336942"></p>
+<p>外部中断（external interrupt, XINT）电气特性数据和时序特性：</p>
+<p>表31 列出了外部中断的时间要求</p>
+<p>表32 列出了外部中断开断特性</p>
+<p>图25 展示了外部中断的时序</p>
+<p><img src="https://pic.islet.space/2021/07/image-20210712083326344.png" alt="image-20210712083326344"></p>
+<h2 id="低电量模式"><a href="#低电量模式" class="headerlink" title="低电量模式"></a>低电量模式</h2><p>本系列芯片拥有两种 时钟门（clock-gating） 低电量模式，分别是 HALT 和 IDLE，STANDARD 模式不支持进入低电量。</p>
+<p>低电量模式的进入和退出代码，以及更多关于低电量模式的描述信息，需要参考《TRM》手册。</p>
+<p>表33 描述了系统进入任何 时钟门 低电量模式后的影响</p>
+<p>表34 列明了IDLE模式下的时序要求</p>
+<p>表35 列明了IDLE模式下的开断特性</p>
+<p>表36 列明了HALT模式下的时序要求</p>
+<p>表37 列明了HALT模式下的开断特性</p>
+<p>图26 展示了IDLE模式的时序框图</p>
+<p>图27 展示了HALT模式的时序框图</p>
+<p><img src="https://pic.islet.space/2021/07/image-20210712100908714.png" alt="image-20210712100908714"></p>
+<p><img src="https://pic.islet.space/2021/07/image-20210712101034377.png" alt="image-20210712101034377"></p>
+<p><img src="https://pic.islet.space/2021/07/image-20210712101211183.png" alt="image-20210712101211183"></p>
+<p><img src="https://pic.islet.space/2021/07/image-20210712101225955.png" alt="image-20210712101225955"></p>
+<h2 id="模拟外设"><a href="#模拟外设" class="headerlink" title="模拟外设"></a>模拟外设</h2><p>暂略</p>
+<h2 id="控制外设"><a href="#控制外设" class="headerlink" title="控制外设"></a>控制外设</h2><p>本系列芯片的控制外设包含 <strong>eCAP</strong>、<strong>HRCAP</strong>、<strong>ePWM</strong>、<strong>HRPWM</strong>、<strong>eQEP</strong> 和 <strong>SDFM</strong>。</p>
+<p>根据《spru566n》表11 可知，ePWM 和 HRPWM 都是4型增强外设，具体功能可以参见《sprui33d》。</p>
+<h3 id="ePWM"><a href="#ePWM" class="headerlink" title="ePWM"></a>ePWM</h3><blockquote>
+<p>The enhanced pulse width modulator (ePWM) peripheral is a key element in controlling many of the <em><strong>power electronic systems</strong></em> found in both commercial and industrial equipment. These systems include <em><strong>digital motor control</strong></em>, <em><strong>switch mode power supply control</strong></em>, <em><strong>uninterruptible power supplies (UPS)</strong></em>, and other forms of power conversion.</p>
+</blockquote>
+<p>大白话地将，ePWM 这个外设，是由很多个ePWM 模块（Module）组成，每个ePWM 模块都有8个子模块（Submodule）。所有的ePWM模块用数字尾缀来表示第几个ePWM模块，如 <code>ePWM1</code>、<code>ePWM3</code> 。每个ePWM模块又有两个输出，分别是 A 和 B，例如 <code>ePWM1A</code> 和 <code>ePWM1B</code> 。</p>
+<p>ePWM模块通过一条时钟同步表（clock synchronization scheme）同步和串联在一起，形成可以统一操作的整体。此外，这个时钟同步表能够被扩展至 eCAP 外设使用。子模块的数量是由设备（设计）和实际使用需求决定的，每个子模块都能够支持单独操作。</p>
+<p>每个ePWM模块支持以下功能：</p>
+<ul>
+<li>带有周期和频率控制的专用16位时基计数器</li>
+<li>两个PWM输出（<code>EPWMxA</code> 和 <code>EPWMxB</code> ），可用于以下配置。<ul>
+<li>两个独立的PWM输出，单边操作<span style="color: #BBB; font-style: Italic;">（ single-edge operation）</span></li>
+<li>两个独立的PWM输出，双边对称操作（ dual-edge symmetric operation）</li>
+<li>一个独立的PWM输出，双边不对称操作（ dual-edge asymmetric operation）</li>
+</ul>
+</li>
+<li>通过软件对PWM信号进行异步覆盖控制。</li>
+<li>可编程的相位控制，支持相对于其他ePWM模块的滞后或领先操作</li>
+<li>逐个周期的硬件锁定（同步）相位关系。</li>
+<li>具有独立上升沿和下降沿延迟控制的死区生成。</li>
+<li>可编程的跳闸区域分配，包括逐周期跳闸和故障条件下的一次性跳闸。</li>
+<li>跳闸条件可以迫使PWM输出达到高、低或高阻抗状态的逻辑水平。</li>
+<li>所有事件都可以触发CPU中断和ADC开始转换(SOC)</li>
+<li>可编程的事件预处理将CPU在中断上的开销降到最低。</li>
+<li>通过高频载波信号进行PWM 斩波（chopping），对脉冲变压器门驱动很有用。</li>
+</ul>
+<p>8个子模块如下：</p>
+<ul>
+<li>Time-Base Submodule</li>
+<li>Counter Compare Submodule</li>
+<li>Action Qualifier Submodule</li>
+<li>Dead-Band Generator Submodule</li>
+<li>PWM Chopper (PC) Submodule</li>
+<li>Trip Zone Submodule</li>
+<li>Event Trigger Submodule</li>
+<li>Digital Compare Submodule</li>
+</ul>
+<p>各子模块的 Purpose 和 Control 简单列些如下：</p>
+<table>
+<thead>
+<tr>
+<th>SUBMODULE</th>
+<th>PURPOSE</th>
+<th>CONTROL</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Time-Base</td>
+<td>determines all of the event timing for the ePWM module</td>
+<td></td>
+</tr>
+<tr>
+<td>Counter Compare</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Action Qualifier</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Dead-Band Generator</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>PWM Chopper</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Trip Zone</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Event Trigger</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Digital Compare</td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<p>ePWM 模块通过两个PWM输出（<code>EPWMxA</code> 和 <code>EPWMxB</code>）来组成一条完整的PWM通道。多路 ePWM被在一个设备内实现，几乎每一个ePWM通道实例都是相同的，只有一个例外。有些实例包括一个硬件扩展，可以更精确地控制PWM输出。这种扩展是高分辨率脉宽调制器（HRPWM），在第18.15节中有描述。每个ePWM模块都用一个以1开头的数值表示，例如，<code>ePWM1</code> 是系统中的第一个实例，<code>ePWM3</code> 是第三个实例，<code>ePWMx</code> 表示任何实例。</p>
+<p>每一个ePWM模块都被连接至输入和输出信号。每一个ePWM模块都包含着8个子系统，并通过图18-2的方式连接至系统内部。</p>
+<p>图1 描述的是外围总线上的多个PWM模块，及输入信号和输出信号通路示例</p>
+<p>图2 描述的是PWM模块下各子模块和信号连接方式</p>
+<img src="https://pic.islet.space/2021/07/image-20210715140249937.png" alt="image-20210715140249937" style="zoom:80%;" />
+
+
+
+
+
+<img src="https://pic.islet.space/2021/07/image-20210715141719524.png" alt="image-20210715141719524" style="zoom:80%;" />
+
+
+
+<blockquote>
+<p>trip input:</p>
+<p>trip zone：是ePWM的一个子模块</p>
+<p>trip-zone input timing:</p>
+<p>Hi-Z： 高阻态</p>
+</blockquote>
+<p>表57 展示了PWM的时间要求，主要是 同步（Sync）/非同步（Async）/带输入验证（With input qualifier）的 <em><strong>同步输入脉冲宽度</strong></em>（Sync Input Pulse Width）的三种时间</p>
+<p>表58 展示了PWM的开关特性，包括最小脉冲周期，同步输出脉冲宽度 和 t<span style="font-size: 0.6rem;">d(TZ-PWM)</span></p>
+<p>表59 </p>
+<p>图58</p>
+<p>图59</p>
+<p>图60 为同步链架构示意？？</p>
+<p>图61 PWM高阻态时序特性</p>
+<p><img src="https://pic.islet.space/2021/07/image-20210712104641579.png" alt="image-20210712104641579"></p>
+<p><img src="https://pic.islet.space/2021/07/image-20210712104655718.png" alt="image-20210712104655718"></p>
+<p><img src="https://pic.islet.space/2021/07/image-20210712104857729.png" alt="image-20210712104857729"></p>
+<p><img src="https://pic.islet.space/2021/07/image-20210712104928659.png" alt="image-20210712104928659"></p>
+<h2 id="通信外设"><a href="#通信外设" class="headerlink" title="通信外设"></a>通信外设</h2><p>暂略</p>
+<h1 id="Register"><a href="#Register" class="headerlink" title="Register"></a>Register</h1><p>暂略</p>
+<h1 id="高频变换器开发"><a href="#高频变换器开发" class="headerlink" title="高频变换器开发"></a>高频变换器开发</h1><p>利用型号为 <code>TMS320F280041</code> 芯片的GPIO（最高输出频率为25MHz）输出一个30KHz的PWM波形，需要使用到 ePWM外设，使用示例中提供的 <code>ePWM6</code> 进行开发，输出高位和低位两个幅频合适的波形后，接到型号为 <code>2EDL05I06PF</code> 的驱动上，驱动型号为 <code>IKW50N65WR5</code> 的IGBT外设。</p>
+<ul>
+<li> <code>TMS320F280041</code> 的外部晶振输入频率 f<span style="font-size: 0.8rem;">XTAL</span> 在 10 ~ 20 MHz 之间，自身工作频率f<span style="font-size: 0.8rem;">SYSCLK</span> 在 2 ~ 100MHz之间。</li>
+</ul>
+<p>以下为工作频率设置的样例，刚好实际芯片时钟配置也是需要配置到满频工作状态 <code>100MHz</code> </p>
+<img src="https://pic.islet.space/2021/07/image-20210715170724177.png" alt="image-20210715170724177" style="zoom:67%;" />
+
+<ul>
+<li>外部晶振和自身工作频率的设置涉及到几个寄存器：<ul>
+<li>CLKSRCCTL1.OSCCLKSRCSEL</li>
+<li>SYSPLLMULT</li>
+<li>IMULT</li>
+<li>FMULT</li>
+<li>ODIV</li>
+<li>SYSCLKDIVSEL.PLLSYSCLKDIV</li>
+<li>SYSPLLCTL1.PLLCLKEN</li>
+</ul>
+</li>
+</ul>
+<p><strong>工作目标</strong>：</p>
+<ol>
+<li>输出PWM波形</li>
+<li>采集输出的波形和IGBT输出的波形（可能需要检测相位和波纹）</li>
+<li>过零饱和电压</li>
+</ol>
+<h1 id="术语"><a href="#术语" class="headerlink" title="术语"></a>术语</h1><p><strong>LDO</strong>: Low dropout, A DC linear voltage regulator which can operate with a very small input/output differential voltage.</p>
+<p><strong>V<span style="font-size: 0.8rem;">REG</span></strong>: Voltage Regulator. 稳压器。</p>
+<p><strong>V<span style="font-size: 0.8rem;">REF</span></strong>: Voltage Reference. 参考电压</p>
+<p><strong>ESD</strong>: Electrostatic Discharge, 静电放电。</p>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><ol>
+<li><a target="_blank" rel="noopener" href="https://www.ti.com.cn/cn/lit/gpn/tms320f280049">《TMS320F28004x 微控制器》</a></li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -864,920 +2158,6 @@
 <li><p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/353520173">I2S/PCM</a></p>
 </li>
 </ol>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://islet.space/2021/06/21/Programming/C/2021-06-21-%E5%AD%98%E5%82%A8%E7%B1%BB%E5%88%AB%E3%80%81%E9%93%BE%E6%8E%A5%E5%92%8C%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Liewzheng">
-      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Coder的孤岛">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/06/21/Programming/C/2021-06-21-%E5%AD%98%E5%82%A8%E7%B1%BB%E5%88%AB%E3%80%81%E9%93%BE%E6%8E%A5%E5%92%8C%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/" class="post-title-link" itemprop="url">存储类别、链接和内存管理</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
-    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-      
-
-      <time title="Created: 2021-06-21 21:50:00 / Modified: 22:12:11" itemprop="dateCreated datePublished" datetime="2021-06-21T21:50:00+08:00">2021-06-21</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Programming/" itemprop="url" rel="index"><span itemprop="name">Programming</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="存储类别"><a href="#存储类别" class="headerlink" title="存储类别"></a>存储类别</h1><p>即 stroage class，C语言提供了多种不同的模型和存储类别在内存中存储数据。</p>
-<blockquote>
-<p>从硬件方面看， 被存储的每个值都占有一定的物理内存，C语言称之为对象（object）。</p>
-<p>与面向对象编程中的对象不同，面向对象编程的对象指的是“类对象”。</p>
-</blockquote>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> entity = <span class="number">3</span>;</span><br></pre></td></tr></table></figure>
-
-<p>该声明创造了一个名为 entity 的 <strong>标识符</strong>（identifier）。标识符可以用来 <strong>指定</strong>（desingate）特定对象的内容，且须遵循变量的命名规则。</p>
-<p>标识符即 软件（C语言）指定硬件内存中的对象（内存区块）的方式。</p>
-<p>同时，那些指定对象的表达式被称为 <strong>左值</strong>。</p>
-<p>左值可以被理解为是 “有具体存储位置的 <strong>对象</strong> ”，区别于 “仅有值而没有具体存储位置” 的数据。</p>
-<p>另，左值中也有可修改的 <strong>普通左值</strong>， 和不能支持修改的 <strong>常量左值</strong>。</p>
-<blockquote>
-<p><em>“左”(left)的原意是指可以放在赋值符号“=”的左边，但其实也表示能作为&amp;和++等操作符的操作数（B语言中已经如此）。而且，现代C/C++中的含义已经不局限于此。lvalue的 <code>l</code> 被重新解释为location。这也对应于ISO C11/ISO C++11的 <strong>内存位置</strong>(memory location)。</em></p>
-<p>——百度百科</p>
-</blockquote>
-<p>从一个左值中必定可以解析出对应对象的地址，除非该对象是位字段（bit-field）或者被声明为寄存器存储类。生成左值的运算符包括下标运算符（subscript operator）[]和间接运算符（indirection operator）*，如下表所示（如果 array 已被声明为数组，而 ptr 被声明为指针变量）。</p>
-<table>
-<thead>
-<tr>
-<th>表达式</th>
-<th>是左值吗</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>array[1]</td>
-<td>是；一个数组元素是一个具有位置的对象</td>
-</tr>
-<tr>
-<td>&amp;array[1]</td>
-<td>否；此对象的位置，并非一个具有位置的对象</td>
-</tr>
-<tr>
-<td>ptr</td>
-<td>是；此指针变量是一个具有位詈的对象</td>
-</tr>
-<tr>
-<td>*ptr</td>
-<td>是；指针所指的地方是一个具有位置的对象</td>
-</tr>
-<tr>
-<td>ptr+1</td>
-<td>否；此加法产生一个新的地址值，但不是一个对象</td>
-</tr>
-<tr>
-<td>*ptr+l</td>
-<td>否；此加法产生一个新的算术值，但不是一个对象</td>
-</tr>
-</tbody></table>
-<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><ol>
-<li>《C Primer Plus》, Stephen Prata</li>
-<li><a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E5%B7%A6%E5%80%BC">左值</a></li>
-<li><a target="_blank" rel="noopener" href="http://c.biancheng.net/view/281.html">C语言左值与右值详解</a></li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://islet.space/2021/05/31/Programming/C++/2021-05-31-C++%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86%EF%BC%88try-catch-throw%EF%BC%89%E5%AE%8C%E5%85%A8%E6%94%BB%E7%95%A5/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Liewzheng">
-      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Coder的孤岛">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/05/31/Programming/C++/2021-05-31-C++%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86%EF%BC%88try-catch-throw%EF%BC%89%E5%AE%8C%E5%85%A8%E6%94%BB%E7%95%A5/" class="post-title-link" itemprop="url">C++异常处理（try catch throw）完全攻略</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
-    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2021-05-31 23:05:00" itemprop="dateCreated datePublished" datetime="2021-05-31T23:05:00+08:00">2021-05-31</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-06-01 22:21:27" itemprop="dateModified" datetime="2021-06-01T22:21:27+08:00">2021-06-01</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Programming/" itemprop="url" rel="index"><span itemprop="name">Programming</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p><a target="_blank" rel="noopener" href="http://c.biancheng.net/view/422.html">c.biancheng.net</a></p>
-<p>程序运行时常会碰到一些异常情况，例如：</p>
-<ul>
-<li>做除法的时候除数为 0；</li>
-<li>用户输入年龄时输入了一个负数；</li>
-<li>用 new 运算符动态分配空间时，空间不够导致无法分配；</li>
-<li>访问数组元素时，下标越界；打开文件读取时，文件不存在。</li>
-</ul>
-<p>这些异常情况，如果不能发现并加以处理，很可能会导致程序崩溃。</p>
-<blockquote>
-<p>所谓“处理”，可以是给出错误提示信息，然后让程序沿一条不会出错的路径继续执行；</p>
-<p>也可能是不得不结束程序，但在结束前做一些必要的工作，如将内存中的数据写入文件、关闭打开的文件、释放动态分配的内存空间等。</p>
-</blockquote>
-<p><strong>一发现异常情况就立即处理未必妥当，因为在一个函数执行过程中发生的异常，在有的情况下由该函数的调用者决定如何处理更加合适。 尤其像库函数这类提供给程序员调用，用以完成与具体应用无关的通用功能的函数，执行过程中贸然对异常进行处理，未必符合调用它的程序的需要。</strong></p>
-<p><strong>此外，将异常分散在各处进行处理不利于代码的维护，尤其是对于在不同地方发生的同一种异常，都要编写相同的处理代码也是一种不必要的重复和冗余。如果能在发生各种异常时让程序都执行到同一个地方，这个地方能够对异常进行集中处理，则程序就会更容易编写、维护。</strong></p>
-<p>鉴于上述原因，<a target="_blank" rel="noopener" href="http://c.biancheng.net/cplus/">C++</a> 引入了异常处理机制。其基本思想是：</p>
-<blockquote>
-<p>函数 A 在执行过程中发现异常时可以不加处理，而只是“拋出一个异常”给 A 的调用者，假定为函数 B。</p>
-</blockquote>
-<p>拋出异常而不加处理会导致函数 A 立即中止，在这种情况下，函数 B 可以选择捕获 A 拋出的异常进行处理，也可以选择置之不理。如果置之不理，这个异常就会被拋给 B 的调用者，以此类推。</p>
-<p>【也就是说，在C++中，异常发生时，是否处理可以由函数的上一级调用函数去决定，如果选择不处理则会将该异常交给更上一级函数去决断。】</p>
-<p>如果一层层的函数都不处理异常，异常最终会被拋给最外层的 main 函数。main 函数应该处理异常。如果main函数也不处理异常，那么程序就会立即异常地中止。</p>
-<h1 id="C-异常处理基本语法"><a href="#C-异常处理基本语法" class="headerlink" title="C++异常处理基本语法"></a>C++异常处理基本语法</h1><h2 id="threw语法定义"><a href="#threw语法定义" class="headerlink" title="threw语法定义"></a>threw语法定义</h2><p>C++ 通过 <code>throw</code> 语句和 <code>try-catch</code> 语句实现对异常的处理。<code>throw</code> 语句的语法如下：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">throw</span>  <span class="comment">/*表达式*/</span>;</span><br></pre></td></tr></table></figure>
-
-<p>该语句拋出一个异常。异常是一个表达式，其值的类型可以是 <mark>基本类型</mark>，也可以是 <mark>类</mark>。</p>
-<h2 id="try-catch语法定义"><a href="#try-catch语法定义" class="headerlink" title="try-catch语法定义"></a>try-catch语法定义</h2><p><code>try-catch</code> 语句的语法如下：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">   <span class="comment">//语句组</span></span><br><span class="line"> &#125;</span><br><span class="line"> <span class="built_in"><span class="keyword">catch</span></span>(<span class="comment">/* 异常类型 */</span>) &#123;</span><br><span class="line">   <span class="comment">//异常处理代码</span></span><br><span class="line"> &#125;</span><br><span class="line"> ...</span><br><span class="line"> <span class="built_in"><span class="keyword">catch</span></span>( <span class="comment">/* 异常类型 */</span>) &#123;</span><br><span class="line">   <span class="comment">//异常处理代码</span></span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
-
-<p><code>catch</code> 可以有多个，但至少要有一个。</p>
-<p>不妨把 try 和其后<code>&#123;&#125;</code>中的内容称作“try块”，把 catch 和其后<code>&#123;&#125;</code>中的内容称作“catch块”。</p>
-<h2 id="try-catch执行过程"><a href="#try-catch执行过程" class="headerlink" title="try-catch执行过程"></a>try-catch执行过程</h2><p><code>try-catch</code> 语句的执行过程是：</p>
-<ul>
-<li>执行 try 块中的语句，如果执行的过程中没有异常拋出，那么执行完后就执行最后一个 catch 块后面的语句，所有 catch 块中的语句都不会被执行；</li>
-<li>如果 try 块执行的过程中拋出了异常，那么拋出异常后立即跳转到第一个“异常类型”和拋出的异常类型匹配的 catch 块中执行（称作异常被该 catch 块“捕获”），执行完后再跳转到最后一个 catch 块后面继续执行。</li>
-</ul>
-<h2 id="例程"><a href="#例程" class="headerlink" title="例程"></a>例程</h2><p>例如下面的程序：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;    </span><br><span class="line">	<span class="keyword">double</span> m ,n;    </span><br><span class="line">	cin &gt;&gt; m &gt;&gt; n;    </span><br><span class="line">	<span class="keyword">try</span> &#123;        </span><br><span class="line">		cout &lt;&lt; <span class="string">&quot;before dividing.&quot;</span> &lt;&lt; endl;        </span><br><span class="line">		<span class="keyword">if</span>( n == <span class="number">0</span>) <span class="keyword">throw</span> <span class="number">-1</span>;</span><br><span class="line">		<span class="keyword">else</span> cout &lt;&lt; m / n &lt;&lt; endl;</span><br><span class="line">		cout &lt;&lt; <span class="string">&quot;after dividing.&quot;</span> &lt;&lt; endl;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in"><span class="keyword">catch</span></span>(<span class="keyword">double</span> d)&#123;</span><br><span class="line">  	cout &lt;&lt; <span class="string">&quot;catch(double) &quot;</span> &lt;&lt; d &lt;&lt;  endl;    </span><br><span class="line">  &#125;    </span><br><span class="line">  <span class="built_in"><span class="keyword">catch</span></span>(<span class="keyword">int</span> e)&#123;</span><br><span class="line">  	cout &lt;&lt; <span class="string">&quot;catch(int) &quot;</span> &lt;&lt; e &lt;&lt; endl;    </span><br><span class="line">  &#125;    </span><br><span class="line">  cout &lt;&lt; <span class="string">&quot;finished&quot;</span> &lt;&lt; endl;    </span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>程序的运行结果如下：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">9 6</span><br><span class="line">before dividing.</span><br><span class="line">1.5</span><br><span class="line">after dividing.</span><br><span class="line">finished</span><br></pre></td></tr></table></figure>
-
-<p>说明当 n 不为 0 时，try 块中不会拋出异常。因此程序在 try 块正常执行完后，越过所有的 catch 块继续执行，catch 块一个也不会执行。</p>
-<p>程序的运行结果也可能如下：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">9 0</span><br><span class="line">before dividing.</span><br><span class="line">catch\(int) -1</span><br><span class="line">finished</span><br></pre></td></tr></table></figure>
-
-<p>当 n 为 0 时，try 块中会拋出一个整型异常。拋出异常后，try 块立即停止执行。该整型异常会被类型匹配的第一个 catch 块捕获，即进入<code>catch(int e)</code>块执行，该 catch 块执行完毕后，程序继续往后执行，直到正常结束。</p>
-<p>如果拋出的异常没有被 catch 块捕获，例如，将<code>catch(int e)</code>，改为<code>catch(char e)</code>，当输入的 n 为 0 时，拋出的整型异常就没有 catch 块能捕获，这个异常也就得不到处理，那么程序就会立即中止，try…catch 后面的内容都不会被执行。</p>
-<h1 id="能够捕获任何异常的-catch-语句"><a href="#能够捕获任何异常的-catch-语句" class="headerlink" title="能够捕获任何异常的 catch 语句"></a>能够捕获任何异常的 catch 语句</h1><p>如果希望不论拋出哪种类型的异常都能捕获，可以编写如下 catch 块：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in"><span class="keyword">catch</span></span>(...) &#123;</span><br><span class="line">   <span class="comment">//...</span></span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
-
-<p>这样的 catch 块能够捕获任何还没有被捕获的异常。例如下面的程序：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="keyword">double</span> m, n;</span><br><span class="line">  cin &gt;&gt; m &gt;&gt; n;</span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;before dividing.&quot;</span> &lt;&lt; endl;</span><br><span class="line">    <span class="keyword">if</span> (n == <span class="number">0</span>) <span class="keyword">throw</span> - <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (m == <span class="number">0</span>) <span class="keyword">throw</span> - <span class="number">1.0</span>;</span><br><span class="line">    <span class="keyword">else</span> cout &lt;&lt; m / n &lt;&lt; endl;</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;after dividing.&quot;</span> &lt;&lt; endl;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in"><span class="keyword">catch</span></span> (<span class="keyword">double</span> d) &#123;</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;catch (double)&quot;</span> &lt;&lt; d &lt;&lt; endl;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in"><span class="keyword">catch</span></span> (...) &#123;</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;catch (...)&quot;</span> &lt;&lt; endl;</span><br><span class="line">  &#125;    </span><br><span class="line">  cout &lt;&lt; <span class="string">&quot;finished&quot;</span> &lt;&lt; endl;</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>程序的运行结果如下：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">9 0</span><br><span class="line">before dividing.</span><br><span class="line">catch (...)</span><br><span class="line">finished</span><br></pre></td></tr></table></figure>
-
-<p>当 n 为 0 时，拋出的整型异常被<code>catchy(...)</code>捕获。</p>
-<p>程序的运行结果也可能如下：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">0 6</span><br><span class="line">before dividing.</span><br><span class="line">catch (double) -1</span><br><span class="line">finished</span><br></pre></td></tr></table></figure>
-
-<p>当 m 为 0 时，拋出一个 double 类型的异常。虽然<code>catch (double)</code>和<code>catch(...)</code>都能匹配该异常，但是<code>catch(double)</code>是第一个能匹配的 catch 块，因此会执行它，而不会执行<code>catch(...)</code>块。</p>
-<p>由于<code>catch(...)</code>能匹配任何类型的异常，它后面的 catch 块实际上就不起作用，因此不要将它写在其他 catch 块前面。</p>
-<h1 id="异常的再拋出"><a href="#异常的再拋出" class="headerlink" title="异常的再拋出"></a>异常的再拋出</h1><p>如果一个函数在执行过程中拋出的异常在本函数内就被 catch 块捕获并处理，那么该异常就不会拋给这个函数的调用者（也称为“上一层的函数”）；如果异常在本函数中没有被处理，则它就会被拋给上一层的函数。例如下面的程序：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CException</span>&#123;</span></span><br><span class="line">  <span class="keyword">public</span>:    </span><br><span class="line">  string msg;    </span><br><span class="line">  <span class="built_in">CException</span>(string s) : <span class="built_in">msg</span>(s) &#123;&#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">double</span> <span class="title">Devide</span><span class="params">(<span class="keyword">double</span> x, <span class="keyword">double</span> y)</span></span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (y == <span class="number">0</span>) <span class="keyword">throw</span> <span class="built_in">CException</span>(<span class="string">&quot;devided by zero&quot;</span>);</span><br><span class="line">  cout &lt;&lt; <span class="string">&quot;in Devide&quot;</span> &lt;&lt; endl;    </span><br><span class="line">  <span class="keyword">return</span> x / y;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">CountTax</span><span class="params">(<span class="keyword">int</span> salary)</span></span>&#123;</span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (salary &lt; <span class="number">0</span>) <span class="keyword">throw</span> <span class="number">-1</span>;</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;counting tax&quot;</span> &lt;&lt; endl;</span><br><span class="line">  &#125;    </span><br><span class="line">  <span class="built_in"><span class="keyword">catch</span></span> (<span class="keyword">int</span>)&#123;</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;salary &lt; 0&quot;</span> &lt;&lt; endl;    </span><br><span class="line">  &#125;</span><br><span class="line">  cout &lt;&lt; <span class="string">&quot;tax counted&quot;</span> &lt;&lt; endl;</span><br><span class="line">  <span class="keyword">return</span> salary * <span class="number">0.15</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="keyword">double</span> f = <span class="number">1.2</span>;    </span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="built_in">CountTax</span>(<span class="number">-1</span>);  <span class="comment">//此处会报错，立即抛出错误被catch(int)捕获，并终止运行</span></span><br><span class="line">    f = <span class="built_in">Devide</span>(<span class="number">3</span>, <span class="number">0</span>);  <span class="comment">//此处也会报错，在”devided by zero“处立即停止，且没有返回值返回赋给f</span></span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;end of try block&quot;</span> &lt;&lt; endl;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in"><span class="keyword">catch</span></span> (CException e)&#123;</span><br><span class="line">    cout &lt;&lt; e.msg &lt;&lt; endl;    </span><br><span class="line">  &#125;    </span><br><span class="line">  cout &lt;&lt; <span class="string">&quot;f = &quot;</span> &lt;&lt; f &lt;&lt; endl;</span><br><span class="line">  cout &lt;&lt; <span class="string">&quot;finished&quot;</span> &lt;&lt; endl;</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>程序的输出结果如下：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">salary &lt; 0</span><br><span class="line">tax counted</span><br><span class="line">devided by zero</span><br><span class="line">f=1.2</span><br><span class="line">finished</span><br></pre></td></tr></table></figure>
-
-<p>CountTa 函数拋出异常后自行处理，这个异常就不会继续被拋给调用者，即 main 函数。因此在 main 函数的 try 块中，CountTax 之后的语句还能正常执行，即会执行<code>f = Devide(3, 0);</code>。</p>
-<p>第 33 行，Devide 函数拋出了异常却不处理，该异常就会被拋给 Devide 函数的调用者，即 main 函数。拋出此异常后，Devide 函数立即结束，第 13 行不会被执行，函数也不会返回一个值，这从第 33 行 f 的值不会被修改可以看出。</p>
-<p><code>Devide()</code>  中第 12 行 拋出的异常被 main 函数中类型匹配的 catch 块捕获。第 36 行中的 e 对象是用<strong>复制构造函数初始化</strong>的。</p>
-<p><mark>如果拋出的异常是派生类的对象，而 catch 块的异常类型是基类，那么这两者也能够匹配，因为派生类对象也是基类对象。</mark></p>
-<blockquote>
-<p>虽然函数也可以通过返回值或者传引用的参数通知调用者发生了异常，但采用这种方式的话，每次调用函数时都要判断是否发生了异常，这在函数被多处调用时比较麻烦。有了异常处理机制，可以将多处函数调用都写在一个 try 块中，任何一处调用发生异常都会被匹配的 catch 块捕获并处理，也就不需要每次调用后都判断是否发生了异常。</p>
-</blockquote>
-<p>有时，虽然在函数中对异常进行了处理，但是还是希望能够通知调用者，以便让调用者知道发生了异常，从而可以作进一步的处理。在 catch 块中拋出异常可以满足这种需要。例如：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">CountTax</span><span class="params">(<span class="keyword">int</span> salary)</span></span>&#123;</span><br><span class="line">	<span class="keyword">try</span> &#123;</span><br><span class="line">  	<span class="keyword">if</span>( salary &lt; <span class="number">0</span> ) <span class="keyword">throw</span> <span class="built_in">string</span>(<span class="string">&quot;zero salary&quot;</span>);</span><br><span class="line">  	cout &lt;&lt; <span class="string">&quot;counting tax&quot;</span> &lt;&lt; endl;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in"><span class="keyword">catch</span></span> (string s )&#123;</span><br><span class="line">  	cout &lt;&lt; <span class="string">&quot;CountTax error : &quot;</span> &lt;&lt; s &lt;&lt; endl;</span><br><span class="line">    <span class="keyword">throw</span>;  <span class="comment">//单写一个throw会把最近的错误传给上一级进行处理</span></span><br><span class="line">  &#125;</span><br><span class="line">  cout &lt;&lt; <span class="string">&quot;tax counted&quot;</span> &lt;&lt; endl;</span><br><span class="line">  <span class="keyword">return</span> salary * <span class="number">0.15</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="keyword">double</span> f = <span class="number">1.2</span>;    </span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="built_in">CountTax</span>(<span class="number">-1</span>);</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;end of try block&quot;</span> &lt;&lt; endl;</span><br><span class="line">  &#125;    </span><br><span class="line">  <span class="built_in"><span class="keyword">catch</span></span>(string s) &#123;</span><br><span class="line">    cout &lt;&lt; s &lt;&lt; endl;</span><br><span class="line">  &#125;    </span><br><span class="line">  cout &lt;&lt; <span class="string">&quot;finished&quot;</span> &lt;&lt; endl;</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>程序的输出结果如下：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">CountTax error:zero salary</span><br><span class="line">zero salary</span><br><span class="line">finished</span><br></pre></td></tr></table></figure>
-
-<p>第 12行的<code>throw;</code>没有指明拋出什么样的异常，因此<mark>拋出的就是 catch 块捕获到的异常</mark>，即 <code>string(&quot;zero salary”)</code> 。这个异常会被 <code>main</code> 函数中的 <code>catch</code> 块捕获。</p>
-<h1 id="函数的异常声明列表"><a href="#函数的异常声明列表" class="headerlink" title="函数的异常声明列表"></a>函数的异常声明列表</h1><p>为了增强程序的可读性和可维护性，使程序员在使用一个函数时就能看出这个函数可能会拋出哪些异常，C++ 允许在函数声明和定义时，加上它所能拋出的异常的列表，称为 <mark>异常声明列表</mark>，具体写法如下：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">func</span><span class="params">()</span> <span class="title">throw</span> <span class="params">(<span class="keyword">int</span>, <span class="keyword">double</span>, A, B, C)</span></span>;</span><br></pre></td></tr></table></figure>
-
-<p>或</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">func</span><span class="params">()</span> <span class="title">throw</span> <span class="params">(<span class="keyword">int</span>, <span class="keyword">double</span>, A, B, C)</span></span>&#123;…&#125;</span><br></pre></td></tr></table></figure>
-
-<p>上面的写法表明 func 可能拋出 int 型、double 型以及 A、B、C 三种类型的异常。异常声明列表可以在函数声明时写，也可以在函数定义时写。如果两处都写，则两处应一致。</p>
-<p>如果异常声明列表如下编写：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">func</span><span class="params">()</span> <span class="title">throw</span> <span class="params">()</span></span>;</span><br></pre></td></tr></table></figure>
-
-<p>则说明 func 函数不会拋出任何异常。</p>
-<p><mark>一个函数如果不交待能拋出哪些类型的异常，就可以拋出任何类型的异常。</mark></p>
-<p>函数如果拋出了其异常声明列表中没有的异常，在编译时不会引发错误，但在运行时， Dev C++ 编译出来的程序会出错；用 Visual Studio 2010 编译出来的程序则不会出错，异常声明列表不起实际作用。</p>
-<h1 id="C-标准异常类"><a href="#C-标准异常类" class="headerlink" title="C++标准异常类"></a>C++标准异常类</h1><p>C++ 标准库中有一些类代表异常，这些类都是从 exception 类派生而来的。常用的几个异常类如图 1 所示。</p>
-<p><img src="https://pic.islet.space/2021/05/1-1P912101914246.jpg" alt="img"></p>
-<p style="font-weight: 900; text-align: center;"> 图1：常用的异常类 </p>
-
-<p>bad_typeid、bad_cast、bad_alloc、ios_base::failure、out_of_range 都是  exception 类的派生类。<mark>C++ 程序在碰到某些异常时，即使程序中没有写 throw  语句，也会自动拋出上述异常类的对象。这些异常类还都有名为 <code>what()</code> 的成员函数，返回字符串形式的异常描述信息。使用这些异常类需要包含头文件 <code> &lt;stdexcept&gt;</code> 。</mark></p>
-<p>下面分别介绍以上几个异常类。本节程序的输出以 Visual Studio 2010为准，Dev C++ 编译的程序输出有所不同。</p>
-<h2 id="1-bad-typeid"><a href="#1-bad-typeid" class="headerlink" title="1) bad_typeid"></a>1) bad_typeid</h2><p>使用 typeid 运算符时，如果其操作数是一个多态类的<a target="_blank" rel="noopener" href="http://c.biancheng.net/c/80/">指针</a>，而该指针的值为 NULL，则会拋出此异常。</p>
-<h2 id="2-bad-cast"><a href="#2-bad-cast" class="headerlink" title="2) bad_cast"></a>2) bad_cast</h2><p>在用 dynamic_cast 进行从多态基类对象（或引用）到派生类的引用的强制类型转换时，如果转换是不安全的，则会拋出此异常。程序示例如下：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdexcept&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Base</span>&#123;</span></span><br><span class="line">  <span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">func</span><span class="params">()</span> </span>&#123;&#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Derived</span> :</span> <span class="keyword">public</span> Base&#123;</span><br><span class="line">  <span class="keyword">public</span>:    </span><br><span class="line">  <span class="function"><span class="keyword">void</span> <span class="title">Print</span><span class="params">()</span> </span>&#123;&#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">PrintObj</span><span class="params">(Base &amp; b)</span></span>&#123;</span><br><span class="line">  <span class="keyword">try</span>&#123;</span><br><span class="line">    Derived &amp; rd = <span class="keyword">dynamic_cast</span> &lt;Derived &amp;&gt;(b);</span><br><span class="line">    rd.<span class="built_in">Print</span>();    </span><br><span class="line">  &#125;    </span><br><span class="line">  <span class="built_in"><span class="keyword">catch</span></span> (bad_cast &amp; e)&#123;</span><br><span class="line">    cerr &lt;&lt; e.<span class="built_in">what</span>() &lt;&lt; endl;    </span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">  Base b;    </span><br><span class="line">  <span class="built_in">PrintObj</span>(b);    </span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>程序的输出结果如下：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Bad dynamic_cast!</span><br></pre></td></tr></table></figure>
-
-<p>在 PrintObj 函数中，通过 dynamic_cast 检测 b 是否引用的是一个 Derived 对象，如果是，就调用其 <code>Print()</code> 成员函数；如果不是，就拋出异常，不会调用 <code>Derived::Print</code>。</p>
-<h2 id="3-bad-alloc"><a href="#3-bad-alloc" class="headerlink" title="3) bad_alloc"></a>3) bad_alloc</h2><p>在用 new 运算符进行动态内存分配时，如果没有足够的内存，则会引发此异常。程序示例如下：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdexcept&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;    </span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="keyword">char</span> * p = <span class="keyword">new</span> <span class="keyword">char</span>[<span class="number">0x7fffffff</span>];</span><br><span class="line">  &#125;    </span><br><span class="line">  <span class="built_in"><span class="keyword">catch</span></span> (bad_alloc &amp; e)&#123;</span><br><span class="line">    cerr &lt;&lt; e.<span class="built_in">what</span>() &lt;&lt; endl;    </span><br><span class="line">  &#125;    </span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>程序的输出结果如下：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">bad allocation</span><br><span class="line">ios_base::failure</span><br></pre></td></tr></table></figure>
-
-<p>在默认状态下，输入输出流对象不会拋出此异常。如果用流对象的 exceptions 成员函数设置了一些标志位，则在出现打开文件出错、读到输入流的文件尾等情况时会拋出此异常。此处不再赘述。</p>
-<h2 id="4-out-of-range"><a href="#4-out-of-range" class="headerlink" title="4) out_of_range"></a>4) out_of_range</h2><p>用 vector 或 string 的 at 成员函数根据下标访问元素时，如果下标越界，则会拋出此异常。例如：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdexcept&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;    </span><br><span class="line">  <span class="function">vector&lt;<span class="keyword">int</span>&gt; <span class="title">v</span><span class="params">(<span class="number">10</span>)</span></span>;</span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    v.<span class="built_in">at</span>(<span class="number">100</span>) = <span class="number">100</span>;</span><br><span class="line">  &#125;    </span><br><span class="line">  <span class="built_in"><span class="keyword">catch</span></span> (out_of_range &amp; e) &#123;</span><br><span class="line">    cerr &lt;&lt; e.<span class="built_in">what</span>() &lt;&lt; endl;</span><br><span class="line">  &#125;    </span><br><span class="line">  string s = <span class="string">&quot;hello&quot;</span>;</span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="keyword">char</span> c = s.<span class="built_in">at</span>(<span class="number">100</span>);</span><br><span class="line">  &#125;    </span><br><span class="line">  <span class="built_in"><span class="keyword">catch</span></span> (out_of_range &amp; e) &#123;</span><br><span class="line">    cerr &lt;&lt; e.<span class="built_in">what</span>() &lt;&lt; endl;    </span><br><span class="line">  &#125;    </span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>程序的输出结果如下：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">invalid vector subscript</span><br><span class="line">invalid string position</span><br></pre></td></tr></table></figure>
-
-<p>如果将<code>v.at(100)</code>换成<code>v[100]</code>，将<code>s.at(100)</code>换成<code>s[100]</code>，程序就不会引发异常（但可能导致程序崩溃）。因为 at 成员函数会检测下标越界并拋出异常，而 <code>operator[]</code> 则不会。<code>operator[]</code> 相比 at 的好处就是不用判断下标是否越界，因此执行速度更快。</p>
-<p>​          </p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://islet.space/2021/05/31/Programming/C++/2021-05-31-C%2011%E5%A4%9A%E7%BA%BF%E7%A8%8Bjoin()%E5%92%8Cdetach()%E7%9A%84%E7%90%86%E8%A7%A3/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Liewzheng">
-      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Coder的孤岛">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/05/31/Programming/C++/2021-05-31-C%2011%E5%A4%9A%E7%BA%BF%E7%A8%8Bjoin()%E5%92%8Cdetach()%E7%9A%84%E7%90%86%E8%A7%A3/" class="post-title-link" itemprop="url">C++11多线程join()和detach()的理解</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
-    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2021-05-31 20:05:00" itemprop="dateCreated datePublished" datetime="2021-05-31T20:05:00+08:00">2021-05-31</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-06-01 22:27:16" itemprop="dateModified" datetime="2021-06-01T22:27:16+08:00">2021-06-01</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Programming/" itemprop="url" rel="index"><span itemprop="name">Programming</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_36784975/article/details/87699113">blog.csdn.net</a></p>
-<h1 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h1><p>每一个程序至少拥有一个线程，那就是执行 <code>main()</code> 函数的主线程，而多线程则是出现两个或两个以上的线程并行运行，即主线程和子线程在同一时间段同时运行。而在这个过程中会出现几种情况：</p>
-<ol>
-<li>主线程先运行结束</li>
-<li>子线程先运行结束</li>
-<li>主子线程同时结束</li>
-</ol>
-<p>在一些情况下需要在子线程结束后主线程才能结束，而一些情况则不需要等待，但需注意一点，并不是主线程结束了其他子线程就立即停止，其他子线程会进入后台运行</p>
-<h1 id="join"><a href="#join" class="headerlink" title="join()"></a>join()</h1><p>join()函数是一个等待线程完成函数，<mark>主线程需要等待子线程运行结束了才可以结束</mark></p>
-<img src="https://pic.islet.space/2021/05/image-20210531223156398.png" alt="image-20210531223156398" style="zoom:80%;" />
-
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;thread&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">func</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">   <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">-10</span>; i &gt; <span class="number">-20</span>; i--)</span><br><span class="line">    &#123;</span><br><span class="line">        cout &lt;&lt; <span class="string">&quot;from func():&quot;</span> &lt;&lt; i &lt;&lt; endl;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span>  <span class="comment">//主线程</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	cout &lt;&lt; <span class="string">&quot;mian()&quot;</span> &lt;&lt; endl;</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;mian()&quot;</span> &lt;&lt; endl;</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;mian()&quot;</span> &lt;&lt; endl;</span><br><span class="line">	<span class="function">thread <span class="title">t</span><span class="params">(func)</span></span>;  <span class="comment">//子线程</span></span><br><span class="line">	t.<span class="built_in">join</span>();  <span class="comment">//等待子线程结束后才进入主线程</span></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><img src="https://pic.islet.space/2021/05/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2Nzg0OTc1,size_16,color_FFFFFF,t_70.png" alt="在这里插入图片描述"></p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;thread&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">func</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">   <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">-10</span>; i &gt; <span class="number">-20</span>; i--)</span><br><span class="line">    &#123;</span><br><span class="line">        cout &lt;&lt; <span class="string">&quot;from func():&quot;</span> &lt;&lt; i &lt;&lt; endl;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span>			<span class="comment">//主线程</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="function">thread <span class="title">t</span><span class="params">(func)</span></span>;	<span class="comment">//子线程</span></span><br><span class="line">	cout &lt;&lt; <span class="string">&quot;mian()&quot;</span> &lt;&lt; endl;</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;mian()&quot;</span> &lt;&lt; endl;</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;mian()&quot;</span> &lt;&lt; endl;</span><br><span class="line">	t.<span class="built_in">join</span>();		<span class="comment">//等待子线程结束后才进入主线程</span></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><img src="https://pic.islet.space/2021/05/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2Nzg0OTc1,size_16,color_FFFFFF,t_70-20210531224629846.png" alt="在这里插入图片描述"></p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;thread&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">func</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">   <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">-10</span>; i &gt; <span class="number">-20</span>; i--)</span><br><span class="line">    &#123;</span><br><span class="line">        cout &lt;&lt; <span class="string">&quot;from func():&quot;</span> &lt;&lt; i &lt;&lt; endl;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span>			<span class="comment">//主线程</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="function">thread <span class="title">t</span><span class="params">(func)</span></span>;	<span class="comment">//子线程</span></span><br><span class="line">	t.<span class="built_in">join</span>();		<span class="comment">//等待子线程结束后才进入主线程</span></span><br><span class="line">	cout &lt;&lt; <span class="string">&quot;mian()&quot;</span> &lt;&lt; endl;</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;mian()&quot;</span> &lt;&lt; endl;</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;mian()&quot;</span> &lt;&lt; endl;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><img src="https://pic.islet.space/2021/05/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2Nzg0OTc1,size_16,color_FFFFFF,t_70-20210531224634866.png" alt="在这里插入图片描述"></p>
-<h1 id="detach"><a href="#detach" class="headerlink" title="detach()"></a>detach()</h1><p><img src="https://pic.islet.space/2021/06/image-20210601222337419.png" alt="image-20210601222337419"></p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;thread&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">func</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">   <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">-10</span>; i &gt; <span class="number">-20</span>; i--)</span><br><span class="line">    &#123;</span><br><span class="line">        cout &lt;&lt; <span class="string">&quot;from func():&quot;</span> &lt;&lt; i &lt;&lt; endl;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span>			<span class="comment">//主线程</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	cout &lt;&lt; <span class="string">&quot;mian()&quot;</span> &lt;&lt; endl;</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;mian()&quot;</span> &lt;&lt; endl;</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;mian()&quot;</span> &lt;&lt; endl;</span><br><span class="line">	<span class="function">thread <span class="title">t</span><span class="params">(func)</span></span>;	<span class="comment">//子线程</span></span><br><span class="line">	t.<span class="built_in">detach</span>();		<span class="comment">//分离子线程</span></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<p><img src="https://pic.islet.space/2021/05/20190220120254940.png" alt="在这里插入图片描述"></p>
-<p> 可以明显看到，主线程太快了，还没等子线程运行就结束了</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;thread&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">func</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">   <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">-10</span>; i &gt; <span class="number">-20</span>; i--)</span><br><span class="line">    &#123;</span><br><span class="line">        cout &lt;&lt; <span class="string">&quot;from func():&quot;</span> &lt;&lt; i &lt;&lt; endl;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span>			<span class="comment">//主线程</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="function">thread <span class="title">t</span><span class="params">(func)</span></span>;	<span class="comment">//子线程</span></span><br><span class="line">	cout &lt;&lt; <span class="string">&quot;mian()&quot;</span> &lt;&lt; endl;</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;mian()&quot;</span> &lt;&lt; endl;</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;mian()&quot;</span> &lt;&lt; endl;</span><br><span class="line">	t.<span class="built_in">detach</span>();		<span class="comment">//分离子线程</span></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><img src="https://pic.islet.space/2021/05/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2Nzg0OTc1,size_16,color_FFFFFF,t_70-20210531224653683.png" alt="在这里插入图片描述"></p>
-<p>同样没等子线程运行完就结束了</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;thread&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">func</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">   <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">-10</span>; i &gt; <span class="number">-20</span>; i--)</span><br><span class="line">    &#123;</span><br><span class="line">        cout &lt;&lt; <span class="string">&quot;from func():&quot;</span> &lt;&lt; i &lt;&lt; endl;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span>			<span class="comment">//主线程</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="function">thread <span class="title">t</span><span class="params">(func)</span></span>;	<span class="comment">//子线程</span></span><br><span class="line">	cout &lt;&lt; <span class="string">&quot;mian()&quot;</span> &lt;&lt; endl;</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;mian()&quot;</span> &lt;&lt; endl;</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;mian()&quot;</span> &lt;&lt; endl;</span><br><span class="line">	t.<span class="built_in">detach</span>();		<span class="comment">//分离子线程</span></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><img src="https://pic.islet.space/2021/05/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2Nzg0OTc1,size_16,color_FFFFFF,t_70-20210531224659144.png" alt="在这里插入图片描述"></p>
-<p>没等子线程运行完就结束</p>
-<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><ul>
-<li><p>如果想要分离一个线程，可以在线程启动后，直接使用 <code>detach()</code> 进行分离。如果打算等待对应线程，则需要细心挑选调用 <code>join()</code> 的位置。当在线程运行之后产生异常，在 <code>join()</code> 调用之前抛出，就意味着很这次调用会被跳过。 </p>
-</li>
-<li><p><code>join()</code> 函数是一个<strong>等待线程函数</strong>，主线程需等待子线程运行结束后才可以结束（注意不是才可以运行，运行是并行的），如果打算等待对应线程，<mark>则需要细心挑选调用 <code>join()</code> 的位置</mark></p>
-</li>
-<li><p><code>detach()</code> 函数是子线程的分离函数，当调用该函数后，线程就被分离到后台运行，<mark>主线程不需要等待该线程结束才结束</mark></p>
-</li>
-</ul>
-<p>​          </p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://islet.space/2021/05/29/Programming/C++/2021-05-29-C++11-lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F%E7%B2%BE%E8%AE%B2/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Liewzheng">
-      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Coder的孤岛">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/05/29/Programming/C++/2021-05-29-C++11-lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F%E7%B2%BE%E8%AE%B2/" class="post-title-link" itemprop="url">C++11 lambda表达式精讲</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
-    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-      
-
-      <time title="Created: 2021-05-29 23:30:00 / Modified: 23:51:21" itemprop="dateCreated datePublished" datetime="2021-05-29T23:30:00+08:00">2021-05-29</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Programming/" itemprop="url" rel="index"><span itemprop="name">Programming</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p><a target="_blank" rel="noopener" href="http://c.biancheng.net/view/3741.html">c.biancheng.net</a></p>
-<h1 id="编译注意"><a href="#编译注意" class="headerlink" title="编译注意"></a>编译注意</h1><p><strong>注意</strong>：在clang上使用lambda表达式时可能会报错，编译时需要添加option <code>-std=c++11</code> 。</p>
-<blockquote>
-<p>This is because <strong>clang++</strong> <a target="_blank" rel="noopener" href="http://clang.llvm.org/cxx_status.html">by  default compiles your code using ISO C++ 1998 standard (including the  defects addressed in the ISO C++ 2003 standard) except for ‘export’  (which has been removed in C++11)</a></p>
-<p>Lambdas are part of <a target="_blank" rel="noopener" href="http://clang.llvm.org/">Clang’s</a> <a target="_blank" rel="noopener" href="http://clang.llvm.org/docs/LanguageExtensions.html#cxx11">C++11 Language Extension</a>, therefore you need to compile your code with <strong>-std=c++11</strong> or <strong>-std=gnu++11</strong></p>
-<p>——<a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/13351032/clangs-support-of-c-11-lambda#:~:text=Lambdas%20are%20part%20of%20Clang%27s%20C%2B%2B11%20Language%20Extension%2C,support%20status%20and%20Activating%20C%2B%2B11%20support%20in%20Clang">STACKOVERFLOW</a></p>
-</blockquote>
-<h1 id="Lambda介绍"><a href="#Lambda介绍" class="headerlink" title="Lambda介绍"></a>Lambda介绍</h1><p>lambda 表达式是 <a target="_blank" rel="noopener" href="http://c.biancheng.net/cplus/">C++</a>11 最重要也最常用的一个特性之一，<a target="_blank" rel="noopener" href="http://c.biancheng.net/csharp/">C#</a> 3.5 和 <a target="_blank" rel="noopener" href="http://c.biancheng.net/java/">Java</a> 8 中就引入了 lambda 表达式。</p>
-<p>lambda 来源于 <strong>函数式编程</strong> 的概念，也是现代编程语言的一个特点。C++11 这次终于把 lambda 加进来了。</p>
-<p>lambda表达式有如下优点：</p>
-<ul>
-<li><strong>声明式编程风格</strong>：就地匿名定义目标函数或函数对象，不需要额外写一个命名函数或者函数对象。以更直接的方式去写程序，好的可读性和可维护性。</li>
-<li><strong>简洁</strong>：不需要额外再写一个函数或者函数对象，避免了代码膨胀和功能分散，让开发者更加集中精力在手边的问题，同时也获取了更高的生产率。</li>
-<li>在需要的时间和地点实现功能闭包，使程序更灵活。</li>
-</ul>
-<p>下面，先从 lambda 表达式的基本功能开始介绍它。</p>
-<h1 id="Lambda-表达式的概念和基本用法"><a href="#Lambda-表达式的概念和基本用法" class="headerlink" title="Lambda 表达式的概念和基本用法"></a>Lambda 表达式的概念和基本用法</h1><p>lambda 表达式定义了一个 <strong>匿名函数</strong>，并且可以 <strong>捕获一定范围内的变量</strong>。lambda 表达式的语法形式可简单归纳如下：</p>
-<p><code>[ capture ] ( params ) opt -&gt; ret &#123; body; &#125;;</code></p>
-<blockquote>
-<ul>
-<li>capture 是捕获列表</li>
-<li>params 是参数表</li>
-<li>opt 是函数选项</li>
-<li>ret 是返回值类型</li>
-<li>body是函数体。</li>
-</ul>
-</blockquote>
-<p>因此，一个完整的 lambda 表达式看起来像这样：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">auto</span> f = [](<span class="keyword">int</span> a) -&gt; <span class="keyword">int</span> &#123; <span class="keyword">return</span> a + <span class="number">1</span>; &#125;;std::cout &lt;&lt; <span class="built_in">f</span>(<span class="number">1</span>) &lt;&lt; std::endl;  </span><br></pre></td></tr></table></figure>
-
-<p>可以看到，上面通过一行代码定义了一个小小的功能闭包，用来将输入加 1 并返回。</p>
-<p>在 C++11 中，lambda 表达式的返回值是通过前面介绍的《<a target="_blank" rel="noopener" href="http://c.biancheng.net/view/3727.html">C++返回值类型后置</a>》语法来定义的。</p>
-<p>其实很多时候，lambda 表达式的返回值是非常明显的，比如这个例子。因此，C++11 中允许省略 lambda 表达式的返回值定义：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">auto</span> f = [](<span class="keyword">int</span> a)&#123; <span class="keyword">return</span> a + <span class="number">1</span>; &#125;;</span><br></pre></td></tr></table></figure>
-
-
-
-<p>这样编译器就会根据 return 语句自动推导出返回值类型。</p>
-<p>需要注意的是，初始化列表不能用于返回值的自动推导：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">auto</span> x1 = [](<span class="keyword">int</span> i)&#123; <span class="keyword">return</span> i; &#125;; <span class="comment">// OK: return type is int</span></span><br><span class="line"><span class="keyword">auto</span> x2 = []()&#123; <span class="keyword">return</span> &#123; <span class="number">1</span>, <span class="number">2</span> &#125;; &#125;; <span class="comment">// error: 无法推导出返回值类型</span></span><br></pre></td></tr></table></figure>
-
-
-
-<p>这时我们需要显式给出具体的返回值类型。</p>
-<p>另外，lambda 表达式在没有参数列表时，参数列表是可以省略的。因此像下面的写法都是正确的：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">auto</span> f1 = []()&#123; <span class="keyword">return</span> <span class="number">1</span>; &#125;;</span><br><span class="line"><span class="keyword">auto</span> f2 = []&#123; <span class="keyword">return</span> <span class="number">1</span>; &#125;; <span class="comment">// 省略空参数表</span></span><br></pre></td></tr></table></figure>
-
-
-
-
-
-
-
-<h1 id="捕获列表"><a href="#捕获列表" class="headerlink" title="捕获列表"></a>捕获列表</h1><p>lambda 表达式还可以通过捕获列表捕获一定范围内的变量：</p>
-<ul>
-<li>[] 不捕获任何变量。</li>
-<li>[&amp;] 捕获外部作用域中所有变量，并作为引用在函数体中使用（按引用捕获）。</li>
-<li>[=] 捕获外部作用域中所有变量，并作为副本在函数体中使用（按值捕获）。</li>
-<li>[=，&amp;foo] 按值捕获外部作用域中所有变量，并按引用捕获 foo 变量。</li>
-<li>[bar] 按值捕获 bar 变量，同时不捕获其他变量。</li>
-<li>[this] 捕获当前类中的 this <a target="_blank" rel="noopener" href="http://c.biancheng.net/c/80/">指针</a>，让 lambda 表达式拥有和当前类成员函数同样的访问权限。如果已经使用了 &amp; 或者 =，就默认添加此选项。捕获 this 的目的是可以在 lamda 中使用当前类的成员函数和成员变量。</li>
-</ul>
-<p>下面看一下它的具体用法，如下所示。</p>
-<p>【实例】lambda 表达式的基本用法。</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span>&#123;</span>    </span><br><span class="line"><span class="keyword">public</span>:    </span><br><span class="line">	<span class="keyword">int</span> i_ = <span class="number">0</span>;    </span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">func</span><span class="params">(<span class="keyword">int</span> x, <span class="keyword">int</span> y)</span></span>&#123;        </span><br><span class="line">		<span class="keyword">auto</span> x1 = []&#123; <span class="keyword">return</span> i_; &#125;;                            </span><br><span class="line">		<span class="keyword">auto</span> x2 = [=]&#123; <span class="keyword">return</span> i_ + x + y; &#125;;                   </span><br><span class="line">		<span class="keyword">auto</span> x3 = [&amp;]&#123; <span class="keyword">return</span> i_ + x + y; &#125;;                   </span><br><span class="line">		<span class="keyword">auto</span> x4 = [<span class="keyword">this</span>]&#123; <span class="keyword">return</span> i_; &#125;;                        </span><br><span class="line">		<span class="keyword">auto</span> x5 = [<span class="keyword">this</span>]&#123; <span class="keyword">return</span> i_ + x + y; &#125;;                </span><br><span class="line">		<span class="keyword">auto</span> x6 = [<span class="keyword">this</span>, x, y]&#123; <span class="keyword">return</span> i_ + x + y; &#125;;          </span><br><span class="line">		<span class="keyword">auto</span> x7 = [<span class="keyword">this</span>]&#123; <span class="keyword">return</span> i_++; &#125;;                  </span><br><span class="line">		&#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> a = <span class="number">0</span>, b = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">auto</span> f1 = []&#123; <span class="keyword">return</span> a; &#125;;               </span><br><span class="line"><span class="keyword">auto</span> f2 = [&amp;]&#123; <span class="keyword">return</span> a++; &#125;;            </span><br><span class="line"><span class="keyword">auto</span> f3 = [=]&#123; <span class="keyword">return</span> a; &#125;;              </span><br><span class="line"><span class="keyword">auto</span> f4 = [=]&#123; <span class="keyword">return</span> a++; &#125;;            </span><br><span class="line"><span class="keyword">auto</span> f5 = [a]&#123; <span class="keyword">return</span> a + b; &#125;;          </span><br><span class="line"><span class="keyword">auto</span> f6 = [a, &amp;b]&#123; <span class="keyword">return</span> a + (b++); &#125;;  </span><br><span class="line"><span class="keyword">auto</span> f7 = [=, &amp;b]&#123; <span class="keyword">return</span> a + (b++); &#125;;  </span><br></pre></td></tr></table></figure>
-
-<p>从上例中可以看到，lambda 表达式的捕获列表精细地控制了 lambda 表达式能够访问的外部变量，以及如何访问这些变量。</p>
-<p><strong>注意</strong>：默认状态下 lambda 表达式无法修改通过复制方式捕获的外部变量。如果希望修改这些变量的话，我们需要使用引用方式进行捕获。</p>
-<p>一个容易出错的细节是关于 lambda 表达式的延迟调用的：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> a = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">auto</span> f = [=]&#123; <span class="keyword">return</span> a; &#125;;      </span><br><span class="line">a += <span class="number">1</span>;                         </span><br><span class="line">std::cout &lt;&lt; <span class="built_in">f</span>() &lt;&lt; std::endl;  </span><br></pre></td></tr></table></figure>
-
-<p>在这个例子中，lambda 表达式按值捕获了所有外部变量。在捕获的一瞬间，a 的值就已经被复制到f中了。之后 a 被修改，但此时 f 中存储的 a 仍然还是捕获时的值，因此，最终输出结果是 0。</p>
-<p>如果希望 lambda 表达式在调用时能够即时访问外部变量，我们应当使用引用方式捕获。</p>
-<p>从上面的例子中我们知道，按值捕获得到的外部变量值是在 lambda 表达式定义时的值。此时所有外部变量均被复制了一份存储在 lambda 表达式变量中。此时虽然修改 lambda 表达式中的这些外部变量并不会真正影响到外部，我们却仍然无法修改它们。</p>
-<p>那么如果希望去修改按值捕获的外部变量应当怎么办呢？这时，需要显式指明 lambda 表达式为 mutable：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> a = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">auto</span> f1 = [=]&#123; <span class="keyword">return</span> a++; &#125;;             </span><br><span class="line"><span class="keyword">auto</span> f2 = [=]() <span class="keyword">mutable</span> &#123; <span class="keyword">return</span> a++; &#125;;  </span><br></pre></td></tr></table></figure>
-
-<p>需要注意的一点是，被 mutable 修饰的 lambda 表达式就算没有参数也要写明参数列表。</p>
-<h1 id="Lambda-表达式的类型"><a href="#Lambda-表达式的类型" class="headerlink" title="Lambda 表达式的类型"></a>Lambda 表达式的类型</h1><p>最后，介绍一下 lambda 表达式的类型。</p>
-<p>lambda 表达式的类型在 C++11 中被称为“闭包类型（Closure Type）”。它是一个特殊的，匿名的非 nunion 的类类型。</p>
-<p>因此，我们可以认为它是一个带有 operator() 的类，即仿函数。因此，我们可以使用 std::function 和 std::bind 来存储和操作 lambda 表达式：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">std::function&lt;<span class="built_in"><span class="keyword">int</span></span>(<span class="keyword">int</span>)&gt;  f1 = [](<span class="keyword">int</span> a)&#123; <span class="keyword">return</span> a; &#125;;std::function&lt;<span class="built_in"><span class="keyword">int</span></span>(<span class="keyword">void</span>)&gt; f2 = std::<span class="built_in">bind</span>([](<span class="keyword">int</span> a)&#123; <span class="keyword">return</span> a; &#125;, <span class="number">123</span>);</span><br></pre></td></tr></table></figure>
-
-<p>另外，对于没有捕获任何变量的 lambda 表达式，还可以被转换成一个普通的函数指针：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> <span class="keyword">func_t</span> = <span class="built_in"><span class="keyword">int</span></span>(*)(<span class="keyword">int</span>);</span><br><span class="line"><span class="keyword">func_t</span> f = [](<span class="keyword">int</span> a)&#123; <span class="keyword">return</span> a; &#125;;</span><br><span class="line"><span class="built_in">f</span>(<span class="number">123</span>);</span><br></pre></td></tr></table></figure>
-
-<p>lambda  表达式可以说是就地定义仿函数闭包的“语法糖”。它的捕获列表捕获住的任何外部变量，最终均会变为闭包类型的成员变量。而一个使用了成员变量的类的  operator()，如果能直接被转换为普通的函数指针，那么 lambda 表达式本身的 this 指针就丢失掉了。而没有捕获任何外部变量的  lambda 表达式则不存在这个问题。</p>
-<p>这里也可以很自然地解释为何按值捕获无法修改捕获的外部变量。因为按照 C++ 标准，lambda 表达式的 operator() 默认是  const 的。一个 const 成员函数是无法修改成员变量的值的。而 mutable 的作用，就在于取消 operator() 的  const。</p>
-<p>需要注意的是，没有捕获变量的 lambda 表达式可以直接转换为函数指针，而捕获变量的 lambda 表达式则不能转换为函数指针。看看下面的代码：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">typedef</span> <span class="title">void</span><span class="params">(*Ptr)</span><span class="params">(<span class="keyword">int</span>*)</span></span>;</span><br><span class="line">Ptr p = [](<span class="keyword">int</span>* p)&#123;<span class="keyword">delete</span> p;&#125;;  </span><br><span class="line">Ptr p1 = [&amp;](<span class="keyword">int</span>* p)&#123;<span class="keyword">delete</span> p;&#125;;  </span><br></pre></td></tr></table></figure>
-
-<p>上面第二行代码能编译通过，而第三行代码不能编译通过，因为第三行的代码捕获了变量，不能直接转换为函数指针。</p>
-<h1 id="声明式的编程风格，简洁的代码"><a href="#声明式的编程风格，简洁的代码" class="headerlink" title="声明式的编程风格，简洁的代码"></a>声明式的编程风格，简洁的代码</h1><p>就地定义匿名函数，不再需要定义函数对象，大大简化了标准库算法的调用。比如，在 C++11 之前，我们要调用 for_each 函数将 vector 中的偶数打印出来，如下所示。</p>
-<p>【实例】lambda 表达式代替函数对象的示例。</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CountEven</span>&#123;</span>    </span><br><span class="line">	<span class="keyword">int</span>&amp; count_;<span class="keyword">public</span>:    </span><br><span class="line">	<span class="built_in">CountEven</span>(<span class="keyword">int</span>&amp; count) : <span class="built_in">count_</span>(count) &#123;&#125;    <span class="function"><span class="keyword">void</span> <span class="title">operator</span><span class="params">()</span><span class="params">(<span class="keyword">int</span> val)</span>    </span>&#123;        <span class="keyword">if</span> (!(val &amp; <span class="number">1</span>))               &#123;            ++ count_;        &#125;    &#125;&#125;;</span><br><span class="line">	std::vector&lt;<span class="keyword">int</span>&gt; v = &#123; <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span> &#125;;</span><br><span class="line">	<span class="keyword">int</span> even_count = <span class="number">0</span>;for_each(v.<span class="built_in">begin</span>(), v.<span class="built_in">end</span>(), <span class="built_in">CountEven</span>(even_count));std::cout &lt;&lt; <span class="string">&quot;The number of even is &quot;</span> &lt;&lt; even_count &lt;&lt; std::endl;</span><br></pre></td></tr></table></figure>
-
-<p>这样写既烦琐又容易出错。有了 lambda 表达式以后，我们可以使用真正的闭包概念来替换掉这里的仿函数，代码如下：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">std::vector&lt;<span class="keyword">int</span>&gt; v = &#123; <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span> &#125;;</span><br><span class="line"><span class="keyword">int</span> even_count = <span class="number">0</span>;</span><br><span class="line">for_each( v.<span class="built_in">begin</span>(), v.<span class="built_in">end</span>(), [&amp;even_count](<span class="keyword">int</span> val)        &#123;            <span class="keyword">if</span> (!(val &amp; <span class="number">1</span>))              &#123;                ++ even_count;            &#125;        &#125;);</span><br><span class="line">std::cout &lt;&lt; <span class="string">&quot;The number of even is &quot;</span> &lt;&lt; even_count &lt;&lt; std::endl;</span><br></pre></td></tr></table></figure>
-
-<p>lambda 表达式的价值在于，就地封装短小的功能闭包，可以极其方便地表达出我们希望执行的具体操作，并让上下文结合得更加紧密。</p>
-<p>​          </p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://islet.space/2021/05/29/Programming/C++/2021-05-29-C++%E5%A4%9A%E7%BA%BF%E7%A8%8B%E7%AC%94%E8%AE%B0/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Liewzheng">
-      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Coder的孤岛">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/05/29/Programming/C++/2021-05-29-C++%E5%A4%9A%E7%BA%BF%E7%A8%8B%E7%AC%94%E8%AE%B0/" class="post-title-link" itemprop="url">C++多线程笔记</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
-    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2021-05-29 21:28:00" itemprop="dateCreated datePublished" datetime="2021-05-29T21:28:00+08:00">2021-05-29</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-05-31 22:29:50" itemprop="dateModified" datetime="2021-05-31T22:29:50+08:00">2021-05-31</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Programming/" itemprop="url" rel="index"><span itemprop="name">Programming</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="线程创建"><a href="#线程创建" class="headerlink" title="线程创建"></a>线程创建</h1><p>C++中对线程的创建都需要使用到库函数 <code>&lt;thread&gt;</code> ，但是线程的启动和使用可以通过 <em><strong>函数</strong></em> 和 <em><strong>带有函数调用操作符的类实例</strong></em> 来进行。</p>
-<h2 id="函数式启动"><a href="#函数式启动" class="headerlink" title="函数式启动"></a>函数式启动</h2><h3 id="函数名启动"><a href="#函数名启动" class="headerlink" title="函数名启动"></a>函数名启动</h3><p>无论是从何处启用多线程，都需要从C++线程库 <code>&lt;thread&gt;</code> 来开始一个线程，通过构造一个 <code>std::thread</code> 对象来启动，以下为最常见的线程创建方法：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">threadHello</span><span class="params">(<span class="keyword">void</span>)</span></span>;</span><br><span class="line"><span class="function">std::thread <span class="title">thread1</span><span class="params">(threadHello)</span></span>;</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p><code>threadHello()</code> 就是需要执行线程的函数；</p>
-<p><code>std::thread</code> 就是创建线程对象的类型；</p>
-<p><code>thread1</code> 就是被创造的线程对象，而 <code>()</code> 中则填写着被这个对象调用的函数。</p>
-</blockquote>
-<h3 id="函数启动"><a href="#函数启动" class="headerlink" title="函数启动"></a>函数启动</h3><p>不同于通过函数名启动，函数启动时会带上其括号 <code>()</code> ， 多个线程可被同时被一个线程对象启动。</p>
-<p>式1：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">std::thread <span class="title">my_thread</span><span class="params">((background_task()))</span></span>;</span><br></pre></td></tr></table></figure>
-
-<p>其中，通过第二层外层 <code>()</code> 将函数及其 <code>()</code> 括起来避免被解释为函数声明，即 <code>my_thread( ( f() ) )</code> 。</p>
-<p>式2：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">std::thread my_thread&#123; <span class="built_in">background_task</span>() &#125;;</span><br></pre></td></tr></table></figure>
-
-<p>通过将 <code>background()</code> 包括在 <code>&#123;&#125;</code> 中，同样是将 <code>background()</code> 声明为一个变量的方法。</p>
-<h3 id="Lambda表达式"><a href="#Lambda表达式" class="headerlink" title="Lambda表达式"></a>Lambda表达式</h3><p>lambda表达式是在C++11以后的新特性。</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">```</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">## 类实例启动</span><br><span class="line"></span><br><span class="line">`std::thread` 可以与任何 可调用（callable）类型一同工作，因此可以将一个带有函数调用操作符的类的实例传递给 `std::thread` 的构造函数来进行代替。</span><br><span class="line"></span><br><span class="line">```c++</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">background_task</span>&#123;</span></span><br><span class="line">  <span class="keyword">public</span>:</span><br><span class="line">  <span class="function"><span class="keyword">void</span> <span class="title">operator</span><span class="params">()</span><span class="params">()</span> <span class="keyword">const</span></span>&#123;   <span class="comment">//带有函数调用操作符</span></span><br><span class="line">    <span class="built_in">do_something</span>();</span><br><span class="line">    <span class="built_in">do_something_else</span>();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">background_task threadF;  <span class="comment">//类实例</span></span><br><span class="line"></span><br><span class="line"><span class="function">std::thread <span class="title">thread1</span><span class="params">(threadF)</span></span>;  <span class="comment">//线程调用该类实例</span></span><br></pre></td></tr></table></figure>
-
-<p>这种情况下，所提供的函数对象被赋值（copied）到属于新创建的执行线程的存储器中，并从那里调用。因此，副本与原版有着灯箱的行为，否则结果可能与预期不符。</p>
-<h3 id="函数调用操作符"><a href="#函数调用操作符" class="headerlink" title="函数调用操作符"></a>函数调用操作符</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">AA</span>&#123;</span></span><br><span class="line">  <span class="function"><span class="keyword">void</span> <span class="title">operator</span><span class="params">()</span><span class="params">()</span></span>&#123;</span><br><span class="line">  	cout&lt;&lt;<span class="string">&quot;aa&quot;</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>在 <code>AA()()</code> 中，<code>AA()</code> 是构造函数，调用了<code>()</code> 操作符。</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://islet.space/2021/05/27/Linux/Shell/2021-05-27-UnixShell%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Liewzheng">
-      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Coder的孤岛">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/05/27/Linux/Shell/2021-05-27-UnixShell%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/" class="post-title-link" itemprop="url">UnixShell常用命令</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
-    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2021-05-27 23:55:00" itemprop="dateCreated datePublished" datetime="2021-05-27T23:55:00+08:00">2021-05-27</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-05-28 00:33:04" itemprop="dateModified" datetime="2021-05-28T00:33:04+08:00">2021-05-28</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="Core-Shell"><a href="#Core-Shell" class="headerlink" title="Core/Shell"></a>Core/Shell</h1><p>首先，要理解Core / shell的概念，系统内核一般被称之为core，而unix及类unix（即与unix类似）系统（如linux）都继承了这一概念，都有其内核。</p>
-<p>古早时期，都是一台电脑就是一台服务器，为了提高服务器的利用率，大家都在用很多客户端登录系统，系统分时（电脑高效处理任务，看起来像是同时进行，其实还是存在先后顺序的）为许多客户端提供服务，即“一点对多点”式的服务模式，客户端都通过小黑窗进行操作。</p>
-<p>如今，独立PC都已经没了服务器这一概念，一台设备就只为一个客户服务（单点对单点），但是这个小黑窗的高效操作的理念却被保留了下来。</p>
-<p>因为所有的客户端对主机的使用都没有进入到内核层面，仅仅停留在表面，所以这种小黑窗的操作层被称为shell层，即外壳。</p>
-<p>逐渐衍生了终端的概念，即客户端即用户终端，即terminal；现在shell、terminal、command-line（命令行）这几个概念都可以被视为同一个概念。</p>
-<p>但shell的流行，逐渐衍生除了很多个人制作的版本，流行的有bash shell、zsh等。</p>
-<h1 id="目录操作"><a href="#目录操作" class="headerlink" title="目录操作"></a>目录操作</h1><h2 id="cd"><a href="#cd" class="headerlink" title="cd"></a>cd</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cd zplusplus</span><br></pre></td></tr></table></figure>
-
-<p>即Change directory，改变目录</p>
-<p>类unix中没有路径这个概念，只有目录。</p>
-<blockquote>
-<ul>
-<li><p><code>~</code> 主目录，个人目录</p>
-</li>
-<li><p><code>/</code> 根目录，硬盘目录</p>
-</li>
-</ul>
-</blockquote>
-<p>TIPS:</p>
-<ul>
-<li>按<code>tabs</code>键可以快速补全相符的目录名称</li>
-</ul>
-<p><code>cd ../</code>可以返回上一层文件目录</p>
-<p><img src="https://pic.islet.space/2021/05/image-20210528002003445.png" alt="image-20210528002003445"></p>
-<h2 id="mkdir"><a href="#mkdir" class="headerlink" title="mkdir"></a>mkdir</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkdir zplusplus</span><br></pre></td></tr></table></figure>
-
-<p>即make directory，创建目录</p>
-<p><img src="https://pic.islet.space/2021/05/image-20210528001730316.png" alt="image-20210528001730316"></p>
-<h2 id="mv"><a href="#mv" class="headerlink" title="mv"></a>mv</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mv zplusplus</span><br></pre></td></tr></table></figure>
-
-<p>即move，移动或删除</p>
-<blockquote>
-<ul>
-<li><code>-f</code> force 强制</li>
-</ul>
-</blockquote>
-<p>也可以用来改名，用法如下：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mv main.c test.c</span><br></pre></td></tr></table></figure>
-
-
-
-<p>其他类似的语句如 <code>rm</code>，可以参考手册</p>
-<h2 id="ls"><a href="#ls" class="headerlink" title="ls"></a>ls</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ls</span><br></pre></td></tr></table></figure>
-
-<p>即List，（展现）列表</p>
-<p>这个命令非常好用，学会了就基本忘不了，各别shell能够提供不同的色彩显示，对于文档类型识别来说非常高效。</p>
-<p><img src="https://pic.islet.space/2021/05/image-20210528001701289.png" alt="image-20210528001701289"></p>
-<h1 id="文件编辑"><a href="#文件编辑" class="headerlink" title="文件编辑"></a>文件编辑</h1><h2 id="vim"><a href="#vim" class="headerlink" title="vim"></a>vim</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim main.c</span><br></pre></td></tr></table></figure>
-
-<p><strong>注意</strong>：如果已经存在了<code>main.c</code> 他就不会新生成一个，否则就会新建。</p>
-<p><strong>操作方法</strong>：</p>
-<ol>
-<li>刚进去的时候需要按 <code>i</code> 进行插入（insert）操作</li>
-<li>编辑完毕之后需要先按 <code>ESC</code> 键，在依次输入 <code>:</code> 及其他指令进行退出，具体参考下方，可以看手册。</li>
-</ol>
-<blockquote>
-<p><code>:</code> instructor 指令输入</p>
-<p><code>w</code> wirte</p>
-<p><code>q</code> quit</p>
-<p><code>!</code> 强制</p>
-</blockquote>
-<p><strong>编辑界面如下</strong>：</p>
-<p><img src="https://pic.islet.space/2021/05/image-20210528002252175.png" alt="image-20210528002252175"></p>
-<p><strong>科普视频</strong>：</p>
-<iframe src="//player.bilibili.com/player.html?aid=55498503&bvid=BV164411P7tw&cid=97032762&page=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"> </iframe>
-
-
-
-<p><strong>自行科普</strong>：GUI，Graphic User Interface 图形用户界面</p>
-<h1 id="代码运行"><a href="#代码运行" class="headerlink" title="代码运行"></a>代码运行</h1><h2 id="gcc"><a href="#gcc" class="headerlink" title="gcc"></a>gcc</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gcc main.c </span><br></pre></td></tr></table></figure>
-
-<p>是<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/gnu/671972">GNU</a>下的GCC编译器之一，c的编译器是<code>gcc</code>，c++的编译器是<code>g++</code></p>
-<blockquote>
-<ul>
-<li><code>-o main</code> 参数</li>
-</ul>
-</blockquote>
-<p><img src="https://pic.islet.space/2021/05/image-20210528002708689.png" alt="image-20210528002708689"></p>
-<p>编译完成之后使用 <code>ls</code> 可以查看已生成的文件 <code>a.out</code>（默认命名）。</p>
-<p><img src="https://pic.islet.space/2021/05/image-20210528002757152.png" alt="image-20210528002757152"></p>
-<p>这个 <code>a.out</code> 文件是CPU能够直接识别和运行的文件，因此直接使用以下代码运行即可。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./a.out</span><br></pre></td></tr></table></figure>
-
-<p>运行效果如下：</p>
-<p><img src="https://pic.islet.space/2021/05/image-20210528002900901.png" alt="image-20210528002900901"></p>
-<p>遇到问题可以再进行调试。</p>
-<p>对GNU和开源的概念可以参考下方视频：</p>
-<iframe src="//player.bilibili.com/player.html?aid=413061830&bvid=BV1zV411d7La&cid=186095567&page=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"> </iframe>
-
-
-
 
       
     </div>

@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="next-config" data-name="main" type="application/json">{&quot;hostname&quot;:&quot;islet.space&quot;,&quot;root&quot;:&quot;&#x2F;&quot;,&quot;images&quot;:&quot;&#x2F;images&quot;,&quot;scheme&quot;:&quot;Gemini&quot;,&quot;version&quot;:&quot;8.3.0&quot;,&quot;exturl&quot;:false,&quot;sidebar&quot;:{&quot;position&quot;:&quot;left&quot;,&quot;display&quot;:&quot;post&quot;,&quot;padding&quot;:18,&quot;offset&quot;:12},&quot;copycode&quot;:false,&quot;bookmark&quot;:{&quot;enable&quot;:false,&quot;color&quot;:&quot;#222&quot;,&quot;save&quot;:&quot;auto&quot;},&quot;fancybox&quot;:false,&quot;mediumzoom&quot;:false,&quot;lazyload&quot;:false,&quot;pangu&quot;:false,&quot;comments&quot;:{&quot;style&quot;:&quot;tabs&quot;,&quot;active&quot;:null,&quot;storage&quot;:true,&quot;lazyload&quot;:false,&quot;nav&quot;:null},&quot;motion&quot;:{&quot;enable&quot;:true,&quot;async&quot;:false,&quot;transition&quot;:{&quot;post_block&quot;:&quot;fadeIn&quot;,&quot;post_header&quot;:&quot;fadeInDown&quot;,&quot;post_body&quot;:&quot;fadeInDown&quot;,&quot;coll_header&quot;:&quot;fadeInLeft&quot;,&quot;sidebar&quot;:&quot;fadeInUp&quot;}},&quot;prism&quot;:false,&quot;i18n&quot;:{&quot;placeholder&quot;:&quot;Searching...&quot;,&quot;empty&quot;:&quot;We didn&#39;t find any results for the search: ${query}&quot;,&quot;hits_time&quot;:&quot;${hits} results found in ${time} ms&quot;,&quot;hits&quot;:&quot;${hits} results found&quot;}}</script>
+<meta name="description" content="本文章用于记录半导体（晶体管的工作原理等blablabla的知识）。 半导体的定义半导体 是指常温下导电性能介于导体与绝缘体之间的材料。 按照国际通行的半导体产品标准方式进行分类，半导体可以分为四类：集成电路（Integer Circuit），分立器件（Discrete Device），传感器（Sensor） 和 光电子器件（Optoelectronic Devices） ，统称为半导体元件。 分">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Semiconductor">
+<meta property="og:url" content="http://islet.space/2021/07/14/Hardware/2021-07-14-Semiconductor/index.html">
+<meta property="og:site_name" content="Coder的孤岛">
+<meta property="og:description" content="本文章用于记录半导体（晶体管的工作原理等blablabla的知识）。 半导体的定义半导体 是指常温下导电性能介于导体与绝缘体之间的材料。 按照国际通行的半导体产品标准方式进行分类，半导体可以分为四类：集成电路（Integer Circuit），分立器件（Discrete Device），传感器（Sensor） 和 光电子器件（Optoelectronic Devices） ，统称为半导体元件。 分">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://islet.space/Users/liewzheng/Library/Application%20Support/typora-user-images/image-20210714204623205.png">
+<meta property="og:image" content="http://islet.space/Users/liewzheng/Library/Application%20Support/typora-user-images/image-20210714204653816.png">
+<meta property="og:image" content="http://islet.space/Users/liewzheng/Library/Application%20Support/typora-user-images/image-20210714210922380.png">
+<meta property="og:image" content="http://islet.space/Users/liewzheng/Library/Application%20Support/typora-user-images/image-20210714210942004.png">
+<meta property="og:image" content="http://islet.space/Users/liewzheng/Library/Application%20Support/typora-user-images/image-20210714212136379.png">
+<meta property="og:image" content="http://islet.space/Users/liewzheng/Library/Application%20Support/typora-user-images/image-20210714212143706.png">
+<meta property="og:image" content="https://pic.islet.space/2021/07/image-20210713102126884.png">
+<meta property="og:image" content="https://pic.islet.space/2021/07/Types-of-Diodes-and-Their-Applications.jpg">
+<meta property="og:image" content="https://pic.islet.space/2021/07/image-20210713102141393.png">
+<meta property="og:image" content="https://pic.islet.space/2021/07/image-20210713104805683.png">
+<meta property="og:image" content="https://pic.islet.space/2021/07/image-20210713105054978.png">
+<meta property="og:image" content="http://islet.space/Users/liewzheng/Library/Application%20Support/typora-user-images/image-20210714215347959.png">
+<meta property="og:image" content="http://islet.space/Users/liewzheng/Library/Application%20Support/typora-user-images/image-20210714222731446.png">
+<meta property="og:image" content="http://islet.space/Users/liewzheng/Library/Application%20Support/typora-user-images/image-20210714222645318.png">
+<meta property="og:image" content="http://islet.space/Users/liewzheng/Library/Application%20Support/typora-user-images/image-20210714223024773.png">
+<meta property="og:image" content="https://pic.islet.space/2021/07/image-20210713105852012.png">
+<meta property="og:image" content="https://pic.islet.space/2021/07/image-20210713110023509.png">
+<meta property="og:image" content="https://pic.islet.space/2021/07/image-20210713110146838.png">
+<meta property="og:image" content="https://pic.islet.space/2021/07/image-20210716001316182.png">
+<meta property="og:image" content="https://pic.islet.space/2021/07/image-20210716001716986.png">
+<meta property="og:image" content="https://pic.islet.space/2021/07/image-20210716002453710.png">
+<meta property="og:image" content="https://pic.islet.space/2021/07/image-20210716002900372.png">
+<meta property="og:image" content="https://pic.islet.space/2021/07/image-20210716004255087.png">
+<meta property="og:image" content="https://pic.islet.space/2021/07/image-20210713105437061.png">
+<meta property="og:image" content="https://pic.islet.space/2021/07/image-20210713105533255.png">
+<meta property="og:image" content="https://pic.islet.space/2021/07/image-20210713112224602.png">
+<meta property="og:image" content="https://pic.islet.space/2021/07/image-20210713142410853.png">
+<meta property="og:image" content="https://pic.islet.space/2021/07/image-20210715221251088.png">
+<meta property="og:image" content="https://pic.islet.space/2021/07/image-20210713144038325.png">
+<meta property="og:image" content="https://pic.islet.space/2021/07/image-20210713144838981.png">
+<meta property="og:image" content="https://pic.islet.space/2021/07/image-20210713112637086.png">
+<meta property="og:image" content="https://pic.islet.space/2021/07/image-20210713112654444.png">
+<meta property="og:image" content="https://pic.islet.space/2021/07/image-20210713112712678.png">
+<meta property="og:image" content="https://pic.islet.space/2021/07/image-20210713112728045.png">
+<meta property="og:image" content="https://pic.islet.space/2021/07/image-20210713122039519.png">
+<meta property="og:image" content="https://pic.islet.space/2021/07/image-20210713112841613.png">
+<meta property="og:image" content="https://pic.islet.space/2021/07/image-20210713112933604.png">
+<meta property="og:image" content="https://pic.islet.space/2021/07/image-20210713122011473.png">
+<meta property="og:image" content="https://pic.islet.space/2021/07/d4628535e5dde711c5d042b5a7efce1b9d166176">
+<meta property="article:published_time" content="2021-07-14T12:30:00.000Z">
+<meta property="article:modified_time" content="2021-07-15T16:45:31.438Z">
+<meta property="article:author" content="Liewzheng">
+<meta property="article:tag" content="Semiconductor">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://islet.space/Users/liewzheng/Library/Application%20Support/typora-user-images/image-20210714204623205.png">
+
+
+<link rel="canonical" href="http://islet.space/2021/07/14/Hardware/2021-07-14-Semiconductor/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{&quot;sidebar&quot;:&quot;&quot;,&quot;isHome&quot;:false,&quot;isPost&quot;:true,&quot;lang&quot;:&quot;en&quot;,&quot;comments&quot;:true,&quot;permalink&quot;:&quot;http:&#x2F;&#x2F;islet.space&#x2F;2021&#x2F;07&#x2F;14&#x2F;Hardware&#x2F;2021-07-14-Semiconductor&#x2F;&quot;,&quot;path&quot;:&quot;2021&#x2F;07&#x2F;14&#x2F;Hardware&#x2F;2021-07-14-Semiconductor&#x2F;&quot;,&quot;title&quot;:&quot;Semiconductor&quot;}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">&quot;&quot;</script>
+<title>Semiconductor | Coder的孤岛</title><script src="/js/config.js"></script>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Coder的孤岛</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">islet of the coder</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-文章"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>文章</a></li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8D%8A%E5%AF%BC%E4%BD%93%E7%9A%84%E5%AE%9A%E4%B9%89"><span class="nav-number">1.</span> <span class="nav-text">半导体的定义</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%AC%E5%BE%81%E5%8D%8A%E5%AF%BC%E4%BD%93"><span class="nav-number">1.1.</span> <span class="nav-text">本征半导体</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#P-N%E5%9E%8B%E5%8D%8A%E5%AF%BC%E4%BD%93"><span class="nav-number">1.2.</span> <span class="nav-text">P&#x2F;N型半导体</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#PN%E7%BB%93"><span class="nav-number">1.3.</span> <span class="nav-text">PN结</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%94%B5%E5%AE%B9%E6%95%88%E5%BA%94"><span class="nav-number">1.3.1.</span> <span class="nav-text">电容效应</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%8C%E6%9E%81%E7%AE%A1"><span class="nav-number">2.</span> <span class="nav-text">二极管</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BB%E8%A6%81%E7%89%B9%E5%BE%81%E5%8F%82%E6%95%B0"><span class="nav-number">2.1.</span> <span class="nav-text">主要特征参数</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%99%B6%E4%BD%93%E7%AE%A1"><span class="nav-number">3.</span> <span class="nav-text">晶体管</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#BJT"><span class="nav-number">3.1.</span> <span class="nav-text">BJT</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86"><span class="nav-number">3.1.1.</span> <span class="nav-text">工作原理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B7%A5%E4%BD%9C%E5%8C%BA%E5%9F%9F"><span class="nav-number">3.1.2.</span> <span class="nav-text">工作区域</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#FET"><span class="nav-number">3.2.</span> <span class="nav-text">FET</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#JFET"><span class="nav-number">3.2.1.</span> <span class="nav-text">JFET</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MOSFET"><span class="nav-number">3.2.2.</span> <span class="nav-text">MOSFET</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#NMOS%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86"><span class="nav-number">3.2.2.1.</span> <span class="nav-text">NMOS工作原理</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#FET-and-BJT"><span class="nav-number">3.3.</span> <span class="nav-text">FET and BJT</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8A%9F%E7%8E%87%E5%8D%8A%E5%AF%BC%E4%BD%93"><span class="nav-number">4.</span> <span class="nav-text">功率半导体</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#IGBT"><span class="nav-number">5.</span> <span class="nav-text">IGBT</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%86%E7%B1%BB"><span class="nav-number">5.1.</span> <span class="nav-text">分类</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9C%AF%E8%AF%AD%E6%80%BB%E7%BB%93"><span class="nav-number">6.</span> <span class="nav-text">术语总结</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">7.</span> <span class="nav-text">参考</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Liewzheng</p>
+  <div class="site-description" itemprop="description">笔记分享的旮旯孤岛而已</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">80</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">151</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="mailto:liewzheng@qq.com" title="E-Mail → mailto:liewzheng@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://islet.space/2021/07/14/Hardware/2021-07-14-Semiconductor/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Liewzheng">
+      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coder的孤岛">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Semiconductor
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-07-14 20:30:00" itemprop="dateCreated datePublished" datetime="2021-07-14T20:30:00+08:00">2021-07-14</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2021-07-16 00:45:31" itemprop="dateModified" datetime="2021-07-16T00:45:31+08:00">2021-07-16</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Semiconductor/" itemprop="url" rel="index"><span itemprop="name">Semiconductor</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>本文章用于记录半导体（晶体管的工作原理等blablabla的知识）。</p>
+<h1 id="半导体的定义"><a href="#半导体的定义" class="headerlink" title="半导体的定义"></a>半导体的定义</h1><p><strong>半导体</strong> 是指常温下导电性能介于导体与绝缘体之间的材料。 按照国际通行的半导体产品标准方式进行分类，半导体可以分为四类：<strong>集成电路</strong>（Integer Circuit），<strong>分立器件</strong>（Discrete Device），<strong>传感器</strong>（Sensor） 和 <strong>光电子器件</strong>（Optoelectronic Devices） ，统称为半导体元件。</p>
+<p>分立器件按照功率转换进行分类，可以分为 <strong>功率器件</strong> 和 <strong>非功率器件</strong>，其中，<strong>传感器</strong> 和 <strong>光电器件</strong> 属于 分立器件下的 <strong>非功率器件</strong>，剩下的均是 <strong>功率器件</strong>，包含大部分晶体管，如 Zener Diode、BJT、IGFET、IGBT、Thyristor等。</p>
+<p><strong>注意</strong>：功率器件的概念很大，不仅在分立器件中存在功率半导体，在IC中也存在功率半导体的产品。</p>
+<h2 id="本征半导体"><a href="#本征半导体" class="headerlink" title="本征半导体"></a>本征半导体</h2><p><mark>导电性介于导体与绝缘体之间的物质</mark>称为 <strong>半导体</strong>。</p>
+<p><strong>导体</strong>：如铁、铝、铜等金属元素等低价元素，其最外层电子在外电场作用下很容易产生定向移动，形成电流。</p>
+<p><strong>绝缘体</strong>：如惰性气体、橡胶等，其原子的最外层电子受原子核的束缚力很强，只有在外电场强到一定程度时才可能导电。</p>
+<p><strong>半导体</strong>：如硅（Si）、锗（Ge），均为四价元素，它们原子的最外层电子受原子核的束缚力介于导体与绝缘体之间。</p>
+<p><strong>本征半导体</strong>：intrinsic semiconductor， 是 <strong>纯净</strong>（Purity）的 <strong>晶体结构</strong>（Crystal Texture）的 半导体；intrinsic 具有 “本质，固有” 之意。<strong>纯净</strong>，即无杂质之意；<strong>晶体结构</strong>，即稳定的结构。</p>
+<h2 id="P-N型半导体"><a href="#P-N型半导体" class="headerlink" title="P/N型半导体"></a>P/N型半导体</h2><p>纯净的硅晶体不带电荷，不显示出任何导电特性。</p>
+<p><strong>自由电子</strong>（Electron）：由于热运动，具有足够能量的价电子挣脱共价键的束缚而成为自由电子</p>
+<p><strong>空穴</strong>（Hole）：自由电子的产生使共价键中留有一个空位置</p>
+<p><strong>复合</strong>：自由电子与空穴相碰同时消失</p>
+<p><strong>电荷</strong>：电子和空穴都是电荷，电子呈现负电荷，空穴呈现正电荷</p>
+<p><strong>载流子</strong>（Carrier）：运载电荷的粒子称为载流子</p>
+<p><strong>导电性</strong>：物体呈现出的传导电流的能力</p>
+<p><strong>多数载流子</strong>：在纯净硅晶体中掺杂数量较多的电荷称为多数载流子。</p>
+<p><strong>少数载流子</strong>：在纯净硅晶体中掺杂数量较少的电荷称为少数载流子。</p>
+<p>外加电场时，带负电的自由电子和带正电的空穴均参与导电，且运动方向相反。由于载流子数目很少，故导电性很差。温度升高，热运动加剧，载流子浓度增大，导电性增强。热力学温度0K时不导电。</p>
+<img src="/Users/liewzheng/Library/Application Support/typora-user-images/image-20210714204623205.png" alt="image-20210714204623205" style="zoom: 33%;" />
+
+<div style="text-align: center; font-weight:900;">图 N型半导体结构</div>
+
+
+
+<img src="/Users/liewzheng/Library/Application Support/typora-user-images/image-20210714204653816.png" alt="image-20210714204653816" style="zoom: 33%;" />
+
+<div style="text-align: center; font-weight:900;">图 P型半导体结构</div>
+
+
+
+<p>往纯净的硅晶体中掺杂一定浓度的 <strong>磷</strong>（P）或 <strong>硼</strong>（B）即可获得 使得硅晶半导体带上电子或空穴，即获得了 <strong>N型半导体</strong> 和 <strong>P型半导体</strong>。</p>
+<p><strong>杂质半导体</strong>：在本征的基础上掺杂其他元素。</p>
+<p><strong>P型半导体</strong>：掺杂了硼元素的硅晶体，空穴为多数载流子。</p>
+<p><strong>N型半导体</strong>：掺杂了磷元素的硅晶体。自由电子为多数载流子。</p>
+<h2 id="PN结"><a href="#PN结" class="headerlink" title="PN结"></a>PN结</h2><p><strong>结</strong>：即 Junction，在纯净硅晶体中掺杂两种不同电荷所形成的杂质接触截面。</p>
+<p><strong>扩散运动</strong>：物质 <mark>因浓度差而产生</mark> 的运动。气体、液体、固体均有之。扩散运动使靠近接触面P区的空穴浓度降低、靠近接触面N区的自由电子浓度降低，产生内电场。</p>
+<p><strong>漂移运动</strong>：因 <mark>电场作用</mark> 所产生的运动。</p>
+<p><strong>动态平衡</strong>：结处因空穴和电子一刻不停地复合和分离（官方：参与扩散运动和漂移运动的载流子数目相同）而形成 “无多数载流子” 的状态。</p>
+<blockquote>
+<p><strong>注意</strong>：扩散运动和漂移运动是相反的， </p>
+</blockquote>
+<img src="/Users/liewzheng/Library/Application Support/typora-user-images/image-20210714210922380.png" alt="image-20210714210922380" style="zoom:50%;" />
+
+<div style="text-align: center; font-weight:900;">图 扩散运动</div>
+
+
+
+<img src="/Users/liewzheng/Library/Application Support/typora-user-images/image-20210714210942004.png" alt="image-20210714210942004" style="zoom:67%;" />
+
+<div style="text-align: center; font-weight:900;">图 漂移运动</div>
+
+<p><strong>耗尽层</strong>：PN结处，因动态平衡而达到的“无多数载流子”的状态，该结的大小称为耗尽层。</p>
+<p>如果此时让P区的多数载流子，即空穴尽量往N区移动，让N区的多数载流子，即自由电子尽量往P区移动，则两种电荷进行复合，形成更宽的耗尽层，此时因为耗尽层因为没有多数载流子而呈现不导电特性。</p>
+<p>反之，让P区的多数载流子尽量往P区靠拢，让N区的多数载流子尽量往N区靠拢（注意，这里用的是“靠拢”，因为中间已经有耗尽层的形成，此时的“靠拢”是让耗尽层中已经复合消失的电子和空穴重新拆开，分别往各自原来的反向回归。），耗尽层的宽度会逐渐缩小，显现出导电特性。</p>
+<p><strong>正向</strong>：电源的正、负极分别对准半导体的P、N极进行连接。</p>
+<p><strong>反向</strong>：电源的正、负极分别对准半导体的N、P极进行连接。</p>
+<p><strong>正向导通</strong>：耗尽层变窄，扩散运动加剧，由于外电源的作用，形成扩散电流，PN结处于导通状态。</p>
+<p><strong>反向截止</strong>：耗尽层变宽，阻止扩散运动，有利于漂移运动，形成漂移电流。由于电流很小，故可近似认为其截止。</p>
+<img src="/Users/liewzheng/Library/Application Support/typora-user-images/image-20210714212136379.png" alt="image-20210714212136379" style="zoom:33%;" />
+
+<div style="text-align: center; font-weight:900;">图 正向导通</div>
+
+
+
+<img src="/Users/liewzheng/Library/Application Support/typora-user-images/image-20210714212143706.png" alt="image-20210714212143706" style="zoom:33%;" />
+
+<div style="text-align: center; font-weight:900;">图 反向截止</div>
+
+
+
+<h3 id="电容效应"><a href="#电容效应" class="headerlink" title="电容效应"></a>电容效应</h3><p><strong>势垒电容</strong>：PN结外加电压变化时，空间电荷区的宽度将发生变化，有电荷的积累和释放的过程，与电容的充放电相同，其等效电容称为势垒电容Cb。</p>
+<p><strong>扩散电容</strong>：PN结外加的正向电压变化时，在扩散路程中载流子的浓度及其梯度均有变化，也有电荷的积累和释放的过程，其等效电容称为扩散电容Cd。</p>
+<p><strong>结电容</strong>：等于 势垒电容 与 扩散电容 之和。但 <mark>结电容不是常量！</mark> 若PN结外加电压频率高到一定程度，则失去单向导电性！</p>
+<h1 id="二极管"><a href="#二极管" class="headerlink" title="二极管"></a>二极管</h1><p>The diode is the most used semiconductor device in electronics circuits. <em><strong>It is a two-terminal electrical check valve that allows the flow of current in one direction.</strong></em> They are mostly made up of <em><strong>silicon</strong></em> but <em><strong>germanium</strong></em> is also used. Usually, they are used for <em><strong>rectification</strong></em>. But there are different properties &amp; characteristics of diodes which can be used for different application. These characteristics are modified to form different types of diodes. </p>
+<p><img src="https://pic.islet.space/2021/07/image-20210713102126884.png" alt="image-20210713102126884"></p>
+<img src="https://pic.islet.space/2021/07/Types-of-Diodes-and-Their-Applications.jpg" alt="Types of Diodes and Their Applications" style="zoom:67%;" />
+
+<div style="text-align: center; font-weight: 900;">图 二极管的几种外形</div>
+
+
+
+<p><img src="https://pic.islet.space/2021/07/image-20210713102141393.png" alt="image-20210713102141393"></p>
+<div style="text-align: center; font-weight: 900;">图 二极管的几种常见结构和符号</div>
+
+<h2 id="主要特征参数"><a href="#主要特征参数" class="headerlink" title="主要特征参数"></a>主要特征参数</h2><ol>
+<li>最大整流电流（Maximum Rectification Current）</li>
+<li>最高反向工作电压（Maximum Reverse Voltage）</li>
+<li>反向电流（Reverse Current）</li>
+<li>最高工作频率（Maximum Frequency）</li>
+</ol>
+<h1 id="晶体管"><a href="#晶体管" class="headerlink" title="晶体管"></a>晶体管</h1><p>晶体管主要分为两种类型，BJT 和 FET。</p>
+<p><strong>工作区域</strong>：晶体管的导通状态，分为三种，分别是饱和、截止和放大，分别是指</p>
+<h2 id="BJT"><a href="#BJT" class="headerlink" title="BJT"></a>BJT</h2><p>BJT，即 Bioplar Junction Transistor，双极性结型晶体管。</p>
+<p>![image-20210714213248733](/Users/liewzheng/Library/Application Support/typora-user-images/image-20210714213248733.png)</p>
+<div style="text-align: center; font-weight:900;">图 晶体管内部结构和符号示意</div>
+
+<p><strong>注意</strong>：晶体管的符号示意中，箭头的方向永远是从P指向N的，此时先不用管c、b、e是怎么接，确定好。</p>
+<blockquote>
+<p>BJT结构特点：三极三区两PN结，发射区多子浓度高，基区多子浓度低且薄，集电区 面积大。</p>
+</blockquote>
+<p><strong>发射区</strong>：多数载流子较高的区域，自由电子流出的方向。</p>
+<p><strong>基区</strong>：多数载流子浓度较低且薄的区域。</p>
+<p><strong>集电区</strong>：面积大的区域，空穴流出的反向。</p>
+<blockquote>
+<p>某极 是根导线，与BJT中的物理区不同。</p>
+</blockquote>
+<p><strong>发射结</strong>：发射区和基区之间的PN结。</p>
+<p><strong>集电结</strong>：集电区和基区之间的PN结。</p>
+<blockquote>
+<p><strong>注意</strong>：以上多数载流子可以是 空穴 或 自由电子，因此 BJT 可以有 NPN 和 PNP 两种类型的BJT。</p>
+</blockquote>
+<p>联系到实际电路连接中，一般情况下，<strong>集电区</strong> 都是接 <strong>供电电源</strong> ， <strong>基区</strong> 都是接 <strong>控制电源</strong>， <strong>发射区</strong> 都是接 <strong>负端/地</strong>。控制电源的电压会低于供电电源的电压，但会大于发射区的电压。</p>
+<p>基区所连接的控制电源 为BJT提供 高电平或低电平 予以控制半导体的导通或截止，<mark>半导体所控制的负载的最大电压取决于发射极的供电电源电压 和 基区的控制电源电压</mark>。</p>
+<img src="https://pic.islet.space/2021/07/image-20210713104805683.png" alt="image-20210713104805683" style="zoom:67%;" />
+
+<div style="text-align: center; font-weight: 900;">图 BJT的几种常见外形</div>
+
+
+
+<img src="https://pic.islet.space/2021/07/image-20210713105054978.png" alt="image-20210713105054978" style="zoom:67%;" />
+
+<div style="text-align: center; font-weight: 900;">图 BJT的结构和符号</div>
+
+
+
+<h3 id="工作原理"><a href="#工作原理" class="headerlink" title="工作原理"></a>工作原理</h3><p>从下图可以看出，下图 BJT 为 NPN 型半导体，集电区接正电，发射区接地，基区接地。集电区与基区为反向截止状态，集电结的耗尽层增大，进一步阻止集电区和发射区之间的电流导通。</p>
+<p>若此时向基区施加正向电流，基区电压高于发射区电压，发射结正偏导通，发射区多子（电子）往基区流动，。发射区的电子能够顺利往集电区流动，集电区的电流往发射区流动，从而导通 该BJT。</p>
+<img src="/Users/liewzheng/Library/Application Support/typora-user-images/image-20210714215347959.png" alt="image-20210714215347959" style="zoom:33%;" />
+
+<div style="text-align: center; font-weight:900;">图 BJT导通时的内部电荷流向示意</div>
+
+
+
+<p>集电极电流是漂移形成的，发射极电流是扩散形成的。</p>
+<p><strong>发射区电流</strong> I<span style="font-size: 0.8rem;">E</span> 是由 扩散运动形成的。</p>
+<p><strong>基区电流</strong> I<span style="font-size: 0.8rem;">B</span> 是由 复合运动形成的。</p>
+<p><strong>集电区电流</strong> I<span style="font-size: 0.8rem;">C</span> 是由 漂移运动形成的。</p>
+<img src="/Users/liewzheng/Library/Application Support/typora-user-images/image-20210714222731446.png" alt="image-20210714222731446" style="zoom:33%;" />
+
+<div style="text-align: center; font-weight:900;">图 BJT输入特性曲线</div>
+
+
+
+<img src="/Users/liewzheng/Library/Application Support/typora-user-images/image-20210714222645318.png" alt="image-20210714222645318" style="zoom: 33%;" />
+
+<div style="text-align: center; font-weight:900;">图 BJT输出特性曲线</div>
+
+
+
+<h3 id="工作区域"><a href="#工作区域" class="headerlink" title="工作区域"></a>工作区域</h3><img src="/Users/liewzheng/Library/Application Support/typora-user-images/image-20210714223024773.png" alt="image-20210714223024773" style="zoom:67%;" />
+
+<div style="text-align: center; font-weight:900;">图 BJT工作区域</div>
+
+<p>饱和 和 放大的区别：</p>
+<p>共射极电路、共基电路</p>
+<h2 id="FET"><a href="#FET" class="headerlink" title="FET"></a>FET</h2><p><strong>场效应晶体管</strong> 简称 <strong>场效应管</strong>。主要有 <strong>结型场效应管</strong>（JFET）和 <strong>金属氧化物半导体场效应管</strong>（MOSFET）两种类型。</p>
+<h3 id="JFET"><a href="#JFET" class="headerlink" title="JFET"></a>JFET</h3><img src="https://pic.islet.space/2021/07/image-20210713105852012.png" alt="image-20210713105852012" style="zoom:67%;" />
+
+<div style="text-align: center; font-weight: 900;">图 JFET的结构和符号</div>
+
+
+
+<h3 id="MOSFET"><a href="#MOSFET" class="headerlink" title="MOSFET"></a>MOSFET</h3><p>在MOS管工作原理图上可以看到，漏极和源极之间有一个寄生二极管。这个叫体二极管，在驱动感性负载(如马达)，这个二极管很重要。顺便说一句，体二极管只在单个的MOS管中存在，在集成电路芯片内部通常是没有的。</p>
+<p>下图a中，为增强型P衬底N沟道MOS，其栅极接 <u>高电平</u> 即导通。</p>
+<img src="https://pic.islet.space/2021/07/image-20210713110023509.png" alt="image-20210713110023509" style="zoom:67%;" />
+
+<div style="text-align: center; font-weight: 900;">图 N沟道增强型MOS管结构示意图 及 增强型MOS管的符号</div>
+
+
+
+<img src="https://pic.islet.space/2021/07/image-20210713110146838.png" alt="image-20210713110146838" style="zoom:67%;" />
+
+<div style="text-align: center; font-weight: 900;">图 N沟道耗尽型MOS管结构示意图 及 耗尽型MOS管的符号</div>
+
+<h4 id="NMOS工作原理"><a href="#NMOS工作原理" class="headerlink" title="NMOS工作原理"></a>NMOS工作原理</h4><iframe src="//player.bilibili.com/player.html?aid=931455726&bvid=BV1DM4y1T7Yx&cid=363622918&page=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"> </iframe>
+
+<p>MOS管有4个端子，其符号也是四个端子组成的，以下用NMOS举例：</p>
+<p>NMOS底部端子连接到基板/主体（Substrate/Body），称为基板、衬底端子 或 <em><strong>主体端子</strong></em>。上方各有两个N沟道，各自连接 <em><strong>源极端子</strong></em> 和 <em><strong>漏极端子</strong></em>。两个端子中间添加了一层 薄绝缘体或电介质，在此层绝缘体上加了一个 <em><strong>栅极端子</strong></em>。</p>
+<img src="https://pic.islet.space/2021/07/image-20210716001316182.png" alt="image-20210716001316182" style="zoom:50%;" />
+
+<p>在NMOS内部构造中，源极端子 和 衬底端子 在内部连接，因此外露出来的端子只有三个。此时因 源极 和 衬底 的电位相同，阻止了任何电流从衬底流向源极。</p>
+<img src="https://pic.islet.space/2021/07/image-20210716001716986.png" alt="image-20210716001716986" style="zoom:50%;" />
+
+<p>在MOS中，希望电子从漏极流向源极，在两个极连接一个电源，其电压称为 V<span style="font-size: 0.6rem;">DS</span> ，此时加大电压，电流却不会增大，因为漏极沟道附近的耗尽层不断增大。</p>
+<img src="https://pic.islet.space/2021/07/image-20210716002453710.png" alt="image-20210716002453710" style="zoom:50%;" />
+
+<p>栅极端子 和 主体端子 都有绝缘材料，当给栅极端子接电压较小的电压 V<span style="font-size: 0.6rem;">GS</span> 时，两个绝缘材料形成电容效应，栅极处的多子不断吸引自由电子往栅极移动，暂时形成带自由电子较多的N区，从而导通了 源极 和 漏极，暂时形成了回路。因为 栅极处的N区是暂时连接 源极和漏极的通道，因此也被称为 N沟道。随着电压的增大或减小，沟道的大小也会随着变化。足以形成沟道的最低栅极电压被称为 阈值电压。</p>
+<img src="https://pic.islet.space/2021/07/image-20210716002900372.png" alt="image-20210716002900372" style="zoom:50%;" />
+
+<p>当不断增加栅极电压，漏极 和 衬底之间的耗尽层将因为 反向偏置 而不断增加。靠近漏极一侧的N沟道宽度将不断减小，直到某个电压点时，称为夹断效应。夹断下映实际上是说，沟道并未完全关闭，许多电子将保留通道，并不是停止了电流流动，而是出现了恒定的饱和电流，其电压被称为 饱和电压。</p>
+<img src="https://pic.islet.space/2021/07/image-20210716004255087.png" alt="image-20210716004255087" style="zoom:50%;" />
+
+
+
+<div style="text-align: center; font-weight: 900;">表 FET的符号和特性</div>
+
+<p><img src="https://pic.islet.space/2021/07/image-20210713105437061.png" alt="image-20210713105437061"></p>
+<p><img src="https://pic.islet.space/2021/07/image-20210713105533255.png" alt="image-20210713105533255"></p>
+<h2 id="FET-and-BJT"><a href="#FET-and-BJT" class="headerlink" title="FET and BJT"></a>FET and BJT</h2><p>FET 的 <strong>栅极</strong>、<strong>源极</strong> 和 <strong>漏极</strong> 对应 BJT的 <strong>基极</strong>、<strong>发射极</strong> 和 <strong>集电极</strong>，其作用类似。</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>FET</th>
+<th>BJT</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>电流索取</td>
+<td>用“栅-源”电压控制漏极电流，栅极基本不取电流<br>【输入电阻高的电路选用】</td>
+<td>工作时基极总要索取一定的电流<br>【信号源若提供电流的选用】</td>
+</tr>
+<tr>
+<td>导电情况</td>
+<td>仅多子参与导电</td>
+<td>多子少子均参与导电</td>
+</tr>
+<tr>
+<td>稳定性</td>
+<td>较好</td>
+<td>较差<br>【因少子数目受温度、辐射等因素影响较大，温度稳定性和抗辐射的能力较差些。】</td>
+</tr>
+<tr>
+<td>噪声系数</td>
+<td>小<br>【低噪声放大器的输入级和信噪比要求高的电路选用】</td>
+<td>大</td>
+</tr>
+<tr>
+<td>源-漏互换</td>
+<td>可以互换，互换后特性变化不大</td>
+<td>互换后特性差异很大，特殊需求时互换</td>
+</tr>
+<tr>
+<td>电压范围</td>
+<td>宽</td>
+<td>窄</td>
+</tr>
+<tr>
+<td>工艺</td>
+<td>简单</td>
+<td>复杂</td>
+</tr>
+<tr>
+<td>耗电</td>
+<td>低</td>
+<td>高</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>IGFET / MOS / MOSFET 是同一个东西，还有个词叫 MISFET（Metal-Insulated-Semiconductor Field Effect Transistor，金属绝缘半导体场效应管）</p>
+</blockquote>
+<h1 id="功率半导体"><a href="#功率半导体" class="headerlink" title="功率半导体"></a>功率半导体</h1><p><strong>功率半导体</strong> 器件大致分为两类： <strong>可控功率半导体</strong> 和 <strong>不可控功率半导体</strong>。<strong>可控功率半导体</strong> 如 Thyristor（晶闸管）、BJT（双极型晶体管）、功率MOSFET 和 IGBT 。不可控功率半导体 包括各种类型的功率二极管。</p>
+<img src="https://pic.islet.space/2021/07/image-20210713112224602.png" alt="image-20210713112224602" style="zoom:67%;" />
+
+<div style="text-align: center; font-weight: 900;">图 常见功率半导体器件及其典型的功率范围、阻断电压和开关频率</div>
+
+
+
+<h1 id="IGBT"><a href="#IGBT" class="headerlink" title="IGBT"></a>IGBT</h1><p><strong>绝缘栅型双极晶体管</strong>，即 <strong>IGBT</strong>（Insulated Gate Bipolar Transistor），是由 <em><strong>BJT</strong></em>（双极型三极管)）和 <em><strong>MOS</strong></em>（绝缘栅型场效应管）组成的 <strong>复合全控型电压驱动式功率半导体</strong> 器件, 兼有 <strong>MOSFET</strong>的 <u>高输入阻抗</u> 和 <strong>GTR</strong>的 <u>低导通压降</u> 两方面的优点。IGBT综合了以上两种器件的优点，驱动功率小而饱和压降低。非常适合应用于直流电压为600V及以上的变流系统如交流电机、变频器、开关电源、照明电路、牵引传动等领域。</p>
+<blockquote>
+<p>GTR 具有饱和压降低，载流密度大，但驱动电流较大的优点；</p>
+<p>MOSFET 具有驱动功率很小，开关速度快，但导通压降大，载流密度小的优点。</p>
+</blockquote>
+<p><strong>IGBT模块</strong> 是由 IGBT（绝缘栅双极型晶体管芯片）与FWD（续流二极管芯片）通过特定的电路桥接封装而成的模块化半导体产品；封装后的IGBT模块直接应用于变频器、UPS不间断电源等设备上；IGBT模块 具有节能、安装维修方便、散热稳定等特点；当前市场上销售的多为此类模块化产品，一般所说的IGBT也指IGBT模块；随着节能环保等理念的推进，此类产品在市场上将越来越多见；</p>
+<img src="https://pic.islet.space/2021/07/image-20210713142410853.png" alt="image-20210713142410853" style="zoom: 80%;" />
+
+<div style="text-align: center; font-weight: 900;">图 IGBT内部结构和等效电路</div>
+
+<p>因为IGBT的构造所致，最好还是不要让IGBT长期工作在放大区，会让其降低使用寿命，因开关开断时而进入放大区无可避免，仅工作在 饱和区 和 截止区 即可。</p>
+<img src="https://pic.islet.space/2021/07/image-20210715221251088.png" alt="image-20210715221251088" style="zoom:80%;" />
+
+
+
+<p>三个英文符号分别表示为 <strong>栅极</strong>（Gate）、<strong>集电极</strong>（Collector）、<strong>发射极</strong>（Emitter）。</p>
+<p>在漏极侧增加了高掺杂的P+层，称之为 <strong>集电极</strong>。</p>
+<ul>
+<li><p>当栅极接近 <u>负电压</u> 或 <u>零电压</u> 时，PN结 J2 阻断，发射极电压远低于集电极电压，IGBT 关断 （正向阻断）；但是此刻 结J1 和 结J3 <strong>正偏导通</strong>。</p>
+</li>
+<li><p>当栅极接到 <u>正电压</u>（通常是15V）时，氧化层下方的 P区 建立 <strong>反型导电沟道</strong>，为 N-区 提供导电通路，电子从发射极到 N-区 降低了 N-区 的电位，PN结 J1导通，IGBT导通。 </p>
+</li>
+</ul>
+<p>如果栅极电压不够大，形成的反型层较弱，流入漂移区的电子数相对较少，IGBT压降增大，即进入特性曲线的 <strong>线性放大区</strong>。工作在线性放大区会加剧损耗或损坏 IGBT，因而除了开关瞬间，应避免进入线性放大区。</p>
+<img src="https://pic.islet.space/2021/07/image-20210713144038325.png" alt="image-20210713144038325" style="zoom:67%;" />
+
+<div style="text-align: center; font-weight: 900;">图 IGBT的输出特性</div>
+
+<p>IGBT 的关断电流分为 <strong>MOSFET关断阶段</strong> 和 <strong>BJT关断阶段</strong>。第一个阶段时，关断反型沟道，电流迅速下降；第二个阶段时，会产生持续时间较长的拖尾电流。</p>
+<p>拖尾电流使得 IGBT 的关断损耗 高于 MOSFET 的关断损耗。</p>
+<img src="https://pic.islet.space/2021/07/image-20210713144838981.png" alt="image-20210713144838981" style="zoom: 67%;" />
+
+<div style="text-align: center; font-weight: 900;">图 MOSFET和IGBT的主要开通和关断特性比较</div>
+
+
+
+<p>截止电压：</p>
+<p>饱和电压：</p>
+<p>击穿电压：</p>
+<p>（栅极和发射极）阈值电压</p>
+<p>漏电流：泄露电流，leakage current。主要是指栅极和发射极的在反向偏执状态的泄露电流，此处特性与二极管相近。</p>
+<h2 id="分类"><a href="#分类" class="headerlink" title="分类"></a>分类</h2><p>IGBT可以分为 <strong>穿通型</strong>（PT）IGBT、<strong>非穿通型</strong>（NPT）IGBT、<strong>场终止型</strong>（FS）IGBT、<strong>沟槽栅</strong>（Trench）IGBT、<strong>载流子存储沟槽栅双极晶体管</strong>（CSTBT）、<strong>注入增强晶体管</strong>（IEGT）、<strong>沟槽栅终止</strong>（Trench-FS）IGBT、<strong>逆导型</strong>（RC）IGBT。</p>
+<p><strong>平面栅极结构</strong> 的IGBT设计，形成了JFET结构，以及发射极区软弱的电导调制效应，载流子的浓度从集电极到发射极之间逐步降低。</p>
+<p><strong>沟槽型栅极结构</strong> 的IGBT设计，在平面型的基础上保持载流子浓度平均分布或逐步增加载流子浓度，进一步降低通态损耗，而不影响拖尾电流和关断损耗。</p>
+<p>载流子越少越有助于降低关断损耗。</p>
+<table>
+<thead>
+<tr>
+<th>TYPE</th>
+<th>内部构造（原理）</th>
+<th>温度系数</th>
+<th>优点</th>
+<th>缺点</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>PT-IGBT<BR>穿通型IGBT</td>
+<td><img src="https://pic.islet.space/2021/07/image-20210713112637086.png" alt="image-20210713112637086" style="zoom:67%;" /></td>
+<td>正温度系数<br>负温度系数</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>NPT-IGBT<BR>非穿通型IGBT</td>
+<td><img src="https://pic.islet.space/2021/07/image-20210713112654444.png" alt="image-20210713112654444" style="zoom:67%;" /></td>
+<td>正温度系数</td>
+<td>1. 有利于IGBT并联</td>
+<td>1. 随着温度上升，损耗增大</td>
+</tr>
+<tr>
+<td>FS-IGBT<BR>场终止型IGBT</td>
+<td><img src="https://pic.islet.space/2021/07/image-20210713112712678.png" alt="image-20210713112712678" style="zoom:67%;" /></td>
+<td>正温度系数</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Trench-IGBT<br>沟槽栅IGBT</td>
+<td><img src="https://pic.islet.space/2021/07/image-20210713112728045.png" alt="image-20210713112728045" style="zoom:67%;" /></td>
+<td></td>
+<td></td>
+<td>1. 更宽的导电沟道会增加IGBT短路时的电流</td>
+</tr>
+<tr>
+<td>CSTBT<br>载流子存储沟槽双极晶体管</td>
+<td><img src="https://pic.islet.space/2021/07/image-20210713122039519.png" alt="image-20210713122039519" style="zoom:67%;" /></td>
+<td></td>
+<td>1. 降低了IGBT的饱和压降</td>
+<td></td>
+</tr>
+<tr>
+<td>IEGT<BR>注入增强栅晶体管</td>
+<td><img src="https://pic.islet.space/2021/07/image-20210713112841613.png" alt="image-20210713112841613" style="zoom:67%;" /></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Trench-FS IGBT<br>沟槽栅终止IGBT</td>
+<td><img src="https://pic.islet.space/2021/07/image-20210713112933604.png" alt="image-20210713112933604" style="zoom:67%;" /></td>
+<td></td>
+<td></td>
+<td>1. 保持鲁棒性，通态损耗和开关损耗降低<br>2. 功率密度提升，即电流密度增大<br>3. 单位IGBT所需硅材料降低</td>
+</tr>
+<tr>
+<td>RC-IGBT<BR>逆导型IGBT</td>
+<td><img src="https://pic.islet.space/2021/07/image-20210713122011473.png" alt="image-20210713122011473" style="zoom:67%;" /></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<h1 id="术语总结"><a href="#术语总结" class="headerlink" title="术语总结"></a>术语总结</h1><p><strong>FET</strong>： Filed Effect Transistor，即 <strong>场效应管</strong>，是 <mark>利用输入回路的电场效应来控制输出回路电流</mark> 的一种半导体器件，故此得名。由于其仅靠半导体中的多数载流子导电，因此也称为 <strong>单极型晶体管</strong>。</p>
+<p><strong>JFET</strong>： Junction Filed Effect Transistor，即 <strong>结型场效应管</strong>，有 P沟道 和 N沟道 两种类型。</p>
+<p><strong>IGFET</strong>： Insulated Gate Field Effect Transistor，即 <strong>绝缘栅型场效应管</strong>。因栅极与源极、栅极与漏极之间均采用二氧化硅绝缘层进行阻隔而得名如此。又因栅极为金属铝，故又称为MOS管。具有 高输入阻抗、高开关频率 和 低驱动功率 的优点。</p>
+<p><strong>MOS</strong>： Metal-Oxide-Semiconductor，即 <strong>金属氧化物半导体</strong>。同上。</p>
+<p><strong>MOSFET</strong>： Metal-Oxide-Semiconductor Field Effect Transistor，即 <strong>金属氧化物半导体场效应管</strong>。同上。</p>
+<p><strong>BJT</strong>： Bipolar Junction Transistor， 即 <strong>双极结型晶体管</strong>。因带有两种不同极性电荷的载流子参与导电，故得名如此，或称 <strong>半导体三极管</strong>，简称 <strong>双极晶体管</strong> 或 <strong>晶体管</strong>。</p>
+<p><strong>UJT</strong>： Unijunction Transistor，即 <strong>单结晶体管</strong>。因有两个基极，也称为 <strong>双基极晶体管</strong>。</p>
+<p><strong>GTR</strong>： Giant Transistor，即 <strong>巨型晶体管</strong>。BJT的一种，亦称为 Power BJT（<strong>电力晶体管</strong>）。具有自关断、无须辅助关断电路、 高电流密度、低保和电压 和 耐高压 的优点。</p>
+<p><strong>IGBT</strong>： Insulated Gate Bipolar Transistor，即 <strong>绝缘栅双极型晶体管</strong>。</p>
+<p><strong>Thyristor</strong>：即 <strong>半导体闸流管</strong> 、<strong>晶闸管</strong>，又称为 <strong>硅可控元件</strong>（Silicon Controlled Rectifier）， 由按顺序排列的PNPN四层半导体组成。最外层的P区和N区构成了正负极，中间的P区构成了控制极（栅极），可以控制导通。具有耐压高、电流大、耐浪涌能力强 且 价格便宜 等优点。</p>
+<p><strong>GTO</strong>： Gate Turn-Off Thyristor，即 <strong>可关断晶闸管</strong>。是一种通过门极来控制器件导通和关断的电力半导体器件。具有 普通晶闸管 和 GTR的优点，是应用于高压大容量场合中的一种大功率开关器件。</p>
+<p><strong>PT</strong>： Power Transistor， 即 <strong>功率晶体管</strong> / <strong>功率管</strong>。</p>
+<p><strong>IPM</strong>： Intelligent Power Module，即 <strong>智能功率模块</strong>。具有GTR 和 MOSFET 的优点。而且IPM内部集成了逻辑、控制、检测和保护电路，使用起来方便,不仅减小了系统的体积以及开发时间，也大大增强了系统的可靠性。</p>
+<img src="https://pic.islet.space/2021/07/d4628535e5dde711c5d042b5a7efce1b9d166176" alt="img" style="zoom: 25%;" />
+
+<div style="text-align: center; font-weight: 900;">图 IPM器件示意</div>
+
+
+
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><ol>
+<li>《模拟电子技术基础》高等教育出版社，童师白</li>
+<li>《IGBT模块：技术、驱动和应用》机械工业出版社，Andreas Volke and Michael Hornkamp</li>
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/366981878">逆变器的分类方式有哪些</a></li>
+<li><a target="_blank" rel="noopener" href="https://baike.baidu.com/item/IGBT/2078902?fromtitle=%E7%BB%9D%E7%BC%98%E6%A0%85%E5%8F%8C%E6%9E%81%E5%9E%8B%E6%99%B6%E4%BD%93%E7%AE%A1&fromid=12731336">IGBT</a></li>
+<li><a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E5%9C%BA%E6%95%88%E5%BA%94%E7%AE%A1">场效应管</a></li>
+<li><a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E6%99%B6%E4%BD%93%E4%BA%8C%E6%9E%81%E7%AE%A1">晶体二极管</a></li>
+<li><a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E6%99%B6%E4%BD%93%E7%AE%A1/569042#:~:text=%E6%99%B6%E4%BD%93%E7%AE%A1%E6%9C%89%E6%97%B6%E5%A4%9A%E6%8C%87%E6%99%B6%E4%BD%93%E4%B8%89%E6%9E%81%E7%AE%A1%E3%80%82%20%E4%B8%89%E7%AB%AF%E5%AD%90%E6%99%B6%E4%BD%93%E7%AE%A1%E4%B8%BB%E8%A6%81%E5%88%86%E4%B8%BA%E4%B8%A4%E5%A4%A7%E7%B1%BB%EF%BC%9A%20%E5%8F%8C%E6%9E%81%E6%80%A7%E6%99%B6%E4%BD%93%E7%AE%A1,%EF%BC%88BJT%EF%BC%89%E5%92%8C%20%E5%9C%BA%E6%95%88%E5%BA%94%E6%99%B6%E4%BD%93%E7%AE%A1%20%EF%BC%88FET%EF%BC%8C%E5%8D%95%E6%9E%81%E6%80%A7%EF%BC%89%E3%80%82">晶体管</a></li>
+<li><a target="_blank" rel="noopener" href="https://circuitglobe.com/difference-between-diode-and-transistor.html">Difference Between Diode &amp; Transistor</a></li>
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/150177944">半导体分类知识大全</a></li>
+<li><a target="_blank" rel="noopener" href="https://xueqiu.com/3593206238/153075165">IGBT—功率半导体皇冠上的明珠</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.electricaltechnology.org/2018/12/types-of-diodes-their-applications.html">Types of Diodes and Their Applications - 24 Types of Diodes</a></li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Semiconductor/" rel="tag"># Semiconductor</a>
+          </div>
+
+    <div id="vcomment" style="margin: 20px 0 0 0"></div>
+    <script>
+        new Valine({
+            el: '#vcomment' ,
+            appId: 'vRGM12EcYxDSM2lat5qjjSeY-gzGzoHsz',
+            appKey: 'WBgAb6NTAFQ7DYtgH0uOPNNh'
+        });
+    </script>
+</body>
+
+
+
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/07/11/Hardware/2021-07-11-%E5%B5%8C%E5%85%A5%E5%BC%8F%E8%8A%AF%E7%89%87%E5%A4%96%E8%AE%BE/" rel="prev" title="嵌入式芯片外设">
+                  <i class="fa fa-chevron-left"></i> 嵌入式芯片外设
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/07/15/Hardware/TI/2021-07-15-IGBT%E5%8F%8A%E5%85%B6%E9%A9%B1%E5%8A%A8%E8%8A%AF%E7%89%87%E8%A7%84%E6%A0%BC%E5%AD%A6%E4%B9%A0/" rel="next" title="IGBT及其驱动芯片规格学习">
+                  IGBT及其驱动芯片规格学习 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+<script src="/js/comments.js"></script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">粤ICP备19004822号 </a>
+  </div>
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Liewzheng</span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
