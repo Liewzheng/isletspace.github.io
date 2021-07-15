@@ -992,6 +992,250 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://islet.space/2021/04/22/Linux/System/2021-04-22-Linux%E5%88%86%E5%8C%BA%E5%8F%8A%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Liewzheng">
+      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coder的孤岛">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/04/22/Linux/System/2021-04-22-Linux%E5%88%86%E5%8C%BA%E5%8F%8A%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/" class="post-title-link" itemprop="url">Linux分区及文件系统</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-04-22 23:58:32" itemprop="dateCreated datePublished" datetime="2021-04-22T23:58:32+08:00">2021-04-22</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2021-04-26 00:14:16" itemprop="dateModified" datetime="2021-04-26T00:14:16+08:00">2021-04-26</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="Linux分区与挂载"><a href="#Linux分区与挂载" class="headerlink" title="Linux分区与挂载"></a>Linux分区与挂载</h1><h2 id="分区表"><a href="#分区表" class="headerlink" title="分区表"></a>分区表</h2><p><strong>分区表</strong>(partition table)是将大表的数据分成称为分区的许多小的子集，类型有FAT16, FAT32, NTFS, exFAT, Ext2/3/4, HFS+, VMFS。另外，分区表的种类划分主要有：range（范围）、list（列表）和hash（散列）分区。划分依据主要是根据其表内部属性。同时，分区表可以创建其独特的分区索引。倘若硬盘丢失了分区表，数据就无法按顺序读取和写入，导致无法操作。</p>
+<p>Kali Linux支持的分区表类型：aix、amiga、bsd、dvh、gpt、mac、msdos、pc98、sun、atari 及 loop。</p>
+<h2 id="磁盘结构"><a href="#磁盘结构" class="headerlink" title="磁盘结构"></a>磁盘结构</h2><p><img src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/04/kzq6k9g8x7.png"></p>
+<p>磁盘结构</p>
+<p>磁盘主要分为以下结构：</p>
+<ul>
+<li>磁头（head）：对磁盘的数据进行读写</li>
+<li>磁道（track）：当磁盘旋转时，磁头若保持在一个位置上，则每个磁头都会在磁盘表面划出一个圆形轨迹，这些圆形轨迹就叫做磁道。 磁盘上的磁道是一组记录密度不同的同心圆</li>
+<li>扇区（sector）：磁盘上的每个磁道被等分为若干个弧段，这些弧段便是硬盘的扇区。硬盘的第一个扇区，叫做引导扇区。 一个扇区的大小为512个字节。</li>
+<li>柱面（cylinder）：在有多个盘片构成的盘组中，由不同盘片的面，但处于同一半径圆的多个磁道组成的一个圆柱面。</li>
+</ul>
+<p>整个磁盘的存储大小为： <strong>存储容量 ＝ 磁头数 × 磁道(柱面)数 × 每道扇区数 × 每扇区字节数</strong></p>
+<h2 id="磁盘的使用"><a href="#磁盘的使用" class="headerlink" title="磁盘的使用"></a>磁盘的使用</h2><p>一块新的硬盘或者U盘等外部设备在插入PC后，需要完成以下事情：</p>
+<ul>
+<li>在/dev/下创建一个新的目录，用来代表该磁盘。如/dev/hda，/dev/hdb等。</li>
+<li>磁盘最开始需要进行格式化，使用<code>mkfs</code>命令为磁盘进行格式化，确定文件系统类型。</li>
+<li>对硬盘进行分区后才可以使用。</li>
+<li>在Linux中挂载到一个已经存在的目录下才可以访问该磁盘，否则无法访问。使用<code>mount</code>与<code>unmount</code>来进行挂载和卸载。</li>
+</ul>
+<blockquote>
+<p> 一般挂在点都在/mnt/xxx目录下，并且该目录必须是已经存在的，否则无法挂载 </p>
+</blockquote>
+<h2 id="fdisk的使用"><a href="#fdisk的使用" class="headerlink" title="fdisk的使用"></a>fdisk的使用</h2><p>在Linux中，使用fdisk来查看当前的硬盘以及硬盘的分区、文件系统等信息。并且使用fdisk命令可以为磁盘进行分区。 fdisk的命令有以下这些： Fdisk命令详解：</p>
+<table>
+<thead>
+<tr>
+<th align="left">命令</th>
+<th align="left">备注</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">m</td>
+<td align="left">获取帮助</td>
+</tr>
+<tr>
+<td align="left">n</td>
+<td align="left">新建分区</td>
+</tr>
+<tr>
+<td align="left">p</td>
+<td align="left">显示分区表</td>
+</tr>
+<tr>
+<td align="left">d</td>
+<td align="left">删除分区</td>
+</tr>
+<tr>
+<td align="left">b</td>
+<td align="left">设置卷标</td>
+</tr>
+<tr>
+<td align="left">w</td>
+<td align="left">写入分区表</td>
+</tr>
+<tr>
+<td align="left">t</td>
+<td align="left">改变分区文件系统类型</td>
+</tr>
+<tr>
+<td align="left">v</td>
+<td align="left">检验分区</td>
+</tr>
+<tr>
+<td align="left">l</td>
+<td align="left">显示fdisk所支持的文件系统代码</td>
+</tr>
+<tr>
+<td align="left">q</td>
+<td align="left">退出</td>
+</tr>
+</tbody></table>
+<h5 id="fdisk示例"><a href="#fdisk示例" class="headerlink" title="fdisk示例"></a>fdisk示例</h5><ol>
+<li>使用<code>fdisk -l</code>查看当前所有硬盘以及分区的状态。</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"># fdisk -l</span><br><span class="line"></span><br><span class="line">Disk /dev/sda: <span class="number">10.7</span> GB, <span class="number">10737418240</span> bytes</span><br><span class="line"><span class="number">255</span> heads, <span class="number">63</span> sectors/track, <span class="number">1305</span> cylinders</span><br><span class="line">Units = cylinders <span class="keyword">of</span> <span class="number">16065</span> * <span class="number">512</span> = <span class="number">8225280</span> bytes</span><br><span class="line"></span><br><span class="line">Device Boot   Start     End   Blocks  Id System</span><br><span class="line">/dev/sda1  *      <span class="number">1</span>     <span class="number">13</span>   <span class="number">104391</span>  <span class="number">83</span> Linux</span><br><span class="line">/dev/sda2       <span class="number">14</span>    <span class="number">1305</span>  <span class="number">10377990</span>  8e Linux LVM</span><br><span class="line"></span><br><span class="line">Disk /dev/sdb: <span class="number">5368</span> MB, <span class="number">5368709120</span> bytes</span><br><span class="line"><span class="number">255</span> heads, <span class="number">63</span> sectors/track, <span class="number">652</span> cylinders</span><br><span class="line">Units = cylinders <span class="keyword">of</span> <span class="number">16065</span> * <span class="number">512</span> = <span class="number">8225280</span> bytes</span><br><span class="line"></span><br><span class="line">Disk /dev/sdb doesn<span class="string">&#x27;t contain a valid partition table</span></span><br></pre></td></tr></table></figure>
+
+<p>可以看到目前有两个磁盘：</p>
+<ul>
+<li>sda：10.7G，255个磁头，63个磁道，1305个扇区 <ul>
+<li>主分区1：/dev/sda1</li>
+<li>主分区2：/dev/sda2</li>
+</ul>
+</li>
+<li>sdb：5G，255个磁头，63个磁道，652个扇区 <ul>
+<li>无分区</li>
+</ul>
+</li>
+</ul>
+<h2 id="分区的概念"><a href="#分区的概念" class="headerlink" title="分区的概念"></a>分区的概念</h2><p>Linux中，磁盘只有被分区完后，才可以被挂载到目录下。</p>
+<p>分区有三种：主分区，扩展分区，逻辑分区，每个磁盘最多只能有四个主分区，而可以有多个扩展分区，在扩展分区中，还可以创建多个逻辑分区。</p>
+<ul>
+<li>主分区：创建完后即可挂载</li>
+<li>扩展分区：扩展分区创建完后，还需要创建逻辑分区才可以被挂载</li>
+</ul>
+<h2 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h2><p>格式化一块硬盘(hdb)，并且对其进行分区，分区后进行挂载</p>
+<h5 id="创建主分区"><a href="#创建主分区" class="headerlink" title="创建主分区"></a>创建主分区</h5><ol>
+<li>通过<code>fdisk /dev/hdb</code>进入磁盘的命令模式    </li>
+</ol>
+<p><img src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/04/s22aqd4o24.png" alt="s22aqd4o24"></p>
+<p>  进入格式化命令模式  </p>
+<ol>
+<li>输入<code>n</code>代表创建分区，<code>e</code>代表扩展分区，<code>p</code>代表主分区    </li>
+</ol>
+<p><img src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/04/0u6woej2nq.png" alt="0u6woej2nq"></p>
+<p>  新建主分区  </p>
+<ol>
+<li>输入<code>First Cylinder</code>的值代表分区初始的柱面值，以及分区的大小<code>+3G</code>代表为该分区分3G    </li>
+</ol>
+<p><img src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/04/vopy3iwz2v.png" alt="vopy3iwz2v"></p>
+<p>  输入初始柱面的值以及分区大小  </p>
+<ol>
+<li>输入<code>p</code>查看创建的分区<code>/dev/hdb1</code>    </li>
+</ol>
+<p><img src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/04/rflbc73wpf.png" alt="rflbc73wpf"></p>
+<p>  新建分区  </p>
+<h5 id="创建扩展分区"><a href="#创建扩展分区" class="headerlink" title="创建扩展分区"></a>创建扩展分区</h5><ol>
+<li>与创建主分区步骤相同，只是在选择<code>command action</code>的时候，选择<code>e</code>，表示创建扩展分区    </li>
+</ol>
+<p><img src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/04/ymjwni22fr.png" alt="ymjwni22fr"></p>
+<p>  创建后的扩展分区  </p>
+<ol>
+<li>在创建完扩展分区后，来创建逻辑分区，输入<code>l</code>代表创建逻辑分区    </li>
+</ol>
+<p><img src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/04/ra4wa3017d.png" alt="ra4wa3017d"></p>
+<p>  创建逻辑分区  </p>
+<ol>
+<li> 与创建主分区、扩展分区一样，为逻辑分区选择起始的柱面，以及分配的大小     </li>
+</ol>
+<p><img src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/04/y0kb4p9z23.png" alt="y0kb4p9z23"></p>
+<p>  分配分区大小  </p>
+<ol>
+<li> 查看扩展分区     </li>
+</ol>
+<p><img src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/04/c78q2lt7wi.png" alt="c78q2lt7wi"></p>
+<p>  查看分区信息  </p>
+<h5 id="分区格式化"><a href="#分区格式化" class="headerlink" title="分区格式化"></a>分区格式化</h5><p>在磁盘分区创建完毕后，需要为分区通过<code>mkfs</code>进行格式化，赋予它文件系统： 如<code>ext2</code>,<code>ext3</code>,<code>vfat</code>等</p>
+<p>使用命令 <code>mkfs -t ext3 /dev/hdb1</code>分别对分区<code>hdb1</code>进行格式化处理，格式化为ext3文件类型</p>
+<p>其中<code>mkfs –t ext3</code>命令等价于<code>mkfs.ext3</code>，<code>mkfs -t ext2</code>命令等价于<code>mkfs.ext2</code> </p>
+<p><img src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/04/513p7ponts.png" alt="513p7ponts"></p>
+<p>mkfs命令</p>
+<h5 id="分区挂载"><a href="#分区挂载" class="headerlink" title="分区挂载"></a>分区挂载</h5><p>当分区格式化完成文件系统后，就可以通过<code>mount</code>与<code>unmount</code>进行挂载与卸载了，当分区挂载到具体目录后，即可进行创建文件、删除文件等文件操作了。</p>
+<p>如<code>mount /dev/hdb1 /mnt/hdb1</code>就会将<code>/dev/hdb1</code>分区挂载到<code>/mnt/hdb1</code>目录下，也就是该目录下的文件都会被写到<code>/dev/hdb1</code>的磁盘分区中保存。</p>
+<p>本文参与<a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer/support-plan">腾讯云自媒体分享计划</a>，欢迎正在阅读的你也加入，一起分享。</p>
+<h1 id="Linux-文件系统"><a href="#Linux-文件系统" class="headerlink" title="Linux 文件系统"></a>Linux 文件系统</h1><h2 id="文件系统类型"><a href="#文件系统类型" class="headerlink" title="文件系统类型"></a>文件系统类型</h2><p>Kali Linux支持：btrfs、exfat、ext2\3\4、f2fs、fat16、fat32、hfs、hfs+、jfs、linux-swap、lvm2 pv、minix、nilfs2、ntfs、reiser4、reiserfs、udf、xfs;</p>
+<h3 id="LINUX-SWAP"><a href="#LINUX-SWAP" class="headerlink" title="LINUX-SWAP"></a>LINUX-SWAP</h3><p>Swap分区在系统的物理内存不够用的时候，把硬盘空间中的一部分空间释放出来，以供当前运行的程序使用。那些被释放的空间可能来自一些很长时间没有什么操作的程序，这些被释放的空间被临时保存到Swap分区中，等到那些程序要运行时，再从Swap分区中恢复保存的数据到内存中。 本文将从分区开始讲解如何开启SWAP交换空间</p>
+<h4 id="分区"><a href="#分区" class="headerlink" title="分区"></a>分区</h4><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># 查看块设备</span><br><span class="line"># 如图可以看出硬盘sda和vdb还有剩余</span><br><span class="line">[root@rainss ~]# lsblk</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h2 id="分区类型"><a href="#分区类型" class="headerlink" title="分区类型"></a>分区类型</h2><p>主分区、扩展分区、逻辑分区</p>
+<h2 id="对齐类型"><a href="#对齐类型" class="headerlink" title="对齐类型"></a>对齐类型</h2><p>对齐到MiB、对齐到柱面</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
     <link itemprop="mainEntityOfPage" href="http://islet.space/2021/04/22/Programming/C++/2021-04-22-Get%20Started%20with%20C++%20and%20Windows%20Subsystem%20for%20Linux%20in%20Visual%20Studio%20Code/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1261,250 +1505,6 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://islet.space/2021/04/22/Linux/System/2021-04-22-Linux%E5%88%86%E5%8C%BA%E5%8F%8A%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Liewzheng">
-      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Coder的孤岛">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/04/22/Linux/System/2021-04-22-Linux%E5%88%86%E5%8C%BA%E5%8F%8A%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/" class="post-title-link" itemprop="url">Linux分区及文件系统</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
-    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2021-04-22 23:58:32" itemprop="dateCreated datePublished" datetime="2021-04-22T23:58:32+08:00">2021-04-22</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-04-26 00:14:16" itemprop="dateModified" datetime="2021-04-26T00:14:16+08:00">2021-04-26</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="Linux分区与挂载"><a href="#Linux分区与挂载" class="headerlink" title="Linux分区与挂载"></a>Linux分区与挂载</h1><h2 id="分区表"><a href="#分区表" class="headerlink" title="分区表"></a>分区表</h2><p><strong>分区表</strong>(partition table)是将大表的数据分成称为分区的许多小的子集，类型有FAT16, FAT32, NTFS, exFAT, Ext2/3/4, HFS+, VMFS。另外，分区表的种类划分主要有：range（范围）、list（列表）和hash（散列）分区。划分依据主要是根据其表内部属性。同时，分区表可以创建其独特的分区索引。倘若硬盘丢失了分区表，数据就无法按顺序读取和写入，导致无法操作。</p>
-<p>Kali Linux支持的分区表类型：aix、amiga、bsd、dvh、gpt、mac、msdos、pc98、sun、atari 及 loop。</p>
-<h2 id="磁盘结构"><a href="#磁盘结构" class="headerlink" title="磁盘结构"></a>磁盘结构</h2><p><img src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/04/kzq6k9g8x7.png"></p>
-<p>磁盘结构</p>
-<p>磁盘主要分为以下结构：</p>
-<ul>
-<li>磁头（head）：对磁盘的数据进行读写</li>
-<li>磁道（track）：当磁盘旋转时，磁头若保持在一个位置上，则每个磁头都会在磁盘表面划出一个圆形轨迹，这些圆形轨迹就叫做磁道。 磁盘上的磁道是一组记录密度不同的同心圆</li>
-<li>扇区（sector）：磁盘上的每个磁道被等分为若干个弧段，这些弧段便是硬盘的扇区。硬盘的第一个扇区，叫做引导扇区。 一个扇区的大小为512个字节。</li>
-<li>柱面（cylinder）：在有多个盘片构成的盘组中，由不同盘片的面，但处于同一半径圆的多个磁道组成的一个圆柱面。</li>
-</ul>
-<p>整个磁盘的存储大小为： <strong>存储容量 ＝ 磁头数 × 磁道(柱面)数 × 每道扇区数 × 每扇区字节数</strong></p>
-<h2 id="磁盘的使用"><a href="#磁盘的使用" class="headerlink" title="磁盘的使用"></a>磁盘的使用</h2><p>一块新的硬盘或者U盘等外部设备在插入PC后，需要完成以下事情：</p>
-<ul>
-<li>在/dev/下创建一个新的目录，用来代表该磁盘。如/dev/hda，/dev/hdb等。</li>
-<li>磁盘最开始需要进行格式化，使用<code>mkfs</code>命令为磁盘进行格式化，确定文件系统类型。</li>
-<li>对硬盘进行分区后才可以使用。</li>
-<li>在Linux中挂载到一个已经存在的目录下才可以访问该磁盘，否则无法访问。使用<code>mount</code>与<code>unmount</code>来进行挂载和卸载。</li>
-</ul>
-<blockquote>
-<p> 一般挂在点都在/mnt/xxx目录下，并且该目录必须是已经存在的，否则无法挂载 </p>
-</blockquote>
-<h2 id="fdisk的使用"><a href="#fdisk的使用" class="headerlink" title="fdisk的使用"></a>fdisk的使用</h2><p>在Linux中，使用fdisk来查看当前的硬盘以及硬盘的分区、文件系统等信息。并且使用fdisk命令可以为磁盘进行分区。 fdisk的命令有以下这些： Fdisk命令详解：</p>
-<table>
-<thead>
-<tr>
-<th align="left">命令</th>
-<th align="left">备注</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="left">m</td>
-<td align="left">获取帮助</td>
-</tr>
-<tr>
-<td align="left">n</td>
-<td align="left">新建分区</td>
-</tr>
-<tr>
-<td align="left">p</td>
-<td align="left">显示分区表</td>
-</tr>
-<tr>
-<td align="left">d</td>
-<td align="left">删除分区</td>
-</tr>
-<tr>
-<td align="left">b</td>
-<td align="left">设置卷标</td>
-</tr>
-<tr>
-<td align="left">w</td>
-<td align="left">写入分区表</td>
-</tr>
-<tr>
-<td align="left">t</td>
-<td align="left">改变分区文件系统类型</td>
-</tr>
-<tr>
-<td align="left">v</td>
-<td align="left">检验分区</td>
-</tr>
-<tr>
-<td align="left">l</td>
-<td align="left">显示fdisk所支持的文件系统代码</td>
-</tr>
-<tr>
-<td align="left">q</td>
-<td align="left">退出</td>
-</tr>
-</tbody></table>
-<h5 id="fdisk示例"><a href="#fdisk示例" class="headerlink" title="fdisk示例"></a>fdisk示例</h5><ol>
-<li>使用<code>fdisk -l</code>查看当前所有硬盘以及分区的状态。</li>
-</ol>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"># fdisk -l</span><br><span class="line"></span><br><span class="line">Disk /dev/sda: <span class="number">10.7</span> GB, <span class="number">10737418240</span> bytes</span><br><span class="line"><span class="number">255</span> heads, <span class="number">63</span> sectors/track, <span class="number">1305</span> cylinders</span><br><span class="line">Units = cylinders <span class="keyword">of</span> <span class="number">16065</span> * <span class="number">512</span> = <span class="number">8225280</span> bytes</span><br><span class="line"></span><br><span class="line">Device Boot   Start     End   Blocks  Id System</span><br><span class="line">/dev/sda1  *      <span class="number">1</span>     <span class="number">13</span>   <span class="number">104391</span>  <span class="number">83</span> Linux</span><br><span class="line">/dev/sda2       <span class="number">14</span>    <span class="number">1305</span>  <span class="number">10377990</span>  8e Linux LVM</span><br><span class="line"></span><br><span class="line">Disk /dev/sdb: <span class="number">5368</span> MB, <span class="number">5368709120</span> bytes</span><br><span class="line"><span class="number">255</span> heads, <span class="number">63</span> sectors/track, <span class="number">652</span> cylinders</span><br><span class="line">Units = cylinders <span class="keyword">of</span> <span class="number">16065</span> * <span class="number">512</span> = <span class="number">8225280</span> bytes</span><br><span class="line"></span><br><span class="line">Disk /dev/sdb doesn<span class="string">&#x27;t contain a valid partition table</span></span><br></pre></td></tr></table></figure>
-
-<p>可以看到目前有两个磁盘：</p>
-<ul>
-<li>sda：10.7G，255个磁头，63个磁道，1305个扇区 <ul>
-<li>主分区1：/dev/sda1</li>
-<li>主分区2：/dev/sda2</li>
-</ul>
-</li>
-<li>sdb：5G，255个磁头，63个磁道，652个扇区 <ul>
-<li>无分区</li>
-</ul>
-</li>
-</ul>
-<h2 id="分区的概念"><a href="#分区的概念" class="headerlink" title="分区的概念"></a>分区的概念</h2><p>Linux中，磁盘只有被分区完后，才可以被挂载到目录下。</p>
-<p>分区有三种：主分区，扩展分区，逻辑分区，每个磁盘最多只能有四个主分区，而可以有多个扩展分区，在扩展分区中，还可以创建多个逻辑分区。</p>
-<ul>
-<li>主分区：创建完后即可挂载</li>
-<li>扩展分区：扩展分区创建完后，还需要创建逻辑分区才可以被挂载</li>
-</ul>
-<h2 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h2><p>格式化一块硬盘(hdb)，并且对其进行分区，分区后进行挂载</p>
-<h5 id="创建主分区"><a href="#创建主分区" class="headerlink" title="创建主分区"></a>创建主分区</h5><ol>
-<li>通过<code>fdisk /dev/hdb</code>进入磁盘的命令模式    </li>
-</ol>
-<p><img src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/04/s22aqd4o24.png" alt="s22aqd4o24"></p>
-<p>  进入格式化命令模式  </p>
-<ol>
-<li>输入<code>n</code>代表创建分区，<code>e</code>代表扩展分区，<code>p</code>代表主分区    </li>
-</ol>
-<p><img src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/04/0u6woej2nq.png" alt="0u6woej2nq"></p>
-<p>  新建主分区  </p>
-<ol>
-<li>输入<code>First Cylinder</code>的值代表分区初始的柱面值，以及分区的大小<code>+3G</code>代表为该分区分3G    </li>
-</ol>
-<p><img src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/04/vopy3iwz2v.png" alt="vopy3iwz2v"></p>
-<p>  输入初始柱面的值以及分区大小  </p>
-<ol>
-<li>输入<code>p</code>查看创建的分区<code>/dev/hdb1</code>    </li>
-</ol>
-<p><img src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/04/rflbc73wpf.png" alt="rflbc73wpf"></p>
-<p>  新建分区  </p>
-<h5 id="创建扩展分区"><a href="#创建扩展分区" class="headerlink" title="创建扩展分区"></a>创建扩展分区</h5><ol>
-<li>与创建主分区步骤相同，只是在选择<code>command action</code>的时候，选择<code>e</code>，表示创建扩展分区    </li>
-</ol>
-<p><img src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/04/ymjwni22fr.png" alt="ymjwni22fr"></p>
-<p>  创建后的扩展分区  </p>
-<ol>
-<li>在创建完扩展分区后，来创建逻辑分区，输入<code>l</code>代表创建逻辑分区    </li>
-</ol>
-<p><img src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/04/ra4wa3017d.png" alt="ra4wa3017d"></p>
-<p>  创建逻辑分区  </p>
-<ol>
-<li> 与创建主分区、扩展分区一样，为逻辑分区选择起始的柱面，以及分配的大小     </li>
-</ol>
-<p><img src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/04/y0kb4p9z23.png" alt="y0kb4p9z23"></p>
-<p>  分配分区大小  </p>
-<ol>
-<li> 查看扩展分区     </li>
-</ol>
-<p><img src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/04/c78q2lt7wi.png" alt="c78q2lt7wi"></p>
-<p>  查看分区信息  </p>
-<h5 id="分区格式化"><a href="#分区格式化" class="headerlink" title="分区格式化"></a>分区格式化</h5><p>在磁盘分区创建完毕后，需要为分区通过<code>mkfs</code>进行格式化，赋予它文件系统： 如<code>ext2</code>,<code>ext3</code>,<code>vfat</code>等</p>
-<p>使用命令 <code>mkfs -t ext3 /dev/hdb1</code>分别对分区<code>hdb1</code>进行格式化处理，格式化为ext3文件类型</p>
-<p>其中<code>mkfs –t ext3</code>命令等价于<code>mkfs.ext3</code>，<code>mkfs -t ext2</code>命令等价于<code>mkfs.ext2</code> </p>
-<p><img src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/04/513p7ponts.png" alt="513p7ponts"></p>
-<p>mkfs命令</p>
-<h5 id="分区挂载"><a href="#分区挂载" class="headerlink" title="分区挂载"></a>分区挂载</h5><p>当分区格式化完成文件系统后，就可以通过<code>mount</code>与<code>unmount</code>进行挂载与卸载了，当分区挂载到具体目录后，即可进行创建文件、删除文件等文件操作了。</p>
-<p>如<code>mount /dev/hdb1 /mnt/hdb1</code>就会将<code>/dev/hdb1</code>分区挂载到<code>/mnt/hdb1</code>目录下，也就是该目录下的文件都会被写到<code>/dev/hdb1</code>的磁盘分区中保存。</p>
-<p>本文参与<a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer/support-plan">腾讯云自媒体分享计划</a>，欢迎正在阅读的你也加入，一起分享。</p>
-<h1 id="Linux-文件系统"><a href="#Linux-文件系统" class="headerlink" title="Linux 文件系统"></a>Linux 文件系统</h1><h2 id="文件系统类型"><a href="#文件系统类型" class="headerlink" title="文件系统类型"></a>文件系统类型</h2><p>Kali Linux支持：btrfs、exfat、ext2\3\4、f2fs、fat16、fat32、hfs、hfs+、jfs、linux-swap、lvm2 pv、minix、nilfs2、ntfs、reiser4、reiserfs、udf、xfs;</p>
-<h3 id="LINUX-SWAP"><a href="#LINUX-SWAP" class="headerlink" title="LINUX-SWAP"></a>LINUX-SWAP</h3><p>Swap分区在系统的物理内存不够用的时候，把硬盘空间中的一部分空间释放出来，以供当前运行的程序使用。那些被释放的空间可能来自一些很长时间没有什么操作的程序，这些被释放的空间被临时保存到Swap分区中，等到那些程序要运行时，再从Swap分区中恢复保存的数据到内存中。 本文将从分区开始讲解如何开启SWAP交换空间</p>
-<h4 id="分区"><a href="#分区" class="headerlink" title="分区"></a>分区</h4><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># 查看块设备</span><br><span class="line"># 如图可以看出硬盘sda和vdb还有剩余</span><br><span class="line">[root@rainss ~]# lsblk</span><br></pre></td></tr></table></figure>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<h2 id="分区类型"><a href="#分区类型" class="headerlink" title="分区类型"></a>分区类型</h2><p>主分区、扩展分区、逻辑分区</p>
-<h2 id="对齐类型"><a href="#对齐类型" class="headerlink" title="对齐类型"></a>对齐类型</h2><p>对齐到MiB、对齐到柱面</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
     <link itemprop="mainEntityOfPage" href="http://islet.space/2021/04/21/Signal/What%20is%20a%20Bypass%20Capacitor/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1600,116 +1600,6 @@
 <p>So again, this is a summary of what a bypass capacitor is and how to select the value of them based on the lowest  AC signal desired to be filtered out and the value of the resistance in parallel with the capacitor. </p>
 <p>You can check out our <a target="_blank" rel="noopener" href="http://www.learningaboutelectronics.com/Articles/Bypass-capacitor-calculator.php">bypass capacitor calculator</a> to calculate  the value of a bypass capacitor based on the input AC signal frequency and the value of the resistor in parallel. </p>
 <p>Related Resources</p>
-<p>​          </p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://islet.space/2021/04/20/Networking/Unix%20domain%20socket%20%E7%AE%80%E4%BB%8B/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Liewzheng">
-      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Coder的孤岛">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/04/20/Networking/Unix%20domain%20socket%20%E7%AE%80%E4%BB%8B/" class="post-title-link" itemprop="url">Unix domain socket 简介</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
-    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2021-04-20 23:58:32" itemprop="dateCreated datePublished" datetime="2021-04-20T23:58:32+08:00">2021-04-20</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-04-29 00:52:30" itemprop="dateModified" datetime="2021-04-29T00:52:30+08:00">2021-04-29</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Networking/" itemprop="url" rel="index"><span itemprop="name">Networking</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/sparkdev/p/8359028.html">cnblogs.com</a></p>
-<p><strong>Unix domain socket 又叫 IPC(inter-process communication 进程间通信) socket，用于实现同一主机上的进程间通信。</strong>socket 原本是为网络通讯设计的，但后来在 socket 的框架上发展出一种 IPC 机制，就是 UNIX domain socket。虽然网络  socket 也可用于同一台主机的进程间通讯(通过 loopback 地址 127.0.0.1)，但是 UNIX domain socket  用于 IPC  更有效率：不需要经过网络协议栈，不需要打包拆包、计算校验和、维护序号和应答等，只是将应用层数据从一个进程拷贝到另一个进程。这是因为，IPC  机制本质上是可靠的通讯，而网络协议是为不可靠的通讯设计的。<br>UNIX domain socket 是全双工的，API 接口语义丰富，相比其它 IPC 机制有明显的优越性，目前已成为使用最广泛的 IPC 机制，比如 X Window 服务器和 GUI 程序之间就是通过 UNIX domain socket 通讯的。<br>Unix domain socket 是 POSIX 标准中的一个组件，所以不要被名字迷惑，linux 系统也是支持它的。</p>
-<p>下面通过一个简单的 demo 来理解相关概念。程序分为服务器端和客户端两部分，它们之间通过 unix domain socket 进行通信。</p>
-<h1 id="服务器端程序"><a href="#服务器端程序" class="headerlink" title="服务器端程序"></a>服务器端程序</h1><p>下面是一个非常简单的服务器端程序，它从客户端读字符，然后将每个字符转换为大写并回送给客户端：</p>
-<p><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;stdlib.h&gt;  </span><br><span class="line">#include &lt;stdio.h&gt;  </span><br><span class="line">#include &lt;stddef.h&gt;  </span><br><span class="line">#include &lt;sys&#x2F;socket.h&gt;  </span><br><span class="line">#include &lt;sys&#x2F;un.h&gt;  </span><br><span class="line">#include &lt;errno.h&gt;  </span><br><span class="line">#include &lt;string.h&gt;  </span><br><span class="line">#include &lt;unistd.h&gt;  </span><br><span class="line">#include &lt;ctype.h&gt;   </span><br><span class="line"> </span><br><span class="line">#define MAXLINE 80  </span><br><span class="line"> </span><br><span class="line">char *socket_path &#x3D; &quot;server.socket&quot;;  </span><br><span class="line"> </span><br><span class="line">int main(void)  </span><br><span class="line">&#123;  </span><br><span class="line">    struct sockaddr_un serun, cliun;  </span><br><span class="line">    socklen_t cliun_len;  </span><br><span class="line">    int listenfd, connfd, size;  </span><br><span class="line">    char buf[MAXLINE];  </span><br><span class="line">    int i, n;  </span><br><span class="line"> </span><br><span class="line">    if ((listenfd &#x3D; socket(AF_UNIX, SOCK_STREAM, 0)) &lt; 0) &#123;  </span><br><span class="line">        perror(&quot;socket error&quot;);  </span><br><span class="line">        exit(1);  </span><br><span class="line">    &#125;  </span><br><span class="line"> </span><br><span class="line">    memset(&amp;serun, 0, sizeof(serun));  </span><br><span class="line">    serun.sun_family &#x3D; AF_UNIX;  </span><br><span class="line">    strcpy(serun.sun_path, socket_path);  </span><br><span class="line">    size &#x3D; offsetof(struct sockaddr_un, sun_path) + strlen(serun.sun_path);  </span><br><span class="line">    unlink(socket_path);  </span><br><span class="line">    if (bind(listenfd, (struct sockaddr *)&amp;serun, size) &lt; 0) &#123;  </span><br><span class="line">        perror(&quot;bind error&quot;);  </span><br><span class="line">        exit(1);  </span><br><span class="line">    &#125;  </span><br><span class="line">    printf(&quot;UNIX domain socket bound\n&quot;);  </span><br><span class="line">      </span><br><span class="line">    if (listen(listenfd, 20) &lt; 0) &#123;  </span><br><span class="line">        perror(&quot;listen error&quot;);  </span><br><span class="line">        exit(1);          </span><br><span class="line">    &#125;  </span><br><span class="line">    printf(&quot;Accepting connections ...\n&quot;);  </span><br><span class="line"> </span><br><span class="line">    while(1) &#123;  </span><br><span class="line">        cliun_len &#x3D; sizeof(cliun);         </span><br><span class="line">        if ((connfd &#x3D; accept(listenfd, (struct sockaddr *)&amp;cliun, &amp;cliun_len)) &lt; 0)&#123;  </span><br><span class="line">            perror(&quot;accept error&quot;);  </span><br><span class="line">            continue;  </span><br><span class="line">        &#125;  </span><br><span class="line">          </span><br><span class="line">        while(1) &#123;  </span><br><span class="line">            n &#x3D; read(connfd, buf, sizeof(buf));  </span><br><span class="line">            if (n &lt; 0) &#123;  </span><br><span class="line">                perror(&quot;read error&quot;);  </span><br><span class="line">                break;  </span><br><span class="line">            &#125; else if(n &#x3D;&#x3D; 0) &#123;  </span><br><span class="line">                printf(&quot;EOF\n&quot;);  </span><br><span class="line">                break;  </span><br><span class="line">            &#125;  </span><br><span class="line">              </span><br><span class="line">            printf(&quot;received: %s&quot;, buf);  </span><br><span class="line"> </span><br><span class="line">            for(i &#x3D; 0; i &lt; n; i++) &#123;  </span><br><span class="line">                buf[i] &#x3D; toupper(buf[i]);  </span><br><span class="line">            &#125;  </span><br><span class="line">            write(connfd, buf, n);  </span><br><span class="line">        &#125;  </span><br><span class="line">        close(connfd);  </span><br><span class="line">    &#125;  </span><br><span class="line">    close(listenfd);  </span><br><span class="line">    return 0;  </span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
-
-<p><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"></p>
-<p>简单介绍一下这段代码：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">int socket(int family, int type, int protocol);</span><br></pre></td></tr></table></figure>
-
-<p>使用 UNIX domain socket 的过程和网络 socket 十分相似，也要先调用 socket() 创建一个 socket 文件描述符.<br><strong>family</strong> 指定为 AF_UNIX，使用 AF_UNIX 会在系统上创建一个 socket 文件，不同进程通过读写这个文件来实现通信。<br><strong>type</strong> 可以选择 SOCK_DGRAM 或 SOCK_STREAM。SOCK_STREAM 意味着会提供按顺序的、可靠、双向、面向连接的比特流。SOCK_DGRAM 意味着会提供定长的、不可靠、无连接的通信。<br><strong>protocol</strong> 参数指定为 0 即可。<br>UNIX domain socket 与网络 socket 编程最明显的不同在于地址格式不同，用结构体 sockaddr_un 表示，网络编程的  socket 地址是 IP 地址加端口号，而 UNIX domain socket 的地址是一个 socket  类型的文件在文件系统中的路径，这个 socket 文件由 bind() 调用创建，如果调用 bind() 时该文件已存在，则 bind()  错误返回。因此，一般在调用 bind() 前会检查 socket 文件是否存在，如果存在就删除掉。<br>网络 socket 编程类似，在 bind 之后要 listen，表示通过 bind 的地址（也就是 socket 文件）提供服务。<br>接下来必须用 accept() 函数初始化连接。accept() 为每个连接创立新的套接字并从监听队列中移除这个连接。</p>
-<h1 id="客户端程序"><a href="#客户端程序" class="headerlink" title="客户端程序"></a>客户端程序</h1><p>下面是客户端程序，它接受用户的输入，并把字符串发送给服务器，然后接收服务器返回的字符串并打印：</p>
-<p><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;stdlib.h&gt;  </span><br><span class="line">#include &lt;stdio.h&gt;  </span><br><span class="line">#include &lt;stddef.h&gt;  </span><br><span class="line">#include &lt;sys&#x2F;socket.h&gt;  </span><br><span class="line">#include &lt;sys&#x2F;un.h&gt;  </span><br><span class="line">#include &lt;errno.h&gt;  </span><br><span class="line">#include &lt;string.h&gt;  </span><br><span class="line">#include &lt;unistd.h&gt;  </span><br><span class="line"> </span><br><span class="line">#define MAXLINE 80  </span><br><span class="line"> </span><br><span class="line">char *client_path &#x3D; &quot;client.socket&quot;;  </span><br><span class="line">char *server_path &#x3D; &quot;server.socket&quot;;  </span><br><span class="line"> </span><br><span class="line">int main() &#123;  </span><br><span class="line">    struct  sockaddr_un cliun, serun;  </span><br><span class="line">    int len;  </span><br><span class="line">    char buf[100];  </span><br><span class="line">    int sockfd, n;  </span><br><span class="line"> </span><br><span class="line">    if ((sockfd &#x3D; socket(AF_UNIX, SOCK_STREAM, 0)) &lt; 0)&#123;  </span><br><span class="line">        perror(&quot;client socket error&quot;);  </span><br><span class="line">        exit(1);  </span><br><span class="line">    &#125;  </span><br><span class="line">      </span><br><span class="line">    &#x2F;&#x2F; 一般显式调用bind函数，以便服务器区分不同客户端  </span><br><span class="line">    memset(&amp;cliun, 0, sizeof(cliun));  </span><br><span class="line">    cliun.sun_family &#x3D; AF_UNIX;  </span><br><span class="line">    strcpy(cliun.sun_path, client_path);  </span><br><span class="line">    len &#x3D; offsetof(struct sockaddr_un, sun_path) + strlen(cliun.sun_path);  </span><br><span class="line">    unlink(cliun.sun_path);  </span><br><span class="line">    if (bind(sockfd, (struct sockaddr *)&amp;cliun, len) &lt; 0) &#123;  </span><br><span class="line">        perror(&quot;bind error&quot;);  </span><br><span class="line">        exit(1);  </span><br><span class="line">    &#125;  </span><br><span class="line"> </span><br><span class="line">    memset(&amp;serun, 0, sizeof(serun));  </span><br><span class="line">    serun.sun_family &#x3D; AF_UNIX;  </span><br><span class="line">    strcpy(serun.sun_path, server_path);  </span><br><span class="line">    len &#x3D; offsetof(struct sockaddr_un, sun_path) + strlen(serun.sun_path);  </span><br><span class="line">    if (connect(sockfd, (struct sockaddr *)&amp;serun, len) &lt; 0)&#123;  </span><br><span class="line">        perror(&quot;connect error&quot;);  </span><br><span class="line">        exit(1);  </span><br><span class="line">    &#125;  </span><br><span class="line"> </span><br><span class="line">    while(fgets(buf, MAXLINE, stdin) !&#x3D; NULL) &#123;    </span><br><span class="line">         write(sockfd, buf, strlen(buf));    </span><br><span class="line">         n &#x3D; read(sockfd, buf, MAXLINE);    </span><br><span class="line">         if ( n &lt; 0 ) &#123;    </span><br><span class="line">            printf(&quot;the other side has been closed.\n&quot;);    </span><br><span class="line">         &#125;else &#123;    </span><br><span class="line">            write(STDOUT_FILENO, buf, n);    </span><br><span class="line">         &#125;    </span><br><span class="line">    &#125;   </span><br><span class="line">    close(sockfd);  </span><br><span class="line">    return 0;  </span><br><span class="line">&#125;  </span><br></pre></td></tr></table></figure>
-
-<p><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"></p>
-<p>与网络 socket 编程不同的是，UNIX domain socket 客户端一般要显式调用 bind  函数，而不依赖系统自动分配的地址。客户端 bind 一个自己指定的 socket 文件名的好处是，该文件名可以包含客户端的 pid  等信息以便服务器区分不同的客户端。</p>
-<h1 id="运行上面的程序"><a href="#运行上面的程序" class="headerlink" title="运行上面的程序"></a>运行上面的程序</h1><p>分别把服务器端程序和客户端程序保存为 server.c 和 client.c 文件，并编译：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ gcc server.c -o server</span><br><span class="line">$ gcc client.c -o client</span><br></pre></td></tr></table></figure>
-
-<p>先启动服务器端程序，然后启动客户端程序输入字符串并回车：</p>
-<p><img src="https://images2017.cnblogs.com/blog/952033/201801/952033-20180126125928506-239880118.png" alt="img"></p>
-<p>还不错，客户端得到了服务器端返回的大写字符串。接下来看看当前目录下的文件：</p>
-<p><img src="https://images2017.cnblogs.com/blog/952033/201801/952033-20180126125951834-1641586991.png" alt="img"></p>
-<p>哈哈，多了两个 socket 文件。</p>
-<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>Unix domain socket 主要用于同一主机上的进程间通信。与主机间的进程通信不同，它不是通过 “IP地址 + TCP或UDP端口号” 的方式进程通信，而是使用 socket 类型的文件来完成通信，因此在稳定性、可靠性以及效率方面的表现都很不错。</p>
-<p><strong>参考：</strong><br><a target="_blank" rel="noopener" href="http://docs.linuxtone.org/ebooks/C&CPP/c/ch37s04.html">UNIX Domain Socket IPC</a><br>[<a target="_blank" rel="noopener" href="http://blog.csdn.net/tzshlyt/article/details/53391655">linux] unix domain socket 例子</a></p>
 <p>​          </p>
 
       
@@ -1997,6 +1887,116 @@
 <p>内网穿透是通过服务器中继转发数据来实现的将内网端口映射到公网，速度上没有P2P直连的快。</p>
 <h3 id="异地组网"><a href="#异地组网" class="headerlink" title="异地组网"></a>异地组网</h3><h3 id="内网穿透"><a href="#内网穿透" class="headerlink" title="内网穿透"></a>内网穿透</h3><p>内网穿透（Intranet penetration），也即 NAT 穿透，进行 NAT 穿透是为了使具有某一个特定源 IP 地址和源端口号的数据包 <mark>不被 NAT 设备屏蔽而正确路由到内网主机</mark> 。</p>
 <p>UDP 内网穿透的实质是利用路由器上的NAT 系统。NAT 是一种将私有（保留）地址转化为合法IP地址的转换技术，它被广泛应用于各种类型 Internet 接入方式和各种类型的网络中。<mark>NAT可以完成重用地址，并且对于内部的网络结构可以实现对外隐蔽</mark>。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://islet.space/2021/04/20/Networking/Unix%20domain%20socket%20%E7%AE%80%E4%BB%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Liewzheng">
+      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coder的孤岛">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/04/20/Networking/Unix%20domain%20socket%20%E7%AE%80%E4%BB%8B/" class="post-title-link" itemprop="url">Unix domain socket 简介</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-04-20 23:58:32" itemprop="dateCreated datePublished" datetime="2021-04-20T23:58:32+08:00">2021-04-20</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2021-04-29 00:52:30" itemprop="dateModified" datetime="2021-04-29T00:52:30+08:00">2021-04-29</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Networking/" itemprop="url" rel="index"><span itemprop="name">Networking</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/sparkdev/p/8359028.html">cnblogs.com</a></p>
+<p><strong>Unix domain socket 又叫 IPC(inter-process communication 进程间通信) socket，用于实现同一主机上的进程间通信。</strong>socket 原本是为网络通讯设计的，但后来在 socket 的框架上发展出一种 IPC 机制，就是 UNIX domain socket。虽然网络  socket 也可用于同一台主机的进程间通讯(通过 loopback 地址 127.0.0.1)，但是 UNIX domain socket  用于 IPC  更有效率：不需要经过网络协议栈，不需要打包拆包、计算校验和、维护序号和应答等，只是将应用层数据从一个进程拷贝到另一个进程。这是因为，IPC  机制本质上是可靠的通讯，而网络协议是为不可靠的通讯设计的。<br>UNIX domain socket 是全双工的，API 接口语义丰富，相比其它 IPC 机制有明显的优越性，目前已成为使用最广泛的 IPC 机制，比如 X Window 服务器和 GUI 程序之间就是通过 UNIX domain socket 通讯的。<br>Unix domain socket 是 POSIX 标准中的一个组件，所以不要被名字迷惑，linux 系统也是支持它的。</p>
+<p>下面通过一个简单的 demo 来理解相关概念。程序分为服务器端和客户端两部分，它们之间通过 unix domain socket 进行通信。</p>
+<h1 id="服务器端程序"><a href="#服务器端程序" class="headerlink" title="服务器端程序"></a>服务器端程序</h1><p>下面是一个非常简单的服务器端程序，它从客户端读字符，然后将每个字符转换为大写并回送给客户端：</p>
+<p><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;stdlib.h&gt;  </span><br><span class="line">#include &lt;stdio.h&gt;  </span><br><span class="line">#include &lt;stddef.h&gt;  </span><br><span class="line">#include &lt;sys&#x2F;socket.h&gt;  </span><br><span class="line">#include &lt;sys&#x2F;un.h&gt;  </span><br><span class="line">#include &lt;errno.h&gt;  </span><br><span class="line">#include &lt;string.h&gt;  </span><br><span class="line">#include &lt;unistd.h&gt;  </span><br><span class="line">#include &lt;ctype.h&gt;   </span><br><span class="line"> </span><br><span class="line">#define MAXLINE 80  </span><br><span class="line"> </span><br><span class="line">char *socket_path &#x3D; &quot;server.socket&quot;;  </span><br><span class="line"> </span><br><span class="line">int main(void)  </span><br><span class="line">&#123;  </span><br><span class="line">    struct sockaddr_un serun, cliun;  </span><br><span class="line">    socklen_t cliun_len;  </span><br><span class="line">    int listenfd, connfd, size;  </span><br><span class="line">    char buf[MAXLINE];  </span><br><span class="line">    int i, n;  </span><br><span class="line"> </span><br><span class="line">    if ((listenfd &#x3D; socket(AF_UNIX, SOCK_STREAM, 0)) &lt; 0) &#123;  </span><br><span class="line">        perror(&quot;socket error&quot;);  </span><br><span class="line">        exit(1);  </span><br><span class="line">    &#125;  </span><br><span class="line"> </span><br><span class="line">    memset(&amp;serun, 0, sizeof(serun));  </span><br><span class="line">    serun.sun_family &#x3D; AF_UNIX;  </span><br><span class="line">    strcpy(serun.sun_path, socket_path);  </span><br><span class="line">    size &#x3D; offsetof(struct sockaddr_un, sun_path) + strlen(serun.sun_path);  </span><br><span class="line">    unlink(socket_path);  </span><br><span class="line">    if (bind(listenfd, (struct sockaddr *)&amp;serun, size) &lt; 0) &#123;  </span><br><span class="line">        perror(&quot;bind error&quot;);  </span><br><span class="line">        exit(1);  </span><br><span class="line">    &#125;  </span><br><span class="line">    printf(&quot;UNIX domain socket bound\n&quot;);  </span><br><span class="line">      </span><br><span class="line">    if (listen(listenfd, 20) &lt; 0) &#123;  </span><br><span class="line">        perror(&quot;listen error&quot;);  </span><br><span class="line">        exit(1);          </span><br><span class="line">    &#125;  </span><br><span class="line">    printf(&quot;Accepting connections ...\n&quot;);  </span><br><span class="line"> </span><br><span class="line">    while(1) &#123;  </span><br><span class="line">        cliun_len &#x3D; sizeof(cliun);         </span><br><span class="line">        if ((connfd &#x3D; accept(listenfd, (struct sockaddr *)&amp;cliun, &amp;cliun_len)) &lt; 0)&#123;  </span><br><span class="line">            perror(&quot;accept error&quot;);  </span><br><span class="line">            continue;  </span><br><span class="line">        &#125;  </span><br><span class="line">          </span><br><span class="line">        while(1) &#123;  </span><br><span class="line">            n &#x3D; read(connfd, buf, sizeof(buf));  </span><br><span class="line">            if (n &lt; 0) &#123;  </span><br><span class="line">                perror(&quot;read error&quot;);  </span><br><span class="line">                break;  </span><br><span class="line">            &#125; else if(n &#x3D;&#x3D; 0) &#123;  </span><br><span class="line">                printf(&quot;EOF\n&quot;);  </span><br><span class="line">                break;  </span><br><span class="line">            &#125;  </span><br><span class="line">              </span><br><span class="line">            printf(&quot;received: %s&quot;, buf);  </span><br><span class="line"> </span><br><span class="line">            for(i &#x3D; 0; i &lt; n; i++) &#123;  </span><br><span class="line">                buf[i] &#x3D; toupper(buf[i]);  </span><br><span class="line">            &#125;  </span><br><span class="line">            write(connfd, buf, n);  </span><br><span class="line">        &#125;  </span><br><span class="line">        close(connfd);  </span><br><span class="line">    &#125;  </span><br><span class="line">    close(listenfd);  </span><br><span class="line">    return 0;  </span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
+
+<p><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"></p>
+<p>简单介绍一下这段代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">int socket(int family, int type, int protocol);</span><br></pre></td></tr></table></figure>
+
+<p>使用 UNIX domain socket 的过程和网络 socket 十分相似，也要先调用 socket() 创建一个 socket 文件描述符.<br><strong>family</strong> 指定为 AF_UNIX，使用 AF_UNIX 会在系统上创建一个 socket 文件，不同进程通过读写这个文件来实现通信。<br><strong>type</strong> 可以选择 SOCK_DGRAM 或 SOCK_STREAM。SOCK_STREAM 意味着会提供按顺序的、可靠、双向、面向连接的比特流。SOCK_DGRAM 意味着会提供定长的、不可靠、无连接的通信。<br><strong>protocol</strong> 参数指定为 0 即可。<br>UNIX domain socket 与网络 socket 编程最明显的不同在于地址格式不同，用结构体 sockaddr_un 表示，网络编程的  socket 地址是 IP 地址加端口号，而 UNIX domain socket 的地址是一个 socket  类型的文件在文件系统中的路径，这个 socket 文件由 bind() 调用创建，如果调用 bind() 时该文件已存在，则 bind()  错误返回。因此，一般在调用 bind() 前会检查 socket 文件是否存在，如果存在就删除掉。<br>网络 socket 编程类似，在 bind 之后要 listen，表示通过 bind 的地址（也就是 socket 文件）提供服务。<br>接下来必须用 accept() 函数初始化连接。accept() 为每个连接创立新的套接字并从监听队列中移除这个连接。</p>
+<h1 id="客户端程序"><a href="#客户端程序" class="headerlink" title="客户端程序"></a>客户端程序</h1><p>下面是客户端程序，它接受用户的输入，并把字符串发送给服务器，然后接收服务器返回的字符串并打印：</p>
+<p><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;stdlib.h&gt;  </span><br><span class="line">#include &lt;stdio.h&gt;  </span><br><span class="line">#include &lt;stddef.h&gt;  </span><br><span class="line">#include &lt;sys&#x2F;socket.h&gt;  </span><br><span class="line">#include &lt;sys&#x2F;un.h&gt;  </span><br><span class="line">#include &lt;errno.h&gt;  </span><br><span class="line">#include &lt;string.h&gt;  </span><br><span class="line">#include &lt;unistd.h&gt;  </span><br><span class="line"> </span><br><span class="line">#define MAXLINE 80  </span><br><span class="line"> </span><br><span class="line">char *client_path &#x3D; &quot;client.socket&quot;;  </span><br><span class="line">char *server_path &#x3D; &quot;server.socket&quot;;  </span><br><span class="line"> </span><br><span class="line">int main() &#123;  </span><br><span class="line">    struct  sockaddr_un cliun, serun;  </span><br><span class="line">    int len;  </span><br><span class="line">    char buf[100];  </span><br><span class="line">    int sockfd, n;  </span><br><span class="line"> </span><br><span class="line">    if ((sockfd &#x3D; socket(AF_UNIX, SOCK_STREAM, 0)) &lt; 0)&#123;  </span><br><span class="line">        perror(&quot;client socket error&quot;);  </span><br><span class="line">        exit(1);  </span><br><span class="line">    &#125;  </span><br><span class="line">      </span><br><span class="line">    &#x2F;&#x2F; 一般显式调用bind函数，以便服务器区分不同客户端  </span><br><span class="line">    memset(&amp;cliun, 0, sizeof(cliun));  </span><br><span class="line">    cliun.sun_family &#x3D; AF_UNIX;  </span><br><span class="line">    strcpy(cliun.sun_path, client_path);  </span><br><span class="line">    len &#x3D; offsetof(struct sockaddr_un, sun_path) + strlen(cliun.sun_path);  </span><br><span class="line">    unlink(cliun.sun_path);  </span><br><span class="line">    if (bind(sockfd, (struct sockaddr *)&amp;cliun, len) &lt; 0) &#123;  </span><br><span class="line">        perror(&quot;bind error&quot;);  </span><br><span class="line">        exit(1);  </span><br><span class="line">    &#125;  </span><br><span class="line"> </span><br><span class="line">    memset(&amp;serun, 0, sizeof(serun));  </span><br><span class="line">    serun.sun_family &#x3D; AF_UNIX;  </span><br><span class="line">    strcpy(serun.sun_path, server_path);  </span><br><span class="line">    len &#x3D; offsetof(struct sockaddr_un, sun_path) + strlen(serun.sun_path);  </span><br><span class="line">    if (connect(sockfd, (struct sockaddr *)&amp;serun, len) &lt; 0)&#123;  </span><br><span class="line">        perror(&quot;connect error&quot;);  </span><br><span class="line">        exit(1);  </span><br><span class="line">    &#125;  </span><br><span class="line"> </span><br><span class="line">    while(fgets(buf, MAXLINE, stdin) !&#x3D; NULL) &#123;    </span><br><span class="line">         write(sockfd, buf, strlen(buf));    </span><br><span class="line">         n &#x3D; read(sockfd, buf, MAXLINE);    </span><br><span class="line">         if ( n &lt; 0 ) &#123;    </span><br><span class="line">            printf(&quot;the other side has been closed.\n&quot;);    </span><br><span class="line">         &#125;else &#123;    </span><br><span class="line">            write(STDOUT_FILENO, buf, n);    </span><br><span class="line">         &#125;    </span><br><span class="line">    &#125;   </span><br><span class="line">    close(sockfd);  </span><br><span class="line">    return 0;  </span><br><span class="line">&#125;  </span><br></pre></td></tr></table></figure>
+
+<p><img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码"></p>
+<p>与网络 socket 编程不同的是，UNIX domain socket 客户端一般要显式调用 bind  函数，而不依赖系统自动分配的地址。客户端 bind 一个自己指定的 socket 文件名的好处是，该文件名可以包含客户端的 pid  等信息以便服务器区分不同的客户端。</p>
+<h1 id="运行上面的程序"><a href="#运行上面的程序" class="headerlink" title="运行上面的程序"></a>运行上面的程序</h1><p>分别把服务器端程序和客户端程序保存为 server.c 和 client.c 文件，并编译：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ gcc server.c -o server</span><br><span class="line">$ gcc client.c -o client</span><br></pre></td></tr></table></figure>
+
+<p>先启动服务器端程序，然后启动客户端程序输入字符串并回车：</p>
+<p><img src="https://images2017.cnblogs.com/blog/952033/201801/952033-20180126125928506-239880118.png" alt="img"></p>
+<p>还不错，客户端得到了服务器端返回的大写字符串。接下来看看当前目录下的文件：</p>
+<p><img src="https://images2017.cnblogs.com/blog/952033/201801/952033-20180126125951834-1641586991.png" alt="img"></p>
+<p>哈哈，多了两个 socket 文件。</p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>Unix domain socket 主要用于同一主机上的进程间通信。与主机间的进程通信不同，它不是通过 “IP地址 + TCP或UDP端口号” 的方式进程通信，而是使用 socket 类型的文件来完成通信，因此在稳定性、可靠性以及效率方面的表现都很不错。</p>
+<p><strong>参考：</strong><br><a target="_blank" rel="noopener" href="http://docs.linuxtone.org/ebooks/C&CPP/c/ch37s04.html">UNIX Domain Socket IPC</a><br>[<a target="_blank" rel="noopener" href="http://blog.csdn.net/tzshlyt/article/details/53391655">linux] unix domain socket 例子</a></p>
+<p>​          </p>
 
       
     </div>
