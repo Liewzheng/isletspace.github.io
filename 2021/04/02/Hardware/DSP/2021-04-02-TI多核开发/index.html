@@ -1,0 +1,931 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="next-config" data-name="main" type="application/json">{&quot;hostname&quot;:&quot;islet.space&quot;,&quot;root&quot;:&quot;&#x2F;&quot;,&quot;images&quot;:&quot;&#x2F;images&quot;,&quot;scheme&quot;:&quot;Gemini&quot;,&quot;version&quot;:&quot;8.3.0&quot;,&quot;exturl&quot;:false,&quot;sidebar&quot;:{&quot;position&quot;:&quot;left&quot;,&quot;display&quot;:&quot;post&quot;,&quot;padding&quot;:18,&quot;offset&quot;:12},&quot;copycode&quot;:false,&quot;bookmark&quot;:{&quot;enable&quot;:false,&quot;color&quot;:&quot;#222&quot;,&quot;save&quot;:&quot;auto&quot;},&quot;fancybox&quot;:false,&quot;mediumzoom&quot;:false,&quot;lazyload&quot;:false,&quot;pangu&quot;:false,&quot;comments&quot;:{&quot;style&quot;:&quot;tabs&quot;,&quot;active&quot;:null,&quot;storage&quot;:true,&quot;lazyload&quot;:false,&quot;nav&quot;:null},&quot;motion&quot;:{&quot;enable&quot;:true,&quot;async&quot;:false,&quot;transition&quot;:{&quot;post_block&quot;:&quot;fadeIn&quot;,&quot;post_header&quot;:&quot;fadeInDown&quot;,&quot;post_body&quot;:&quot;fadeInDown&quot;,&quot;coll_header&quot;:&quot;fadeInLeft&quot;,&quot;sidebar&quot;:&quot;fadeInUp&quot;}},&quot;prism&quot;:false,&quot;i18n&quot;:{&quot;placeholder&quot;:&quot;Searching...&quot;,&quot;empty&quot;:&quot;We didn&#39;t find any results for the search: ${query}&quot;,&quot;hits_time&quot;:&quot;${hits} results found in ${time} ms&quot;,&quot;hits&quot;:&quot;${hits} results found&quot;}}</script>
+<meta name="description" content="多核开发涉及多核通信及任务分配管理的问题，任何多核通信都需要针对具体芯片的型号及系统特性去设计。多核通信包括资源共享、竞争、同步、异步等问题；多核任务分配则关系着各核心任务均衡和RTOS系统能否及时响应的问题。 1. 基础知识并发、并行、异步、同步、共享、互斥、进程、线程Concurrency 并发仅表示计算机可以同时执行多项任务，以至于如何实现“同时”执行，则有许多不同形式。 如，单核处理器可以">
+<meta property="og:type" content="article">
+<meta property="og:title" content="TI多核开发">
+<meta property="og:url" content="http://islet.space/2021/04/02/Hardware/DSP/2021-04-02-TI%E5%A4%9A%E6%A0%B8%E5%BC%80%E5%8F%91/index.html">
+<meta property="og:site_name" content="Coder的孤岛">
+<meta property="og:description" content="多核开发涉及多核通信及任务分配管理的问题，任何多核通信都需要针对具体芯片的型号及系统特性去设计。多核通信包括资源共享、竞争、同步、异步等问题；多核任务分配则关系着各核心任务均衡和RTOS系统能否及时响应的问题。 1. 基础知识并发、并行、异步、同步、共享、互斥、进程、线程Concurrency 并发仅表示计算机可以同时执行多项任务，以至于如何实现“同时”执行，则有许多不同形式。 如，单核处理器可以">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/04/Snipaste_2021-04-08_09-00-03.png">
+<meta property="og:image" content="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/04/Snipaste_2021-04-08_08-54-09.png">
+<meta property="og:image" content="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/04/Snipaste_2021-04-08_08-57-22.png">
+<meta property="og:image" content="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/04/Snipaste_2021-04-08_09-33-14.png">
+<meta property="og:image" content="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/04/Snipaste_2021-04-08_14-57-07.png">
+<meta property="article:published_time" content="2021-04-02T00:30:00.000Z">
+<meta property="article:modified_time" content="2021-07-08T14:41:03.931Z">
+<meta property="article:author" content="Liewzheng">
+<meta property="article:tag" content="TI">
+<meta property="article:tag" content="multicore">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/04/Snipaste_2021-04-08_09-00-03.png">
+
+
+<link rel="canonical" href="http://islet.space/2021/04/02/Hardware/DSP/2021-04-02-TI%E5%A4%9A%E6%A0%B8%E5%BC%80%E5%8F%91/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{&quot;sidebar&quot;:&quot;&quot;,&quot;isHome&quot;:false,&quot;isPost&quot;:true,&quot;lang&quot;:&quot;en&quot;,&quot;comments&quot;:true,&quot;permalink&quot;:&quot;http:&#x2F;&#x2F;islet.space&#x2F;2021&#x2F;04&#x2F;02&#x2F;Hardware&#x2F;DSP&#x2F;2021-04-02-TI%E5%A4%9A%E6%A0%B8%E5%BC%80%E5%8F%91&#x2F;&quot;,&quot;path&quot;:&quot;2021&#x2F;04&#x2F;02&#x2F;Hardware&#x2F;DSP&#x2F;2021-04-02-TI多核开发&#x2F;&quot;,&quot;title&quot;:&quot;TI多核开发&quot;}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">&quot;&quot;</script>
+<title>TI多核开发 | Coder的孤岛</title><script src="/js/config.js"></script>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Coder的孤岛</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">islet of the coder</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-文章"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>文章</a></li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86"><span class="nav-number">1.</span> <span class="nav-text">1. 基础知识</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B9%B6%E5%8F%91%E3%80%81%E5%B9%B6%E8%A1%8C%E3%80%81%E5%BC%82%E6%AD%A5%E3%80%81%E5%90%8C%E6%AD%A5%E3%80%81%E5%85%B1%E4%BA%AB%E3%80%81%E4%BA%92%E6%96%A5%E3%80%81%E8%BF%9B%E7%A8%8B%E3%80%81%E7%BA%BF%E7%A8%8B"><span class="nav-number">1.1.</span> <span class="nav-text">并发、并行、异步、同步、共享、互斥、进程、线程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Concurrency-%E5%B9%B6%E5%8F%91"><span class="nav-number">1.1.1.</span> <span class="nav-text">Concurrency 并发</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Parallelism-%E5%B9%B6%E8%A1%8C"><span class="nav-number">1.1.2.</span> <span class="nav-text">Parallelism 并行</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Synchronization-%E5%90%8C%E6%AD%A5"><span class="nav-number">1.1.3.</span> <span class="nav-text">Synchronization 同步</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Asynchronization-%E5%BC%82%E6%AD%A5"><span class="nav-number">1.1.4.</span> <span class="nav-text">Asynchronization 异步</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Mutual-Exclusion-%E4%BA%92%E6%96%A5"><span class="nav-number">1.1.5.</span> <span class="nav-text">Mutual Exclusion 互斥</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A0%86%E3%80%81%E6%A0%88"><span class="nav-number">1.2.</span> <span class="nav-text">堆、栈</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-%E5%A4%9A%E6%A0%B8%E9%80%9A%E4%BF%A1%E6%A8%A1%E5%9D%97"><span class="nav-number">2.</span> <span class="nav-text">2. 多核通信模块</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Header-Files-included"><span class="nav-number">2.1.</span> <span class="nav-text">Header Files included</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Standard-IPC-Function-Call-Sequence"><span class="nav-number">2.2.</span> <span class="nav-text">Standard IPC Function Call Sequence</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B0%83%E7%94%A8%E9%A1%BA%E5%BA%8F"><span class="nav-number">2.2.1.</span> <span class="nav-text">调用顺序</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%E7%A4%BA%E4%BE%8B"><span class="nav-number">2.2.2.</span> <span class="nav-text">代码示例</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Ipc-Start-%E4%BD%BF%E7%94%A8%E7%A4%BA%E4%BE%8B"><span class="nav-number">2.2.2.1.</span> <span class="nav-text">Ipc_Start() 使用示例</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#MessageQ-Create-%E4%BD%BF%E7%94%A8%E7%A4%BA%E4%BE%8B"><span class="nav-number">2.2.2.2.</span> <span class="nav-text">MessageQ_Create() 使用示例</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Error-Handling-in-IPC"><span class="nav-number">2.3.</span> <span class="nav-text">Error Handling in IPC</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#IPC-Module-Configuration"><span class="nav-number">2.4.</span> <span class="nav-text">IPC Module Configuration</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Attach-and-Detach-%EF%BC%88%E4%BE%9D%E9%99%84%E4%B8%8E%E5%88%86%E7%A6%BB%EF%BC%89"><span class="nav-number">2.4.0.1.</span> <span class="nav-text">Attach and Detach （依附与分离）</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-%E5%A4%9A%E6%A0%B8%E4%BB%BB%E5%8A%A1%E5%88%86%E9%85%8D"><span class="nav-number">3.</span> <span class="nav-text">3. 多核任务分配</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-Chip-Support-Library"><span class="nav-number">4.</span> <span class="nav-text">4. Chip Support Library</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Cache-Module"><span class="nav-number">4.1.</span> <span class="nav-text">Cache Module</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#IPC-Module"><span class="nav-number">4.2.</span> <span class="nav-text">IPC Module</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#CACHE-wbInvL1d"><span class="nav-number">4.2.1.</span> <span class="nav-text">CACHE_wbInvL1d()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CACHE-invL1d"><span class="nav-number">4.2.2.</span> <span class="nav-text">CACHE_invL1d ()</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Chip-Module"><span class="nav-number">4.3.</span> <span class="nav-text">Chip Module</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#IPC-HW-Example-in-ANC"><span class="nav-number">4.4.</span> <span class="nav-text">IPC_HW Example in ANC</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#5-C6657%E7%89%B9%E6%80%A7"><span class="nav-number">5.</span> <span class="nav-text">5. C6657特性</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#L2%E7%BC%93%E5%AD%98"><span class="nav-number">5.1.</span> <span class="nav-text">L2缓存</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Liewzheng</p>
+  <div class="site-description" itemprop="description">笔记分享的旮旯孤岛而已</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">82</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">153</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="mailto:liewzheng@qq.com" title="E-Mail → mailto:liewzheng@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://islet.space/2021/04/02/Hardware/DSP/2021-04-02-TI%E5%A4%9A%E6%A0%B8%E5%BC%80%E5%8F%91/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Liewzheng">
+      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coder的孤岛">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          TI多核开发
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-04-02 08:30:00" itemprop="dateCreated datePublished" datetime="2021-04-02T08:30:00+08:00">2021-04-02</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2021-07-08 22:41:03" itemprop="dateModified" datetime="2021-07-08T22:41:03+08:00">2021-07-08</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Communication/" itemprop="url" rel="index"><span itemprop="name">Communication</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>多核开发涉及多核通信及任务分配管理的问题，任何多核通信都需要针对具体芯片的型号及系统特性去设计。多核通信包括资源共享、竞争、同步、异步等问题；多核任务分配则关系着各核心任务均衡和RTOS系统能否及时响应的问题。</p>
+<h1 id="1-基础知识"><a href="#1-基础知识" class="headerlink" title="1. 基础知识"></a>1. 基础知识</h1><h2 id="并发、并行、异步、同步、共享、互斥、进程、线程"><a href="#并发、并行、异步、同步、共享、互斥、进程、线程" class="headerlink" title="并发、并行、异步、同步、共享、互斥、进程、线程"></a>并发、并行、异步、同步、共享、互斥、进程、线程</h2><h3 id="Concurrency-并发"><a href="#Concurrency-并发" class="headerlink" title="Concurrency 并发"></a>Concurrency 并发</h3><p>仅表示计算机可以同时执行多项任务，以至于如何实现“同时”执行，则有许多不同形式。</p>
+<p>如，单核处理器可以通过分配时间片，轮询任务来达到多任务并发。系统让一个任务运行一段时间，在切换到另一个任务运行，如此循环往复，此过程也被称为 线程的<strong>上下文切换（Context Switching）</strong>。</p>
+<h3 id="Parallelism-并行"><a href="#Parallelism-并行" class="headerlink" title="Parallelism 并行"></a>Parallelism 并行</h3><p>多个任务于同一时刻在不同的和核心上进行处理，称为并行</p>
+<h3 id="Synchronization-同步"><a href="#Synchronization-同步" class="headerlink" title="Synchronization 同步"></a>Synchronization 同步</h3><p>指程序任务间的先后关系，后面一个程序必须等前一个任务执行完毕方可启动。因此，在同步中，并无并发或并行概念</p>
+<h3 id="Asynchronization-异步"><a href="#Asynchronization-异步" class="headerlink" title="Asynchronization 异步"></a>Asynchronization 异步</h3><p>指不同的任务之间不会相互等待</p>
+<p>对于I/O资源访问频繁的系统，宜使用异步编程，</p>
+<h3 id="Mutual-Exclusion-互斥"><a href="#Mutual-Exclusion-互斥" class="headerlink" title="Mutual Exclusion 互斥"></a>Mutual Exclusion 互斥</h3><p>程序内存开销 及 线程切换开销</p>
+<h2 id="堆、栈"><a href="#堆、栈" class="headerlink" title="堆、栈"></a>堆、栈</h2><p>题目所指的 heap 和 stack 在 C++ 标准中相对的术语分别是<strong>自由存储</strong>（free store，即用<code>new</code>创建对象时所分配的空间）和<strong>自动变量</strong>（automatic variable，或称为局部变量，不要与 C++11 的<code>auto</code>混淆）。</p>
+<p>编程角度，要分开两者，是因为两者的生命周期不一样。</p>
+<p>如果只需要在作用域内维持变量的生命周期，最好就用自动变量，这样是最简单方便高效的。其他情况可考虑用自由存储、静态局部／全局变量，或类的（静态）成员变量。它们各有不同特点，不在此答案详述。另外，由于 C++ 不支持可变长数组（VLA），不可以定义动态长度的自动变量（成员变量也不行），这个情况下也需要用 new[] 来创建动态长度的数组。</p>
+<p>自动变量会在作用域（如函数作用域、块作用域等）结束后析构、释放内存。因为分配和释放的次序是刚好完全相反的，所以可用到堆栈先进后出（first-in-last-out, FILO）的特性，而 C++ 语言的实现一般也会使用到调用堆栈（call stack）来分配自动变量（但非标准的要求）。<br>自由存储可以在函数结束后继续生存，所以也需要配合 delete 来手动析构、释放内存（也可使用智能指针避免手动 delete）。由于分配和释放次序没有限制，不能使用堆栈这种数据结构做分配，实现上可能采用自由链表（free list）或其他动态内存分配机制。</p>
+<p><strong>堆</strong>，英文是 heap，在内存管理的语境下，指的是动态分配内存的区域。这个堆跟数据结构里的堆不是一回事。这里的内存，被分配之后需要手工释放，否则，就会造成内存泄漏。</p>
+<p>C++ 标准里一个相关概念是自由存储区(free store)，特指使用 <code>new</code> 和 <code>delete</code> 来分配和释放内存的区域。一般而言，free store是堆(heap)的一个子集，原因如下：</p>
+<ul>
+<li><code>new</code> 和 <code>delete</code> 操作的区域是 free store；<code>malloc</code> 和 <code>free</code> 操作的区域是 heap</li>
+<li><code>new</code> 和 <code>delete</code> 通常底层使用 <code>malloc</code> 和 <code>free</code> 来实现</li>
+</ul>
+<p><strong>栈</strong>，英文是 stack，在内存管理的语境下，指的是函数调用过程中产生的本地变量和调用数据的区域。这个栈和数据结构里的栈高度相似，都满足“后进先出”（last-in-first-out 或 LIFO）。</p>
+<p><strong>RAII</strong>，完整的英文是 Resource Acquisition Is Initialization，是 C++ 所特有的资源管理方式。有少量其他语言，如 D、Ada 和 Rust 也采纳了 RAII，但主流的编程语言中， C++ 是唯一一个依赖 RAII 来做资源管理的。</p>
+<p>RAII 依托栈和析构函数，来对所有的资源——包括堆内存在内——进行管理。对 RAII 的使用，使得 C++ 不需要类似于 Java 那样的垃圾收集方法，也能有效地对内存进行管理。RAII 的存在，也是垃圾收集虽然理论上可以在 C++ 使用，但从来没有真正流行过的主要原因。 </p>
+<p>嵌入式的设备如DSP上的栈空间是Kb级别，在函数内定义数组或申请空间都不能像linux下那样直接定义和申请，要么定义成全局的，要么指向一块划分好的空间，否则就会造成覆盖代码段等的问题。</p>
+<p>DSP的所有变量，函数，以及程序员定义的地址都保存在这三片空间上，程序员在定义变量时，若没有特殊规定，则编译器自动把变量分配到可读写空间上的任意位置，所以当程序员使用 <code>int *p = 0x00810000</code> ；这种语法的时候，很有可能会覆盖掉程序保存变量和函数的空间，导致程序运行异常，因此需要一个 <code>.cmd</code> 文件来约束，哪些地方用来给程序员自己定义变量地址用，哪些地方用来给程序为变量和函数申请内存来用。</p>
+<h1 id="2-多核通信模块"><a href="#2-多核通信模块" class="headerlink" title="2. 多核通信模块"></a>2. 多核通信模块</h1><blockquote>
+<p><em>IPC Modules can be used in a variety of combinations.</em> </p>
+</blockquote>
+<p>以上即是说，各类IPC模块可以根据需要进行组合混用。</p>
+<p>IPC以独立插件的形式进行安装与使用，使用时可能需要手动挂载至项目属性中。</p>
+<p>Here are some introductions about heap in the &lt;SPRUEX3K.pdf&gt; as follows: </p>
+<blockquote>
+<p>SYS/BIOS provides the following Heap implementations:</p>
+<ul>
+<li><strong>HeapMem.</strong> Allocate variable-size blocks. Section 6.8.1</li>
+<li><strong>HeapBuf.</strong> Allocate fixed-size blocks. Section 6.8.2</li>
+<li><strong>HeapMultiBuf.</strong> Specify variable-size allocation, but internally allocate from a variety of fixed-size<br>blocks. Section 6.8.3</li>
+</ul>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>Module</th>
+<th>Module Path</th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>GateMP（门）</td>
+<td><code>GateMP</code></td>
+<td>Manages gates for mutual exclusion of shared resources by multiple processors and threads. <br/><em>See Section 2.6.</em></td>
+</tr>
+<tr>
+<td>HeapBufMP（堆缓存）</td>
+<td><code>ti.sdo.ipc.heaps.HeapBufMP</code></td>
+<td>Fixed-sized shared memory Heaps. Similar to SYS/BIOS’s <code>ti.sysbios.heaps.HeapBuf </code> module, but with some configuration differences. <br/><em>See Section 2.5.</em></td>
+</tr>
+<tr>
+<td>HeapMemMP（堆储存）</td>
+<td><code>ti.sdo.ipc.heaps.HeapMemMP</code></td>
+<td>Variable-sized shared memory Heaps. <br/><em>See Section 2.5.</em></td>
+</tr>
+<tr>
+<td>HeapMultiBufMP（堆混合缓存）</td>
+<td><code>ti.sdo.ipc.heaps.HeapMultiBufMP</code></td>
+<td>Multiple fixed-sized shared memory Heaps. <br/><em>See Section 2.5.</em></td>
+</tr>
+<tr>
+<td>Ipc（核间通信）</td>
+<td><code>ti.sdo.ipc.Ipc</code></td>
+<td>Provides <code>Ipc_start()</code> function and allows startup sequence configuration. <br/><em>See Section 2.2.</em></td>
+</tr>
+<tr>
+<td>ListMP（列表）</td>
+<td><code>ti.sdo.ipc.ListMP</code></td>
+<td>Doubly-linked list for shared-memory, multi-processor applications. Very similar to the ti.sdo.utils.List module. <br/><em>See Section 2.4.</em></td>
+</tr>
+<tr>
+<td>MessageQ （Q报文）</td>
+<td><code>ti.sdo.ipc.MessageQ</code></td>
+<td>Variable size messaging module. 可拥有不同大小的信息模块。<br/><em>See Section 2.3.</em></td>
+</tr>
+<tr>
+<td>TransportShm（运输表）</td>
+<td><code>ti.sdo.ipc.transports.TransportShm</code></td>
+<td>Transport used by MessageQ for remote communication with other processors via shared memory. <br/><em>See Section 2.3.11.</em></td>
+</tr>
+<tr>
+<td>Notify （通知）</td>
+<td><code>ti.sdo.ipc.Notify</code></td>
+<td>Low-level interrupt mux/demuxer module. <br/><em>See Section 2.7.</em></td>
+</tr>
+<tr>
+<td>NotifyDriverShm（通知驱动表）</td>
+<td><code>ti.sdo.ipc.notifyDrivers.NotifyDriverShm</code></td>
+<td>Shared memory notification driver used by the Notify module to communicate between a pair of processors. <br/><em>See Section 2.7.</em></td>
+</tr>
+<tr>
+<td>SharedRegion （共享区域）</td>
+<td><code>ti.sdo.ipc.SharedRegion</code></td>
+<td>Maintains shared memory for multiple shared regions. <br/><em>See Section 2.8.</em></td>
+</tr>
+</tbody></table>
+<h2 id="Header-Files-included"><a href="#Header-Files-included" class="headerlink" title="Header Files included"></a>Header Files included</h2><p>除了<code> &lt;ipc_install_dir&gt;/packages/ti/ipc/</code> 路径下可以找到IPC必须的头文件外， <code>&lt;ipc_install_dir&gt;/packages/ti/sdo/ipc/</code> 路径下同样有IPC的头文件，但是请勿直接引用至 <code>.c</code>文件中。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;xdc/std.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="comment">/* ---- XDC.RUNTIME module Headers */</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;xdc/runtime/Memory.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;xdc/runtime/System.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;xdc/runtime/IHeap.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;xdc/runtime/Timestamp.h&gt;</span>    <span class="comment">//not officially included</span></span></span><br><span class="line"><span class="comment">/* ----- IPC module Headers */</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;ti/ipc/GateMP.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;ti/ipc/Ipc.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;ti/ipc/MessageQ.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;ti/ipc/HeapBufMP.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;ti/ipc/MultiProc.h&gt;</span></span></span><br><span class="line"><span class="comment">/* ---- BIOS6 module Headers */</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;ti/sysbios/BIOS.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;ti/sysbios/knl/Task.h&gt;</span></span></span><br><span class="line"><span class="comment">/* ---- Get globals from .cfg Header */</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;xdc/cfg/global.h&gt;</span></span></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="Standard-IPC-Function-Call-Sequence"><a href="#Standard-IPC-Function-Call-Sequence" class="headerlink" title="Standard IPC Function Call Sequence"></a>Standard IPC Function Call Sequence</h2><p>Standard IPC Function Call Sequence，即标准IPC函数的调用顺序。</p>
+<blockquote>
+<p> <em><strong>MODULE</strong></em> 在本处指任一类型的IPC调用（如，GateMP、IPC、MessageQ等），如  <code>MODULE_Open()</code> 即可替换成 <code>MessageQ_Open()</code> ，具体实参见对应的头文件。</p>
+</blockquote>
+<p>An application that uses IPC APIs—such as <code>MessageQ</code>, <code>GateMP</code>, and <code>ListMP</code>—**must include the Ipc module header file and call <code>Ipc_start()</code> in the <code>main()</code> function. ** <code>Ipc_start()</code> does the following:</p>
+<ul>
+<li>初始化：Initializes a number of objects and modules used by IPC.</li>
+<li>同步：Synchronizes multiple processors so they can boot in any order.</li>
+</ul>
+<p><strong>NOTES:</strong> If the <code>main()</code> function calls any IPC APIs, the call to <code>Ipc_start()</code> must be placed before any calls to IPC modules.</p>
+<h3 id="调用顺序"><a href="#调用顺序" class="headerlink" title="调用顺序"></a>调用顺序</h3><ul>
+<li>Firstly, initialize a <code>MODULE_Params</code> structure to its default values via a <code>MODULE_Params_init() </code> function.  The creator thread can then set individual parameter fields in this structure as needed.</li>
+<li>Secondly, calls the <code>MODULE_create()</code> function to creates the instance and initializes any shared memory used by the instance. <em>If the instance is to be opened remotely, a unique name must be supplied in the parameters.</em></li>
+<li>Other threads can access this instance via the <code>MODULE_open()</code> function, which <strong>returns a handle with access to the instance.</strong> The name that was used for instance creation must be used in the <code>MODULE_open()</code> function.</li>
+<li>Finally, the thread that called <code>MODULE_create()</code> can call <code>MODULE_delete()</code> to free the memory used by the instance.</li>
+</ul>
+<blockquote>
+<ul>
+<li>首先，使用 <code>MODULE_Params_init() </code> 来初始化 <code>MODULE_Params</code> 结构。（创建它的线程）可以根据需要单独调整结构体内的个别参数。</li>
+<li>然后，调用 <code>MODULE_create()</code> 函数来创建对象实例，并初始化其内存。如果该对象在别处被打开，需要给被调用的参数取好名字防止重复。</li>
+<li>接着， 其他线程可以通过 <code>MODULE_open()</code>  函数接入该对象，并返回一个对应的句柄。该对象的创建名称必须与打开名称保持一致。</li>
+<li>最后，调用 <code>MODULE_create()</code> 来创建对象实例的线程就可以调用 <code>MODULE_delete()</code> 来释放被对象占用的内存。</li>
+</ul>
+</blockquote>
+<p><strong>注意：</strong> </p>
+<blockquote>
+<p><em>All threads that opened an instance must close that instance before the thread that created it can delete it.</em> <em>Also, a thread that calls <code>MODULE_create()</code> cannot call <code>MODULE_close()</code>.</em> <em>Likewise, a thread that calls <code>MODULE_open()</code> cannot call <code>MODULE_delete()</code>.</em></p>
+<p>在由创建者删除（delete）某IPC对象时，由谁使用（open）就由谁关闭（close）。且决不能由创建者来调用关闭函数，否则创建者无法删除该对象。（顺序如下图所示）</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">stateDiagram-v2</span><br><span class="line">	[*] --&gt; Core0</span><br><span class="line">	[*] --&gt; Core1</span><br><span class="line">	Core0 --&gt; IPC_Start()</span><br><span class="line">	IPC_Start() --&gt; Module_Create()</span><br><span class="line">	IPC_Start() --&gt; Core1 : Wait for Sychronization</span><br><span class="line">	Core1 --&gt; UsersProgram()</span><br><span class="line">	UsersProgram() --&gt; Module_Open()</span><br><span class="line">	Module_Open() --&gt; Module_Close()</span><br><span class="line">	Module_Create() --&gt; Module_Delete()</span><br><span class="line">	Module_Close() --&gt; Module_Delete() : Closed by who opens</span><br><span class="line">	</span><br></pre></td></tr></table></figure>
+
+<h3 id="代码示例"><a href="#代码示例" class="headerlink" title="代码示例"></a>代码示例</h3><h4 id="Ipc-Start-使用示例"><a href="#Ipc-Start-使用示例" class="headerlink" title="Ipc_Start() 使用示例"></a>Ipc_Start() 使用示例</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;ti/ipc/Ipc.h&gt;</span></span></span><br><span class="line">...</span><br><span class="line"><span class="function">Int <span class="title">main</span><span class="params">(Int argc, Char* argv[])</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">     Int status;</span><br><span class="line">     <span class="comment">/* Call Ipc_start() */</span></span><br><span class="line">     status = Ipc_start();</span><br><span class="line">     <span class="keyword">if</span> (status &lt; <span class="number">0</span>) &#123;</span><br><span class="line">         System_abort(<span class="string">&quot;Ipc_start failed\n&quot;</span>);</span><br><span class="line">     &#125;</span><br><span class="line">     BIOS_start();</span><br><span class="line">     <span class="keyword">return</span> (<span class="number">0</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="MessageQ-Create-使用示例"><a href="#MessageQ-Create-使用示例" class="headerlink" title="MessageQ_Create() 使用示例"></a>MessageQ_Create() 使用示例</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">messageQ = MessageQ_create(DSP_MESSAGEQNAME, <span class="literal">NULL</span>);</span><br><span class="line"><span class="keyword">if</span> (messageQ == <span class="literal">NULL</span>) &#123;   <span class="comment">//an error occurred when creating the object</span></span><br><span class="line">	System_abort(<span class="string">&quot;MessageQ_create failed\n&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="Error-Handling-in-IPC"><a href="#Error-Handling-in-IPC" class="headerlink" title="Error Handling in IPC"></a>Error Handling in IPC</h2><p>Success codes always have values greater or equal to zero. The Failure codes are always negative.</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">MessageQ_Msg msg; </span><br><span class="line">MessageQ_Handle messageQ;</span><br><span class="line">Int status;</span><br><span class="line">...</span><br><span class="line">status = MessageQ_get(messageQ, &amp;msg, MessageQ_FOREVER);</span><br><span class="line"><span class="keyword">if</span> (status &lt; <span class="number">0</span>) &#123;</span><br><span class="line">	System_abort(<span class="string">&quot;Should not happen\n&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="IPC-Module-Configuration"><a href="#IPC-Module-Configuration" class="headerlink" title="IPC Module Configuration"></a>IPC Module Configuration</h2><p>Configure how the IPC module synchronizes processors by configuring the <code>Ipc.procSync</code> property. For example:</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* CONFIGURATION ABOUT INTER-PROCESS COMMUNICATION */</span></span><br><span class="line">var Ipc = xdc.useModule(&#x27;ti.sdo.ipc.Ipc&#x27;);</span><br><span class="line">Ipc.procSync = Ipc.ProcSync_ALL;</span><br></pre></td></tr></table></figure>
+
+<p>Here are three options: <code>Ipc.ProcSync_ALL</code> | <code>Ipc.ProcSync_PAIR</code> | <code>Ipc.ProcSync_NONE</code></p>
+<table>
+<thead>
+<tr>
+<th>Options</th>
+<th>Conditions</th>
+<th>Specialties</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Ipc.ProcSync_ALL</strong></td>
+<td>- IPC processors on a device start up at the same time<br/>- Connections should be established between every possible pair of processors</td>
+<td>- <code>Ipc_start() API</code> automatically attaches to and synchronizes all remote processors.  <br/>- Application <em><strong>should never call</strong></em> <code>Ipc_attach()</code>.</td>
+</tr>
+<tr>
+<td><strong>Ipc.ProcSync_PAIR</strong> <em>(Default Mode)</em></td>
+<td><em>One of the following is true:</em><br>- You need to control when synchronization with each remote processor occurs.<br/>- Useful work can be done while trying to synchronize with a remote processor by yielding a thread after each attempt to Ipc_attach() to the processor. <br/> - Connections to some remote processors are unnecessary and should be made selectively to save memory.</td>
+<td>- Must explicitly call <code>Ipc_attach()</code> to attach to a specific remote processor. <br/>- <code>Ipc_start()</code> performs system-wide IPC initialization, but does not <strong>make connections to remote processors</strong>.</td>
+</tr>
+<tr>
+<td><strong>Ipc.ProcSync_NONE</strong></td>
+<td><em>Use this option with caution.</em> <br/>It is intended for use in cases where the application performs its own synchronization and you want to avoid a potential deadlock situation with the IPC synchronization.</td>
+<td><code>Ipc_start()</code> doesn’t synchronize any processors before setting up the objects needed by other modules.</td>
+</tr>
+</tbody></table>
+<h4 id="Attach-and-Detach-（依附与分离）"><a href="#Attach-and-Detach-（依附与分离）" class="headerlink" title="Attach and Detach （依附与分离）"></a>Attach and Detach （依附与分离）</h4><p>In addition to the default actions performed when attaching to or detaching from a remote processor, You can configure a function to perform custom actions. </p>
+<p>Attach and Detach are provided for the processor synchronization:</p>
+<ul>
+<li><p><code>Ipc_attach()</code> Creates a connection to the specified remote processor. </p>
+</li>
+<li><p><code>Ipc_detach()</code> Deletes the connection to the specified remote processor.</p>
+</li>
+</ul>
+<p>在 <code>.cfg</code> 文件中以下为两个互相依赖和两个互相分离的函数配置，每一组函数都会传递一个不同的参数：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">var Ipc = xdc.useModule(&#x27;ti.sdo.ipc.Ipc&#x27;);</span><br><span class="line"></span><br><span class="line">var fxn = <span class="keyword">new</span> Ipc.UserFxn;</span><br><span class="line">fxn.attach = &#x27;&amp;userAttachFxn1&#x27;;</span><br><span class="line">fxn.detach = &#x27;&amp;userDetachFxn1&#x27;;</span><br><span class="line">Ipc.addUserFxn(fxn, <span class="number">0x1</span>);</span><br><span class="line"></span><br><span class="line">fxn.attach = &#x27;&amp;userAttachFxn2&#x27;;</span><br><span class="line">fxn.detach = &#x27;&amp;userDetachFxn2&#x27;;</span><br><span class="line">Ipc.addUserFxn(fxn, <span class="number">0x2</span>);</span><br></pre></td></tr></table></figure>
+
+<p><em><strong>These functions run near the end of <code>Ipc_attach()</code> and near the beginning of <code>Ipc_detach()</code> , respectively.</strong></em></p>
+<p><em><strong>Such functions must be non-blocking and must run to completion. 这些被定义的函数必须为非阻塞且（一旦开始就）运行到底。</strong></em></p>
+<p><strong>注意：</strong> Call <code>Ipc_attach()</code> to the processor that owns shared memory region 0 (usually the processor with id = 0) before making a connection to any other remote processor. For example, if there are three processors configured with <em><strong>MultiProc</strong></em>, #1 should attach to #0 before it can attach to #2.</p>
+<h1 id="3-多核任务分配"><a href="#3-多核任务分配" class="headerlink" title="3. 多核任务分配"></a>3. 多核任务分配</h1><blockquote>
+<p>如果多个核共享一个工程及相同的bios 配置文件，是不能指定某一个任务到特定的core上，如果某个任务只有某个core才会运行，可以在任务中区分core运行。如果多个core分别有不同的工程，则没有“多核任务分配”的问题，每个工程可以根据各自core的应用创建各自的任务，不需要软件区分core。</p>
+</blockquote>
+<blockquote>
+<p>单核可以是一个out生成最终的bin文件烧写在flash，多核如果存在多个out文件，可以把out文件合并成一个bin烧写，或者多个bin分开烧写均可。bin文件中都有程序的地址及长度信息，在多个bin时，也是一样可以由core0负责对flash的程序文件解析，将程序搬移到相应的地址上，最后core0再向其他core magic address写入入口地址，并发送ipc触发即可。</p>
+</blockquote>
+<blockquote>
+<p>这个并非由SYS/BIOS分配，需要开发者指定。</p>
+<p>可以根据core number来做判断，然后确认该任务是否运行在该核上。 </p>
+</blockquote>
+<h1 id="4-Chip-Support-Library"><a href="#4-Chip-Support-Library" class="headerlink" title="4. Chip Support Library"></a>4. Chip Support Library</h1><p>CSL，即芯片支持库( Chip Support Library)。在程序设计过程中利用CSL库函数可以方便地访问 <strong>DSP的寄存器和硬件资源</strong>，提高DSP软件的开发效率和速度。</p>
+<p>CSL库包含了对INTC、Boot Configuration、BWMNGMT、CACHE、CHIP、CPINTC、EDMA3、EMAC、EMIF4F、GPIO、IDMA、IPC、MDIO、MEMPROT、MPU、MSMC、PLLC、PSC、Semaphore、SGMII、SRIO、TIMER、TSC、VCP2、XMC、CGEM、CPPI、QMSS、CPPI_LLD_SYMBOL 及 CPPI_LLD_ENUM共30种模块的支持。</p>
+<h2 id="Cache-Module"><a href="#Cache-Module" class="headerlink" title="Cache Module"></a>Cache Module</h2><p>位于 <code>ti\pdk_C6657_1_1_2_6\packages\ti\csl\</code> 下的头文件 <code>&lt;csl_cacheAux.h&gt;</code> 提供了缓存（Cache）配置相关的CSL功能层API。</p>
+<blockquote>
+<p>This is the CACHE Auxilary Header File which exposes the <em><strong>various CSL Functional Layer API</strong></em>‘s to <em><strong>configure the CACHE Module</strong></em>.</p>
+</blockquote>
+<blockquote>
+<p>Cache API包含了对L1D（L1 Data Cache）、L1P 及 L2的各种操作。关于L1D、L1P及L2 的详细文件参考《SPRS814D》第193页。</p>
+</blockquote>
+<p>该头文件中对三种缓存的可操作方式如下示：</p>
+<table>
+<thead>
+<tr>
+<th>OPERATION</th>
+<th>L1D</th>
+<th>L1P</th>
+<th>L2</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>setSize</td>
+<td>√</td>
+<td>√</td>
+<td>√</td>
+</tr>
+<tr>
+<td>getSize</td>
+<td>√</td>
+<td>√</td>
+<td>√</td>
+</tr>
+<tr>
+<td>freeze</td>
+<td>√</td>
+<td>√</td>
+<td>√</td>
+</tr>
+<tr>
+<td>unfreeze</td>
+<td>√</td>
+<td>√</td>
+<td>√</td>
+</tr>
+<tr>
+<td>getPrevMode<br/><em>– get the previous operating state</em></td>
+<td>√</td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td>invAllWait<br/><em>– wait for the cache global invalidate operation to complete</em></td>
+<td>√</td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td>invAll<br/><em>– globally invalidate cache</em></td>
+<td>√</td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td>wbAllWait<br/><em>– wait for the cache writeback operation to complete</em></td>
+<td>√</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>wbAll<br/><em>– writeback the dirty lines of the cache</em></td>
+<td>√</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>wbInvAllWait<br/><em>– wait for the cache writeback invalidate operation to complete</em></td>
+<td>√</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>wbInvAll<br/><em>– invalidate and writeback the dirty lines of the cache</em></td>
+<td>√</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>invWait<br/><em>– wait for the cache invalidate block operation to complete</em></td>
+<td>√</td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td>inv<br/><em>– to invalidate a block in cache</em></td>
+<td>√</td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td>wbWait<br/><em>– wait for the cache writeback block operation to complete</em></td>
+<td>√</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>wb<br/><em>– writeback the dirty lines of the block address</em></td>
+<td>√</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>wbInvWait<br/><em>– wait for the cache invalidate/writeback block operation to complete</em></td>
+<td>√</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>wbInv<br/><em>– invalidate and writeback the dirty lines of the block address</em></td>
+<td>√</td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<h2 id="IPC-Module"><a href="#IPC-Module" class="headerlink" title="IPC Module"></a>IPC Module</h2><p>IPC，即进程间通信（Inter-process communication）。</p>
+<p>位于 <code>ti\pdk_C6657_1_1_2_6\packages\ti\csl\</code> 下的头文件 <code>&lt;csl_ipcAux.h&gt;</code> 提供了<strong>查询定义</strong> 和 <strong>控制函数</strong>。IPC API包含了对 NMI、GEM、Host的各种操作。其中 <strong>GEM</strong> 对 IPCGRx 及 IPCARx 进行操作；而 <strong>Host</strong> 对 IPCGRH 及 IPCARH 进行操作。</p>
+<p><strong>注意：</strong> 下文中， <code>index</code> 和 <code>srcId</code> 均是函数形参，如在<code>CSL_IPC_isGEMInterruptAckSet（uint32 index, uint32 srcId)</code>中：<code>index</code> 指需要检查IPCARx寄存器的GEM编号。<code>srcId</code> 指示在指定的索引对应的IPCARx寄存器中需要读取0-27 SRCCx位中的哪一个。</p>
+<blockquote>
+<p><strong>NMI</strong>，即 <strong>不可屏蔽中断</strong>（Non Maskable Interrupt）。<strong>NMIG</strong>，即 <strong>不可屏蔽中断产生寄存器</strong>（NMI Generation Register *(NMIGRx)*）。NMIGRx registers are used for generating NMI events to the corresponding CorePac. The C6657 has two NMIGRx registers (NMIGR0 and NMIGR1). The NMIGR0 register generates an NMI event to CorePac0, and the NMIGR1 register generates an NMI event to CorePac1.Writing 1 to the NMIG field generates an NMI pulse. Writing 0 has no effect and reads return 0 and have no other effect.</p>
+<img src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/04/Snipaste_2021-04-08_09-00-03.png" style="zoom:50%;" />
+
+<p><strong>IPCGRx</strong>，即 <strong>进程间通信产生寄存器</strong>（IPC interrupt generation register）。IPCGRx are to facilitate inter CorePac interrupts. The C6657 has two IPCGRx registers (IPCGR0 and IPCGR1). These registers can be used by external hosts or CorePacs to generate interrupts to other CorePacs. A write of 1to the IPCG field of the IPCGRx register will generate an interrupt pulse to CorePacx (0 &lt;= x &lt;= 1).</p>
+<img src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/04/Snipaste_2021-04-08_08-54-09.png" style="zoom:50%;" />
+
+<p><strong>IPCARx</strong>，即 <strong>IPC中断确认寄存器</strong>（IPC interrupt-acknowledgement registers）。IPCARx are to facilitate inter-CorePac core interrupts. The C6657 has two IPCARx registers (IPCAR0 and IPCAR1). These registers also provide a <em>Source ID facility</em> by which up to 28 different sources of interrupts can be identified. Allocation of source bits to source processor and meaning is entirely based on software convention. The register field descriptions are shown in the following tables. Virtually anything can be a source for these registers as this is completely controlled by software. Any master that has access to BOOTCFG module space can write to these registers.</p>
+<img src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/04/Snipaste_2021-04-08_08-57-22.png" style="zoom:50%;" />
+
+<p><strong>IPCGRH</strong>，即 <strong>主机IPC产生寄存器</strong>（IPC Generation Host）。The IPCGRH register facilitates interrupts to external hosts. Operation and use of the IPCGRH register is the same as for other IPCGR registers. The interrupt output pulse created by the IPCGRH register appears on device pin HOUT. <mark><i>The host interrupt output pulse should be stretched. It should be asserted for 4 bootcfg clock cycles (CPU/6) followed by a deassertion of 4 bootcfg clock cycles. Generating the pulse will result in 8 CPU/6 cycle pulse blocking window. </i></mark>Write to IPCGRH with IPCG bit (bit 0) set will only generate a pulse if they are beyond 8 CPU/6 cycle period. </p>
+<img src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/04/Snipaste_2021-04-08_09-33-14.png" style="zoom:50%;" />
+
+<p><strong>IPCARH</strong>，即 <strong>主机IPC确认寄存器</strong>（Host IPC Acknowledgment Register）。</p>
+<img src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/04/Snipaste_2021-04-08_14-57-07.png" style="zoom: 67%;" />
+</blockquote>
+<p>该头文件中的可操作方式如下示：</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>NMI</th>
+<th>GEM</th>
+<th>Host</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>genEvent</td>
+<td>√</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>genInterrupt<br><em>– generate an interrupt pulse</em></td>
+<td></td>
+<td>√</td>
+<td>√</td>
+</tr>
+<tr>
+<td>isInterruptSourceSet</td>
+<td></td>
+<td>√<br><em>– checks if the SRCSx bit of the <strong>IPCGRx</strong> register is set</em></td>
+<td>√<br><em>– checks if the SRCSx bit of the <strong>IPCGRH</strong> register is set</em></td>
+</tr>
+<tr>
+<td>isInterruptAckSet</td>
+<td></td>
+<td>√<br><em>– checks if the SRCCx bit of the <strong>IPCARx</strong> register is set.</em></td>
+<td>√<br><em>– checks if the SRCCx bit of the <strong>IPCARH</strong> register is set.</em></td>
+</tr>
+<tr>
+<td>clearInterruptSource</td>
+<td></td>
+<td>√</td>
+<td>√</td>
+</tr>
+</tbody></table>
+<p><code>isGEMInterruptSourceSet()</code> returns 1 if the <u>SRCCx bit corresponding to the <strong>srcId</strong> is set</u> in the IPCARx register corresponding to the index specified. 如果与srcId对应的SRCCx位在与指定索引对应的IPCARx寄存器中被设置，则返回1。</p>
+<blockquote>
+<p><code>CSL_IPC_clearGEMInterruptSource()</code> clears the interrupt source IDs by setting the <strong>SRCCx bit of IPCARx</strong> and <strong>SRCSx bit of IPCGRx</strong> corresponding to the GEM index and Source ID specified.  </p>
+<p><code>CSL_IPC_clearGEMInterruptSource()</code> 通过设置 <em><strong>GEM 索引</strong></em> 和 <em><strong>指定源 ID</strong></em> 对应的 <strong>IPCARx寄存器上的SRCCx位</strong> 和 <strong>IPCGRx寄存器上的SRCSx位</strong> 来清除 中断源ID 。</p>
+</blockquote>
+<blockquote>
+<p><code>CSL_IPC_clearHostInterruptSource()</code> function clears the interrupt source IDs by setting the <strong>SRCCx bit of IPCARH</strong> and <strong>SRCSx bit of IPCGRH</strong> corresponding to the Source ID specified.  </p>
+<p><code>CSL_IPC_clearHostInterruptSource()</code> 通过设置 <em><strong>指定源ID</strong></em> 对应的 <strong>IPCARH上的SRCCx位</strong> 和 <strong>IPCGRH上的SRCSx位</strong> 来清楚中断源ID。</p>
+</blockquote>
+<h3 id="CACHE-wbInvL1d"><a href="#CACHE-wbInvL1d" class="headerlink" title="CACHE_wbInvL1d()"></a>CACHE_wbInvL1d()</h3><p>This function is used to <mark><strong>invalidate and writeback</strong> the <em>dirty lines</em> of the block address</mark>.  </p>
+<p>Although the block size can be specified in the number of bytes, the cache controller operates on whole cache lines. </p>
+<p>To prevent unintended behavior “blockPtr” should be aligned on the cache line size and “byteCnt” should be a multiple of the cache line size.</p>
+<h3 id="CACHE-invL1d"><a href="#CACHE-invL1d" class="headerlink" title="CACHE_invL1d ()"></a>CACHE_invL1d ()</h3><p>This function is used to <mark><strong>invalidate</strong> a <em>block</em> in the L1D Cache</mark>. </p>
+<p>Although the block size can be specified in the number of bytes, the cache controller operates on whole cache lines. </p>
+<p>To prevent unintended behavior “blockPtr” should be aligned on the cache line size and “byteCnt” should be a multiple of the cache line size.</p>
+<h2 id="Chip-Module"><a href="#Chip-Module" class="headerlink" title="Chip Module"></a>Chip Module</h2><p><code>#include &lt;csl_chipAux.h&gt;</code></p>
+<p>本头文件是以C( <code>extern &quot;C&quot;</code> )的方式来书写的，包含芯片读取与写入相关操作的API，名称以 <code>CSL_chipRead</code> 或 <code>CSL_chipWrite</code> 开头，所有函数均以静态内联（static inline，重定义成 <code>CSL_IDEF_INLINE</code> ）32位非负整数（Uint32）的方式定义，如 <code>CSL_IDEF_INLINE Uint32 CSL_chipRead***();</code> 。</p>
+<p><code>&lt;csl_chipAux.h&gt;</code> 提供了26个读取寄存器相关的函数，函数定义均是对寄存器的读取并返回数值，某些读取函数需要注意 <em>前置条件</em>（Pre-condition）。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">CSL_chipReadAMR();    <span class="comment">//Addressing Mode control register 寻址模式控制寄存器</span></span><br><span class="line">CSL_chipReadCSR();    <span class="comment">//Control Status register 控制状态寄存器</span></span><br><span class="line">CSL_chipReadIFR();    <span class="comment">//Interrupt Flag register 中断标志寄存器</span></span><br><span class="line">CSL_chipReadIER();    <span class="comment">//Interrupt Enable register 中断使能寄存器</span></span><br><span class="line">CSL_chipReadISTP();    <span class="comment">//Interrupt Service Table Pointer register 中断服务表指针寄存器</span></span><br><span class="line">CSL_chipReadIRP();    <span class="comment">//Interrupt Return Pointer register 中断返回指针寄存器</span></span><br><span class="line">CSL_chipReadNRP();    <span class="comment">//Nonmaskable Interrupt Return Pointer register </span></span><br><span class="line">CSL_chipReadERP();    <span class="comment">//Exception Return Pointer register 异常返回指针寄存器</span></span><br><span class="line">CSL_chipReadTSCL();    <span class="comment">//Time Stamp Counter Lower Order 32-bits register 时间戳计数器低32位</span></span><br><span class="line">CSL_chipReadTSCH();    <span class="comment">//Time Stamp Counter Higer Order 32-bits register 时间戳计数器高32位</span></span><br><span class="line">CSL_chipReadARP();    <span class="comment">//Analysis Return Pointer register </span></span><br><span class="line">CSL_chipReadILC();    <span class="comment">//Inner Loop SPL buffer Counter(ILC) register</span></span><br><span class="line">CSL_chipReadRILC();    <span class="comment">//Reload Inner Loop SPL buffer Counter(RILC) register</span></span><br><span class="line">CSL_chipReadREP();    <span class="comment">//Restricted Entry Point Address register</span></span><br><span class="line">CSL_chipReadPCE1();    <span class="comment">//Program Counter, E1 Phase register E1字段程序计数器</span></span><br><span class="line">CSL_chipReadDNUM();    <span class="comment">//DSP Core Number register 核心数寄存器</span></span><br><span class="line">CSL_chipReadSSR();    <span class="comment">//Saturation Status Register 饱和状态寄存器</span></span><br><span class="line">CSL_chipReadGPLYA();    <span class="comment">//GMPY A-side polynomial register </span></span><br><span class="line">CSL_chipReadGPLYB();    <span class="comment">//GMPY B-side polynomial register</span></span><br><span class="line">CSL_chipReadGFPGFR();    <span class="comment">//Golios Field Multiply Control Register</span></span><br><span class="line">CSL_chipReadDIER();    <span class="comment">//Debug Interrupt Enable Register 调试中断使能寄存器</span></span><br><span class="line">CSL_chipReadTSR();    <span class="comment">//Task State Register 任务状态寄存器</span></span><br><span class="line">CSL_chipReadITSR();    <span class="comment">//Interrupt Task State Register 中断任务状态寄存器</span></span><br><span class="line">CSL_chipReadNTSR();    <span class="comment">//NMI/Exception Task State Register 异常任务状态寄存器</span></span><br><span class="line">CSL_chipReadEFR();    <span class="comment">//Exception Flag Register 异常标志寄存器</span></span><br><span class="line">CSL_chipReadIERR();    <span class="comment">//Internal Exception Report Register 内部异常报告寄存器</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p><code>&lt;csl_chipAux.h&gt;</code> 提供了24个写入寄存器相关的函数，且与读取寄存器相关函数并不呈现一一对应关系。函数定义均是将一个Uint32类型（重定义为 <code>CSL_Reg32</code> ）的新值赋值给寄存器，并将旧值返回，写入寄存器均不需要注意 前置条件，部分需要注意后置条件（Post-condition）。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">CSL_chipWriteAMR(CSL_Reg32  val);</span><br><span class="line">CSL_chipWriteCSR(CSL_Reg32  val);</span><br><span class="line">CSL_chipWriteISR(CSL_Reg32  val);    <span class="comment">//Interrupt Set Register 中断设置寄存器</span></span><br><span class="line">CSL_chipWriteICR(CSL_Reg32  val);    <span class="comment">//Interrupt Clear Register 中断清除寄存器</span></span><br><span class="line">CSL_chipWriteIER(CSL_Reg32  val);</span><br><span class="line">CSL_chipWriteISTP(CSL_Reg32  val);</span><br><span class="line">CSL_chipWriteIRP(CSL_Reg32  val);</span><br><span class="line">CSL_chipWriteNRP(CSL_Reg32  val);</span><br><span class="line">CSL_chipWriteERP(CSL_Reg32  val);</span><br><span class="line">CSL_chipWriteTSCL(CSL_Reg32  val);</span><br><span class="line">CSL_chipWriteARP(CSL_Reg32  val);</span><br><span class="line">CSL_chipWriteILC(CSL_Reg32  val);</span><br><span class="line">CSL_chipWriteRILC(CSL_Reg32  val);</span><br><span class="line">CSL_chipWriteREP(CSL_Reg32  val);</span><br><span class="line">CSL_chipWriteSSR(CSL_Reg32  val);</span><br><span class="line">CSL_chipWriteGPLYA(CSL_Reg32  val);</span><br><span class="line">CSL_chipWriteGPLYB(CSL_Reg32  val);</span><br><span class="line">CSL_chipWriteGFPGFR(CSL_Reg32  val);</span><br><span class="line">CSL_chipWriteDIER(CSL_Reg32  val);</span><br><span class="line">CSL_chipWriteTSR(CSL_Reg32  val);</span><br><span class="line">CSL_chipWriteITSR(CSL_Reg32  val);</span><br><span class="line">CSL_chipWriteNTSR(CSL_Reg32  val);</span><br><span class="line">CSL_chipWriteECR(CSL_Reg32  val);    <span class="comment">//Exception Clear Register 异常清除寄存器</span></span><br><span class="line">CSL_chipWriteIERR(CSL_Reg32  val);</span><br></pre></td></tr></table></figure>
+
+
+
+<p>共30个寄存器涉及是否可读写：</p>
+<table>
+<thead>
+<tr>
+<th>Register</th>
+<th>Read</th>
+<th>Write</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>AMR</td>
+<td>√</td>
+<td>√</td>
+</tr>
+<tr>
+<td>CSR</td>
+<td>√</td>
+<td>√</td>
+</tr>
+<tr>
+<td>IFR</td>
+<td>√</td>
+<td>×</td>
+</tr>
+<tr>
+<td>ISR</td>
+<td>×</td>
+<td>√</td>
+</tr>
+<tr>
+<td>ICR</td>
+<td>×</td>
+<td>√</td>
+</tr>
+<tr>
+<td>IER</td>
+<td>√</td>
+<td>√</td>
+</tr>
+<tr>
+<td>ISTP</td>
+<td>√</td>
+<td>√</td>
+</tr>
+<tr>
+<td>IRP</td>
+<td>√</td>
+<td>√</td>
+</tr>
+<tr>
+<td>NRP</td>
+<td>√</td>
+<td>√</td>
+</tr>
+<tr>
+<td>ERP</td>
+<td>√</td>
+<td>√</td>
+</tr>
+<tr>
+<td>TSCL</td>
+<td>√</td>
+<td>√</td>
+</tr>
+<tr>
+<td>TSCH</td>
+<td>√</td>
+<td>×</td>
+</tr>
+<tr>
+<td>ARP</td>
+<td>√</td>
+<td>√</td>
+</tr>
+<tr>
+<td>ILC</td>
+<td>√</td>
+<td>√</td>
+</tr>
+<tr>
+<td>RILC</td>
+<td>√</td>
+<td>√</td>
+</tr>
+<tr>
+<td>REP</td>
+<td>√</td>
+<td>√</td>
+</tr>
+<tr>
+<td>PCE1</td>
+<td>√</td>
+<td>×</td>
+</tr>
+<tr>
+<td>DNUM</td>
+<td>√</td>
+<td>×</td>
+</tr>
+<tr>
+<td>SSR</td>
+<td>√</td>
+<td>√</td>
+</tr>
+<tr>
+<td>GPLYA</td>
+<td>√</td>
+<td>√</td>
+</tr>
+<tr>
+<td>GPLYB</td>
+<td>√</td>
+<td>√</td>
+</tr>
+<tr>
+<td>GFPGFR</td>
+<td>√</td>
+<td>√</td>
+</tr>
+<tr>
+<td>DIER</td>
+<td>√</td>
+<td>√</td>
+</tr>
+<tr>
+<td>TSR</td>
+<td>√</td>
+<td>√</td>
+</tr>
+<tr>
+<td>ITSR</td>
+<td>√</td>
+<td>√</td>
+</tr>
+<tr>
+<td>NTSR</td>
+<td>√</td>
+<td>√</td>
+</tr>
+<tr>
+<td>ECR</td>
+<td>×</td>
+<td>√</td>
+</tr>
+<tr>
+<td>EFR</td>
+<td>√</td>
+<td>×</td>
+</tr>
+<tr>
+<td>IERR</td>
+<td>√</td>
+<td>√</td>
+</tr>
+</tbody></table>
+<h2 id="IPC-HW-Example-in-ANC"><a href="#IPC-HW-Example-in-ANC" class="headerlink" title="IPC_HW Example in ANC"></a>IPC_HW Example in ANC</h2><p><strong>硬件（中断）层核间通信</strong>（不需要修改）</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Ipc_Init</span><span class="params">(<span class="keyword">void</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	Hwi_Params params;    <span class="comment">//创建HWI对象</span></span><br><span class="line">	Error_Block eb;    <span class="comment">//创建错误块处理对象</span></span><br><span class="line"></span><br><span class="line">	Error_init(&amp;eb);    <span class="comment">//初始化错误块</span></span><br><span class="line">	Hwi_Params_init(&amp;params);    <span class="comment">//初始化HWI对象</span></span><br><span class="line">	params.eventId = <span class="number">90</span>;    <span class="comment">//IPC INT	/* Set the event ID of the associated host interrupt */</span></span><br><span class="line">	params.enableInt = TRUE;    <span class="comment">//打开中断</span></span><br><span class="line"></span><br><span class="line">	Hwi_create(<span class="number">5</span>, &amp;IpcIsr, &amp;params, &amp;eb);    <span class="comment">//INT5	/* Create Hwi thread Hwi function is CpIntc_dispatch */</span></span><br><span class="line">	Hwi_enable();    <span class="comment">//打开中断</span></span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span>(CSL_chipReadDNUM() == <span class="number">0</span>)&#123;     <span class="comment">//core0	//检测运行前触发的ipc，因为运行前写入的ipc无法触发中断</span></span><br><span class="line">		<span class="keyword">if</span>(CSL_IPC_isGEMInterruptAckSet(<span class="number">0</span>,<span class="number">2</span>))&#123;    <span class="comment">//判断索引为0对应的IPCARx中的第2位是否为中断确认位</span></span><br><span class="line">			CSL_IPC_clearGEMInterruptSource(<span class="number">0</span>,<span class="number">2</span>);    <span class="comment">//是则清除</span></span><br><span class="line">		&#125;</span><br><span class="line">	&#125;<span class="keyword">else</span>&#123;    <span class="comment">//core1</span></span><br><span class="line">		<span class="keyword">if</span>(CSL_IPC_isGEMInterruptAckSet(<span class="number">1</span>,<span class="number">2</span>))&#123;    <span class="comment">//判断索引为1对应的IPCARx中的第2位是否为中断确认位</span></span><br><span class="line">			CSL_IPC_clearGEMInterruptSource(<span class="number">1</span>,<span class="number">2</span>);   <span class="comment">//是则清除</span></span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>核心同步</strong>（不需要修改）</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Ipc_CoreSync</span><span class="params">(<span class="keyword">void</span>)</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(CSL_chipReadDNUM() == <span class="number">0</span>)&#123;    <span class="comment">//core0</span></span><br><span class="line">                CSL_IPC_genGEMInterrupt(<span class="number">1</span>,<span class="number">1</span>);    <span class="comment">//IPC_IPCGR_SRCS1 = 1;</span></span><br><span class="line">                <span class="keyword">while</span>(!CSL_IPC_isGEMInterruptAckSet(<span class="number">0</span>,<span class="number">1</span>));    <span class="comment">//等待core1启动</span></span><br><span class="line">                CSL_IPC_clearGEMInterruptSource(<span class="number">0</span>,<span class="number">1</span>);    <span class="comment">//core1启动成功，清除标志</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">else</span> &#123;    <span class="comment">//core1</span></span><br><span class="line">		CSL_IPC_genGEMInterrupt(<span class="number">0</span>,<span class="number">1</span>);    <span class="comment">//IPC_IPCGR_SRCS1 = 1;</span></span><br><span class="line">		<span class="keyword">while</span>(!CSL_IPC_isGEMInterruptAckSet(<span class="number">1</span>,<span class="number">1</span>));    <span class="comment">//等待core0启动</span></span><br><span class="line">		CSL_IPC_clearGEMInterruptSource(<span class="number">1</span>,<span class="number">1</span>);    <span class="comment">//core0启动成功，清除标志</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>核间IPC信号发送</strong>（可根据需要进行修改）</p>
+<p>可定义多个IPC核间通信函数，但是要区分得清各函数在何时何处被调用到，否则将会引起混乱。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Ipc_Core0ToCore1</span><span class="params">(<span class="keyword">void</span>)</span></span>&#123;</span><br><span class="line"><span class="comment">/* 可自定义区域 */</span></span><br><span class="line">	<span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;<span class="number">16</span>;i++)&#123;</span><br><span class="line">		ptr0[i] = adData[i];</span><br><span class="line">	&#125;</span><br><span class="line"><span class="comment">/* 可自定义区域 */</span></span><br><span class="line">	CACHE_wbInvL1d(ptr0,<span class="number">64</span>,CACHE_WAIT);<span class="comment">//L1D line size 64bytes</span></span><br><span class="line">	CSL_IPC_genGEMInterrupt(<span class="number">1</span>,<span class="number">2</span>);<span class="comment">////ipcgr1</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Ipc_Core1ToCore0</span><span class="params">(<span class="keyword">void</span>)</span></span>&#123;</span><br><span class="line"><span class="comment">/* 可自定义区域 */</span></span><br><span class="line">	<span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;<span class="number">4</span>;i++)&#123;</span><br><span class="line">		ptr1[i] = daData[i];</span><br><span class="line">	&#125;</span><br><span class="line"><span class="comment">/* 可自定义区域 */</span></span><br><span class="line">	CACHE_wbInvL1d(ptr1,<span class="number">64</span>,CACHE_WAIT);                 <span class="comment">//L1D line size 64bytes</span></span><br><span class="line">	CSL_IPC_genGEMInterrupt(<span class="number">0</span>,<span class="number">2</span>);                               <span class="comment">//ipcgr0</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>核间通信中断函数</strong>（可根据需要进行修改）</p>
+<p><strong>注意：</strong>实际使用时，并不需要在某处调用 <code>IpcIsr()</code> 函数，即实际上是被硬件中断进行控制的，在 <code>HWI_Create()</code> 函数中被使用到。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">IpcIsr</span><span class="params">(UArg arg)</span></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(CSL_chipReadDNUM() == <span class="number">0</span>) &#123;                      <span class="comment">// core0</span></span><br><span class="line">		<span class="keyword">if</span>(CSL_IPC_isGEMInterruptAckSet(<span class="number">0</span>,<span class="number">2</span>))&#123;                      <span class="comment">//ipcgr0</span></span><br><span class="line">			CSL_IPC_clearGEMInterruptSource(<span class="number">0</span>,<span class="number">2</span>);</span><br><span class="line">			CACHE_invL1d(ptr1,<span class="number">64</span>,CACHE_WAIT);</span><br><span class="line">			<span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;<span class="number">4</span>;i++)&#123;</span><br><span class="line">				daData[i] = ptr1[i];</span><br><span class="line">			&#125;</span><br><span class="line">			Semaphore_post(sem0_da);    <span class="comment">//执行发送程序，将数据通过SPI发送到DA：通过semaphore切换task</span></span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">else</span>&#123;	<span class="comment">// core1</span></span><br><span class="line">		<span class="keyword">if</span>(CSL_IPC_isGEMInterruptAckSet(<span class="number">1</span>,<span class="number">2</span>))&#123;                          <span class="comment">//ipcgr1</span></span><br><span class="line">			CSL_IPC_clearGEMInterruptSource(<span class="number">1</span>,<span class="number">2</span>);</span><br><span class="line">			CACHE_invL1d(ptr0,<span class="number">64</span>,CACHE_WAIT);</span><br><span class="line">			<span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;<span class="number">16</span>;i++)&#123;</span><br><span class="line">				adData[i] = ptr0[i];</span><br><span class="line">			&#125;</span><br><span class="line">			Semaphore_post(sem1_anc);    <span class="comment">//执行core1的计算步骤，计算完后应该通知core0的ipc启动结果发送程序：通过semaphore切换task</span></span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h1 id="5-C6657特性"><a href="#5-C6657特性" class="headerlink" title="5. C6657特性"></a>5. C6657特性</h1><h2 id="L2缓存"><a href="#L2缓存" class="headerlink" title="L2缓存"></a>L2缓存</h2><p>Debug模式下，程序文件都写在L2缓存中。而C6657总共有 <code>2048KB</code> 大小的L2 缓存，其中每个核心分配到 <code>1024KB</code> ，缓存起始地址为 <code>0x00800000</code> 。</p>
+<p>在仿真器中分配内存大小一致，如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">MEMORY</span><br><span class="line">&#123;</span><br><span class="line">    L2SRAM (RWX) : org = <span class="number">0x800000</span>, len = <span class="number">0x100000</span></span><br><span class="line">    MSMCSRAM (RWX) : org = <span class="number">0xc000000</span>, len = <span class="number">0x100000</span></span><br><span class="line">    DDR3 (RWX) : org = <span class="number">0x80000000</span>, len = <span class="number">0x20000000</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Written in &lt;*TMS320C6655/57 DataManual*&gt;:</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/TI/" rel="tag"># TI</a>
+              <a href="/tags/multicore/" rel="tag"># multicore</a>
+          </div>
+
+    <div id="vcomment" style="margin: 20px 0 0 0"></div>
+    <script>
+        new Valine({
+            el: '#vcomment' ,
+            appId: 'vRGM12EcYxDSM2lat5qjjSeY-gzGzoHsz',
+            appKey: 'WBgAb6NTAFQ7DYtgH0uOPNNh'
+        });
+    </script>
+</body>
+
+
+
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/02/10/Programming/CSS/2021-02-10-CSS%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" rel="prev" title="CSS学习笔记">
+                  <i class="fa fa-chevron-left"></i> CSS学习笔记
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/04/11/Web/JavaScript/" rel="next" title="Javascript">
+                  Javascript <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+<script src="/js/comments.js"></script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">粤ICP备19004822号 </a>
+  </div>
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Liewzheng</span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

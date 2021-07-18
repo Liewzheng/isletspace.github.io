@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="next-config" data-name="main" type="application/json">{&quot;hostname&quot;:&quot;islet.space&quot;,&quot;root&quot;:&quot;&#x2F;&quot;,&quot;images&quot;:&quot;&#x2F;images&quot;,&quot;scheme&quot;:&quot;Gemini&quot;,&quot;version&quot;:&quot;8.3.0&quot;,&quot;exturl&quot;:false,&quot;sidebar&quot;:{&quot;position&quot;:&quot;left&quot;,&quot;display&quot;:&quot;post&quot;,&quot;padding&quot;:18,&quot;offset&quot;:12},&quot;copycode&quot;:false,&quot;bookmark&quot;:{&quot;enable&quot;:false,&quot;color&quot;:&quot;#222&quot;,&quot;save&quot;:&quot;auto&quot;},&quot;fancybox&quot;:false,&quot;mediumzoom&quot;:false,&quot;lazyload&quot;:false,&quot;pangu&quot;:false,&quot;comments&quot;:{&quot;style&quot;:&quot;tabs&quot;,&quot;active&quot;:null,&quot;storage&quot;:true,&quot;lazyload&quot;:false,&quot;nav&quot;:null},&quot;motion&quot;:{&quot;enable&quot;:true,&quot;async&quot;:false,&quot;transition&quot;:{&quot;post_block&quot;:&quot;fadeIn&quot;,&quot;post_header&quot;:&quot;fadeInDown&quot;,&quot;post_body&quot;:&quot;fadeInDown&quot;,&quot;coll_header&quot;:&quot;fadeInLeft&quot;,&quot;sidebar&quot;:&quot;fadeInUp&quot;}},&quot;prism&quot;:false,&quot;i18n&quot;:{&quot;placeholder&quot;:&quot;Searching...&quot;,&quot;empty&quot;:&quot;We didn&#39;t find any results for the search: ${query}&quot;,&quot;hits_time&quot;:&quot;${hits} results found in ${time} ms&quot;,&quot;hits&quot;:&quot;${hits} results found&quot;}}</script>
+<meta name="description" content="在产品设计时，倘若没有考虑应用环境对电源隔离的要求，产品到了应用时就会出现因设计方案的不当导致的系统不稳定，甚至出现高压损坏后级负载的情况，以及出现危害人身财产安全的情况。因此产品设计是否需要隔离至关重要。 定义隔离电源：电源的输入回路和输出回路之间没有直接的电气连接，输入和输出之间是绝缘的高阻态，没有电流回路。   图1 采用变压器的隔离电源    非隔离电源：输入和输出之间有直接的电流回路，例">
+<meta property="og:type" content="article">
+<meta property="og:title" content="电隔离和非电隔离">
+<meta property="og:url" content="http://islet.space/2021/07/17/Hardware/Circuit/2021-07-17-%E7%94%B5%E9%9A%94%E7%A6%BB%E5%92%8C%E9%9D%9E%E7%94%B5%E9%9A%94%E7%A6%BB/index.html">
+<meta property="og:site_name" content="Coder的孤岛">
+<meta property="og:description" content="在产品设计时，倘若没有考虑应用环境对电源隔离的要求，产品到了应用时就会出现因设计方案的不当导致的系统不稳定，甚至出现高压损坏后级负载的情况，以及出现危害人身财产安全的情况。因此产品设计是否需要隔离至关重要。 定义隔离电源：电源的输入回路和输出回路之间没有直接的电气连接，输入和输出之间是绝缘的高阻态，没有电流回路。   图1 采用变压器的隔离电源    非隔离电源：输入和输出之间有直接的电流回路，例">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://pic.islet.space/2021/07/60935d50373e5-thumb.png">
+<meta property="og:image" content="https://pic.islet.space/2021/07/60935d4fef66f-thumb.png">
+<meta property="og:image" content="https://pic.islet.space/2021/07/60935d5048313-thumb.png">
+<meta property="og:image" content="https://pic.islet.space/2021/07/60935d504e874-thumb.png">
+<meta property="og:image" content="https://pic.islet.space/2021/07/60935d4fe8f0d-thumb.png">
+<meta property="og:image" content="https://pic.islet.space/2021/07/60935d4fc9c96-thumb.png">
+<meta property="og:image" content="https://pic.islet.space/2021/07/60935d503580c-thumb.png">
+<meta property="article:published_time" content="2021-07-17T02:40:00.000Z">
+<meta property="article:modified_time" content="2021-07-17T03:42:40.048Z">
+<meta property="article:author" content="Liewzheng">
+<meta property="article:tag" content="circuit">
+<meta property="article:tag" content="隔离">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://pic.islet.space/2021/07/60935d50373e5-thumb.png">
+
+
+<link rel="canonical" href="http://islet.space/2021/07/17/Hardware/Circuit/2021-07-17-%E7%94%B5%E9%9A%94%E7%A6%BB%E5%92%8C%E9%9D%9E%E7%94%B5%E9%9A%94%E7%A6%BB/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{&quot;sidebar&quot;:&quot;&quot;,&quot;isHome&quot;:false,&quot;isPost&quot;:true,&quot;lang&quot;:&quot;en&quot;,&quot;comments&quot;:true,&quot;permalink&quot;:&quot;http:&#x2F;&#x2F;islet.space&#x2F;2021&#x2F;07&#x2F;17&#x2F;Hardware&#x2F;Circuit&#x2F;2021-07-17-%E7%94%B5%E9%9A%94%E7%A6%BB%E5%92%8C%E9%9D%9E%E7%94%B5%E9%9A%94%E7%A6%BB&#x2F;&quot;,&quot;path&quot;:&quot;2021&#x2F;07&#x2F;17&#x2F;Hardware&#x2F;Circuit&#x2F;2021-07-17-电隔离和非电隔离&#x2F;&quot;,&quot;title&quot;:&quot;电隔离和非电隔离&quot;}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">&quot;&quot;</script>
+<title>电隔离和非电隔离 | Coder的孤岛</title><script src="/js/config.js"></script>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Coder的孤岛</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">islet of the coder</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-文章"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>文章</a></li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%9A%E4%B9%89"><span class="nav-number">1.</span> <span class="nav-text">定义</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BC%98%E7%BC%BA%E7%82%B9%E5%AF%B9%E6%AF%94"><span class="nav-number">2.</span> <span class="nav-text">优缺点对比</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="nav-number">3.</span> <span class="nav-text">适用场景</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9A%94%E7%A6%BB%E7%94%B5%E6%BA%90"><span class="nav-number">3.0.1.</span> <span class="nav-text">隔离电源</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9D%9E%E9%9A%94%E7%A6%BB%E7%94%B5%E6%BA%90"><span class="nav-number">3.0.2.</span> <span class="nav-text">非隔离电源</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%9A%94%E7%A6%BB%E7%94%B5%E6%BA%90%E6%A8%A1%E5%9D%97%E9%80%89%E5%9E%8B%E7%9A%84%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="nav-number">4.</span> <span class="nav-text">隔离电源模块选型的注意事项</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B5%8B%E8%AF%95%E6%96%B9%E6%B3%95"><span class="nav-number">4.1.</span> <span class="nav-text">测试方法</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">5.</span> <span class="nav-text">总结</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Liewzheng</p>
+  <div class="site-description" itemprop="description">笔记分享的旮旯孤岛而已</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">82</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">153</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="mailto:liewzheng@qq.com" title="E-Mail → mailto:liewzheng@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://islet.space/2021/07/17/Hardware/Circuit/2021-07-17-%E7%94%B5%E9%9A%94%E7%A6%BB%E5%92%8C%E9%9D%9E%E7%94%B5%E9%9A%94%E7%A6%BB/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Liewzheng">
+      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coder的孤岛">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          电隔离和非电隔离
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2021-07-17 10:40:00 / Modified: 11:42:40" itemprop="dateCreated datePublished" datetime="2021-07-17T10:40:00+08:00">2021-07-17</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Hardware/" itemprop="url" rel="index"><span itemprop="name">Hardware</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>在产品设计时，倘若没有考虑应用环境对电源隔离的要求，产品到了应用时就会出现因设计方案的不当导致的系统不稳定，甚至出现高压损坏后级负载的情况，以及出现危害人身财产安全的情况。因此产品设计是否需要隔离至关重要。</p>
+<h1 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h1><p><strong>隔离电源</strong>：电源的输入回路和输出回路之间没有直接的电气连接，输入和输出之间是绝缘的高阻态，没有电流回路。</p>
+<img src="https://pic.islet.space/2021/07/60935d50373e5-thumb.png" alt="img" style="zoom:67%;" />
+
+<div style="text-align: center; font-weight: 900;">图1 采用变压器的隔离电源</div>
+
+
+
+<p><strong>非隔离电源</strong>：输入和输出之间有直接的电流回路，例如，输入和输出之间是共地的。以隔离的反激电路和非隔离的BUCK电路为例。</p>
+<img src="https://pic.islet.space/2021/07/60935d4fef66f-thumb.png" alt="img" style="zoom:67%;" />
+
+<div style="text-align: center; font-weight: 900;">图2 非隔离电源</div>
+
+
+
+<img src="https://pic.islet.space/2021/07/60935d5048313-thumb.png" alt="img" style="zoom:50%;" />
+
+
+
+<h1 id="优缺点对比"><a href="#优缺点对比" class="headerlink" title="优缺点对比"></a>优缺点对比</h1><p>由上述概念可知，对于常用的电源拓扑而言，非隔离电源主要有：<em><strong>Buck</strong></em>、<em><strong>Boost</strong></em>、<em><strong>Buck-Boost</strong></em>等。而隔离电源主要有各种带隔离变压器的 <em><strong>反激</strong></em>、<em><strong>正激</strong></em>、<em><strong>半桥</strong></em>、<em><strong>LLC</strong></em> 等拓扑。</p>
+<p>结合常用的隔离与非隔离电源，我们从直观上就可得出它们的一些优缺点，两者的优缺点几乎是相反的。使用隔离或非隔离的电源，需了解实际项目对电源的需求是怎样的。</p>
+<p>隔离和非隔离电源的主要差别在于 隔离模块的可靠性高，但成本高，效率差点。非隔离模块的结构很简单，成本低，效率高，安全性能差。因此，在如下几个场合，建议用隔离电源：</p>
+<ol>
+<li></li>
+</ol>
+<p>总结的表如表1所示，两者的优缺点几乎是相反的。</p>
+<div style="text-align: center; font-weight: 900;">表1 隔离电源和非隔离电源的优缺点</div>
+
+<img src="https://pic.islet.space/2021/07/60935d504e874-thumb.png" alt="img" style="zoom:80%;" />
+
+
+
+<h1 id="适用场景"><a href="#适用场景" class="headerlink" title="适用场景"></a>适用场景</h1><p>一般场合使用对模块电源隔离电压要求不是很高，但是 <mark> 更高的隔离电压可以保证模块电源具有更小的漏电流，更高的安全性和可靠性，并且 <em><strong>EMC特性</strong></em> 也更好一些</mark>，因此目前业界普遍的隔离电压水平为1500VDC以上。</p>
+<p>了解了隔离与非隔离电源的优缺点，对于一些常用的嵌入式供电，其对应的场景及推荐隔离方案如下：</p>
+<ol>
+<li>系统前级的电源，为提高抗干扰性能，保证可靠性，一般用隔离电源。</li>
+<li>对安全有要求的场合，如需接市电的AC-DC，或医疗用的电源和白色家电，为保证人身的安全，必须用隔离电源，有些场合还必须用加强隔离的电源。</li>
+<li>对于远程工业通信的供电，为有效降低地电势差和导线耦合干扰的影响，为每个通信节点单独供电一般都用隔离电源。</li>
+<li>内部IC或部分电路供电，从性价比和体积出发，优先选用非隔离电源。</li>
+<li>对于采用电池供电，<mark>对续航力要求严苛的场合，采用非隔离供电</mark>。</li>
+</ol>
+<h3 id="隔离电源"><a href="#隔离电源" class="headerlink" title="隔离电源"></a>隔离电源</h3><ol>
+<li><p>涉及可能触电的场合，如从电网取电，转成低压直流的场合，需用隔离的AC-DC电源；</p>
+</li>
+<li><p>串行通信总线通过RS-232、RS-485和控制器局域网(CAN)等物理网络传送数据，这些相互连接的系统每个都配备有自己的电源，而且各系统之间往往间隔较远，因此，我们通常需要隔离电源进行电气隔离来确保系统的物理安全，且通过隔离 <mark style="font-style: Italic; font-weight: 900;">切断接地回路</mark>，来保护系统免受瞬态高电压冲击，同时减少信号失真；</p>
+</li>
+<li><p>对外的I/O端口，为保证系统的可靠运行，也建议对I/O端口做电源隔离。</p>
+</li>
+</ol>
+<h3 id="非隔离电源"><a href="#非隔离电源" class="headerlink" title="非隔离电源"></a>非隔离电源</h3><p>电路板内的IC或部分电路供电，从性价比和体积出发，优先选用非隔离的方案；如MPS的MP150/157/MP174系列buck型非隔离AC-DC，适合于1~5W应用；</p>
+<p>对于工作电压低于36V，采用电池供电，对续航力要求严苛的场合，优先采用非隔离供电，如MPS的MP2451/MPQ2451。</p>
+<h1 id="隔离电源模块选型的注意事项"><a href="#隔离电源模块选型的注意事项" class="headerlink" title="隔离电源模块选型的注意事项"></a>隔离电源模块选型的注意事项</h1><p>电源的隔离耐压在GB-4943国标中又叫抗电强度，这个GB-4943标准就是我们常说的信息类设备的安全标准，就是为了防止人员受到物理和电气伤害的国家标准，其中包括避免人受到电击伤害、物理伤害、爆炸等伤害。如下图为隔离电源结构图。</p>
+<img src="https://pic.islet.space/2021/07/60935d4fe8f0d-thumb.png" alt="img" style="zoom:120%;" />
+
+<div style="text-align: center; font-weight: 900;">图 隔离电源结构</div>
+
+<p>作为模块电源的重要指标，标准中也规定了隔离耐压相关测试方法，简单的测试时一般采用等电位连接测试，连接示意图如下：</p>
+<p><img src="https://pic.islet.space/2021/07/60935d4fc9c96-thumb.png" alt="img"></p>
+<div style="text-align: center; font-weight: 900;">图 隔离耐压测试示意</div>
+
+
+
+<h2 id="测试方法"><a href="#测试方法" class="headerlink" title="测试方法"></a>测试方法</h2><ol>
+<li><p>将耐压计的电压设为规定的耐压值，电流设为规定的漏电流值，时间设为规定的测试时间值；</p>
+</li>
+<li><p>操作耐压计开始测试，开始加压，在规定的测试时间内，模块应无击穿，无飞弧现象。</p>
+</li>
+<li><p>注意在测试时焊接电源模块要选取合适的温度，避免反复焊接，损坏电源模块。</p>
+</li>
+<li><p>除此之外还要注意：</p>
+<ol>
+<li>要注意是AC-DC还是DC-DC。</li>
+<li>隔离电源模块的隔离耐压。例如隔离1000V DC 是否满足绝缘要求。</li>
+<li>隔离电源模块是否有进行全面的可靠性测试。电源模块要经过性能测试、容差测试、瞬态条件测试、可靠性测试、EMC电磁兼容测试、高低温测试、极限测试、寿命测试、安规测试等。</li>
+<li>隔离电源模块的生产工厂产线是否规范。电源模块生产线需要通过ISO9001, ISO14001，OHSAS18001等多项国际认证，如下图3所示。</li>
+<li>隔离电源模块是否有应用在工业、汽车等恶劣环境。电源模块不仅仅大量应用与恶劣的工业环境，同时在新能源汽车的BMS管理系统中也游刃有余。</li>
+</ol>
+</li>
+</ol>
+<p><img src="https://pic.islet.space/2021/07/60935d503580c-thumb.png" alt="img"></p>
+<div style="text-align: center; font-weight: 900;">图 ISO认证</div>
+
+
+
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>很多人认为非隔离电源不如隔离电源好，因为隔离电源贵，所以肯定贵的就好。前几年非隔离的稳定性确实没有隔离稳定，但随着研发技术的更新，现如今非隔离已经非常成熟，日渐稳定。说到安全性，其实现在非隔离电源也是很安全的，只要在结构稍微做下改动，对人体还是很安全的，同样的道理，非隔离电源也是可以过很多安规标准，例如:ULTUVSAACE等。</p>
+<p>实际上非隔离电源损坏的根源就是电源AC线两端的浪涌电压所致，也可以这么说，雷击浪涌吧，这种电压是加在电压AC线两端的瞬间高压，有时高达三千伏，但时间很短，能量却极强，在打雷时会发生，或是在同一条AC线上，当一个大的负载断开瞬间，因为电流惯性的原因也会发生，这个电压进入电源，对于非隔离BUCK电路，会瞬间传达到输出，击坏恒流检测环，或是进一步击坏芯片，造成300v直通，而烧掉整条灯管。对于隔离反激电源，会击坏MOS,现象就是保管，芯片，MOS管全烧坏。现在LED驱动电源，在使用过程中坏的，80%以上都是这两种类似现象。而且，小型开关电源，就算是电源适配器，也经常损坏的是这个现象，均是浪涌电压所致，而在LED电源里，表现的更加普遍，这是因为LED的负载特性是特别的怕浪涌电压的。</p>
+<p>如果按照一般的理论来讲，电子电路里，元器件越少，可靠性越高，相应越多的元件的电路板可靠性则越低。实际上非隔离电路的元件是比隔离电路要少的，为什么隔离电路可靠性高。其实说白了，不是什么可靠性，而是 <mark>非隔离电路对于浪涌太敏感，抑制能力差</mark>，隔离电路，因为能量是先进入变压器，然后从变压器再输送到LED负载的。BUCK电路是输入电源一部分直接加在了LED负载上，故前者对浪涌抑制和衰减能力强，所以浪涌来时损坏的机率小而已。实际上，非隔离电源的问题主要是在于浪涌问题，目前这个问题，因为只有LED灯具在大批量应用时，从概率上才能看出其解决的程度，所以很多人没有提出好的防治办法，更多的人则是不知道浪涌电压为何物。LED灯具坏了，很多人也找不到原因，最后只能一句，什么此电源不稳定就了结了，具体哪里不稳定，他不知道。</p>
+<p>非隔离电源的优势一是效率，二是成本。</p>
+<p>非隔离电源适合的场合：首先，是室内的灯具，这种室内用电环境较好，浪涌影响小。第二，使用的场合是高压小电流，低压大电流用非隔离没有意义，因为低压大电流非隔离的效率并不比隔离的高，成本也低不到多少去。第三，电压相对较稳定的环境中使用非隔离电源。当然，如果有办法解决掉抑制浪涌的问题，那么非隔离电源的应用范围将大大拓宽！</p>
+<p>隔离电源因为浪涌的问题，损坏率也不可小觑，一般那种返修回来，击坏保险，芯片，MOS的第一个应该想到是浪涌问题。为了减少损坏率，在设计时就行要考虑到浪涌的因素进去，或是在使用时要告戒用户，尽量避免浪涌发生。（如室内灯具，打雷时暂时先关掉）</p>
+<p>综合所述，使用隔离与非隔离很多时候都是因为浪涌这个问题，而浪涌问题和用电环境是息息相关的，所以很多时候使用隔离电源和非隔离电源不能一刀切，非隔离电源在节能，成本上都是很有优势的，所以要科学的选用非隔离还是隔离作为LED驱动电源。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/circuit/" rel="tag"># circuit</a>
+              <a href="/tags/%E9%9A%94%E7%A6%BB/" rel="tag"># 隔离</a>
+          </div>
+
+    <div id="vcomment" style="margin: 20px 0 0 0"></div>
+    <script>
+        new Valine({
+            el: '#vcomment' ,
+            appId: 'vRGM12EcYxDSM2lat5qjjSeY-gzGzoHsz',
+            appKey: 'WBgAb6NTAFQ7DYtgH0uOPNNh'
+        });
+    </script>
+</body>
+
+
+
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/07/15/Hardware/Circuit/2021-07-15-IGBT%E5%8F%8A%E5%85%B6%E9%A9%B1%E5%8A%A8%E8%8A%AF%E7%89%87%E8%A7%84%E6%A0%BC%E5%AD%A6%E4%B9%A0/" rel="prev" title="IGBT及其驱动芯片规格学习">
+                  <i class="fa fa-chevron-left"></i> IGBT及其驱动芯片规格学习
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/07/17/Hardware/Circuit/2021-07-17-%E5%8D%8A%E6%A1%A5%E3%80%81%E5%85%A8%E6%A1%A5%E3%80%81%E5%8F%8D%E6%BF%80%E3%80%81%E6%AD%A3%E6%BF%80%E3%80%81%E6%8E%A8%E6%8C%BD%E6%8B%93%E6%89%91%E7%BB%93%E6%9E%84%E7%9A%84%E5%8C%BA%E5%88%AB%E5%92%8C%E7%89%B9%E7%82%B9/" rel="next" title="半桥、全桥、反激、正激、推挽拓扑结构的区别和特点">
+                  半桥、全桥、反激、正激、推挽拓扑结构的区别和特点 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+<script src="/js/comments.js"></script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">粤ICP备19004822号 </a>
+  </div>
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Liewzheng</span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
