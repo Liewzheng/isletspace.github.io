@@ -20,17 +20,20 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
 
 <script class="next-config" data-name="main" type="application/json">{&quot;hostname&quot;:&quot;islet.space&quot;,&quot;root&quot;:&quot;&#x2F;&quot;,&quot;images&quot;:&quot;&#x2F;images&quot;,&quot;scheme&quot;:&quot;Gemini&quot;,&quot;version&quot;:&quot;8.3.0&quot;,&quot;exturl&quot;:false,&quot;sidebar&quot;:{&quot;position&quot;:&quot;left&quot;,&quot;display&quot;:&quot;post&quot;,&quot;padding&quot;:18,&quot;offset&quot;:12},&quot;copycode&quot;:false,&quot;bookmark&quot;:{&quot;enable&quot;:false,&quot;color&quot;:&quot;#222&quot;,&quot;save&quot;:&quot;auto&quot;},&quot;fancybox&quot;:false,&quot;mediumzoom&quot;:false,&quot;lazyload&quot;:false,&quot;pangu&quot;:false,&quot;comments&quot;:{&quot;style&quot;:&quot;tabs&quot;,&quot;active&quot;:null,&quot;storage&quot;:true,&quot;lazyload&quot;:false,&quot;nav&quot;:null},&quot;motion&quot;:{&quot;enable&quot;:true,&quot;async&quot;:false,&quot;transition&quot;:{&quot;post_block&quot;:&quot;fadeIn&quot;,&quot;post_header&quot;:&quot;fadeInDown&quot;,&quot;post_body&quot;:&quot;fadeInDown&quot;,&quot;coll_header&quot;:&quot;fadeInLeft&quot;,&quot;sidebar&quot;:&quot;fadeInUp&quot;}},&quot;prism&quot;:false,&quot;i18n&quot;:{&quot;placeholder&quot;:&quot;Searching...&quot;,&quot;empty&quot;:&quot;We didn&#39;t find any results for the search: ${query}&quot;,&quot;hits_time&quot;:&quot;${hits} results found in ${time} ms&quot;,&quot;hits&quot;:&quot;${hits} results found&quot;}}</script>
-<meta name="description" content="TMS320F28004x 下称 本系列芯片。 概述C28004x 共有2种芯片封装形式： LQFP 和 VQFN 。VQFN 仅有56针，LQFP 有 100针和 64针的区别。分别用 PZ 、PM 和 RSH 三种型号尾缀与 100-pin 、64-pin 和 56-pin 相关联。根据section4.3，可以知道还有个64PMQ的尾缀。 如型号TMS320F280041PM，仅有64针脚，">
+<meta name="description" content="[TOC] TMS320F28004x 下称 本系列芯片，本系列设备型号命名方法：   开发本系列芯片可能需要使用到的文件如下：  注意：下文中《TRM》 与《SPRUI33D》为同一份文件。 概述C28004x 共有2种芯片封装形式： LQFP 和 VQFN 。VQFN 仅有56针，LQFP 有 100针和 64针的区别。分别用 PZ 、PM 和 RSH 三种型号尾缀与 100-pin 、64-">
 <meta property="og:type" content="article">
 <meta property="og:title" content="F280041PM开发笔记">
 <meta property="og:url" content="http://islet.space/2021/07/10/Hardware/DSP/2021-07-10-F280041PM%E5%BC%80%E5%8F%91%E7%AC%94%E8%AE%B0/index.html">
 <meta property="og:site_name" content="Coder的孤岛">
-<meta property="og:description" content="TMS320F28004x 下称 本系列芯片。 概述C28004x 共有2种芯片封装形式： LQFP 和 VQFN 。VQFN 仅有56针，LQFP 有 100针和 64针的区别。分别用 PZ 、PM 和 RSH 三种型号尾缀与 100-pin 、64-pin 和 56-pin 相关联。根据section4.3，可以知道还有个64PMQ的尾缀。 如型号TMS320F280041PM，仅有64针脚，">
+<meta property="og:description" content="[TOC] TMS320F28004x 下称 本系列芯片，本系列设备型号命名方法：   开发本系列芯片可能需要使用到的文件如下：  注意：下文中《TRM》 与《SPRUI33D》为同一份文件。 概述C28004x 共有2种芯片封装形式： LQFP 和 VQFN 。VQFN 仅有56针，LQFP 有 100针和 64针的区别。分别用 PZ 、PM 和 RSH 三种型号尾缀与 100-pin 、64-">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://pic.islet.space/2021/07/image-20210719092842059.png">
+<meta property="og:image" content="https://pic.islet.space/2021/07/image-20210724112707176.png">
 <meta property="og:image" content="https://pic.islet.space/2021/07/image-20210710144933414.png">
 <meta property="og:image" content="https://pic.islet.space/2021/07/image-20210710141413564.png">
 <meta property="og:image" content="https://pic.islet.space/2021/07/image-20210710142641475.png">
 <meta property="og:image" content="https://pic.islet.space/2021/07/image-20210712141632913.png">
+<meta property="og:image" content="https://pic.islet.space/2021/07/image-20210802135651683.png">
 <meta property="og:image" content="https://pic.islet.space/2021/07/image-20210712094430159.png">
 <meta property="og:image" content="https://pic.islet.space/2021/07/image-20210712094455163.png">
 <meta property="og:image" content="https://pic.islet.space/2021/07/image-20210712093251720.png">
@@ -39,38 +42,140 @@
 <meta property="og:image" content="https://pic.islet.space/2021/07/image-20210712095838640.png">
 <meta property="og:image" content="https://pic.islet.space/2021/07/image-20210710154834139.png">
 <meta property="og:image" content="https://pic.islet.space/2021/07/image-20210710155206953.png">
-<meta property="og:image" content="https://pic.islet.space/2021/07/image-20210710155140640.png">
+<meta property="og:image" content="https://pic.islet.space/2021/07/image-20210726121525047.png">
+<meta property="og:image" content="https://pic.islet.space/2021/07/image-20210730085027137.png">
+<meta property="og:image" content="https://pic.islet.space/2021/07/image-20210711172426297.png">
+<meta property="og:image" content="https://pic.islet.space/2021/07/image-20210730134835054.png">
+<meta property="og:image" content="https://pic.islet.space/2021/07/image-20210730141929361.png">
+<meta property="og:image" content="https://pic.islet.space/2021/07/image-20210730145344856.png">
 <meta property="og:image" content="https://pic.islet.space/2021/07/image-20210710155540889.png">
 <meta property="og:image" content="https://pic.islet.space/2021/07/image-20210710160134644.png">
 <meta property="og:image" content="https://pic.islet.space/2021/07/image-20210710160150517.png">
 <meta property="og:image" content="https://pic.islet.space/2021/07/image-20210711172100592.png">
 <meta property="og:image" content="https://pic.islet.space/2021/07/image-20210711173148615.png">
-<meta property="og:image" content="https://pic.islet.space/2021/07/image-20210711172426297.png">
+<meta property="og:image" content="https://pic.islet.space/2021/07/image-20210710155140640.png">
+<meta property="og:image" content="https://pic.islet.space/2021/07/image-20210730085027137.png">
+<meta property="og:image" content="https://pic.islet.space/2021/07/image-20210715170724177.png">
+<meta property="og:image" content="https://pic.islet.space/2021/08/image-20210730164642361.png">
+<meta property="og:image" content="https://pic.islet.space/2021/07/image-20210726095356897.png">
 <meta property="og:image" content="https://pic.islet.space/2021/07/image-20210711173614732.png">
 <meta property="og:image" content="https://pic.islet.space/2021/07/image-20210711173721809.png">
+<meta property="og:image" content="https://pic.islet.space/2021/07/image-20210730135537700.png">
 <meta property="og:image" content="https://pic.islet.space/2021/07/image-20210711174357812.png">
 <meta property="og:image" content="https://pic.islet.space/2021/07/image-20210711174530164.png">
-<meta property="og:image" content="https://pic.islet.space/2021/07/image-20210711175336942.png">
+<meta property="og:image" content="https://pic.islet.space/2021/07/image-20210728104527100.png">
+<meta property="og:image" content="https://pic.islet.space/2021/07/image-20210728105035255.png">
+<meta property="og:image" content="https://pic.islet.space/2021/07/image-20210728105057621.png">
+<meta property="og:image" content="https://pic.islet.space/2021/07/image-20210728105118549.png">
+<meta property="og:image" content="https://pic.islet.space/2021/07/image-20210728111202805.png">
 <meta property="og:image" content="https://pic.islet.space/2021/07/image-20210712083326344.png">
+<meta property="og:image" content="https://pic.islet.space/2021/07/image-20210728110450590.png">
 <meta property="og:image" content="https://pic.islet.space/2021/07/image-20210712100908714.png">
 <meta property="og:image" content="https://pic.islet.space/2021/07/image-20210712101034377.png">
 <meta property="og:image" content="https://pic.islet.space/2021/07/image-20210712101211183.png">
 <meta property="og:image" content="https://pic.islet.space/2021/07/image-20210712101225955.png">
+<meta property="og:image" content="https://pic.islet.space/2021/07/image-20210730103920701.png">
+<meta property="og:image" content="https://pic.islet.space/2021/07/image-20210730092532193.png">
+<meta property="og:image" content="https://pic.islet.space/2021/07/image-20210730094148462.png">
+<meta property="og:image" content="https://pic.islet.space/2021/07/image-20210730105429591.png">
+<meta property="og:image" content="https://pic.islet.space/2021/07/image-20210730091825651.png">
+<meta property="og:image" content="https://pic.islet.space/2021/07/image-20210730093537064.png">
 <meta property="og:image" content="https://pic.islet.space/2021/07/image-20210715140249937.png">
 <meta property="og:image" content="https://pic.islet.space/2021/07/image-20210715141719524.png">
 <meta property="og:image" content="https://pic.islet.space/2021/07/image-20210712104641579.png">
 <meta property="og:image" content="https://pic.islet.space/2021/07/image-20210712104655718.png">
 <meta property="og:image" content="https://pic.islet.space/2021/07/image-20210712104857729.png">
 <meta property="og:image" content="https://pic.islet.space/2021/07/image-20210712104928659.png">
+<meta property="og:image" content="https://pic.islet.space/2021/07/image-20210723095251220.png">
+<meta property="og:image" content="https://pic.islet.space/2021/07/image-20210723095318306.png">
+<meta property="og:image" content="https://pic.islet.space/2021/07/image-20210723095334783.png">
+<meta property="og:image" content="https://pic.islet.space/2021/08/image-20210802142302371.png">
+<meta property="og:image" content="https://pic.islet.space/2021/08/image-20210802142447715.png">
+<meta property="og:image" content="https://pic.islet.space/2021/07/image-20210723083549303.png">
+<meta property="og:image" content="https://pic.islet.space/2021/07/image-20210723090439017.png">
+<meta property="og:image" content="https://pic.islet.space/2021/07/image-20210723104144586.png">
+<meta property="og:image" content="https://pic.islet.space/2021/07/image-20210723104124781.png">
+<meta property="og:image" content="https://pic.islet.space/2021/07/image-20210723104110747.png">
+<meta property="og:image" content="https://pic.islet.space/2021/07/image-20210723104533742.png">
+<meta property="og:image" content="https://pic.islet.space/2021/07/image-20210723083704637.png">
+<meta property="og:image" content="https://pic.islet.space/2021/07/image-20210724100317179.png">
+<meta property="og:image" content="https://pic.islet.space/2021/07/image-20210724102101254.png">
+<meta property="og:image" content="https://pic.islet.space/2021/07/image-20210724082155433.png">
+<meta property="og:image" content="https://pic.islet.space/2021/07/image-20210724083434622.png">
+<meta property="og:image" content="https://pic.islet.space/2021/07/image-20210724083824488.png">
+<meta property="og:image" content="https://pic.islet.space/2021/07/image-20210724090622329.png">
+<meta property="og:image" content="https://pic.islet.space/2021/07/image-20210724092138218.png">
+<meta property="og:image" content="https://pic.islet.space/2021/07/image-20210724092919402.png">
+<meta property="og:image" content="https://pic.islet.space/2021/07/image-20210724092932350.png">
+<meta property="og:image" content="https://pic.islet.space/2021/07/image-20210724094334396.png">
+<meta property="og:image" content="https://pic.islet.space/2021/07/image-20210724172530959.png">
+<meta property="og:image" content="https://pic.islet.space/2021/07/image-20210724104412883.png">
+<meta property="og:image" content="https://pic.islet.space/2021/07/image-20210719094604082.png">
+<meta property="og:image" content="https://pic.islet.space/2021/07/image-20210719094942412.png">
+<meta property="og:image" content="https://pic.islet.space/2021/07/image-20210719094813670.png">
+<meta property="og:image" content="https://pic.islet.space/2021/07/image-20210719091534852.png">
+<meta property="og:image" content="https://pic.islet.space/2021/07/image-20210719090718448.png">
+<meta property="og:image" content="https://pic.islet.space/2021/07/image-20210719094501999.png">
+<meta property="og:image" content="https://pic.islet.space/2021/07/image-20210719095520123.png">
+<meta property="og:image" content="https://pic.islet.space/2021/07/image-20210719095713314.png">
+<meta property="og:image" content="https://pic.islet.space/2021/07/image-20210719095934052.png">
+<meta property="og:image" content="https://pic.islet.space/2021/07/image-20210719100817504.png">
+<meta property="og:image" content="https://pic.islet.space/2021/07/image-20210719101229117.png">
+<meta property="og:image" content="https://pic.islet.space/2021/07/image-20210719101527907.png">
+<meta property="og:image" content="https://pic.islet.space/2021/07/image-20210719102326890.png">
+<meta property="og:image" content="https://pic.islet.space/2021/07/image-20210719102359274.png">
+<meta property="og:image" content="https://pic.islet.space/2021/07/image-20210719102420155.png">
+<meta property="og:image" content="https://pic.islet.space/2021/07/image-20210719102438745.png">
+<meta property="og:image" content="https://pic.islet.space/2021/07/image-20210719110002751.png">
+<meta property="og:image" content="https://pic.islet.space/2021/07/image-20210719111024816.png">
+<meta property="og:image" content="https://pic.islet.space/2021/07/image-20210726152918902.png">
+<meta property="og:image" content="https://pic.islet.space/2021/07/image-20210726154218244.png">
+<meta property="og:image" content="https://pic.islet.space/2021/07/image-20210726153612834.png">
+<meta property="og:image" content="https://pic.islet.space/2021/07/image-20210726153524140.png">
+<meta property="og:image" content="https://pic.islet.space/2021/07/image-20210726155434636.png">
+<meta property="og:image" content="https://pic.islet.space/2021/07/image-20210726160136365.png">
+<meta property="og:image" content="https://pic.islet.space/2021/07/image-20210721145040598.png">
+<meta property="og:image" content="https://pic.islet.space/2021/07/image-20210721145100629.png">
+<meta property="og:image" content="https://pic.islet.space/2021/07/image-20210721145123473.png">
+<meta property="og:image" content="https://pic.islet.space/2021/07/image-20210721145138283.png">
+<meta property="og:image" content="https://pic.islet.space/2021/07/image-20210721145157425.png">
+<meta property="og:image" content="https://pic.islet.space/2021/07/image-20210721145226082.png">
+<meta property="og:image" content="https://pic.islet.space/2021/07/image-20210721145242594.png">
+<meta property="og:image" content="https://pic.islet.space/2021/07/image-20210721154709745.png">
+<meta property="og:image" content="https://pic.islet.space/2021/07/image-20210719162954288.png">
+<meta property="og:image" content="https://pic.islet.space/2021/07/image-20210719162958021.png">
+<meta property="og:image" content="https://pic.islet.space/2021/07/image-20210719160255497.png">
 <meta property="og:image" content="https://pic.islet.space/2021/07/image-20210715170724177.png">
+<meta property="og:image" content="https://pic.islet.space/2021/07/image-20210722084618101.png">
+<meta property="og:image" content="https://pic.islet.space/2021/07/image-20210721154450124.png">
+<meta property="og:image" content="https://pic.islet.space/2021/07/image-20210726110116356.png">
+<meta property="og:image" content="https://pic.islet.space/2021/08/image-20210802172012594.png">
+<meta property="og:image" content="https://pic.islet.space/2021/08/image-20210802171937172.png">
+<meta property="og:image" content="https://pic.islet.space/2021/07/image-20210720171745641.png">
+<meta property="og:image" content="https://pic.islet.space/2021/07/image-20210720171759718.png">
+<meta property="og:image" content="https://pic.islet.space/2021/07/image-20210720172450100.png">
+<meta property="og:image" content="https://pic.islet.space/2021/07/image-20210720172242634.png">
+<meta property="og:image" content="https://pic.islet.space/2021/07/image-20210721104533304.png">
+<meta property="og:image" content="https://pic.islet.space/2021/07/image-20210727092820296.png">
+<meta property="og:image" content="https://pic.islet.space/2021/07/image-20210727094440528.png">
+<meta property="og:image" content="https://pic.islet.space/2021/07/image-20210726155434636.png">
+<meta property="og:image" content="https://pic.islet.space/2021/07/image-20210730170342194.png">
+<meta property="og:image" content="https://pic.islet.space/2021/07/image-20210730170350083.png">
+<meta property="og:image" content="https://pic.islet.space/2021/07/image-20210730171218213.png">
+<meta property="og:image" content="https://pic.islet.space/2021/07/image-20210730171409142.png">
+<meta property="og:image" content="https://pic.islet.space/2021/08/image-20210802160213827.png">
+<meta property="og:image" content="https://pic.islet.space/2021/08/image-20210802160242203.png">
+<meta property="og:image" content="https://pic.islet.space/2021/08/image-20210802160456548.png">
+<meta property="og:image" content="https://pic.islet.space/2021/08/image-20210802160358841.png">
+<meta property="og:image" content="https://pic.islet.space/2021/08/image-20210802154136487.png">
 <meta property="article:published_time" content="2021-07-10T03:10:00.000Z">
-<meta property="article:modified_time" content="2021-07-15T13:11:29.141Z">
+<meta property="article:modified_time" content="2021-08-02T11:11:01.521Z">
 <meta property="article:author" content="Liewzheng">
 <meta property="article:tag" content="TI">
 <meta property="article:tag" content="C2000">
 <meta property="article:tag" content="DSP">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://pic.islet.space/2021/07/image-20210710144933414.png">
+<meta name="twitter:image" content="https://pic.islet.space/2021/07/image-20210719092842059.png">
 
 
 <link rel="canonical" href="http://islet.space/2021/07/10/Hardware/DSP/2021-07-10-F280041PM%E5%BC%80%E5%8F%91%E7%AC%94%E8%AE%B0/">
@@ -156,7 +261,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A6%82%E8%BF%B0"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Specification"><span class="nav-number">2.</span> <span class="nav-text">Specification</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%95%E8%84%9A"><span class="nav-number">2.1.</span> <span class="nav-text">引脚</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BC%95%E8%84%9A%E5%88%86%E9%85%8D"><span class="nav-number">2.1.1.</span> <span class="nav-text">引脚分配</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BC%95%E8%84%9A%E8%B7%AF%E7%94%B1"><span class="nav-number">2.1.2.</span> <span class="nav-text">引脚路由</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BC%95%E8%84%9A%E5%A4%8D%E7%94%A8"><span class="nav-number">2.1.3.</span> <span class="nav-text">引脚复用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BC%95%E8%84%9A%E7%BD%AE%E9%AB%98-%E4%BD%8E"><span class="nav-number">2.1.4.</span> <span class="nav-text">引脚置高&#x2F;低</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#X-BAR"><span class="nav-number">2.1.5.</span> <span class="nav-text">X-BAR</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%BE%93%E5%85%A5X-BAR"><span class="nav-number">2.1.5.1.</span> <span class="nav-text">输入X-BAR</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%BE%93%E5%87%BAX-BAR-%E5%92%8C-ePWM-X-BAR"><span class="nav-number">2.1.5.2.</span> <span class="nav-text">输出X-BAR 和 ePWM X-BAR</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%94%B5%E5%8E%8B"><span class="nav-number">2.2.</span> <span class="nav-text">电压</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%8D%E4%BD%8D"><span class="nav-number">2.3.</span> <span class="nav-text">复位</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%97%B6%E9%92%9F"><span class="nav-number">2.4.</span> <span class="nav-text">时钟</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%97%B6%E9%92%9F%E9%85%8D%E7%BD%AE%E6%96%B9%E6%B3%95"><span class="nav-number">2.4.1.</span> <span class="nav-text">时钟配置方法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%97%AA%E5%AD%98"><span class="nav-number">2.5.</span> <span class="nav-text">闪存</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#JTAG"><span class="nav-number">2.6.</span> <span class="nav-text">JTAG</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#GPIO"><span class="nav-number">2.7.</span> <span class="nav-text">GPIO</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%AD%E6%96%AD"><span class="nav-number">2.8.</span> <span class="nav-text">中断</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%8E%E7%94%B5%E9%87%8F%E6%A8%A1%E5%BC%8F"><span class="nav-number">2.9.</span> <span class="nav-text">低电量模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A8%A1%E6%8B%9F%E5%A4%96%E8%AE%BE"><span class="nav-number">2.10.</span> <span class="nav-text">模拟外设</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8E%A7%E5%88%B6%E5%A4%96%E8%AE%BE"><span class="nav-number">2.11.</span> <span class="nav-text">控制外设</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ePWM"><span class="nav-number">2.11.1.</span> <span class="nav-text">ePWM</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%80%9A%E4%BF%A1%E5%A4%96%E8%AE%BE"><span class="nav-number">2.12.</span> <span class="nav-text">通信外设</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Register"><span class="nav-number">3.</span> <span class="nav-text">Register</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%AB%98%E9%A2%91%E5%8F%98%E6%8D%A2%E5%99%A8%E5%BC%80%E5%8F%91"><span class="nav-number">4.</span> <span class="nav-text">高频变换器开发</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9C%AF%E8%AF%AD"><span class="nav-number">5.</span> <span class="nav-text">术语</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">6.</span> <span class="nav-text">参考</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A6%82%E8%BF%B0"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Specification"><span class="nav-number">2.</span> <span class="nav-text">Specification</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%95%E8%84%9A"><span class="nav-number">2.1.</span> <span class="nav-text">引脚</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BC%95%E8%84%9A%E5%88%86%E9%85%8D"><span class="nav-number">2.1.1.</span> <span class="nav-text">引脚分配</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BC%95%E8%84%9A%E8%B7%AF%E7%94%B1"><span class="nav-number">2.1.2.</span> <span class="nav-text">引脚路由</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BC%95%E8%84%9A%E5%A4%8D%E7%94%A8"><span class="nav-number">2.1.3.</span> <span class="nav-text">引脚复用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BC%95%E8%84%9A%E7%BD%AE%E9%AB%98-%E4%BD%8E"><span class="nav-number">2.1.4.</span> <span class="nav-text">引脚置高&#x2F;低</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#X-BAR"><span class="nav-number">2.1.5.</span> <span class="nav-text">X-BAR</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%BE%93%E5%85%A5X-BAR"><span class="nav-number">2.1.5.1.</span> <span class="nav-text">输入X-BAR</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%BE%93%E5%87%BAX-BAR-%E5%92%8C-ePWM-X-BAR"><span class="nav-number">2.1.5.2.</span> <span class="nav-text">输出X-BAR 和 ePWM X-BAR</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%94%B5%E5%8E%8B"><span class="nav-number">2.2.</span> <span class="nav-text">电压</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%8D%E4%BD%8D"><span class="nav-number">2.3.</span> <span class="nav-text">复位</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%97%B6%E9%92%9F"><span class="nav-number">2.4.</span> <span class="nav-text">时钟</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%86%85%E6%BA%90%E6%97%B6%E9%92%9F"><span class="nav-number">2.4.1.</span> <span class="nav-text">内源时钟</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%9C%8B%E9%97%A8%E7%8B%97"><span class="nav-number">2.4.1.1.</span> <span class="nav-text">看门狗</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%96%E6%BA%90%E6%97%B6%E9%92%9F"><span class="nav-number">2.4.2.</span> <span class="nav-text">外源时钟</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%A1%A8%E6%A0%BC"><span class="nav-number">2.4.2.1.</span> <span class="nav-text">表格</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#PLL%E8%AE%A1%E7%AE%97%E6%96%B9%E6%B3%95"><span class="nav-number">2.4.3.</span> <span class="nav-text">PLL计算方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%86%85%E6%BA%90%E6%97%B6%E9%92%9F%E9%85%8D%E7%BD%AE%E6%96%B9%E6%B3%95"><span class="nav-number">2.4.4.</span> <span class="nav-text">内源时钟配置方法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E7%A4%BA%E4%BE%8B"><span class="nav-number">2.4.4.1.</span> <span class="nav-text">配置示例</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E4%BB%A3%E7%A0%81"><span class="nav-number">2.4.4.2.</span> <span class="nav-text">配置代码</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%96%E9%83%A8%E6%97%B6%E9%92%9F%E9%85%8D%E7%BD%AE%E6%96%B9%E6%B3%95"><span class="nav-number">2.4.5.</span> <span class="nav-text">外部时钟配置方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%90%E7%B3%BB%E7%BB%9F%E6%97%B6%E9%92%9F%EF%BC%88SYSCLK-PERx-SYSCLK%EF%BC%89"><span class="nav-number">2.4.6.</span> <span class="nav-text">子系统时钟（SYSCLK &#x2F; PERx.SYSCLK）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%97%AA%E5%AD%98"><span class="nav-number">2.5.</span> <span class="nav-text">闪存</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#JTAG"><span class="nav-number">2.6.</span> <span class="nav-text">JTAG</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#GPIO"><span class="nav-number">2.7.</span> <span class="nav-text">GPIO</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AF%84%E5%AD%98%E5%99%A8"><span class="nav-number">2.7.1.</span> <span class="nav-text">寄存器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE"><span class="nav-number">2.7.2.</span> <span class="nav-text">配置</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%87%BD%E6%95%B0%E8%AF%B4%E6%98%8E"><span class="nav-number">2.7.2.1.</span> <span class="nav-text">函数说明</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%BC%95%E8%84%9A%E5%A4%8D%E7%94%A8%E8%AE%BE%E7%BD%AE%E5%87%BD%E6%95%B0"><span class="nav-number">2.7.2.1.1.</span> <span class="nav-text">引脚复用设置函数</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%BC%95%E8%84%9A%E5%B1%9E%E6%80%A7%E8%AE%BE%E7%BD%AE%E5%87%BD%E6%95%B0"><span class="nav-number">2.7.2.1.2.</span> <span class="nav-text">引脚属性设置函数</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%AD%E6%96%AD"><span class="nav-number">2.8.</span> <span class="nav-text">中断</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#STAGE0-%E5%A4%96%E8%AE%BE%E4%B8%AD%E6%96%AD%E9%98%B6%E6%AE%B5"><span class="nav-number">2.8.1.</span> <span class="nav-text">STAGE0 - 外设中断阶段</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#STAGE1-PIE%E9%98%B6%E6%AE%B5"><span class="nav-number">2.8.2.</span> <span class="nav-text">STAGE1 - PIE阶段</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#STAGE2-CPU%E9%98%B6%E6%AE%B5"><span class="nav-number">2.8.3.</span> <span class="nav-text">STAGE2 - CPU阶段</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%8E%E7%94%B5%E9%87%8F%E6%A8%A1%E5%BC%8F"><span class="nav-number">2.9.</span> <span class="nav-text">低电量模式</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A8%A1%E6%8B%9F%E5%A4%96%E8%AE%BE"><span class="nav-number">3.</span> <span class="nav-text">模拟外设</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#ADC"><span class="nav-number">3.1.</span> <span class="nav-text">ADC</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ADC%E7%89%B9%E7%82%B9"><span class="nav-number">3.1.1.</span> <span class="nav-text">ADC特点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ADC%E8%BE%93%E5%85%A5%E6%A8%A1%E5%9E%8B"><span class="nav-number">3.1.2.</span> <span class="nav-text">ADC输入模型</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%8E%A7%E5%88%B6%E5%A4%96%E8%AE%BE"><span class="nav-number">4.</span> <span class="nav-text">控制外设</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#ePWM"><span class="nav-number">4.1.</span> <span class="nav-text">ePWM</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9B%BE%E8%A1%A8"><span class="nav-number">4.1.1.</span> <span class="nav-text">图表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%90-%E3%80%91Time-Base-Submodule"><span class="nav-number">4.1.2.</span> <span class="nav-text">【#】Time-Base Submodule</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9C%AF%E8%AF%AD"><span class="nav-number">4.1.2.1.</span> <span class="nav-text">术语</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9B%BE%E8%A1%A8-1"><span class="nav-number">4.1.2.2.</span> <span class="nav-text">图表</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%90-%E3%80%91Counter-Compare-Submodule"><span class="nav-number">4.1.3.</span> <span class="nav-text">【#】Counter Compare Submodule</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%90-%E3%80%91Action-Qualifier-Submodule"><span class="nav-number">4.1.4.</span> <span class="nav-text">【#】Action Qualifier Submodule</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Dead-Band-Generator-Submodule"><span class="nav-number">4.1.5.</span> <span class="nav-text">Dead-Band Generator Submodule</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#PWM-Chopper-Submodule"><span class="nav-number">4.1.6.</span> <span class="nav-text">PWM Chopper Submodule</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%90-%E3%80%91Trip-Zone-Submodule"><span class="nav-number">4.1.7.</span> <span class="nav-text">【#】Trip Zone Submodule</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Event-Trigger-Submodule"><span class="nav-number">4.1.8.</span> <span class="nav-text">Event Trigger Submodule</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Digital-Compare-Submodule"><span class="nav-number">4.1.9.</span> <span class="nav-text">Digital Compare Submodule</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%80%9A%E4%BF%A1%E5%A4%96%E8%AE%BE"><span class="nav-number">5.</span> <span class="nav-text">通信外设</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%96%B0%E5%BB%BA%E9%A1%B9%E7%9B%AE%EF%BC%88Step-by-step"><span class="nav-number">6.</span> <span class="nav-text">新建项目（Step by step)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%B0%E5%BB%BAC28xx%E9%A1%B9%E7%9B%AE"><span class="nav-number">6.1.</span> <span class="nav-text">新建C28xx项目</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%BE%E7%BD%AE%E5%A4%84%E7%90%86%E5%99%A8%E9%80%89%E9%A1%B9"><span class="nav-number">6.2.</span> <span class="nav-text">设置处理器选项</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%BE%E7%BD%AE%E5%A4%B4%E6%96%87%E4%BB%B6%E9%80%89%E9%A1%B9"><span class="nav-number">6.3.</span> <span class="nav-text">设置头文件选项</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%BE%E7%BD%AE%E6%96%87%E4%BB%B6%E6%90%9C%E7%B4%A2%E8%B7%AF%E5%BE%84"><span class="nav-number">6.4.</span> <span class="nav-text">设置文件搜索路径</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%BE%E7%BD%AE%E4%BB%A3%E7%A0%81%E5%90%AF%E5%8A%A8%E7%82%B9"><span class="nav-number">6.5.</span> <span class="nav-text">设置代码启动点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%BE%E7%BD%AE%E5%AD%97%E4%BD%93%E9%9B%86"><span class="nav-number">6.6.</span> <span class="nav-text">设置字体集</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B7%BB%E5%8A%A0%E6%96%87%E4%BB%B6"><span class="nav-number">6.7.</span> <span class="nav-text">添加文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A1%B9%E7%9B%AE%E7%BC%96%E8%AF%91"><span class="nav-number">6.8.</span> <span class="nav-text">项目编译</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%AF%84%E4%BC%B0%E6%9D%BF%E7%A1%AC%E4%BB%B6%E8%BF%9E%E6%8E%A5"><span class="nav-number">7.</span> <span class="nav-text">评估板硬件连接</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#F28004x-API%E6%8C%87%E5%8D%97"><span class="nav-number">8.</span> <span class="nav-text">F28004x API指南</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E7%BB%84%E7%BB%87%E6%A6%82%E8%BF%B0"><span class="nav-number">8.1.</span> <span class="nav-text">文件组织概述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BC%96%E7%A8%8B%E6%A8%A1%E5%9E%8B"><span class="nav-number">8.2.</span> <span class="nav-text">编程模型</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#F28004x-%E4%BC%AA%E6%93%8D%E4%BD%9C"><span class="nav-number">9.</span> <span class="nav-text">F28004x 伪操作</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#C2000Ware"><span class="nav-number">10.</span> <span class="nav-text">C2000Ware</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%AB%98%E9%A2%91%E9%80%86%E5%8F%98%E5%99%A8%E5%BC%80%E5%8F%91"><span class="nav-number">11.</span> <span class="nav-text">高频逆变器开发</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B7%A5%E4%BD%9C%E7%9B%AE%E6%A0%87"><span class="nav-number">11.1.</span> <span class="nav-text">工作目标</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#PLL%E8%AE%BE%E7%BD%AE"><span class="nav-number">11.2.</span> <span class="nav-text">PLL设置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ePWM-1"><span class="nav-number">11.3.</span> <span class="nav-text">ePWM</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%8F%E5%AE%9A%E4%B9%89"><span class="nav-number">11.3.1.</span> <span class="nav-text">宏定义</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#ePWM%E5%A4%96%E8%AE%BE%E5%AE%9A%E4%B9%89"><span class="nav-number">11.3.1.1.</span> <span class="nav-text">ePWM外设定义</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%AE%BE%E7%BD%AE%E4%B8%8A%E4%B8%8B%E6%A1%A5"><span class="nav-number">11.3.1.2.</span> <span class="nav-text">设置上下桥</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%88%9D%E5%A7%8B%E5%8C%96%E5%A4%96%E8%AE%BE"><span class="nav-number">11.3.1.3.</span> <span class="nav-text">初始化外设</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#EPWMCLK"><span class="nav-number">11.3.2.</span> <span class="nav-text">EPWMCLK</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B8%B8%E8%A7%81%E9%94%99%E8%AF%AF%E5%A4%84%E7%90%86"><span class="nav-number">12.</span> <span class="nav-text">常见错误处理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#10263-MEMORY-RANGE-HAS-ALREADY-BEEN-SPECIFIED"><span class="nav-number">12.1.</span> <span class="nav-text">#10263 MEMORY RANGE HAS ALREADY BEEN SPECIFIED</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1965-CANNOT-OPEN-SOURCE-FILE"><span class="nav-number">12.2.</span> <span class="nav-text">#1965 CANNOT OPEN SOURCE FILE</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#10234-D-UNRESOLVED-SYMBOLS-REMAIN"><span class="nav-number">12.3.</span> <span class="nav-text">#10234-D UNRESOLVED SYMBOLS REMAIN</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SC-ERR-PATH-BROKEN"><span class="nav-number">12.4.</span> <span class="nav-text">SC_ERR_PATH_BROKEN</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%97%B6%E9%92%9F%E5%88%9D%E5%A7%8B%E5%8C%96%E9%94%99%E8%AF%AF"><span class="nav-number">12.5.</span> <span class="nav-text">时钟初始化错误</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TARGET-MUST-BE-CONNECTED"><span class="nav-number">12.6.</span> <span class="nav-text">TARGET MUST BE CONNECTED</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9C%AF%E8%AF%AD-1"><span class="nav-number">13.</span> <span class="nav-text">术语</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">14.</span> <span class="nav-text">参考</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -169,7 +274,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">82</span>
+          <span class="site-state-item-count">81</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -255,7 +360,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-07-15 21:11:29" itemprop="dateModified" datetime="2021-07-15T21:11:29+08:00">2021-07-15</time>
+        <time title="Modified: 2021-08-02 19:11:01" itemprop="dateModified" datetime="2021-08-02T19:11:01+08:00">2021-08-02</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -277,16 +382,23 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <p>TMS320F28004x 下称 本系列芯片。</p>
+        <p>[TOC]</p>
+<p>TMS320F28004x 下称 本系列芯片，本系列设备型号命名方法：</p>
+<img src="https://pic.islet.space/2021/07/image-20210719092842059.png" alt="image-20210719092842059" style="zoom:67%;" />
+
+<p>开发本系列芯片可能需要使用到的文件如下：</p>
+<p><img src="https://pic.islet.space/2021/07/image-20210724112707176.png" alt="image-20210724112707176"></p>
+<p><strong>注意</strong>：下文中《TRM》 与《SPRUI33D》为同一份文件。</p>
 <h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><p>C28004x 共有2种芯片封装形式： LQFP 和 VQFN 。VQFN 仅有56针，LQFP 有 100针和 64针的区别。分别用 PZ 、PM 和 RSH 三种型号尾缀与 100-pin 、64-pin 和 56-pin 相关联。根据section4.3，可以知道还有个64PMQ的尾缀。</p>
 <p>如型号TMS320F280041PM，仅有64针脚，引脚分布如下图所示：</p>
-<img src="https://pic.islet.space/2021/07/image-20210710144933414.png" alt="image-20210710144933414"  />
+<img src="https://pic.islet.space/2021/07/image-20210710144933414.png" alt="image-20210710144933414" style="zoom:100%;" />
 
 
 
 <h1 id="Specification"><a href="#Specification" class="headerlink" title="Specification"></a>Specification</h1><p>下图应该是F280049的系统功能框图，与F280041PM仍有些出入。</p>
 <p><img src="https://pic.islet.space/2021/07/image-20210710141413564.png" alt="image-20210710141413564"></p>
-<p><strong>注意</strong>：F280041PM不支持 CLA（可编程控制Law加速器，Programmable Control Law Accelerator），Flash为128KB（64KW），GPIO数量为26，AIO数量为14，ADC通道为14，同时280041支持5个PGA</p>
+<p><strong>注意</strong>：<span style="text-decoration: line-through">F280041PM不支持 CLA（控制律加速器，Control Law Accelerator）</span>，Flash为128KB（64KW），GPIO数量为26，AIO数量为14，ADC通道为14，同时280041支持5个PGA</p>
+<p><strong>更正</strong>： F28004x系列均支持 CLA（控制律加速器，Control Law Accelerator），如《spru566n》中的下表示，支持type2型CLA。</p>
 <p>TMS320F28004x 所支持外设如下：</p>
 <img src="https://pic.islet.space/2021/07/image-20210710142641475.png" alt="image-20210710142641475" style="zoom:110%;" />
 
@@ -299,8 +411,9 @@
 <p><code>CLA type 2</code> ，表示在原始功能的基础上，增加了后台代码模式，可以在后台运行通信和清理程序等任务；后台任务持续运行，直到禁用或设备/软复位；后台任务可以由外设或软件触发；其他前台任务可以按照定义的优先顺序中断后台任务；增加了使后台代码部分不被中断的规定；增加了调试功能，具有真正的软件断点支持，在调试停止期间，CLA从同一地址重新获取数据会被停止。</p>
 <img src="https://pic.islet.space/2021/07/image-20210712141632913.png" alt="image-20210712141632913" style="zoom: 67%;" />
 </blockquote>
-<h2 id="引脚"><a href="#引脚" class="headerlink" title="引脚"></a>引脚</h2><h3 id="引脚分配"><a href="#引脚分配" class="headerlink" title="引脚分配"></a>引脚分配</h3><p>Page17 4.2 <em><strong>Pin Attributes</strong></em> 下可以查看各封装芯片引脚的名称、编号 及 功能。</p>
-<h3 id="引脚路由"><a href="#引脚路由" class="headerlink" title="引脚路由"></a>引脚路由</h3><p>Page30 4.3 <em><strong>Signal Routing</strong></em> 下可以查看引脚的路由信息。</p>
+<p>贴一张 <em><strong>系统控制基础地址</strong></em> 的总表：<img src="https://pic.islet.space/2021/07/image-20210802135651683.png" alt="image-20210802135651683"></p>
+<h2 id="引脚"><a href="#引脚" class="headerlink" title="引脚"></a>引脚</h2><h3 id="引脚分配"><a href="#引脚分配" class="headerlink" title="引脚分配"></a>引脚分配</h3><p>Page17 4.2 <em><strong>Pin Attributes</strong></em> 下可以查看各封装芯片引脚的名称、编号 及 功能。（共有10页左右，不粘贴了）</p>
+<h3 id="引脚路由"><a href="#引脚路由" class="headerlink" title="引脚路由"></a>引脚路由</h3><p>Page30 4.3 <em><strong>Signal Routing</strong></em> 下可以查看引脚的路由信息。包括模拟引脚和数字引脚的复用信息。</p>
 <h3 id="引脚复用"><a href="#引脚复用" class="headerlink" title="引脚复用"></a>引脚复用</h3><p>Page41 4.4 <em><strong>Pin Multiplexing</strong></em> 下可以查看引脚的复用信息，GPIO口的默认功能就是GPIO，除了GPIO35 和 GPIO37（默认情况下是TDI 和 TDO）。GPIO口的次级功能可以通过设置 <code>GPyGMUXn.GPIOz</code> 和 <code>GPyMUXn.GPIOz</code> 寄存器位来进行。</p>
 <p><strong>注意</strong>： </p>
 <ul>
@@ -328,15 +441,47 @@
 <p><strong>注意</strong>：必须使用同一个系统电压调节器来驱动VDDIO和VDDIO_SW。</p>
 <p>下方是有关两个电压调节器的详细描述：</p>
 <p><img src="https://pic.islet.space/2021/07/image-20210710154834139.png" alt="image-20210710154834139"></p>
-<h2 id="复位"><a href="#复位" class="headerlink" title="复位"></a>复位</h2><h2 id="时钟"><a href="#时钟" class="headerlink" title="时钟"></a>时钟</h2><p>下图展示了本系列芯片的时钟系统，本系列芯片支持两个独立的内部振荡器，直接映射为 <strong>INTOSC1</strong> 和 <strong>INTOSC2</strong> 。默认情况下，都会在芯片启动时开启，且 <strong>INTOSC2</strong> 才是系统参考时钟源，<strong>INTOSC1</strong> 是备用时钟源。<u>这一点可以手动修改</u>。</p>
-<img src="https://pic.islet.space/2021/07/image-20210710155206953.png" alt="image-20210710155206953" style="zoom:67%;" />
+<h2 id="复位"><a href="#复位" class="headerlink" title="复位"></a>复位</h2><h2 id="时钟"><a href="#时钟" class="headerlink" title="时钟"></a>时钟</h2><p>设备时钟域为设备上的不同模块提供时钟输入支持，这些设备与派生时钟（derived clock）直接相连， 或通过额外的分频器连接。</p>
+<p>F28004x 支持 <strong>内源</strong> 和 <strong>外源</strong> 两种类型时钟。<strong>内源</strong> 即芯片自带的，上电即起振的内源性时钟。<strong>外源</strong> 即需要通过引脚外接配置的。</p>
+<p>下图展示了 本系列芯片支持的时钟系统框图，可以看到时钟源 有 <em><strong>INTOSC1</strong></em> / <em><strong>INTOSC2</strong></em> / <em><strong>X1(XTAL)</strong></em> 三个，由时钟源配置产生的时钟最终会产生 <em><strong>看门狗时钟</strong></em>、<em><strong>PLL系统时钟</strong></em>、<em><strong>芯片时钟</strong></em>  主要是这三种。其中 <em><strong>芯片时钟</strong></em> 又会 <em><u>进一步</u></em> 配置到给各种外设。</p>
+<p>外设的时钟使用也是有区别的，其中  <em><strong>SYSCLK</strong></em> 被 ePIE、RAMs、GPIOs 和 DCSM 所使用；<em><strong>PERx.LSPCLK</strong></em> 被 SCIs 和 SPIs 所使用；<em><strong>CAN-Bit-Clock</strong></em> 被 CAN总线使用（注意，此时必须使用外源时钟进行配置）；<em><strong>PERx.SYSCLK</strong></em> 被 剩余其他外设所使用。</p>
+<img src="https://pic.islet.space/2021/07/image-20210710155206953.png" alt="image-20210710155206953"  />
 
-<p>下图展示了系统PLL的设置框图。</p>
-<img src="https://pic.islet.space/2021/07/image-20210710155140640.png" alt="image-20210710155140640" style="zoom:67%;" />
-
-
-
-<p>表13 展示了（外部）输入时钟频率的范围要求</p>
+<p>下表 3-40 所示为《SPRUI33D》第173页 关于时钟配置相关的寄存器。</p>
+<p><img src="https://pic.islet.space/2021/07/image-20210726121525047.png" alt="image-20210726121525047"></p>
+<h3 id="内源时钟"><a href="#内源时钟" class="headerlink" title="内源时钟"></a>内源时钟</h3><blockquote>
+<p>At power-up, the device is clocked from an on-chip 10 MHz oscillator (INTOSC2). INTOSC2 is the primary internal clock source, and is the default system clock at reset. It is used to run the boot ROM and can be used as the system clock source for the application.</p>
+</blockquote>
+<p>下图展示了本系列芯片的时钟系统，本系列芯片支持两个独立的 <strong>内源时钟</strong>，直接映射为 <em><strong>INTOSC1</strong></em> 和 <em><strong>INTOSC2</strong></em> 。默认情况下，都会在芯片启动时开启，且 <em><strong>INTOSC2</strong></em> 才是 内源时钟的主时钟源，<strong>INTOSC1</strong> 是备用时钟源。<u>这一点可以手动修改</u>。</p>
+<p>芯片启动时，<em><strong>INTOSC2</strong></em> 以10MHz速率起振，为 ROM的启动做准备，且可以被配置为 系统时钟。</p>
+<p>即系统内部自带的内源时钟，<em><strong>INTOSCx</strong></em>  ，可以在不外接晶振的情况下，仅用内源时钟即可驱动工作，且《sprui33》3.7.11中就以内源时钟 <em><strong>INTOSC2</strong></em> 为主时钟（仅有10MHz），讲述了系统运行时钟 <em><strong>SYSCLK</strong></em> （100MHz）的配置方法。</p>
+<p>注意：</p>
+<ul>
+<li><p>如果需要使用 CAN 外设，那么仅使用 <em><strong>INTOSCx</strong></em> 的频率是不足以达到CAN的频率要求的，必须使用外部时钟 <em><strong>XTAL</strong></em> 。</p>
+</li>
+<li><p><mark style="font-weight: 900;">在使用内源时钟时，用于接外源时钟的X1引脚必须通过一个 1KΩ的电阻接地。</mark></p>
+</li>
+<li><p>与其他GPIO相比，<mark>GPIO18拥有不一样的电气特性</mark>，因为是可以被当做X2来使用的。</p>
+</li>
+</ul>
+<p><img src="https://pic.islet.space/2021/07/image-20210730085027137.png" alt="image-20210730085027137"></p>
+<h4 id="看门狗"><a href="#看门狗" class="headerlink" title="看门狗"></a>看门狗</h4><p>如图5-10所示，如果要启用看门狗，其速率最高与 <em><strong>INTOSC1</strong></em> 一致。</p>
+<h3 id="外源时钟"><a href="#外源时钟" class="headerlink" title="外源时钟"></a>外源时钟</h3><p><span style="text-decoration-line: line-through;">系统还可以使用 <em><strong>X1</strong></em> 或 <em><strong>X2</strong></em> 两个接口其中之一来连接 至 <strong>外部时钟</strong> 。</span></p>
+<p>外源时钟有两个接口，分别是 <em><strong>第41</strong></em>（<em>GPIO18_X2</em>） 和 <em><strong>第42</strong></em>（<em>X1</em>）。按照连接方式分类，可以分为 <strong>外源时钟模式</strong> 和 <strong>单端外源时钟模式</strong>：</p>
+<ul>
+<li>外源时钟模式时，<em>X1</em> 和 <em>X2</em> 都进行连接。进一步区分为 <strong>EC</strong>（外部晶振器，External Crystal）和 <strong>ER</strong>（外部谐振器，External Resonator）。</li>
+<li>单端外源时钟模式时，仅 <em>X1</em> 连接，<em>X2</em> 留空，VSS需要接地。</li>
+</ul>
+<p>图 5-12 至 5-14 展示了三种不同的外部时钟源电路：</p>
+<p><img src="https://pic.islet.space/2021/07/image-20210711172426297.png" alt="image-20210711172426297"></p>
+<p><strong>注意</strong>：<mark>当 <em><strong>X1</strong></em> 接口被当作外源时钟接口使用时，X2接口不能被当做GPIO使用。仅当使用内源时钟时， <em><strong>X2</strong></em> 可以配置成 GPIO。</mark></p>
+<p>如下方所示，为 LaunchPad 硬件的时钟电路，其中 Boosterpack 是指 ？？？</p>
+<p><img src="https://pic.islet.space/2021/07/image-20210730134835054.png" alt="image-20210730134835054"></p>
+<p>需要使用到Boosterpack时，需要移除R35，在R31和R38上焊上0Ω的跨电阻连接器，下图为LaunchPad背面的镜像示意。</p>
+<p><img src="https://pic.islet.space/2021/07/image-20210730141929361.png" alt="image-20210730141929361"></p>
+<p>从C2000WARE套件里的《MCU025A(001)_BOM.xls》可以找到launchpads板上的板载时钟一共有2个，分别是Y1和Y2。其中，与F280049只接相连的是Y2，为Crystal。</p>
+<p><img src="https://pic.islet.space/2021/07/image-20210730145344856.png" alt="image-20210730145344856"></p>
+<h4 id="表格"><a href="#表格" class="headerlink" title="表格"></a>表格</h4><p>表13 展示了（外部）输入时钟频率的范围要求</p>
 <p>表14 展示了（外部）晶体振荡器的电气特性</p>
 <p>表15 展示了X1的计时要求</p>
 <p>表16 展示了PLL锁定的时间</p>
@@ -351,10 +496,22 @@
 <p><img src="https://pic.islet.space/2021/07/image-20210710160150517.png" alt="image-20210710160150517"></p>
 <p><img src="https://pic.islet.space/2021/07/image-20210711172100592.png" alt="image-20210711172100592"></p>
 <p><img src="https://pic.islet.space/2021/07/image-20210711173148615.png" alt="image-20210711173148615"></p>
-<p>图 5-12 至 5-14 展示了三种不同的外部时钟源电路：</p>
-<p><img src="https://pic.islet.space/2021/07/image-20210711172426297.png" alt="image-20210711172426297"></p>
-<p><strong>注意</strong>：当X1接口被当作时钟接口使用时，X2接口也不可用作GPIO口。</p>
-<h3 id="时钟配置方法"><a href="#时钟配置方法" class="headerlink" title="时钟配置方法"></a>时钟配置方法</h3><p>Once the application requirements are understood, a specific clock configuration can be determined. The default configuration is for <em><strong>INTOSC2</strong></em> to be used as the system clock (<em><strong>PLLSYSCLK</strong></em>) with a divider of 1. The following procedure can be used to set up the desired application configuration:</p>
+<h3 id="PLL计算方法"><a href="#PLL计算方法" class="headerlink" title="PLL计算方法"></a>PLL计算方法</h3><p>下图展示了系统PLL的设置框图。</p>
+<img src="https://pic.islet.space/2021/07/image-20210710155140640.png" alt="image-20210710155140640"  />
+
+<p>系统PLL（PLLSYSCLK）的计算方法：<code>PLLSYSCLK = OSCCLK * IMULT * FMULT / PLLSYSCLKDIV</code> </p>
+<blockquote>
+<p>PLLSYSCLK : 输出时钟频率</p>
+<p>OSCCLK : 输入时钟频率</p>
+<p>IMULT : 整数倍频，取值范围为 [0, 127]</p>
+<p>FMULT : 分数倍频，取值范围为 [0 , 3]</p>
+<p>PLLSYSCLKDIV : 分频， 取值范围为 {0, 1, 2, 4, 6, 8, …, 124, 126}</p>
+</blockquote>
+<h3 id="内源时钟配置方法"><a href="#内源时钟配置方法" class="headerlink" title="内源时钟配置方法"></a>内源时钟配置方法</h3><p>需要注意的是，内源时钟配置时，X1需要通过一个1KΩ的电阻接地。</p>
+<img src="https://pic.islet.space/2021/07/image-20210730085027137.png" alt="image-20210730085027137" style="zoom:67%;" />
+
+<p>Once the application requirements are understood, a specific clock configuration can be determined. The default configuration is for <em><strong>INTOSC2</strong></em> to be used as the system clock (<em><strong>PLLSYSCLK</strong></em>) with a divider of 1. </p>
+<p>The following procedure can be used to set up the desired application configuration:</p>
 <ol>
 <li><p>Select the reference clock source (<em><strong>OSCCLK</strong></em>) by writing to <em><strong>CLKSRCCTL1.OSCCLKSRCSEL</strong></em>. To enable XTAL, follow the instructions in the previous sections.</p>
 </li>
@@ -371,25 +528,137 @@
 </ol>
 <p>The system clock configuration can be changed at run time. Changing the <em><strong>OSCCLK</strong></em> source will automatically bypass the PLL and set the multiplier to zero. Changing the multiplier from one non-zero value to another will temporarily bypass the PLL until it re-locks.</p>
 <p><mark style="font-weight: 900;">注意： At least a 300 CPU clock cycles delay is needed after OSSCLK source is changed. </mark></p>
+<h4 id="配置示例"><a href="#配置示例" class="headerlink" title="配置示例"></a>配置示例</h4><p>以下为工作频率设置的样例，利用内源时钟 <code>10MHz</code> ，产生芯片满负工作频率 <code>100MHz</code> ：</p>
+<img src="https://pic.islet.space/2021/07/image-20210715170724177.png" alt="image-20210715170724177"  />
+
+
+
+<h4 id="配置代码"><a href="#配置代码" class="headerlink" title="配置代码"></a>配置代码</h4><p><code>f28004x_examples.h</code> 文件中，包含了对 <code>IMULT</code> 、<code>FMULT</code> 、 <code>PLLSYSCLKDIV</code> 的变量宏定义。</p>
+<p>官方提供的PLL配置函数原型为：<code>void InitSysPll(Uint16 clock_source, Uint16 imult, Uint16 fmult, Uint16 divsel)</code> 。根据配置实例中的参数，函数调用时代码如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">InitSysPll(INT_OSC2, IMULT_19, FMULT_0pt25, PLLCLK_BY_1);</span><br></pre></td></tr></table></figure>
+
+<p>或</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">InitSysPll(<span class="number">0x00</span>, <span class="number">0x13</span>, <span class="number">0x01</span>, <span class="number">0x01</span>);</span><br></pre></td></tr></table></figure>
+
+<p>即 <code>10MHz * ( 19 + 1/4 ) / (2^1) = 96.25MHz</code>，最后的CPU工作频率为 96.25MHz，但由于内源时钟振荡器可能存在变化，CPU的工作时钟也存在 ±3% 的公差。</p>
+<h3 id="外部时钟配置方法"><a href="#外部时钟配置方法" class="headerlink" title="外部时钟配置方法"></a>外部时钟配置方法</h3><p>下面配置步骤由《TRM》第104页提供，按照连接方式，将连接模式分为：<strong>外源时钟模式</strong> 和 <strong>单端外源时钟模式</strong></p>
+<p>两个模式仅在第2和第7个步骤有所区别，其余均相同。</p>
+<table>
+<thead>
+<tr>
+<th>外源时钟模式：<em>CRYSTAL</em> or <em>RESONATOR</em></th>
+<th>单端外源时钟模式：<em>OSCILLATOR</em></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1. Clear the <code>XTALCR.OSCOFF</code> bit.</td>
+<td>1. Clear the <code>XTALCR.OSCOFF</code> bit.</td>
+</tr>
+<tr>
+<td>2. Wait for the crystal to power up. 1ms is the typical wait time but this depends on the crystal that is being used.</td>
+<td>2. Set the <code>XTALCR.SE</code> bit to enable <em>single-ended mode</em>.</td>
+</tr>
+<tr>
+<td>3. Clear the X1 counter by writing a 1 to <code>X1CNT.CLR</code> and keep clearing until the X1 counter value in the <code>X1CNT</code> register is no longer saturated <code>1023 (0x3ff)</code>.</td>
+<td>3. Clear the X1 counter by writing a 1 to <code>X1CNT.CLR</code> and keep clearing until the X1 counter value in the <code>X1CNT</code> register is no longer saturated <code>1023 (0x3ff)</code>.</td>
+</tr>
+<tr>
+<td>4. Wait for the X1 counter value in the <code>X1CNT</code> register to reach <code>1023 (0x3ff)</code>.</td>
+<td>4. Wait for the X1 counter value in the <code>X1CNT</code> register to reach <code>1023 (0x3ff)</code>.</td>
+</tr>
+<tr>
+<td>5. Repeat steps 3-4 three additional times.</td>
+<td>5. Repeat steps 3-4 three additional times.</td>
+</tr>
+<tr>
+<td>6. Select XTAL as the OSCCLK source by writing a <code>1</code> to <code>CLKSRCCTL1.OSCCLKSRCSEL</code>.</td>
+<td>6. Select XTAL as the OSCCLK source by writing a <code>1</code> to <code>CLKSRCCTL1.OSCCLKSRCSEL</code>.</td>
+</tr>
+<tr>
+<td>7. Check the <code>MCLKSTS</code> bit in the <code>MCDCR</code> register. If it’s set, the oscillator has not finished powering up, and more time is required:<br><em><strong>a.</strong></em> Clear the missing clock status by writing a <code>1</code> to <code>MCDCR.MCLKCLR</code>.<br><em><strong>b.</strong></em> Repeat steps 2-7. Do not reset the device. Doing so will power down the oscillator, which requires the procedure to be restarted from step 1.<br><em><strong>c.</strong></em> <mark style="font-style: italic;">If the oscillator has not finished powering up in 10 milliseconds, there is a real clock failure.</mark></td>
+<td>7. Check the <code>MCLKSTS</code> bit in the <code>MCDCR</code> register. <mark style="font-style: italic;">If it’s set, either the external oscillator or the device has failed.</mark></td>
+</tr>
+<tr>
+<td>8. If <code>MCDCR.MCLKSTS</code> is clear, the oscillator startup is a success. The system clock is now derived from XTAL.</td>
+<td>8. If <code>MCLKSTS</code> is clear, the switch to the external clock is a success. The system clock is now derived from XTAL.</td>
+</tr>
+</tbody></table>
+<p><img src="https://pic.islet.space/2021/08/image-20210730164642361.png" alt="image-20210730164642361"></p>
+<h3 id="子系统时钟（SYSCLK-PERx-SYSCLK）"><a href="#子系统时钟（SYSCLK-PERx-SYSCLK）" class="headerlink" title="子系统时钟（SYSCLK / PERx.SYSCLK）"></a>子系统时钟（SYSCLK / PERx.SYSCLK）</h3><p>CPU 为 CLA / DMA 和 绝大多数（片上）外设直接提供时钟信号，该时钟就是 <em><strong>PLLSYSCLK</strong></em> ， 但会在CPU进入 HALT模式时被栅断（gate off）。</p>
+<p>每一个外设都拥有使用 <em><strong>PCLKCRx</strong></em> 寄存器进行独立控制的时钟。</p>
+<p><strong>注意</strong>：当使用 PCLKCRx 时，应用需要在时钟接入外设后，等待5个 <em><strong>SYSCLK</strong></em> 周期。</p>
+<p>如《SPRUI33D》中，表3-55所示，从第195页起可查看 <em><strong>PCLKCRx</strong></em> 相关寄存器的所有说明。</p>
+<p><img src="https://pic.islet.space/2021/07/image-20210726095356897.png" alt="image-20210726095356897"></p>
 <h2 id="闪存"><a href="#闪存" class="headerlink" title="闪存"></a>闪存</h2><p>表23 展示了不同时钟源和频率下所需的最小闪存等待状态</p>
 <p>表24 展示了闪存的性能参数</p>
 <p><img src="https://pic.islet.space/2021/07/image-20210711173614732.png" alt="image-20210711173614732"></p>
 <p><img src="https://pic.islet.space/2021/07/image-20210711173721809.png" alt="image-20210711173721809"></p>
-<h2 id="JTAG"><a href="#JTAG" class="headerlink" title="JTAG"></a>JTAG</h2><h2 id="GPIO"><a href="#GPIO" class="headerlink" title="GPIO"></a>GPIO</h2><p>在复位时，GPIO会被配置为输入。对于特定的输入，用户还可以选择 <strong>输入鉴定周期</strong>（input qualification cycles）的数量来过滤不需要的 <strong>噪声突变</strong>（unwanted noise glitches）。</p>
-<p>表29 展示了GPIO的特性参数，需要注意的是，GPIO的频率只有25MHz最高。</p>
-<p>表30 展示了GPIO的输入时间要求</p>
+<h2 id="JTAG"><a href="#JTAG" class="headerlink" title="JTAG"></a>JTAG</h2><img src="https://pic.islet.space/2021/07/image-20210730135537700.png" alt="image-20210730135537700" style="zoom: 80%;" />
+
+
+
+
+
+<h2 id="GPIO"><a href="#GPIO" class="headerlink" title="GPIO"></a>GPIO</h2><p><mark>在复位时，GPIO会被配置为输入。</mark></p>
+<p>对于特定的输入，用户还可以选择 <strong>输入鉴定周期</strong>（input qualification cycles）的数量来过滤不需要的 <strong>噪声突变</strong>（unwanted noise glitches）。</p>
+<p><em><strong>表 29</strong></em> 展示了GPIO的特性参数，<mark style="text-decoration-line: line-through;">需要注意的是，GPIO的频率只有25MHz最高。</mark></p>
+<p><em><strong>表 30</strong></em> 展示了GPIO的输入时间要求</p>
 <p><img src="https://pic.islet.space/2021/07/image-20210711174357812.png" alt="image-20210711174357812"></p>
 <p><img src="https://pic.islet.space/2021/07/image-20210711174530164.png" alt="image-20210711174530164"></p>
-<h2 id="中断"><a href="#中断" class="headerlink" title="中断"></a>中断</h2><p>C28x系列芯片有14条外围中断可用，其中13和14中断被直接关联至CPU定时器1和定时器2。剩余12条中断可以通过 <strong>增强型外围中断扩展</strong>（enhanced Peripheral Interrupt Expansion，ePIE)模块进行信号引导。本模块将最多16个外设中断复用到每个CPU中断线中，并扩展了向量表，允许每个中断有自己的ISR。允许芯片支持数量众多的外围设备。</p>
-<p>中断路径一共有三个阶段——外围设备、ePIE模块 和 CPU。每个阶段都有其使能和标志寄存器。本系统允许CPU在其他中断等待时处理一个中断，在软件中实现并优先处理嵌套中断，并在某些关键任务中禁用中断。</p>
+<h3 id="寄存器"><a href="#寄存器" class="headerlink" title="寄存器"></a>寄存器</h3><p>《SPRUI33D》第857页起讲述GPIO特性，第870页起讲述相关寄存器信息。</p>
+<p>如 <em><strong>表 8-8</strong></em> 所示，GPIO拥有两类寄存器，分别是 <em><strong>GPIO控制寄存器</strong></em> 和 <em><strong>GPIO数据寄存器</strong></em> 。另，控制/数据寄存器 下都有 <em>GPIO A</em> / <em>GPIO B</em> / <em>GPIO H</em> 三种区别。<em><strong>表 8-9</strong></em> 是GPIO控制寄存器的详细介绍，<em><strong>表 8-54</strong></em> 是GPIO数据寄存器的详细介绍。</p>
+<p><img src="https://pic.islet.space/2021/07/image-20210728104527100.png" alt="image-20210728104527100"></p>
+<p><img src="https://pic.islet.space/2021/07/image-20210728105035255.png" alt="image-20210728105035255"></p>
+<p><img src="https://pic.islet.space/2021/07/image-20210728105057621.png" alt="image-20210728105057621"></p>
+<p><img src="https://pic.islet.space/2021/07/image-20210728105118549.png" alt="image-20210728105118549"></p>
+<h3 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h3><p>如 <a target="_blank" rel="noopener" href="http://code.islet.space/TI/f28004x/group__gpio__api.html">GPIO配置手册</a> 所示，<code>GPIO_SetupPinMux();</code> 和 <code>GPIO_SetupPinOption();</code> 并不存在，这两个是存在于 <code>f28004x_gpio.h</code> 中的自定义。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">// AFE_InitGpio - Initialize the GPIOs on launchpad and boosterpack</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">AFE_InitGpio</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    EALLOW; <span class="comment">// below registers are &quot;protected&quot;, allow access.</span></span><br><span class="line">    <span class="comment">//GPIO-23 - LaunchPad RED LED</span></span><br><span class="line">    GPIO_SetupPinMux(<span class="number">23</span>, GPIO_MUX_CPU1, <span class="number">0</span>);</span><br><span class="line">    GPIO_SetupPinOptions(<span class="number">23</span>, GPIO_OUTPUT, GPIO_PUSHPULL);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// GPIO-34 - LaunchPad GREEN LED</span></span><br><span class="line">    GPIO_SetupPinMux(<span class="number">34</span>, GPIO_MUX_CPU1, <span class="number">0</span>);</span><br><span class="line">    GPIO_SetupPinOptions(<span class="number">34</span>, GPIO_OUTPUT, GPIO_PUSHPULL);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// GPIO AFE BoosterPack LED</span></span><br><span class="line">    GPIO_SetupPinMux(<span class="number">4</span>, GPIO_MUX_CPU1, <span class="number">0</span>);</span><br><span class="line">    GPIO_SetupPinOptions(<span class="number">4</span>, GPIO_OUTPUT, GPIO_PUSHPULL);</span><br><span class="line"></span><br><span class="line">    GPIO_SetupPinMux(<span class="number">5</span>, GPIO_MUX_CPU1, <span class="number">0</span>);</span><br><span class="line">    GPIO_SetupPinOptions(<span class="number">5</span>, GPIO_OUTPUT, GPIO_PUSHPULL);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    GPIO_WritePin(<span class="number">4</span>, <span class="number">1</span>);</span><br><span class="line">    GPIO_WritePin(<span class="number">5</span>, <span class="number">1</span>);</span><br><span class="line">    EDIS;</span><br><span class="line">    <span class="comment">// Disable register access</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="函数说明"><a href="#函数说明" class="headerlink" title="函数说明"></a>函数说明</h4><h5 id="引脚复用设置函数"><a href="#引脚复用设置函数" class="headerlink" title="引脚复用设置函数"></a>引脚复用设置函数</h5><p>本函数用于将指定引脚与函数进行绑定，绑定前会自动检查对应的CPU和外设是否可用。</p>
+<p>然后，创建指向相应寄存器的指针，这是对GPIO寄存器定义方式的一种变通。</p>
+<p>头文件中的标准定义使得对一个寄存器或位进行命名访问非常容易，但很难进行任意的数字访问。有一个具有相同寄存器的GPIO模块阵列，包括像 <code>GPyCSEL1-4</code> 这样的多寄存器组的阵列，会更容易。但是头文件没有定义任何我们可以变成数组的东西，所以就用手动指针运算来代替。</p>
+<p>要改变多路复用，首先将外设多路复用设置为0/GPIO，以避免出现故障，然后改变组复用，再将外设多路复用设置为目标值。最后，设置CPU选择。这个过程在《TRM》中有所描述。不幸的是，由于我们事先不知道引脚，我们不能硬编码一个位域参考，所以这里有一些棘手的位操作。</p>
+<p><strong>警告</strong>：该代码不涉及模拟模式选择寄存器。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">// GPIO_SetupPinMux - Set the peripheral muxing for the specified pin.</span></span><br><span class="line"><span class="comment">// The appropriate parameters can be found in the pinout spreadsheet.</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">GPIO_SetupPinMux</span><span class="params">(Uint16 gpioNumber, Uint16 cpu, Uint16 muxPosition)</span></span>&#123;</span><br><span class="line">    <span class="keyword">volatile</span> Uint32 *gpioBaseAddr;</span><br><span class="line">    <span class="keyword">volatile</span> Uint32 *mux, *gmux, *csel;</span><br><span class="line">    Uint16 pin32, pin16, pin8;</span><br><span class="line"></span><br><span class="line">    pin32 = gpioNumber % <span class="number">32</span>;</span><br><span class="line">    pin16 = gpioNumber % <span class="number">16</span>;</span><br><span class="line">    pin8 = gpioNumber % <span class="number">8</span>;</span><br><span class="line">    gpioBaseAddr = (Uint32 *)&amp;GpioCtrlRegs + (gpioNumber/<span class="number">32</span>)*GPY_CTRL_OFFSET;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//</span></span><br><span class="line">    <span class="comment">// Sanity check for valid cpu and peripheral values</span></span><br><span class="line">    <span class="comment">//</span></span><br><span class="line">    <span class="keyword">if</span> (cpu &gt; GPIO_MUX_CPU1CLA || muxPosition &gt; <span class="number">0xF</span>)&#123;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//</span></span><br><span class="line">    <span class="comment">// Create pointers to the appropriate registers. This is a workaround</span></span><br><span class="line">    <span class="comment">// for the way GPIO registers are defined. The standard definition</span></span><br><span class="line">    <span class="comment">// in the header file makes it very easy to do named accesses of one</span></span><br><span class="line">    <span class="comment">// register or bit, but hard to do arbitrary numerical accesses. It&#x27;s</span></span><br><span class="line">    <span class="comment">// easier to have an array of GPIO modules with identical registers,</span></span><br><span class="line">    <span class="comment">// including arrays for multi-register groups like GPyCSEL1-4. But</span></span><br><span class="line">    <span class="comment">// the header file doesn&#x27;t define anything we can turn into an array,</span></span><br><span class="line">    <span class="comment">// so manual pointer arithmetic is used instead.</span></span><br><span class="line">    <span class="comment">//</span></span><br><span class="line">    mux = gpioBaseAddr + GPYMUX + pin32/<span class="number">16</span>;</span><br><span class="line">    gmux = gpioBaseAddr + GPYGMUX + pin32/<span class="number">16</span>;</span><br><span class="line">    csel = gpioBaseAddr + GPYCSEL + pin32/<span class="number">8</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//</span></span><br><span class="line">    <span class="comment">// Now for the actual function</span></span><br><span class="line">    <span class="comment">//</span></span><br><span class="line">    EALLOW;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//</span></span><br><span class="line">    <span class="comment">// To change the muxing, set the peripheral mux to 0/GPIO first to avoid</span></span><br><span class="line">    <span class="comment">// glitches, then change the group mux, then set the peripheral mux to</span></span><br><span class="line">    <span class="comment">// its target value. Finally, set the CPU select. This procedure is</span></span><br><span class="line">    <span class="comment">// described in the TRM. Unfortunately, since we don&#x27;t know the pin in</span></span><br><span class="line">    <span class="comment">// advance we can&#x27;t hardcode a bitfield reference, so there&#x27;s some tricky</span></span><br><span class="line">    <span class="comment">// bit twiddling here.</span></span><br><span class="line">    <span class="comment">//</span></span><br><span class="line">    *mux &amp;= ~(<span class="number">0x3</span>UL &lt;&lt; (<span class="number">2</span>*pin16));</span><br><span class="line">    *gmux &amp;= ~(<span class="number">0x3</span>UL &lt;&lt; (<span class="number">2</span>*pin16));</span><br><span class="line">    *gmux |= (Uint32)((muxPosition &gt;&gt; <span class="number">2</span>) &amp; <span class="number">0x3</span>UL) &lt;&lt; (<span class="number">2</span>*pin16);</span><br><span class="line">    *mux |= (Uint32)(muxPosition &amp; <span class="number">0x3</span>UL) &lt;&lt; (<span class="number">2</span>*pin16);</span><br><span class="line"></span><br><span class="line">    *csel &amp;= ~(<span class="number">0x3</span>L &lt;&lt; (<span class="number">4</span>*pin8));</span><br><span class="line">    *csel |= (Uint32)(cpu &amp; <span class="number">0x3</span>L) &lt;&lt; (<span class="number">4</span>*pin8);</span><br><span class="line"></span><br><span class="line">    <span class="comment">//</span></span><br><span class="line">    <span class="comment">// WARNING: This code does not touch the analog mode select registers.</span></span><br><span class="line">    <span class="comment">//</span></span><br><span class="line"></span><br><span class="line">    EDIS;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="引脚属性设置函数"><a href="#引脚属性设置函数" class="headerlink" title="引脚属性设置函数"></a>引脚属性设置函数</h5><p>为指定的引脚设置输入/出，可以通过已定义的标志（flags）来设置，这些标志都是16位的掩码。</p>
+<p>输入引脚可用的标志如：</p>
+<blockquote>
+<p><code>GPIO_PULLUP</code> 使能拉高</p>
+<p><code>GPIO_INVERT</code> 输入极性翻转</p>
+<p><code>GPIO_SYNC</code> 与PLLSYSCLK同步输入阀（这条是默认的，可以不单独设置）</p>
+<p><code>GPIO_QUAL3</code> 使用3采样质量</p>
+<p><code>GPIO_QUAL6</code> 使用6采样质量</p>
+<p><code>GPIO_ASYNC</code> 不使用同步或质量</p>
+</blockquote>
+<p>输出引脚可用标志如下：</p>
+<blockquote>
+<p><code>GPIO_OPENDRAIN</code> 工作在输出开漏模式</p>
+<p><code>GPIO_PULLUP</code> 输出置高，</p>
+</blockquote>
+<p>注意：如果输出开漏模式打开，也就自动打开了置高。输入配置里的 SYNC / QUAL3 / QUAL6 / ASYNC 只允许启用一个。</p>
+<p><strong>默认输入状态</strong>：<strong>未同步</strong>（ASYNC）且无 <strong>置高</strong>（PULL-UP）和 <strong>极性翻转</strong>（INVERT）。</p>
+<p><strong>默认输出状态</strong>：标准数字输出。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">GPIO_SetupPinOptions</span><span class="params">(Uint16 gpioNumber, Uint16 output, Uint16 flags)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">volatile</span> Uint32 *gpioBaseAddr;</span><br><span class="line">    <span class="keyword">volatile</span> Uint32 *dir, *pud, *inv, *odr, *qsel;</span><br><span class="line">    Uint32 pin32, pin16, pinMask, qual;</span><br><span class="line"></span><br><span class="line">    pin32 = gpioNumber % <span class="number">32</span>;</span><br><span class="line">    pin16 = gpioNumber % <span class="number">16</span>;</span><br><span class="line">    pinMask = <span class="number">1UL</span> &lt;&lt; pin32;</span><br><span class="line">    gpioBaseAddr = (Uint32 *)&amp;GpioCtrlRegs + (gpioNumber/<span class="number">32</span>)*GPY_CTRL_OFFSET;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//</span></span><br><span class="line">    <span class="comment">// Create pointers to the appropriate registers. This is a workaround</span></span><br><span class="line">    <span class="comment">// for the way GPIO registers are defined. The standard definition</span></span><br><span class="line">    <span class="comment">// in the header file makes it very easy to do named accesses of one</span></span><br><span class="line">    <span class="comment">// register or bit, but hard to do arbitrary numerical accesses. It&#x27;s</span></span><br><span class="line">    <span class="comment">// easier to have an array of GPIO modules with identical registers,</span></span><br><span class="line">    <span class="comment">// including arrays for multi-register groups like GPyQSEL1-2. But</span></span><br><span class="line">    <span class="comment">// the header file doesn&#x27;t define anything we can turn into an array,</span></span><br><span class="line">    <span class="comment">// so manual pointer arithmetic is used instead.</span></span><br><span class="line">    <span class="comment">//</span></span><br><span class="line">    dir = gpioBaseAddr + GPYDIR;</span><br><span class="line">    pud = gpioBaseAddr + GPYPUD;</span><br><span class="line">    inv = gpioBaseAddr + GPYINV;</span><br><span class="line">    odr = gpioBaseAddr + GPYODR;</span><br><span class="line">    qsel = gpioBaseAddr + GPYQSEL + pin32/<span class="number">16</span>;</span><br><span class="line"></span><br><span class="line">    EALLOW;</span><br><span class="line"></span><br><span class="line">    *dir &amp;= ~pinMask;      <span class="comment">// Set the data direction</span></span><br><span class="line">    <span class="keyword">if</span> (output == <span class="number">1</span>)&#123;</span><br><span class="line">        *dir |= pinMask;   <span class="comment">// Output, with optional open drain mode and pull-up</span></span><br><span class="line">        <span class="keyword">if</span> (flags &amp; GPIO_OPENDRAIN) *odr |= pinMask;  <span class="comment">// Enable open drain if necessary</span></span><br><span class="line">        <span class="keyword">else</span> *odr &amp;= ~pinMask;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (flags &amp; (GPIO_OPENDRAIN | GPIO_PULLUP)) *pud &amp;= ~pinMask;  <span class="comment">// Enable pull-up if necessary. Open drain mode must be active.</span></span><br><span class="line">        <span class="keyword">else</span> *pud |= pinMask;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span>&#123;</span><br><span class="line">        *dir &amp;= ~pinMask;        <span class="comment">// Input, with optional pull-up, qualification, and polarity inversion</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (flags &amp; GPIO_PULLUP) *pud &amp;= ~pinMask;     <span class="comment">// Enable pull-up if necessary</span></span><br><span class="line">        <span class="keyword">else</span> *pud |= pinMask;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (flags &amp; GPIO_INVERT) *inv |= pinMask;   <span class="comment">// Invert polarity if necessary</span></span><br><span class="line">        <span class="keyword">else</span> *inv &amp;= ~pinMask;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//</span></span><br><span class="line">    <span class="comment">// Extract the qualification parameter and load it into the register.</span></span><br><span class="line">    <span class="comment">// This is also needed for open drain outputs, so we might as well do it</span></span><br><span class="line">    <span class="comment">// all the time.</span></span><br><span class="line">    <span class="comment">//</span></span><br><span class="line">    qual = (flags &amp; GPIO_ASYNC) / GPIO_QUAL3;</span><br><span class="line">    *qsel &amp;= ~(<span class="number">0x3</span>L &lt;&lt; (<span class="number">2</span> * pin16));</span><br><span class="line">    <span class="keyword">if</span> (qual != <span class="number">0x0</span>) *qsel |= qual &lt;&lt; (<span class="number">2</span> * pin16);</span><br><span class="line"></span><br><span class="line">    EDIS;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="中断"><a href="#中断" class="headerlink" title="中断"></a>中断</h2><p>C28x系列芯片有14条外设中断可用，其中13和14中断被直接关联至CPU定时器1和定时器2。剩余12条中断可以通过 <strong>增强型外围中断扩展</strong>（enhanced Peripheral Interrupt Expansion，ePIE)模块进行信号引导。本模块将最多16个外设中断复用到每个CPU中断线中，并扩展了向量表，允许每个中断有自己的ISR。允许芯片支持数量众多的外围设备。</p>
+<p>中断路径一共有三个阶段—— <em><strong>外设中断阶段</strong></em>、<em><strong>PIE模块阶段</strong></em> 和 <em><strong>CPU阶段</strong></em>。每个阶段都有其使能和标志寄存器。本系统允许CPU在其他中断等待时处理一个中断，在软件中实现并优先处理嵌套中断，并在某些关键任务中禁用中断。</p>
 <p>下图展示了本系列芯片的中断架构。</p>
-<p><img src="https://pic.islet.space/2021/07/image-20210711175336942.png" alt="image-20210711175336942"></p>
+<p><img src="https://pic.islet.space/2021/07/image-20210728111202805.png" alt="image-20210728111202805"></p>
 <p>外部中断（external interrupt, XINT）电气特性数据和时序特性：</p>
 <p>表31 列出了外部中断的时间要求</p>
 <p>表32 列出了外部中断开断特性</p>
 <p>图25 展示了外部中断的时序</p>
 <p><img src="https://pic.islet.space/2021/07/image-20210712083326344.png" alt="image-20210712083326344"></p>
-<h2 id="低电量模式"><a href="#低电量模式" class="headerlink" title="低电量模式"></a>低电量模式</h2><p>本系列芯片拥有两种 时钟门（clock-gating） 低电量模式，分别是 HALT 和 IDLE，STANDARD 模式不支持进入低电量。</p>
+<h3 id="STAGE0-外设中断阶段"><a href="#STAGE0-外设中断阶段" class="headerlink" title="STAGE0 - 外设中断阶段"></a>STAGE0 - 外设中断阶段</h3><h3 id="STAGE1-PIE阶段"><a href="#STAGE1-PIE阶段" class="headerlink" title="STAGE1 - PIE阶段"></a>STAGE1 - PIE阶段</h3><p>PIE控制器是指用于外围设备中断控制（Peripheral Interrupt Control）的寄存器。</p>
+<p><img src="https://pic.islet.space/2021/07/image-20210728110450590.png" alt="image-20210728110450590"></p>
+<h3 id="STAGE2-CPU阶段"><a href="#STAGE2-CPU阶段" class="headerlink" title="STAGE2 - CPU阶段"></a>STAGE2 - CPU阶段</h3><h2 id="低电量模式"><a href="#低电量模式" class="headerlink" title="低电量模式"></a>低电量模式</h2><p>本系列芯片拥有两种 时钟门（clock-gating） 低电量模式，分别是 HALT 和 IDLE，STANDARD 模式不支持进入低电量。</p>
 <p>低电量模式的进入和退出代码，以及更多关于低电量模式的描述信息，需要参考《TRM》手册。</p>
 <p>表33 描述了系统进入任何 时钟门 低电量模式后的影响</p>
 <p>表34 列明了IDLE模式下的时序要求</p>
@@ -402,98 +671,71 @@
 <p><img src="https://pic.islet.space/2021/07/image-20210712101034377.png" alt="image-20210712101034377"></p>
 <p><img src="https://pic.islet.space/2021/07/image-20210712101211183.png" alt="image-20210712101211183"></p>
 <p><img src="https://pic.islet.space/2021/07/image-20210712101225955.png" alt="image-20210712101225955"></p>
-<h2 id="模拟外设"><a href="#模拟外设" class="headerlink" title="模拟外设"></a>模拟外设</h2><p>暂略</p>
-<h2 id="控制外设"><a href="#控制外设" class="headerlink" title="控制外设"></a>控制外设</h2><p>本系列芯片的控制外设包含 <strong>eCAP</strong>、<strong>HRCAP</strong>、<strong>ePWM</strong>、<strong>HRPWM</strong>、<strong>eQEP</strong> 和 <strong>SDFM</strong>。</p>
-<p>根据《spru566n》表11 可知，ePWM 和 HRPWM 都是4型增强外设，具体功能可以参见《sprui33d》。</p>
-<h3 id="ePWM"><a href="#ePWM" class="headerlink" title="ePWM"></a>ePWM</h3><blockquote>
-<p>The enhanced pulse width modulator (ePWM) peripheral is a key element in controlling many of the <em><strong>power electronic systems</strong></em> found in both commercial and industrial equipment. These systems include <em><strong>digital motor control</strong></em>, <em><strong>switch mode power supply control</strong></em>, <em><strong>uninterruptible power supplies (UPS)</strong></em>, and other forms of power conversion.</p>
-</blockquote>
-<p>大白话地将，ePWM 这个外设，是由很多个ePWM 模块（Module）组成，每个ePWM 模块都有8个子模块（Submodule）。所有的ePWM模块用数字尾缀来表示第几个ePWM模块，如 <code>ePWM1</code>、<code>ePWM3</code> 。每个ePWM模块又有两个输出，分别是 A 和 B，例如 <code>ePWM1A</code> 和 <code>ePWM1B</code> 。</p>
-<p>ePWM模块通过一条时钟同步表（clock synchronization scheme）同步和串联在一起，形成可以统一操作的整体。此外，这个时钟同步表能够被扩展至 eCAP 外设使用。子模块的数量是由设备（设计）和实际使用需求决定的，每个子模块都能够支持单独操作。</p>
-<p>每个ePWM模块支持以下功能：</p>
+<h1 id="模拟外设"><a href="#模拟外设" class="headerlink" title="模拟外设"></a>模拟外设</h1><p>本系列芯片的模拟外设包含 <strong>ADC</strong> 、 <strong>PGA</strong> 、 <strong>DAC</strong> 和 <strong>CMPSS</strong>。</p>
+<h2 id="ADC"><a href="#ADC" class="headerlink" title="ADC"></a>ADC</h2><p>本系列芯片的第16、17引脚是ADC的参考电压：</p>
 <ul>
-<li>带有周期和频率控制的专用16位时基计数器</li>
-<li>两个PWM输出（<code>EPWMxA</code> 和 <code>EPWMxB</code> ），可用于以下配置。<ul>
-<li>两个独立的PWM输出，单边操作<span style="color: #BBB; font-style: Italic;">（ single-edge operation）</span></li>
-<li>两个独立的PWM输出，双边对称操作（ dual-edge symmetric operation）</li>
-<li>一个独立的PWM输出，双边不对称操作（ dual-edge asymmetric operation）</li>
+<li>第16pin 是ADC A/B/C的高参考电压（Voltage Reference High） VREFHIx </li>
+<li>第17pin 是ADC A/B/C的低参考电压（Voltage Reference Low） VREFLOx</li>
+</ul>
+<p>其简化示意图如下：</p>
+<img src="https://pic.islet.space/2021/07/image-20210730103920701.png" alt="image-20210730103920701" style="zoom:67%;" />
+
+<p>ADC模拟外设的内部架构如下：</p>
+<p><img src="https://pic.islet.space/2021/07/image-20210730092532193.png" alt="image-20210730092532193"></p>
+<p>SOC和EOC的内部架构如下：</p>
+<img src="https://pic.islet.space/2021/07/image-20210730094148462.png" alt="image-20210730094148462" style="zoom: 67%;" />
+
+<img src="https://pic.islet.space/2021/07/image-20210730105429591.png" alt="image-20210730105429591" style="zoom:67%;" />
+
+
+
+<h3 id="ADC特点"><a href="#ADC特点" class="headerlink" title="ADC特点"></a>ADC特点</h3><ul>
+<li>12bit 分辨率</li>
+<li>VREFHI VREFLO</li>
+<li>可选内部参考电压为 2.5V 或 3.3V</li>
+<li>单端信号转换器</li>
+<li>最多16个ADC通道</li>
+<li>16个配置SOC</li>
+<li>16个独立的可寻址结果寄存器</li>
+<li>四个高级的（flexible）外设中断</li>
+<li>可配置的中断（interrupt placement）</li>
+<li>爆发模式</li>
+<li>多触发源<ul>
+<li>S/W ，软件立即启动</li>
+<li>所有的ePWMs（ADC SOC A 或 B）</li>
+<li>GPIO XINT2</li>
+<li>CPU定时器 0/1/2</li>
+<li>ADCINT1/2</li>
 </ul>
 </li>
-<li>通过软件对PWM信号进行异步覆盖控制。</li>
-<li>可编程的相位控制，支持相对于其他ePWM模块的滞后或领先操作</li>
-<li>逐个周期的硬件锁定（同步）相位关系。</li>
-<li>具有独立上升沿和下降沿延迟控制的死区生成。</li>
-<li>可编程的跳闸区域分配，包括逐周期跳闸和故障条件下的一次性跳闸。</li>
-<li>跳闸条件可以迫使PWM输出达到高、低或高阻抗状态的逻辑水平。</li>
-<li>所有事件都可以触发CPU中断和ADC开始转换(SOC)</li>
-<li>可编程的事件预处理将CPU在中断上的开销降到最低。</li>
-<li>通过高频载波信号进行PWM 斩波（chopping），对脉冲变压器门驱动很有用。</li>
+<li>四个PPB（post-processing blocks），每一个都有：<ul>
+<li>Saturating offset calibration</li>
+<li>Error from setpoint calculation</li>
+<li>High, low and zero-crossing compare, with interrupt and ePWM trip capability</li>
+<li>Trigger-to-sample delay capture</li>
 </ul>
-<p>8个子模块如下：</p>
-<ul>
-<li>Time-Base Submodule</li>
-<li>Counter Compare Submodule</li>
-<li>Action Qualifier Submodule</li>
-<li>Dead-Band Generator Submodule</li>
-<li>PWM Chopper (PC) Submodule</li>
-<li>Trip Zone Submodule</li>
-<li>Event Trigger Submodule</li>
-<li>Digital Compare Submodule</li>
+</li>
 </ul>
-<p>各子模块的 Purpose 和 Control 简单列些如下：</p>
-<table>
-<thead>
-<tr>
-<th>SUBMODULE</th>
-<th>PURPOSE</th>
-<th>CONTROL</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>Time-Base</td>
-<td>determines all of the event timing for the ePWM module</td>
-<td></td>
-</tr>
-<tr>
-<td>Counter Compare</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>Action Qualifier</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>Dead-Band Generator</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>PWM Chopper</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>Trip Zone</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>Event Trigger</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>Digital Compare</td>
-<td></td>
-<td></td>
-</tr>
-</tbody></table>
+<h3 id="ADC输入模型"><a href="#ADC输入模型" class="headerlink" title="ADC输入模型"></a>ADC输入模型</h3><p><img src="https://pic.islet.space/2021/07/image-20210730091825651.png" alt="image-20210730091825651"></p>
+<p>每个通道的寄生电容</p>
+<p><img src="https://pic.islet.space/2021/07/image-20210730093537064.png" alt="image-20210730093537064"></p>
+<h1 id="控制外设"><a href="#控制外设" class="headerlink" title="控制外设"></a>控制外设</h1><p>本系列芯片的控制外设包含 <strong>eCAP</strong>、<strong>HRCAP</strong>、<strong>ePWM</strong>、<strong>HRPWM</strong>、<strong>eQEP</strong> 和 <strong>SDFM</strong>。</p>
+<p>根据《SPRU566N》表11 可知，ePWM 和 HRPWM 都是4型增强外设，具体功能可以参见《SPRUI33D》。</p>
+<h2 id="ePWM"><a href="#ePWM" class="headerlink" title="ePWM"></a>ePWM</h2><p>ePWM是商业和工业控制电力系统的关键组成部分。这些系统包括 <u>数字电机控制</u>、<u>开关电源控制</u>、<u>不间断电源供应</u> 或 其他形式的电源转换。</p>
+<p>ePWM这个大的外设模块（Module）组成，是由8个子模块（Submodule）构成的。所有的ePWM模块用数字尾缀来表示第几个ePWM模块，如 <code>ePWM1</code>、<code>ePWM3</code> 。每个ePWM模块又有两个输出，分别是 A 和 B，例如 <code>ePWM1A</code> 和 <code>ePWM1B</code> 。</p>
+<p>ePWM模块通过一条时钟同步表（clock synchronization scheme）同步和串联在一起，形成可以统一操作的整体。此外，这个时钟同步表能够被扩展至 eCAP 外设使用。子模块的数量是由设备（设计）和实际使用需求决定的，每个子模块都能够支持单独操作。</p>
 <p>ePWM 模块通过两个PWM输出（<code>EPWMxA</code> 和 <code>EPWMxB</code>）来组成一条完整的PWM通道。多路 ePWM被在一个设备内实现，几乎每一个ePWM通道实例都是相同的，只有一个例外。有些实例包括一个硬件扩展，可以更精确地控制PWM输出。这种扩展是高分辨率脉宽调制器（HRPWM），在第18.15节中有描述。每个ePWM模块都用一个以1开头的数值表示，例如，<code>ePWM1</code> 是系统中的第一个实例，<code>ePWM3</code> 是第三个实例，<code>ePWMx</code> 表示任何实例。</p>
 <p>每一个ePWM模块都被连接至输入和输出信号。每一个ePWM模块都包含着8个子系统，并通过图18-2的方式连接至系统内部。</p>
-<p>图1 描述的是外围总线上的多个PWM模块，及输入信号和输出信号通路示例</p>
-<p>图2 描述的是PWM模块下各子模块和信号连接方式</p>
+<h3 id="图表"><a href="#图表" class="headerlink" title="图表"></a>图表</h3><p><em><strong>表 5-57</strong></em> 展示了PWM的时间要求，主要是 同步（Sync）/非同步（Async）/带输入验证（With input qualifier）的 <em><strong>同步输入脉冲宽度</strong></em>（Sync Input Pulse Width）的三种时间</p>
+<p><em><strong>表 5-58</strong></em> 展示了PWM的开关特性，包括最小脉冲周期，同步输出脉冲宽度 和 t<span style="font-size: 0.6rem;">d(TZ-PWM)</span></p>
+<p><em><strong>表 5-59</strong></em> </p>
+<p><em><strong>表 18-21</strong></em> 展示了ePWM外设下的各寄存器（自《SPRUI33D》Page 1885）,<mark>约有81个寄存器</mark>。</p>
+<p><em><strong>图 18-1</strong></em> 描述的是外围总线上的多个PWM模块，及输入信号和输出信号通路示例</p>
+<p><em><strong>图 18-2</strong></em> 描述的是PWM模块下各子模块和信号连接方式（简图）</p>
+<p><em><strong>图 5-58</strong></em> 描述的是ePWM内部的子模块和信号连接方式（结构图）</p>
+<p><em><strong>图 5-59</strong></em></p>
+<p><em><strong>图 5-60</strong></em> 为TB计数器同步链。</p>
+<p><em><strong>图 5-61</strong></em> PWM高阻态时序特性</p>
 <img src="https://pic.islet.space/2021/07/image-20210715140249937.png" alt="image-20210715140249937" style="zoom:80%;" />
 
 
@@ -504,56 +746,526 @@
 
 
 
-<blockquote>
-<p>trip input:</p>
-<p>trip zone：是ePWM的一个子模块</p>
-<p>trip-zone input timing:</p>
-<p>Hi-Z： 高阻态</p>
-</blockquote>
-<p>表57 展示了PWM的时间要求，主要是 同步（Sync）/非同步（Async）/带输入验证（With input qualifier）的 <em><strong>同步输入脉冲宽度</strong></em>（Sync Input Pulse Width）的三种时间</p>
-<p>表58 展示了PWM的开关特性，包括最小脉冲周期，同步输出脉冲宽度 和 t<span style="font-size: 0.6rem;">d(TZ-PWM)</span></p>
-<p>表59 </p>
-<p>图58</p>
-<p>图59</p>
-<p>图60 为同步链架构示意？？</p>
-<p>图61 PWM高阻态时序特性</p>
 <p><img src="https://pic.islet.space/2021/07/image-20210712104641579.png" alt="image-20210712104641579"></p>
 <p><img src="https://pic.islet.space/2021/07/image-20210712104655718.png" alt="image-20210712104655718"></p>
 <p><img src="https://pic.islet.space/2021/07/image-20210712104857729.png" alt="image-20210712104857729"></p>
 <p><img src="https://pic.islet.space/2021/07/image-20210712104928659.png" alt="image-20210712104928659"></p>
-<h2 id="通信外设"><a href="#通信外设" class="headerlink" title="通信外设"></a>通信外设</h2><p>暂略</p>
-<h1 id="Register"><a href="#Register" class="headerlink" title="Register"></a>Register</h1><p>暂略</p>
-<h1 id="高频变换器开发"><a href="#高频变换器开发" class="headerlink" title="高频变换器开发"></a>高频变换器开发</h1><p>利用型号为 <code>TMS320F280041</code> 芯片的GPIO（最高输出频率为25MHz）输出一个30KHz的PWM波形，需要使用到 ePWM外设，使用示例中提供的 <code>ePWM6</code> 进行开发，输出高位和低位两个幅频合适的波形后，接到型号为 <code>2EDL05I06PF</code> 的驱动上，驱动型号为 <code>IKW50N65WR5</code> 的IGBT外设。</p>
-<ul>
-<li> <code>TMS320F280041</code> 的外部晶振输入频率 f<span style="font-size: 0.8rem;">XTAL</span> 在 10 ~ 20 MHz 之间，自身工作频率f<span style="font-size: 0.8rem;">SYSCLK</span> 在 2 ~ 100MHz之间。</li>
-</ul>
-<p>以下为工作频率设置的样例，刚好实际芯片时钟配置也是需要配置到满频工作状态 <code>100MHz</code> </p>
-<img src="https://pic.islet.space/2021/07/image-20210715170724177.png" alt="image-20210715170724177" style="zoom:67%;" />
+<p><img src="https://pic.islet.space/2021/07/image-20210723095251220.png" alt="image-20210723095251220"></p>
+<p><img src="https://pic.islet.space/2021/07/image-20210723095318306.png" alt="image-20210723095318306"></p>
+<p><img src="https://pic.islet.space/2021/07/image-20210723095334783.png" alt="image-20210723095334783"></p>
+<p>《TRM》P1841，简化过的ePWM模型：</p>
+<p><img src="https://pic.islet.space/2021/08/image-20210802142302371.png" alt="image-20210802142302371"></p>
+<p><img src="https://pic.islet.space/2021/08/image-20210802142447715.png" alt="image-20210802142447715"></p>
+<h3 id="【-】Time-Base-Submodule"><a href="#【-】Time-Base-Submodule" class="headerlink" title="【#】Time-Base Submodule"></a>【#】Time-Base Submodule</h3><p><img src="https://pic.islet.space/2021/07/image-20210723083549303.png" alt="TB子模块的信号和寄存器"></p>
+<p>PWM事件的周期被 <em><strong>TBPRD寄存器</strong></em> 和 <em><strong>TB计数器的模式</strong></em> 控制着。TB计数器的三种工作模式由 <em><strong>TB控制寄存器</strong></em> （<em>TBCTL</em>）控制，分别为 <strong>增计数</strong>（Up-Count）、<strong>减计数</strong>（Down-Count）和 <strong>增减计数</strong>（Up-Down-Count）。</p>
+<p>影子周期寄存器（shadow period register）的内存地址（memory address）与活跃寄存器相同。<em><strong>TB控制寄存器</strong></em> （<em>TBCTL</em>）下的 <em><strong>PRDLD位</strong></em> 控制着要读写哪个寄存器，同时控制着是否使能影子寄存器，此时可分为 <em><strong>TB周期影子模式</strong></em>（Time-Base Period Shadow Mode） 或 <em><strong>TB周期即刻载入模式</strong></em>（Time-Base Period Immediate Load Mode）。</p>
+<p>在TB计数器同步链中，<em><strong>EXTSYNC1</strong></em> 由 <em><strong>INPUTXBAR5</strong></em> 输入而得，<em><strong>EXTSYNC2</strong></em> 由 <em><strong>INPUTXBAR6</strong></em> 输入而得。而这些输入信号可以通过配置选择任意GPIO作为同步输入源。<mark>在使用 SYNCSEL 寄存器配置同步链传播路径时，应确保最长的路径不超过四个 ePWM/eCAP 模块。</mark></p>
+<p>每个ePWM模块配置时都可以选择使用或者无视同步输入。如果 TBCTL[PHSEN] 位被设置了，且发生 <strong>同步输入脉冲</strong>（Synchronization Input Pulse）、 <strong>软件强制同步脉冲</strong>（Software Forced Synchronization Pulse） 或 <strong>数字比较事件同步脉冲</strong>（Digital Compare Event Synchronization Pulse） 三者之一的情况时，<strong>TB计数器</strong>（<strong>TBCTR</strong>）会自动加载 <strong>相位寄存器</strong>（<strong>TBPHS</strong>） 的内容。</p>
+<h4 id="术语"><a href="#术语" class="headerlink" title="术语"></a>术语</h4><p><em>Up-Down-Count Mode</em>: <strong>增减计数</strong>，TB计数器从0开始自增计数直到等于周期值（TBPRD值）。当与该值相等时，TB计数器会 <mark>逐步自减至0</mark>。接着周而复始，重新开始自增。</p>
+<p><em>Up-Count Mode</em>: <strong>增计数</strong>，TB计数器从0开始自增计数直到等于周期值（TBPRD值）。当与该值相等时，TB计数器 <mark>直接归零</mark>，接着周而复始，重新开始自增。</p>
+<p><em>Down-Count Mode</em>: <strong>减计数</strong>，TB计数器从周期值（TBPRD值）开始自减至0。当到达0值时，TB计数器直接重置TBPR值，接着周而复始，重新开始自减。</p>
+<p><em>Active Register</em>: <strong>活跃寄存器</strong>，控制着硬件，并对硬件触发或调用（ causes or invokes）的事件进行响应。</p>
+<p><em>Shadow Register</em>: <strong>影子寄存器</strong>，为活跃寄存器提供缓存，即临时存储空间（ temporary holding location）。不对任何控制硬件造成直接影响。 在关键时刻（at a strategic point in time ），影子寄存器的内容将会传递给活跃寄存器。可以避免因软件异步修改造成的崩溃或假操作（corruption or spurious operation）。</p>
+<p><em>Time-Base Period Shadow Mode</em>: <strong>TB周期影子模式</strong>，当 <code>TBCTL[PRDLD]=0</code> 时，影子寄存器打开。对<em><strong>TBPRD</strong></em>内存地址的读写操作将会影响到影子寄存器。当TB计数器为零（<code>TBCTR=0x00</code>）时，影子寄存器的内容会被传输到活跃寄存器。<em><strong>TBCTL2</strong></em>[PRDLDSYNC] 位决定着同步时间。当且仅当 <em><strong>TBCTL</strong></em>[PRDLD] 值为0时，PRDLDSYNC位的值有效。默认情况下，影子寄存器开启。 通过配置 <strong>全局负载配置寄存器</strong>（<em><strong>GLDCFG</strong></em>）中对应的位，全局负载控制机制就能够和TB周期寄存器被一起使用。当全局复杂模式选通时，从影子寄存器到活跃寄存器的内容传输</p>
+<p><em>Time-Base Period Immediate Load Mode</em>: <strong>TB周期即刻载入模式</strong>，当 <code>TBCTL[PRDLD]=1</code> 时，即刻载入模式开启。对TBPRD内存地址的读写操作将会直接载入到活跃寄存器。</p>
+<p><em>Time-Base Clock Synchronization</em>: <strong>TB时钟同步</strong>，外设时钟使能寄存器（peripheral clock enable registers）里的 <em><strong>TBCLKSYNC</strong></em> 位 允许所有用户将所有已开启的ePWM模块同步至TB时钟（TBCLK）。开启时，所有已开启的模块时钟会与TBCLK的第一个上升沿对齐。为了完美地同步TBCLK，所有ePWM模块的预分频都要明确设置。 </p>
+<p><em>Time-Base Counter Synchronization</em>: <strong>TB计数同步</strong>，每个ePWM模块都有一个 <strong>同步输入</strong>（SYNCI）、一个 <strong>同步输出</strong>（SYNCO） 和 一个 <strong>外设同步输出</strong>（SYNCPER）。</p>
+<p><em>Synchronization Input Pulse</em>:  <strong>同步输入脉冲</strong>，当检测到输入同步脉冲时，相位寄存器的值被载入至计数器中。这个载入操作会在下一个有效的TB时钟（TBCLK）边沿发生。</p>
+<p><em>Software Forced Synchronization Pulse</em>: <strong>软件强制同步脉冲</strong>，</p>
+<p><em>Digital Compare Event Synchronization Pulse</em>: <strong>数字比较事件同步脉冲</strong>，</p>
+<p>开启ePWM时钟的步骤如下：</p>
+<ol>
+<li>在 PCLKCRx 寄存器里，使能ePWM模块时钟</li>
+<li>设置 <code>TBCLKSYNC = 0</code> </li>
+<li>配置模块</li>
+<li>设置 <code>TBCLKSYNC = 1</code> </li>
+</ol>
+<blockquote>
+<p>CTR，Counter的缩写。</p>
+</blockquote>
+<h4 id="图表-1"><a href="#图表-1" class="headerlink" title="图表"></a>图表</h4><p><em><strong>图 18-6</strong></em> 展示了当TB计数器周期设置为4时，增计数、减计数 和 增减计数 三种模式下的PWM周期和频率的关系。时间自增的步长由从ePWM时钟分频而来的时基时钟（TBCLK）定义。</p>
+<p><em><strong>表 18-2</strong></em> 是对关键TB信号的详细描述。</p>
+<img src="https://pic.islet.space/2021/07/image-20210723090439017.png" alt="image-20210723090439017"  />
 
+
+
+<div style="text-align: center;"><img src="https://pic.islet.space/2021/07/image-20210723104144586.png" alt="image-20210723104144586" style="zoom:60%;" /><img src="https://pic.islet.space/2021/07/image-20210723104124781.png" alt="image-20210723104124781" style="zoom:66.6%;" /></div>
+
+<div style="text-align: center;"><img src="https://pic.islet.space/2021/07/image-20210723104110747.png" alt="image-20210723104110747" style="zoom:63%;" /><img src="https://pic.islet.space/2021/07/image-20210723104533742.png" alt="image-20210723104533742" style="zoom:55%;" /></div>
+
+
+
+<img src="https://pic.islet.space/2021/07/image-20210723083704637.png" alt="image-20210723083704637" style="zoom:80%;" />
+
+
+
+<h3 id="【-】Counter-Compare-Submodule"><a href="#【-】Counter-Compare-Submodule" class="headerlink" title="【#】Counter Compare Submodule"></a>【#】Counter Compare Submodule</h3><p>CC子模块， 以TB计数值为输入源。这个值被不断地拿来与CMPA/CMPB/CMPC/CMPD进行比较，当TB计数器的值与其中一个寄存器的值相等时CC子模块就会生成一个适当的事件。</p>
+<p><img src="https://pic.islet.space/2021/07/image-20210724100317179.png" alt="image-20210724100317179"></p>
+<p>CC子模块的作用：</p>
 <ul>
-<li>外部晶振和自身工作频率的设置涉及到几个寄存器：<ul>
-<li>CLKSRCCTL1.OSCCLKSRCSEL</li>
-<li>SYSPLLMULT</li>
-<li>IMULT</li>
-<li>FMULT</li>
-<li>ODIV</li>
-<li>SYSCLKDIVSEL.PLLSYSCLKDIV</li>
-<li>SYSPLLCTL1.PLLCLKEN</li>
+<li>通过CMPA/CMPB/CMPC/CMPD寄存器，基于可编程时间戳生成时间<ul>
+<li>当 <code>CTR=CMPA</code> 时， TB计数器的值等于计数比较器A的值（TBCTR=CMPA）</li>
+<li>当 <code>CTR=CMPB</code> 时， TB计数器的值等于计数比较器B的值（TBCTR=CMPB）</li>
+<li>当 <code>CTR=CMPC</code> 时， TB计数器的值等于计数比较器C的值（TBCTR=CMPC）</li>
+<li>当 <code>CTR=CMPD</code> 时， TB计数器的值等于计数比较器D的值（TBCTR=CMPD）</li>
 </ul>
 </li>
+<li>如果用CMPA和CMPB对AQ子模块正确地配置，可以控制PWM的占空比</li>
+<li>可以在PWM周期活跃时备份（shadows）新的比较值以防崩坏或错误</li>
 </ul>
-<p><strong>工作目标</strong>：</p>
-<ol>
-<li>输出PWM波形</li>
-<li>采集输出的波形和IGBT输出的波形（可能需要检测相位和波纹）</li>
-<li>过零饱和电压</li>
+<p>CC子模块的内部信号通路结构示意如下图18-15。可以看出，CC子模块前一级是TB子模块，接收其时间信号。CC子模块不间断地对比 CMPx 和 TBCTR 的值，一旦符合要求，则输出结果给AQ子模块。所有CMPx的输出结果均会导向ET（事件触发器和中断），但是导向AQ子模块的只有 CMPA / CMPB。</p>
+<p><img src="https://pic.islet.space/2021/07/image-20210724102101254.png" alt="image-20210724102101254"></p>
+<h3 id="【-】Action-Qualifier-Submodule"><a href="#【-】Action-Qualifier-Submodule" class="headerlink" title="【#】Action Qualifier Submodule"></a>【#】Action Qualifier Submodule</h3><p>AQ子模块在 <strong>波形结构</strong> 和 <strong>PWM生成</strong> 上扮演着重要的角色。它决定了哪个事件可以被转换为不同的动作类型（converted into various action types），进而产生 <em><strong>EPWMxA</strong></em> 和 <em><strong>EPWMxB</strong></em> 输出需要的开关波形（producing the required switched waveforms）。</p>
+<p>AQ子模块控制着当特定事件发生时，ePWM外设的两条输出线（EPWMxA / EPWMxB）该如何进行输出。输入至AQ子模块的事件 会由 计数器方向（自增或自减）进一步限定。这允许在计数上升和计数下降阶段对输出进行独立操作。</p>
+<p><img src="https://pic.islet.space/2021/07/image-20210724082155433.png" alt="image-20210724082155433"></p>
+<p><strong>AQ子模块的作用</strong>：</p>
+<ul>
+<li>根据以下（特定）事件 <em>限定并生成</em>（qualifying and generating）动作（包括 <strong>设置</strong>、<strong>清除</strong> 和 <strong>标记</strong>）:<ul>
+<li>当 <code>CTR = PRD</code> ，TB计数器等于周期（TBCTR = TBPRD）</li>
+<li>当 <code>CTR = ZERO</code> ，TB计数器等于0（TBCTR = 0x00）</li>
+<li>当 <code>CTR = CMPA</code> ，TB计数器等于 计数比较器A （TBCTR = CMPA）</li>
+<li>当 <code>CTR = CMPB</code> ，TB计数器等于 计数比较器B（TBCTR = CMPB）</li>
+</ul>
+</li>
+<li>T1、T2事件：基于比较器（comparator）、跳闸（trip） 或 同步器（syncin）的触发事件</li>
+<li>当这些事件同时发生时管理好它们的优先级</li>
+<li>当TB计数器自增或自减时提供对事件的独立控制</li>
+</ul>
+<p>从下图18-21 或 表 18-3 中可以看出，AQ子模块的输入信号源除了TB时钟意外，剩下的触发事件有7种，分别是 PRD / ZERO / CMPA / CMPB / DIR / T1 / T2。只有前四种需要使用到TB计数器。软件强制动作（software forced action）是个非常有用的异步事件，由 <em><strong>AQSFRC</strong></em> 和 <em><strong>AQCSFRC</strong></em> 寄存器控制。</p>
+<p><strong>注意</strong>：如果在影子模式下 <em><strong>CSFA</strong></em> 未被使用，必须配置 <em><strong>RLDCSF</strong></em> 位以关闭影子模式。</p>
+<img src="https://pic.islet.space/2021/07/image-20210724083434622.png" alt="image-20210724083434622" style="zoom: 80%;" />
+
+<img src="https://pic.islet.space/2021/07/image-20210724083824488.png" alt="image-20210724083824488" style="zoom:80%;" />
+
+
+
+<p>对输出（EPWMxA / EPWMxB）可能施加（imposed）的动作如下：</p>
+<ul>
+<li><strong>置高</strong>（Set High）：将输出置高。</li>
+<li><strong>置低</strong>（Clear Low）：将输出置低。</li>
+<li><strong>切换</strong>（Toggle）：如果任一输出（EPWMxA / EPWMxB）被同时置高，则将它们置低。如果任一输出被同时置低，则将它们置高。</li>
+<li><strong>无视</strong>（Do Nothing）：让输出保持与当前相同的电平，不做处理。虽然“无视”选项阻止了事件对输出的可能动作，但是这些事件仍然可以去触发中断和ADC的开启。</li>
+</ul>
+<p>输出（EPWMxA / EPWMxB）的动作需要分别单独指定（specified independently）。在特定输出上，所有或任一事件都可以被配置以生成动作。</p>
+<p>比如说，<code>CTR=CMPA</code> 和 <code>CTR=CMPB</code> 都可以被配置到 <em><strong>EPWMxA</strong></em> 上。所有限定动作都可以通过控制寄存器被配置。</p>
+<p>每一个符号代表着一个动作，就像是时间上的标记。某些动作在时间上是固定的（如，0和周期），而CMPA和CMPB动作是非固定的（moveable）且其时间位置可以通过CMPA/B寄存器来编程。</p>
+<p>使用 <strong>无视</strong> 操作可以关闭或无效某个动作，无视动作是复位后的默认值。</p>
+<p><img src="https://pic.islet.space/2021/07/image-20210724090622329.png" alt="image-20210724090622329"></p>
+<p>AQ触发事件源选择寄存器（AQTSRCSEL, Action Qualifier Trigger Event Source Selection register）被用于为T1/T2事件选择源。在AQ子模块中，一个trip/数字比较事件的T1/T2的选择和配置 与 Trip-zone子模块事件的配置 是相互独立的。特定的trip事件是不确定能否在TZ子模块里通过配置来触发trip动作的，但是相同事件是能够确定可以被配置于AQ子模块中，以生成T1/T2来控制PWM生成的。</p>
+<p>PWM动作限定器（AQ）是可以在相同时间内接受一个以上事件的，此时，硬件会为事件排好优先级。优先级规则是，事件生成越晚，优先级越高，而且 <strong>软件强制事件</strong>（software forced event）拥有最高优先级。</p>
+<p>增减计数模式下的动作限定事件优先级如下表18-4所示，优先级按数字从小到大依次递减，共分10级。</p>
+<p><mark>优先级会因TB计数器的计数模式改变而改变。</mark> 但是从下表18-5和 18-6中可以看到，自增模式和自减模式下，只有7个优先级，在任一模式下，其相反动作的触发都不会被考虑，如在自减模式下，自增事件不会被考虑，自增模式下，自减事件不会被考虑。</p>
+<p><strong>注意</strong>：CMPA或者CMPB是可以设置得比PRD还大的，此时需要考虑依据所处模式进行考虑，如表18-7所示。</p>
+<p><img src="https://pic.islet.space/2021/07/image-20210724092138218.png" alt="image-20210724092138218"></p>
+<p><img src="https://pic.islet.space/2021/07/image-20210724092919402.png" alt="image-20210724092919402"></p>
+<p><img src="https://pic.islet.space/2021/07/image-20210724092932350.png" alt="image-20210724092932350"></p>
+<p><img src="https://pic.islet.space/2021/07/image-20210724094334396.png" alt="image-20210724094334396"></p>
+<p>图18-25 展示了如何使用TBCTR的增减计数模式来生成一个symmetric PWM波形。</p>
+<img src="https://pic.islet.space/2021/07/image-20210724172530959.png" alt="image-20210724172530959" style="zoom:80%;" />
+
+
+
+
+
+<h3 id="Dead-Band-Generator-Submodule"><a href="#Dead-Band-Generator-Submodule" class="headerlink" title="Dead-Band Generator Submodule"></a>Dead-Band Generator Submodule</h3><p>暂略</p>
+<h3 id="PWM-Chopper-Submodule"><a href="#PWM-Chopper-Submodule" class="headerlink" title="PWM Chopper Submodule"></a>PWM Chopper Submodule</h3><p>暂略</p>
+<h3 id="【-】Trip-Zone-Submodule"><a href="#【-】Trip-Zone-Submodule" class="headerlink" title="【#】Trip Zone Submodule"></a>【#】Trip Zone Submodule</h3><p>TZ子模块，每个ePWM模块都连接了6个 TZ<em>n</em>（TZ1 ~ TZ6） 信号 ， 其中：</p>
+<ul>
+<li>前三个信号来自于GPIO 复用</li>
+<li>TZ4 来自于 带有 EQEP 模块设备的 反转（inverted）的 <em><strong>EQEPxERR</strong></em> 信号</li>
+<li>TZ5 连接至了系统时钟故障（fail）逻辑</li>
+<li>TZ6 来自于 CPU 的 EMUSTOP 输出</li>
+</ul>
+<p>这些信号指示了外部的故障或跳闸情况，并且可以对ePWM的输出进行编程，以便在故障发生时作出相应的反应。</p>
+<img src="https://pic.islet.space/2021/07/image-20210724104412883.png" alt="image-20210724104412883" style="zoom:80%;" />
+
+
+
+<p>TZ子模块的特点：</p>
+<ul>
+<li>错误输入TZ1 ~ TZ6 能够被高级地（flexibly）路由至（mapped to）任何ePWM模块</li>
+<li>在出现错误时，输出（EPWMxA / EPWMxB）状态可以被强制指定为其中之一：<ul>
+<li>置高</li>
+<li>置低</li>
+<li>高阻抗（High-impedance）</li>
+<li>无动作（no action taken）</li>
+</ul>
+</li>
+<li>为主要的 <strong>短路</strong> 或 <strong>过流</strong>（short circuits or over-current）提供 <strong>一次性错误</strong>（one-shot trip, OSHT）</li>
+<li>为 <strong>限流操作</strong>（current limiting operation）提供 <strong>循环错误</strong>（cycle-by-cycle tripping）</li>
+<li>基于 片上模拟比较模块输出 和/或 TZ1 至 TZ3 提供 数字比较错误（digital compare tripping）</li>
+<li>每一个TZ输入和DC子模块 DCAEVT1/2 或 DCBEVT1/2 强制事件能够被定位于 一次性错误 或 循环错误上。</li>
+<li>中断生成可用于任何一个TZ输入</li>
+<li>软件强制错误也可用</li>
+<li>如果不需要使用，TZ子模块也能够被完全屏蔽。</li>
+</ul>
+<h3 id="Event-Trigger-Submodule"><a href="#Event-Trigger-Submodule" class="headerlink" title="Event Trigger Submodule"></a>Event Trigger Submodule</h3><p>暂略</p>
+<h3 id="Digital-Compare-Submodule"><a href="#Digital-Compare-Submodule" class="headerlink" title="Digital Compare Submodule"></a>Digital Compare Submodule</h3><p>暂略</p>
+<h1 id="通信外设"><a href="#通信外设" class="headerlink" title="通信外设"></a>通信外设</h1><p>暂略</p>
+<h1 id="新建项目（Step-by-step"><a href="#新建项目（Step-by-step" class="headerlink" title="新建项目（Step by step)"></a>新建项目（Step by step)</h1><h2 id="新建C28xx项目"><a href="#新建C28xx项目" class="headerlink" title="新建C28xx项目"></a>新建C28xx项目</h2><ol>
+<li>选择新建 CCS 项目</li>
 </ol>
-<h1 id="术语"><a href="#术语" class="headerlink" title="术语"></a>术语</h1><p><strong>LDO</strong>: Low dropout, A DC linear voltage regulator which can operate with a very small input/output differential voltage.</p>
+<p><img src="https://pic.islet.space/2021/07/image-20210719094604082.png" alt="image-20210719094604082"></p>
+<ol start="2">
+<li>可暂时不选择具体芯片，选择 F28xx 系列即可，也可以选择 <code>28004x Piccolo</code>，在选择具体芯片。</li>
+</ol>
+<p><img src="https://pic.islet.space/2021/07/image-20210719094942412.png" alt="image-20210719094942412"></p>
+<ol start="3">
+<li>设置项目名称并保存。</li>
+</ol>
+<img src="https://pic.islet.space/2021/07/image-20210719094813670.png" alt="image-20210719094813670" style="zoom: 80%;" />
+
+<h2 id="设置处理器选项"><a href="#设置处理器选项" class="headerlink" title="设置处理器选项"></a>设置处理器选项</h2><p>C2000系列编译器中，关于处理器选项，需要设置 <code>CLA</code>、 <code>FPU</code>、 <code>TMU</code>、 <code>IDIV</code> 和 <code>VCU</code> 这几个参数，其中《spru566n》全文关于 <code>IDIV</code> 的描述仅有 F28002x 和 2838x 支持，此处就默认 28004x 不支持（暂时先留空），其余支持项均可以在《spru566n》表11中查找到。</p>
+<ul>
+<li><code>IDIV</code> 是指 <em><strong>增强型整数除法</strong></em> ，enhanced integer division，也是快速整数除法，fast integer division。</li>
+<li><code>FPU</code> 有 FPU32 / FPU64 / SOFTLIB 三种选项，其中如果设置了 <code>TMU</code> 和 <code>VCU</code>，则默认设置为 FPU32。</li>
+</ul>
+<p><img src="https://pic.islet.space/2021/07/image-20210719091534852.png" alt="image-20210719091534852"></p>
+<p><img src="https://pic.islet.space/2021/07/image-20210719090718448.png" alt="image-20210719090718448"></p>
+<p>各选项设置如下：</p>
+<img src="https://pic.islet.space/2021/07/image-20210719094501999.png" alt="image-20210719094501999" style="zoom:67%;" />
+
+
+
+<h2 id="设置头文件选项"><a href="#设置头文件选项" class="headerlink" title="设置头文件选项"></a>设置头文件选项</h2><p>向头文件包含设置中，添加两条 c2000Ware 套件安装包提供的支持库信息：</p>
+<p><code>D:\ti\c2000Ware\C2000Ware_2_01_00_00\driverlib\f28004x\driverlib</code></p>
+<p><code>D:\ti\c2000Ware\C2000Ware_2_01_00_00\device_support\f28004x\common\include</code></p>
+<p><strong>注意</strong>：以上路径信息仅供参考，具体路径仍需依据套件安装地址来修改。</p>
+<img src="https://pic.islet.space/2021/07/image-20210719095520123.png" alt="image-20210719095520123" style="zoom:80%;" />
+
+
+
+<img src="https://pic.islet.space/2021/07/image-20210719095713314.png" alt="image-20210719095713314" style="zoom:80%;" />
+
+
+
+<p>最后一共有4条信息：</p>
+<p><img src="https://pic.islet.space/2021/07/image-20210719095934052.png" alt="image-20210719095934052"></p>
+<h2 id="设置文件搜索路径"><a href="#设置文件搜索路径" class="headerlink" title="设置文件搜索路径"></a>设置文件搜索路径</h2><p>先在 <span style="font-style: italic; color: #aaa; font-weight: 900;">Add &lt;dir&gt; to library search path (–search_path, -i)</span> 中添加可以处理链接器的（.cmd）文件路径 <code>D:\ti\c2000Ware\C2000Ware_2_01_00_00\device_support\f28004x\common\cmd</code>，然后将 <span style="font-style: italic; color: #aaa; font-weight: 900;">Include library file or command files as input (–input, -I)</span> 中的 <code>libc.a</code> 删除，添加具体的链接器全名 <code>28004x_generic_ram_lnk.cmd</code>  和 <code>rts2800_fpu32.lib</code> 。</p>
+<img src="https://pic.islet.space/2021/07/image-20210719100817504.png" alt="image-20210719100817504" style="zoom:80%;" />
+
+
+
+<h2 id="设置代码启动点"><a href="#设置代码启动点" class="headerlink" title="设置代码启动点"></a>设置代码启动点</h2><p>此步骤为 <em><strong>可选</strong></em> 步骤，在 <span style="font-style: italic; color: #aaa; font-weight: 900;">Advance Options</span> 下的 <span style="font-style: italic; color: #aaa; font-weight: 900;">Symbol Management</span> 中设置 <em>程序入口点</em>  <code>code_start</code> 。</p>
+<p><strong>注意</strong>：本步骤是用于设置编译参数的，可以在完全新建项目的时候不操作本步骤，此时进行编译 <code>Build Project</code> 的话也是可以编译成功的。</p>
+<img src="https://pic.islet.space/2021/07/image-20210719101229117.png" alt="image-20210719101229117" style="zoom:80%;" />
+
+
+
+<blockquote>
+<p><em>code_start</em>  is  the  first  code  that  is  executed  after  exiting  the  boot  ROM  code  for  the example f28004x projects.  The projects are setup such that the codegen entry point is also set to the code start label using linker options.  The code start code will automatically re-direct the execution to <code>_c_init00</code>.</p>
+</blockquote>
+<h2 id="设置字体集"><a href="#设置字体集" class="headerlink" title="设置字体集"></a>设置字体集</h2><p>此步骤为 <em><strong>可选</strong></em> 步骤，在 <span style="font-style: italic; color: #aaa; font-weight: 900;">Resource</span> 下可以设置 <em>字体编码</em> 和 <em>回行</em> 格式。</p>
+<img src="https://pic.islet.space/2021/07/image-20210719101527907.png" alt="image-20210719101527907" style="zoom:80%;" />
+
+
+
+<h2 id="添加文件"><a href="#添加文件" class="headerlink" title="添加文件"></a>添加文件</h2><p>添加文件有两种形式，一种是以链接形式添加，编译时不会修改到源文件。另一种是直接添加至项目中（复制副本 或 新建文件）。</p>
+<ol>
+<li>先用官方提供的文件进行预试添加和调试。在项目上右击选择 <code>Add Files</code> ，以 <em><strong>链接形式</strong></em> 添加文件：</li>
+</ol>
+<ul>
+<li><code>D:\ti\c2000Ware\C2000Ware_2_01_00_00\driverlib\f28004x\driverlib\ccs\Debug\driverlib.lib</code></li>
+<li><code>D:\ti\c2000Ware\C2000Ware_2_01_00_00\device_support\f28004x\common\source\device.c</code></li>
+<li><code>D:\ti\c2000Ware\C2000Ware_2_01_00_00\device_support\f28004x\common\source\f28004x_codestartbranch.asm</code></li>
+</ul>
+<ol start="2">
+<li>在项目名上右键点击 Add Files。</li>
+</ol>
+<p><img src="https://pic.islet.space/2021/07/image-20210719102326890.png" alt="image-20210719102326890"></p>
+<ol start="3">
+<li>选择对应路径文件。</li>
+</ol>
+<img src="https://pic.islet.space/2021/07/image-20210719102359274.png" alt="image-20210719102359274" style="zoom:80%;" />
+
+<ol start="4">
+<li>选择添加方式 Link to files ，可以看到项目中已经添加了一个文件。</li>
+</ol>
+<div style="text-align: center;"><img src="https://pic.islet.space/2021/07/image-20210719102420155.png" alt="image-20210719102420155" style="zoom:80%;" /> <img src="https://pic.islet.space/2021/07/image-20210719102438745.png" alt="image-20210719102438745" style="zoom:80%;" /></div>
+
+<ol start="5">
+<li>到此处后仍不能进行 <code>Build Project</code> ，会报错 <code>error #10234-D: unresolved symbols remain c28</code>，需要执行下一步，将 <code>main.c</code> 以 <em><strong>新文件形式</strong></em> 添加进去。</li>
+</ol>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&quot;driverlib.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&quot;device.h&quot;</span></span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span></span>&#123;</span><br><span class="line">    <span class="comment">// Initialize device clock and peripherals</span></span><br><span class="line">    Device_init();</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Initialize GPIO and configure the GPIO pin as a push-pull output</span></span><br><span class="line">    Device_initGPIO();</span><br><span class="line">    GPIO_setPadConfig(DEVICE_GPIO_PIN_LED1, GPIO_PIN_TYPE_STD);</span><br><span class="line">    GPIO_setDirectionMode(DEVICE_GPIO_PIN_LED1, GPIO_DIR_MODE_OUT);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Initialize PIE and clear PIE registers. Disables CPU interrupts.</span></span><br><span class="line">    Interrupt_initModule();</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Initialize the PIE vector table with pointers to the shell Interrupt</span></span><br><span class="line">    <span class="comment">// Service Routines (ISR).</span></span><br><span class="line">    Interrupt_initVectorTable();</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Enable Global Interrupt (INTM) and realtime interrupt (DBGM)</span></span><br><span class="line">    EINT;</span><br><span class="line">    ERTM;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Loop Forever</span></span><br><span class="line">    <span class="keyword">for</span>(;;)&#123;</span><br><span class="line">        <span class="comment">// Turn on LED</span></span><br><span class="line">        GPIO_writePin(DEVICE_GPIO_PIN_LED1, <span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// Delay for a bit.</span></span><br><span class="line">        DEVICE_DELAY_US(<span class="number">500000</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// Turn off LED</span></span><br><span class="line">        GPIO_writePin(DEVICE_GPIO_PIN_LED1, <span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// Delay for a bit.</span></span><br><span class="line">        DEVICE_DELAY_US(<span class="number">500000</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="项目编译"><a href="#项目编译" class="headerlink" title="项目编译"></a>项目编译</h2><p>修改完之后进行编译 Build Project ，会报错 <em><strong>内存不足</strong></em>，信息如下：</p>
+<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&quot;D:/ti/c2000Ware/C2000Ware_2_01_00_00/device_support/f28004x/common/<span class="built_in">cmd</span>/<span class="number">28004</span>x_generic_ram_lnk.<span class="built_in">cmd</span>&quot;, line <span class="number">81</span>: error #<span class="number">10099</span>-D: program will <span class="keyword">not</span> fit into available memory.  run placement with alignment/blocking fails <span class="keyword">for</span> section &quot;.stack&quot; size <span class="number">0</span>x400 page <span class="number">1</span>.  Available memory ranges:</span><br><span class="line">   RAMM1        size: <span class="number">0</span>x3f8        unused: <span class="number">0</span>x3f8        max hole: <span class="number">0</span>x3f8     </span><br></pre></td></tr></table></figure>
+
+<p>以上错误信息的大意是，软件需要使用到的 <strong>堆</strong> <code>.stack</code> 的大小是 <code>0x400</code> 而 <code>RAMM1</code> 的大小只有 <code>0x3f8</code> 。</p>
+<p>从错误提示中看到报错的文件名，打开在 <strong>设置文件搜索路径</strong> 中添加的 <code>28004x_generic_ram_lnk.cmd</code> 文件，已知TI公司利用 <code>.cmd</code> 文件来描述芯片内部地址，打开该文件并搜索可以看到 <code>RAMM1</code> 的确大小不足 <code>0x40</code>，且此时 <code>RAMM1_RSVD</code> 并未被使用，适当修改 <code>RAMM1</code> 的地址长度，注意不要和其他地址长度重叠即可。</p>
+<img src="https://pic.islet.space/2021/07/image-20210719110002751.png" alt="image-20210719110002751" style="zoom:80%;" />
+
+<p>重新编译即可成功。</p>
+<p><img src="https://pic.islet.space/2021/07/image-20210719111024816.png" alt="image-20210719111024816"></p>
+<h1 id="评估板硬件连接"><a href="#评估板硬件连接" class="headerlink" title="评估板硬件连接"></a>评估板硬件连接</h1><p>TI官方的评估板型号为 LAUNCHXL-F280049C （如下示），支持使用JTAG连接与PC进行通信，关于评估板的手册文档如<a target="_blank" rel="noopener" href="https://www.ti.com/lit/spruii7">《SPRUII7》</a>所示。</p>
+<p><img src="https://pic.islet.space/2021/07/image-20210726152918902.png" alt="image-20210726152918902"></p>
+<p>连接完毕之后，设备管理器 会出现如下图所示硬件：</p>
+<p><img src="https://pic.islet.space/2021/07/image-20210726154218244.png" alt="image-20210726154218244"></p>
+<div style="text-align: center; font-weight: 900;">图 设备管理器界面</div>
+
+
+
+<p>本评估板自带了XDS110接口，只需要使用USB mini 线和PC进行，并在项目文件路径 <code>targetConfigs\TMS320F280049C_LaunchPad.ccxml</code> 文件下确保连接器和设备正确即可。</p>
+<p><img src="https://pic.islet.space/2021/07/image-20210726153612834.png" alt="image-20210726153612834"></p>
+<div style="text-align: center; font-weight: 900;">图 Project Explorer窗口下的文件路径</div>
+
+
+
+<p><img src="https://pic.islet.space/2021/07/image-20210726153524140.png" alt="image-20210726153524140"></p>
+<div style="text-align: center; font-weight: 900;">图 配置文件下的连接器配置</div>
+
+
+
+<p>在<code>.ccxml</code> 文件中进行修改，点击下方的 <em>Advanced</em>，然后选择 <code>cJTAG(1149.7)2-pin advance mode</code>，然后 <em>save</em> 保存即可。具体操作如下图：</p>
+<p><img src="https://pic.islet.space/2021/07/image-20210726155434636.png" alt="image-20210726155434636"></p>
+<div style="text-align: center; font-weight: 900;">图 选择cJTAG连接方式</div>
+
+
+
+<p><img src="https://pic.islet.space/2021/07/image-20210726160136365.png" alt="image-20210726160136365"></p>
+<div style="text-align: center; font-weight: 900;">图 点击测试按钮进行连接测试</div>
+
+
+
+<h1 id="F28004x-API指南"><a href="#F28004x-API指南" class="headerlink" title="F28004x API指南"></a>F28004x API指南</h1><p>截止2020年7月21日，最新版 <a target="_blank" rel="noopener" href="https://code.islet.space/TI/f28004x/3_04/intro.html">F28004x API指南 3.04版</a> 已上传。可以直接在联网电脑上打开，使用Google chrome浏览器可以右键翻译查阅。</p>
+<h2 id="文件组织概述"><a href="#文件组织概述" class="headerlink" title="文件组织概述"></a>文件组织概述</h2><p>以下是外围驱动库源代码的组织概览。</p>
+<ul>
+<li>{driverlib} - 此目录包含驱动程序的源代码。</li>
+<li>{driverlib/inc/} - 此目录包含用于直接寄存器访问编程模型的外设、中断和寄存器访问头文件。</li>
+<li>{hw_*.h} - 头文件，每个外设一个，描述每个外设的所有寄存器和这些寄存器中的位域。驱动程序使用这些头文件直接访问外设，应用程序代码可以使用这些头文件绕过外设驱动程序库 API。</li>
+</ul>
+<h2 id="编程模型"><a href="#编程模型" class="headerlink" title="编程模型"></a>编程模型</h2><p>外设驱动程序库支持两种编程模型：<em><strong>直接寄存器访问模型</strong></em> 和 <em><strong>软件驱动程序模型</strong></em>。根据应用程序的需要或开发人员所需的编程环境，每个模型都可以单独使用或组合使用。</p>
+<p>每种编程模型都有优点和缺点。与使用软件驱动程序模型相比，<mark>使用直接寄存器访问模型通常会产生更小、更高效的代码</mark>。然而，直接寄存器访问模型<mark>需要详细了解每个寄存器和位域的操作，以及它们的相互作用和外围设备正常操作所需的任何顺序</mark>；<mark>软件驱动程序模型</mark>使开发人员与这些细节更加隔绝，<mark>通常需要更少的时间来开发应用程序</mark>。软件驱动程序模型还产生了<mark>更具可读性的代码</mark>。</p>
+<h1 id="F28004x-伪操作"><a href="#F28004x-伪操作" class="headerlink" title="F28004x 伪操作"></a>F28004x 伪操作</h1><p>在 <code>F28004x_device.h</code> 文件中包含一部分伪操作，参考《SPRU430F》做出解释</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span>  EINT   __asm(<span class="meta-string">&quot; clrc INTM&quot;</span>)   <span class="comment">//INTM置0，打开（enable）中断</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span>  DINT   __asm(<span class="meta-string">&quot; setc INTM&quot;</span>)   <span class="comment">//INTM置1，关闭（disable）中断</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span>  ERTM   __asm(<span class="meta-string">&quot; clrc DBGM&quot;</span>)   <span class="comment">//打开调试模式（Debug Mode）</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span>  DRTM   __asm(<span class="meta-string">&quot; setc DBGM&quot;</span>)   <span class="comment">//关闭调试模式（Debug Mode）</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span>  EALLOW __asm(<span class="meta-string">&quot; EALLOW&quot;</span>)   <span class="comment">//打开保护区域写入权限（Enable Write Access to Protected Space）</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span>  EDIS   __asm(<span class="meta-string">&quot; EDIS&quot;</span>)   <span class="comment">//关闭保护区域写入权限（Disable Write Access to Protected Space）</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span>  ESTOP0 __asm(<span class="meta-string">&quot; ESTOP0&quot;</span>)   <span class="comment">//Emulation Stop 0</span></span></span><br></pre></td></tr></table></figure>
+
+
+
+<p>以下为《SPRU430F》第107 ~ 113页提供的伪操作指令合集。</p>
+<DIV style="text-align: center;"><img src="https://pic.islet.space/2021/07/image-20210721145040598.png" alt="image-20210721145040598" style="zoom: 67%;" /><img src="https://pic.islet.space/2021/07/image-20210721145100629.png" alt="image-20210721145100629" style="zoom:67%;" /></DIV>
+
+<DIV style="text-align: center;"><img src="https://pic.islet.space/2021/07/image-20210721145123473.png" alt="image-20210721145123473" style="zoom:67%;" /><img src="https://pic.islet.space/2021/07/image-20210721145138283.png" alt="image-20210721145138283" style="zoom:67%;" /></DIV>
+
+<DIV style="text-align: center;"><img src="https://pic.islet.space/2021/07/image-20210721145157425.png" alt="image-20210721145157425" style="zoom:67%;" /><img src="https://pic.islet.space/2021/07/image-20210721145226082.png" alt="image-20210721145226082" style="zoom:67%;" /></DIV>
+
+<DIV style="text-align: center;"><img src="https://pic.islet.space/2021/07/image-20210721145242594.png" alt="image-20210721145242594" style="zoom:67%;" /></DIV>
+
+
+
+<h1 id="C2000Ware"><a href="#C2000Ware" class="headerlink" title="C2000Ware"></a>C2000Ware</h1><p>C2000Ware是C28系列芯片的IDE组成部分，开发过程一共安装了两个版本，2.01版与3.04版，<marK>两者的文件结构基本一致</mark>，包括 <u>样例应用</u>、<u>头文件存放路径</u> 等基本一致，不一致的地方是文件内容，包括 <u>例程的增删</u> 和 <u>说明文档的更新</u>。始终不变的是C2000Ware的例程类别，总共有两种，分别在两个路径下：</p>
+<ul>
+<li><code>D:\ti\c2000Ware\C2000Ware_2_01_00_00\driverlib\f28004x\examples</code>，存放的是 <em><strong>驱动库样例应用</strong></em>（Driver Library Example Applications），是以驱动及其案例来进行代码编写的，每个project都可能会涉及许多外设，因此使用前需要先阅读相关文档去了解该案例的开发目标，再结合实际进行修改。</li>
+<li><code>D:\ti\c2000Ware\C2000Ware_2_01_00_00\device_support\f28004x\examples</code>， 存放的是 <em><strong>位域样例应用</strong></em>（Bit-Field Example Applications），是以最小外设功能为目标的代码编写过程，并不是以project作为分类单元的，而是以外设为分类方法，每个外设的某个细节功能作为代码间的区别。</li>
+</ul>
+<p><strong>例如</strong>：同样是了解PWM外设的使用案例，从 <em><strong>驱动库样例应用</strong></em>（3.04版） 中能找到的案例只有3个：<code>boostxl_afe031_f28004x_pwmmode</code>、<code>hrpwm</code> 和 <code>adc_ex1_soc_epwm</code>，具体如何使用，使用到PWM里的何种功能并不能从项目案例中直接看出来。但是从 <em><strong>位域样例应用</strong></em>（3.04版） 中，可以找到13个PWM下的应用：<code>trip_zone</code> / <code>updown_aq</code> / <code>synchronization</code> / <code>digital_compare</code> / <code>digital_compare_event_filter</code> / <code>valley_switching</code> / <code>edge_filter</code> / <code>deadband</code> / <code>dma</code> / <code>chopper</code> / <code>configure_signal</code> / <code>monoshot_mode</code> / <code>up_aq</code> 。</p>
+<blockquote>
+<p><em>PS</em>：以上信息因C2000Ware版本不同而不同。</p>
+</blockquote>
+<p>以上信息，从《F28004x_DEV_USER_GUIDE》中也可以查看到，理清套件下的文件结构需要阅读的文件有两个，但在3.04版本的C2000Ware中未提供：</p>
+<ol>
+<li><a target="_blank" rel="noopener" href="https://code.islet.space/TI/f28004x/docs/F28004x_DriverLib_Users_Guide.pdf">《F28004x_DriverLib_Users_Guide》</a></li>
+<li><a target="_blank" rel="noopener" href="https://code.islet.space/TI/f28004x/docs/F28004x_DEV_USER_GUIDE.pdf">《F28004x_DEV_USER_GUIDE》</a></li>
+</ol>
+<p>2.01与3.04版本都提供了网页版的手册，可以在对应 <code>\docs\</code> 文件夹下查阅。推荐使用网页版 <a target="_blank" rel="noopener" href="https://code.islet.space/TI/f28004x/3_04/index.html">API指南</a> 进行函数原型速查。</p>
+<p><img src="https://pic.islet.space/2021/07/image-20210721154709745.png" alt="image-20210721154709745"></p>
+<div style="text-align: center; font-weight: 900;">图 3.04版本函数的搜索查阅</div>
+
+
+
+<h1 id="高频逆变器开发"><a href="#高频逆变器开发" class="headerlink" title="高频逆变器开发"></a>高频逆变器开发</h1><p><strong>逆变器</strong>，即将直流DC变换为交流AC的过程。利用 DSP输出波形，控制接入高压直流电的（高位 和 地位）两个IGBT输出正向和反向两种电压，形成交流AC。</p>
+<p>逆变电路根据直流侧电源的性质不同（电压源/电流源）分为两种类别： <strong>电压型逆变电路</strong> 和 <strong>电流型逆变电路</strong>。</p>
+<blockquote>
+<p>电压源逆变电路的特点：</p>
+<ol>
+<li>直流侧为电压源，或并联有大电容，相当于电压源。直流侧电压基本无脉动，直流回路呈现低阻抗。</li>
+<li>由于直流电压源的钳位作用，交流侧输出电压波形为矩形波，且与负载阻抗角无关。而交流侧输出电流波形与相位因负载阻抗情况的不同而不同。</li>
+<li>当交流侧为阻感负载时需要提供无功功率，直流侧电容起缓冲无功能能量的作用。为了给交流侧向直流侧反馈的无功能量提供通道，逆变桥各臂都并联了 反馈二极管。</li>
+</ol>
+</blockquote>
+<p><strong>单相电压型逆变电路</strong> 可以根据变换出来的波形分为 <strong>半桥</strong> 或 <strong>全桥</strong>，即 <strong>单相半桥变压型逆变电路</strong> 和 <strong>单相全桥变压型逆变电路</strong>。</p>
+<p><img src="https://pic.islet.space/2021/07/image-20210719162954288.png" alt="image-20210719162954288"></p>
+<p><img src="https://pic.islet.space/2021/07/image-20210719162958021.png" alt="image-20210719162958021"></p>
+<p><strong>具体为</strong>：利用型号为 <code>TMS320F280041</code> 芯片的GPIO（最高输出频率为25MHz）输出一个30KHz的PWM波形，需要使用到 ePWM外设。使用官方C2000套件示例中提供的 <code>ePWM6</code> 案例进行开发，输出高位和低位两个幅频合适的波形后，接到型号为 <code>2EDL05I06PF</code> 的驱动上，由驱动控制型号为 <code>IKW50N65WR5</code> 的IGBT 高频开断。</p>
+<h2 id="工作目标"><a href="#工作目标" class="headerlink" title="工作目标"></a>工作目标</h2><ol>
+<li>使用内源时钟，使芯片工作在100Mhz</li>
+<li>输出占空比为50%的PWM波形，频率在30KHz</li>
+<li>采集输出的波形和IGBT输出的波形（可能需要检测相位和波纹）</li>
+<li>完成过零饱和电压检测</li>
+</ol>
+<p><img src="https://pic.islet.space/2021/07/image-20210719160255497.png" alt="image-20210719160255497"></p>
+<div style="text-align: center; font-weight: 900;">图 占空比为20%的测试波形</div>
+
+
+
+
+
+<h2 id="PLL设置"><a href="#PLL设置" class="headerlink" title="PLL设置"></a>PLL设置</h2><ul>
+<li> <code>TMS320F280041</code> 的外部晶振输入频率 f<span style="font-size: 0.8rem;">XTAL</span> 在 10 ~ 20 MHz 之间，自身工作频率f<span style="font-size: 0.8rem;">SYSCLK</span> 在 2 ~ 100MHz之间。</li>
+</ul>
+<p>以下为工作频率设置的样例，利用内源时钟 <code>10MHz</code> ，产生芯片满负工作频率 <code>100MHz</code> ：</p>
+<img src="https://pic.islet.space/2021/07/image-20210715170724177.png" alt="image-20210715170724177" style="zoom:67%;" />
+
+<p>本系统采用10MHz的内源时钟 <em><strong>INTOSC2</strong></em> 作为 <em><strong>OSCCLK</strong></em>，其配置方法（包括设置公式和函数原型）都已在前文详细描述和记录，请参考该代码。</p>
+<h2 id="ePWM-1"><a href="#ePWM-1" class="headerlink" title="ePWM"></a>ePWM</h2><p>以下为两个版本下案例所给的 <code>main()</code>函数的流程对比。</p>
+<p>左侧用的是Bitfield模式，右边用的是driver-lib模式。</p>
+<p><img src="https://pic.islet.space/2021/07/image-20210722084618101.png" alt="image-20210722084618101"></p>
+<div style="text-align: center; font-weight: 900;">图 新旧版本main()函数流程对比</div>
+
+<p>同样是将中断重新映射至ISR函数里，下图左侧是2.01版本下的driver-lib模式，右侧是3.04bit-field模式。</p>
+<p><img src="https://pic.islet.space/2021/07/image-20210721154450124.png" alt="image-20210721154450124"></p>
+<div style="text-align: center; font-weight: 900;">图 不同的调用配置方法</div>
+
+
+
+
+
+
+
+<h3 id="宏定义"><a href="#宏定义" class="headerlink" title="宏定义"></a>宏定义</h3><h4 id="ePWM外设定义"><a href="#ePWM外设定义" class="headerlink" title="ePWM外设定义"></a>ePWM外设定义</h4><p>在Driver-Lib的 <code>&lt;f28004x_globalVariabledefs.c&gt;</code> 中，提供了ePWM下各模块的定义，如下面代码所示，定义了 外设 ePWM1所有的寄存器（结构体）<code>EPwm1Regs</code> ，是EPWM_REGS的结构体实例。</p>
+<p><strong>使用方法</strong>：使用该外设下的寄存器时直接按照结构体变量的方法使用即可，如 <code>EPwm1Regs.TBPRD = EPWM1_TIMER_TBPRD</code>。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">ifdef</span> __cplusplus</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> DATA_SECTION(<span class="meta-string">&quot;EPwm1RegsFile&quot;</span>)</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">else</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> DATA_SECTION(EPwm1Regs,<span class="meta-string">&quot;EPwm1RegsFile&quot;</span>);</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br><span class="line"><span class="keyword">volatile</span> <span class="class"><span class="keyword">struct</span> <span class="title">EPWM_REGS</span> <span class="title">EPwm1Regs</span>;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//----------------------------------------</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">ifdef</span> __cplusplus</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> DATA_SECTION(<span class="meta-string">&quot;EPwm2RegsFile&quot;</span>)</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">else</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> DATA_SECTION(EPwm2Regs,<span class="meta-string">&quot;EPwm2RegsFile&quot;</span>);</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br><span class="line"><span class="keyword">volatile</span> <span class="class"><span class="keyword">struct</span> <span class="title">EPWM_REGS</span> <span class="title">EPwm2Regs</span>;</span></span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+
+
+<h4 id="设置上下桥"><a href="#设置上下桥" class="headerlink" title="设置上下桥"></a>设置上下桥</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> EPWM1_TIMER_TBPRD  400  <span class="comment">//设置总周期为400，CMPA和CMPB占比一致时，占空比为50%</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> EPWM1_CMPA         200  <span class="comment">//高边占比</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> EPWM1_CMPB         200  <span class="comment">//低编占比</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> EPWM_CMP_UP        0x1  <span class="comment">//置高</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> EPWM_CMP_DOWN      0x0  <span class="comment">//置低</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> EPWM1B_SPACE_COMPARE 229</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> EPWM1A_SPACE_COMPARE 118</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> EPWM1B_MARK_COMPARE  252</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> EPWM1A_MARK_COMPARE  128</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="初始化外设"><a href="#初始化外设" class="headerlink" title="初始化外设"></a>初始化外设</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">EPWM6_Init</span><span class="params">()</span></span>&#123;  <span class="comment">//使用高分辨率PWM</span></span><br><span class="line">    EALLOW; <span class="comment">//打开保护区域写入权限</span></span><br><span class="line">    EPwm6Regs.HRMSTEP.bit.HRMSTEP = <span class="number">55</span>;   <span class="comment">//设置步长为55</span></span><br><span class="line">    CpuSysRegs.PCLKCR0.bit.HRPWM = <span class="number">1</span>;   <span class="comment">//打开HRPWM的时钟</span></span><br><span class="line">    EDIS;  <span class="comment">//关闭保护区域写入权限</span></span><br><span class="line"></span><br><span class="line">    EPwm6Regs.TBPRD = EPWM1_TIMER_TBPRD;       <span class="comment">// 设置TBCLK的总周期为380，前面已宏定义过</span></span><br><span class="line">    EPwm6Regs.TBPHS.bit.TBPHS = <span class="number">0x0000</span>;        <span class="comment">// 初始化相位为0</span></span><br><span class="line">    EPwm6Regs.TBCTR = <span class="number">0x0000</span>;                  <span class="comment">// 清空TB计数器</span></span><br><span class="line"></span><br><span class="line">    EPwm6Regs.CMPA.bit.CMPA = EPWM1_CMPA;    <span class="comment">// 设置A比较值</span></span><br><span class="line">    EPwm6Regs.CMPB.bit.CMPB = EPWM1_CMPB;    <span class="comment">// 设置B比较值</span></span><br><span class="line"></span><br><span class="line">    EPwm6Regs.TBCTL.bit.CTRMODE = TB_COUNT_UPDOWN; <span class="comment">// 设置TB计数模式为增减计数模式</span></span><br><span class="line">    EPwm6Regs.TBCTL.bit.PHSEN = TB_DISABLE;        <span class="comment">// 关闭相位载入</span></span><br><span class="line">    EPwm6Regs.TBCTL.bit.SYNCOSEL = TB_SYNC_DISABLE;<span class="comment">// 关闭TBCLK的时钟同步</span></span><br><span class="line">    EPwm6Regs.TBCTL.bit.HSPCLKDIV = TB_DIV1;       <span class="comment">// Clock ratio to SYSCLKOUT</span></span><br><span class="line">    EPwm6Regs.TBCTL.bit.CLKDIV = TB_DIV1;</span><br><span class="line">    EPwm6Regs.TBCTL.bit.FREE_SOFT = <span class="number">0x03</span>;</span><br><span class="line"></span><br><span class="line">    EPwm6Regs.CMPCTL.bit.SHDWAMODE = CC_SHADOW;   <span class="comment">//安装影子寄存器给高边</span></span><br><span class="line">    EPwm6Regs.CMPCTL.bit.SHDWBMODE = CC_SHADOW;   <span class="comment">//安装影子寄存器给低边</span></span><br><span class="line">    EPwm6Regs.CMPCTL.bit.LOADAMODE = CC_CTR_ZERO_PRD; <span class="comment">// 初始化为0</span></span><br><span class="line">    EPwm6Regs.CMPCTL.bit.LOADBMODE = CC_CTR_ZERO_PRD; <span class="comment">// 初始化为0</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">//TZCTL[TZA] = 2: 错误事件发生时，EPWM1A会被强制置低</span></span><br><span class="line">    EPwm6Regs.TZCTL.bit.TZA = <span class="number">2</span>;</span><br><span class="line">    EPwm6Regs.TZCTL.bit.DCAEVT1 = <span class="number">3</span>;</span><br><span class="line">    EPwm6Regs.TZCTL.bit.DCAEVT2 = <span class="number">3</span>;</span><br><span class="line">    <span class="comment">// TZCTL[TZB] = 2:错误事件发生时，EPWM1B会被强制置低</span></span><br><span class="line">    EPwm6Regs.TZCTL.bit.TZB = <span class="number">2</span>;</span><br><span class="line">    EPwm6Regs.TZCTL.bit.DCBEVT1 = <span class="number">3</span>;</span><br><span class="line">    EPwm6Regs.TZCTL.bit.DCBEVT2 = <span class="number">3</span>;</span><br><span class="line"></span><br><span class="line">    EPwm6Regs.AQCTLA.bit.CAU = AQ_SET;            <span class="comment">// 设置PWM1A给事件A，增计数</span></span><br><span class="line">    EPwm6Regs.AQCTLA.bit.CAD = AQ_CLEAR;          <span class="comment">// 清除PWM1A给事件A，减计数</span></span><br><span class="line">    EPwm6Regs.AQCTLB.bit.CBU = AQ_SET;            <span class="comment">// 设置PWM1B给事件B，增计数</span></span><br><span class="line">    EPwm6Regs.AQCTLB.bit.CBD = AQ_CLEAR;          <span class="comment">// 清除PWM1B给事件B，减计数</span></span><br><span class="line"></span><br><span class="line">    EPwm6Regs.ETSEL.bit.INTEN = <span class="number">0</span>;                <span class="comment">// 关闭中断</span></span><br><span class="line"></span><br><span class="line">    EALLOW;</span><br><span class="line">    EPwm6Regs.HRCNFG.bit.HRLOAD = <span class="number">2</span>;   <span class="comment">//安装HRPWM</span></span><br><span class="line">    EPwm6Regs.HRCNFG.bit.AUTOCONV = <span class="number">1</span>;</span><br><span class="line">    EPwm6Regs.HRCNFG.bit.EDGMODE = <span class="number">3</span>;</span><br><span class="line">    EPwm6Regs.HRPCTL.bit.HRPE = <span class="number">1</span>;</span><br><span class="line">    EDIS;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>从上面代码里总结出下面配置步骤：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">graph LR</span><br><span class="line">配置开始 --&gt; 配置TBCLK --&gt; 配置影子寄存器ShadowRegister --&gt; 配置CMP --&gt; 配置TripZone --&gt; 配置AactionQualifier --&gt; 配置ePWM中断 --&gt; 配置结束</span><br></pre></td></tr></table></figure>
+
+
+
+<p>理解完配置思路和子模块后，简化该配置步骤如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">graph LR</span><br><span class="line">配置开始 --&gt; 配置TB子模块 --&gt; 配置CC子模块 --&gt; 配置TZ子模块 --&gt; 配置AQ子模块 --&gt; 配置ePWM中断 --&gt; 配置结束</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+
+
+
+
+<p>初始化</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">initEPWM1</span><span class="params">()</span></span>&#123;</span><br><span class="line">    EPWM_setTimeBaseCounterMode(myEPWM1_BASE, EPWM_COUNTER_MODE_UP);</span><br><span class="line">    EPWM_setTimeBasePeriod(myEPWM1_BASE, EPWM1_TIMER_TBPRD);</span><br><span class="line">    EPWM_disablePhaseShiftLoad(myEPWM1_BASE);</span><br><span class="line">    EPWM_setPhaseShift(myEPWM1_BASE, <span class="number">0U</span>);</span><br><span class="line">    EPWM_setTimeBaseCounter(myEPWM1_BASE, <span class="number">0U</span>);</span><br><span class="line"></span><br><span class="line">    EPWM_setClockPrescaler(myEPWM1_BASE, EPWM_CLOCK_DIVIDER_2, EPWM_HSCLOCK_DIVIDER_2); <span class="comment">// Set ePWM clock pre-scaler</span></span><br><span class="line"></span><br><span class="line">    EPWM_setCounterCompareShadowLoadMode(myEPWM1_BASE, EPWM_COUNTER_COMPARE_A, EPWM_COMP_LOAD_ON_CNTR_ZERO);</span><br><span class="line">    EPWM_setCounterCompareShadowLoadMode(myEPWM1_BASE, EPWM_COUNTER_COMPARE_B, EPWM_COMP_LOAD_ON_CNTR_ZERO);</span><br><span class="line"></span><br><span class="line">    <span class="comment">//</span></span><br><span class="line">    <span class="comment">// Set Compare values</span></span><br><span class="line">    <span class="comment">//</span></span><br><span class="line">    EPWM_setCounterCompareValue(myEPWM1_BASE, EPWM_COUNTER_COMPARE_A, EPWM1_MIN_CMPA);</span><br><span class="line">    EPWM_setCounterCompareValue(myEPWM1_BASE, EPWM_COUNTER_COMPARE_B, EPWM1_MIN_CMPB);</span><br><span class="line"></span><br><span class="line">    <span class="comment">//</span></span><br><span class="line">    <span class="comment">// Set actions for ePWM1A &amp; ePWM1B</span></span><br><span class="line">    <span class="comment">//</span></span><br><span class="line">    <span class="comment">// Set PWM1A on Zero</span></span><br><span class="line">    EPWM_setActionQualifierAction(myEPWM1_BASE, EPWM_AQ_OUTPUT_A, EPWM_AQ_OUTPUT_HIGH, EPWM_AQ_OUTPUT_ON_TIMEBASE_ZERO);</span><br><span class="line">    <span class="comment">// Clear PWM1A on event A, up count</span></span><br><span class="line">    EPWM_setActionQualifierAction(myEPWM1_BASE, EPWM_AQ_OUTPUT_A, EPWM_AQ_OUTPUT_LOW, EPWM_AQ_OUTPUT_ON_TIMEBASE_UP_CMPA);</span><br><span class="line">    <span class="comment">// Set PWM1B on Zero</span></span><br><span class="line">    EPWM_setActionQualifierAction(myEPWM1_BASE, EPWM_AQ_OUTPUT_B, EPWM_AQ_OUTPUT_HIGH, EPWM_AQ_OUTPUT_ON_TIMEBASE_ZERO);</span><br><span class="line">    <span class="comment">// Clear PWM1B on event B, up count</span></span><br><span class="line">    EPWM_setActionQualifierAction(myEPWM1_BASE, EPWM_AQ_OUTPUT_B, EPWM_AQ_OUTPUT_LOW, EPWM_AQ_OUTPUT_ON_TIMEBASE_UP_CMPB);</span><br><span class="line"></span><br><span class="line">    <span class="comment">//</span></span><br><span class="line">    <span class="comment">// Interrupt where we will change the Compare Values</span></span><br><span class="line">    <span class="comment">//</span></span><br><span class="line">    EPWM_setInterruptSource(myEPWM1_BASE, EPWM_INT_TBCTR_ZERO);</span><br><span class="line">    EPWM_enableInterrupt(myEPWM1_BASE);</span><br><span class="line">    EPWM_setInterruptEventCount(myEPWM1_BASE, <span class="number">3U</span>);</span><br><span class="line"></span><br><span class="line">   <span class="comment">//</span></span><br><span class="line">   <span class="comment">// Information this example uses to keep track</span></span><br><span class="line">   <span class="comment">// of the direction the CMPA/CMPB values are</span></span><br><span class="line">   <span class="comment">// moving, the min and max allowed values and</span></span><br><span class="line">   <span class="comment">// a pointer to the correct ePWM registers</span></span><br><span class="line">   <span class="comment">//</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// Start by increasing CMPA &amp; CMPB</span></span><br><span class="line">    epwm1Info.epwmCompADirection = EPWM_CMP_UP;</span><br><span class="line">    epwm1Info.epwmCompBDirection = EPWM_CMP_UP;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Clear interrupt counter</span></span><br><span class="line">    epwm1Info.epwmTimerIntCount = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Set base as ePWM1</span></span><br><span class="line">    epwm1Info.epwmModule = myEPWM1_BASE;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Setup min/max CMPA/CMP values</span></span><br><span class="line">    epwm1Info.epwmMaxCompA = EPWM1_MAX_CMPA;</span><br><span class="line">    epwm1Info.epwmMinCompA = EPWM1_MIN_CMPA;</span><br><span class="line">    epwm1Info.epwmMaxCompB = EPWM1_MAX_CMPB;</span><br><span class="line">    epwm1Info.epwmMinCompB = EPWM1_MIN_CMPB;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">graph LR</span><br><span class="line">配置开始 --&gt; 配置TBCLK --&gt; 配置时钟分频 --&gt; 配置影子寄存器ShadowRegister --&gt; 配置CMP --&gt; 配置AactionQualifier --&gt; 配置ePWM中断 --&gt; 配置结束</span><br></pre></td></tr></table></figure>
+
+<h3 id="EPWMCLK"><a href="#EPWMCLK" class="headerlink" title="EPWMCLK"></a>EPWMCLK</h3><p><img src="https://pic.islet.space/2021/07/image-20210726110116356.png" alt="image-20210726110116356"></p>
+<p><img src="https://pic.islet.space/2021/08/image-20210802172012594.png" alt="image-20210802172012594"></p>
+<p><img src="https://pic.islet.space/2021/08/image-20210802171937172.png" alt="image-20210802171937172"></p>
+<p>通过配置下方代码中 <code>main()</code> 函数的参数，来对CPU 、ePWM的相关寄存器参数进行调节，可以实现目标PWM周期为30.8Khz的设置。</p>
+<p>代码就不贴了，可以直接下载：<a target="_blank" rel="noopener" href="http://code.islet.space/VisualStudioStudio/F28004x_ParamsCalculate/main.cpp">main.cpp</a></p>
+<p>从系统时钟设置到外设时钟设置过程中，需要设置的寄存器、位及其数值具体如下（仅供参考）：</p>
+<ol>
+<li>设置时钟源。选择时钟源为 <em><strong>内源时钟2</strong></em>（INTOSC2），修改 <code>CLKSRCCTL1</code> 寄存器下的 <code>OSCCLKSRCSEL</code> 值为 <code>0x00</code> 。</li>
+<li>设置系统PLL频率。需要分别设置整数分频、分数分频 和 系统分频，对应修改 <code>SYSPLLMULT</code> 寄存器下的 <code>IMULT</code> / <code>FMULT</code> / <code>ODIV</code> 值为 <code>0x13</code> / <code>0x3</code> / <code>0x1</code> （或使用十进制赋值 <code>19</code> / <code>3</code> / <code>1</code>）。</li>
+<li>设置需要使用的PWM设备序号。打开对应控制的 <code>PCLKCRx</code> 寄存器下的对应位，参考《SPRUI33D》第195页相关寄存器说明。</li>
+<li>设定PWMCLK频率。修改 <code>TBCTL</code> 寄存器下的 <code>HSPCLKDIV</code> 及 <code>CLKDIV</code> 为 <code>0x00</code> 及 <code>0x01</code> （默认情况下也是这个值），以获得 <strong>CPU时钟速率一半值的外设时钟</strong>。</li>
+<li>设定TB计数器模式。修改 <code>TBCTL</code> 寄存器下的 <code>CTRMODE</code> 为 <code>0x2</code> ，打开 TB counter 的增减计数模式。</li>
+<li>设定TB周期。修改 <code>TBPRD</code> 寄存器的值为十进制的 <code>1600</code> 。</li>
+</ol>
+<h1 id="常见错误处理"><a href="#常见错误处理" class="headerlink" title="常见错误处理"></a>常见错误处理</h1><h2 id="10263-MEMORY-RANGE-HAS-ALREADY-BEEN-SPECIFIED"><a href="#10263-MEMORY-RANGE-HAS-ALREADY-BEEN-SPECIFIED" class="headerlink" title="#10263 MEMORY RANGE HAS ALREADY BEEN SPECIFIED"></a>#10263 MEMORY RANGE HAS ALREADY BEEN SPECIFIED</h2><p><strong>错误提示</strong>：存储区域范围（Memory Range）重复声明。</p>
+<p><strong>解释</strong>：在两个 <code>.cmd</code> 文件中，对 memory 的 page0 下的存储范围重复声明。</p>
+<div style="text-align: center;"><img src="https://pic.islet.space/2021/07/image-20210720171745641.png" alt="image-20210720171745641" style="zoom:80%;" /> <img src="https://pic.islet.space/2021/07/image-20210720171759718.png" alt="image-20210720171759718" style="zoom:80%;" /></div>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&quot;..&#x2F;28004x_RAM_afe031_lnk.cmd&quot;, line 7: error #10263: BEGIN memory range has already been specified</span><br><span class="line">&quot;..&#x2F;28004x_RAM_afe031_lnk.cmd&quot;, line 7: error #10264: BEGIN memory range overlaps existing memory range BEGIN</span><br><span class="line">&quot;..&#x2F;28004x_RAM_afe031_lnk.cmd&quot;, line 8: error #10263: RAMM0 memory range has already been specified</span><br><span class="line">&quot;..&#x2F;28004x_RAM_afe031_lnk.cmd&quot;, line 8: error #10264: RAMM0 memory range overlaps existing memory range RAMM0</span><br><span class="line">&quot;..&#x2F;28004x_RAM_afe031_lnk.cmd&quot;, line 9: error #10263: RAMLS0 memory range has already been specified</span><br><span class="line">.....</span><br></pre></td></tr></table></figure>
+
+<p><strong>解决办法</strong>：删除、移动 <code>28004x_RAM_afe031_lnk.cmd</code> ，或更改其后缀名；确保在 <em>项目属性</em>（Properties）中的 <strong>连接器命令文件</strong>（Linker Command File）为正确的 <code>280041_RAM_lnk.cmd</code> 。</p>
+<img src="https://pic.islet.space/2021/07/image-20210720172450100.png" alt="image-20210720172450100" style="zoom:80%;" />
+
+
+
+<img src="https://pic.islet.space/2021/07/image-20210720172242634.png" alt="image-20210720172242634" style="zoom:80%;" />
+
+
+
+
+
+<h2 id="1965-CANNOT-OPEN-SOURCE-FILE"><a href="#1965-CANNOT-OPEN-SOURCE-FILE" class="headerlink" title="#1965 CANNOT OPEN SOURCE FILE"></a>#1965 CANNOT OPEN SOURCE FILE</h2><p>无法找到指定头文件，报错如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&quot;D:&#x2F;ti&#x2F;c2000Ware&#x2F;C2000Ware_2_01_00_00&#x2F;device_support&#x2F;f28004x&#x2F;common&#x2F;include&#x2F;F28x_Project.h&quot;, line 47: fatal error #1965: cannot open source file &quot;f28004x_device.h&quot;</span><br></pre></td></tr></table></figure>
+
+<p>可以借助本地搜索工具everything进行文件搜索，将缺失的头文件的绝对路径复制，并粘贴至 头文件设置 下的搜索路径中。上方的错误缺失 <code>f28004x_device.h</code> ，添加 <code>D:\ti\c2000Ware\C2000Ware_2_01_00_00\device_support\f28004x\headers\include</code> 绝对路径以供搜索，即可解决。</p>
+<p><img src="https://pic.islet.space/2021/07/image-20210721104533304.png" alt="image-20210721104533304"></p>
+<h2 id="10234-D-UNRESOLVED-SYMBOLS-REMAIN"><a href="#10234-D-UNRESOLVED-SYMBOLS-REMAIN" class="headerlink" title="#10234-D UNRESOLVED SYMBOLS REMAIN"></a>#10234-D UNRESOLVED SYMBOLS REMAIN</h2><p>在将函数需要的头文件添加到项目后，进行 <em>build project</em> ，出现 “未能解决的标志存留” ，有2种可能原因：</p>
+<ol>
+<li>输出格式（Output Format）不正确。</li>
+<li>头文件缺少对应的 <code>.c</code> 文件。</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"> undefined        first referenced   </span><br><span class="line">  symbol              <span class="keyword">in</span> file        </span><br><span class="line"> ---------        ----------------   </span><br><span class="line"> _ClkCfgRegs      ./SystemControl.obj</span><br><span class="line"> _CpuSysRegs      ./SystemControl.obj</span><br><span class="line"> _Dcc0Regs        ./SystemControl.obj</span><br><span class="line"> _DcsmBank0Z1Regs ./SystemControl.obj</span><br><span class="line"> _DcsmBank0Z2Regs ./SystemControl.obj</span><br><span class="line"> _F28x_usDelay    ./SystemControl.obj</span><br><span class="line"> _Flash0CtrlRegs  ./SystemControl.obj</span><br><span class="line"> _Flash0EccRegs   ./SystemControl.obj</span><br><span class="line"> _WdRegs          ./SystemControl.obj</span><br><span class="line"> </span><br><span class="line">error <span class="comment">#10234-D: unresolved symbols remain</span></span><br><span class="line">error <span class="comment">#10010: errors encountered during linking; &quot;F28004x_WPT.out&quot; not built</span></span><br><span class="line"> </span><br><span class="line">&gt;&gt; Compilation failure</span><br><span class="line">makefile:143: recipe <span class="keyword">for</span> target <span class="string">&#x27;F28004x_WPT.out&#x27;</span> failed</span><br><span class="line">makefile:139: recipe <span class="keyword">for</span> target <span class="string">&#x27;all&#x27;</span> failed</span><br><span class="line">gmake[1]: *** [F28004x_WPT.out] Error 1</span><br><span class="line">gmake: *** [all] Error 2</span><br><span class="line"></span><br><span class="line">**** Build Finished ****</span><br></pre></td></tr></table></figure>
+
+<p><strong>解决方法</strong>：</p>
+<p>排除第一种情况后，找到 未定义符号（undefined symbol）对应的头文件 <code>f28004x_device.h</code> 和 <code>f28004x_sysctrl.h</code> 所在的文件路径 <code>D:\ti\c2000Ware\C2000Ware_2_01_00_00\device_support\f28004x\headers\include</code> ，注意到该头文件上一级有个 <code>source</code> 文件夹，存储着头文件对应的 <code>.c</code> 文件： <code>f28004x_globalvariabledefs.c</code> ，将该头文件以链接或复制的形式添加到项目文件中即可。</p>
+<p><strong>注意</strong>：大部分情况下，header files 都会有其对应的 <code>.c</code> 或 <code>.asm</code> 文件，需要去相同的目录下方寻找即可。</p>
+<div style="text-align: center;"><img src="https://pic.islet.space/2021/07/image-20210727092820296.png" alt="image-20210727092820296" style="zoom:100%;" /><img src="https://pic.islet.space/2021/07/image-20210727094440528.png" alt="image-20210727094440528" style="zoom:100%;" /></div>
+
+
+
+<h2 id="SC-ERR-PATH-BROKEN"><a href="#SC-ERR-PATH-BROKEN" class="headerlink" title="SC_ERR_PATH_BROKEN"></a>SC_ERR_PATH_BROKEN</h2><p>在将评估板接到PC过程中，进行连接测试（Test Connection），报错如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">-----[Print the reset-command software log-file]-----------------------------</span><br><span class="line"></span><br><span class="line">This utility has selected a 100- or 510-class product.</span><br><span class="line">This utility will load the adapter <span class="string">&#x27;jioxds110.dll&#x27;</span>.</span><br><span class="line">The library build date was <span class="string">&#x27;Nov 25 2019&#x27;</span>.</span><br><span class="line">The library build time was <span class="string">&#x27;16:55:29&#x27;</span>.</span><br><span class="line">The library package version is <span class="string">&#x27;8.4.0.00006&#x27;</span>.</span><br><span class="line">The library component version is <span class="string">&#x27;35.35.0.0&#x27;</span>.</span><br><span class="line">The controller does not use a programmable FPGA.</span><br><span class="line">The controller has a version number of <span class="string">&#x27;5&#x27;</span> (0x00000005).</span><br><span class="line">The controller has an insertion length of <span class="string">&#x27;0&#x27;</span> (0x00000000).</span><br><span class="line">This utility will attempt to reset the controller.</span><br><span class="line">This utility has successfully reset the controller.</span><br><span class="line"></span><br><span class="line">-----[Print the reset-command hardware log-file]-----------------------------</span><br><span class="line"></span><br><span class="line">The scan-path will be reset by toggling the JTAG TRST signal.</span><br><span class="line">The controller is the XDS110 with USB interface.</span><br><span class="line">The link from controller to target is direct (without cable).</span><br><span class="line">The software is configured <span class="keyword">for</span> XDS110 features.</span><br><span class="line">The controller cannot monitor the value on the EMU[0] pin.</span><br><span class="line">The controller cannot monitor the value on the EMU[1] pin.</span><br><span class="line">The controller cannot control the timing on output pins.</span><br><span class="line">The controller cannot control the timing on input pins.</span><br><span class="line">The scan-path link-delay has been <span class="built_in">set</span> to exactly <span class="string">&#x27;0&#x27;</span> (0x0000).</span><br><span class="line"></span><br><span class="line">-----[An error has occurred and this utility has aborted]--------------------</span><br><span class="line"></span><br><span class="line">This error is generated by TI<span class="string">&#x27;s USCIF driver or utilities.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">The value is &#x27;</span>-233<span class="string">&#x27; (0xffffff17).</span></span><br><span class="line"><span class="string">The title is &#x27;</span>SC_ERR_PATH_BROKEN<span class="string">&#x27;.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">The explanation is:</span></span><br><span class="line"><span class="string">The JTAG IR and DR scan-paths cannot circulate bits, they may be broken.</span></span><br><span class="line"><span class="string">An attempt to scan the JTAG scan-path has failed.</span></span><br><span class="line"><span class="string">The target&#x27;</span>s JTAG scan-path appears to be broken</span><br><span class="line">with a stuck-at-ones or stuck-at-zero fault.</span><br><span class="line"></span><br><span class="line">[End: Texas Instruments XDS110 USB Debug Probe_0]</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<p>因为本开发板设计上使用两线制，为 <em>cJTAG</em>，而默认情况下是标准的 JTAG，只需要 TCK 和 TMS 两个信号（官方文档的常见问答部分有说明）。</p>
+<p>在<code>.ccxml</code> 文件中进行修改，点击下方的 <em>Advanced</em>，然后选择 <code>cJTAG(1149.7)2-pin advance mode</code>，然后 <em>save</em> 保存即可。具体操作如下图：</p>
+<p><img src="https://pic.islet.space/2021/07/image-20210726155434636.png" alt="image-20210726155434636"></p>
+<p>再次运行结果如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br></pre></td><td class="code"><pre><span class="line">-----[Print the reset-command software log-file]-----------------------------</span><br><span class="line"></span><br><span class="line">This utility has selected a 100- or 510-class product.</span><br><span class="line">This utility will load the adapter <span class="string">&#x27;jioxds110.dll&#x27;</span>.</span><br><span class="line">The library build date was <span class="string">&#x27;Nov 25 2019&#x27;</span>.</span><br><span class="line">The library build time was <span class="string">&#x27;16:55:29&#x27;</span>.</span><br><span class="line">The library package version is <span class="string">&#x27;8.4.0.00006&#x27;</span>.</span><br><span class="line">The library component version is <span class="string">&#x27;35.35.0.0&#x27;</span>.</span><br><span class="line">The controller does not use a programmable FPGA.</span><br><span class="line">The controller has a version number of <span class="string">&#x27;5&#x27;</span> (0x00000005).</span><br><span class="line">The controller has an insertion length of <span class="string">&#x27;0&#x27;</span> (0x00000000).</span><br><span class="line">This utility will attempt to reset the controller.</span><br><span class="line">This utility has successfully reset the controller.</span><br><span class="line"></span><br><span class="line">-----[Print the reset-command hardware log-file]-----------------------------</span><br><span class="line"></span><br><span class="line">The scan-path will be reset by toggling the JTAG TRST signal.</span><br><span class="line">The controller is the XDS110 with USB interface.</span><br><span class="line">The link from controller to target is direct (without cable).</span><br><span class="line">The software is configured <span class="keyword">for</span> XDS110 features.</span><br><span class="line">The controller cannot monitor the value on the EMU[0] pin.</span><br><span class="line">The controller cannot monitor the value on the EMU[1] pin.</span><br><span class="line">The controller cannot control the timing on output pins.</span><br><span class="line">The controller cannot control the timing on input pins.</span><br><span class="line">The scan-path link-delay has been <span class="built_in">set</span> to exactly <span class="string">&#x27;0&#x27;</span> (0x0000).</span><br><span class="line"></span><br><span class="line">-----[Perform the Integrity scan-test on the JTAG IR]------------------------</span><br><span class="line"></span><br><span class="line">This <span class="built_in">test</span> will use blocks of 64 32-bit words.</span><br><span class="line">This <span class="built_in">test</span> will be applied just once.</span><br><span class="line"></span><br><span class="line">Do a <span class="built_in">test</span> using 0xFFFFFFFF.</span><br><span class="line">Scan tests: 1, skipped: 0, failed: 0</span><br><span class="line">Do a <span class="built_in">test</span> using 0x00000000.</span><br><span class="line">Scan tests: 2, skipped: 0, failed: 0</span><br><span class="line">Do a <span class="built_in">test</span> using 0xFE03E0E2.</span><br><span class="line">Scan tests: 3, skipped: 0, failed: 0</span><br><span class="line">Do a <span class="built_in">test</span> using 0x01FC1F1D.</span><br><span class="line">Scan tests: 4, skipped: 0, failed: 0</span><br><span class="line">Do a <span class="built_in">test</span> using 0x5533CCAA.</span><br><span class="line">Scan tests: 5, skipped: 0, failed: 0</span><br><span class="line">Do a <span class="built_in">test</span> using 0xAACC3355.</span><br><span class="line">Scan tests: 6, skipped: 0, failed: 0</span><br><span class="line">All of the values were scanned correctly.</span><br><span class="line"></span><br><span class="line">The JTAG IR Integrity scan-test has succeeded.</span><br><span class="line"></span><br><span class="line">-----[Perform the Integrity scan-test on the JTAG DR]------------------------</span><br><span class="line"></span><br><span class="line">This <span class="built_in">test</span> will use blocks of 64 32-bit words.</span><br><span class="line">This <span class="built_in">test</span> will be applied just once.</span><br><span class="line"></span><br><span class="line">Do a <span class="built_in">test</span> using 0xFFFFFFFF.</span><br><span class="line">Scan tests: 1, skipped: 0, failed: 0</span><br><span class="line">Do a <span class="built_in">test</span> using 0x00000000.</span><br><span class="line">Scan tests: 2, skipped: 0, failed: 0</span><br><span class="line">Do a <span class="built_in">test</span> using 0xFE03E0E2.</span><br><span class="line">Scan tests: 3, skipped: 0, failed: 0</span><br><span class="line">Do a <span class="built_in">test</span> using 0x01FC1F1D.</span><br><span class="line">Scan tests: 4, skipped: 0, failed: 0</span><br><span class="line">Do a <span class="built_in">test</span> using 0x5533CCAA.</span><br><span class="line">Scan tests: 5, skipped: 0, failed: 0</span><br><span class="line">Do a <span class="built_in">test</span> using 0xAACC3355.</span><br><span class="line">Scan tests: 6, skipped: 0, failed: 0</span><br><span class="line">All of the values were scanned correctly.</span><br><span class="line"></span><br><span class="line">The JTAG DR Integrity scan-test has succeeded.</span><br><span class="line"></span><br><span class="line">[End: Texas Instruments XDS110 USB Debug Probe_0]</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="时钟初始化错误"><a href="#时钟初始化错误" class="headerlink" title="时钟初始化错误"></a>时钟初始化错误</h2><p>时钟初始化错误是可能新建文件后可能会出现的隐形错误，因为程序编译的时候不报错，只报 WARNING ，因此很难察觉。</p>
+<p>但是，能通过 Expression 界面输入寄存器名称，用以观察其是否被初始化，如下图示，为自建项目后初始化的寄存器数值，只运行第一步PLL初始化，可以观察到 <code>ClkCfgRegs</code> 并未被初始化。</p>
+<p><img src="https://pic.islet.space/2021/07/image-20210730170342194.png" alt="image-20210730170342194"></p>
+<p>同样使用官方样例代码进行仅一步的PLL初始化操作，可以发现初始化成功。</p>
+<p><img src="https://pic.islet.space/2021/07/image-20210730170350083.png" alt="image-20210730170350083"></p>
+<p>仔细对比和检查后发现，自建项目中缺少了几个，通过link方式或copy方式添加进来，再到项目属性下的 Symbol Management中，为输出模块添加代码入口点 <code>code_start</code> 即可。</p>
+<p><img src="https://pic.islet.space/2021/07/image-20210730171218213.png" alt="image-20210730171218213"></p>
+<p><img src="https://pic.islet.space/2021/07/image-20210730171409142.png" alt="image-20210730171409142"></p>
+<h2 id="TARGET-MUST-BE-CONNECTED"><a href="#TARGET-MUST-BE-CONNECTED" class="headerlink" title="TARGET MUST BE CONNECTED"></a>TARGET MUST BE CONNECTED</h2><p>使用JTAG调试器XDS100 V2连接至目标设备上时，如果出现下图所示的 “Disconnected: Unknown”，说明目标MCU/DSP没有正确识别。</p>
+<p><img src="https://pic.islet.space/2021/08/image-20210802160213827.png" alt="image-20210802160213827"></p>
+<p>首先应检查JTAG是否链接正常，打开“设备管理器”进行查看，如果设备连接器中出现了该JTAG设备，则进一步查看项目文件下的<code>.cxxm</code>l文件，该文件用于配置设备连接信息，包括芯片信号、JTAG调试器信号、通信方式、通信速率等。确保所有设置都正确以后进行全面断电、断开连接、重启CCS并重新尝试Debug，如果仍旧出现问题，请按以下步骤进行操作。</p>
+<p>在Debug界面，点击目标CPU，点击 <code>Connect Target</code> 进行手动连接。</p>
+<p><img src="https://pic.islet.space/2021/08/image-20210802160242203.png" alt="image-20210802160242203"></p>
+<p>连接正确后，手动导入 <code>Build</code> 完之后的 <code>.out</code> 文件，将该程序手动烧写至CPU的RAM/Flash中。</p>
+<p><img src="https://pic.islet.space/2021/08/image-20210802160456548.png" alt="image-20210802160456548"></p>
+<p>选择对应项目下生成的 <code>.out</code> 文件：</p>
+<p><img src="https://pic.islet.space/2021/08/image-20210802160358841.png" alt="image-20210802160358841"></p>
+<p>可以在Console台（界面）观察到已经写入和初始化成功：</p>
+<p><img src="https://pic.islet.space/2021/08/image-20210802154136487.png" alt="image-20210802154136487"></p>
+<h1 id="术语-1"><a href="#术语-1" class="headerlink" title="术语"></a>术语</h1><p><strong>LDO</strong>: Low dropout, A DC linear voltage regulator which can operate with a very small input/output differential voltage.</p>
 <p><strong>V<span style="font-size: 0.8rem;">REG</span></strong>: Voltage Regulator. 稳压器。</p>
 <p><strong>V<span style="font-size: 0.8rem;">REF</span></strong>: Voltage Reference. 参考电压</p>
 <p><strong>ESD</strong>: Electrostatic Discharge, 静电放电。</p>
 <h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><ol>
 <li><a target="_blank" rel="noopener" href="https://www.ti.com.cn/cn/lit/gpn/tms320f280049">《TMS320F28004x 微控制器》</a></li>
+<li><a href="">《F28004x_DEV_USER_GUIDE.pdf》</a></li>
+<li><a href="">《SPRU566N C2000 <em><strong>Real-Time Control MCU Peripherals</strong></em> Reference Guide》</a></li>
+<li><a href="">《SPRUI33D TMS320F28004x <em><strong>Real-Time Microcontrollers</strong></em> Technical Reference Manual》</a></li>
+<li><a href="">《SPRUHS1C TMS320C28x <em><strong>Extended Instruction Sets</strong></em> Technical Reference Manual》</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.docin.com/p-505058292.html">基于IGBT的DC-AC变换器设计</a></li>
+<li><a target="_blank" rel="noopener" href="http://www.henlito.com/chinese/news/10/12717.html">IGBT模块单相半桥逆变电路设计与应用</a></li>
+<li><a target="_blank" rel="noopener" href="https://code.islet.space/TI/f28004x/index.html">Texas Instruments F28004x Peripheral Driver Library </a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/Simon_cici/article/details/84951920">280049LaunchPad仿真器连接不上的问题解决办法</a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/dog_second/article/details/108382419">DSP 28335 编译过程中的#10234-D、#10010报错</a></li>
+<li>《MCU025A(001)_BOM.xls》</li>
+<li>《MCU025A(001)_Sch.pdf》</li>
+<li>《MCU025A_PCB_LayerPlots.pdf》</li>
 </ol>
 
     </div>

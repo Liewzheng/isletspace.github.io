@@ -126,7 +126,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">82</span>
+          <span class="site-state-item-count">81</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -169,91 +169,6 @@
 
 
     <div class="main-inner index posts-expand">
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://islet.space/2019/03/08/Linux/System/2019-03-08MBR%E5%92%8CGPT%E7%9A%84%E5%8C%BA%E5%88%AB/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Liewzheng">
-      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Coder的孤岛">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2019/03/08/Linux/System/2019-03-08MBR%E5%92%8CGPT%E7%9A%84%E5%8C%BA%E5%88%AB/" class="post-title-link" itemprop="url">MBR和GPT的区别</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
-    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2019-03-08 19:00:00" itemprop="dateCreated datePublished" datetime="2019-03-08T19:00:00+08:00">2019-03-08</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-05-20 22:46:05" itemprop="dateModified" datetime="2021-05-20T22:46:05+08:00">2021-05-20</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>1、传统的BIOS只支持从MBR分区的硬盘启动。MBR分区的分区表保存在硬盘的第一个扇区，而且只有64字节，所以最多只能有四个表项。也就是说，我们只能把硬盘分为4主分区，或者分成小于等于3个主分区再加一个扩展分区。扩展分区又可以分为多个逻辑分区。MBR分区的优点就是简单，大家都用，所以大家都懂的嘛，很多操作系统都可以从MBR分区的硬盘启动。缺点就是MBR分区不能识别大于2T的硬盘空间，也不能有大于2T的分区； </p>
-<p>2、GPT分区的硬盘可以解决以上MBR分区的所有缺点，它没有4个主分区的限制，想分几个主分区就可以分几个主分区，它可以识别大于2T的硬盘空间，每个分区的大小也可以超过2T。但是它的缺点是需要操作系统支持。比如只有WinXP 64位、Win Vista、Win 7和Win 8和比较新的Linux发行版支持GPT分区的硬盘。而且，如果没有EFI的支持的话，以上系统也只能将GPT分区的硬盘当成数据盘，不能从GPT分区的硬盘启动； </p>
-<p>3、要从GPT分区的硬盘启动，则主板使用EFI、硬盘使用GPT分区、操作系统支持GPT和EFI这三个条件缺一不可。目前比较新的64位Linux系统和Win8系统都是支持EFI的，所以都是需要从GPT分区的硬盘启动的。现在的电脑主板已经逐渐抛弃legacy BIOS，而只支持EFI了。（像我的工作机这样的过渡产品将越来越少。）目前很多预装Win8的笔记本的主板几乎都只支持EFI了。所以，学习GPT和EFI的相关知识势在必行； </p>
-<p>4、以上分区策略都是固定分区。硬盘分区一旦完成，则分区的大小不可改变，如果要改变分区的大小的话，只有重新分区。而且由于没有办法把多个硬盘分到一个区，所以再怎么分，每个分区的大小都有限。所以我们需要一种动态分区的东西。LVM就是这样一个东西，它叫逻辑卷管理（Logical Volume Manager）。使用LVM的机制是这样的：首先把硬盘分区或者整块硬盘标记为一个物理卷（PV），然后再创建一个卷组（VG），把一个或多个物理卷加入卷组，最后对卷组进行分区，每一个分区称为一个逻辑卷（LV）。LVM的优点就是可以随时向卷组中添加物理卷扩展卷组的大小，以可以动态调整逻辑卷的大小。这在服务器中尤其有用，比如说有一个原本有100个用户的服务器，其/home目录下就会有100个用户的主目录，如果给他们每人分配20G的空间的话，就会占满一个2T的硬盘，如果这时再来100个用户怎么办？如果使用LVM就可以顺利解决这个问题，我们可以再加一个3T的硬盘，然后把这个硬盘加入卷组就可以扩大卷组的大小，然后再调整/home所在的逻辑卷的大小即可。LVM既可以搭配MBR使用，也可以搭配GPT使用。</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
 
     
 
@@ -1313,6 +1228,90 @@
 <li>&lt;<a target="_blank" rel="noopener" href="https://freertos.org/a00106.html">API</a>&gt;</li>
 </ol>
 
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://islet.space/2019/01/17/Programming/C++/2019-01-17-C++%20-%2010%E8%BF%9B%E5%88%B6%E6%95%B4%E5%9E%8B%E8%BD%AC%E6%8D%A2%E6%88%9016%E8%BF%9B%E5%88%B6%E6%98%BE%E7%A4%BA%E7%9A%84%E5%AD%97%E7%AC%A6%E4%B8%B2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Liewzheng">
+      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coder的孤岛">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2019/01/17/Programming/C++/2019-01-17-C++%20-%2010%E8%BF%9B%E5%88%B6%E6%95%B4%E5%9E%8B%E8%BD%AC%E6%8D%A2%E6%88%9016%E8%BF%9B%E5%88%B6%E6%98%BE%E7%A4%BA%E7%9A%84%E5%AD%97%E7%AC%A6%E4%B8%B2/" class="post-title-link" itemprop="url">10进制整型转换成16进制显示的字符串</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2019-01-17 17:30:00" itemprop="dateCreated datePublished" datetime="2019-01-17T17:30:00+08:00">2019-01-17</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2021-05-23 20:06:19" itemprop="dateModified" datetime="2021-05-23T20:06:19+08:00">2021-05-23</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Programming/" itemprop="url" rel="index"><span itemprop="name">Programming</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>原文出处：《<a target="_blank" rel="noopener" href="https://blog.csdn.net/ma2595162349/article/details/74590285">十进制数转为十六进制字符串</a>》</p>
+<p>本文修改了以上原文的代码，修正了[0-16]区间的10进制数转换成16进制数时无法正确转换的问题。</p>
+<p>代码如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">char</span> Hexadecimal_Code[]=<span class="string">&quot;0123456789ABCDEF&quot;</span>;</span><br><span class="line"><span class="keyword">char</span> str_Temp[<span class="number">10</span>];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">char</span> *<span class="title">Decimal_To_Hexadecimal_String</span><span class="params">(<span class="keyword">int</span> Decimal_Data)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> High,Low,i=<span class="number">0</span>;</span><br><span class="line">	<span class="keyword">if</span>(Decimal_Data &lt;= <span class="number">0</span> || Decimal_Data &gt; <span class="number">255</span>)</span><br><span class="line">		<span class="built_in">exit</span>(<span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">	High=Decimal_Data &gt;&gt; <span class="number">4</span>;</span><br><span class="line">   	Low=Decimal_Data &amp; <span class="number">15</span>;</span><br><span class="line"></span><br><span class="line">  	str_Temp[i++]=Hexadecimal_Code[High];</span><br><span class="line">	str_Temp[i++]=Hexadecimal_Code[Low];</span><br><span class="line">	str_Temp[i]=<span class="string">&#x27;\0&#x27;</span>;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> str_Temp;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;%s\n&quot;</span>,Decimal_To_Hexadecimal_String(<span class="number">5</span>));</span><br><span class="line"></span><br><span class="line">   	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
       
     </div>
 
