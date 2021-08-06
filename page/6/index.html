@@ -6,7 +6,7 @@
 <meta name="theme-color" content="#222">
 <meta name="generator" content="Hexo 5.4.0">
 
-
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
@@ -19,7 +19,7 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
 
-<script class="next-config" data-name="main" type="application/json">{&quot;hostname&quot;:&quot;islet.space&quot;,&quot;root&quot;:&quot;&#x2F;&quot;,&quot;images&quot;:&quot;&#x2F;images&quot;,&quot;scheme&quot;:&quot;Gemini&quot;,&quot;version&quot;:&quot;8.3.0&quot;,&quot;exturl&quot;:false,&quot;sidebar&quot;:{&quot;position&quot;:&quot;left&quot;,&quot;display&quot;:&quot;post&quot;,&quot;padding&quot;:18,&quot;offset&quot;:12},&quot;copycode&quot;:false,&quot;bookmark&quot;:{&quot;enable&quot;:false,&quot;color&quot;:&quot;#222&quot;,&quot;save&quot;:&quot;auto&quot;},&quot;fancybox&quot;:false,&quot;mediumzoom&quot;:false,&quot;lazyload&quot;:false,&quot;pangu&quot;:false,&quot;comments&quot;:{&quot;style&quot;:&quot;tabs&quot;,&quot;active&quot;:null,&quot;storage&quot;:true,&quot;lazyload&quot;:false,&quot;nav&quot;:null},&quot;motion&quot;:{&quot;enable&quot;:true,&quot;async&quot;:false,&quot;transition&quot;:{&quot;post_block&quot;:&quot;fadeIn&quot;,&quot;post_header&quot;:&quot;fadeInDown&quot;,&quot;post_body&quot;:&quot;fadeInDown&quot;,&quot;coll_header&quot;:&quot;fadeInLeft&quot;,&quot;sidebar&quot;:&quot;fadeInUp&quot;}},&quot;prism&quot;:false,&quot;i18n&quot;:{&quot;placeholder&quot;:&quot;Searching...&quot;,&quot;empty&quot;:&quot;We didn&#39;t find any results for the search: ${query}&quot;,&quot;hits_time&quot;:&quot;${hits} results found in ${time} ms&quot;,&quot;hits&quot;:&quot;${hits} results found&quot;}}</script>
+<script class="next-config" data-name="main" type="application/json">{&quot;hostname&quot;:&quot;islet.space&quot;,&quot;root&quot;:&quot;&#x2F;&quot;,&quot;images&quot;:&quot;&#x2F;images&quot;,&quot;scheme&quot;:&quot;Gemini&quot;,&quot;version&quot;:&quot;8.3.0&quot;,&quot;exturl&quot;:false,&quot;sidebar&quot;:{&quot;position&quot;:&quot;left&quot;,&quot;display&quot;:&quot;post&quot;,&quot;padding&quot;:18,&quot;offset&quot;:12},&quot;copycode&quot;:true,&quot;bookmark&quot;:{&quot;enable&quot;:false,&quot;color&quot;:&quot;#222&quot;,&quot;save&quot;:&quot;auto&quot;},&quot;fancybox&quot;:false,&quot;mediumzoom&quot;:false,&quot;lazyload&quot;:false,&quot;pangu&quot;:false,&quot;comments&quot;:{&quot;style&quot;:&quot;tabs&quot;,&quot;active&quot;:null,&quot;storage&quot;:true,&quot;lazyload&quot;:false,&quot;nav&quot;:null},&quot;motion&quot;:{&quot;enable&quot;:true,&quot;async&quot;:false,&quot;transition&quot;:{&quot;post_block&quot;:&quot;fadeIn&quot;,&quot;post_header&quot;:&quot;fadeInDown&quot;,&quot;post_body&quot;:&quot;fadeInDown&quot;,&quot;coll_header&quot;:&quot;fadeInLeft&quot;,&quot;sidebar&quot;:&quot;fadeInUp&quot;}},&quot;prism&quot;:false,&quot;i18n&quot;:{&quot;placeholder&quot;:&quot;Searching...&quot;,&quot;empty&quot;:&quot;We didn&#39;t find any results for the search: ${query}&quot;,&quot;hits_time&quot;:&quot;${hits} results found in ${time} ms&quot;,&quot;hits&quot;:&quot;${hits} results found&quot;}}</script>
 <meta name="description" content="笔记分享的旮旯孤岛而已">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Coder的孤岛">
@@ -83,7 +83,11 @@
 
 <nav class="site-nav">
   <ul class="main-menu menu">
+        <li class="menu-item menu-item-首页"><a href="https://islet.space/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
         <li class="menu-item menu-item-文章"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>文章</a></li>
+        <li class="menu-item menu-item-标签"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-目录"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>目录</a></li>
+        <li class="menu-item menu-item-zplusplus"><a href="https://zplusplus.cn/" rel="noopener" target="_blank"><i class="fa fa-user fa-fw"></i>ZPLUSPLUS</a></li>
   </ul>
 </nav>
 
@@ -126,17 +130,19 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">81</span>
+          <span class="site-state-item-count">82</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
-        <span class="site-state-item-count">18</span>
-        <span class="site-state-item-name">categories</span>
+            <a href="/categories/">
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">153</span>
-        <span class="site-state-item-name">tags</span>
+            <a href="/tags/">
+        <span class="site-state-item-count">155</span>
+        <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
 </div>
@@ -162,6 +168,7 @@
     <i class="fa fa-arrow-up"></i>
     <span>0%</span>
   </div>
+  <div class="reading-progress-bar"></div>
 
 <noscript>
   <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
@@ -169,6 +176,128 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://islet.space/2021/04/11/Web/JavaScript/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Liewzheng">
+      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coder的孤岛">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/04/11/Web/JavaScript/" class="post-title-link" itemprop="url">Javascript</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-04-11 23:58:32" itemprop="dateCreated datePublished" datetime="2021-04-11T23:58:32+08:00">2021-04-11</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2021-04-26 00:13:21" itemprop="dateModified" datetime="2021-04-26T00:13:21+08:00">2021-04-26</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Networking/" itemprop="url" rel="index"><span itemprop="name">Networking</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="面向对象编程"><a href="#面向对象编程" class="headerlink" title="面向对象编程"></a>面向对象编程</h1><h2 id="对象的抽象"><a href="#对象的抽象" class="headerlink" title="对象的抽象"></a>对象的抽象</h2><p><strong>抽象</strong> 是指一种归纳或总结，<strong>对象</strong> 是现实世界物体特征的实体。万事万物不论大小皆可看做对象， <strong>类</strong> 则是对各种不同对象的 <em>归纳总结</em>，类是对象的 <em>抽象表示形式</em>。</p>
+<blockquote>
+<p>例如，男演员Jack可以看做是一个对象，女演员Rose也可以看过是一个对象，而两者会被统一归纳为Person或者Human的类（或抽象）。每一个对象都有其独特的属性（Property）或功能（Function），而归纳总结出来的类则具有不同对象的相同属性或功能。</p>
+</blockquote>
+<p>基于类的面向对象语言是面向对象世界里的主流。虽然大多数面向对象开发语言都使用类来完成面向对象编程，但类不是面向对象编程的实质内涵。面向对象的实质内涵是将所有业务逻辑单元都视为一个对象（即，对象是目的或结果），且类不是唯一用来完成面向对象编程的方法。</p>
+<p>面向对象不能被当做面向类，否则会进入误区。对象和类的关系相当于一般程序设计语言中的 <strong>变量</strong> 和 <strong>变量类型</strong> 的关系。所以，有时类也被称为是一种数据类型，可以看做抽象数据类型的具体实现。此时的数据类型则是 **数据 **和 <strong>操作</strong> 的集合。</p>
+<h2 id="面向对象与面向过程的区别"><a href="#面向对象与面向过程的区别" class="headerlink" title="面向对象与面向过程的区别"></a>面向对象与面向过程的区别</h2><p>面向过程程序设计，即结构化程序设计，诸如Pascal、C。</p>
+<p>面向对象程序设计解决了结构化程序设计代码复用的难题，如C++、C#、Java、JavaScript、Python等都是。</p>
+<img src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/04/image-20210413144641711.png" alt="image-20210413144641711" style="zoom: 67%;" />
+
+<p>面向过程也是把程序定义为“数据+作用于数据的操作算法”，但最重要的区别是：面向过程编程 <mark>使用过程操作数据结构</mark>， 而面向对象编程将过程和数据结构捆绑，使对象 <mark>操作自己的数据结构</mark>。</p>
+<h1 id="JavaScript的类"><a href="#JavaScript的类" class="headerlink" title="JavaScript的类"></a>JavaScript的类</h1><h2 id="类的创建"><a href="#类的创建" class="headerlink" title="类的创建"></a>类的创建</h2><p>JavaScript可以用关键字 <code>class</code> 进行赋值。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Rectangle</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="title">constructor</span>(<span class="params">height, width</span>)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.height = height;</span><br><span class="line">        <span class="built_in">this</span>.width = width;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 方法一：参数赋值法，间接调用构造器赋值</span></span><br><span class="line"><span class="keyword">var</span> oRectangle = <span class="keyword">new</span> Rectangle(<span class="number">10</span>, <span class="number">20</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 方法二：生成对象后单独调用赋值</span></span><br><span class="line"><span class="comment">// var oRectangle = new Rectangle();</span></span><br><span class="line"><span class="comment">// oRectangle.height = 10;</span></span><br><span class="line"><span class="comment">// oRectangle.width = 30;</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(oRectangle.height, oRectangle.width)</span><br></pre></td></tr></table></figure>
+
+
+
+<p>在MDN Web Docs中，对JavaScript类的定义如下：</p>
+<blockquote>
+<p>实际上，类是“特殊的函数”，就像你能够定义的函数表达式和函数声明一样，类语法有两个组成部分：**类表达式 **和 <strong>类声明</strong>。</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">HelloWrold</span>(<span class="params"></span>)</span>&#123;    <span class="comment">//To use keyword `function` instead of `class` to define a class</span></span><br><span class="line">    <span class="built_in">this</span>.printInfo = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;Hi! JavaScript!\n&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> oHelloWorld = <span class="keyword">new</span> HelloWorld();    <span class="comment">// Make a new object of the class named `HelloWorld`</span></span><br><span class="line"><span class="keyword">var</span> result = oHelloWorld.printInfo();    <span class="comment">//Call the method of the object to assign</span></span><br><span class="line"><span class="built_in">document</span>.write(result);</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="构造器"><a href="#构造器" class="headerlink" title="构造器"></a>构造器</h2><p><strong>构造器（Constructor）</strong>，或称 <strong>构造方法</strong>，一种用于创建和初始化<code>class</code>创建的对象的特殊 <strong>方法（Methods）</strong>。<code>constructor([arguments]) &#123; ... &#125;</code>， 其中 <code>arguments</code> 看情况而定，可以省略。</p>
+<p><strong>注意</strong>：</p>
+<ol>
+<li>在一个类中只能有一个名为 <code>constructor</code> 的特殊方法。 一个类中出现多次构造函数 (constructor)方法将会抛出一个 <code>SyntaxError</code> 错误。</li>
+<li>在一个构造方法中可以使用 <code>super</code> 关键字来 <mark>调用一个父类的构造方法</mark>。</li>
+<li>如果没有显式指定构造方法，则会添加默认的 constructor 方法。</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Polygon</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="title">constructor</span>(<span class="params">arg0, arg1</span>)</span> &#123;</span><br><span class="line">    <span class="built_in">this</span>.name = <span class="string">&#x27;Polygon&#x27;</span>;</span><br><span class="line">    <span class="built_in">this</span>.body = arg0 + arg1;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> poly1 = <span class="keyword">new</span> Polygon(<span class="number">10</span>,<span class="number">20</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(poly1.name, poly1.body);</span><br><span class="line"><span class="comment">// expected output: &quot;Polygon&quot; 30</span></span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+
+
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -3712,7 +3841,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-07-08 22:41:04" itemprop="dateModified" datetime="2021-07-08T22:41:04+08:00">2021-07-08</time>
+        <time title="Modified: 2021-08-06 23:56:34" itemprop="dateModified" datetime="2021-08-06T23:56:34+08:00">2021-08-06</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -3720,7 +3849,7 @@
       </span>
       <span class="post-meta-item-text">In</span>
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Hardwares/" itemprop="url" rel="index"><span itemprop="name">Hardwares</span></a>
+          <a href="/categories/Hardware/" itemprop="url" rel="index"><span itemprop="name">Hardware</span></a>
         </span>
     </span>
 
@@ -7519,91 +7648,6 @@
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://islet.space/2019/03/08/Linux/System/2019-03-08MBR%E5%92%8CGPT%E7%9A%84%E5%8C%BA%E5%88%AB/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Liewzheng">
-      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Coder的孤岛">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2019/03/08/Linux/System/2019-03-08MBR%E5%92%8CGPT%E7%9A%84%E5%8C%BA%E5%88%AB/" class="post-title-link" itemprop="url">MBR和GPT的区别</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
-    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2019-03-08 19:00:00" itemprop="dateCreated datePublished" datetime="2019-03-08T19:00:00+08:00">2019-03-08</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-05-20 22:46:05" itemprop="dateModified" datetime="2021-05-20T22:46:05+08:00">2021-05-20</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>1、传统的BIOS只支持从MBR分区的硬盘启动。MBR分区的分区表保存在硬盘的第一个扇区，而且只有64字节，所以最多只能有四个表项。也就是说，我们只能把硬盘分为4主分区，或者分成小于等于3个主分区再加一个扩展分区。扩展分区又可以分为多个逻辑分区。MBR分区的优点就是简单，大家都用，所以大家都懂的嘛，很多操作系统都可以从MBR分区的硬盘启动。缺点就是MBR分区不能识别大于2T的硬盘空间，也不能有大于2T的分区； </p>
-<p>2、GPT分区的硬盘可以解决以上MBR分区的所有缺点，它没有4个主分区的限制，想分几个主分区就可以分几个主分区，它可以识别大于2T的硬盘空间，每个分区的大小也可以超过2T。但是它的缺点是需要操作系统支持。比如只有WinXP 64位、Win Vista、Win 7和Win 8和比较新的Linux发行版支持GPT分区的硬盘。而且，如果没有EFI的支持的话，以上系统也只能将GPT分区的硬盘当成数据盘，不能从GPT分区的硬盘启动； </p>
-<p>3、要从GPT分区的硬盘启动，则主板使用EFI、硬盘使用GPT分区、操作系统支持GPT和EFI这三个条件缺一不可。目前比较新的64位Linux系统和Win8系统都是支持EFI的，所以都是需要从GPT分区的硬盘启动的。现在的电脑主板已经逐渐抛弃legacy BIOS，而只支持EFI了。（像我的工作机这样的过渡产品将越来越少。）目前很多预装Win8的笔记本的主板几乎都只支持EFI了。所以，学习GPT和EFI的相关知识势在必行； </p>
-<p>4、以上分区策略都是固定分区。硬盘分区一旦完成，则分区的大小不可改变，如果要改变分区的大小的话，只有重新分区。而且由于没有办法把多个硬盘分到一个区，所以再怎么分，每个分区的大小都有限。所以我们需要一种动态分区的东西。LVM就是这样一个东西，它叫逻辑卷管理（Logical Volume Manager）。使用LVM的机制是这样的：首先把硬盘分区或者整块硬盘标记为一个物理卷（PV），然后再创建一个卷组（VG），把一个或多个物理卷加入卷组，最后对卷组进行分区，每一个分区称为一个逻辑卷（LV）。LVM的优点就是可以随时向卷组中添加物理卷扩展卷组的大小，以可以动态调整逻辑卷的大小。这在服务器中尤其有用，比如说有一个原本有100个用户的服务器，其/home目录下就会有100个用户的主目录，如果给他们每人分配20G的空间的话，就会占满一个2T的硬盘，如果这时再来100个用户怎么办？如果使用LVM就可以顺利解决这个问题，我们可以再加一个3T的硬盘，然后把这个硬盘加入卷组就可以扩大卷组的大小，然后再调整/home所在的逻辑卷的大小即可。LVM既可以搭配MBR使用，也可以搭配GPT使用。</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
     <a class="extend prev" rel="prev" href="/page/5/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><span class="page-number current">6</span><a class="page-number" href="/page/7/">7</a><span class="space">&hellip;</span><a class="page-number" href="/page/9/">9</a><a class="extend next" rel="next" href="/page/7/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
@@ -7618,12 +7662,12 @@
   </div>
 
 <div class="copyright">
-  &copy; 
+  &copy; 2019 – 
   <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
-  <span class="author" itemprop="copyrightHolder">Liewzheng</span>
+  <span class="author" itemprop="copyrightHolder">liewzheng</span>
 </div>
 
     </div>

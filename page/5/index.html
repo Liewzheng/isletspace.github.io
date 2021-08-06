@@ -6,7 +6,7 @@
 <meta name="theme-color" content="#222">
 <meta name="generator" content="Hexo 5.4.0">
 
-
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
@@ -19,7 +19,7 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
 
-<script class="next-config" data-name="main" type="application/json">{&quot;hostname&quot;:&quot;islet.space&quot;,&quot;root&quot;:&quot;&#x2F;&quot;,&quot;images&quot;:&quot;&#x2F;images&quot;,&quot;scheme&quot;:&quot;Gemini&quot;,&quot;version&quot;:&quot;8.3.0&quot;,&quot;exturl&quot;:false,&quot;sidebar&quot;:{&quot;position&quot;:&quot;left&quot;,&quot;display&quot;:&quot;post&quot;,&quot;padding&quot;:18,&quot;offset&quot;:12},&quot;copycode&quot;:false,&quot;bookmark&quot;:{&quot;enable&quot;:false,&quot;color&quot;:&quot;#222&quot;,&quot;save&quot;:&quot;auto&quot;},&quot;fancybox&quot;:false,&quot;mediumzoom&quot;:false,&quot;lazyload&quot;:false,&quot;pangu&quot;:false,&quot;comments&quot;:{&quot;style&quot;:&quot;tabs&quot;,&quot;active&quot;:null,&quot;storage&quot;:true,&quot;lazyload&quot;:false,&quot;nav&quot;:null},&quot;motion&quot;:{&quot;enable&quot;:true,&quot;async&quot;:false,&quot;transition&quot;:{&quot;post_block&quot;:&quot;fadeIn&quot;,&quot;post_header&quot;:&quot;fadeInDown&quot;,&quot;post_body&quot;:&quot;fadeInDown&quot;,&quot;coll_header&quot;:&quot;fadeInLeft&quot;,&quot;sidebar&quot;:&quot;fadeInUp&quot;}},&quot;prism&quot;:false,&quot;i18n&quot;:{&quot;placeholder&quot;:&quot;Searching...&quot;,&quot;empty&quot;:&quot;We didn&#39;t find any results for the search: ${query}&quot;,&quot;hits_time&quot;:&quot;${hits} results found in ${time} ms&quot;,&quot;hits&quot;:&quot;${hits} results found&quot;}}</script>
+<script class="next-config" data-name="main" type="application/json">{&quot;hostname&quot;:&quot;islet.space&quot;,&quot;root&quot;:&quot;&#x2F;&quot;,&quot;images&quot;:&quot;&#x2F;images&quot;,&quot;scheme&quot;:&quot;Gemini&quot;,&quot;version&quot;:&quot;8.3.0&quot;,&quot;exturl&quot;:false,&quot;sidebar&quot;:{&quot;position&quot;:&quot;left&quot;,&quot;display&quot;:&quot;post&quot;,&quot;padding&quot;:18,&quot;offset&quot;:12},&quot;copycode&quot;:true,&quot;bookmark&quot;:{&quot;enable&quot;:false,&quot;color&quot;:&quot;#222&quot;,&quot;save&quot;:&quot;auto&quot;},&quot;fancybox&quot;:false,&quot;mediumzoom&quot;:false,&quot;lazyload&quot;:false,&quot;pangu&quot;:false,&quot;comments&quot;:{&quot;style&quot;:&quot;tabs&quot;,&quot;active&quot;:null,&quot;storage&quot;:true,&quot;lazyload&quot;:false,&quot;nav&quot;:null},&quot;motion&quot;:{&quot;enable&quot;:true,&quot;async&quot;:false,&quot;transition&quot;:{&quot;post_block&quot;:&quot;fadeIn&quot;,&quot;post_header&quot;:&quot;fadeInDown&quot;,&quot;post_body&quot;:&quot;fadeInDown&quot;,&quot;coll_header&quot;:&quot;fadeInLeft&quot;,&quot;sidebar&quot;:&quot;fadeInUp&quot;}},&quot;prism&quot;:false,&quot;i18n&quot;:{&quot;placeholder&quot;:&quot;Searching...&quot;,&quot;empty&quot;:&quot;We didn&#39;t find any results for the search: ${query}&quot;,&quot;hits_time&quot;:&quot;${hits} results found in ${time} ms&quot;,&quot;hits&quot;:&quot;${hits} results found&quot;}}</script>
 <meta name="description" content="笔记分享的旮旯孤岛而已">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Coder的孤岛">
@@ -83,7 +83,11 @@
 
 <nav class="site-nav">
   <ul class="main-menu menu">
+        <li class="menu-item menu-item-首页"><a href="https://islet.space/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
         <li class="menu-item menu-item-文章"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>文章</a></li>
+        <li class="menu-item menu-item-标签"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-目录"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>目录</a></li>
+        <li class="menu-item menu-item-zplusplus"><a href="https://zplusplus.cn/" rel="noopener" target="_blank"><i class="fa fa-user fa-fw"></i>ZPLUSPLUS</a></li>
   </ul>
 </nav>
 
@@ -126,17 +130,19 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">81</span>
+          <span class="site-state-item-count">82</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
-        <span class="site-state-item-count">18</span>
-        <span class="site-state-item-name">categories</span>
+            <a href="/categories/">
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">153</span>
-        <span class="site-state-item-name">tags</span>
+            <a href="/tags/">
+        <span class="site-state-item-count">155</span>
+        <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
 </div>
@@ -162,6 +168,7 @@
     <i class="fa fa-arrow-up"></i>
     <span>0%</span>
   </div>
+  <div class="reading-progress-bar"></div>
 
 <noscript>
   <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
@@ -169,6 +176,168 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://islet.space/2021/05/03/Signal/2021-05-03-%E9%9F%B3%E9%A2%91%E8%AE%BE%E5%A4%87%E8%BF%9E%E6%8E%A5%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Liewzheng">
+      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coder的孤岛">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/05/03/Signal/2021-05-03-%E9%9F%B3%E9%A2%91%E8%AE%BE%E5%A4%87%E8%BF%9E%E6%8E%A5%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" class="post-title-link" itemprop="url">音频设备连接基础知识</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-05-03 17:08:00" itemprop="dateCreated datePublished" datetime="2021-05-03T17:08:00+08:00">2021-05-03</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2021-05-09 13:01:38" itemprop="dateModified" datetime="2021-05-09T13:01:38+08:00">2021-05-09</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/signal/" itemprop="url" rel="index"><span itemprop="name">signal</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>​    </p>
+<p><a target="_blank" rel="noopener" href="https://www.sohu.com/a/418986148_142772">sohu.com</a></p>
+<h1 id="阻抗介绍"><a href="#阻抗介绍" class="headerlink" title="阻抗介绍"></a>阻抗介绍</h1><p>仅针对音频系统中的电路进行说明</p>
+<ul>
+<li>在对电路施加电压时，电阻抗是 <strong>对电路中交流电的抵抗力的度量</strong>。</li>
+<li>阻抗以欧姆为单位（类似于电阻）测量，并且 <strong>可以认为是交流电路中的一种“交流电阻”</strong>。</li>
+<li>音频信号是交流电压，因为它们同时具有负电压和正电压（信号的正振幅和负振幅）。<strong>因此，音频信号是交流电</strong>（具有负电流和正电流）。</li>
+<li>仅当<strong>上级设备</strong>输出连接到前置放大器（或串联的下一个音频设备）时，音频信号才会通过。（上级设备的输出必须创建一个带有负载的电路，以使音频信号流动。）</li>
+</ul>
+<img src="https://pic.islet.space/2021/05/a0fcf0d70d88400289cafcd70441614e.png" alt="img" style="zoom:33%;" />
+
+
+
+<p>在音频系统的连接中，有各式各样的设备进行设备串联，首先说两个概念：</p>
+<blockquote>
+<p><strong>输出阻抗</strong>： 音频设备输出端上的固有阻抗。</p>
+<p><strong>负载阻抗</strong>： 音频设备下一级（通常是前置放大器）的输入阻抗，该阻抗与上级的输出共同构成电路。</p>
+</blockquote>
+<p>在音频行业内，行业规定 <mark>输入接口的阻抗应为输出阻抗的10倍以上，这样才能保证音频信号的传输质量</mark>。</p>
+<p><mark>这样的 “<strong>阻抗匹配</strong>” 其实是为了 “<strong>电压匹配</strong>” ，而不是传统电学概念中的输入输出等阻抗的“阻抗匹配”。</mark></p>
+<p>源输出阻抗和输入阻抗之间的电压传递公式：</p>
+<p><strong>V<del>L</del>= Z<del>L</del>·V<del>S</del> / (Z<del>S</del>+ Z<del>L</del>)</strong></p>
+<blockquote>
+<p>V<del>L</del>输入端 =前置放大器输入端的电压。</p>
+<p>V<del>S</del>输出端 =麦克风输出端的电压。 </p>
+<p>Z<del>L</del>输入端 =前置放大器的输入阻抗（麦克风负载阻抗）。 </p>
+<p>Z<del>S</del>输出端 =麦克风输出阻抗。 </p>
+</blockquote>
+<p>可以将其可视化为简单的分压器：</p>
+<img src="https://pic.islet.space/2021/05/db9e3783f23c47a4b3529b34e2d8710a.png" alt="img" style="zoom: 33%;" />
+
+<div style="text-align: center; font-size: 10px; color: #aaa;">图 简化电路</div>
+
+
+
+<p>不难推算，如果其他所有条件保持不变，增加负载阻抗“ Z输入端”可使上级设备的输出电压与前置放大器的输入电压之间的匹配度更高。</p>
+<p>Z输入端起码要达到Z输出端的10倍以上，电压才可达到源输出端电压的90%，但是我们也不希望输入端的阻抗过大，因为阻抗过高会增加线路出现噪音的可能。</p>
+<p>这种最大化的电压传输称为“阻抗桥接”，或者称为“电压匹配”。</p>
+<h1 id="音频信号"><a href="#音频信号" class="headerlink" title="音频信号"></a>音频信号</h1><p>HOLA，在了解完阻抗的秘密之后，在这里我们简单说一下各个种类的信号等级和阻抗的差异。我们在这说下经常遇到的三类信号：<strong>麦克风信号</strong>、<strong>线路信号</strong>、<strong>乐器信号</strong>。</p>
+<div style="text-align: center; font-size: 10px; color: #aaa;">表 各类信号参数表</div>
+
+<img src="https://pic.islet.space/2021/05/0a2b0b9619794c908f565d648a72eec6.png" alt="img" style="zoom:50%;" />
+
+<p><strong>麦克风信号</strong>，就是麦克风输出的信号，其电平大概在 <strong>-60dBV和-40dBV（0.001V -  0.010V)之间</strong>，通常需要前级放大器的放大才能正常使用，麦克风的<strong>输出阻抗通常在150Ω至200Ω之间</strong>。</p>
+<p>所以呢，你的声卡或者话放的Mic  Input（麦克风输入）接口的阻值应至少该有1500Ω。</p>
+<img src="https://pic.islet.space/2021/05/d969f365edb84996b66525d18320fe3c.jpeg" alt="img" style="zoom:50%;" />
+
+<div style="text-align: center; font-size: 10px; color: #aaa;">图 麦克风信号输入接口</div>
+
+<p><strong>线路信号</strong>也就是Line Level  Signal，一般由TRS（大三芯）平衡线缆传递，比如一些播放器、效果器的输出信号都为线路信号，<strong>其电平约为0dBV（1V）</strong>，<strong>是麦克风信号电平的100倍-1000倍</strong>；<strong>其输出阻抗通常在100Ω至600Ω之间</strong>，Line Input（线路信号输入）接口的阻抗通常大于10,000Ω。有些音频接口有独立的Line Input，有的则是复合型。比如M-Audio  Air192 | 4</p>
+<img src="https://pic.islet.space/2021/05/image-20210503171654739.png" alt="M-Audio  Air192|4" style="zoom: 50%;" />
+
+<div style="text-align: center; font-size: 10px; color: #aaa;">图 M-Audio  Air192 | 4</div>
+
+<p><strong>乐器信号</strong> - Instrument Level  Signal，乐器信号的电平位于麦克风信号和线路信号之间，通常以TS（大两芯）线缆传递，通常需要<strong>前级放大器</strong>将其提升到合适的<strong>线路电平等级</strong>；电吉他、电贝斯、带有拾音器的原声乐器输出的信号均为乐器信号，通常这些乐器的输出阻抗非常高，约在7,000Ω至15,000Ω甚至更高。因此你经常能看到话放、声卡的线路输入通道上有“Hi-Z(高阻抗）”或者“Line/Instrument”切换开关，能使线路输入接口的阻值增加，以适配乐器信号输入，有些音频接口则直接独立出来高阻乐器输入接口。乐器输入接口阻值通常在1MΩ（100万欧姆）左右。</p>
+<p>在前文说过，如果<strong>乐器输入接口阻值过低时，信号会失真、高频丢失，声音听起来会很沉闷</strong>；而<strong>阻值过高时，会增加线路出现噪音</strong>的可能。而有一类设备能完美的解决这一问题，让你随心所欲的调节满意的音色。比如：</p>
+<p>IK  Multimedia的Z‑Tone系列产品可对这些变量进行控制，通过使用高质量的前置放大器，并配备可调的输入阻抗，以使各种拾音器都能发出其完美的声音。Z-Tone系列有两款相关产品，有体积较大的Z‑Tone DI和更紧凑的Z‑Tone Buffer Boost。</p>
+<p><img src="https://pic.islet.space/2021/05/image-20210503172016745.png" alt="Z‑Tone Buffer Boost"></p>
+<div style="text-align: center; font-size: 10px; color: #aaa;">图 Z‑Tone Buffer Boost</div>
+
+
+
+<h1 id="实际应用"><a href="#实际应用" class="headerlink" title="实际应用"></a>实际应用</h1><p>如果<strong>将高阻抗输出输入到低阻抗麦克风电平输入中，它通常会使前置放大器过载</strong>。这将导致<strong>失真</strong>，甚至可能<strong>损坏前置放大器的电路</strong>！</p>
+<p>例如，如果你想将合成器、吉他等高阻信号插入调音台、音频接口的麦克风（XLR）输入，建议你使用<strong>DI盒转换</strong>，将高阻抗信号转换为低阻抗信号。</p>
+<img src="https://pic.islet.space/2021/05/c9178428f8ad4ecf8272344c07e24c02.jpeg" alt="img" style="zoom:50%;" />
+
+<div style="text-align: center; font-size: 10px; color: #aaa;">图 使用Z-Tone DI录制箱琴</div>
+
+
+
+<p><strong>注意</strong>：最好将DI盒尽可能靠近高阻抗输出源，较长的走线应将转换后的低阻抗信号传送到调音台或声卡。通俗点说就是，连接时，两芯线短，卡农线长。这将有助于节省更多的音频信号高端频率。</p>
+<p>那么有的好奇的同学会问，低阻抗的输出接入高阻抗会怎样呢？按理论来说，低阻出，高阻入，很完美呀！但是…</p>
+<p>举个栗子🌰，我们的麦克风是低阻输出，你的吉他单块效果器是高阻输入，串联在一起是理想的选择，也有一些朋友想实现这样的操作，让声音变得更有意思。但是你直接拿XLR卡农转TS大两芯，从麦克风插到效果器上，这样是有问题的。</p>
+<p>问题在于，线路或乐器输入需要线路或乐器信号等级。线路和乐器信号的电压比麦克风信号高得多。</p>
+<p><strong>将低阻抗麦克风插入高阻抗乐器或线路输入会产生很低的电平信号。音频信号将接近接收端设备本底噪声，因此当你提升放大器的增益时也会产生更大噪声，这种不良的信噪比是很令人绝望的。</strong></p>
+<p>这时候你就需要Re-amp盒或者类似AXE I/O这种带有Re-amp功能的音频接口来实现你的这一想法。</p>
+<img src="https://pic.islet.space/2021/05/cb59d2afa93b469b91fe410bbc38df23.jpeg" alt="img" style="zoom:50%;" />
+
+<div style="text-align: center; font-size: 10px; color: #aaa;">图 IK Multimedia AXE I/O</div>
+
+<p>​          </p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -2265,128 +2434,6 @@
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://islet.space/2021/04/11/Web/JavaScript/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Liewzheng">
-      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Coder的孤岛">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/04/11/Web/JavaScript/" class="post-title-link" itemprop="url">Javascript</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
-    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2021-04-11 23:58:32" itemprop="dateCreated datePublished" datetime="2021-04-11T23:58:32+08:00">2021-04-11</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-04-26 00:13:21" itemprop="dateModified" datetime="2021-04-26T00:13:21+08:00">2021-04-26</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Networking/" itemprop="url" rel="index"><span itemprop="name">Networking</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="面向对象编程"><a href="#面向对象编程" class="headerlink" title="面向对象编程"></a>面向对象编程</h1><h2 id="对象的抽象"><a href="#对象的抽象" class="headerlink" title="对象的抽象"></a>对象的抽象</h2><p><strong>抽象</strong> 是指一种归纳或总结，<strong>对象</strong> 是现实世界物体特征的实体。万事万物不论大小皆可看做对象， <strong>类</strong> 则是对各种不同对象的 <em>归纳总结</em>，类是对象的 <em>抽象表示形式</em>。</p>
-<blockquote>
-<p>例如，男演员Jack可以看做是一个对象，女演员Rose也可以看过是一个对象，而两者会被统一归纳为Person或者Human的类（或抽象）。每一个对象都有其独特的属性（Property）或功能（Function），而归纳总结出来的类则具有不同对象的相同属性或功能。</p>
-</blockquote>
-<p>基于类的面向对象语言是面向对象世界里的主流。虽然大多数面向对象开发语言都使用类来完成面向对象编程，但类不是面向对象编程的实质内涵。面向对象的实质内涵是将所有业务逻辑单元都视为一个对象（即，对象是目的或结果），且类不是唯一用来完成面向对象编程的方法。</p>
-<p>面向对象不能被当做面向类，否则会进入误区。对象和类的关系相当于一般程序设计语言中的 <strong>变量</strong> 和 <strong>变量类型</strong> 的关系。所以，有时类也被称为是一种数据类型，可以看做抽象数据类型的具体实现。此时的数据类型则是 **数据 **和 <strong>操作</strong> 的集合。</p>
-<h2 id="面向对象与面向过程的区别"><a href="#面向对象与面向过程的区别" class="headerlink" title="面向对象与面向过程的区别"></a>面向对象与面向过程的区别</h2><p>面向过程程序设计，即结构化程序设计，诸如Pascal、C。</p>
-<p>面向对象程序设计解决了结构化程序设计代码复用的难题，如C++、C#、Java、JavaScript、Python等都是。</p>
-<img src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/04/image-20210413144641711.png" alt="image-20210413144641711" style="zoom: 67%;" />
-
-<p>面向过程也是把程序定义为“数据+作用于数据的操作算法”，但最重要的区别是：面向过程编程 <mark>使用过程操作数据结构</mark>， 而面向对象编程将过程和数据结构捆绑，使对象 <mark>操作自己的数据结构</mark>。</p>
-<h1 id="JavaScript的类"><a href="#JavaScript的类" class="headerlink" title="JavaScript的类"></a>JavaScript的类</h1><h2 id="类的创建"><a href="#类的创建" class="headerlink" title="类的创建"></a>类的创建</h2><p>JavaScript可以用关键字 <code>class</code> 进行赋值。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Rectangle</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="title">constructor</span>(<span class="params">height, width</span>)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.height = height;</span><br><span class="line">        <span class="built_in">this</span>.width = width;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 方法一：参数赋值法，间接调用构造器赋值</span></span><br><span class="line"><span class="keyword">var</span> oRectangle = <span class="keyword">new</span> Rectangle(<span class="number">10</span>, <span class="number">20</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 方法二：生成对象后单独调用赋值</span></span><br><span class="line"><span class="comment">// var oRectangle = new Rectangle();</span></span><br><span class="line"><span class="comment">// oRectangle.height = 10;</span></span><br><span class="line"><span class="comment">// oRectangle.width = 30;</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(oRectangle.height, oRectangle.width)</span><br></pre></td></tr></table></figure>
-
-
-
-<p>在MDN Web Docs中，对JavaScript类的定义如下：</p>
-<blockquote>
-<p>实际上，类是“特殊的函数”，就像你能够定义的函数表达式和函数声明一样，类语法有两个组成部分：**类表达式 **和 <strong>类声明</strong>。</p>
-</blockquote>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">HelloWrold</span>(<span class="params"></span>)</span>&#123;    <span class="comment">//To use keyword `function` instead of `class` to define a class</span></span><br><span class="line">    <span class="built_in">this</span>.printInfo = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;Hi! JavaScript!\n&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> oHelloWorld = <span class="keyword">new</span> HelloWorld();    <span class="comment">// Make a new object of the class named `HelloWorld`</span></span><br><span class="line"><span class="keyword">var</span> result = oHelloWorld.printInfo();    <span class="comment">//Call the method of the object to assign</span></span><br><span class="line"><span class="built_in">document</span>.write(result);</span><br></pre></td></tr></table></figure>
-
-
-
-<h2 id="构造器"><a href="#构造器" class="headerlink" title="构造器"></a>构造器</h2><p><strong>构造器（Constructor）</strong>，或称 <strong>构造方法</strong>，一种用于创建和初始化<code>class</code>创建的对象的特殊 <strong>方法（Methods）</strong>。<code>constructor([arguments]) &#123; ... &#125;</code>， 其中 <code>arguments</code> 看情况而定，可以省略。</p>
-<p><strong>注意</strong>：</p>
-<ol>
-<li>在一个类中只能有一个名为 <code>constructor</code> 的特殊方法。 一个类中出现多次构造函数 (constructor)方法将会抛出一个 <code>SyntaxError</code> 错误。</li>
-<li>在一个构造方法中可以使用 <code>super</code> 关键字来 <mark>调用一个父类的构造方法</mark>。</li>
-<li>如果没有显式指定构造方法，则会添加默认的 constructor 方法。</li>
-</ol>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Polygon</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="title">constructor</span>(<span class="params">arg0, arg1</span>)</span> &#123;</span><br><span class="line">    <span class="built_in">this</span>.name = <span class="string">&#x27;Polygon&#x27;</span>;</span><br><span class="line">    <span class="built_in">this</span>.body = arg0 + arg1;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> poly1 = <span class="keyword">new</span> Polygon(<span class="number">10</span>,<span class="number">20</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(poly1.name, poly1.body);</span><br><span class="line"><span class="comment">// expected output: &quot;Polygon&quot; 30</span></span><br></pre></td></tr></table></figure>
-
-
-
-
-
-
-
-
-
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
     <a class="extend prev" rel="prev" href="/page/4/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><span class="space">&hellip;</span><a class="page-number" href="/page/9/">9</a><a class="extend next" rel="next" href="/page/6/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
@@ -2401,12 +2448,12 @@
   </div>
 
 <div class="copyright">
-  &copy; 
+  &copy; 2019 – 
   <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
-  <span class="author" itemprop="copyrightHolder">Liewzheng</span>
+  <span class="author" itemprop="copyrightHolder">liewzheng</span>
 </div>
 
     </div>

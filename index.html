@@ -6,7 +6,7 @@
 <meta name="theme-color" content="#222">
 <meta name="generator" content="Hexo 5.4.0">
 
-
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
@@ -19,7 +19,7 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
 
-<script class="next-config" data-name="main" type="application/json">{&quot;hostname&quot;:&quot;islet.space&quot;,&quot;root&quot;:&quot;&#x2F;&quot;,&quot;images&quot;:&quot;&#x2F;images&quot;,&quot;scheme&quot;:&quot;Gemini&quot;,&quot;version&quot;:&quot;8.3.0&quot;,&quot;exturl&quot;:false,&quot;sidebar&quot;:{&quot;position&quot;:&quot;left&quot;,&quot;display&quot;:&quot;post&quot;,&quot;padding&quot;:18,&quot;offset&quot;:12},&quot;copycode&quot;:false,&quot;bookmark&quot;:{&quot;enable&quot;:false,&quot;color&quot;:&quot;#222&quot;,&quot;save&quot;:&quot;auto&quot;},&quot;fancybox&quot;:false,&quot;mediumzoom&quot;:false,&quot;lazyload&quot;:false,&quot;pangu&quot;:false,&quot;comments&quot;:{&quot;style&quot;:&quot;tabs&quot;,&quot;active&quot;:null,&quot;storage&quot;:true,&quot;lazyload&quot;:false,&quot;nav&quot;:null},&quot;motion&quot;:{&quot;enable&quot;:true,&quot;async&quot;:false,&quot;transition&quot;:{&quot;post_block&quot;:&quot;fadeIn&quot;,&quot;post_header&quot;:&quot;fadeInDown&quot;,&quot;post_body&quot;:&quot;fadeInDown&quot;,&quot;coll_header&quot;:&quot;fadeInLeft&quot;,&quot;sidebar&quot;:&quot;fadeInUp&quot;}},&quot;prism&quot;:false,&quot;i18n&quot;:{&quot;placeholder&quot;:&quot;Searching...&quot;,&quot;empty&quot;:&quot;We didn&#39;t find any results for the search: ${query}&quot;,&quot;hits_time&quot;:&quot;${hits} results found in ${time} ms&quot;,&quot;hits&quot;:&quot;${hits} results found&quot;}}</script>
+<script class="next-config" data-name="main" type="application/json">{&quot;hostname&quot;:&quot;islet.space&quot;,&quot;root&quot;:&quot;&#x2F;&quot;,&quot;images&quot;:&quot;&#x2F;images&quot;,&quot;scheme&quot;:&quot;Gemini&quot;,&quot;version&quot;:&quot;8.3.0&quot;,&quot;exturl&quot;:false,&quot;sidebar&quot;:{&quot;position&quot;:&quot;left&quot;,&quot;display&quot;:&quot;post&quot;,&quot;padding&quot;:18,&quot;offset&quot;:12},&quot;copycode&quot;:true,&quot;bookmark&quot;:{&quot;enable&quot;:false,&quot;color&quot;:&quot;#222&quot;,&quot;save&quot;:&quot;auto&quot;},&quot;fancybox&quot;:false,&quot;mediumzoom&quot;:false,&quot;lazyload&quot;:false,&quot;pangu&quot;:false,&quot;comments&quot;:{&quot;style&quot;:&quot;tabs&quot;,&quot;active&quot;:null,&quot;storage&quot;:true,&quot;lazyload&quot;:false,&quot;nav&quot;:null},&quot;motion&quot;:{&quot;enable&quot;:true,&quot;async&quot;:false,&quot;transition&quot;:{&quot;post_block&quot;:&quot;fadeIn&quot;,&quot;post_header&quot;:&quot;fadeInDown&quot;,&quot;post_body&quot;:&quot;fadeInDown&quot;,&quot;coll_header&quot;:&quot;fadeInLeft&quot;,&quot;sidebar&quot;:&quot;fadeInUp&quot;}},&quot;prism&quot;:false,&quot;i18n&quot;:{&quot;placeholder&quot;:&quot;Searching...&quot;,&quot;empty&quot;:&quot;We didn&#39;t find any results for the search: ${query}&quot;,&quot;hits_time&quot;:&quot;${hits} results found in ${time} ms&quot;,&quot;hits&quot;:&quot;${hits} results found&quot;}}</script>
 <meta name="description" content="笔记分享的旮旯孤岛而已">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Coder的孤岛">
@@ -83,7 +83,11 @@
 
 <nav class="site-nav">
   <ul class="main-menu menu">
+        <li class="menu-item menu-item-首页"><a href="https://islet.space/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
         <li class="menu-item menu-item-文章"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>文章</a></li>
+        <li class="menu-item menu-item-标签"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-目录"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>目录</a></li>
+        <li class="menu-item menu-item-zplusplus"><a href="https://zplusplus.cn/" rel="noopener" target="_blank"><i class="fa fa-user fa-fw"></i>ZPLUSPLUS</a></li>
   </ul>
 </nav>
 
@@ -126,17 +130,19 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">81</span>
+          <span class="site-state-item-count">82</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
-        <span class="site-state-item-count">18</span>
-        <span class="site-state-item-name">categories</span>
+            <a href="/categories/">
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">153</span>
-        <span class="site-state-item-name">tags</span>
+            <a href="/tags/">
+        <span class="site-state-item-count">155</span>
+        <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
 </div>
@@ -162,6 +168,7 @@
     <i class="fa fa-arrow-up"></i>
     <span>0%</span>
   </div>
+  <div class="reading-progress-bar"></div>
 
 <noscript>
   <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
@@ -169,6 +176,103 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://islet.space/2021/08/06/Blog/2021-08-06-%E8%A7%A3%E5%86%B3%E6%96%B0%E7%89%88hexo%E6%B2%A1%E6%9C%89%E7%9B%AE%E5%BD%95%E5%92%8C%E6%A0%87%E7%AD%BE%E9%A1%B5%E7%9A%84%E9%97%AE%E9%A2%98/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Liewzheng">
+      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coder的孤岛">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/08/06/Blog/2021-08-06-%E8%A7%A3%E5%86%B3%E6%96%B0%E7%89%88hexo%E6%B2%A1%E6%9C%89%E7%9B%AE%E5%BD%95%E5%92%8C%E6%A0%87%E7%AD%BE%E9%A1%B5%E7%9A%84%E9%97%AE%E9%A2%98/" class="post-title-link" itemprop="url">解决新版hexo没有目录和标签页的问题</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2021-08-06 23:40:00 / Modified: 23:59:25" itemprop="dateCreated datePublished" datetime="2021-08-06T23:40:00+08:00">2021-08-06</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Blog/" itemprop="url" rel="index"><span itemprop="name">Blog</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>新版hexo安装之后没有标签页，解决方法大致三步：</p>
+<ol>
+<li><p>需要自行在 <code>/source/</code> 文件夹下添加一个 <code>categories</code> 和 <code>tags</code> 文件夹，然后往文件夹中分别写入一个 <code>index.md</code> 文件。</p>
+</li>
+<li><p>然后在对应的 <code>index.md</code> 中写入 <em>YAML</em> 信息。</p>
+</li>
+<li><p>在对应的主题配置文件，例如 <code>_config.yml</code> 中填写好配置。</p>
+</li>
+</ol>
+<h1 id="新建目录和页面"><a href="#新建目录和页面" class="headerlink" title="新建目录和页面"></a>新建目录和页面</h1><p>可以通过两句语句来运行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">hexo new page categories</span><br><span class="line">hexo new page tags</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 添加type属性</span></span><br><span class="line"></span><br><span class="line">编辑 `index.md`，修改信息如下，日期随意：</span><br><span class="line"></span><br><span class="line">```bash</span><br><span class="line">---</span><br><span class="line">title: 目录</span><br><span class="line"><span class="built_in">type</span>: categories</span><br><span class="line">date: 2020-08-06 23:32:00</span><br><span class="line">---</span><br></pre></td></tr></table></figure>
+
+<p>注意上面写的一个属性 <code>type</code>，千万不能写错。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">---</span><br><span class="line">title: 标签</span><br><span class="line"><span class="built_in">type</span>: tags</span><br><span class="line">date: 2020-08-06 23:32:00</span><br><span class="line">---</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="设置配置文件"><a href="#设置配置文件" class="headerlink" title="设置配置文件"></a>设置配置文件</h1><p>如下图所示修改即可：</p>
+<p><img src="https://pic.islet.space/2021/08/image-20210806235851123.png" alt="image-20210806235851123"></p>
+<p>最后重新清空、运行和预览即可。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">hexo clean</span><br><span class="line">hexo generate</span><br><span class="line">hexo site</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1365,7 +1469,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-08-02 19:11:01" itemprop="dateModified" datetime="2021-08-02T19:11:01+08:00">2021-08-02</time>
+        <time title="Modified: 2021-08-06 22:49:13" itemprop="dateModified" datetime="2021-08-06T22:49:13+08:00">2021-08-06</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -1677,19 +1781,19 @@
 <p><img src="https://pic.islet.space/2021/07/image-20210712101211183.png" alt="image-20210712101211183"></p>
 <p><img src="https://pic.islet.space/2021/07/image-20210712101225955.png" alt="image-20210712101225955"></p>
 <h1 id="模拟外设"><a href="#模拟外设" class="headerlink" title="模拟外设"></a>模拟外设</h1><p>本系列芯片的模拟外设包含 <strong>ADC</strong> 、 <strong>PGA</strong> 、 <strong>DAC</strong> 和 <strong>CMPSS</strong>。</p>
-<h2 id="ADC"><a href="#ADC" class="headerlink" title="ADC"></a>ADC</h2><p>本系列芯片的第16、17引脚是ADC的参考电压：</p>
-<ul>
-<li>第16pin 是ADC A/B/C的高参考电压（Voltage Reference High） VREFHIx </li>
-<li>第17pin 是ADC A/B/C的低参考电压（Voltage Reference Low） VREFLOx</li>
-</ul>
-<p>其简化示意图如下：</p>
+<p>所有的模拟引脚一共有16个，包括ADC三个模块（module，A、B、C）、PGA、DAC等都是复用的。</p>
+<p><img src="https://pic.islet.space/2021/08/image-20210805172817997.png" alt="image-20210805172817997"></p>
+<h2 id="ADC"><a href="#ADC" class="headerlink" title="ADC"></a>ADC</h2><p>本系列芯片的ADC外设是 <strong>第5类</strong>（TYPE 5）ADC，只支持12位单端模式。以下讨论中可能会看到 ADCA / ADCB / ADCC 三种不同的描述，其实是ADC三个大的模块，模块下面又有很多个通道。</p>
+<img src="https://pic.islet.space/2021/08/image-20210804113737347.png" alt="image-20210804113737347" style="zoom:67%;" />
+
+
+
+<p>单个ADC模块的简化示意图如下：</p>
 <img src="https://pic.islet.space/2021/07/image-20210730103920701.png" alt="image-20210730103920701" style="zoom:67%;" />
 
 <p>ADC模拟外设的内部架构如下：</p>
 <p><img src="https://pic.islet.space/2021/07/image-20210730092532193.png" alt="image-20210730092532193"></p>
 <p>SOC和EOC的内部架构如下：</p>
-<img src="https://pic.islet.space/2021/07/image-20210730094148462.png" alt="image-20210730094148462" style="zoom: 67%;" />
-
 <img src="https://pic.islet.space/2021/07/image-20210730105429591.png" alt="image-20210730105429591" style="zoom:67%;" />
 
 
@@ -1700,7 +1804,7 @@
 <li>可选内部参考电压为 2.5V 或 3.3V</li>
 <li>单端信号转换器</li>
 <li>最多16个ADC通道</li>
-<li>16个配置SOC</li>
+<li>16个配置SOC（<code>ADCSOC0</code> ~ <code>ADCSOC15</code>）</li>
 <li>16个独立的可寻址结果寄存器</li>
 <li>四个高级的（flexible）外设中断</li>
 <li>可配置的中断（interrupt placement）</li>
@@ -1724,6 +1828,206 @@
 <h3 id="ADC输入模型"><a href="#ADC输入模型" class="headerlink" title="ADC输入模型"></a>ADC输入模型</h3><p><img src="https://pic.islet.space/2021/07/image-20210730091825651.png" alt="image-20210730091825651"></p>
 <p>每个通道的寄生电容</p>
 <p><img src="https://pic.islet.space/2021/07/image-20210730093537064.png" alt="image-20210730093537064"></p>
+<h3 id="ADC配置项"><a href="#ADC配置项" class="headerlink" title="ADC配置项"></a>ADC配置项</h3><p>ADC模块的 配置项 分为 <strong>可配置</strong>（Configurable）、<strong>不可配置</strong>（Unconfigurable） 两种。可配置项又分为 <strong>可按模块独立配置</strong> 和 <strong>全局配置</strong>（Globally configurable） 两种。</p>
+<table>
+<thead>
+<tr>
+<th>Options</th>
+<th>Configurability</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>时钟</strong> Clock</td>
+<td>每个模块（A/B/C）</td>
+</tr>
+<tr>
+<td><strong>分辨率</strong> Resolution</td>
+<td>不可配置（仅12bit）</td>
+</tr>
+<tr>
+<td><strong>信号模式</strong> Signal mode</td>
+<td>不可配置（仅单端（Single-ended））</td>
+</tr>
+<tr>
+<td><strong>参考电压源</strong> Reference voltage source</td>
+<td>每个模块（外部或内部）</td>
+</tr>
+<tr>
+<td><strong>触发源</strong> Trigger source</td>
+<td>每个SOC</td>
+</tr>
+<tr>
+<td><strong>转换通道</strong> Converted Channel</td>
+<td>每个SOC</td>
+</tr>
+<tr>
+<td><strong>获取窗口期</strong> Acquisition window duration</td>
+<td>每个SOC</td>
+</tr>
+<tr>
+<td><strong>EOC定位</strong> EOC location</td>
+<td>每个模块</td>
+</tr>
+<tr>
+<td><strong>爆发模式</strong> Burst mode</td>
+<td>每个模块</td>
+</tr>
+</tbody></table>
+<p><strong>注意</strong>：这里的 <strong>SOC</strong> 是指 <strong>ADCSOC</strong>，start of conversion。</p>
+<h4 id="时钟-1"><a href="#时钟-1" class="headerlink" title="时钟"></a>时钟</h4><p>ADC基础时钟由系统时钟 <em><strong>SYSCLK</strong></em> 提供，用以生成ADC <strong>获取窗口</strong>（acquisition window）。寄存器 <em><strong>ADCCTL2</strong></em> 有一个决定ADC时钟 <em><strong>ADCCLK</strong></em> 的预分频（prescale）区域。<em><strong>ADCCLK</strong></em> 直接为转换器（converter）提供时钟信号。</p>
+<p>转换核心需要约10.5个 <em><strong>ADCCLK</strong></em> 时钟周期来将 输入电压转换成 数字信号，因此需要自行决定和配置获取窗口所需要的周期大小。</p>
+<img src="https://pic.islet.space/2021/08/image-20210805153739063.png" alt="image-20210805153739063" style="zoom: 67%;" />
+
+
+
+<h4 id="分辨率"><a href="#分辨率" class="headerlink" title="分辨率"></a>分辨率</h4><p>ADC分辨率决定着最终模拟信号能够转换成的数值大小。本系列芯片支持12bit分辨率。</p>
+<h4 id="参考电压源"><a href="#参考电压源" class="headerlink" title="参考电压源"></a>参考电压源</h4><p>本系列芯片的第16、17引脚是ADC的参考电压：</p>
+<ul>
+<li>第16pin 是ADC A/B/C的高参考电压（Voltage Reference High） <em><strong>VREFHIx</strong></em> </li>
+<li>第17pin 是ADC A/B/C的低参考电压（Voltage Reference Low） <em><strong>VREFLOx</strong></em></li>
+</ul>
+<p>根据《TRM》P1442可知，每个ADC模块都可以配置一个单独的参考电压（包括 <strong>VREFHI</strong>和 <strong>VREFLO</strong>），参考电压源可以是内部或外部。需要注意的是，引脚数较少的封装可能在多个ADC之间共享一个VREFHI引脚。在这种情况下，共享一个参考引脚的ADC必须将它们的参考模式配置得完全一样。</p>
+<h5 id="外部参考电源"><a href="#外部参考电源" class="headerlink" title="外部参考电源"></a>外部参考电源</h5><p>在外部参考电压模式下，参考电压源的针脚被当做比率测量参考，以测定ADC转换的输入范围。</p>
+<p>以下几点需要注意：</p>
+<ul>
+<li>如果没有连接到具体的外部 <em><strong>VREFLO</strong></em> 信号，需将 <em><strong>VREFLO</strong></em> 连接至 设备模拟地 <em><strong>VSSA</strong></em>。</li>
+<li>外部参考电源（高/低）的输入范围：</li>
+<li><em><strong>VREFHI</strong></em> 针脚要求外接电容。</li>
+</ul>
+<img src="https://pic.islet.space/2021/08/image-20210805090011967.png" alt="image-20210805090011967" style="zoom:50%;" />
+
+<img src="https://pic.islet.space/2021/08/image-20210805090028640.png" alt="image-20210805090028640" style="zoom:50%;" />
+
+
+
+<h5 id="内部参考电源"><a href="#内部参考电源" class="headerlink" title="内部参考电源"></a>内部参考电源</h5><p>选择内部参考电源时，将由芯片设备来为 <em><strong>VREFHI</strong></em> 提供参考电源。 此电源电压可以被配置为 <code>2.5V</code> 或 <code>1.65V</code>，当配置 <code>1.65V</code> 时，模拟输入的范围最大为 <code>3.3V</code> 。</p>
+<p><strong>注意</strong>：内部参考模式同样要求给 VREFHI针脚外接一个电容（具体电容值视具体情况而定）。</p>
+<h5 id="Ganged参考电源"><a href="#Ganged参考电源" class="headerlink" title="Ganged参考电源"></a>Ganged参考电源</h5><p>某些封装中，多个ADC电压参考针脚可能被捆绑在了一起。这种情况下，当选择外部或内部参考模式，以及选择 <code>3.3V</code> 或 <code>2.5V</code> 内部参考电压范围时，有必要对ganged参考进行相同的配置。</p>
+<p>例如，如果 ADC B 和 ADC C参考电源针脚被捆绑在一起，并且需要一个2.5V的内部参考电源时，以下配置代码可供参考：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//ADCB VREFHI and ADCC VREFHI share a pin</span></span><br><span class="line"><span class="comment">//ADCB VREFLO and ADCC VREFLO share a pin</span></span><br><span class="line"><span class="comment">//Both references must be explicitly configured</span></span><br><span class="line"><span class="comment">//Both references must be configured identically</span></span><br><span class="line">SetVREF(ADC_ADCB, ADC_INTERNAL, ADC_VREF2P5);</span><br><span class="line">SetVREF(ADC_ADCC, ADC_INTERNAL, ADC_VREF2P5);</span><br></pre></td></tr></table></figure>
+
+<p>内部硬件设备将确保相同针脚上的多个参考电源不会冲突。（ensure multiple references don’t drive conflicting voltages onto the same pin）正因如此，参考电源可以被配置于任意顺序及任意时间。</p>
+<h5 id="选择参考模式"><a href="#选择参考模式" class="headerlink" title="选择参考模式"></a>选择参考模式</h5><p>电压参考模式可以用C2000套件提供的 <code>SetVREF()</code> 或 <code>ADC_setVREF()</code> 函数进行配置。使用这些函数时需确保 <strong>修正值</strong>（correct trim）已被载入 ADC trim 寄存器，需要确保设备复位后这些函数至少被调用一次，同时不要通过直接写入 <em><strong>ANAREFCTL</strong></em> 寄存器来配置电压参考模式。</p>
+<h4 id="信号模式"><a href="#信号模式" class="headerlink" title="信号模式"></a>信号模式</h4><p>本系列芯片支持单端模式，通过单根针脚 <code>ADCINx</code> 采样转换器的输入电压，参考点为 <code>VREFLO</code>。</p>
+<h5 id="预期（Expected）转换结果"><a href="#预期（Expected）转换结果" class="headerlink" title="预期（Expected）转换结果"></a>预期（Expected）转换结果</h5><p>基于给定的模拟输入电压，预期情况下的数字转换结果如下表所示。小数部分省略。</p>
+<table>
+<thead>
+<tr>
+<th>模拟输入</th>
+<th>数字输出</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>当输入电压低于参考低电压<br><em><strong>ADCINy</strong></em> ≤ <em><strong>VREFLO</strong></em></td>
+<td><strong>最小量程</strong> <code>0x00</code></td>
+</tr>
+<tr>
+<td>当输入电压在高低参考电压之间<br><em><strong>VREFLO</strong></em> &lt; <em><strong>ADCINy</strong></em> &lt; <em><strong>VREFHI</strong></em></td>
+<td><strong>最大量程</strong> <code>0xFFF</code> 和 <strong>输入电压差</strong> / <strong>参考电压差</strong> 之积<br>即 <code>0xFFF * (ADCINy - VREFLO) / (VREFHI - VREFLO)</code></td>
+</tr>
+<tr>
+<td>当输入电压超过参考高电压<br><em><strong>ADCINy</strong></em> ≥ <em><strong>VREFHI</strong></em></td>
+<td><strong>最大量程</strong> <code>0xFFF</code>（即 <code>2^(12)-1</code>）</td>
+</tr>
+</tbody></table>
+<h5 id="解释（Interpreting）转换结果"><a href="#解释（Interpreting）转换结果" class="headerlink" title="解释（Interpreting）转换结果"></a>解释（Interpreting）转换结果</h5><p>基于给定的ADC数字转换结果，来反推理想的对应模拟输入的结果。公式就用上面的表格来反推就好了。</p>
+<h3 id="ADC寄存器"><a href="#ADC寄存器" class="headerlink" title="ADC寄存器"></a>ADC寄存器</h3><p>寄存器这边除了描述最基本的 <strong>基地址</strong> （Base Address）以外，还有两类寄存器：<strong>结果寄存器</strong>（Result Register）和 <strong>控制寄存器</strong>（Control Register）。</p>
+<img src="https://pic.islet.space/2021/08/image-20210805085945157.png" alt="image-20210805085945157" style="zoom: 85%;" />
+
+
+
+<p><img src="https://pic.islet.space/2021/08/image-20210805090938982.png" alt="image-20210805090938982"></p>
+<p><img src="https://pic.islet.space/2021/08/image-20210805090858805.png" alt="image-20210805090858805"></p>
+<h3 id="ADC启动顺序"><a href="#ADC启动顺序" class="headerlink" title="ADC启动顺序"></a>ADC启动顺序</h3><p>设备开启或系统级复位时，ADC会被断电禁用。为ADC上电启用时，请遵循以下顺序：</p>
+<ol>
+<li>设置 <code>PCLKCR13</code> 寄存器中的指定位来启用所需 ADC 时钟</li>
+<li>设置 <code>ADCCTL2</code> 寄存器中的 预分频 <code>PRESCALE</code> 位来设置 ADC的时钟分频</li>
+<li>设置 <code>ADCCTL1</code> 寄存器中的 <code>ADCPWDNZ</code> 位来启用 ADC</li>
+<li>采样前启用一个延迟（需要查询具体需要多长）</li>
+</ol>
+<p><strong>注意</strong>：如果多路ADC需要同步开启，第一步和第三步可以通过 <em>同一条写入指令</em>（in one write instruction）来进行配置。因此，也就可以用同一条延迟指令来等待ADC上电启动。</p>
+<h3 id="SOC操作原则"><a href="#SOC操作原则" class="headerlink" title="SOC操作原则"></a>SOC操作原则</h3><blockquote>
+<p>Each SOC is a configuration set defining the single conversion of a single channel.</p>
+</blockquote>
+<p>注意上面这句话，<mark>每一个SOC都是一个定义着单通道转换器的配置集</mark>（Configuration Set）。</p>
+<p>如果有需要，多个SOC可以配置于使用相同的触发器、通道 或 采样周期。使用相同的触发器来配置多个SOC的话，触发器可以生成一个转换序列（generate a sequence of conversions），同时相同的触发器和通道可以过采样（oversampling）。</p>
+<img src="https://pic.islet.space/2021/07/image-20210730094148462.png" alt="image-20210730094148462"  />
+
+<p>在SOC配置集中有三个可配置项：</p>
+<ul>
+<li><code>ADCSOCFLG1</code> 启动转换的触发源（the trigger source that starts the conversion），操作某个bit可以启动某个SOC，详见《TRM》P1519</li>
+<li><code>CHSEL</code> 转换通道（the channel to convert），可取值范围为 <code>0h</code> ~ <code>Fh</code>，代表 ADC0 ~ ADC15</li>
+<li><code>ACQPS</code> 捕获窗口/采样周期（the acquisition window duration），可取值范围为 <code>000h</code> ~ <code>1FFh</code> </li>
+</ul>
+<blockquote>
+<p>Upon receiving the trigger configured for a soc, the wrapper will ensure that the specified channel is captured using the specified acquisition window duration.</p>
+</blockquote>
+<h4 id="ACQPS的计算"><a href="#ACQPS的计算" class="headerlink" title="ACQPS的计算"></a>ACQPS的计算</h4><p><strong>注意</strong>：Acquisition Window 和 ACQPS 不是同一个概念，Acquisition Window 就是下方所述的 <strong><em>S</em> 和 <em>H</em> 的持续时间</strong>。</p>
+<p>参考ADC输入模型简图：</p>
+<p><img src="https://pic.islet.space/2021/07/image-20210730091825651.png" alt="image-20210730091825651"></p>
+<p>采样周期和 ACQPS的关系如下：</p>
+<div style="text-align: center; font-weight: 900; font-style: italic;">Acquisition window = (ACQPS + 1)∙(System Clock (SYSCLK) cycle time)</div>
+
+<p>以下案例在求解采样周期的基础上，倒推 ACQPS 的设置：</p>
+<p>为了能够正确读取ADC数据，ADC输入信号必须有足够的时间为 <strong>采样和保持电容</strong> <code>Ch</code>（the sample and hold capacitor）充电。通常来说，<em>S</em> 和 <em>H</em> 的持续时间的选择是为了使采样电容被充电到最终值的 ½ LSB 或者 ¼ LSB ，具体取决于可容忍的 settling 误差（tolerable settling error）。</p>
+<p>可以用 RC settling 模块来确定所需的 settling 时间近似值。具体时间常数模型如下方公式：</p>
+<div style="text-align: center;"><img src="https://pic.islet.space/2021/08/image-20210805180321634.png" alt="image-20210805180321634" style="zoom:100%;" /></div>
+
+<p>所需时间常数的数量也由下面等式给出：</p>
+<div style="text-align: center;"><img src="https://pic.islet.space/2021/08/image-20210805180508541.png" alt="image-20210805180508541" style="zoom:100%;" /></div>
+
+<p>最终<em>S</em> 和 <em>H</em> 的持续时间如下方公式所示：</p>
+<div style="text-align: center;"><img src="https://pic.islet.space/2021/08/image-20210805180522951.png" alt="image-20210805180522951" style="zoom:100%;" /></div>
+
+<blockquote>
+<p>ADC输入模块需要提供以下参数：</p>
+<ul>
+<li><code>n</code> = ADC 分辨率 (in bits)</li>
+<li><code>RON</code> = ADC 采样开关电阻 (in Ohms)</li>
+<li><code>CH</code> = ADC 采样电容 (in pF)</li>
+<li><code>Cp</code> = ADC 通道寄生输入电容 (in pF)</li>
+</ul>
+<p>以下参数则取决于应用（硬件/软件）设计：</p>
+<ul>
+<li>settling error = tolerable settling error (in LSBs)</li>
+<li>Rs = ADC 驱动电流源电阻值 (in Ohms)</li>
+<li>CS = ADC 输入引脚上的 <em><strong>寄生电容值</strong></em> (in pF)</li>
+</ul>
+</blockquote>
+<p>通过以下参数来说明计算方式：</p>
+<ul>
+<li>n = 12-bits</li>
+<li>RON = 500Ω</li>
+<li>CH = 12.5pF</li>
+<li>Cp = 12.7pF</li>
+<li>settling error = ¼ LSB</li>
+<li>Rs = 180Ω</li>
+<li>Cs = 150pF</li>
+</ul>
+<p>时间常数计算如下：</p>
+<div style="text-align: center;"><img src="https://pic.islet.space/2021/08/image-20210805180544244.png" alt="image-20210805180544244" style="zoom:100%;" /></div>
+
+
+
+<p>所需时间常数的数量如下：</p>
+<div style="text-align: center;"><img src="https://pic.islet.space/2021/08/image-20210805180556088.png" alt="image-20210805180556088" style="zoom:100%;" /></div>
+
+<p>最终结果：</p>
+<div style="text-align: center; font-weight: 900;">37.8ns · 7.13 = 270ns</div>
+
+<p>如果系统时间 <em><strong>SYSCLK</strong></em> 为 <code>100 MHz</code> ，周期为 <code>10ns</code> ，则 S和H的持续时间应该是  <code>270 ns/10 ns = 27.0 SYSCLKs</code>，即27个系统时钟周期，为ADC输入信号所要提供的充足的ACQPS应该至少是  <code>CEILING(27.0) – 1 = 26</code></p>
+<p>While this gives a rough estimate of the required acquisition window, a better method would be to setup a circuit with the ADC input model, a model of the source impedance/capacitance, and any board parasitics in SPICE (or similar software) and simulate to verify that the sampling capacitor settles to the desired accuracy.</p>
+<p>参数计算代码如下：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*-------------------------------------------------------------------------</span></span><br><span class="line"><span class="comment"> * HEADER FILES</span></span><br><span class="line"><span class="comment">-------------------------------------------------------------------------*/</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;math.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*-------------------------------------------------------------------------</span></span><br><span class="line"><span class="comment"> * DATA TYPE DEFINITION</span></span><br><span class="line"><span class="comment">-------------------------------------------------------------------------*/</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">double</span> ADCPARAM;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">/*-------------------------------------------------------------------------</span></span><br><span class="line"><span class="comment"> * MACRO DEFINITION</span></span><br><span class="line"><span class="comment">-------------------------------------------------------------------------*/</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> ADC_RESOLUTION 12  <span class="comment">//定义分辨率为12位</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> LSB 1</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/*-------------------------------------------------------------------------</span></span><br><span class="line"><span class="comment"> * GLOBAL PARAMETERS</span></span><br><span class="line"><span class="comment">-------------------------------------------------------------------------*/</span></span><br><span class="line"><span class="comment">// r for Resistance , c for Capacitance </span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">adc_parameters</span>&#123;</span></span><br><span class="line">    <span class="keyword">short</span> resolution;  <span class="comment">//分辨率</span></span><br><span class="line">    ADCPARAM r_on;  <span class="comment">// ADC采样开关电阻</span></span><br><span class="line">    ADCPARAM c_hold;   <span class="comment">// ADC采样和保持电容</span></span><br><span class="line">    ADCPARAM c_parasitic;   <span class="comment">// ADC通道寄生输入电容</span></span><br><span class="line"></span><br><span class="line">    ADCPARAM settling_error;  <span class="comment">//可容忍的沉降误差</span></span><br><span class="line">    ADCPARAM r_source;  <span class="comment">//ADC驱动电流源上的电阻值</span></span><br><span class="line">    ADCPARAM c_source;  <span class="comment">//ADC输入引脚上的寄生电容值</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">/*-------------------------------------------------------------------------</span></span><br><span class="line"><span class="comment"> * FUNCTION DECLARATION</span></span><br><span class="line"><span class="comment">-------------------------------------------------------------------------*/</span></span><br><span class="line"><span class="function">ADCPARAM <span class="title">timeConstanceCalc</span><span class="params">(ADCPARAM, ADCPARAM, ADCPARAM, ADCPARAM, ADCPARAM)</span></span>;</span><br><span class="line"><span class="function">ADCPARAM <span class="title">numberCalc</span><span class="params">(ADCPARAM, ADCPARAM, ADCPARAM, ADCPARAM, ADCPARAM)</span></span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">/*-------------------------------------------------------------------------</span></span><br><span class="line"><span class="comment"> * MAIN FUNCTIONS</span></span><br><span class="line"><span class="comment">-------------------------------------------------------------------------*/</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="comment">// 注意： 所有电容值单位为 pF， 所有电阻值单位为 Ω</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">adc_parameters</span> <span class="title">ADC1</span>;</span></span><br><span class="line">    ADC1.resolution = ADC_RESOLUTION;  <span class="comment">// 不可修改</span></span><br><span class="line">    ADC1.r_on = <span class="number">500</span>;  <span class="comment">//不变</span></span><br><span class="line">    ADC1.c_hold = <span class="number">12.5</span>;  <span class="comment">//不变</span></span><br><span class="line">    ADC1.c_parasitic = <span class="number">12.7</span>;  <span class="comment">//不变</span></span><br><span class="line"></span><br><span class="line">    ADC1.settling_error = <span class="number">1</span>/<span class="number">4.0</span> *LSB;  <span class="comment">//不要写1/4 *LSB，会得出无限大的数据（inf）</span></span><br><span class="line">    ADC1.r_source = <span class="number">1000</span>;   <span class="comment">//实际使用1kΩ，原180</span></span><br><span class="line">    ADC1.c_source = <span class="number">10000</span>;     <span class="comment">//带入0.1uF计算，原150</span></span><br><span class="line"></span><br><span class="line">    ADCPARAM result = <span class="number">0</span>;</span><br><span class="line">    result = <span class="built_in">timeConstanceCalc</span>(ADC1.r_source, ADC1.r_on, ADC1.c_hold, ADC1.c_source, ADC1.c_parasitic) * <span class="built_in">numberCalc</span>(ADC1.resolution, ADC1.settling_error, ADC1.c_source, ADC1.c_parasitic, ADC1.c_hold);</span><br><span class="line"></span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;ADC采样和保持的时间为&quot;</span>  &lt;&lt; result &lt;&lt; <span class="string">&quot;ns&quot;</span> &lt;&lt; endl;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">/*-------------------------------------------------------------------------</span></span><br><span class="line"><span class="comment"> * FUNCTION DEFINITIONS</span></span><br><span class="line"><span class="comment">-------------------------------------------------------------------------*/</span></span><br><span class="line"><span class="function">ADCPARAM <span class="title">timeConstanceCalc</span><span class="params">(ADCPARAM Rs, ADCPARAM Ron, ADCPARAM Ch, ADCPARAM Cs, ADCPARAM Cp)</span></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> ( ( Rs + Ron ) * Ch + Rs * ( Cs + Cp ) ) /<span class="number">1000</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function">ADCPARAM <span class="title">numberCalc</span><span class="params">(ADCPARAM n, ADCPARAM se, ADCPARAM Cs, ADCPARAM Cp, ADCPARAM Ch)</span></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">log</span>( <span class="built_in">exp2</span>(n) / se ) - <span class="built_in">log</span>( (Cs + Cp) / Ch);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+
+
 <h1 id="控制外设"><a href="#控制外设" class="headerlink" title="控制外设"></a>控制外设</h1><p>本系列芯片的控制外设包含 <strong>eCAP</strong>、<strong>HRCAP</strong>、<strong>ePWM</strong>、<strong>HRPWM</strong>、<strong>eQEP</strong> 和 <strong>SDFM</strong>。</p>
 <p>根据《SPRU566N》表11 可知，ePWM 和 HRPWM 都是4型增强外设，具体功能可以参见《SPRUI33D》。</p>
 <h2 id="ePWM"><a href="#ePWM" class="headerlink" title="ePWM"></a>ePWM</h2><p>ePWM是商业和工业控制电力系统的关键组成部分。这些系统包括 <u>数字电机控制</u>、<u>开关电源控制</u>、<u>不间断电源供应</u> 或 其他形式的电源转换。</p>
@@ -1932,9 +2236,10 @@
 
 
 
-<h2 id="设置头文件选项"><a href="#设置头文件选项" class="headerlink" title="设置头文件选项"></a>设置头文件选项</h2><p>向头文件包含设置中，添加两条 c2000Ware 套件安装包提供的支持库信息：</p>
+<h2 id="设置头文件选项"><a href="#设置头文件选项" class="headerlink" title="设置头文件选项"></a>设置头文件选项</h2><p>向头文件包含设置中，添加几条 c2000Ware 套件安装包提供的支持库信息：</p>
 <p><code>D:\ti\c2000Ware\C2000Ware_2_01_00_00\driverlib\f28004x\driverlib</code></p>
 <p><code>D:\ti\c2000Ware\C2000Ware_2_01_00_00\device_support\f28004x\common\include</code></p>
+<p><code>D:\ti\c2000Ware\C2000Ware_2_01_00_00\device_support\f28004x\headers\include</code></p>
 <p><strong>注意</strong>：以上路径信息仅供参考，具体路径仍需依据套件安装地址来修改。</p>
 <img src="https://pic.islet.space/2021/07/image-20210719095520123.png" alt="image-20210719095520123" style="zoom:80%;" />
 
@@ -2175,7 +2480,7 @@
 <p><img src="https://pic.islet.space/2021/08/image-20210802172012594.png" alt="image-20210802172012594"></p>
 <p><img src="https://pic.islet.space/2021/08/image-20210802171937172.png" alt="image-20210802171937172"></p>
 <p>通过配置下方代码中 <code>main()</code> 函数的参数，来对CPU 、ePWM的相关寄存器参数进行调节，可以实现目标PWM周期为30.8Khz的设置。</p>
-<p>代码就不贴了，可以直接下载：<a target="_blank" rel="noopener" href="http://code.islet.space/VisualStudioStudio/F28004x_ParamsCalculate/main.cpp">main.cpp</a></p>
+<p>参数计算代码就不贴了，可以直接下载：<a target="_blank" rel="noopener" href="http://code.islet.space/VisualStudioStudio/F28004x_ParamsCalculate/main.cpp">main.cpp</a></p>
 <p>从系统时钟设置到外设时钟设置过程中，需要设置的寄存器、位及其数值具体如下（仅供参考）：</p>
 <ol>
 <li>设置时钟源。选择时钟源为 <em><strong>内源时钟2</strong></em>（INTOSC2），修改 <code>CLKSRCCTL1</code> 寄存器下的 <code>OSCCLKSRCSEL</code> 值为 <code>0x00</code> 。</li>
@@ -2247,7 +2552,7 @@
 <p>首先应检查JTAG是否链接正常，打开“设备管理器”进行查看，如果设备连接器中出现了该JTAG设备，则进一步查看项目文件下的<code>.cxxm</code>l文件，该文件用于配置设备连接信息，包括芯片信号、JTAG调试器信号、通信方式、通信速率等。确保所有设置都正确以后进行全面断电、断开连接、重启CCS并重新尝试Debug，如果仍旧出现问题，请按以下步骤进行操作。</p>
 <p>在Debug界面，点击目标CPU，点击 <code>Connect Target</code> 进行手动连接。</p>
 <p><img src="https://pic.islet.space/2021/08/image-20210802160242203.png" alt="image-20210802160242203"></p>
-<p>连接正确后，手动导入 <code>Build</code> 完之后的 <code>.out</code> 文件，将该程序手动烧写至CPU的RAM/Flash中。</p>
+<p>连接正确后，手动导入 <code>Build</code> 完之后的 <code>.out</code> 文件，将该程序手动烧写至CPU的RAM/Flash中</p>
 <p><img src="https://pic.islet.space/2021/08/image-20210802160456548.png" alt="image-20210802160456548"></p>
 <p>选择对应项目下生成的 <code>.out</code> 文件：</p>
 <p><img src="https://pic.islet.space/2021/08/image-20210802160358841.png" alt="image-20210802160358841"></p>
@@ -2483,128 +2788,6 @@
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://islet.space/2021/06/30/Hardware/DSP/2021-06-30-ADSP%E6%B7%B7%E5%90%88%E7%BC%96%E7%A8%8B/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Liewzheng">
-      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Coder的孤岛">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/06/30/Hardware/DSP/2021-06-30-ADSP%E6%B7%B7%E5%90%88%E7%BC%96%E7%A8%8B/" class="post-title-link" itemprop="url">ADSP混合编程</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
-    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2021-06-30 14:00:00" itemprop="dateCreated datePublished" datetime="2021-06-30T14:00:00+08:00">2021-06-30</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-07-01 01:31:56" itemprop="dateModified" datetime="2021-07-01T01:31:56+08:00">2021-07-01</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Hardware/" itemprop="url" rel="index"><span itemprop="name">Hardware</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="伪操作和伪指令"><a href="#伪操作和伪指令" class="headerlink" title="伪操作和伪指令"></a>伪操作和伪指令</h1><p><em><strong>Directives</strong></em>，即 <strong>伪操作</strong>，是汇编语言中的特殊指令助记符。主要作用是为完成汇编程序做各种准备。伪操作仅是在源程序进行汇编时由汇编程序处理，而不是在计算机运行期间由机器执行的指令。即，伪操作只在汇编时起作用，一旦汇编结束，其使命也就结束了。</p>
-<p><em><strong>Pseudo-Instruction</strong></em>，即 <em><strong>伪指令</strong></em>，是汇编语言程序里的特殊指令助记符，不是 真指令。伪指令在汇编时被替换成合适的机器指令（根据芯片架构而定，不同芯片架构之间指令可能不同），故其也只在汇编时其作用，不在机器运行期间由机器执行。</p>
-<h1 id="ADI汇编文件样式"><a href="#ADI汇编文件样式" class="headerlink" title="ADI汇编文件样式"></a>ADI汇编文件样式</h1><p>.asm 文件具有以下样式，包含 <em><strong>预处理指令</strong></em>（主要是C/C++宏定义）、汇编伪操作类别（assembler direcitives）、数据块、代码块、条件编译预处理 和 汇编标签。</p>
-<p><img src="https://pic.islet.space/2021/06/image-20210630170546778.png" alt="image-20210630170546778"></p>
-<h2 id="混合编程"><a href="#混合编程" class="headerlink" title="混合编程"></a>混合编程</h2><h3 id="使用asm"><a href="#使用asm" class="headerlink" title="使用asm()"></a>使用asm()</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> img288; <span class="comment">//定义C语言变量</span></span><br><span class="line"><span class="keyword">asm</span>(<span class="string">&quot;ax0 = 0x5C;&quot;</span>);</span><br><span class="line"><span class="keyword">asm</span>(<span class="string">&quot;dm(img288_) = ax0;&quot;</span>);  <span class="comment">//用汇编语言赋值时，变量需要加后置下划线？？？</span></span><br><span class="line">img288 = <span class="number">0x5C</span>;  <span class="comment">//直接用C语言赋值</span></span><br></pre></td></tr></table></figure>
-
-<p>以上C语言与汇编代码经过编译后：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ax0 &#x3D; 0x5C;</span><br><span class="line">dm(img288_) &#x3D; ax0;</span><br><span class="line">my1 &#x3D; 92;</span><br><span class="line">dm(img288_) &#x3D; my1;</span><br></pre></td></tr></table></figure>
-
-
-
-<p><mark>此处可否把 <code>dm()</code> 当成一个类似于指针的东西</mark></p>
-<h3 id="使用汇编子程序"><a href="#使用汇编子程序" class="headerlink" title="使用汇编子程序"></a>使用汇编子程序</h3><p>使用汇编子程序是C语言程序与汇编语言接口的另一种方法。<mark>用户定义的子程序放在单独的汇编文件中，或是做成二进制的库文件，并将子程序的定义用GLOBEL输出，汇编后就可以供C语言程序调用</mark>。下面是一个不需要参数的子程序的例子：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">.MODULE&#x2F;RAM_delay_;</span><br><span class="line">.external del_cycle;  &#x2F;&#x2F;声明del_cycle是外部变量</span><br><span class="line">.global delay;  &#x2F;&#x2F;声明delay是全局变量</span><br><span class="line"></span><br><span class="line">delay_:</span><br><span class="line">function_entry;  &#x2F;&#x2F;子程序开始标志，必不可少</span><br><span class="line">ar &#x3D; dm(del_cycle_);</span><br><span class="line">cntr &#x3D; ar;</span><br><span class="line">do d_loop until ce;</span><br><span class="line">d_loop:nop;</span><br><span class="line">exit;  &#x2F;&#x2F;子程序结束标志，必不可少</span><br><span class="line">.ENDMOD;</span><br></pre></td></tr></table></figure>
-
-<p>注意：以上代码源自参考链接4，实际上代码中的关键字相差可能较大，需要根据实际情况进行改动。</p>
-<p>比如，21479系列芯片与ADAU1939芯片一同工作，其ADC采样代码如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">.section&#x2F;pm seg_pmco;  &#x2F;&#x2F;程序代码块，procedure memory section</span><br><span class="line"></span><br><span class="line">_Receive_ADC_Samples:  &#x2F;*应该类似于 &#123; *&#x2F;</span><br><span class="line">.global _Receive_ADC_Samples;  &#x2F;&#x2F;定义自己为全局函数</span><br><span class="line"></span><br><span class="line">	r1 &#x3D; -31;     </span><br><span class="line">	r0 &#x3D; dm(_rx1a_buf + Internal_ADC_L1);	</span><br><span class="line">	f0 &#x3D; float r0 by r1;	</span><br><span class="line">	dm(_Left_Channel_In1) &#x3D; r0;</span><br><span class="line">  </span><br><span class="line">	r0 &#x3D; dm(_rx1a_buf + Internal_ADC_R1);	</span><br><span class="line">	f0 &#x3D; float r0 by r1;	</span><br><span class="line">	dm(_Right_Channel_In1) &#x3D; r0;			</span><br><span class="line"></span><br><span class="line">	r0 &#x3D; dm(_rx1b_buf + Internal_ADC_L2);	</span><br><span class="line">	f0 &#x3D; float r0 by r1;	</span><br><span class="line">	dm(_Left_Channel_In2) &#x3D; r0;	</span><br><span class="line">	</span><br><span class="line">	r0 &#x3D; dm(_rx1b_buf + Internal_ADC_R2);	</span><br><span class="line">	f0 &#x3D; float r0 by r1;	</span><br><span class="line">	dm(_Right_Channel_In2) &#x3D; r0;			</span><br><span class="line"></span><br><span class="line">	r0 &#x3D; DM(AD1939_audio_frame_timer);</span><br><span class="line">	r0 &#x3D; r0 + 1;</span><br><span class="line">	DM(AD1939_audio_frame_timer) &#x3D; r0;</span><br><span class="line">	</span><br><span class="line">	leaf_exit;  &#x2F;&#x2F;程序结束标志，应该类似于return;吧</span><br><span class="line">_Receive_ADC_Samples.end:  &#x2F;*应该类似于 &#125;*&#x2F;</span><br></pre></td></tr></table></figure>
-
-
-
-
-
-
-
-<h1 id="Dual-Memory-Support-Keywords-dm-pm"><a href="#Dual-Memory-Support-Keywords-dm-pm" class="headerlink" title="Dual Memory Support Keywords (dm / pm)"></a>Dual Memory Support Keywords (dm / pm)</h1><p>This section describes <em><strong>cc21k</strong></em> language extension keywords to C and C++ that support the dual-memory space, modified Harvard architecture of the ADSP-21xxx processors. There are two keywords used to designate memory space: <em><strong>dm</strong></em> and <em><strong>pm</strong></em>. They can be used to specify the location of a static or global variable or to qualify a pointer declaration.</p>
-<p>以下规则适用于两种内存关键字（dm/pm）：</p>
-<ul>
-<li>The memory space keyword (dm or pm) refers to the expression to the right of the keyword. </li>
-<li>You can specify a memory space for each level of pointer. This corresponds to one memory space for each * in the declaration. </li>
-<li>The compiler uses <em><strong>Data Memory</strong></em> (DM) as the default memory space for all variables. All undeclared spaces for data are Data Memory spaces. </li>
-<li>The compiler always uses <em><strong>Program Memory</strong></em> (PM) as the memory space for functions. Function pointers always point to Program Memory. </li>
-<li>You cannot assign memory spaces to <em><strong>automatic variables</strong></em>. <mark>All automatic variables reside on the stack, which is always in Data Memory</mark>. </li>
-<li>Literal character strings always reside in Data Memory.</li>
-</ul>
-<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><ol>
-<li>《<a target="_blank" rel="noopener" href="https://www.analog.com/media/en/dsp-documentation/software-manuals/50_21k_cc_mn_rev_1.5.pdf">VisualDSP++ 5.0 C/C++ Compiler Manual for SHARC Processors</a>》</li>
-<li>《<a target="_blank" rel="noopener" href="https://www.analog.com/media/en/dsp-documentation/processor-manuals/236999443isr_21xxx.pdf">ADSP-21160 SHARC DSP Instruction Set Reference</a>》</li>
-<li>《嵌入式系统原理与应用设计》王光学，电子工业出版社</li>
-<li><a target="_blank" rel="noopener" href="http://www.gzweix.com/article/sort0250/sort0251/sort0288/info-228197_2.html">嵌入式C语言开发ADSP21XX系列</a></li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
     <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/9/">9</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
@@ -2619,12 +2802,12 @@
   </div>
 
 <div class="copyright">
-  &copy; 
+  &copy; 2019 – 
   <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
-  <span class="author" itemprop="copyrightHolder">Liewzheng</span>
+  <span class="author" itemprop="copyrightHolder">liewzheng</span>
 </div>
 
     </div>
