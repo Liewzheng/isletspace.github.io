@@ -87,7 +87,7 @@
         <li class="menu-item menu-item-文章"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>文章</a></li>
         <li class="menu-item menu-item-标签"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
         <li class="menu-item menu-item-目录"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>目录</a></li>
-        <li class="menu-item menu-item-zplusplus"><a href="https://zplusplus.cn/" rel="noopener" target="_blank"><i class="fa fa-user fa-fw"></i>ZPLUSPLUS</a></li>
+        <li class="menu-item menu-item-友链"><a href="/friends/" rel="section"><i class="fa fa-user fa-fw"></i>友链</a></li>
   </ul>
 </nav>
 
@@ -210,10 +210,16 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">Posted on</span>
-      
 
-      <time title="Created: 2021-08-06 23:40:00 / Modified: 23:59:25" itemprop="dateCreated datePublished" datetime="2021-08-06T23:40:00+08:00">2021-08-06</time>
+      <time title="Created: 2021-08-06 23:40:00" itemprop="dateCreated datePublished" datetime="2021-08-06T23:40:00+08:00">2021-08-06</time>
     </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2021-08-08 14:26:07" itemprop="dateModified" datetime="2021-08-08T14:26:07+08:00">2021-08-08</time>
+      </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
         <i class="far fa-folder"></i>
@@ -244,7 +250,11 @@
 </li>
 </ol>
 <h1 id="新建目录和页面"><a href="#新建目录和页面" class="headerlink" title="新建目录和页面"></a>新建目录和页面</h1><p>可以通过两句语句来运行：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">hexo new page categories</span><br><span class="line">hexo new page tags</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 添加type属性</span></span><br><span class="line"></span><br><span class="line">编辑 `index.md`，修改信息如下，日期随意：</span><br><span class="line"></span><br><span class="line">```bash</span><br><span class="line">---</span><br><span class="line">title: 目录</span><br><span class="line"><span class="built_in">type</span>: categories</span><br><span class="line">date: 2020-08-06 23:32:00</span><br><span class="line">---</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">hexo new page categories</span><br><span class="line">hexo new page tags</span><br></pre></td></tr></table></figure>
+
+
+<h1 id="添加type属性"><a href="#添加type属性" class="headerlink" title="添加type属性"></a>添加type属性</h1><p>编辑 <code>index.md</code>，修改信息如下，日期随意：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">---</span><br><span class="line">title: 目录</span><br><span class="line"><span class="built_in">type</span>: categories</span><br><span class="line">date: 2020-08-06 23:32:00</span><br><span class="line">---</span><br></pre></td></tr></table></figure>
 
 <p>注意上面写的一个属性 <code>type</code>，千万不能写错。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">---</span><br><span class="line">title: 标签</span><br><span class="line"><span class="built_in">type</span>: tags</span><br><span class="line">date: 2020-08-06 23:32:00</span><br><span class="line">---</span><br></pre></td></tr></table></figure>
