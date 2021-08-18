@@ -1481,7 +1481,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-08-10 00:44:17" itemprop="dateModified" datetime="2021-08-10T00:44:17+08:00">2021-08-10</time>
+        <time title="Modified: 2021-08-18 19:00:38" itemprop="dateModified" datetime="2021-08-18T19:00:38+08:00">2021-08-18</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -1773,13 +1773,91 @@
 <p>下图展示了本系列芯片的中断架构。</p>
 <p><img src="https://pic.islet.space/2021/07/image-20210728111202805.png" alt="image-20210728111202805"></p>
 <p>外部中断（external interrupt, XINT）电气特性数据和时序特性：</p>
-<p>表31 列出了外部中断的时间要求</p>
-<p>表32 列出了外部中断开断特性</p>
-<p>图25 展示了外部中断的时序</p>
+<p><strong>表31</strong> 列出了外部中断的时间要求</p>
+<p><strong>表32</strong> 列出了外部中断开断特性</p>
+<p><strong>图25</strong> 展示了外部中断的时序</p>
 <p><img src="https://pic.islet.space/2021/07/image-20210712083326344.png" alt="image-20210712083326344"></p>
-<h3 id="STAGE0-外设中断阶段"><a href="#STAGE0-外设中断阶段" class="headerlink" title="STAGE0 - 外设中断阶段"></a>STAGE0 - 外设中断阶段</h3><h3 id="STAGE1-PIE阶段"><a href="#STAGE1-PIE阶段" class="headerlink" title="STAGE1 - PIE阶段"></a>STAGE1 - PIE阶段</h3><p>PIE控制器是指用于外围设备中断控制（Peripheral Interrupt Control）的寄存器。</p>
+<h3 id="中断架构"><a href="#中断架构" class="headerlink" title="中断架构"></a>中断架构</h3><h4 id="STAGE0-外设中断阶段"><a href="#STAGE0-外设中断阶段" class="headerlink" title="STAGE0 - 外设中断阶段"></a>STAGE0 - 外设中断阶段</h4><p>每个外设都有其独立的中断配置，在每个设备的章节中都有描述。某些外设允许多种事件来触发相同的中断信号。例如，通信外设就可能使用相同的中断来检查数据是否被接收或者是否存在传输错误。中断的触发状态可以通过查看外设状态寄存器来确定。通常，在下一次中断生成前，需要手动清除前一次在状态寄存器上的数据位。</p>
+<h4 id="STAGE1-PIE阶段"><a href="#STAGE1-PIE阶段" class="headerlink" title="STAGE1 - PIE阶段"></a>STAGE1 - PIE阶段</h4><p>PIE控制器是指用于外围设备中断控制（Peripheral Interrupt Control）的寄存器。</p>
+<p>PIE为每一个外设中断信号都提供了独立的标志和使能寄存器位，这些外设中断信号通常也被称为 <em><strong>PIE通道</strong></em>。这些通道根据关联的CPU中断（associated CPU interrupt）被进行绑定成 <strong>组</strong>（group）。每一个PIE组都拥有一个16bit的 <strong>使能寄存器</strong> <em><strong>PIEIERx</strong></em> 和 一个16bit的 <strong>标志寄存器</strong> <em><strong>PIEIFRx</strong></em> ，并且在PIE确认寄存器 <em><strong>PIEACK</strong></em> 中还有一个bit。<mark><em><strong>PIEACK</strong></em> register bit acts as a common interrupt mask for the entire <em><strong>PIE</strong></em> group.</mark></p>
+<p>当CPU接收一个中断时，从PIE中查找到中断服务程序的地址（fetches the address of the ISR）。【因此写完中断服务程序时需要将程序的地址绑定到PIE上，如下面代码。】PIE返回组中 <strong>同时被使能且被标志了的</strong>（both flagged and enabled） <strong>最低数字的通道</strong>（lowest-numbered channel）的向量地址。在多数中断都被 <strong>阻塞</strong>（pending）时，这相当于给了低优先级中断一个较高的权限。</p>
+<p>如果没有中断被同时标志和使能，PIE就会返回通道1的向量地址。这种情况通常不会发生，只有在 <strong>PIE改变状态时</strong> <strong>中断也同时</strong> 生成才会。（software changes the state of the PIE while an interrupt is propagating）</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">EALLOW;</span><br><span class="line">PieVectTable.ADCA1_INT = &amp;adcA1ISR;   <span class="comment">//为通道ADCA1绑定中断应用 adcA1ISR</span></span><br><span class="line">EDIS;</span><br></pre></td></tr></table></figure>
+
+
+
 <p><img src="https://pic.islet.space/2021/07/image-20210728110450590.png" alt="image-20210728110450590"></p>
-<h3 id="STAGE2-CPU阶段"><a href="#STAGE2-CPU阶段" class="headerlink" title="STAGE2 - CPU阶段"></a>STAGE2 - CPU阶段</h3><h2 id="低电量模式"><a href="#低电量模式" class="headerlink" title="低电量模式"></a>低电量模式</h2><p>本系列芯片拥有两种 时钟门（clock-gating） 低电量模式，分别是 HALT 和 IDLE，STANDARD 模式不支持进入低电量。</p>
+<h4 id="STAGE2-CPU阶段"><a href="#STAGE2-CPU阶段" class="headerlink" title="STAGE2 - CPU阶段"></a>STAGE2 - CPU阶段</h4><p>和PIE相似，CPU 也为每一个中断提供了对应的标志和使能寄存器位。在CPU内部寄存器中，有一个 <strong>中断使能寄存器</strong>（<strong>IER</strong>）和一个 <strong>中断标志寄存器</strong>（<strong>IFR</strong>）。CPU内部还有一个由 <em><strong>ST1</strong></em> 寄存器下的 <em><strong>INTM</strong></em> 位 控制的 <strong>全局中断屏蔽</strong>（global interrupt mask），该屏蔽可以用CPU的 <code>SETC</code> 和 <code>CLRC</code> 指令进行进行设置和清除操作。对应到C语言的代码中，就是C2000套件的宏定义 <code>DINT</code> 和 <code>EINT</code> 。</p>
+<p>对 <code>IER</code> 和 <code>INTM</code> 的写入都是原子操作。原则上，一旦设置了 <code>INTM</code> 位，队列（pipeline）里的下个指令将会在所有中断都被关闭的情况下运行，不需要软件延迟。</p>
+<h3 id="中断顺序"><a href="#中断顺序" class="headerlink" title="中断顺序"></a>中断顺序</h3><p><img src="https://pic.islet.space/2021/08/image-20210816112840611.png" alt="image-20210816112840611"></p>
+<p>当外设生成中断（在第x组PIE，第y通道）时，以下事件顺序将会触发：</p>
+<ol>
+<li>中断被锁定在 <code>PIEIFRx.y</code></li>
+<li>如果 <code>PIEIERx.y</code> 被设置 ，中断生成</li>
+<li>如果 <code>PIEACK.x</code> 被清除，中断生成且 <code>PIEACK</code> 被设置</li>
+<li>中断被锁定在 <code>IFR.x</code> </li>
+<li>如果 <code>IER.x</code> 被设置，中断生成</li>
+<li>如果 <code>INTM</code> 被清除，CPU接收中断</li>
+<li>任何在管道里的D2或更后面的阶段的指令将会运行到完成。更早阶段的指令将会被清除（flushed）。</li>
+<li>CPU在堆（stack）上保存内容</li>
+<li><code>IFR.x</code> 和 <code>IER.x</code> 被清除。<code>INTM</code> 被设置。<code>EALLOW</code> 被清除。</li>
+<li>CPU中PIE中索引到ISR的地址。<code>PIEIFR.y</code> 被清除</li>
+</ol>
+<p>所谓中断延迟是指介于 <code>PIEIFRx.y</code> <strong>锁存中断</strong> 和 <strong>第一个ISR指令进入CPU队列的执行阶段</strong> 之间的时间。</p>
+<p>最小的中断延迟时间是14个系统周期，在ISR或堆内存中的等待时间也会增加延迟。</p>
+<p>外部中断为了 <strong>GPIO同步</strong> 和 <strong>输入限制</strong>（input qualification），增加了最少2个系统周期。</p>
+<p>使用C28x <code>RPT</code> 指令创建的循环无法被中断。</p>
+<h3 id="配置方法"><a href="#配置方法" class="headerlink" title="配置方法"></a>配置方法</h3><p>上电时，默认情况下任何中断都不被使能。PIEIER 寄存器和 IER寄存器被清除， INTM寄存器被设置。应用代码负责配置和使能所有外设中断。</p>
+<h4 id="使能中断"><a href="#使能中断" class="headerlink" title="使能中断"></a>使能中断</h4><p>以下为中断使能步骤：</p>
+<ol>
+<li>全局性地关闭中断（<code>DINT</code> 或者 <code>SETC INTM</code>)</li>
+<li>通过设置 <code>PIECTRL</code> 寄存器的 <code>ENPIE</code> 位来使能PIE。</li>
+<li>为每个中断在PIE向量表里的对应位置上写ISR向量（中断服务程序地址），如下表3所示，注意下表是 EALLOW 保护的。</li>
+</ol>
+<p><img src="https://pic.islet.space/2021/08/image-20210817095119399.png" alt="image-20210817095119399"></p>
+<ol start="4">
+<li>为每个中断设置对应的 <code>PIEIERx</code> 位。（不要使用直接连接至CPU的定时器1和定时器2）</li>
+<li>为所有拥有已启用中断的PIE组（for any PIE group containing enabled interrupts）设置CPU的IER位</li>
+<li>启用外设中断</li>
+<li>全局性启动中断（<code>EINT</code> 或 <code>CLRC INTM</code>）</li>
+</ol>
+<h4 id="处理中断"><a href="#处理中断" class="headerlink" title="处理中断"></a>处理中断</h4><p>ISR中断处理程序基本与普通程序一直，以下几点需要遵守：</p>
+<ol>
+<li>保存和恢复特定的CPU寄存器状态（如果需要）</li>
+<li>为中断组清除 <code>PIEACK</code> 位</li>
+<li>使用 <code>IRET</code> 指令来返回</li>
+</ol>
+<p>如果函数定义时使用了 <code>__interrupt</code> 关键字，第一条和第三条会由C编译器自动处理。</p>
+<p>与中断组相关的PIEACK 位必须在用户代码中手动清除，通常是在ISR的末尾执行该操作。如果PIEACK没有被清除，那么CPU将不会继续接收改组的中断。此处与不经过PIE的定时器中断有所不同。</p>
+<h4 id="关闭中断"><a href="#关闭中断" class="headerlink" title="关闭中断"></a>关闭中断</h4><p>为关闭所有中断，需通过 <code>DINT</code> 和 <code>SETC INTM</code> 来设置CPU的全局中断屏蔽。不需要在设置 <code>INTM</code> 或 修改IER后添加 <code>NOP</code>，在中断关闭后会有下一条指令将被执行。</p>
+<p>通过操作 <code>PIEIERx</code> 寄存器能够关闭独立中断，但需要避免竞争发生。当 <code>PIEIER</code> 写入完成时，如果中断信号准备好要生成，该中断信号将会直接到达CPU并且造成假中断的触发。为避免假中断的触发，应循以下步骤：</p>
+<ol>
+<li>全局性禁止中断（<code>DINT</code> 或 <code>SETC INTM</code>）</li>
+<li>为中断清除 <code>PIEIER</code> 位</li>
+<li>等待5个周期（系统周期？）以确保任何已生成的中断能够到达CPU的IFR寄存器</li>
+<li>为中断的PIE组清除CPU的IFR位 和  <code>PIEACK</code> 位</li>
+<li>全局性启用中断（<code>EINT</code> 或 <code>CLRC INTM</code>）</li>
+</ol>
+<p>使用CPU的 <em><strong>IER</strong></em> 寄存器可以禁用中断组。此时不会产生竞争，因此无需特殊的程序进行处理。</p>
+<p><code>PIEIER</code> 位不可以被软件清除（must never be cleared in software），因为 读/写/改 操作可能会对进入CPU的中断造成影响（may cause incoming interrupts to be lost）。唯一安全的清除 <code>PIEIER</code> 位的方法是让CPU处理该中断。以下程序步骤可以用于绕过普通ISR：</p>
+<ol>
+<li>全局性禁止中断（<code>DINT</code> 或 <code>SETC INTM</code>）</li>
+<li>修改PIE向量表以将 <code>PIEIFR</code> 位的中断向量映射至空的ISR上，该ISR将只包含一个来自中断指令 <code>IRET</code> 的返回（contain a return from interrupt instruction）</li>
+<li>在外设寄存器上禁用中断</li>
+<li>全局性启用中断（<code>EINT</code> 或 <code>CLRC INTM</code>）</li>
+<li>等待空的ISR为阻塞中断服务</li>
+<li>全局性禁止中断（<code>DINT</code> 或 <code>SETC INTM</code>）</li>
+<li>修改PIE向量表以将中断向量映射回至其原始的ISR（original ISR）</li>
+<li>为中断的PIE组清除 <code>PIEACK</code> 位</li>
+<li>全局性启用中断（<code>EINT</code> 或 <code>CLRC INTM</code>）</li>
+</ol>
+<h4 id="嵌套式中断"><a href="#嵌套式中断" class="headerlink" title="嵌套式中断"></a>嵌套式中断</h4><p>默认情况下，中断不会嵌套。通过软件操控 <code>IER</code> 和 <code>PIEIERx</code> 寄存器可以实现对中断的嵌套和优先级排序。详见 <a target="_blank" rel="noopener" href="https://processors.wiki.ti.com/index.php/Interrupt_Nesting_on_C28x">TI Wiki</a></p>
+<h4 id="向量地址有效性检查"><a href="#向量地址有效性检查" class="headerlink" title="向量地址有效性检查"></a>向量地址有效性检查</h4><p>ePIE向量表有两个备份，初级向量表地址在 <code>0xD00</code> 到 <code>0xEFF</code> 之间，冗余向量表的地址在 <code>0x01000D00</code> 到 <code>0x01000EFF</code> 之间。对初级向量表的写入时也将会对冗余向量表进行写入，对冗余向量表的写入仅对冗余向量表有效。读取时，两个向量表互相独立。</p>
+<p>在向量地址获取时，ePIE将会对两个向量表的输出进行比较。如果没有差别，CPU会生成一个地址并存放到 <em><strong>PIEVERRADDR</strong></em> 寄存器中（the CPU branches to the address in the <em><strong>PIEVERRADDR</strong></em> register）并发送错误信号（trip signals）给PWM外设。如果 <em><strong>PIEVERRADDR</strong></em> 寄存器值没有被设置，地址 <code>0x003FFBE</code> 上用于默认启动的ROM句柄将会被使用。</p>
+<h3 id="向量表"><a href="#向量表" class="headerlink" title="向量表"></a>向量表</h3><p>《TRM》P89至P95.</p>
+<h3 id="不可屏蔽中断和意外"><a href="#不可屏蔽中断和意外" class="headerlink" title="不可屏蔽中断和意外"></a>不可屏蔽中断和意外</h3><h3 id="相关寄存器"><a href="#相关寄存器" class="headerlink" title="相关寄存器"></a>相关寄存器</h3><p>下表来自《TRM》P506。下表中，寄存器分为4类：<strong>总控制</strong>、<strong>确认</strong>、<strong>使能</strong> 和 <strong>标志</strong>。</p>
+<p><img src="https://pic.islet.space/2021/08/image-20210818103607977.png" alt="image-20210818103607977"></p>
+<h2 id="低电量模式"><a href="#低电量模式" class="headerlink" title="低电量模式"></a>低电量模式</h2><p>本系列芯片拥有两种 时钟门（clock-gating） 低电量模式，分别是 HALT 和 IDLE，STANDARD 模式不支持进入低电量。</p>
 <p>低电量模式的进入和退出代码，以及更多关于低电量模式的描述信息，需要参考《TRM》手册。</p>
 <p>表33 描述了系统进入任何 时钟门 低电量模式后的影响</p>
 <p>表34 列明了IDLE模式下的时序要求</p>
@@ -1836,7 +1914,7 @@
 <li>最多16个ADC通道</li>
 <li>16个配置SOC（<code>ADCSOC0</code> ~ <code>ADCSOC15</code>）</li>
 <li>16个独立的可寻址结果寄存器</li>
-<li>四个高级的（flexible）外设中断（每个模块都有 <code>INT0</code> ~ <code>INT3</code>）</li>
+<li>四个高级的（flexible）外设中断（每个模块都有 <code>INT1</code> ~ <code>INT4</code>）</li>
 <li>可配置的中断（interrupt placement）</li>
 <li>可以设置爆发模式（Burst Mode）</li>
 <li>多触发源<ul>
@@ -2161,6 +2239,9 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">graph TD</span><br><span class="line">将通道中断&#x2F;中断程序与中断向量表绑定 --&gt; 设置参考电压VREF --&gt; 配置Module --&gt; 配置SOC --&gt; 配置EOC&#x2F;中断</span><br></pre></td></tr></table></figure>
 
 <p>如果不涉及超采样、多重采样等模式，可以不考虑SOC的优先级配置。</p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>外设ADC配置过程中，最容易将ADC模块（A/B/C）、SOC序号、EOC序号、通道序号 和 模块中断序号之间互相搞混，配置时需要先画草图理清思路再行配置。</p>
+<p>启用多个ADC通道时，需要注意模拟外设的引脚有限，某些SOC、ADC模块会复用，画图工作量会大些。</p>
+<p><img src="I:\00.LEARNING\ADC模块理解_1.png" alt="ADC模块理解"></p>
 <h1 id="控制外设"><a href="#控制外设" class="headerlink" title="控制外设"></a>控制外设</h1><p>本系列芯片的控制外设包含 <strong>eCAP</strong>、<strong>HRCAP</strong>、<strong>ePWM</strong>、<strong>HRPWM</strong>、<strong>eQEP</strong> 和 <strong>SDFM</strong>。</p>
 <p>根据《SPRU566N》表11 可知，ePWM 和 HRPWM 都是4型增强外设，具体功能可以参见《SPRUI33D》。</p>
 <h2 id="ePWM"><a href="#ePWM" class="headerlink" title="ePWM"></a>ePWM</h2><p>ePWM是商业和工业控制电力系统的关键组成部分。这些系统包括 <u>数字电机控制</u>、<u>开关电源控制</u>、<u>不间断电源供应</u> 或 其他形式的电源转换。</p>
@@ -2356,6 +2437,45 @@
 
 
 <h3 id="Digital-Compare-Submodule"><a href="#Digital-Compare-Submodule" class="headerlink" title="Digital Compare Submodule"></a>Digital Compare Submodule</h3><p>暂略</p>
+<h2 id="eCAP"><a href="#eCAP" class="headerlink" title="eCAP"></a>eCAP</h2><p>本系列芯片使用的是第1类eCAP，特性如下所示：</p>
+<p><img src="https://pic.islet.space/2021/08/image-20210818150848657.png" alt="image-20210818150848657"></p>
+<p>eCAP模块有如下特性：</p>
+<ul>
+<li>旋转机械的速度测量 （例如，通过霍尔传感器检测齿形链轮）</li>
+<li>多个位置传感器脉冲的时间差测量</li>
+<li>脉冲串信号的周期和占空比测量</li>
+<li>将来自任务占空比解码的电流/电压传感器的电流/电压振幅进行解码</li>
+</ul>
+<p>后续会描述到的eCAP特性如：</p>
+<ul>
+<li>4个事件时间戳寄存器（每个32bit）</li>
+<li>最多能够为四个顺序时间戳捕获事件的 <strong>边沿极性选择</strong>（edge polarity selection）</li>
+<li>对四个时间的任何一个进行中断（interrupt on either of the four events）</li>
+<li>单次捕获（Single-shot capture）最多可捕获4个事件的时间戳</li>
+<li>在一个四层的环形缓冲器中连续捕获时间戳的模式</li>
+<li>绝对时间戳捕获</li>
+<li>差分（德尔塔）模式的时间戳捕获</li>
+<li>当不启用捕获模式时，eCAP模块可以被配置为一个单通道的PWM输出</li>
+</ul>
+<p>第一类eCAP 较 第0类eCAP增加了以下特性：</p>
+<ul>
+<li>事件过滤器复位位（reset bit）</li>
+<li>以计数器状态位为模</li>
+<li>DMA触发源</li>
+<li>输入多路器</li>
+<li>EALLOW保护</li>
+</ul>
+<h3 id="配置引脚"><a href="#配置引脚" class="headerlink" title="配置引脚"></a>配置引脚</h3><p>为了将设备输入引脚连接至模块，输入X-BAR必须要用上。设备上的任何GPIO都能够配置为输入。通过设置 <code>GPxQSELn</code> 寄存器位可以将GPIO输入验证（input qualification）设置为同步模式或异步模式。</p>
+<p>使用同步输入能够有效提高抗噪性，但是让eCAP丢失±2个周期的精度。在 <code>GPyPUD</code> 寄存器中能够配置内部拉高。一旦GPIO模式开启，<code>GPyINV</code> 寄存器就能够倒置信号了（invert the signals）。</p>
+<p>必须配置128:1的输入多路器也是一类eCAP模块的新特性。从下表19-1可以看出，该多路器能够配置不同的输入细节。</p>
+<p><img src="https://pic.islet.space/2021/08/image-20210818171451027.png" alt="image-20210818171451027"></p>
+<p><img src="https://pic.islet.space/2021/08/image-20210818171518769.png" alt="image-20210818171518769"></p>
+<p>输出X-BAR能够用于连接输出信号至 OUTPUTXBARx 输出定位（output location）。</p>
+<h3 id="捕获和APWM操作模式"><a href="#捕获和APWM操作模式" class="headerlink" title="捕获和APWM操作模式"></a>捕获和APWM操作模式</h3><p>暂略</p>
+<h3 id="捕获模式"><a href="#捕获模式" class="headerlink" title="捕获模式"></a>捕获模式</h3><p>暂略</p>
+<h3 id="eCAP模块应用"><a href="#eCAP模块应用" class="headerlink" title="eCAP模块应用"></a>eCAP模块应用</h3><p>暂略</p>
+<h3 id="APWM模式应用"><a href="#APWM模式应用" class="headerlink" title="APWM模式应用"></a>APWM模式应用</h3><p>暂略</p>
+<h3 id="寄存器-1"><a href="#寄存器-1" class="headerlink" title="寄存器"></a>寄存器</h3><p>暂略</p>
 <h1 id="通信外设"><a href="#通信外设" class="headerlink" title="通信外设"></a>通信外设</h1><p>暂略</p>
 <h1 id="新建项目（Step-by-step"><a href="#新建项目（Step-by-step" class="headerlink" title="新建项目（Step by step)"></a>新建项目（Step by step)</h1><h2 id="新建C28xx项目"><a href="#新建C28xx项目" class="headerlink" title="新建C28xx项目"></a>新建C28xx项目</h2><ol>
 <li>选择新建 CCS 项目</li>
@@ -2645,15 +2765,12 @@
 </ol>
 <p>数模转换开发不同于ePWM配置开发，不仅信号输入和子模块配置方式上有许多不同点，最明显的不同是高频逆变器不需要使用到触发中断，但ADC模块不论是转换触发还是读取数值都需要中断来进行操作，即由外部中断脉冲输入ADC模块，促使ADC模块将电容电压依据参考电压转换为数值并存写到寄存器中，然后生成中断脉冲，触发中断程序来读取其中的数值。</p>
 <p>ADC模块在功能描述上也有别于ePWM，ePWM采用许多子模块的描述方法，ADC则使用通道、SOC、EOC、INT等描述词汇，需要区分理解，且ADC模块从顶自下参数都有许多配置限制，具体看前面的描述吧。</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*-----------------------------------------------------------------------</span></span><br><span class="line"><span class="comment"> * 【函数】：void ADC_Init(void);</span></span><br><span class="line"><span class="comment"> * 【参数】：</span></span><br><span class="line"><span class="comment"> * 【说明】：配置ADC模块的电压、时钟、脉冲生成时间和开关</span></span><br><span class="line"><span class="comment"> * 【其他】：</span></span><br><span class="line"><span class="comment"> * 【参考】：</span></span><br><span class="line"><span class="comment">----------------------------------------------------------------------- */</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">ADC_Init</span><span class="params">(<span class="keyword">void</span>)</span></span>&#123;</span><br><span class="line">    SetVREF(ADC_ADCA, ADC_EXTERNAL, ADC_VREF2P5);  <span class="comment">//为ADC A提供外部参考电压</span></span><br><span class="line"></span><br><span class="line">    EALLOW;</span><br><span class="line">    AdcaRegs.ADCCTL2.bit.PRESCALE = <span class="number">0x02</span>;         <span class="comment">//`0010`，ADCCLK = 输入时钟 / 2.0，即50MHz</span></span><br><span class="line">    AdcaRegs.ADCCTL1.bit.INTPULSEPOS = <span class="number">0x1</span>;    <span class="comment">// 写1的话，在ADC转换完成时（ADC捕获窗口周期结束时）生成脉冲中断</span></span><br><span class="line">                                                                                   <span class="comment">// 写0的话，就是在窗口周期结束时加上一组系统时钟周期后再生成中断，具体看《TRM》P1499</span></span><br><span class="line">    AdcaRegs.ADCCTL1.bit.ADCPWDNZ = ON;     <span class="comment">// 打开ADC A 的所有模拟电路</span></span><br><span class="line">    EDIS;</span><br><span class="line"></span><br><span class="line">    DELAY_US(<span class="number">1000</span>);  <span class="comment">//延迟1ms</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">/*-----------------------------------------------------------------------</span></span><br><span class="line"><span class="comment"> * 【函数】：void ADC_SOC_Init(void);</span></span><br><span class="line"><span class="comment"> * 【参数】：</span></span><br><span class="line"><span class="comment"> * 【说明】：配置ADC模块下的SOC，设置通道和中断相关内容</span></span><br><span class="line"><span class="comment"> * 【其他】：</span></span><br><span class="line"><span class="comment"> * 【参考】：</span></span><br><span class="line"><span class="comment">----------------------------------------------------------------------- */</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">ADC_SOC_Init</span><span class="params">(<span class="keyword">void</span>)</span></span>&#123;</span><br><span class="line">    EALLOW;</span><br><span class="line">    AdcaRegs.ADCSOC0CTL.bit.CHSEL = <span class="number">0x1</span>;           <span class="comment">// channel select，为SOC0选择通道ADCA1，可设置范围为0~F</span></span><br><span class="line">    AdcaRegs.ADCSOC0CTL.bit.ACQPS = <span class="number">0x1FF</span>;      <span class="comment">// acquisition window, AW = (ACQPS+1) * SYSCLK，需要结合实际硬件设计进行计算，计算代码在文档中，1~511</span></span><br><span class="line">    AdcaRegs.ADCSOC0CTL.bit.TRIGSEL = <span class="number">0x0F</span>;      <span class="comment">// trigger select，触发源选择为ePWM6，每一次ePWM</span></span><br><span class="line">    AdcaRegs.ADCINTSEL1N2.bit.INT1SEL = <span class="number">0x0</span>;     <span class="comment">// 由EOC0来触发ADCA模块的第一个中断（INT1）</span></span><br><span class="line">    AdcaRegs.ADCINTSEL1N2.bit.INT1E = ON;        <span class="comment">// 打开ADCA模块的第一个中断（INT1）</span></span><br><span class="line">                                                                                     <span class="comment">// 此处没有设置ADC A的 中断生成模式（INT1CONT），默认为0x0，即手动清除中断标志时生成中断脉冲</span></span><br><span class="line">    AdcaRegs.ADCINTFLGCLR.bit.ADCINT1 = <span class="number">0x1</span>;   <span class="comment">//  清除ADC中断1的标志</span></span><br><span class="line">    EDIS;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">/*-----------------------------------------------------------------------</span></span><br><span class="line"><span class="comment"> * 【函数】：__interrupt void adcA1ISR(void);</span></span><br><span class="line"><span class="comment"> * 【参数】：</span></span><br><span class="line"><span class="comment"> * 【说明】：ADC外设中断的处理程序</span></span><br><span class="line"><span class="comment"> * 【其他】：注意需要加 __interrupt</span></span><br><span class="line"><span class="comment"> * 【参考】：</span></span><br><span class="line"><span class="comment">----------------------------------------------------------------------- */</span></span><br><span class="line"><span class="function">__interrupt <span class="keyword">void</span> <span class="title">adcA1ISR</span><span class="params">(<span class="keyword">void</span>)</span></span>&#123;</span><br><span class="line">    sampleResult = AdcaResultRegs.ADCRESULT0;</span><br><span class="line"></span><br><span class="line">    AdcaRegs.ADCINTFLGCLR.bit.ADCINT1 = <span class="number">1</span>;   <span class="comment">// ADCA模块上的第一个中断</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>(<span class="number">1</span> == AdcaRegs.ADCINTOVF.bit.ADCINT1)&#123;</span><br><span class="line">        AdcaRegs.ADCINTOVFCLR.bit.ADCINT1 = <span class="number">1</span>;  <span class="comment">//清除中断溢出</span></span><br><span class="line">        AdcaRegs.ADCINTFLGCLR.bit.ADCINT1 = <span class="number">1</span>;   <span class="comment">// ADCA模块上的第一个中断</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    PieCtrlRegs.PIEACK.all = PIEACK_GROUP1;    <span class="comment">// 确认中断</span></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*-----------------------------------------------------------------------</span></span><br><span class="line"><span class="comment"> * 【函数】：void ADC_Init(void);</span></span><br><span class="line"><span class="comment"> * 【参数】：无</span></span><br><span class="line"><span class="comment"> * 【说明】：配置ADC模块的电压、时钟、脉冲生成时间和开关</span></span><br><span class="line"><span class="comment"> * 【其他】：以下所有配置项（电压、时钟、脉冲生成时间和开关）都是以模块（A</span></span><br><span class="line"><span class="comment"> *                      /B/C）为最小单位进行配置的，需要启动ADCB和ADCC则需要在此处</span></span><br><span class="line"><span class="comment"> *                      进行相似配置</span></span><br><span class="line"><span class="comment"> * 【参考】：</span></span><br><span class="line"><span class="comment">----------------------------------------------------------------------- */</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">ADC_Init</span><span class="params">(<span class="keyword">void</span>)</span></span>&#123;</span><br><span class="line">    SetVREF(ADC_ADCA, ADC_EXTERNAL, ADC_VREF2P5);  <span class="comment">//为ADC A提供外部参考电压</span></span><br><span class="line"></span><br><span class="line">    EALLOW;</span><br><span class="line">    AdcaRegs.ADCCTL2.bit.PRESCALE = <span class="number">0x02</span>;         <span class="comment">//`0010`，ADCCLK = 输入时钟 / 2.0，即50MHz</span></span><br><span class="line">    AdcaRegs.ADCCTL1.bit.INTPULSEPOS = <span class="number">0x1</span>;    <span class="comment">// 写1的话，在ADC转换完成时（ADC捕获窗口周期结束时）生成脉冲中断</span></span><br><span class="line">                                               <span class="comment">// 写0的话，就是在窗口周期结束时加上一组系统时钟周期后再生成中断，具体看《TRM》P1499</span></span><br><span class="line">    AdcaRegs.ADCCTL1.bit.ADCPWDNZ = ON;     <span class="comment">// 打开ADC A 的所有模拟电路</span></span><br><span class="line">    EDIS;</span><br><span class="line"></span><br><span class="line">    DELAY_US(<span class="number">1000</span>);  <span class="comment">//延迟1ms</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">/*-----------------------------------------------------------------------</span></span><br><span class="line"><span class="comment"> * 【函数】：void ADC_SOC_Init(void);</span></span><br><span class="line"><span class="comment"> * 【参数】：无</span></span><br><span class="line"><span class="comment"> * 【说明】：配置ADC模块下的SOC，设置通道和中断相关内容</span></span><br><span class="line"><span class="comment"> * 【其他】：ADCINTSEL1N2寄存器是设置中断源相关的，</span></span><br><span class="line"><span class="comment"> * 【参考】：</span></span><br><span class="line"><span class="comment">----------------------------------------------------------------------- */</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">ADC_SOC_Init</span><span class="params">(<span class="keyword">void</span>)</span></span>&#123;</span><br><span class="line">    EALLOW;</span><br><span class="line">    AdcaRegs.ADCSOC0CTL.bit.CHSEL = <span class="number">0x1</span>;           <span class="comment">// channel select，为SOC0选择通道ADCA1，可设置范围为0~F</span></span><br><span class="line">    AdcaRegs.ADCSOC0CTL.bit.ACQPS = <span class="number">0x1FF</span>;      <span class="comment">// acquisition window, AW = (ACQPS+1) * SYSCLK，需要结合实际硬件设计进行计算，计算代码在文档中，1~511</span></span><br><span class="line">    AdcaRegs.ADCSOC0CTL.bit.TRIGSEL = <span class="number">0x0F</span>;      <span class="comment">// trigger select，触发源选择为ePWM6，每一次ePWM</span></span><br><span class="line">    AdcaRegs.ADCINTSEL1N2.bit.INT1SEL = <span class="number">0x0</span>;     <span class="comment">// 由EOC0来触发ADCA模块的第一个中断（INT1）</span></span><br><span class="line">    AdcaRegs.ADCINTSEL1N2.bit.INT1E = ON;        <span class="comment">// 打开ADCA模块的第一个中断（INT1）</span></span><br><span class="line">                                                 <span class="comment">// 此处没有设置ADC A的 中断生成模式（INT1CONT），默认为0x0，即手动清除中断标志时生成中断脉冲</span></span><br><span class="line">    AdcaRegs.ADCINTFLGCLR.bit.ADCINT1 = <span class="number">0x1</span>;   <span class="comment">//  清除ADC中断1的标志</span></span><br><span class="line">    EDIS;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">/*-----------------------------------------------------------------------</span></span><br><span class="line"><span class="comment"> * 【函数】：__interrupt void adcA1ISR(void);</span></span><br><span class="line"><span class="comment"> * 【参数】：无</span></span><br><span class="line"><span class="comment"> * 【说明】：ADC外设中断的处理程序</span></span><br><span class="line"><span class="comment"> * 【其他】：注意需要加 __interrupt 关键字，加了的话编译器会自动处理 保持和恢</span></span><br><span class="line"><span class="comment"> *                     复特定的CPU寄存器状态（如果需要）且在人为清除中断组PIEACK位</span></span><br><span class="line"><span class="comment"> *                     后会自动使用IRET指令来返回；如果不加，则保持和恢复工作 以及 返</span></span><br><span class="line"><span class="comment"> *                     回工作需要人为处理。</span></span><br><span class="line"><span class="comment"> * 【参考】：详见开发文档的处理中断部分，或《TRM》P85</span></span><br><span class="line"><span class="comment">----------------------------------------------------------------------- */</span></span><br><span class="line"><span class="function">__interrupt <span class="keyword">void</span> <span class="title">adcA1ISR</span><span class="params">(<span class="keyword">void</span>)</span></span>&#123;</span><br><span class="line">    sampleResult = AdcaResultRegs.ADCRESULT0;</span><br><span class="line"></span><br><span class="line">    AdcaRegs.ADCINTFLGCLR.bit.ADCINT1 = <span class="number">1</span>;   <span class="comment">// ADCA模块上的第一个中断</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>(<span class="number">1</span> == AdcaRegs.ADCINTOVF.bit.ADCINT1)&#123;</span><br><span class="line">        AdcaRegs.ADCINTOVFCLR.bit.ADCINT1 = <span class="number">1</span>;  <span class="comment">//清除中断溢出</span></span><br><span class="line">        AdcaRegs.ADCINTFLGCLR.bit.ADCINT1 = <span class="number">1</span>;   <span class="comment">// ADCA模块上的第一个中断</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    PieCtrlRegs.PIEACK.all = PIEACK_GROUP1;    <span class="comment">// 确认中断</span></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 
 
-
-
-
-
-
+<p>ADC为12bit分辨率的电压转换外设，下面为读取数值和特定量程之间的电压转换代码，可以通过宏定义来修改最高量程、参考电压最高值 和 单个引脚的偏差值</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span>    ADCDATA_OFFSET   40   <span class="comment">// ADC2通道的量程偏差</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span>    VOLTAGE_RANGE   3.30   <span class="comment">//电压量程3.3V</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span>    ADC_RANGE  4096   <span class="comment">//ADC量程4096</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">/*-----------------------------------------------------------------------</span></span><br><span class="line"><span class="comment"> * 【函数】：float AdcVoltage(ADCDATA regData);</span></span><br><span class="line"><span class="comment"> * 【参数】：1. 瞬时读取的ADC寄存器的值 regData</span></span><br><span class="line"><span class="comment"> * 【说明】：将ADC寄存器结果的值转换为对应量程电压的处理程序</span></span><br><span class="line"><span class="comment"> * 【其他】：</span></span><br><span class="line"><span class="comment"> * 【参考】：</span></span><br><span class="line"><span class="comment">----------------------------------------------------------------------- */</span></span><br><span class="line"><span class="function"><span class="keyword">float</span> <span class="title">AdcVoltage</span><span class="params">(ADCDATA regData)</span></span>&#123;</span><br><span class="line">    ADCDATA tempData = <span class="number">0</span>;    <span class="comment">//初始化中转变量 tempData</span></span><br><span class="line"></span><br><span class="line">    tempData = regData + ADCDATA_OFFSET ;  <span class="comment">//修正某个模拟端口的偏差值，偏差值可以人为修改（假设测试设备输出电压经过计量）</span></span><br><span class="line">    <span class="keyword">if</span>(tempData &lt;= <span class="number">0</span>) tempData = <span class="number">0</span>;   <span class="comment">//超量程偏差修正</span></span><br><span class="line">    <span class="keyword">if</span>(tempData &gt;=ADC_RANGE) tempData = ADC_RANGE;   <span class="comment">//超量程偏差修正</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> ((<span class="keyword">float</span>)tempData / ADC_RANGE * VOLTAGE_RANGE);   <span class="comment">//转换成电压值，返回浮点数</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 
 
@@ -2725,6 +2842,10 @@
 <p><img src="https://pic.islet.space/2021/08/image-20210802160358841.png" alt="image-20210802160358841"></p>
 <p>可以在Console台（界面）观察到已经写入和初始化成功：</p>
 <p><img src="https://pic.islet.space/2021/08/image-20210802154136487.png" alt="image-20210802154136487"></p>
+<h2 id="85-INVALID-COMBINATION-OF-TYPE-SPECIFIERS"><a href="#85-INVALID-COMBINATION-OF-TYPE-SPECIFIERS" class="headerlink" title="#85 INVALID COMBINATION OF TYPE SPECIFIERS"></a>#85 INVALID COMBINATION OF TYPE SPECIFIERS</h2><p>出现以上错误时，我正打算新建函数，但是写到一半忘了，去忙别的，回头编译就出错了。找到最近的修改痕迹，然后果然发现自己只写了一个函数数据类型，其他啥都没写，将其删除即可重新编译。</p>
+<h1 id="常见优化提示"><a href="#常见优化提示" class="headerlink" title="常见优化提示"></a>常见优化提示</h1><h2 id="2614-D-Performance-Use-–fp-mode-relaxed-to-enable-TMU-hardware-support-for-FP-division"><a href="#2614-D-Performance-Use-–fp-mode-relaxed-to-enable-TMU-hardware-support-for-FP-division" class="headerlink" title="#2614-D (Performance) Use –fp_mode=relaxed to enable TMU hardware support for FP division"></a>#2614-D (Performance) Use –fp_mode=relaxed to enable TMU hardware support for FP division</h2><p><img src="https://pic.islet.space/2021/08/image-20210817085055902.png" alt="image-20210817085055902"></p>
+<p>上述提示标志为 <code>i</code> ，也就是有关于性能优化的提示，可以在项目属性的编译器中，打开对应的优化开关，如下图。</p>
+<p><img src="https://pic.islet.space/2021/08/image-20210817085234005.png" alt="image-20210817085234005"></p>
 <h1 id="术语-1"><a href="#术语-1" class="headerlink" title="术语"></a>术语</h1><p><strong>LDO</strong>: Low dropout, A DC linear voltage regulator which can operate with a very small input/output differential voltage.</p>
 <p><strong>V<span style="font-size: 0.8rem;">REG</span></strong>: Voltage Regulator. 稳压器。</p>
 <p><strong>V<span style="font-size: 0.8rem;">REF</span></strong>: Voltage Reference. 参考电压</p>
