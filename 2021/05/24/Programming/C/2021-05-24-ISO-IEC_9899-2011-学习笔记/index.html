@@ -1,13 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.css">
   <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="viewport" content="width=device-width">
 <meta name="theme-color" content="#222">
 <meta name="generator" content="Hexo 5.4.0">
 
-<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
@@ -17,16 +16,16 @@
 
 
 
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
-<script class="next-config" data-name="main" type="application/json">{&quot;hostname&quot;:&quot;islet.space&quot;,&quot;root&quot;:&quot;&#x2F;&quot;,&quot;images&quot;:&quot;&#x2F;images&quot;,&quot;scheme&quot;:&quot;Gemini&quot;,&quot;version&quot;:&quot;8.3.0&quot;,&quot;exturl&quot;:false,&quot;sidebar&quot;:{&quot;position&quot;:&quot;left&quot;,&quot;display&quot;:&quot;post&quot;,&quot;padding&quot;:18,&quot;offset&quot;:12},&quot;copycode&quot;:true,&quot;bookmark&quot;:{&quot;enable&quot;:false,&quot;color&quot;:&quot;#222&quot;,&quot;save&quot;:&quot;auto&quot;},&quot;fancybox&quot;:false,&quot;mediumzoom&quot;:false,&quot;lazyload&quot;:false,&quot;pangu&quot;:false,&quot;comments&quot;:{&quot;style&quot;:&quot;tabs&quot;,&quot;active&quot;:null,&quot;storage&quot;:true,&quot;lazyload&quot;:false,&quot;nav&quot;:null},&quot;motion&quot;:{&quot;enable&quot;:true,&quot;async&quot;:false,&quot;transition&quot;:{&quot;post_block&quot;:&quot;fadeIn&quot;,&quot;post_header&quot;:&quot;fadeInDown&quot;,&quot;post_body&quot;:&quot;fadeInDown&quot;,&quot;coll_header&quot;:&quot;fadeInLeft&quot;,&quot;sidebar&quot;:&quot;fadeInUp&quot;}},&quot;prism&quot;:false,&quot;i18n&quot;:{&quot;placeholder&quot;:&quot;Searching...&quot;,&quot;empty&quot;:&quot;We didn&#39;t find any results for the search: ${query}&quot;,&quot;hits_time&quot;:&quot;${hits} results found in ${time} ms&quot;,&quot;hits&quot;:&quot;${hits} results found&quot;}}</script>
-<meta name="description" content="预备知识C标准库 文本流 二进制流 基本概念字符集和字符编码UNICODE主页  字符集对内存的影响字符集涉及编码规则，包括单个字符所占用的空间大小，进而影响数据在硬件中的内存占用。       如果将UTF-8转换成更为精简的GBK字符集，则会输出不同的结果。">
+<script class="next-config" data-name="main" type="application/json">{"hostname":"islet.space","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.7.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+<meta name="description" content="预备知识 C标准库  image-20210524001458724  文本流  image-20210524001643408  二进制流  image-20210524001722423  基本概念 字符集和字符编码 UNICODE主页  image-20210524002528437  字符集对内存的影响 字符集涉及编码规则，包括单个字符所占用的空间大小，进而影响数据在硬件中的内存占用。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="ISO-IEC_9899-2011 学习笔记">
 <meta property="og:url" content="http://islet.space/2021/05/24/Programming/C/2021-05-24-ISO-IEC_9899-2011-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/index.html">
 <meta property="og:site_name" content="Coder的孤岛">
-<meta property="og:description" content="预备知识C标准库 文本流 二进制流 基本概念字符集和字符编码UNICODE主页  字符集对内存的影响字符集涉及编码规则，包括单个字符所占用的空间大小，进而影响数据在硬件中的内存占用。       如果将UTF-8转换成更为精简的GBK字符集，则会输出不同的结果。">
+<meta property="og:description" content="预备知识 C标准库  image-20210524001458724  文本流  image-20210524001643408  二进制流  image-20210524001722423  基本概念 字符集和字符编码 UNICODE主页  image-20210524002528437  字符集对内存的影响 字符集涉及编码规则，包括单个字符所占用的空间大小，进而影响数据在硬件中的内存占用。">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://pic.islet.space/2021/05/image-20210524001458724.png">
 <meta property="og:image" content="https://pic.islet.space/2021/05/image-20210524001643408.png">
@@ -50,10 +49,10 @@
 
 
 
-<script class="next-config" data-name="page" type="application/json">{&quot;sidebar&quot;:&quot;&quot;,&quot;isHome&quot;:false,&quot;isPost&quot;:true,&quot;lang&quot;:&quot;en&quot;,&quot;comments&quot;:true,&quot;permalink&quot;:&quot;http:&#x2F;&#x2F;islet.space&#x2F;2021&#x2F;05&#x2F;24&#x2F;Programming&#x2F;C&#x2F;2021-05-24-ISO-IEC_9899-2011-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0&#x2F;&quot;,&quot;path&quot;:&quot;2021&#x2F;05&#x2F;24&#x2F;Programming&#x2F;C&#x2F;2021-05-24-ISO-IEC_9899-2011-学习笔记&#x2F;&quot;,&quot;title&quot;:&quot;ISO-IEC_9899-2011 学习笔记&quot;}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://islet.space/2021/05/24/Programming/C/2021-05-24-ISO-IEC_9899-2011-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/","path":"2021/05/24/Programming/C/2021-05-24-ISO-IEC_9899-2011-学习笔记/","title":"ISO-IEC_9899-2011 学习笔记"}</script>
 
-<script class="next-config" data-name="calendar" type="application/json">&quot;&quot;</script>
-<title>ISO-IEC_9899-2011 学习笔记 | Coder的孤岛</title><script src="/js/config.js"></script>
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>ISO-IEC_9899-2011 学习笔记 | Coder的孤岛</title>
   
 
 
@@ -62,7 +61,9 @@
   <noscript>
     <link rel="stylesheet" href="/css/noscript.css">
   </noscript>
-</head>
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<!-- hexo injector head_end end --></head>
 
 <body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
   <div class="headband"></div>
@@ -98,7 +99,7 @@
 
 <nav class="site-nav">
   <ul class="main-menu menu">
-        <li class="menu-item menu-item-首页"><a href="https://islet.space/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-首页"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
         <li class="menu-item menu-item-文章"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>文章</a></li>
         <li class="menu-item menu-item-目录"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>目录</a></li>
         <li class="menu-item menu-item-标签"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
@@ -134,7 +135,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86"><span class="nav-number">1.</span> <span class="nav-text">预备知识</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#C%E6%A0%87%E5%87%86%E5%BA%93"><span class="nav-number">1.1.</span> <span class="nav-text">C标准库</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%87%E6%9C%AC%E6%B5%81"><span class="nav-number">1.1.1.</span> <span class="nav-text">文本流</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%8C%E8%BF%9B%E5%88%B6%E6%B5%81"><span class="nav-number">1.1.2.</span> <span class="nav-text">二进制流</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="nav-number">2.</span> <span class="nav-text">基本概念</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AD%97%E7%AC%A6%E9%9B%86%E5%92%8C%E5%AD%97%E7%AC%A6%E7%BC%96%E7%A0%81"><span class="nav-number">2.1.</span> <span class="nav-text">字符集和字符编码</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%97%E7%AC%A6%E9%9B%86%E5%AF%B9%E5%86%85%E5%AD%98%E7%9A%84%E5%BD%B1%E5%93%8D"><span class="nav-number">2.1.1.</span> <span class="nav-text">字符集对内存的影响</span></a></li></ol></li></ol></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86"><span class="nav-number">1.</span> <span class="nav-text">预备知识</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#c%E6%A0%87%E5%87%86%E5%BA%93"><span class="nav-number">1.1.</span> <span class="nav-text">C标准库</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%87%E6%9C%AC%E6%B5%81"><span class="nav-number">1.1.1.</span> <span class="nav-text">文本流</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%8C%E8%BF%9B%E5%88%B6%E6%B5%81"><span class="nav-number">1.1.2.</span> <span class="nav-text">二进制流</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="nav-number">2.</span> <span class="nav-text">基本概念</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AD%97%E7%AC%A6%E9%9B%86%E5%92%8C%E5%AD%97%E7%AC%A6%E7%BC%96%E7%A0%81"><span class="nav-number">2.1.</span> <span class="nav-text">字符集和字符编码</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%97%E7%AC%A6%E9%9B%86%E5%AF%B9%E5%86%85%E5%AD%98%E7%9A%84%E5%BD%B1%E5%93%8D"><span class="nav-number">2.1.1.</span> <span class="nav-text">字符集对内存的影响</span></a></li></ol></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -146,26 +147,26 @@
 <div class="site-state-wrap site-overview-item animated">
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
-          <a href="/archives">
-          <span class="site-state-item-count">82</span>
+        <a href="/archives/">
+          <span class="site-state-item-count">88</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
-            <a href="/categories/">
-        <span class="site-state-item-count">14</span>
+          <a href="/categories/">
+        <span class="site-state-item-count">11</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
-            <a href="/tags/">
-        <span class="site-state-item-count">155</span>
+          <a href="/tags/">
+        <span class="site-state-item-count">163</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
 </div>
   <div class="links-of-author site-overview-item animated">
       <span class="links-of-author-item">
-        <a href="mailto:liewzheng@qq.com" title="E-Mail → mailto:liewzheng@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+        <a href="mailto:liewzheng@foxmail.com" title="E-Mail → mailto:liewzheng@foxmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
       </span>
   </div>
 
@@ -185,7 +186,6 @@
     <i class="fa fa-arrow-up"></i>
     <span>0%</span>
   </div>
-  <div class="reading-progress-bar"></div>
 
 <noscript>
   <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
@@ -221,6 +221,7 @@
 
         <div class="post-meta-container">
           <div class="post-meta">
+
     <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
     <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
     <span class="post-meta-item">
@@ -258,20 +259,32 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <h1 id="预备知识"><a href="#预备知识" class="headerlink" title="预备知识"></a>预备知识</h1><h2 id="C标准库"><a href="#C标准库" class="headerlink" title="C标准库"></a>C标准库</h2><p><img src="https://pic.islet.space/2021/05/image-20210524001458724.png" alt="image-20210524001458724"></p>
-<h3 id="文本流"><a href="#文本流" class="headerlink" title="文本流"></a>文本流</h3><p><img src="https://pic.islet.space/2021/05/image-20210524001643408.png" alt="image-20210524001643408"></p>
-<h3 id="二进制流"><a href="#二进制流" class="headerlink" title="二进制流"></a>二进制流</h3><p><img src="https://pic.islet.space/2021/05/image-20210524001722423.png" alt="image-20210524001722423"></p>
-<h1 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h1><h2 id="字符集和字符编码"><a href="#字符集和字符编码" class="headerlink" title="字符集和字符编码"></a>字符集和字符编码</h2><p><a target="_blank" rel="noopener" href="https://unicode.org/">UNICODE主页</a></p>
-<p><img src="https://pic.islet.space/2021/05/image-20210524002528437.png" alt="image-20210524002528437"></p>
-<h3 id="字符集对内存的影响"><a href="#字符集对内存的影响" class="headerlink" title="字符集对内存的影响"></a>字符集对内存的影响</h3><p>字符集涉及编码规则，包括单个字符所占用的空间大小，进而影响数据在硬件中的内存占用。</p>
-<img src="https://pic.islet.space/2021/05/image-20210526002443105.png" alt="image-20210526002443105"  />
-
-
-
-
-
+        <h1 id="预备知识">预备知识</h1>
+<h2 id="c标准库">C标准库</h2>
+<figure>
+<img src="https://pic.islet.space/2021/05/image-20210524001458724.png" alt="image-20210524001458724" /><figcaption aria-hidden="true">image-20210524001458724</figcaption>
+</figure>
+<h3 id="文本流">文本流</h3>
+<figure>
+<img src="https://pic.islet.space/2021/05/image-20210524001643408.png" alt="image-20210524001643408" /><figcaption aria-hidden="true">image-20210524001643408</figcaption>
+</figure>
+<h3 id="二进制流">二进制流</h3>
+<figure>
+<img src="https://pic.islet.space/2021/05/image-20210524001722423.png" alt="image-20210524001722423" /><figcaption aria-hidden="true">image-20210524001722423</figcaption>
+</figure>
+<h1 id="基本概念">基本概念</h1>
+<h2 id="字符集和字符编码">字符集和字符编码</h2>
+<p><a target="_blank" rel="noopener" href="https://unicode.org/">UNICODE主页</a></p>
+<figure>
+<img src="https://pic.islet.space/2021/05/image-20210524002528437.png" alt="image-20210524002528437" /><figcaption aria-hidden="true">image-20210524002528437</figcaption>
+</figure>
+<h3 id="字符集对内存的影响">字符集对内存的影响</h3>
+<p>字符集涉及编码规则，包括单个字符所占用的空间大小，进而影响数据在硬件中的内存占用。</p>
+<p><img src="https://pic.islet.space/2021/05/image-20210526002443105.png" alt="image-20210526002443105"  /></p>
 <p>如果将UTF-8转换成更为精简的GBK字符集，则会输出不同的结果。</p>
-<p><img src="https://pic.islet.space/2021/05/image-20210526002630693.png" alt="image-20210526002630693"></p>
+<figure>
+<img src="https://pic.islet.space/2021/05/image-20210526002630693.png" alt="image-20210526002630693" /><figcaption aria-hidden="true">image-20210526002630693</figcaption>
+</figure>
 
     </div>
 
@@ -281,8 +294,8 @@
 
     <footer class="post-footer">
           <div class="reward-container">
-  <div>感谢支持和鼓励</div>
-  <button onclick="document.querySelector('.post-reward').classList.toggle('active');">
+  <div>感谢您的支持和鼓励</div>
+  <button>
     Donate
   </button>
   <div class="post-reward">
@@ -306,21 +319,16 @@
               <a href="/tags/2011/" rel="tag"># 2011</a>
           </div>
 
-    <div id="vcomment" style="margin: 20px 0 0 0"></div>
-    <script>
-        new Valine({
-            el: '#vcomment' ,
-            appId: 'vRGM12EcYxDSM2lat5qjjSeY-gzGzoHsz',
-            appKey: 'WBgAb6NTAFQ7DYtgH0uOPNNh'
-        });
-    </script>
-</body>
-
-
-
-
         
 
+  <div id="vcomments" style="margin: 1rem 0 0 0;"></div>
+  <script>
+    new Valine({
+      el: '#vcomments',
+      appId: 'vRGM12EcYxDSM2lat5qjjSeY-gzGzoHsz',
+      appKey: 'WBgAb6NTAFQ7DYtgH0uOPNNh'
+    })
+  </script>
           <div class="post-nav">
             <div class="post-nav-item">
                 <a href="/2021/05/23/Programming/2021-05-23-POSIX/" rel="prev" title="POSIX">
@@ -341,7 +349,8 @@
 
 
 
-<script src="/js/comments.js"></script>
+
+
 </div>
   </main>
 
@@ -364,8 +373,8 @@
   </footer>
 
   
-  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
-<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
 
   
 
@@ -373,10 +382,15 @@
 
 
 
-
   
 
 
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":"enable","tags":"none","js":{"url":"https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js","integrity":"sha256-r+3itOMtGGjap0x+10hu6jW/gZCzxHsoKrOd7gyRSGY="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
 
 
 

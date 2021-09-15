@@ -1,13 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.css">
   <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="viewport" content="width=device-width">
 <meta name="theme-color" content="#222">
 <meta name="generator" content="Hexo 5.4.0">
 
-<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
@@ -17,10 +16,10 @@
 
 
 
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
-<script class="next-config" data-name="main" type="application/json">{&quot;hostname&quot;:&quot;islet.space&quot;,&quot;root&quot;:&quot;&#x2F;&quot;,&quot;images&quot;:&quot;&#x2F;images&quot;,&quot;scheme&quot;:&quot;Gemini&quot;,&quot;version&quot;:&quot;8.3.0&quot;,&quot;exturl&quot;:false,&quot;sidebar&quot;:{&quot;position&quot;:&quot;left&quot;,&quot;display&quot;:&quot;post&quot;,&quot;padding&quot;:18,&quot;offset&quot;:12},&quot;copycode&quot;:true,&quot;bookmark&quot;:{&quot;enable&quot;:false,&quot;color&quot;:&quot;#222&quot;,&quot;save&quot;:&quot;auto&quot;},&quot;fancybox&quot;:false,&quot;mediumzoom&quot;:false,&quot;lazyload&quot;:false,&quot;pangu&quot;:false,&quot;comments&quot;:{&quot;style&quot;:&quot;tabs&quot;,&quot;active&quot;:null,&quot;storage&quot;:true,&quot;lazyload&quot;:false,&quot;nav&quot;:null},&quot;motion&quot;:{&quot;enable&quot;:true,&quot;async&quot;:false,&quot;transition&quot;:{&quot;post_block&quot;:&quot;fadeIn&quot;,&quot;post_header&quot;:&quot;fadeInDown&quot;,&quot;post_body&quot;:&quot;fadeInDown&quot;,&quot;coll_header&quot;:&quot;fadeInLeft&quot;,&quot;sidebar&quot;:&quot;fadeInUp&quot;}},&quot;prism&quot;:false,&quot;i18n&quot;:{&quot;placeholder&quot;:&quot;Searching...&quot;,&quot;empty&quot;:&quot;We didn&#39;t find any results for the search: ${query}&quot;,&quot;hits_time&quot;:&quot;${hits} results found in ${time} ms&quot;,&quot;hits&quot;:&quot;${hits} results found&quot;}}</script>
+<script class="next-config" data-name="main" type="application/json">{"hostname":"islet.space","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.7.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
 <meta name="description" content="c.biancheng.net 程序运行时常会碰到一些异常情况，例如：  做除法的时候除数为 0； 用户输入年龄时输入了一个负数； 用 new 运算符动态分配空间时，空间不够导致无法分配； 访问数组元素时，下标越界；打开文件读取时，文件不存在。  这些异常情况，如果不能发现并加以处理，很可能会导致程序崩溃。  所谓“处理”，可以是给出错误提示信息，然后让程序沿一条不会出错的路径继续执行； 也可能是">
 <meta property="og:type" content="article">
 <meta property="og:title" content="C++异常处理（try catch throw）完全攻略">
@@ -44,10 +43,10 @@
 
 
 
-<script class="next-config" data-name="page" type="application/json">{&quot;sidebar&quot;:&quot;&quot;,&quot;isHome&quot;:false,&quot;isPost&quot;:true,&quot;lang&quot;:&quot;en&quot;,&quot;comments&quot;:true,&quot;permalink&quot;:&quot;http:&#x2F;&#x2F;islet.space&#x2F;2021&#x2F;05&#x2F;31&#x2F;Programming&#x2F;C++&#x2F;2021-05-31-C++%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86%EF%BC%88try-catch-throw%EF%BC%89%E5%AE%8C%E5%85%A8%E6%94%BB%E7%95%A5&#x2F;&quot;,&quot;path&quot;:&quot;2021&#x2F;05&#x2F;31&#x2F;Programming&#x2F;C++&#x2F;2021-05-31-C++异常处理（try-catch-throw）完全攻略&#x2F;&quot;,&quot;title&quot;:&quot;C++异常处理（try catch throw）完全攻略&quot;}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://islet.space/2021/05/31/Programming/C++/2021-05-31-C++%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86%EF%BC%88try-catch-throw%EF%BC%89%E5%AE%8C%E5%85%A8%E6%94%BB%E7%95%A5/","path":"2021/05/31/Programming/C++/2021-05-31-C++异常处理（try-catch-throw）完全攻略/","title":"C++异常处理（try catch throw）完全攻略"}</script>
 
-<script class="next-config" data-name="calendar" type="application/json">&quot;&quot;</script>
-<title>C++异常处理（try catch throw）完全攻略 | Coder的孤岛</title><script src="/js/config.js"></script>
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>C++异常处理（try catch throw）完全攻略 | Coder的孤岛</title>
   
 
 
@@ -56,7 +55,9 @@
   <noscript>
     <link rel="stylesheet" href="/css/noscript.css">
   </noscript>
-</head>
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<!-- hexo injector head_end end --></head>
 
 <body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
   <div class="headband"></div>
@@ -92,7 +93,7 @@
 
 <nav class="site-nav">
   <ul class="main-menu menu">
-        <li class="menu-item menu-item-首页"><a href="https://islet.space/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-首页"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
         <li class="menu-item menu-item-文章"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>文章</a></li>
         <li class="menu-item menu-item-目录"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>目录</a></li>
         <li class="menu-item menu-item-标签"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
@@ -128,7 +129,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#C-%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86%E5%9F%BA%E6%9C%AC%E8%AF%AD%E6%B3%95"><span class="nav-number">1.</span> <span class="nav-text">C++异常处理基本语法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#threw%E8%AF%AD%E6%B3%95%E5%AE%9A%E4%B9%89"><span class="nav-number">1.1.</span> <span class="nav-text">threw语法定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#try-catch%E8%AF%AD%E6%B3%95%E5%AE%9A%E4%B9%89"><span class="nav-number">1.2.</span> <span class="nav-text">try-catch语法定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#try-catch%E6%89%A7%E8%A1%8C%E8%BF%87%E7%A8%8B"><span class="nav-number">1.3.</span> <span class="nav-text">try-catch执行过程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BE%8B%E7%A8%8B"><span class="nav-number">1.4.</span> <span class="nav-text">例程</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%83%BD%E5%A4%9F%E6%8D%95%E8%8E%B7%E4%BB%BB%E4%BD%95%E5%BC%82%E5%B8%B8%E7%9A%84-catch-%E8%AF%AD%E5%8F%A5"><span class="nav-number">2.</span> <span class="nav-text">能够捕获任何异常的 catch 语句</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%BC%82%E5%B8%B8%E7%9A%84%E5%86%8D%E6%8B%8B%E5%87%BA"><span class="nav-number">3.</span> <span class="nav-text">异常的再拋出</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%87%BD%E6%95%B0%E7%9A%84%E5%BC%82%E5%B8%B8%E5%A3%B0%E6%98%8E%E5%88%97%E8%A1%A8"><span class="nav-number">4.</span> <span class="nav-text">函数的异常声明列表</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#C-%E6%A0%87%E5%87%86%E5%BC%82%E5%B8%B8%E7%B1%BB"><span class="nav-number">5.</span> <span class="nav-text">C++标准异常类</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-bad-typeid"><span class="nav-number">5.1.</span> <span class="nav-text">1) bad_typeid</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-bad-cast"><span class="nav-number">5.2.</span> <span class="nav-text">2) bad_cast</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-bad-alloc"><span class="nav-number">5.3.</span> <span class="nav-text">3) bad_alloc</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-out-of-range"><span class="nav-number">5.4.</span> <span class="nav-text">4) out_of_range</span></a></li></ol></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#c%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86%E5%9F%BA%E6%9C%AC%E8%AF%AD%E6%B3%95"><span class="nav-number">1.</span> <span class="nav-text">C++异常处理基本语法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#threw%E8%AF%AD%E6%B3%95%E5%AE%9A%E4%B9%89"><span class="nav-number">1.1.</span> <span class="nav-text">threw语法定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#try-catch%E8%AF%AD%E6%B3%95%E5%AE%9A%E4%B9%89"><span class="nav-number">1.2.</span> <span class="nav-text">try-catch语法定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#try-catch%E6%89%A7%E8%A1%8C%E8%BF%87%E7%A8%8B"><span class="nav-number">1.3.</span> <span class="nav-text">try-catch执行过程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BE%8B%E7%A8%8B"><span class="nav-number">1.4.</span> <span class="nav-text">例程</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%83%BD%E5%A4%9F%E6%8D%95%E8%8E%B7%E4%BB%BB%E4%BD%95%E5%BC%82%E5%B8%B8%E7%9A%84-catch-%E8%AF%AD%E5%8F%A5"><span class="nav-number">2.</span> <span class="nav-text">能够捕获任何异常的 catch 语句</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%BC%82%E5%B8%B8%E7%9A%84%E5%86%8D%E6%8B%8B%E5%87%BA"><span class="nav-number">3.</span> <span class="nav-text">异常的再拋出</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%87%BD%E6%95%B0%E7%9A%84%E5%BC%82%E5%B8%B8%E5%A3%B0%E6%98%8E%E5%88%97%E8%A1%A8"><span class="nav-number">4.</span> <span class="nav-text">函数的异常声明列表</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#c%E6%A0%87%E5%87%86%E5%BC%82%E5%B8%B8%E7%B1%BB"><span class="nav-number">5.</span> <span class="nav-text">C++标准异常类</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#bad_typeid"><span class="nav-number">5.1.</span> <span class="nav-text">1) bad_typeid</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#bad_cast"><span class="nav-number">5.2.</span> <span class="nav-text">2) bad_cast</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#bad_alloc"><span class="nav-number">5.3.</span> <span class="nav-text">3) bad_alloc</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#out_of_range"><span class="nav-number">5.4.</span> <span class="nav-text">4) out_of_range</span></a></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -140,26 +141,26 @@
 <div class="site-state-wrap site-overview-item animated">
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
-          <a href="/archives">
-          <span class="site-state-item-count">82</span>
+        <a href="/archives/">
+          <span class="site-state-item-count">88</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
-            <a href="/categories/">
-        <span class="site-state-item-count">14</span>
+          <a href="/categories/">
+        <span class="site-state-item-count">11</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
-            <a href="/tags/">
-        <span class="site-state-item-count">155</span>
+          <a href="/tags/">
+        <span class="site-state-item-count">163</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
 </div>
   <div class="links-of-author site-overview-item animated">
       <span class="links-of-author-item">
-        <a href="mailto:liewzheng@qq.com" title="E-Mail → mailto:liewzheng@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+        <a href="mailto:liewzheng@foxmail.com" title="E-Mail → mailto:liewzheng@foxmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
       </span>
   </div>
 
@@ -179,7 +180,6 @@
     <i class="fa fa-arrow-up"></i>
     <span>0%</span>
   </div>
-  <div class="reading-progress-bar"></div>
 
 <noscript>
   <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
@@ -215,6 +215,7 @@
 
         <div class="post-meta-container">
           <div class="post-meta">
+
     <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
     <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
     <span class="post-meta-item">
@@ -274,109 +275,103 @@
 <p>拋出异常而不加处理会导致函数 A 立即中止，在这种情况下，函数 B 可以选择捕获 A 拋出的异常进行处理，也可以选择置之不理。如果置之不理，这个异常就会被拋给 B 的调用者，以此类推。</p>
 <p>【也就是说，在C++中，异常发生时，是否处理可以由函数的上一级调用函数去决定，如果选择不处理则会将该异常交给更上一级函数去决断。】</p>
 <p>如果一层层的函数都不处理异常，异常最终会被拋给最外层的 main 函数。main 函数应该处理异常。如果main函数也不处理异常，那么程序就会立即异常地中止。</p>
-<h1 id="C-异常处理基本语法"><a href="#C-异常处理基本语法" class="headerlink" title="C++异常处理基本语法"></a>C++异常处理基本语法</h1><h2 id="threw语法定义"><a href="#threw语法定义" class="headerlink" title="threw语法定义"></a>threw语法定义</h2><p>C++ 通过 <code>throw</code> 语句和 <code>try-catch</code> 语句实现对异常的处理。<code>throw</code> 语句的语法如下：</p>
+<h1 id="c异常处理基本语法">C++异常处理基本语法</h1>
+<h2 id="threw语法定义">threw语法定义</h2>
+<p>C++ 通过 <code>throw</code> 语句和 <code>try-catch</code> 语句实现对异常的处理。<code>throw</code> 语句的语法如下：</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">throw</span>  <span class="comment">/*表达式*/</span>;</span><br></pre></td></tr></table></figure>
-
 <p>该语句拋出一个异常。异常是一个表达式，其值的类型可以是 <mark>基本类型</mark>，也可以是 <mark>类</mark>。</p>
-<h2 id="try-catch语法定义"><a href="#try-catch语法定义" class="headerlink" title="try-catch语法定义"></a>try-catch语法定义</h2><p><code>try-catch</code> 语句的语法如下：</p>
+<h2 id="try-catch语法定义">try-catch语法定义</h2>
+<p><code>try-catch</code> 语句的语法如下：</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">   <span class="comment">//语句组</span></span><br><span class="line"> &#125;</span><br><span class="line"> <span class="built_in"><span class="keyword">catch</span></span>(<span class="comment">/* 异常类型 */</span>) &#123;</span><br><span class="line">   <span class="comment">//异常处理代码</span></span><br><span class="line"> &#125;</span><br><span class="line"> ...</span><br><span class="line"> <span class="built_in"><span class="keyword">catch</span></span>( <span class="comment">/* 异常类型 */</span>) &#123;</span><br><span class="line">   <span class="comment">//异常处理代码</span></span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
-
 <p><code>catch</code> 可以有多个，但至少要有一个。</p>
 <p>不妨把 try 和其后<code>&#123;&#125;</code>中的内容称作“try块”，把 catch 和其后<code>&#123;&#125;</code>中的内容称作“catch块”。</p>
-<h2 id="try-catch执行过程"><a href="#try-catch执行过程" class="headerlink" title="try-catch执行过程"></a>try-catch执行过程</h2><p><code>try-catch</code> 语句的执行过程是：</p>
+<h2 id="try-catch执行过程">try-catch执行过程</h2>
+<p><code>try-catch</code> 语句的执行过程是：</p>
 <ul>
 <li>执行 try 块中的语句，如果执行的过程中没有异常拋出，那么执行完后就执行最后一个 catch 块后面的语句，所有 catch 块中的语句都不会被执行；</li>
 <li>如果 try 块执行的过程中拋出了异常，那么拋出异常后立即跳转到第一个“异常类型”和拋出的异常类型匹配的 catch 块中执行（称作异常被该 catch 块“捕获”），执行完后再跳转到最后一个 catch 块后面继续执行。</li>
 </ul>
-<h2 id="例程"><a href="#例程" class="headerlink" title="例程"></a>例程</h2><p>例如下面的程序：</p>
+<h2 id="例程">例程</h2>
+<p>例如下面的程序：</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;    </span><br><span class="line">	<span class="keyword">double</span> m ,n;    </span><br><span class="line">	cin &gt;&gt; m &gt;&gt; n;    </span><br><span class="line">	<span class="keyword">try</span> &#123;        </span><br><span class="line">		cout &lt;&lt; <span class="string">&quot;before dividing.&quot;</span> &lt;&lt; endl;        </span><br><span class="line">		<span class="keyword">if</span>( n == <span class="number">0</span>) <span class="keyword">throw</span> <span class="number">-1</span>;</span><br><span class="line">		<span class="keyword">else</span> cout &lt;&lt; m / n &lt;&lt; endl;</span><br><span class="line">		cout &lt;&lt; <span class="string">&quot;after dividing.&quot;</span> &lt;&lt; endl;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in"><span class="keyword">catch</span></span>(<span class="keyword">double</span> d)&#123;</span><br><span class="line">  	cout &lt;&lt; <span class="string">&quot;catch(double) &quot;</span> &lt;&lt; d &lt;&lt;  endl;    </span><br><span class="line">  &#125;    </span><br><span class="line">  <span class="built_in"><span class="keyword">catch</span></span>(<span class="keyword">int</span> e)&#123;</span><br><span class="line">  	cout &lt;&lt; <span class="string">&quot;catch(int) &quot;</span> &lt;&lt; e &lt;&lt; endl;    </span><br><span class="line">  &#125;    </span><br><span class="line">  cout &lt;&lt; <span class="string">&quot;finished&quot;</span> &lt;&lt; endl;    </span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
 <p>程序的运行结果如下：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">9 6</span><br><span class="line">before dividing.</span><br><span class="line">1.5</span><br><span class="line">after dividing.</span><br><span class="line">finished</span><br></pre></td></tr></table></figure>
-
 <p>说明当 n 不为 0 时，try 块中不会拋出异常。因此程序在 try 块正常执行完后，越过所有的 catch 块继续执行，catch 块一个也不会执行。</p>
 <p>程序的运行结果也可能如下：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">9 0</span><br><span class="line">before dividing.</span><br><span class="line">catch\(int) -1</span><br><span class="line">finished</span><br></pre></td></tr></table></figure>
-
 <p>当 n 为 0 时，try 块中会拋出一个整型异常。拋出异常后，try 块立即停止执行。该整型异常会被类型匹配的第一个 catch 块捕获，即进入<code>catch(int e)</code>块执行，该 catch 块执行完毕后，程序继续往后执行，直到正常结束。</p>
-<p>如果拋出的异常没有被 catch 块捕获，例如，将<code>catch(int e)</code>，改为<code>catch(char e)</code>，当输入的 n 为 0 时，拋出的整型异常就没有 catch 块能捕获，这个异常也就得不到处理，那么程序就会立即中止，try…catch 后面的内容都不会被执行。</p>
-<h1 id="能够捕获任何异常的-catch-语句"><a href="#能够捕获任何异常的-catch-语句" class="headerlink" title="能够捕获任何异常的 catch 语句"></a>能够捕获任何异常的 catch 语句</h1><p>如果希望不论拋出哪种类型的异常都能捕获，可以编写如下 catch 块：</p>
+<p>如果拋出的异常没有被 catch 块捕获，例如，将<code>catch(int e)</code>，改为<code>catch(char e)</code>，当输入的 n 为 0 时，拋出的整型异常就没有 catch 块能捕获，这个异常也就得不到处理，那么程序就会立即中止，try...catch 后面的内容都不会被执行。</p>
+<h1 id="能够捕获任何异常的-catch-语句">能够捕获任何异常的 catch 语句</h1>
+<p>如果希望不论拋出哪种类型的异常都能捕获，可以编写如下 catch 块：</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in"><span class="keyword">catch</span></span>(...) &#123;</span><br><span class="line">   <span class="comment">//...</span></span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
-
 <p>这样的 catch 块能够捕获任何还没有被捕获的异常。例如下面的程序：</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="keyword">double</span> m, n;</span><br><span class="line">  cin &gt;&gt; m &gt;&gt; n;</span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;before dividing.&quot;</span> &lt;&lt; endl;</span><br><span class="line">    <span class="keyword">if</span> (n == <span class="number">0</span>) <span class="keyword">throw</span> - <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (m == <span class="number">0</span>) <span class="keyword">throw</span> - <span class="number">1.0</span>;</span><br><span class="line">    <span class="keyword">else</span> cout &lt;&lt; m / n &lt;&lt; endl;</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;after dividing.&quot;</span> &lt;&lt; endl;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in"><span class="keyword">catch</span></span> (<span class="keyword">double</span> d) &#123;</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;catch (double)&quot;</span> &lt;&lt; d &lt;&lt; endl;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in"><span class="keyword">catch</span></span> (...) &#123;</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;catch (...)&quot;</span> &lt;&lt; endl;</span><br><span class="line">  &#125;    </span><br><span class="line">  cout &lt;&lt; <span class="string">&quot;finished&quot;</span> &lt;&lt; endl;</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
 <p>程序的运行结果如下：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">9 0</span><br><span class="line">before dividing.</span><br><span class="line">catch (...)</span><br><span class="line">finished</span><br></pre></td></tr></table></figure>
-
 <p>当 n 为 0 时，拋出的整型异常被<code>catchy(...)</code>捕获。</p>
 <p>程序的运行结果也可能如下：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">0 6</span><br><span class="line">before dividing.</span><br><span class="line">catch (double) -1</span><br><span class="line">finished</span><br></pre></td></tr></table></figure>
-
 <p>当 m 为 0 时，拋出一个 double 类型的异常。虽然<code>catch (double)</code>和<code>catch(...)</code>都能匹配该异常，但是<code>catch(double)</code>是第一个能匹配的 catch 块，因此会执行它，而不会执行<code>catch(...)</code>块。</p>
 <p>由于<code>catch(...)</code>能匹配任何类型的异常，它后面的 catch 块实际上就不起作用，因此不要将它写在其他 catch 块前面。</p>
-<h1 id="异常的再拋出"><a href="#异常的再拋出" class="headerlink" title="异常的再拋出"></a>异常的再拋出</h1><p>如果一个函数在执行过程中拋出的异常在本函数内就被 catch 块捕获并处理，那么该异常就不会拋给这个函数的调用者（也称为“上一层的函数”）；如果异常在本函数中没有被处理，则它就会被拋给上一层的函数。例如下面的程序：</p>
+<h1 id="异常的再拋出">异常的再拋出</h1>
+<p>如果一个函数在执行过程中拋出的异常在本函数内就被 catch 块捕获并处理，那么该异常就不会拋给这个函数的调用者（也称为“上一层的函数”）；如果异常在本函数中没有被处理，则它就会被拋给上一层的函数。例如下面的程序：</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CException</span>&#123;</span></span><br><span class="line">  <span class="keyword">public</span>:    </span><br><span class="line">  string msg;    </span><br><span class="line">  <span class="built_in">CException</span>(string s) : <span class="built_in">msg</span>(s) &#123;&#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">double</span> <span class="title">Devide</span><span class="params">(<span class="keyword">double</span> x, <span class="keyword">double</span> y)</span></span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (y == <span class="number">0</span>) <span class="keyword">throw</span> <span class="built_in">CException</span>(<span class="string">&quot;devided by zero&quot;</span>);</span><br><span class="line">  cout &lt;&lt; <span class="string">&quot;in Devide&quot;</span> &lt;&lt; endl;    </span><br><span class="line">  <span class="keyword">return</span> x / y;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">CountTax</span><span class="params">(<span class="keyword">int</span> salary)</span></span>&#123;</span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (salary &lt; <span class="number">0</span>) <span class="keyword">throw</span> <span class="number">-1</span>;</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;counting tax&quot;</span> &lt;&lt; endl;</span><br><span class="line">  &#125;    </span><br><span class="line">  <span class="built_in"><span class="keyword">catch</span></span> (<span class="keyword">int</span>)&#123;</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;salary &lt; 0&quot;</span> &lt;&lt; endl;    </span><br><span class="line">  &#125;</span><br><span class="line">  cout &lt;&lt; <span class="string">&quot;tax counted&quot;</span> &lt;&lt; endl;</span><br><span class="line">  <span class="keyword">return</span> salary * <span class="number">0.15</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="keyword">double</span> f = <span class="number">1.2</span>;    </span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="built_in">CountTax</span>(<span class="number">-1</span>);  <span class="comment">//此处会报错，立即抛出错误被catch(int)捕获，并终止运行</span></span><br><span class="line">    f = <span class="built_in">Devide</span>(<span class="number">3</span>, <span class="number">0</span>);  <span class="comment">//此处也会报错，在”devided by zero“处立即停止，且没有返回值返回赋给f</span></span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;end of try block&quot;</span> &lt;&lt; endl;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in"><span class="keyword">catch</span></span> (CException e)&#123;</span><br><span class="line">    cout &lt;&lt; e.msg &lt;&lt; endl;    </span><br><span class="line">  &#125;    </span><br><span class="line">  cout &lt;&lt; <span class="string">&quot;f = &quot;</span> &lt;&lt; f &lt;&lt; endl;</span><br><span class="line">  cout &lt;&lt; <span class="string">&quot;finished&quot;</span> &lt;&lt; endl;</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
 <p>程序的输出结果如下：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">salary &lt; 0</span><br><span class="line">tax counted</span><br><span class="line">devided by zero</span><br><span class="line">f=1.2</span><br><span class="line">finished</span><br></pre></td></tr></table></figure>
-
 <p>CountTa 函数拋出异常后自行处理，这个异常就不会继续被拋给调用者，即 main 函数。因此在 main 函数的 try 块中，CountTax 之后的语句还能正常执行，即会执行<code>f = Devide(3, 0);</code>。</p>
 <p>第 33 行，Devide 函数拋出了异常却不处理，该异常就会被拋给 Devide 函数的调用者，即 main 函数。拋出此异常后，Devide 函数立即结束，第 13 行不会被执行，函数也不会返回一个值，这从第 33 行 f 的值不会被修改可以看出。</p>
-<p><code>Devide()</code>  中第 12 行 拋出的异常被 main 函数中类型匹配的 catch 块捕获。第 36 行中的 e 对象是用<strong>复制构造函数初始化</strong>的。</p>
+<p><code>Devide()</code> 中第 12 行 拋出的异常被 main 函数中类型匹配的 catch 块捕获。第 36 行中的 e 对象是用<strong>复制构造函数初始化</strong>的。</p>
 <p><mark>如果拋出的异常是派生类的对象，而 catch 块的异常类型是基类，那么这两者也能够匹配，因为派生类对象也是基类对象。</mark></p>
 <blockquote>
 <p>虽然函数也可以通过返回值或者传引用的参数通知调用者发生了异常，但采用这种方式的话，每次调用函数时都要判断是否发生了异常，这在函数被多处调用时比较麻烦。有了异常处理机制，可以将多处函数调用都写在一个 try 块中，任何一处调用发生异常都会被匹配的 catch 块捕获并处理，也就不需要每次调用后都判断是否发生了异常。</p>
 </blockquote>
 <p>有时，虽然在函数中对异常进行了处理，但是还是希望能够通知调用者，以便让调用者知道发生了异常，从而可以作进一步的处理。在 catch 块中拋出异常可以满足这种需要。例如：</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">CountTax</span><span class="params">(<span class="keyword">int</span> salary)</span></span>&#123;</span><br><span class="line">	<span class="keyword">try</span> &#123;</span><br><span class="line">  	<span class="keyword">if</span>( salary &lt; <span class="number">0</span> ) <span class="keyword">throw</span> <span class="built_in">string</span>(<span class="string">&quot;zero salary&quot;</span>);</span><br><span class="line">  	cout &lt;&lt; <span class="string">&quot;counting tax&quot;</span> &lt;&lt; endl;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in"><span class="keyword">catch</span></span> (string s )&#123;</span><br><span class="line">  	cout &lt;&lt; <span class="string">&quot;CountTax error : &quot;</span> &lt;&lt; s &lt;&lt; endl;</span><br><span class="line">    <span class="keyword">throw</span>;  <span class="comment">//单写一个throw会把最近的错误传给上一级进行处理</span></span><br><span class="line">  &#125;</span><br><span class="line">  cout &lt;&lt; <span class="string">&quot;tax counted&quot;</span> &lt;&lt; endl;</span><br><span class="line">  <span class="keyword">return</span> salary * <span class="number">0.15</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="keyword">double</span> f = <span class="number">1.2</span>;    </span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="built_in">CountTax</span>(<span class="number">-1</span>);</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;end of try block&quot;</span> &lt;&lt; endl;</span><br><span class="line">  &#125;    </span><br><span class="line">  <span class="built_in"><span class="keyword">catch</span></span>(string s) &#123;</span><br><span class="line">    cout &lt;&lt; s &lt;&lt; endl;</span><br><span class="line">  &#125;    </span><br><span class="line">  cout &lt;&lt; <span class="string">&quot;finished&quot;</span> &lt;&lt; endl;</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
 <p>程序的输出结果如下：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">CountTax error:zero salary</span><br><span class="line">zero salary</span><br><span class="line">finished</span><br></pre></td></tr></table></figure>
-
-<p>第 12行的<code>throw;</code>没有指明拋出什么样的异常，因此<mark>拋出的就是 catch 块捕获到的异常</mark>，即 <code>string(&quot;zero salary”)</code> 。这个异常会被 <code>main</code> 函数中的 <code>catch</code> 块捕获。</p>
-<h1 id="函数的异常声明列表"><a href="#函数的异常声明列表" class="headerlink" title="函数的异常声明列表"></a>函数的异常声明列表</h1><p>为了增强程序的可读性和可维护性，使程序员在使用一个函数时就能看出这个函数可能会拋出哪些异常，C++ 允许在函数声明和定义时，加上它所能拋出的异常的列表，称为 <mark>异常声明列表</mark>，具体写法如下：</p>
+<p>第 12行的<code>throw;</code>没有指明拋出什么样的异常，因此<mark>拋出的就是 catch 块捕获到的异常</mark>，即 <code>string("zero salary”)</code> 。这个异常会被 <code>main</code> 函数中的 <code>catch</code> 块捕获。</p>
+<h1 id="函数的异常声明列表">函数的异常声明列表</h1>
+<p>为了增强程序的可读性和可维护性，使程序员在使用一个函数时就能看出这个函数可能会拋出哪些异常，C++ 允许在函数声明和定义时，加上它所能拋出的异常的列表，称为 <mark>异常声明列表</mark>，具体写法如下：</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">func</span><span class="params">()</span> <span class="title">throw</span> <span class="params">(<span class="keyword">int</span>, <span class="keyword">double</span>, A, B, C)</span></span>;</span><br></pre></td></tr></table></figure>
-
 <p>或</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">func</span><span class="params">()</span> <span class="title">throw</span> <span class="params">(<span class="keyword">int</span>, <span class="keyword">double</span>, A, B, C)</span></span>&#123;…&#125;</span><br></pre></td></tr></table></figure>
-
 <p>上面的写法表明 func 可能拋出 int 型、double 型以及 A、B、C 三种类型的异常。异常声明列表可以在函数声明时写，也可以在函数定义时写。如果两处都写，则两处应一致。</p>
 <p>如果异常声明列表如下编写：</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">func</span><span class="params">()</span> <span class="title">throw</span> <span class="params">()</span></span>;</span><br></pre></td></tr></table></figure>
-
 <p>则说明 func 函数不会拋出任何异常。</p>
 <p><mark>一个函数如果不交待能拋出哪些类型的异常，就可以拋出任何类型的异常。</mark></p>
 <p>函数如果拋出了其异常声明列表中没有的异常，在编译时不会引发错误，但在运行时， Dev C++ 编译出来的程序会出错；用 Visual Studio 2010 编译出来的程序则不会出错，异常声明列表不起实际作用。</p>
-<h1 id="C-标准异常类"><a href="#C-标准异常类" class="headerlink" title="C++标准异常类"></a>C++标准异常类</h1><p>C++ 标准库中有一些类代表异常，这些类都是从 exception 类派生而来的。常用的几个异常类如图 1 所示。</p>
-<p><img src="https://pic.islet.space/2021/05/1-1P912101914246.jpg" alt="img"></p>
-<p style="font-weight: 900; text-align: center;"> 图1：常用的异常类 </p>
-
-<p>bad_typeid、bad_cast、bad_alloc、ios_base::failure、out_of_range 都是  exception 类的派生类。<mark>C++ 程序在碰到某些异常时，即使程序中没有写 throw  语句，也会自动拋出上述异常类的对象。这些异常类还都有名为 <code>what()</code> 的成员函数，返回字符串形式的异常描述信息。使用这些异常类需要包含头文件 <code> &lt;stdexcept&gt;</code> 。</mark></p>
+<h1 id="c标准异常类">C++标准异常类</h1>
+<p>C++ 标准库中有一些类代表异常，这些类都是从 exception 类派生而来的。常用的几个异常类如图 1 所示。</p>
+<figure>
+<img src="https://pic.islet.space/2021/05/1-1P912101914246.jpg" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p style="font-weight: 900; text-align: center;">
+图1：常用的异常类
+</p>
+<p>bad_typeid、bad_cast、bad_alloc、ios_base::failure、out_of_range 都是 exception 类的派生类。<mark>C++ 程序在碰到某些异常时，即使程序中没有写 throw 语句，也会自动拋出上述异常类的对象。这些异常类还都有名为 <code>what()</code> 的成员函数，返回字符串形式的异常描述信息。使用这些异常类需要包含头文件 <code>&lt;stdexcept&gt;</code> 。</mark></p>
 <p>下面分别介绍以上几个异常类。本节程序的输出以 Visual Studio 2010为准，Dev C++ 编译的程序输出有所不同。</p>
-<h2 id="1-bad-typeid"><a href="#1-bad-typeid" class="headerlink" title="1) bad_typeid"></a>1) bad_typeid</h2><p>使用 typeid 运算符时，如果其操作数是一个多态类的<a target="_blank" rel="noopener" href="http://c.biancheng.net/c/80/">指针</a>，而该指针的值为 NULL，则会拋出此异常。</p>
-<h2 id="2-bad-cast"><a href="#2-bad-cast" class="headerlink" title="2) bad_cast"></a>2) bad_cast</h2><p>在用 dynamic_cast 进行从多态基类对象（或引用）到派生类的引用的强制类型转换时，如果转换是不安全的，则会拋出此异常。程序示例如下：</p>
+<h2 id="bad_typeid">1) bad_typeid</h2>
+<p>使用 typeid 运算符时，如果其操作数是一个多态类的<a target="_blank" rel="noopener" href="http://c.biancheng.net/c/80/">指针</a>，而该指针的值为 NULL，则会拋出此异常。</p>
+<h2 id="bad_cast">2) bad_cast</h2>
+<p>在用 dynamic_cast 进行从多态基类对象（或引用）到派生类的引用的强制类型转换时，如果转换是不安全的，则会拋出此异常。程序示例如下：</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdexcept&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Base</span>&#123;</span></span><br><span class="line">  <span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">func</span><span class="params">()</span> </span>&#123;&#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Derived</span> :</span> <span class="keyword">public</span> Base&#123;</span><br><span class="line">  <span class="keyword">public</span>:    </span><br><span class="line">  <span class="function"><span class="keyword">void</span> <span class="title">Print</span><span class="params">()</span> </span>&#123;&#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">PrintObj</span><span class="params">(Base &amp; b)</span></span>&#123;</span><br><span class="line">  <span class="keyword">try</span>&#123;</span><br><span class="line">    Derived &amp; rd = <span class="keyword">dynamic_cast</span> &lt;Derived &amp;&gt;(b);</span><br><span class="line">    rd.<span class="built_in">Print</span>();    </span><br><span class="line">  &#125;    </span><br><span class="line">  <span class="built_in"><span class="keyword">catch</span></span> (bad_cast &amp; e)&#123;</span><br><span class="line">    cerr &lt;&lt; e.<span class="built_in">what</span>() &lt;&lt; endl;    </span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">  Base b;    </span><br><span class="line">  <span class="built_in">PrintObj</span>(b);    </span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
 <p>程序的输出结果如下：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Bad dynamic_cast!</span><br></pre></td></tr></table></figure>
-
 <p>在 PrintObj 函数中，通过 dynamic_cast 检测 b 是否引用的是一个 Derived 对象，如果是，就调用其 <code>Print()</code> 成员函数；如果不是，就拋出异常，不会调用 <code>Derived::Print</code>。</p>
-<h2 id="3-bad-alloc"><a href="#3-bad-alloc" class="headerlink" title="3) bad_alloc"></a>3) bad_alloc</h2><p>在用 new 运算符进行动态内存分配时，如果没有足够的内存，则会引发此异常。程序示例如下：</p>
+<h2 id="bad_alloc">3) bad_alloc</h2>
+<p>在用 new 运算符进行动态内存分配时，如果没有足够的内存，则会引发此异常。程序示例如下：</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdexcept&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;    </span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="keyword">char</span> * p = <span class="keyword">new</span> <span class="keyword">char</span>[<span class="number">0x7fffffff</span>];</span><br><span class="line">  &#125;    </span><br><span class="line">  <span class="built_in"><span class="keyword">catch</span></span> (bad_alloc &amp; e)&#123;</span><br><span class="line">    cerr &lt;&lt; e.<span class="built_in">what</span>() &lt;&lt; endl;    </span><br><span class="line">  &#125;    </span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
 <p>程序的输出结果如下：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">bad allocation</span><br><span class="line">ios_base::failure</span><br></pre></td></tr></table></figure>
-
 <p>在默认状态下，输入输出流对象不会拋出此异常。如果用流对象的 exceptions 成员函数设置了一些标志位，则在出现打开文件出错、读到输入流的文件尾等情况时会拋出此异常。此处不再赘述。</p>
-<h2 id="4-out-of-range"><a href="#4-out-of-range" class="headerlink" title="4) out_of_range"></a>4) out_of_range</h2><p>用 vector 或 string 的 at 成员函数根据下标访问元素时，如果下标越界，则会拋出此异常。例如：</p>
+<h2 id="out_of_range">4) out_of_range</h2>
+<p>用 vector 或 string 的 at 成员函数根据下标访问元素时，如果下标越界，则会拋出此异常。例如：</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdexcept&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;    </span><br><span class="line">  <span class="function">vector&lt;<span class="keyword">int</span>&gt; <span class="title">v</span><span class="params">(<span class="number">10</span>)</span></span>;</span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    v.<span class="built_in">at</span>(<span class="number">100</span>) = <span class="number">100</span>;</span><br><span class="line">  &#125;    </span><br><span class="line">  <span class="built_in"><span class="keyword">catch</span></span> (out_of_range &amp; e) &#123;</span><br><span class="line">    cerr &lt;&lt; e.<span class="built_in">what</span>() &lt;&lt; endl;</span><br><span class="line">  &#125;    </span><br><span class="line">  string s = <span class="string">&quot;hello&quot;</span>;</span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="keyword">char</span> c = s.<span class="built_in">at</span>(<span class="number">100</span>);</span><br><span class="line">  &#125;    </span><br><span class="line">  <span class="built_in"><span class="keyword">catch</span></span> (out_of_range &amp; e) &#123;</span><br><span class="line">    cerr &lt;&lt; e.<span class="built_in">what</span>() &lt;&lt; endl;    </span><br><span class="line">  &#125;    </span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
 <p>程序的输出结果如下：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">invalid vector subscript</span><br><span class="line">invalid string position</span><br></pre></td></tr></table></figure>
-
 <p>如果将<code>v.at(100)</code>换成<code>v[100]</code>，将<code>s.at(100)</code>换成<code>s[100]</code>，程序就不会引发异常（但可能导致程序崩溃）。因为 at 成员函数会检测下标越界并拋出异常，而 <code>operator[]</code> 则不会。<code>operator[]</code> 相比 at 的好处就是不用判断下标是否越界，因此执行速度更快。</p>
-<p>​          </p>
+<p>​</p>
 
     </div>
 
@@ -386,8 +381,8 @@
 
     <footer class="post-footer">
           <div class="reward-container">
-  <div>感谢支持和鼓励</div>
-  <button onclick="document.querySelector('.post-reward').classList.toggle('active');">
+  <div>感谢您的支持和鼓励</div>
+  <button>
     Donate
   </button>
   <div class="post-reward">
@@ -410,21 +405,16 @@
               <a href="/tags/VisualC/" rel="tag"># VisualC++</a>
           </div>
 
-    <div id="vcomment" style="margin: 20px 0 0 0"></div>
-    <script>
-        new Valine({
-            el: '#vcomment' ,
-            appId: 'vRGM12EcYxDSM2lat5qjjSeY-gzGzoHsz',
-            appKey: 'WBgAb6NTAFQ7DYtgH0uOPNNh'
-        });
-    </script>
-</body>
-
-
-
-
         
 
+  <div id="vcomments" style="margin: 1rem 0 0 0;"></div>
+  <script>
+    new Valine({
+      el: '#vcomments',
+      appId: 'vRGM12EcYxDSM2lat5qjjSeY-gzGzoHsz',
+      appKey: 'WBgAb6NTAFQ7DYtgH0uOPNNh'
+    })
+  </script>
           <div class="post-nav">
             <div class="post-nav-item">
                 <a href="/2021/05/31/Programming/C++/2021-05-31-C%2011%E5%A4%9A%E7%BA%BF%E7%A8%8Bjoin()%E5%92%8Cdetach()%E7%9A%84%E7%90%86%E8%A7%A3/" rel="prev" title="C++11多线程join()和detach()的理解">
@@ -445,7 +435,8 @@
 
 
 
-<script src="/js/comments.js"></script>
+
+
 </div>
   </main>
 
@@ -468,8 +459,8 @@
   </footer>
 
   
-  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
-<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
 
   
 
@@ -477,10 +468,15 @@
 
 
 
-
   
 
 
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":"enable","tags":"none","js":{"url":"https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js","integrity":"sha256-r+3itOMtGGjap0x+10hu6jW/gZCzxHsoKrOd7gyRSGY="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
 
 
 

@@ -1,13 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.css">
   <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="viewport" content="width=device-width">
 <meta name="theme-color" content="#222">
 <meta name="generator" content="Hexo 5.4.0">
 
-<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
@@ -17,16 +16,16 @@
 
 
 
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
-<script class="next-config" data-name="main" type="application/json">{&quot;hostname&quot;:&quot;islet.space&quot;,&quot;root&quot;:&quot;&#x2F;&quot;,&quot;images&quot;:&quot;&#x2F;images&quot;,&quot;scheme&quot;:&quot;Gemini&quot;,&quot;version&quot;:&quot;8.3.0&quot;,&quot;exturl&quot;:false,&quot;sidebar&quot;:{&quot;position&quot;:&quot;left&quot;,&quot;display&quot;:&quot;post&quot;,&quot;padding&quot;:18,&quot;offset&quot;:12},&quot;copycode&quot;:true,&quot;bookmark&quot;:{&quot;enable&quot;:false,&quot;color&quot;:&quot;#222&quot;,&quot;save&quot;:&quot;auto&quot;},&quot;fancybox&quot;:false,&quot;mediumzoom&quot;:false,&quot;lazyload&quot;:false,&quot;pangu&quot;:false,&quot;comments&quot;:{&quot;style&quot;:&quot;tabs&quot;,&quot;active&quot;:null,&quot;storage&quot;:true,&quot;lazyload&quot;:false,&quot;nav&quot;:null},&quot;motion&quot;:{&quot;enable&quot;:true,&quot;async&quot;:false,&quot;transition&quot;:{&quot;post_block&quot;:&quot;fadeIn&quot;,&quot;post_header&quot;:&quot;fadeInDown&quot;,&quot;post_body&quot;:&quot;fadeInDown&quot;,&quot;coll_header&quot;:&quot;fadeInLeft&quot;,&quot;sidebar&quot;:&quot;fadeInUp&quot;}},&quot;prism&quot;:false,&quot;i18n&quot;:{&quot;placeholder&quot;:&quot;Searching...&quot;,&quot;empty&quot;:&quot;We didn&#39;t find any results for the search: ${query}&quot;,&quot;hits_time&quot;:&quot;${hits} results found in ${time} ms&quot;,&quot;hits&quot;:&quot;${hits} results found&quot;}}</script>
-<meta name="description" content="TCP在TCP&#x2F;IP协议族中，网络层IP提供的是一种不可靠的服务。也就是说，它只是尽可能快地把分组从源结点送到目的结点，但是并不提供任何可靠性保证。而另一方面，TCP在不可靠的IP层上提供了一个可靠的运输层。为了提供这种可靠的服务，TCP采用了超时重传、发送和接收端到端的确认分组等机制。由此可见，运输层和网络层分别负责不同的功能。 在四层网络结构，由下之上分别是：数据链路层、网络层、传输层及应用层">
+<script class="next-config" data-name="main" type="application/json">{"hostname":"islet.space","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.7.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+<meta name="description" content="TCP 在TCP&#x2F;IP协议族中，网络层IP提供的是一种不可靠的服务。也就是说，它只是尽可能快地把分组从源结点送到目的结点，但是并不提供任何可靠性保证。而另一方面，TCP在不可靠的IP层上提供了一个可靠的运输层。为了提供这种可靠的服务，TCP采用了超时重传、发送和接收端到端的确认分组等机制。由此可见，运输层和网络层分别负责不同的功能。 在四层网络结构，由下之上分别是：数据链路层、网络层、传输层及应用">
 <meta property="og:type" content="article">
 <meta property="og:title" content="C socket">
 <meta property="og:url" content="http://islet.space/2021/01/15/Networking/2021-01-15-C-Socket/index.html">
 <meta property="og:site_name" content="Coder的孤岛">
-<meta property="og:description" content="TCP在TCP&#x2F;IP协议族中，网络层IP提供的是一种不可靠的服务。也就是说，它只是尽可能快地把分组从源结点送到目的结点，但是并不提供任何可靠性保证。而另一方面，TCP在不可靠的IP层上提供了一个可靠的运输层。为了提供这种可靠的服务，TCP采用了超时重传、发送和接收端到端的确认分组等机制。由此可见，运输层和网络层分别负责不同的功能。 在四层网络结构，由下之上分别是：数据链路层、网络层、传输层及应用层">
+<meta property="og:description" content="TCP 在TCP&#x2F;IP协议族中，网络层IP提供的是一种不可靠的服务。也就是说，它只是尽可能快地把分组从源结点送到目的结点，但是并不提供任何可靠性保证。而另一方面，TCP在不可靠的IP层上提供了一个可靠的运输层。为了提供这种可靠的服务，TCP采用了超时重传、发送和接收端到端的确认分组等机制。由此可见，运输层和网络层分别负责不同的功能。 在四层网络结构，由下之上分别是：数据链路层、网络层、传输层及应用">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/04/TCPIP-01.png">
 <meta property="og:image" content="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/04/20210218-03.png">
@@ -47,10 +46,10 @@
 
 
 
-<script class="next-config" data-name="page" type="application/json">{&quot;sidebar&quot;:&quot;&quot;,&quot;isHome&quot;:false,&quot;isPost&quot;:true,&quot;lang&quot;:&quot;en&quot;,&quot;comments&quot;:true,&quot;permalink&quot;:&quot;http:&#x2F;&#x2F;islet.space&#x2F;2021&#x2F;01&#x2F;15&#x2F;Networking&#x2F;2021-01-15-C-Socket&#x2F;&quot;,&quot;path&quot;:&quot;2021&#x2F;01&#x2F;15&#x2F;Networking&#x2F;2021-01-15-C-Socket&#x2F;&quot;,&quot;title&quot;:&quot;C socket&quot;}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://islet.space/2021/01/15/Networking/2021-01-15-C-Socket/","path":"2021/01/15/Networking/2021-01-15-C-Socket/","title":"C socket"}</script>
 
-<script class="next-config" data-name="calendar" type="application/json">&quot;&quot;</script>
-<title>C socket | Coder的孤岛</title><script src="/js/config.js"></script>
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>C socket | Coder的孤岛</title>
   
 
 
@@ -59,7 +58,9 @@
   <noscript>
     <link rel="stylesheet" href="/css/noscript.css">
   </noscript>
-</head>
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<!-- hexo injector head_end end --></head>
 
 <body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
   <div class="headband"></div>
@@ -95,7 +96,7 @@
 
 <nav class="site-nav">
   <ul class="main-menu menu">
-        <li class="menu-item menu-item-首页"><a href="https://islet.space/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-首页"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
         <li class="menu-item menu-item-文章"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>文章</a></li>
         <li class="menu-item menu-item-目录"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>目录</a></li>
         <li class="menu-item menu-item-标签"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
@@ -131,7 +132,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#TCP"><span class="nav-number">1.</span> <span class="nav-text">TCP</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#TCP-Introduce"><span class="nav-number">1.1.</span> <span class="nav-text">TCP Introduce</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#TCP-Structure"><span class="nav-number">1.1.1.</span> <span class="nav-text">TCP Structure</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#TCP-Flags"><span class="nav-number">1.1.2.</span> <span class="nav-text">TCP Flags</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TCP-Three-Way-Handshake"><span class="nav-number">1.2.</span> <span class="nav-text">TCP Three-Way Handshake</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#The-Steps-of-Three-Way-Handshake"><span class="nav-number">1.2.1.</span> <span class="nav-text">The Steps of Three-Way Handshake</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#The-Meaning-of-Three-way-handshake"><span class="nav-number">1.2.2.</span> <span class="nav-text">The Meaning of Three-way handshake</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TCP-Four-Way-Wavehand"><span class="nav-number">1.3.</span> <span class="nav-text">TCP Four-Way-Wavehand</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#The-Meaning-of-Four-Way-Wavehand"><span class="nav-number">1.3.1.</span> <span class="nav-text">The Meaning of Four-Way-Wavehand</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#The-Steps-of-Four-Way-Wavehand"><span class="nav-number">1.3.2.</span> <span class="nav-text">The Steps of Four-Way-Wavehand</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#RST"><span class="nav-number">1.3.3.</span> <span class="nav-text">RST</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Differences-between-FIN-and-RST"><span class="nav-number">1.3.3.1.</span> <span class="nav-text">Differences between FIN and RST</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Why-do-we-send-RST"><span class="nav-number">1.3.3.2.</span> <span class="nav-text">Why do we send RST?</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Wireshark-Tutorial"><span class="nav-number">2.</span> <span class="nav-text">Wireshark Tutorial</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Capturing-Filters-%E6%8D%95%E8%8E%B7%E8%BF%87%E6%BB%A4"><span class="nav-number">2.1.</span> <span class="nav-text">Capturing Filters 捕获过滤</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Filtering-packets-while-capturing-%E6%8D%95%E8%8E%B7%E6%97%B6%E5%8F%AF%E7%94%A8%E7%9A%84%E8%BF%87%E6%BB%A4%E7%BB%84%E4%BB%B6"><span class="nav-number">2.1.1.</span> <span class="nav-text">Filtering packets while capturing 捕获时可用的过滤组件</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Some-common-examples-%E4%B8%80%E4%BA%9B%E9%80%9A%E7%94%A8%E7%A4%BA%E4%BE%8B"><span class="nav-number">2.1.1.1.</span> <span class="nav-text">Some common examples 一些通用示例</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Capture-Filter-Syntax-%E6%8D%95%E8%8E%B7%E8%BF%87%E6%BB%A4%E5%99%A8%E6%A0%87%E5%BF%97"><span class="nav-number">2.1.1.2.</span> <span class="nav-text">Capture Filter Syntax 捕获过滤器标志</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Capturing-%E6%8D%95%E8%8E%B7"><span class="nav-number">2.2.</span> <span class="nav-text">Capturing 捕获</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Capture-options-%E6%8D%95%E8%8E%B7%E8%AE%BE%E7%BD%AE"><span class="nav-number">2.2.1.</span> <span class="nav-text">Capture options 捕获设置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Input-options-%E8%BE%93%E5%85%A5%E8%AE%BE%E7%BD%AE"><span class="nav-number">2.2.2.</span> <span class="nav-text">Input options 输入设置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Filtering-options-%E8%BF%87%E6%BB%A4%E8%AE%BE%E7%BD%AE"><span class="nav-number">2.2.3.</span> <span class="nav-text">Filtering options 过滤设置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Storing-options-%E5%AD%98%E5%82%A8%E8%AE%BE%E7%BD%AE"><span class="nav-number">2.2.4.</span> <span class="nav-text">Storing options 存储设置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Stop-condition-options-%E7%BB%88%E6%AD%A2%E8%AE%BE%E7%BD%AE"><span class="nav-number">2.2.5.</span> <span class="nav-text">Stop condition options 终止设置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Display-while-capturing-options"><span class="nav-number">2.2.6.</span> <span class="nav-text">Display while capturing options</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#High-performance-capturing-%E9%AB%98%E6%80%A7%E8%83%BD%E6%A8%A1%E5%BC%8F%E6%8D%95%E8%8E%B7"><span class="nav-number">2.2.7.</span> <span class="nav-text">High performance capturing 高性能模式捕获</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Long-term-capturing-%E9%95%BF%E6%9C%9F%E6%8D%95%E8%8E%B7"><span class="nav-number">2.2.8.</span> <span class="nav-text">Long term capturing 长期捕获</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Display-Filter-%E6%98%BE%E7%A4%BA%E8%BF%87%E6%BB%A4%E5%99%A8"><span class="nav-number">2.3.</span> <span class="nav-text">Display Filter 显示过滤器</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Filtering-packets-while-viewing-%E8%A7%82%E5%AF%9F%E6%97%B6%E7%9A%84%E8%BF%87%E6%BB%A4%E5%99%A8%E7%BB%84%E4%BB%B6"><span class="nav-number">2.3.1.</span> <span class="nav-text">Filtering packets while viewing 观察时的过滤器组件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%89%B9%E6%AE%8A%E5%AD%97%E7%AC%A6"><span class="nav-number">2.3.2.</span> <span class="nav-text">特殊字符</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#constains-%E5%92%8C-matches"><span class="nav-number">2.3.2.1.</span> <span class="nav-text">constains 和 matches</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Some-common-examples-%E4%B8%80%E4%BA%9B%E9%80%9A%E7%94%A8%E7%A4%BA%E4%BE%8B-1"><span class="nav-number">2.3.3.</span> <span class="nav-text">Some common examples 一些通用示例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Hint"><span class="nav-number">2.3.4.</span> <span class="nav-text">Hint</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#WIRESHARK%E4%B8%AD%E7%9A%84%E5%90%84%E7%A7%8D%E6%A0%87%E5%BF%97%EF%BC%88TCP%EF%BC%89"><span class="nav-number">2.4.</span> <span class="nav-text">WIRESHARK中的各种标志（TCP）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#OUT-OF-ORDER"><span class="nav-number">2.4.1.</span> <span class="nav-text">OUT OF ORDER</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Previous-segment-not-captured"><span class="nav-number">2.4.2.</span> <span class="nav-text">Previous segment not captured</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#TCP-DUP-ACK"><span class="nav-number">2.4.3.</span> <span class="nav-text">TCP DUP ACK</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#TCP-Fast-Retransmission"><span class="nav-number">2.4.4.</span> <span class="nav-text">TCP Fast Retransmission</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#TCP-Spurious-Retransmission"><span class="nav-number">2.4.5.</span> <span class="nav-text">TCP Spurious Retransmission</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#TCP-Retransmission"><span class="nav-number">2.4.6.</span> <span class="nav-text">TCP Retransmission</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#TCP-ACKed-unseen-segment"><span class="nav-number">2.4.7.</span> <span class="nav-text">TCP ACKed unseen segment</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#TCP-Zerowindow"><span class="nav-number">2.4.8.</span> <span class="nav-text">TCP Zerowindow</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#TCP-Window-Update"><span class="nav-number">2.4.9.</span> <span class="nav-text">TCP Window Update</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B6%E4%BB%96"><span class="nav-number">2.5.</span> <span class="nav-text">其他</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#IPv4%E6%98%A0%E5%B0%84"><span class="nav-number">2.5.1.</span> <span class="nav-text">IPv4映射</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9B%9E%E9%80%81%E5%9C%B0%E5%9D%80"><span class="nav-number">2.5.2.</span> <span class="nav-text">回送地址</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%93%E7%94%A8%E7%BD%91%E7%BB%9C%E5%9C%B0%E5%9D%80"><span class="nav-number">2.5.3.</span> <span class="nav-text">专用网络地址</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Name"><span class="nav-number">2.5.4.</span> <span class="nav-text">Name</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Socket-in-Posix"><span class="nav-number">3.</span> <span class="nav-text">Socket in Posix</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Headerfiles"><span class="nav-number">3.1.</span> <span class="nav-text">Headerfiles</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Socket-in-Texas-Instrument%E2%80%99s-SysBIOS"><span class="nav-number">4.</span> <span class="nav-text">Socket in Texas Instrument’s SysBIOS</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#NETCTRL-H-%E5%8F%8A-SOCKET-H"><span class="nav-number">4.1.</span> <span class="nav-text">NETCTRL.H 及 SOCKET.H</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#NETCTRL-API"><span class="nav-number">4.1.1.</span> <span class="nav-text">NETCTRL API</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SOCKET-API"><span class="nav-number">4.2.</span> <span class="nav-text">SOCKET API</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#UNIVERSAL-TCP"><span class="nav-number">4.2.1.</span> <span class="nav-text">UNIVERSAL_TCP</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#defined-in-lt-ws2def-h-gt"><span class="nav-number">4.2.1.1.</span> <span class="nav-text">defined in &lt;ws2def.h&gt;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#defined-in-TI-lt-socket-h-gt"><span class="nav-number">4.2.1.2.</span> <span class="nav-text">defined in TI &lt;socket.h&gt;</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#IPv4%E5%A5%97%E6%8E%A5%E5%AD%97%E5%9C%B0%E5%9D%80%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84"><span class="nav-number">4.2.1.2.1.</span> <span class="nav-text">IPv4套接字地址数据结构</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%86%85%E6%A0%B8%E7%94%A8%E5%9C%B0%E5%9D%80%E5%AD%98%E5%82%A8%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84"><span class="nav-number">4.2.1.2.2.</span> <span class="nav-text">内核用地址存储数据结构</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E9%80%9A%E7%94%A8%E5%A5%97%E6%8E%A5%E5%AD%97%E5%9C%B0%E5%9D%80%E5%82%A8%E5%AD%98%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84"><span class="nav-number">4.2.1.2.3.</span> <span class="nav-text">通用套接字地址储存数据结构</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SOCKET-API-IN-CLIENT"><span class="nav-number">4.2.2.</span> <span class="nav-text">SOCKET API IN CLIENT</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%A5%97%E6%8E%A5%E5%AD%97"><span class="nav-number">4.2.2.1.</span> <span class="nav-text">套接字</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E6%8F%8F%E8%BF%B0%E7%AC%A6"><span class="nav-number">4.2.2.2.</span> <span class="nav-text">文件描述符</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#FD%E9%9B%86"><span class="nav-number">4.2.2.2.1.</span> <span class="nav-text">FD集</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AD%97%E8%8A%82%E9%A1%BA%E5%BA%8F%E8%BD%AC%E6%8D%A2%E5%87%BD%E6%95%B0"><span class="nav-number">4.2.2.3.</span> <span class="nav-text">字节顺序转换函数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#timeval%E7%BB%93%E6%9E%84%E4%BD%93"><span class="nav-number">4.2.2.4.</span> <span class="nav-text">timeval结构体</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SOCKET-API-IN-SERVER"><span class="nav-number">4.2.3.</span> <span class="nav-text">SOCKET API IN SERVER</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SOCKET-API-IN-SERVER-LINUX-C"><span class="nav-number">4.2.4.</span> <span class="nav-text">SOCKET API IN SERVER (LINUX C)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Daemon-API"><span class="nav-number">4.2.5.</span> <span class="nav-text">Daemon API</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#NETCFG-H"><span class="nav-number">4.3.</span> <span class="nav-text">NETCFG.H</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CONFIGIF-H"><span class="nav-number">4.4.</span> <span class="nav-text">CONFIGIF.H</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Configuration-%E7%89%B9%E6%80%A7"><span class="nav-number">4.4.1.</span> <span class="nav-text">Configuration 特性</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Socket-in-Windows"><span class="nav-number">5.</span> <span class="nav-text">Socket in Windows</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#SEND-BLOCKING"><span class="nav-number">6.</span> <span class="nav-text">SEND() BLOCKING</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%A5%97%E6%8E%A5%E5%AD%97%E5%8F%8A%E6%B5%81%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA%E6%8E%A5%E5%8F%A3-IO"><span class="nav-number">7.</span> <span class="nav-text">套接字及流输入输出接口(IO)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Open-FD-Session"><span class="nav-number">7.1.</span> <span class="nav-text">Open FD Session</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">8.</span> <span class="nav-text">参考</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#tcp"><span class="nav-number">1.</span> <span class="nav-text">TCP</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#tcp-introduce"><span class="nav-number">1.1.</span> <span class="nav-text">TCP Introduce</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#tcp-structure20210218-03"><span class="nav-number">1.1.1.</span> <span class="nav-text">TCP Structure</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#tcp-flags"><span class="nav-number">1.1.2.</span> <span class="nav-text">TCP Flags</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#tcp-three-way-handshake"><span class="nav-number">1.2.</span> <span class="nav-text">TCP Three-Way Handshake</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#the-steps-of-three-way-handshake"><span class="nav-number">1.2.1.</span> <span class="nav-text">The Steps of Three-Way Handshake</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#the-meaning-of-three-way-handshake"><span class="nav-number">1.2.2.</span> <span class="nav-text">The Meaning of Three-way handshake</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#tcp-four-way-wavehand"><span class="nav-number">1.3.</span> <span class="nav-text">TCP Four-Way-Wavehand</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#the-meaning-of-four-way-wavehand"><span class="nav-number">1.3.1.</span> <span class="nav-text">The Meaning of Four-Way-Wavehand</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#the-steps-of-four-way-wavehand"><span class="nav-number">1.3.2.</span> <span class="nav-text">The Steps of Four-Way-Wavehand</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#rst"><span class="nav-number">1.3.3.</span> <span class="nav-text">RST</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#differences-between-fin-and-rst"><span class="nav-number">1.3.3.1.</span> <span class="nav-text">Differences between FIN and RST</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#why-do-we-send-rst"><span class="nav-number">1.3.3.2.</span> <span class="nav-text">Why do we send RST?</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#wireshark-tutorial"><span class="nav-number">2.</span> <span class="nav-text">Wireshark Tutorial</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#capturing-filters-%E6%8D%95%E8%8E%B7%E8%BF%87%E6%BB%A4"><span class="nav-number">2.1.</span> <span class="nav-text">Capturing Filters 捕获过滤</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#filtering-packets-while-capturing-%E6%8D%95%E8%8E%B7%E6%97%B6%E5%8F%AF%E7%94%A8%E7%9A%84%E8%BF%87%E6%BB%A4%E7%BB%84%E4%BB%B6"><span class="nav-number">2.1.1.</span> <span class="nav-text">Filtering packets while capturing 捕获时可用的过滤组件</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#some-common-examples-%E4%B8%80%E4%BA%9B%E9%80%9A%E7%94%A8%E7%A4%BA%E4%BE%8B"><span class="nav-number">2.1.1.1.</span> <span class="nav-text">Some common examples 一些通用示例</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#capture-filter-syntax-%E6%8D%95%E8%8E%B7%E8%BF%87%E6%BB%A4%E5%99%A8%E6%A0%87%E5%BF%97"><span class="nav-number">2.1.1.2.</span> <span class="nav-text">Capture Filter Syntax 捕获过滤器标志</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#capturing-%E6%8D%95%E8%8E%B7"><span class="nav-number">2.2.</span> <span class="nav-text">Capturing 捕获</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#capture-options-%E6%8D%95%E8%8E%B7%E8%AE%BE%E7%BD%AE"><span class="nav-number">2.2.1.</span> <span class="nav-text">Capture options 捕获设置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#input-options-%E8%BE%93%E5%85%A5%E8%AE%BE%E7%BD%AE"><span class="nav-number">2.2.2.</span> <span class="nav-text">Input options 输入设置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#filtering-options-%E8%BF%87%E6%BB%A4%E8%AE%BE%E7%BD%AE"><span class="nav-number">2.2.3.</span> <span class="nav-text">Filtering options 过滤设置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#storing-options-%E5%AD%98%E5%82%A8%E8%AE%BE%E7%BD%AE"><span class="nav-number">2.2.4.</span> <span class="nav-text">Storing options 存储设置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#stop-condition-options-%E7%BB%88%E6%AD%A2%E8%AE%BE%E7%BD%AE"><span class="nav-number">2.2.5.</span> <span class="nav-text">Stop condition options 终止设置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#display-while-capturing-options"><span class="nav-number">2.2.6.</span> <span class="nav-text">Display while capturing options</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#high-performance-capturing-%E9%AB%98%E6%80%A7%E8%83%BD%E6%A8%A1%E5%BC%8F%E6%8D%95%E8%8E%B7"><span class="nav-number">2.2.7.</span> <span class="nav-text">High performance capturing 高性能模式捕获</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#long-term-capturing-%E9%95%BF%E6%9C%9F%E6%8D%95%E8%8E%B7"><span class="nav-number">2.2.8.</span> <span class="nav-text">Long term capturing 长期捕获</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#display-filter-%E6%98%BE%E7%A4%BA%E8%BF%87%E6%BB%A4%E5%99%A8"><span class="nav-number">2.3.</span> <span class="nav-text">Display Filter 显示过滤器</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#filtering-packets-while-viewing-%E8%A7%82%E5%AF%9F%E6%97%B6%E7%9A%84%E8%BF%87%E6%BB%A4%E5%99%A8%E7%BB%84%E4%BB%B6"><span class="nav-number">2.3.1.</span> <span class="nav-text">Filtering packets while viewing 观察时的过滤器组件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%89%B9%E6%AE%8A%E5%AD%97%E7%AC%A6"><span class="nav-number">2.3.2.</span> <span class="nav-text">特殊字符</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#constains-%E5%92%8C-matches"><span class="nav-number">2.3.2.1.</span> <span class="nav-text">constains 和 matches</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#some-common-examples-%E4%B8%80%E4%BA%9B%E9%80%9A%E7%94%A8%E7%A4%BA%E4%BE%8B-1"><span class="nav-number">2.3.3.</span> <span class="nav-text">Some common examples 一些通用示例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#hint"><span class="nav-number">2.3.4.</span> <span class="nav-text">Hint</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#wireshark%E4%B8%AD%E7%9A%84%E5%90%84%E7%A7%8D%E6%A0%87%E5%BF%97tcp"><span class="nav-number">2.4.</span> <span class="nav-text">WIRESHARK中的各种标志（TCP）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#out-of-order"><span class="nav-number">2.4.1.</span> <span class="nav-text">OUT OF ORDER</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#previous-segment-not-captured"><span class="nav-number">2.4.2.</span> <span class="nav-text">Previous segment not captured</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#tcp-dup-ack"><span class="nav-number">2.4.3.</span> <span class="nav-text">TCP DUP ACK</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#tcp-fast-retransmission"><span class="nav-number">2.4.4.</span> <span class="nav-text">TCP Fast Retransmission</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#tcp-spurious-retransmission"><span class="nav-number">2.4.5.</span> <span class="nav-text">TCP Spurious Retransmission</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#tcp-retransmission"><span class="nav-number">2.4.6.</span> <span class="nav-text">TCP Retransmission</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#tcp-acked-unseen-segment"><span class="nav-number">2.4.7.</span> <span class="nav-text">TCP ACKed unseen segment</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#tcp-zerowindow"><span class="nav-number">2.4.8.</span> <span class="nav-text">TCP Zerowindow</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#tcp-window-update"><span class="nav-number">2.4.9.</span> <span class="nav-text">TCP Window Update</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B6%E4%BB%96"><span class="nav-number">2.5.</span> <span class="nav-text">其他</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ipv4%E6%98%A0%E5%B0%84"><span class="nav-number">2.5.1.</span> <span class="nav-text">IPv4映射</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9B%9E%E9%80%81%E5%9C%B0%E5%9D%80"><span class="nav-number">2.5.2.</span> <span class="nav-text">回送地址</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%93%E7%94%A8%E7%BD%91%E7%BB%9C%E5%9C%B0%E5%9D%80"><span class="nav-number">2.5.3.</span> <span class="nav-text">专用网络地址</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#name"><span class="nav-number">2.5.4.</span> <span class="nav-text">Name</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#socket-in-posix"><span class="nav-number">3.</span> <span class="nav-text">Socket in Posix</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#headerfiles"><span class="nav-number">3.1.</span> <span class="nav-text">Headerfiles</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#socket-in-texas-instruments-sysbios"><span class="nav-number">4.</span> <span class="nav-text">Socket in Texas Instrument’s SysBIOS</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#netctrl.h-%E5%8F%8A-socket.h"><span class="nav-number">4.1.</span> <span class="nav-text">NETCTRL.H 及 SOCKET.H</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#netctrl-api"><span class="nav-number">4.1.1.</span> <span class="nav-text">NETCTRL API</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#socket-api"><span class="nav-number">4.2.</span> <span class="nav-text">SOCKET API</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#universal_tcp"><span class="nav-number">4.2.1.</span> <span class="nav-text">UNIVERSAL_TCP</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#defined-in-ws2def.h"><span class="nav-number">4.2.1.1.</span> <span class="nav-text">defined in &lt;ws2def.h&gt;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#defined-in-ti-socket.h"><span class="nav-number">4.2.1.2.</span> <span class="nav-text">defined in TI &lt;socket.h&gt;</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#ipv4%E5%A5%97%E6%8E%A5%E5%AD%97%E5%9C%B0%E5%9D%80%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84"><span class="nav-number">4.2.1.2.1.</span> <span class="nav-text">IPv4套接字地址数据结构</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%86%85%E6%A0%B8%E7%94%A8%E5%9C%B0%E5%9D%80%E5%AD%98%E5%82%A8%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84"><span class="nav-number">4.2.1.2.2.</span> <span class="nav-text">内核用地址存储数据结构</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E9%80%9A%E7%94%A8%E5%A5%97%E6%8E%A5%E5%AD%97%E5%9C%B0%E5%9D%80%E5%82%A8%E5%AD%98%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84"><span class="nav-number">4.2.1.2.3.</span> <span class="nav-text">通用套接字地址储存数据结构</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#socket-api-in-client"><span class="nav-number">4.2.2.</span> <span class="nav-text">SOCKET API IN CLIENT</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%A5%97%E6%8E%A5%E5%AD%97"><span class="nav-number">4.2.2.1.</span> <span class="nav-text">套接字</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E6%8F%8F%E8%BF%B0%E7%AC%A6"><span class="nav-number">4.2.2.2.</span> <span class="nav-text">文件描述符</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#fd%E9%9B%86"><span class="nav-number">4.2.2.2.1.</span> <span class="nav-text">FD集</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AD%97%E8%8A%82%E9%A1%BA%E5%BA%8F%E8%BD%AC%E6%8D%A2%E5%87%BD%E6%95%B0"><span class="nav-number">4.2.2.3.</span> <span class="nav-text">字节顺序转换函数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#timeval%E7%BB%93%E6%9E%84%E4%BD%93"><span class="nav-number">4.2.2.4.</span> <span class="nav-text">timeval结构体</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#socket-api-in-server"><span class="nav-number">4.2.3.</span> <span class="nav-text">SOCKET API IN SERVER</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#socket-api-in-server-linux-c"><span class="nav-number">4.2.4.</span> <span class="nav-text">SOCKET API IN SERVER (LINUX C)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#daemon-api"><span class="nav-number">4.2.5.</span> <span class="nav-text">Daemon API</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#netcfg.h"><span class="nav-number">4.3.</span> <span class="nav-text">NETCFG.H</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#configif.h"><span class="nav-number">4.4.</span> <span class="nav-text">CONFIGIF.H</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#configuration-%E7%89%B9%E6%80%A7"><span class="nav-number">4.4.1.</span> <span class="nav-text">Configuration 特性</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#socket-in-windows"><span class="nav-number">5.</span> <span class="nav-text">Socket in Windows</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#send-blocking"><span class="nav-number">6.</span> <span class="nav-text">SEND() BLOCKING</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%A5%97%E6%8E%A5%E5%AD%97%E5%8F%8A%E6%B5%81%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA%E6%8E%A5%E5%8F%A3io"><span class="nav-number">7.</span> <span class="nav-text">套接字及流输入输出接口(IO)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#open-fd-session"><span class="nav-number">7.1.</span> <span class="nav-text">Open FD Session</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">8.</span> <span class="nav-text">参考</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -143,26 +144,26 @@
 <div class="site-state-wrap site-overview-item animated">
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
-          <a href="/archives">
-          <span class="site-state-item-count">82</span>
+        <a href="/archives/">
+          <span class="site-state-item-count">88</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
-            <a href="/categories/">
-        <span class="site-state-item-count">14</span>
+          <a href="/categories/">
+        <span class="site-state-item-count">11</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
-            <a href="/tags/">
-        <span class="site-state-item-count">155</span>
+          <a href="/tags/">
+        <span class="site-state-item-count">163</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
 </div>
   <div class="links-of-author site-overview-item animated">
       <span class="links-of-author-item">
-        <a href="mailto:liewzheng@qq.com" title="E-Mail → mailto:liewzheng@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+        <a href="mailto:liewzheng@foxmail.com" title="E-Mail → mailto:liewzheng@foxmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
       </span>
   </div>
 
@@ -182,7 +183,6 @@
     <i class="fa fa-arrow-up"></i>
     <span>0%</span>
   </div>
-  <div class="reading-progress-bar"></div>
 
 <noscript>
   <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
@@ -218,6 +218,7 @@
 
         <div class="post-meta-container">
           <div class="post-meta">
+
     <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
     <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
     <span class="post-meta-item">
@@ -255,129 +256,151 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <h1 id="TCP"><a href="#TCP" class="headerlink" title="TCP"></a>TCP</h1><p>在TCP/IP协议族中，网络层IP提供的是一种不可靠的服务。也就是说，它只是尽可能快地把分组从源结点送到目的结点，但是并不提供任何可靠性保证。而另一方面，TCP在不可靠的IP层上提供了一个可靠的运输层。为了提供这种可靠的服务，TCP采用了超时重传、发送和接收端到端的确认分组等机制。由此可见，运输层和网络层分别负责不同的功能。</p>
+        <h1 id="tcp">TCP</h1>
+<p>在TCP/IP协议族中，网络层IP提供的是一种不可靠的服务。也就是说，它只是尽可能快地把分组从源结点送到目的结点，但是并不提供任何可靠性保证。而另一方面，TCP在不可靠的IP层上提供了一个可靠的运输层。为了提供这种可靠的服务，TCP采用了超时重传、发送和接收端到端的确认分组等机制。由此可见，运输层和网络层分别负责不同的功能。</p>
 <p>在四层网络结构，由下之上分别是：<code>数据链路层</code>、<code>网络层</code>、<code>传输层</code>及<code>应用层</code>。</p>
-<p>**数据链路层 **协议典型如：Ethernet、ARP、ICMP</p>
+<p><strong>数据链路层 </strong>协议典型如：Ethernet、ARP、ICMP</p>
 <p><strong>网络层</strong> 协议典型如：IP</p>
-<p>**传输层 **协议典型如：TCP、UDP</p>
+<p><strong>传输层 </strong>协议典型如：TCP、UDP</p>
 <p><strong>应用层</strong> 协议典型如：HTTP、FTP等</p>
-<p><img src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/04/TCPIP-01.png" alt="TCPIP-01"></p>
-<p style="text-align: center; color: #999; font-weight: 600;">图1-4 TCP/IP协议族中不同层次的协议</p>
-
+<figure>
+<img src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/04/TCPIP-01.png" alt="TCPIP-01" /><figcaption aria-hidden="true">TCPIP-01</figcaption>
+</figure>
+<p style="text-align: center; color: #999; font-weight: 600;">
+图1-4 TCP/IP协议族中不同层次的协议
+</p>
 <p>为协议ICMP和IGMP定位一直是一件很棘手的事情。在图1-4中，把它们与IP放在同一层上，那是因为事实上它们是IP的附属协议。但是在这里，又把它们放在IP层的上面，这是因为ICMP和IGMP报文都被封装在IP数据报中。</p>
 <p>使用TCP/IP协议的应用程序通常采用两种应用编程接口（API）：socket和TLI（运输层接口：Transport Layer Interface）。前者有时称作“Berkeley Socket”，表明它是从 <strong>伯克利</strong> 版发展而来的。后者起初是由AT&amp;T开发的，有时称作XTI（X/Open运输层接口），以承认X/Open这个自己定义标准的国际计算机生产商所做的工作。XTI实际上是TLI的一个超集。</p>
-<h2 id="TCP-Introduce"><a href="#TCP-Introduce" class="headerlink" title="TCP Introduce"></a>TCP Introduce</h2><p>TCP(Transmission Control Protocol)传输控制协议，是主机对主机层的传输控制协议，提供可靠的连接服务，采用三次握手确认建立一个连接。</p>
-<h3 id="TCP-Structure"><a href="#TCP-Structure" class="headerlink" title="TCP Structure"></a>TCP Structure<img src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/04/20210218-03.png" alt="20210218-03"></h3><p><img src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/04/20210218-02.png" alt="20210218-02"></p>
+<h2 id="tcp-introduce">TCP Introduce</h2>
+<p>TCP(Transmission Control Protocol)传输控制协议，是主机对主机层的传输控制协议，提供可靠的连接服务，采用三次握手确认建立一个连接。</p>
+<h3 id="tcp-structure20210218-03">TCP Structure<img src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/04/20210218-03.png" alt="20210218-03" /></h3>
+<figure>
+<img src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/04/20210218-02.png" alt="20210218-02" /><figcaption aria-hidden="true">20210218-02</figcaption>
+</figure>
 <table>
+<colgroup>
+<col style="width: 44%" />
+<col style="width: 11%" />
+<col style="width: 44%" />
+</colgroup>
 <thead>
-<tr>
-<th align="left">Definitions</th>
-<th align="left">Length</th>
+<tr class="header">
+<th style="text-align: left;">Definitions</th>
+<th style="text-align: left;">Length</th>
 <th>Explain</th>
 </tr>
 </thead>
-<tbody><tr>
-<td align="left">源端口 Source Port</td>
-<td align="left">16bits（2bytes）</td>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">源端口 Source Port</td>
+<td style="text-align: left;">16bits（2bytes）</td>
 <td></td>
 </tr>
-<tr>
-<td align="left">目的端口 Destination Port</td>
-<td align="left">16bits（2bytes）</td>
+<tr class="even">
+<td style="text-align: left;">目的端口 Destination Port</td>
+<td style="text-align: left;">16bits（2bytes）</td>
 <td></td>
 </tr>
-<tr>
-<td align="left"><strong>序号 Sequence Number</strong></td>
-<td align="left">32bits（4bytes）</td>
-<td>指定了当前数据分片中分配给 <mark>第一字节数据</mark> 的序列号。<em><strong>在TCP传输流中每一个字节为一个序号</strong></em>。如果TCP报文中flags标志位为SYN，该序列号表示 ***初始化序列号(ISN)***，此时第一个数据应该是从序列号ISN+1开始。</td>
+<tr class="odd">
+<td style="text-align: left;"><strong>序号 Sequence Number</strong></td>
+<td style="text-align: left;">32bits（4bytes）</td>
+<td>指定了当前数据分片中分配给 <mark>第一字节数据</mark> 的序列号。<strong><em>在TCP传输流中每一个字节为一个序号</em></strong>。如果TCP报文中flags标志位为SYN，该序列号表示 <strong><em>初始化序列号(ISN)</em></strong>，此时第一个数据应该是从序列号ISN+1开始。</td>
 </tr>
-<tr>
-<td align="left"><strong>确认号 Acknowledgement Number</strong></td>
-<td align="left">32bits（4bytes）</td>
+<tr class="even">
+<td style="text-align: left;"><strong>确认号 Acknowledgement Number</strong></td>
+<td style="text-align: left;">32bits（4bytes）</td>
 <td>表示TCP发送者期望接受下一个数据分片的序列号。该序号在TCP分片中Flags标志位为ACK时生效。序列号分片的方向和流的方向同方向，而确认序列号分片方向和流方向反方向。</td>
 </tr>
-<tr>
-<td align="left"><em>偏移量 Data-Offset</em></td>
-<td align="left">4bits</td>
+<tr class="odd">
+<td style="text-align: left;"><em>偏移量 Data-Offset</em></td>
+<td style="text-align: left;">4bits</td>
 <td>数据偏移也叫首部长度。<br/>因为首部长度实际也说明了数据区在分片中的起始偏移值。它表示TCP头包含了多少个32-bit的words。因为4bits在十进制中能表示的最大值为15，32bits表示4个字节，那么Data Offset的最大可表示<code>15*4=60</code>个字节（bytes）。<br />所以TCP报头长度最大为60字节。如果<code>options field</code>为0的话，报文头长度为20个字节。</td>
 </tr>
-<tr>
-<td align="left"><em>保留域 Reserved field</em></td>
-<td align="left">3bits（或6bits）</td>
+<tr class="even">
+<td style="text-align: left;"><em>保留域 Reserved field</em></td>
+<td style="text-align: left;">3bits（或6bits）</td>
 <td>值全为零</td>
 </tr>
-<tr>
-<td align="left"><strong>标志位 Flags</strong></td>
-<td align="left">9bits（或6bits）</td>
+<tr class="odd">
+<td style="text-align: left;"><strong>标志位 Flags</strong></td>
+<td style="text-align: left;">9bits（或6bits）</td>
 <td>表示TCP包特定的连接状态，一个标签位占一个bit。</td>
 </tr>
-<tr>
-<td align="left">窗口 Window</td>
-<td align="left">16bits（2bytes）</td>
+<tr class="even">
+<td style="text-align: left;">窗口 Window</td>
+<td style="text-align: left;">16bits（2bytes）</td>
 <td>表示滑动窗口的大小，用来告诉发送端接收端的buffer space的大小。接收端buffer大小用来控制发送端的发送数据数率，从而达到流量控制。最大值为65535.</td>
 </tr>
-<tr>
-<td align="left">检验和 Checksum</td>
-<td align="left">16bits（2bytes）</td>
+<tr class="odd">
+<td style="text-align: left;">检验和 Checksum</td>
+<td style="text-align: left;">16bits（2bytes）</td>
 <td>用来检查TCP头在传输中是否被修改。</td>
 </tr>
-<tr>
-<td align="left">紧急指针 Urgent Pointer</td>
-<td align="left">16bits（2bytes）</td>
+<tr class="even">
+<td style="text-align: left;">紧急指针 Urgent Pointer</td>
+<td style="text-align: left;">16bits（2bytes）</td>
 <td>表示TCP片中第一个紧急数据字节的指针。只有当URG标志置1时紧急指针才有效。</td>
 </tr>
-<tr>
-<td align="left"><em><strong>可变部分 Options Field</strong></em> 和 <em><strong>填充部分 Padding Field</strong></em></td>
-<td align="left">可变长度。</td>
+<tr class="odd">
+<td style="text-align: left;"><strong><em>可变部分 Options Field</em></strong> 和 <strong><em>填充部分 Padding Field</em></strong></td>
+<td style="text-align: left;">可变长度。</td>
 <td>表示TCP可选选项以及填充位。当选项不足32bits时，填充字段加入额外的0填充。</td>
 </tr>
-</tbody></table>
-<h3 id="TCP-Flags"><a href="#TCP-Flags" class="headerlink" title="TCP Flags"></a>TCP Flags</h3><p>对于旧版本的TCP头定义，Flags有6bits，新版TCP头对flags扩展了3bits。每个TCP flag对应于1bit 。所以旧版TCP头flags值有6个，新版扩展了3个值。</p>
+</tbody>
+</table>
+<h3 id="tcp-flags">TCP Flags</h3>
+<p>对于旧版本的TCP头定义，Flags有6bits，新版TCP头对flags扩展了3bits。每个TCP flag对应于1bit 。所以旧版TCP头flags值有6个，新版扩展了3个值。</p>
 <p>从低位到高位分别是：</p>
 <table>
+<colgroup>
+<col style="width: 49%" />
+<col style="width: 50%" />
+</colgroup>
 <thead>
-<tr>
+<tr class="header">
 <th>Definition</th>
 <th>Declaration</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr class="odd">
 <td><strong>FIN</strong><br/> (finished 结束)</td>
 <td>表示发送者以及发送完数据。通常用在发送者发送完数据的最后一个包中。</td>
 </tr>
-<tr>
+<tr class="even">
 <td><strong>SYN</strong><br/> (synchronous 建立联机)</td>
 <td></td>
 </tr>
-<tr>
+<tr class="odd">
 <td><strong>RST</strong><br/>(reset 重置)</td>
 <td>重置连接标志，用于重置由于主机崩溃或其他原因而出现错误的连接。<br />或者发送包发送到一个不是期望的目的主机时，接收端发送reset 重置连接标志的包。</td>
 </tr>
-<tr>
+<tr class="even">
 <td><strong>PSH</strong><br/> (push 传送)</td>
 <td>通知接收端处理接收的报文，而不是将报文缓存到buffer中。</td>
 </tr>
-<tr>
+<tr class="odd">
 <td><strong>ACK</strong><br/>(acknowledgement 确认)</td>
 <td></td>
 </tr>
-<tr>
+<tr class="even">
 <td><strong>URG</strong><br/> (urgent 紧急)</td>
 <td>通知接收端处理在处理其他包前优先处理接收到的紧急报文。</td>
 </tr>
-<tr>
+<tr class="odd">
 <td><strong>ECE</strong><br/> (Explicit Congestion Notification Echo) 【新】</td>
 <td>表示TCP peer有ECN能力。</td>
 </tr>
-<tr>
+<tr class="even">
 <td><strong>CWR</strong><br/>(Congestion Window Reduced)【新】</td>
 <td>发送者在接收到一个带有ECE flag包时，将会使用CWR flag。</td>
 </tr>
-<tr>
+<tr class="odd">
 <td><strong>NS</strong><br/> (Nonce Sum)【新】</td>
 <td>该标签用来保护不受发送者发送的突发的恶意隐藏报文的侵害。</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
 <p>TCP 连接的建立都是采用<code>客户-服务器(Client-Server)</code>方式：</p>
 <ul>
 <li>主动发起连接建立的应用进程叫做客户(client)。</li>
@@ -385,36 +408,38 @@
 </ul>
 <p>传输连接就有三个阶段，即：<strong>连接建立</strong>、<strong>数据传输</strong> 和 <strong>连接释放</strong> 。</p>
 <p>TCP 采用全双工模式，在连接建立后和连接释放前进行数据传输。数据传输是单向的，从发送端传输给接受端。TCP通过序列号能够保证数据被接受端接受。TCP建立连接是通过三次握手的方式来建立连接的。</p>
-<h2 id="TCP-Three-Way-Handshake"><a href="#TCP-Three-Way-Handshake" class="headerlink" title="TCP Three-Way Handshake"></a>TCP Three-Way Handshake</h2><blockquote>
-<p><strong>注意</strong>： 不管是大小写，<code>ack</code>  ( 或 <code>Ack</code> )和 <code>ACK</code> 都是 <strong>确认</strong> 的意思， 不同之处在于：</p>
+<h2 id="tcp-three-way-handshake">TCP Three-Way Handshake</h2>
+<blockquote>
+<p><strong>注意</strong>： 不管是大小写，<code>ack</code> ( 或 <code>Ack</code> )和 <code>ACK</code> 都是 <strong>确认</strong> 的意思， 不同之处在于：</p>
 <ul>
 <li>在TCP首部中，<code>ACK</code>为确认标志位 ——占 1 字节，只有当 ACK = 1 时确认号字段才有效。当 ACK = 0 时，确认号无效。；</li>
 <li><code>Ack</code>为确认号字段（Ack Number）——占 4 字节，是期望收到对方的下一个报文段的数据的第一个字节的序号。</li>
 </ul>
 </blockquote>
-<h3 id="The-Steps-of-Three-Way-Handshake"><a href="#The-Steps-of-Three-Way-Handshake" class="headerlink" title="The Steps of Three-Way Handshake"></a>The Steps of Three-Way Handshake</h3><p><strong>第一次握手：</strong>Client发送位码为<code>SYN＝1</code> ，随机产生 <code>seq number=1234567</code> 的数据包到服务器，Server收到 <code>SYN=1</code>，知道Client要求建立联机；</p>
+<h3 id="the-steps-of-three-way-handshake">The Steps of Three-Way Handshake</h3>
+<p><strong>第一次握手：</strong>Client发送位码为<code>SYN＝1</code> ，随机产生 <code>seq number=1234567</code> 的数据包到服务器，Server收到 <code>SYN=1</code>，知道Client要求建立联机；</p>
 <p><strong>第二次握手：</strong>Server收到请求后要确认联机信息，向Client发送<code>ack number=(Client的seq+1)</code>，<code>SYN=1</code>， <code>ACK=1</code> ，随机产生 <code>seq number=7654321</code> 的包；</p>
 <p><strong>第三次握手：</strong>Client 收到后检查 <code>ack number</code> 是否正确，即第一次发送的seq number+1，以及位码 <code>ACK</code>是否为 1，若正确，Client 会再发送 <code>ack number=(主机B的seq+1)</code> ，<code>ACK=1</code>，Server 收到后确认<code>seq number</code> 值与<code>ACK=1</code>则连接建立成功。</p>
 <p>完成三次握手，主机A与主机B开始传送数据。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sequenceDiagram</span><br><span class="line">Client -&gt;&gt; Server: SYN&#x3D;1  [seq number&#x3D;1234567]</span><br><span class="line">Server --&gt;&gt; Client: SYN &#x3D; 1, ACK &#x3D; 1  [ack number &#x3D; 1234568，seq number &#x3D; 7654321]</span><br><span class="line">Client -&gt;&gt; Server: ACK &#x3D; 1 [ack number &#x3D; 7654322]</span><br></pre></td></tr></table></figure>
-
-
-
-<p>在TCP/IP协议中，TCP协议提供可靠的连接服务，采用三次握手建立一个连接。<br><strong>第一次握手：</strong>建立连接时，客户端发送syn包(syn=j)到服务器，并进入SYN_SEND状态，等待服务器确认；<br><strong>第二次握手：</strong>服务器收到syn包，必须确认客户的SYN（ack=j+1），同时自己也发送一个SYN包（syn=k），即SYN+ACK包，此时服务器进入SYN_RECV状态；<br><strong>第三次握手：</strong>客户端收到服务器的SYN＋ACK包，向服务器发送确认包ACK(ack=k+1)，此包发送完毕，客户端和服务器进入ESTABLISHED状态，完成三次握手。完成三次握手，客户端与服务器开始传送数据.</p>
-<h3 id="The-Meaning-of-Three-way-handshake"><a href="#The-Meaning-of-Three-way-handshake" class="headerlink" title="The Meaning of Three-way handshake"></a>The Meaning of Three-way handshake</h3><p>向客户端确认这个请求，这两个数据包（前两次握手）足以证明客户端与服务器之间的网络是畅通的，并且协商数据通信所需要的参数。比如协商接收窗口大小，所支持的数据包最大字节数等。</p>
+<p>在TCP/IP协议中，TCP协议提供可靠的连接服务，采用三次握手建立一个连接。 <strong>第一次握手：</strong>建立连接时，客户端发送syn包(syn=j)到服务器，并进入SYN_SEND状态，等待服务器确认； <strong>第二次握手：</strong>服务器收到syn包，必须确认客户的SYN（ack=j+1），同时自己也发送一个SYN包（syn=k），即SYN+ACK包，此时服务器进入SYN_RECV状态； <strong>第三次握手：</strong>客户端收到服务器的SYN＋ACK包，向服务器发送确认包ACK(ack=k+1)，此包发送完毕，客户端和服务器进入ESTABLISHED状态，完成三次握手。完成三次握手，客户端与服务器开始传送数据.</p>
+<h3 id="the-meaning-of-three-way-handshake">The Meaning of Three-way handshake</h3>
+<p>向客户端确认这个请求，这两个数据包（前两次握手）足以证明客户端与服务器之间的网络是畅通的，并且协商数据通信所需要的参数。比如协商接收窗口大小，所支持的数据包最大字节数等。</p>
 <p>如果没有最后一个数据包确认（第三次握手），A先发出一个建立连接的请求数据包，由于网络原因绕远路了。A经过设定的超时时间后还未收到B的确认数据包，于是发出第二个建立连接的请求数据包，这次网路通畅，数据包很快到达B，B的确认数据包也很快就到达A。于是A与B开始传输数据，过了一会A第一次发出的建立连接的请求数据包到达了B，B以为是再次建立连接，所以又发出一个确认数据包。由于A已经收到了一个确认数据包，所以会忽略B发来的第二个确认数据包，但是B发出确认数据包之后就要一直等待A的回复，而A永远也不会回复。由此造成服务器资源浪费，这种情况多了B计算机可能就停止响应了。</p>
 <p>第三次握手（第三个数据包）作用在于，告诉B计算机，B第二次握手发给A的确认数据包A收到了，是有效的。避免B计算机等待造成资源浪费。随后A与B可进行下一步的通信。</p>
-<p>**连接建立 **过程中要解决以下三个问题：</p>
+<p><strong>连接建立 </strong>过程中要解决以下三个问题：</p>
 <ul>
 <li>要使每一方能够确知对方的存在。</li>
 <li>要允许双方协商一些参数（如 <code>最大报文段长度</code>，<code>最大窗口大小</code>，<code>服务质量</code> 等）。</li>
 <li>能够对运输实体资源（如 <code>缓存大小</code>，<code>连接表中的项目</code> 等）进行分配。</li>
 </ul>
 <p><strong>连接建立过程中，客户端存在以下状态：</strong></p>
-<p><strong>SYN-SENT：</strong>在未与目标服务器建立连接之前始终处于此状态，并将不断向目标服务器发送请求，直到 <code>收到</code> 并 <code>回复</code> 来自服务器的信息后，方进入下一个状态。<br><strong>ESTABLISHED：</strong>稳定连接状态。</p>
+<p><strong>SYN-SENT：</strong>在未与目标服务器建立连接之前始终处于此状态，并将不断向目标服务器发送请求，直到 <code>收到</code> 并 <code>回复</code> 来自服务器的信息后，方进入下一个状态。 <strong>ESTABLISHED：</strong>稳定连接状态。</p>
 <p><strong>连接建立过程中，服务器存在以下状态：</strong></p>
-<p><strong>LISTEN：</strong> 在未与客户端建立连接之前，始终处于此状态，在收到客户端的连接请求后答复其请求，并进入下一个状态。<br><strong>SYN-RCVD：</strong> 等待SYN信息到达后进入下一个状态。<br><strong>ESTABLISHED：</strong>稳定连接状态。</p>
-<p><img src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/04/20210218-01.png" alt="20210218-01"></p>
+<p><strong>LISTEN：</strong> 在未与客户端建立连接之前，始终处于此状态，在收到客户端的连接请求后答复其请求，并进入下一个状态。 <strong>SYN-RCVD：</strong> 等待SYN信息到达后进入下一个状态。 <strong>ESTABLISHED：</strong>稳定连接状态。</p>
+<figure>
+<img src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/04/20210218-01.png" alt="20210218-01" /><figcaption aria-hidden="true">20210218-01</figcaption>
+</figure>
 <p><strong>连接建立文字图解：</strong></p>
 <blockquote>
 <p>Client 发出 <code>同步数据包（请求建立连接的数据包）</code> 并进入SYN-SENT状态。</p>
@@ -423,14 +448,14 @@
 <li>ACK = 0，说明数据包确认号无效，省略；</li>
 <li>Seq=x，x为所传送数据的第一个字节的序号。</li>
 </ul>
-<p>Server 收到Client发出的 <code>同步数据包</code> 后结束LISTEN状态，进入SYN-RCVD状态并向A发出 <code>确认同步数据包 </code>。</p>
+<p>Server 收到Client发出的 <code>同步数据包</code> 后结束LISTEN状态，进入SYN-RCVD状态并向A发出 <code>确认同步数据包</code>。</p>
 <ul>
 <li>SYN=1；</li>
 <li>ACK=1；</li>
-<li>seq=y，y的值由B指定表示B发送数据时的 <em><strong>第一个数据字节的序号</strong></em> ；</li>
+<li>seq=y，y的值由B指定表示B发送数据时的 <strong><em>第一个数据字节的序号</em></strong> ；</li>
 <li>ack=x+1，表示已经收到A发送的x个字节数据，并告诉A下次应从数据的第x+1个字节开始发送。</li>
 </ul>
-<p>Client 收到<code>确认同步数据包 </code>之后，向B答复 <code>确认数据包</code> ，结束 SYN-SENT 状态，进入 ESTABLISHED 状态。</p>
+<p>Client 收到<code>确认同步数据包</code>之后，向B答复 <code>确认数据包</code> ，结束 SYN-SENT 状态，进入 ESTABLISHED 状态。</p>
 <ul>
 <li>SYN=0，表示双方已同意建立连接；</li>
 <li>ACK=1，表示收到B的确认数据包；</li>
@@ -439,26 +464,22 @@
 </ul>
 <p>Server 收到 Client 的 <code>确认数据包</code> 之后，结束SYN-RCVD状态，进入ESTABLISHED状态。</p>
 </blockquote>
-<h2 id="TCP-Four-Way-Wavehand"><a href="#TCP-Four-Way-Wavehand" class="headerlink" title="TCP Four-Way-Wavehand"></a>TCP Four-Way-Wavehand</h2><p>结束连接时，不管是Client或Server均可以主动发起结束信标FIN或RST。此处称主动发起结束信标的一方为主动方，另一方为被动方。</p>
-<h3 id="The-Meaning-of-Four-Way-Wavehand"><a href="#The-Meaning-of-Four-Way-Wavehand" class="headerlink" title="The Meaning of Four-Way-Wavehand"></a>The Meaning of Four-Way-Wavehand</h3><p>当被动方收到主动方的FIN报文通知时，它仅仅表示主动方没有数据再发送给被动方了。</p>
+<h2 id="tcp-four-way-wavehand">TCP Four-Way-Wavehand</h2>
+<p>结束连接时，不管是Client或Server均可以主动发起结束信标FIN或RST。此处称主动发起结束信标的一方为主动方，另一方为被动方。</p>
+<h3 id="the-meaning-of-four-way-wavehand">The Meaning of Four-Way-Wavehand</h3>
+<p>当被动方收到主动方的FIN报文通知时，它仅仅表示主动方没有数据再发送给被动方了。</p>
 <p>但未必被动方所有的数据都完整的发送给了主动方，所以 <mark>被动方不会马上关闭SOCKET</mark>，它可能还需要发送一些数据给主动方后，再发送FIN报文给主动方，告诉主动方同意关闭连接，所以这里的ACK报文和FIN报文多数情况下都是分开发送的。</p>
-<h3 id="The-Steps-of-Four-Way-Wavehand"><a href="#The-Steps-of-Four-Way-Wavehand" class="headerlink" title="The Steps of Four-Way-Wavehand"></a>The Steps of Four-Way-Wavehand</h3><ol>
-<li><p> <strong>第一次挥手：</strong>Client发送一个FIN，用来关闭Client到Server的数据传送，Client进入 <code>FIN_WAIT_1</code> 状态。</p>
-</li>
-<li><p> <strong>第二次挥手：</strong>Server收到FIN后，发送一个ACK给Client，确认序号为收到序号+1（与SYN相同，一个FIN占用一个序号），Server进入``CLOSE_WAIT` 状态。</p>
-</li>
-<li><p> <strong>第三次挥手：</strong>Server发送一个FIN，用来关闭Server到Client的数据传送，Server进入 <code>LAST_ACK</code> 状态。</p>
-</li>
-<li><p> <strong>第四次挥手：</strong>Client收到FIN后，Client进入``TIME_WAIT<code>状态，接着发送一个ACK给Server，确认序号为收到序号+1，Server进入</code>CLOSED` 状态，完成四次挥手</p>
-</li>
+<h3 id="the-steps-of-four-way-wavehand">The Steps of Four-Way-Wavehand</h3>
+<ol type="1">
+<li><p><strong>第一次挥手：</strong>Client发送一个FIN，用来关闭Client到Server的数据传送，Client进入 <code>FIN_WAIT_1</code> 状态。</p></li>
+<li><p><strong>第二次挥手：</strong>Server收到FIN后，发送一个ACK给Client，确认序号为收到序号+1（与SYN相同，一个FIN占用一个序号），Server进入`<code>CLOSE_WAIT</code> 状态。</p></li>
+<li><p><strong>第三次挥手：</strong>Server发送一个FIN，用来关闭Server到Client的数据传送，Server进入 <code>LAST_ACK</code> 状态。</p></li>
+<li><p><strong>第四次挥手：</strong>Client收到FIN后，Client进入`<code>TIME_WAIT</code> 状态，接着发送一个ACK给Server，确认序号为收到序号+1，Server进入 <code>CLOSED</code> 状态，完成四次挥手</p></li>
 </ol>
-<img src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/04/70.jpg" style="zoom:50%;" />
-
-
-
-
-
-<h3 id="RST"><a href="#RST" class="headerlink" title="RST"></a>RST</h3><h4 id="Differences-between-FIN-and-RST"><a href="#Differences-between-FIN-and-RST" class="headerlink" title="Differences between FIN and RST"></a>Differences between FIN and RST</h4><blockquote>
+<p><img src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/04/70.jpg" style="zoom:50%;" /></p>
+<h3 id="rst">RST</h3>
+<h4 id="differences-between-fin-and-rst">Differences between FIN and RST</h4>
+<blockquote>
 <p><strong>关键字：</strong> 主动释放、有序释放、终止释放</p>
 </blockquote>
 <p><strong>释放</strong> 即发送方和接收方终止连接，解除连接状态。</p>
@@ -475,25 +496,30 @@
 <p>除了“有序释放”， 还有一种 <strong>终止释放</strong> ，比如进程异常退出，用来关闭异常连接使用，是通过 <code>RST</code> 标志位实现的。 标志位为 <code>RST</code> 的TCP报文，会立即发送，<u>而之前所有在缓存区排队的数据都将被RST发送方丢弃。</u></p>
 <p><mark>FIN报文需要应答 <code>ACK</code> , RST报文不需要应答 <code>ACK</code>。</mark></p>
 <p><strong>半开连接</strong>：如果发生断点，或网络条件很差，其中一端发送 <code>RST</code> 后会立马关闭连接；而另一端可能感知不到，仍然认为连接正常，造成一种半开连接的状态。</p>
-<h4 id="Why-do-we-send-RST"><a href="#Why-do-we-send-RST" class="headerlink" title="Why do we send RST?"></a>Why do we send RST?</h4><p>RST标志位被发送，通常是因为一下几种原因：</p>
+<h4 id="why-do-we-send-rst">Why do we send RST?</h4>
+<p>RST标志位被发送，通常是因为一下几种原因：</p>
 <blockquote>
-<ol>
+<ol type="1">
 <li>A向B发起连接，但B之上并没有应用监听相应的端口，这时B操作系统上的TCP处理程序会发RST包。</li>
 <li>请求超时，即由于主动连接端连接请求超时，主动发起RST关闭连接。</li>
 <li>在一个已关闭的socket上收到数据</li>
 <li>字节流接收不完全</li>
 </ol>
 </blockquote>
-<p><strong>情况二：</strong><br>有89、27两台主机。主机89向主机27发送了一个SYN，表示希望连接8888端口，主机27回应了主机89一个SYN表示可以连接。但是主机89却很不友好，莫名其妙的发送了一个RST表示我不想连接你了。<br>后来经过排查发现，在主机89上的程序在建立了socket之后，用setsockopt的SO_RCVTIMEO选项设置了recv的超时时间为100ms。而我们看上面的抓包结果表示，从主机89发出SYN到接收SYN的时间多达110ms。（从15:01:27.799961到15:01:27.961886， 小数点之后的单位是微秒）。因此主机89上的程序认为接收超时，所以发送了RST拒绝进一步发送数据。</p>
-<p><strong>情况三：</strong><br>比如，AB正常建立连接了，正在通讯时，A向B发送了FIN包要求关连接，B发送ACK后，网断了，A通过若干原因排查后放弃了这个连接（例如进程重启）。网通了后，B又开始发数据包，A收到后表示压力很大，不知道这野连接哪来的，就发了个RST包强制把连接关了，B收到后会出现connect reset by peer错误。</p>
-<h1 id="Wireshark-Tutorial"><a href="#Wireshark-Tutorial" class="headerlink" title="Wireshark Tutorial"></a>Wireshark Tutorial</h1><p>Wireshark是一款可以监听和捕捉网络通信数据的软件，对捕获的数据自下而上进行解码和分析至已知协议。如(Ethernet II – IP – TCP 或 Ethernet II – IP – TCP – HTTP)。</p>
+<p><strong>情况二：</strong> 有89、27两台主机。主机89向主机27发送了一个SYN，表示希望连接8888端口，主机27回应了主机89一个SYN表示可以连接。但是主机89却很不友好，莫名其妙的发送了一个RST表示我不想连接你了。 后来经过排查发现，在主机89上的程序在建立了socket之后，用setsockopt的SO_RCVTIMEO选项设置了recv的超时时间为100ms。而我们看上面的抓包结果表示，从主机89发出SYN到接收SYN的时间多达110ms。（从15:01:27.799961到15:01:27.961886， 小数点之后的单位是微秒）。因此主机89上的程序认为接收超时，所以发送了RST拒绝进一步发送数据。</p>
+<p><strong>情况三：</strong> 比如，AB正常建立连接了，正在通讯时，A向B发送了FIN包要求关连接，B发送ACK后，网断了，A通过若干原因排查后放弃了这个连接（例如进程重启）。网通了后，B又开始发数据包，A收到后表示压力很大，不知道这野连接哪来的，就发了个RST包强制把连接关了，B收到后会出现connect reset by peer错误。</p>
+<h1 id="wireshark-tutorial">Wireshark Tutorial</h1>
+<p>Wireshark是一款可以监听和捕捉网络通信数据的软件，对捕获的数据自下而上进行解码和分析至已知协议。如(Ethernet II -- IP -- TCP 或 Ethernet II -- IP -- TCP -- HTTP)。</p>
 <p>Wireshark主要通过 <strong>捕获过滤</strong> 和 <strong>显示过滤</strong> 对所有数据进行 <strong>捕获时过滤</strong> 或 <strong>捕获后显示过滤</strong>。</p>
-<h2 id="Capturing-Filters-捕获过滤"><a href="#Capturing-Filters-捕获过滤" class="headerlink" title="Capturing Filters 捕获过滤"></a>Capturing Filters 捕获过滤</h2><h3 id="Filtering-packets-while-capturing-捕获时可用的过滤组件"><a href="#Filtering-packets-while-capturing-捕获时可用的过滤组件" class="headerlink" title="Filtering packets while capturing 捕获时可用的过滤组件"></a>Filtering packets while capturing 捕获时可用的过滤组件</h3><p>Capture Filters are used to filter out uninteresting packets already at capture time. This is done to reduce the size of the resulting capture (file) and is especially useful on high traffic networks or for long term capturing.  </p>
-<p>Wireshark uses the pcap (libpcap/WinPcap) filter language for capture filters. This language is explained in the tcpdump man page under “expression” (<a target="_blank" rel="noopener" href="http://www.tcpdump.org/">http://www.tcpdump.org</a> and search for “selects which”).</p>
+<h2 id="capturing-filters-捕获过滤">Capturing Filters 捕获过滤</h2>
+<h3 id="filtering-packets-while-capturing-捕获时可用的过滤组件">Filtering packets while capturing 捕获时可用的过滤组件</h3>
+<p>Capture Filters are used to filter out uninteresting packets already at capture time. This is done to reduce the size of the resulting capture (file) and is especially useful on high traffic networks or for long term capturing.</p>
+<p>Wireshark uses the pcap (libpcap/WinPcap) filter language for capture filters. This language is explained in the tcpdump man page under "expression" (http://www.tcpdump.org and search for "selects which").</p>
 <p>Note: This capture filter language is different from the one used for the Wireshark display filters!</p>
-<p>捕获过滤器的使用方式为：菜单栏上的 <code>捕获</code> –&gt; <code>选项</code> –&gt; <code>所选择接口的捕获过滤器</code> 中输入对应的过滤条件。</p>
-<hr>
-<h4 id="Some-common-examples-一些通用示例"><a href="#Some-common-examples-一些通用示例" class="headerlink" title="Some common examples 一些通用示例"></a>Some common examples 一些通用示例</h4><p><strong>Example Ethernet:</strong> capture all traffic to and from the Ethernet address 08:00:08:15:ca:fe</p>
+<p>捕获过滤器的使用方式为：菜单栏上的 <code>捕获</code> --&gt; <code>选项</code> --&gt; <code>所选择接口的捕获过滤器</code> 中输入对应的过滤条件。</p>
+<hr />
+<h4 id="some-common-examples-一些通用示例">Some common examples 一些通用示例</h4>
+<p><strong>Example Ethernet:</strong> capture all traffic to and from the Ethernet address 08:00:08:15:ca:fe</p>
 <p>ether <code>host 08:00:08:15:ca:fe</code></p>
 <p><strong>Example IP:</strong> capture all traffic to and from the IP address 192.168.0.10</p>
 <p><code>host 192.168.0.10</code></p>
@@ -501,11 +527,12 @@
 <p><code>tcp port 80</code></p>
 <p><strong>Examples combined:</strong> capture all traffic to and from 192.168.0.10 except http</p>
 <p><code>host 192.168.0.10 and not tcp port 80</code></p>
-<p>Beware: if you capture TCP/IP traffic with the primitives “host” or “port”, you will not see the ARP traffic belonging to it!</p>
-<hr>
-<h4 id="Capture-Filter-Syntax-捕获过滤器标志"><a href="#Capture-Filter-Syntax-捕获过滤器标志" class="headerlink" title="Capture Filter Syntax 捕获过滤器标志"></a>Capture Filter Syntax 捕获过滤器标志</h4><p>The following is a short description of the capture filter language syntax. For a further reference, have a look at: <a target="_blank" rel="noopener" href="http://www.tcpdump.org/tcpdump_man.html">http://www.tcpdump.org/tcpdump_man.html</a></p>
+<p>Beware: if you capture TCP/IP traffic with the primitives "host" or "port", you will not see the ARP traffic belonging to it!</p>
+<hr />
+<h4 id="capture-filter-syntax-捕获过滤器标志">Capture Filter Syntax 捕获过滤器标志</h4>
+<p>The following is a short description of the capture filter language syntax. For a further reference, have a look at: http://www.tcpdump.org/tcpdump_man.html</p>
 <p>A capture filter takes the form of a series of <strong>primitive expressions</strong>, connected by conjunctions (and/or) and optionally preceded by not:</p>
-<p><strong>[not] primitive [and|or [not] primitive …]</strong></p>
+<p><strong>[not] primitive [and|or [not] primitive ...]</strong></p>
 <p>A primitive is simply one of the following:</p>
 <p><strong>[src|dst] host <host></strong></p>
 <p>This primitive allows you to filter on a host IP address or name. You can optionally precede the primitive with the keyword <code>src|dst</code> to specify that you are only interested in source or destination addresses. If these are not present, packets where the specified address appears as either the source or the destination address will be selected.</p>
@@ -516,7 +543,7 @@
 <p><strong>[src|dst] net <net> [{mask <mask>}|{len <len>}]</strong></p>
 <p>This primitive allows you to filter on network numbers. You can optionally precede this primitive with the keyword <code>src|dst</code> to specify that you are only interested in a source or destination network. If neither of these are present, packets will be selected that have the specified network in either the source or destination address. In addition, you can specify either the netmask or the <strong>CIDR</strong> <em>(Classless Inter-Domain Routing)</em> prefix for the network if they are different from your own.</p>
 <p><strong>[tcp|udp] [src|dst] port <port></strong></p>
-<p>This primitive allows you to filter on TCP and UDP port numbers. You can optionally precede this primitive with the keywords src|dst and tcp|udp which allow you to specify that you are only interested in source or destination ports and TCP or UDP packets respectively. The keywords tcp|udp must appear before src|dst.<br>If these are not specified, packets will be selected for both the TCP and UDP protocols and when the specified address appears in either the source or destination port field.</p>
+<p>This primitive allows you to filter on TCP and UDP port numbers. You can optionally precede this primitive with the keywords src|dst and tcp|udp which allow you to specify that you are only interested in source or destination ports and TCP or UDP packets respectively. The keywords tcp|udp must appear before src|dst. If these are not specified, packets will be selected for both the TCP and UDP protocols and when the specified address appears in either the source or destination port field.</p>
 <p><strong>less|greater <length></strong></p>
 <p>This primitive allows you to filter on packets whose length was less than or equal to the specified length, or greater than or equal to the specified length, respectively.</p>
 <p><strong>ip|ether proto <protocol></strong></p>
@@ -525,39 +552,55 @@
 <p>This primitive allows you to filter on either Ethernet or IP broadcasts or multicasts.</p>
 <p><strong><expr> relop <expr></strong></p>
 <p>This primitive allows you to create complex filter expressions that select bytes or ranges of bytes in packets. Please see the tcpdump man pages for more details.</p>
-<h2 id="Capturing-捕获"><a href="#Capturing-捕获" class="headerlink" title="Capturing 捕获"></a>Capturing 捕获</h2><p>This section will explain the capturing options and give hints on what to do in some special cases.</p>
-<h3 id="Capture-options-捕获设置"><a href="#Capture-options-捕获设置" class="headerlink" title="Capture options 捕获设置"></a>Capture options 捕获设置</h3><p>The capture options can be logically divided into the following categories:</p>
-<p>-input<br>-filtering<br>-stop conditions<br>-storing<br>-display while capturing</p>
-<h3 id="Input-options-输入设置"><a href="#Input-options-输入设置" class="headerlink" title="Input options 输入设置"></a>Input options 输入设置</h3><p><strong>-Interface</strong>: You have to choose which interface (network card) will be used to capture packets from. Be sure to select the correct one, as it’s a common mistake to select the wrong interface.</p>
+<h2 id="capturing-捕获">Capturing 捕获</h2>
+<p>This section will explain the capturing options and give hints on what to do in some special cases.</p>
+<h3 id="capture-options-捕获设置">Capture options 捕获设置</h3>
+<p>The capture options can be logically divided into the following categories:</p>
+<p>-input -filtering -stop conditions -storing -display while capturing</p>
+<h3 id="input-options-输入设置">Input options 输入设置</h3>
+<p><strong>-Interface</strong>: You have to choose which interface (network card) will be used to capture packets from. Be sure to select the correct one, as it's a common mistake to select the wrong interface.</p>
 <p><strong>-Link-layer header type</strong>: unless you are in the rare case that you will need this, just keep the default.</p>
-<h3 id="Filtering-options-过滤设置"><a href="#Filtering-options-过滤设置" class="headerlink" title="Filtering options 过滤设置"></a>Filtering options 过滤设置</h3><p><strong>-Capture packets in promiscuous mode</strong>: Usually a network card will only capture the traffic to its own network address. If you want to capture all traffic that the network card can “see”, mark this option. See the FAQ for some more details of capturing packets from a switched network.</p>
+<h3 id="filtering-options-过滤设置">Filtering options 过滤设置</h3>
+<p><strong>-Capture packets in promiscuous mode</strong>: Usually a network card will only capture the traffic to its own network address. If you want to capture all traffic that the network card can "see", mark this option. See the FAQ for some more details of capturing packets from a switched network.</p>
 <p><strong>-Limit each packet to xy bytes</strong>: Will limit the maximum size to be captured of each packet, this includes the link-layer header and all subsequent headers. This can be useful when an error is known to be in the first 20 bytes of a packet, for example, as the size of the resulting capture file will be reduced.</p>
-<p><strong>-Capture Filter</strong>: Use a capture filter to reduce the amount of packets to be captured. See “Capture Filters” in this help for further information how to use it.</p>
-<h3 id="Storing-options-存储设置"><a href="#Storing-options-存储设置" class="headerlink" title="Storing options 存储设置"></a>Storing options 存储设置</h3><p><strong>-File</strong>: You can choose the file to which captured data will be written. If you don’t enter something here a temporary file will be used.</p>
-<p><strong>-Use multiple files</strong>: Instead of using a single capture file, multiple files will be created. The generated filenames will contain an incrementing number and the start time of the capture. For example, if you choose “/foo.cap” in the “File” field, files like “/foo_00001_20040205110102.cap”, “/foo_00002_20040205110102.cap”, … will be created.<br>This feature can be useful if you do long term capturing, as working with a single capture file of several GB usually isn’t very fast.</p>
-<h3 id="Stop-condition-options-终止设置"><a href="#Stop-condition-options-终止设置" class="headerlink" title="Stop condition options 终止设置"></a>Stop condition options 终止设置</h3><p>These three fields should be obvious; the capture process will be automatically stopped if one of the selected conditions is exceeded.</p>
-<h3 id="Display-while-capturing-options"><a href="#Display-while-capturing-options" class="headerlink" title="Display while capturing options"></a>Display while capturing options</h3><p>-Update list of packets in real time: Using this will show the captured packets immediately on the main screen.<br>Please note: this will slow down capturing, so increased packet drops might appear.</p>
-<p>-Automatic scrolling in live capture: This will scroll the “Packet List” automatically to the latest captured packet, when the “Update List of packets in real time” option is used.</p>
+<p><strong>-Capture Filter</strong>: Use a capture filter to reduce the amount of packets to be captured. See "Capture Filters" in this help for further information how to use it.</p>
+<h3 id="storing-options-存储设置">Storing options 存储设置</h3>
+<p><strong>-File</strong>: You can choose the file to which captured data will be written. If you don't enter something here a temporary file will be used.</p>
+<p><strong>-Use multiple files</strong>: Instead of using a single capture file, multiple files will be created. The generated filenames will contain an incrementing number and the start time of the capture. For example, if you choose "/foo.cap" in the "File" field, files like "/foo_00001_20040205110102.cap", "/foo_00002_20040205110102.cap", ... will be created. This feature can be useful if you do long term capturing, as working with a single capture file of several GB usually isn't very fast.</p>
+<h3 id="stop-condition-options-终止设置">Stop condition options 终止设置</h3>
+<p>These three fields should be obvious; the capture process will be automatically stopped if one of the selected conditions is exceeded.</p>
+<h3 id="display-while-capturing-options">Display while capturing options</h3>
+<p>-Update list of packets in real time: Using this will show the captured packets immediately on the main screen. Please note: this will slow down capturing, so increased packet drops might appear.</p>
+<p>-Automatic scrolling in live capture: This will scroll the "Packet List" automatically to the latest captured packet, when the "Update List of packets in real time" option is used.</p>
 <p>-Name resolution: perform the corresponding name resolution while capturing.</p>
-<h3 id="High-performance-capturing-高性能模式捕获"><a href="#High-performance-capturing-高性能模式捕获" class="headerlink" title="High performance capturing 高性能模式捕获"></a>High performance capturing 高性能模式捕获</h3><p>When your network traffic is high, you might need to take some steps to ensure Wireshark doesn’t get behind on its capture, particularly if you’re running it on a slow computer.</p>
+<h3 id="high-performance-capturing-高性能模式捕获">High performance capturing 高性能模式捕获</h3>
+<p>When your network traffic is high, you might need to take some steps to ensure Wireshark doesn't get behind on its capture, particularly if you're running it on a slow computer.</p>
 <p>When Wireshark cannot keep up, packets are dropped. To help avoid this as much as possible:</p>
-<p>a) Don’t use the “Update list of packets in real time” option (see above). This has a significant performance penalty.</p>
-<p>b) Close other programs that might slow down your system, such as virus scanner software, server processes, etc.</p>
-<p>c) It might be a good idea not to use a capture filter. This will depend on the task you have to do.<br>As a rule of thumb: if you want to see most of the packets and only filter a small number out, don’t use a capture filter (you can use a display filter later). If you only want to capture a small proportion of the packets, it might be better to set a capture filter, as this will reduce the number of packets that have to be saved.</p>
-<p>d) If you still get packet drops, it might be an idea to use a tool dedicated to packet capturing and only use Wireshark for displaying and analyzing the packets.</p>
-<p>Have a look at tshark, the command line variant of wireshark, which is included in this package.<br>XXX: add a list of possibly useful standalone capture programs.</p>
-<h3 id="Long-term-capturing-长期捕获"><a href="#Long-term-capturing-长期捕获" class="headerlink" title="Long term capturing 长期捕获"></a>Long term capturing 长期捕获</h3><p>By “Long term capturing”, it’s meant to capture data from a network for several hours or even days. Long term capturing will usually result in huge capture files, being hundreds of MB’s or even several GB’s in size!</p>
+<ol type="a">
+<li><p>Don't use the "Update list of packets in real time" option (see above). This has a significant performance penalty.</p></li>
+<li><p>Close other programs that might slow down your system, such as virus scanner software, server processes, etc.</p></li>
+<li><p>It might be a good idea not to use a capture filter. This will depend on the task you have to do. As a rule of thumb: if you want to see most of the packets and only filter a small number out, don't use a capture filter (you can use a display filter later). If you only want to capture a small proportion of the packets, it might be better to set a capture filter, as this will reduce the number of packets that have to be saved.</p></li>
+<li><p>If you still get packet drops, it might be an idea to use a tool dedicated to packet capturing and only use Wireshark for displaying and analyzing the packets.</p></li>
+</ol>
+<p>Have a look at tshark, the command line variant of wireshark, which is included in this package. XXX: add a list of possibly useful standalone capture programs.</p>
+<h3 id="long-term-capturing-长期捕获">Long term capturing 长期捕获</h3>
+<p>By "Long term capturing", it's meant to capture data from a network for several hours or even days. Long term capturing will usually result in huge capture files, being hundreds of MB's or even several GB's in size!</p>
 <p>Before doing a long term capture, get familiar with the options to use for it, as you might not get what you desire. Doing a long term capture not getting the results needed, is usually wasting a lot of time. ;-)</p>
-<p>Rules of thumb for this task:<br>-Use the ring buffer feature when you expect very large capture files.<br>-Don’t use the “Update list of packets in real time” option.<br>-Set an appropriate capture filter, when you are only interested in some special packets from the net.</p>
-<h2 id="Display-Filter-显示过滤器"><a href="#Display-Filter-显示过滤器" class="headerlink" title="Display Filter 显示过滤器"></a>Display Filter 显示过滤器</h2><h3 id="Filtering-packets-while-viewing-观察时的过滤器组件"><a href="#Filtering-packets-while-viewing-观察时的过滤器组件" class="headerlink" title="Filtering packets while viewing 观察时的过滤器组件"></a>Filtering packets while viewing 观察时的过滤器组件</h3><p>After capturing packets or loading some network traffic from a file, Wireshark will display the packet data immediately on the screen.</p>
-<p>Using display filters, you can choose which packets should (not) be shown on the screen. This is useful to reduce the “noise” usually on the network, showing only the packets you want to. So you can concentrate on the things you are really interested in. </p>
+<p>Rules of thumb for this task: -Use the ring buffer feature when you expect very large capture files. -Don't use the "Update list of packets in real time" option. -Set an appropriate capture filter, when you are only interested in some special packets from the net.</p>
+<h2 id="display-filter-显示过滤器">Display Filter 显示过滤器</h2>
+<h3 id="filtering-packets-while-viewing-观察时的过滤器组件">Filtering packets while viewing 观察时的过滤器组件</h3>
+<p>After capturing packets or loading some network traffic from a file, Wireshark will display the packet data immediately on the screen.</p>
+<p>Using display filters, you can choose which packets should (not) be shown on the screen. This is useful to reduce the "noise" usually on the network, showing only the packets you want to. So you can concentrate on the things you are really interested in.</p>
 <p>The display filter will not affect the data captured, it will only select which packets of the captured data are displayed on the screen.</p>
-<p>Every time you change the filter string, all packets will be reread from the capture file (or from memory), and processed by the display filter “machine”. Packet by packet, this “machine” is asked, if this particular packet should be shown or not.</p>
-<p>Wireshark offers a very powerful display filter language for this. It can be used for a wide range of purposes, from simply: “show only packets from a specific IP address”, or on the other hand, to very complex filters like: “find all packets where a special application specific flag is set”.</p>
+<p>Every time you change the filter string, all packets will be reread from the capture file (or from memory), and processed by the display filter "machine". Packet by packet, this "machine" is asked, if this particular packet should be shown or not.</p>
+<p>Wireshark offers a very powerful display filter language for this. It can be used for a wide range of purposes, from simply: "show only packets from a specific IP address", or on the other hand, to very complex filters like: "find all packets where a special application specific flag is set".</p>
 <p>Note: This display filter language is different from the one used for the Wireshark capture filters!</p>
-<h3 id="特殊字符"><a href="#特殊字符" class="headerlink" title="特殊字符"></a>特殊字符</h3><h4 id="constains-和-matches"><a href="#constains-和-matches" class="headerlink" title="constains 和 matches"></a>constains 和 matches</h4><p><strong>contains</strong> 用来判断是否包含一个值，<strong>matches</strong> 用来判断是否匹配一个表达式</p>
-<hr>
-<h3 id="Some-common-examples-一些通用示例-1"><a href="#Some-common-examples-一些通用示例-1" class="headerlink" title="Some common examples 一些通用示例"></a>Some common examples 一些通用示例</h3><p><strong>Example Ethernet</strong>: display all traffic to and from the Ethernet address 08.00.08.15.ca.fe</p>
+<h3 id="特殊字符">特殊字符</h3>
+<h4 id="constains-和-matches">constains 和 matches</h4>
+<p><strong>contains</strong> 用来判断是否包含一个值，<strong>matches</strong> 用来判断是否匹配一个表达式</p>
+<hr />
+<h3 id="some-common-examples-一些通用示例-1">Some common examples 一些通用示例</h3>
+<p><strong>Example Ethernet</strong>: display all traffic to and from the Ethernet address 08.00.08.15.ca.fe</p>
 <p><code>eth.addr==08.00.08.15.ca.fe</code></p>
 <p><strong>Example IP</strong>: display all traffic to and from the IP address 192.168.0.10</p>
 <p><code>ip.addr==192.168.0.10</code></p>
@@ -565,72 +608,78 @@
 <p><code>tcp.port==80</code></p>
 <p><strong>Examples combined</strong>: display all traffic to and from 192.168.0.10 except http</p>
 <p><code>ip.addr==192.168.0.10 &amp;&amp; tcp.port!=80</code></p>
-<p>Beware: The filter string builds a logical expression, which must be true to show the packet. The &amp;&amp; is a “logical and”, “A &amp;&amp; B” means: A must be true AND B must be true to show the packet (it doesn’t mean: A will be shown AND B will be shown). </p>
-<hr>
-<h3 id="Hint"><a href="#Hint" class="headerlink" title="Hint"></a>Hint</h3><p>Filtering can lead to side effects, which are sometimes not obvious at first sight. Example: If you capture TCP/IP traffic with the primitive “ip”, you will not see the ARP traffic belonging to it, as this is a lower protocol layer than IP!</p>
-<h2 id="WIRESHARK中的各种标志（TCP）"><a href="#WIRESHARK中的各种标志（TCP）" class="headerlink" title="WIRESHARK中的各种标志（TCP）"></a>WIRESHARK中的各种标志（TCP）</h2><h3 id="OUT-OF-ORDER"><a href="#OUT-OF-ORDER" class="headerlink" title="OUT OF ORDER"></a>OUT OF ORDER</h3><p><code>TCP Out-of-Order</code> </p>
-<p><strong>正常情况：</strong>在TCP传输过程中，同一台主机发出的数据段应该是连续的，即后一个包的 <code>Seq</code> 号等于前一    个包的 <code>Seq</code> + <code>Len</code> （三次握手和四次挥手是例外）。</p>
+<p>Beware: The filter string builds a logical expression, which must be true to show the packet. The &amp;&amp; is a "logical and", "A &amp;&amp; B" means: A must be true AND B must be true to show the packet (it doesn't mean: A will be shown AND B will be shown).</p>
+<hr />
+<h3 id="hint">Hint</h3>
+<p>Filtering can lead to side effects, which are sometimes not obvious at first sight. Example: If you capture TCP/IP traffic with the primitive "ip", you will not see the ARP traffic belonging to it, as this is a lower protocol layer than IP!</p>
+<h2 id="wireshark中的各种标志tcp">WIRESHARK中的各种标志（TCP）</h2>
+<h3 id="out-of-order">OUT OF ORDER</h3>
+<p><code>TCP Out-of-Order</code></p>
+<p><strong>正常情况：</strong>在TCP传输过程中，同一台主机发出的数据段应该是连续的，即后一个包的 <code>Seq</code> 号等于前一 个包的 <code>Seq</code> + <code>Len</code> （三次握手和四次挥手是例外）。</p>
 <p>异常情况：当Wireshark发现后一个包的 <code>Seq</code> 号 <mark>小于</mark> 前一个包的 <code>Seq</code> + <code>Len</code> 时，就会认为是乱序了，因此提示 <code>TCP Out-of-Order</code> 。</p>
-<h3 id="Previous-segment-not-captured"><a href="#Previous-segment-not-captured" class="headerlink" title="Previous segment not captured"></a>Previous segment not captured</h3><p><code>Previous segment not capturedd</code> ，即报文缺失，指存在未抓取的数据包</p>
+<h3 id="previous-segment-not-captured">Previous segment not captured</h3>
+<p><code>Previous segment not capturedd</code> ，即报文缺失，指存在未抓取的数据包</p>
 <p><strong>正常情况：</strong>在TCP传输过程中，同一台主机发出的数据段应该是连续的，即后一个包的 <code>Seq</code> 号等于前一个包的 <code>Seq</code> + <code>Len</code> （三次握手和四次挥手是例外）。</p>
 <p><strong>异常情况：</strong>如果Wireshark发现后一个包的 <code>Seq</code> 号大于前一个包的 <code>Seq</code> + <code>Len</code> ，就知道中间缺失了一段数据。假如缺失的那段数据在整个网络包中都找不到（即排除了乱序），就会提示<code>TCP Previous segment not captured</code> 。</p>
 <blockquote>
-<p><strong>TCP Previous segment lost</strong> - Occurs when a packet  arrives with a sequence number greater than the “next expected sequence  number” on that connection, indicating that one or more packets prior to the flagged packet did not arrive. This event is a good indicator of  packet loss and will likely be accompanied by “TCP Retransmission”  events.</p>
-<p>– Wireshark</p>
+<p><strong>TCP Previous segment lost</strong> - Occurs when a packet arrives with a sequence number greater than the "next expected sequence number" on that connection, indicating that one or more packets prior to the flagged packet did not arrive. This event is a good indicator of packet loss and will likely be accompanied by "TCP Retransmission" events.</p>
+<p>-- Wireshark</p>
 </blockquote>
-<h3 id="TCP-DUP-ACK"><a href="#TCP-DUP-ACK" class="headerlink" title="TCP DUP ACK"></a>TCP DUP ACK</h3><p><code>Tcp Dup Ack xxx#y</code> ，即重复确认。</p>
+<h3 id="tcp-dup-ack">TCP DUP ACK</h3>
+<p><code>Tcp Dup Ack xxx#y</code> ，即重复确认。</p>
 <p>当乱序或者丢包发生时，接收方会收到一些Seq号比期望值大的包。</p>
-<p><u>接收方每收到一个这种包就会进行答复，<code>Ack</code> 一次期望的 <code>Seq</code> 值，以此方式来提醒发送方，于是就产生了一些重复的 <code>Ack</code> 。</u> </p>
+<p><u>接收方每收到一个这种包就会进行答复，<code>Ack</code> 一次期望的 <code>Seq</code> 值，以此方式来提醒发送方，于是就产生了一些重复的 <code>Ack</code> 。</u></p>
 <p>Wireshark会在这种重复的Ack上标记 <code>TCP Dup ACK</code> ，代表了数据段丢失 TCP 状态，<code>xxx</code> 代表数据丢失的位置， <code>y</code> 后代表第几次丢失报文。</p>
-<h3 id="TCP-Fast-Retransmission"><a href="#TCP-Fast-Retransmission" class="headerlink" title="TCP Fast Retransmission"></a>TCP Fast Retransmission</h3><p>快速重传，当发送方收到来自接收方的3个或以上<code>TCP Dup ACK</code> ，就意识到之前发的包可能丢了，于是发送方快速重传该数据（这是RFC的规定）。</p>
-<h3 id="TCP-Spurious-Retransmission"><a href="#TCP-Spurious-Retransmission" class="headerlink" title="TCP Spurious Retransmission"></a>TCP Spurious Retransmission</h3><h3 id="TCP-Retransmission"><a href="#TCP-Retransmission" class="headerlink" title="TCP Retransmission"></a>TCP Retransmission</h3><p>超时重传。</p>
+<h3 id="tcp-fast-retransmission">TCP Fast Retransmission</h3>
+<p>快速重传，当发送方收到来自接收方的3个或以上<code>TCP Dup ACK</code> ，就意识到之前发的包可能丢了，于是发送方快速重传该数据（这是RFC的规定）。</p>
+<h3 id="tcp-spurious-retransmission">TCP Spurious Retransmission</h3>
+<h3 id="tcp-retransmission">TCP Retransmission</h3>
+<p>超时重传。</p>
 <p>如果一个包真的丢了，且无后续包，则可以在接收方触发 <code>Dup Ack</code> ，就不会快速重传。</p>
 <p>这种情况下发送方只好等到超时了再重传，此类重传包就会被Wireshark标上 <code>TCP Retransmission</code> 。</p>
-<h3 id="TCP-ACKed-unseen-segment"><a href="#TCP-ACKed-unseen-segment" class="headerlink" title="TCP ACKed unseen segment"></a>TCP ACKed unseen segment</h3><p>抓取遗漏。</p>
+<h3 id="tcp-acked-unseen-segment">TCP ACKed unseen segment</h3>
+<p>抓取遗漏。</p>
 <p>当Wireshark发现被Ack的那个包没被抓到，就会提示 <code>TCP ACKed unseen  segment</code>， 即此为由于抓包不到造成的报错。</p>
 <p><em>这可能是最常见的Wireshark提示了，幸好它几乎是永远可以忽略的。</em></p>
-<p>以图3为例，32号包的<code>Seq=6889</code>  <code>Len=1448</code> ，相加得 8337，说明服务器发出的下一个包应该是 <code>Seq=8337</code>。而我们看到的却是35号包的<code>Seq=11233</code>，这意味着 8337～11232 这段数据没有被抓到。这段数据本应该出现在34号之前，所以Wireshark提示了<code>TCP ACKed unseen segment</code>。</p>
-<img src="http://tc.sinaimg.cn/maxwidth.2048/tc.service.weibo.com/community_emc_com/8ccefb660da3f07e9a83e0625c6c7f19.png" style="zoom:150%;" />
-
-
-
-<h3 id="TCP-Zerowindow"><a href="#TCP-Zerowindow" class="headerlink" title="TCP Zerowindow"></a>TCP Zerowindow</h3><p>窗口清零。</p>
+<p>以图3为例，32号包的<code>Seq=6889</code> <code>Len=1448</code> ，相加得 8337，说明服务器发出的下一个包应该是 <code>Seq=8337</code>。而我们看到的却是35号包的<code>Seq=11233</code>，这意味着 8337～11232 这段数据没有被抓到。这段数据本应该出现在34号之前，所以Wireshark提示了<code>TCP ACKed unseen segment</code>。</p>
+<p><img src="http://tc.sinaimg.cn/maxwidth.2048/tc.service.weibo.com/community_emc_com/8ccefb660da3f07e9a83e0625c6c7f19.png" style="zoom:150%;" /></p>
+<h3 id="tcp-zerowindow">TCP Zerowindow</h3>
+<p>窗口清零。</p>
 <p>TCP包中的 <code>win=</code> 代表接收窗口的大小，即表示这个包的发送方当前还有多少缓存区可以接收数据。</p>
 <p>当Wireshark在一个包中发现 <code>win=0</code> 时，就会给它打上 <code>TCP  zerowindow</code> 的标志，表示缓存区已满，不能再接受数据了。下图就是服务器的缓存区已满，所以通知客户端不要再发数据了。我们甚至可以在3258～3263这几个包中看出它的窗口逐渐减少的过程，即从 <code>win=15872</code> 减小到 <code>win=1472</code> 。</p>
-<img src="http://tc.sinaimg.cn/maxwidth.2048/tc.service.weibo.com/community_emc_com/1b59377ebee4107bed8557a6a4a9d35f.png" style="zoom:150%;" />
-
-
-
-<h3 id="TCP-Window-Update"><a href="#TCP-Window-Update" class="headerlink" title="TCP Window Update"></a>TCP Window Update</h3><h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><p>Sockets API和Internet在许多 <em><strong>竞争性协议族</strong></em>（包括 <em>IPX</em>、<em>AppleTalk</em>、<em>DECNet</em>、<em>OSI</em>、<em>SNA</em> 及 <em>TCP</em>/IP）的世界中逐渐成长起来，并且 <mark>Sockets被设计成支持所有这些协议</mark> 。</p>
-<h3 id="IPv4映射"><a href="#IPv4映射" class="headerlink" title="IPv4映射"></a>IPv4映射</h3><p>IPv4映射的地址是通过在IPv4地址前添加4个字节的前缀 <code>::fff:</code> 而构成。</p>
-<p>如，<code>132.3.23.7 </code> 的IPv4地址映射至IPv6即 <code>::ffff:132.3.32.7</code> 。</p>
+<p><img src="http://tc.sinaimg.cn/maxwidth.2048/tc.service.weibo.com/community_emc_com/1b59377ebee4107bed8557a6a4a9d35f.png" style="zoom:150%;" /></p>
+<h3 id="tcp-window-update">TCP Window Update</h3>
+<h2 id="其他">其他</h2>
+<p>Sockets API和Internet在许多 <strong><em>竞争性协议族</em></strong>（包括 <em>IPX</em>、<em>AppleTalk</em>、<em>DECNet</em>、<em>OSI</em>、<em>SNA</em> 及 <em>TCP</em>/IP）的世界中逐渐成长起来，并且 <mark>Sockets被设计成支持所有这些协议</mark> 。</p>
+<h3 id="ipv4映射">IPv4映射</h3>
+<p>IPv4映射的地址是通过在IPv4地址前添加4个字节的前缀 <code>::fff:</code> 而构成。</p>
+<p>如，<code>132.3.23.7</code> 的IPv4地址映射至IPv6即 <code>::ffff:132.3.32.7</code> 。</p>
 <p>协议互操作性</p>
-<h3 id="回送地址"><a href="#回送地址" class="headerlink" title="回送地址"></a>回送地址</h3><p>IPv4的回送地址是<code>127.0.0.1</code></p>
+<h3 id="回送地址">回送地址</h3>
+<p>IPv4的回送地址是<code>127.0.0.1</code></p>
 <p>IPv6的回送地址是 <code>0:0:0:0:0:0:0:1</code></p>
-<h3 id="专用网络地址"><a href="#专用网络地址" class="headerlink" title="专用网络地址"></a>专用网络地址</h3><p>以 <code>10</code> 、<code>192.168</code> 、<code>172.16</code>~`172.31`开头的地址最初被指定在不属于全球Internet的专用网络中使用。</p>
-<h3 id="Name"><a href="#Name" class="headerlink" title="Name"></a>Name</h3><p>Hostname是指 <em>计算机名称</em> ，Domain Name是指 <em>域名</em> 。</p>
+<h3 id="专用网络地址">专用网络地址</h3>
+<p>以 <code>10</code> 、<code>192.168</code> 、<code>172.16</code>~<code>172.31</code>开头的地址最初被指定在不属于全球Internet的专用网络中使用。</p>
+<h3 id="name">Name</h3>
+<p>Hostname是指 <em>计算机名称</em> ，Domain Name是指 <em>域名</em> 。</p>
 <p>通常情况下，一个name都是指Hostname。</p>
-<h1 id="Socket-in-Posix"><a href="#Socket-in-Posix" class="headerlink" title="Socket in Posix"></a>Socket in Posix</h1><h2 id="Headerfiles"><a href="#Headerfiles" class="headerlink" title="Headerfiles"></a>Headerfiles</h2><p>在Posix标准中，以下文件被用于在Unix/Linux/Mac中进行网络编程。</p>
+<h1 id="socket-in-posix">Socket in Posix</h1>
+<h2 id="headerfiles">Headerfiles</h2>
+<p>在Posix标准中，以下文件被用于在Unix/Linux/Mac中进行网络编程。</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/types.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/socket.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;netinet/in.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;arpa/inet.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;netdb.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;errno.h&gt;</span></span></span><br></pre></td></tr></table></figure>
-
 <p>各文件包含的内容如下：</p>
 <ul>
-<li><p> <code>&lt;sys/types.h&gt;</code> 定义了在socket网络编程中用到的数据类型；</p>
-</li>
-<li><p><code>&lt;sys/socket.h&gt;</code> 定义了接口类型（socket types）、接口标志（socket flags）、额外设置（addtional options）、地址簇（address family）和地址存储结构体（address storage structure）特定机器的一些设定。</p>
-</li>
-<li><p><code>&lt;netinet/in.h&gt;</code> 定义了RFC协议（protocol），和IP网络层相关的宏定义。其中 <code>in</code> 是 internet 的缩写。</p>
-</li>
-<li><p><code>&lt;arpa/inet.h&gt;</code> 则定义了对网络层操作的函数，例如，“将host地址与net地址互相转换” 的 <code>htonl()</code> 、 <code>htons()</code> 、 <code>ntohl()</code> 、<code>ntohs()</code> 都定义在里面，还有 <code>inet_addr()</code> 、 <code>*inet_ntoa()</code>、<code>*inet_ntop()</code> 、<code>inet_pton()</code> 等操作</p>
-</li>
-<li><p><code>&lt;netdb.h&gt;</code> 定义了网络数据库（network database）的操作， 相关手册可以查看 Michael 的 <a target="_blank" rel="noopener" href="https://www.man7.org/linux/man-pages/man0/netdb.h.0p.html">在线手册</a>。</p>
-</li>
-<li><p><code>&lt;unistd.h&gt;</code> 定义了系统线程、文件读取等的操作和宏定义。</p>
-</li>
-<li><p><code>&lt;errno.h&gt;</code> 定义了 普通文件操作和网路文件操作的错误码（error codes）。</p>
-</li>
+<li><p><code>&lt;sys/types.h&gt;</code> 定义了在socket网络编程中用到的数据类型；</p></li>
+<li><p><code>&lt;sys/socket.h&gt;</code> 定义了接口类型（socket types）、接口标志（socket flags）、额外设置（addtional options）、地址簇（address family）和地址存储结构体（address storage structure）特定机器的一些设定。</p></li>
+<li><p><code>&lt;netinet/in.h&gt;</code> 定义了RFC协议（protocol），和IP网络层相关的宏定义。其中 <code>in</code> 是 internet 的缩写。</p></li>
+<li><p><code>&lt;arpa/inet.h&gt;</code> 则定义了对网络层操作的函数，例如，“将host地址与net地址互相转换” 的 <code>htonl()</code> 、 <code>htons()</code> 、 <code>ntohl()</code> 、<code>ntohs()</code> 都定义在里面，还有 <code>inet_addr()</code> 、 <code>*inet_ntoa()</code>、<code>*inet_ntop()</code> 、<code>inet_pton()</code> 等操作</p></li>
+<li><p><code>&lt;netdb.h&gt;</code> 定义了网络数据库（network database）的操作， 相关手册可以查看 Michael 的 <a target="_blank" rel="noopener" href="https://www.man7.org/linux/man-pages/man0/netdb.h.0p.html">在线手册</a>。</p></li>
+<li><p><code>&lt;unistd.h&gt;</code> 定义了系统线程、文件读取等的操作和宏定义。</p></li>
+<li><p><code>&lt;errno.h&gt;</code> 定义了 普通文件操作和网路文件操作的错误码（error codes）。</p></li>
 </ul>
-<h1 id="Socket-in-Texas-Instrument’s-SysBIOS"><a href="#Socket-in-Texas-Instrument’s-SysBIOS" class="headerlink" title="Socket in Texas Instrument’s SysBIOS"></a>Socket in Texas Instrument’s SysBIOS</h1><h2 id="NETCTRL-H-及-SOCKET-H"><a href="#NETCTRL-H-及-SOCKET-H" class="headerlink" title="NETCTRL.H 及 SOCKET.H"></a>NETCTRL.H 及 SOCKET.H</h2><p>以下两句话是TI官方对<code>&lt;netctrl.h&gt;</code> 的描述，即简易控制网络开断的包装函数，以此类方法实现接口的目的是隐藏可以被调用的HAL/STACK功能</p>
+<h1 id="socket-in-texas-instruments-sysbios">Socket in Texas Instrument’s SysBIOS</h1>
+<h2 id="netctrl.h-及-socket.h">NETCTRL.H 及 SOCKET.H</h2>
+<p>以下两句话是TI官方对<code>&lt;netctrl.h&gt;</code> 的描述，即简易控制网络开断的包装函数，以此类方法实现接口的目的是隐藏可以被调用的HAL/STACK功能</p>
 <blockquote>
 <ul>
 <li>Shell functions for simplified net startup and shutdown</li>
@@ -641,146 +690,117 @@
 <blockquote>
 <p>NETCTRL is used to initialize the stack and maintain services. To accomplish this, it makes use of the configuration manager provided in the NETTOOLS library. Note that the configuration definitions and structures defined here are specific to NETCTRL, not CONFIG.</p>
 </blockquote>
-<h3 id="NETCTRL-API"><a href="#NETCTRL-API" class="headerlink" title="NETCTRL API"></a>NETCTRL API</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 初始化运行环境</span></span><br><span class="line"><span class="function">_extern <span class="keyword">int</span>  <span class="title">NC_SystemOpen</span><span class="params">( <span class="keyword">int</span> Priority, <span class="keyword">int</span> OpMode )</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">//第一个参数可选择任务等级高或任务等级低</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> NC_PRIORITY_LOW             OS_SCHEDULER_LOWPRI</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> NC_PRIORITY_HIGH            OS_SCHEDULER_HIGHPRI</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//定义打开模式为POLLING或中断</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> NC_OPMODE_POLLING           1</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> NC_OPMODE_INTERRUPT         2</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// NC_SystemOpen()的返回结果</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> NC_OPEN_SUCCESS             0</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> NC_OPEN_ILLEGAL_PRIORITY    -1</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> NC_OPEN_ILLEGAL_OPMODE      -2</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> NC_OPEN_MEMINIT_FAILED      -3</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> NC_OPEN_EVENTINIT_FAILED    -4</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 关闭运行环境</span></span><br><span class="line"><span class="function">_extern <span class="keyword">void</span> <span class="title">NC_SystemClose</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 使用提供的配置信息开启网络</span></span><br><span class="line"><span class="function">_extern <span class="keyword">int</span> <span class="title">NC_NetStart</span><span class="params">( HANDLE hCfg, <span class="keyword">void</span> (*NetStart)(),</span></span></span><br><span class="line"><span class="function"><span class="params">                        <span class="keyword">void</span> (*NetStop)(), <span class="keyword">void</span> (*NetIP)(IPN,uint,uint) )</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 断开网络</span></span><br><span class="line"><span class="function">_extern <span class="keyword">void</span> <span class="title">NC_NetStop</span><span class="params">( <span class="keyword">int</span> rc )</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 当Boot线程完成时被调用</span></span><br><span class="line"><span class="function">_extern <span class="keyword">void</span> <span class="title">NC_BootComplete</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 当IP地址被添加或移除时被调用</span></span><br><span class="line"><span class="function">_extern <span class="keyword">void</span> <span class="title">NC_IPUpdate</span><span class="params">( IPN IPAddr, uint IfIdx, uint fAdd )</span></span>;</span><br></pre></td></tr></table></figure>
-
-
-
-<h2 id="SOCKET-API"><a href="#SOCKET-API" class="headerlink" title="SOCKET API"></a>SOCKET API</h2><h3 id="UNIVERSAL-TCP"><a href="#UNIVERSAL-TCP" class="headerlink" title="UNIVERSAL_TCP"></a>UNIVERSAL_TCP</h3><h4 id="defined-in-lt-ws2def-h-gt"><a href="#defined-in-lt-ws2def-h-gt" class="headerlink" title="defined in &lt;ws2def.h&gt;"></a>defined in <code>&lt;ws2def.h&gt;</code></h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">addrinfo</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    <span class="keyword">int</span>                 ai_flags;       <span class="comment">// AI_PASSIVE, AI_CANONNAME, AI_NUMERICHOST</span></span><br><span class="line">    <span class="keyword">int</span>                 ai_family;      <span class="comment">// PF_xxx</span></span><br><span class="line">    <span class="keyword">int</span>                 ai_socktype;    <span class="comment">// SOCK_xxx</span></span><br><span class="line">    <span class="keyword">int</span>                 ai_protocol;    <span class="comment">// 0 or IPPROTO_xxx for IPv4 and IPv6</span></span><br><span class="line">    <span class="keyword">size_t</span>              ai_addrlen;     <span class="comment">// Length of ai_addr</span></span><br><span class="line">    <span class="keyword">char</span> *              ai_canonname;   <span class="comment">// Canonical name for nodename</span></span><br><span class="line">    _Field_size_bytes_(ai_addrlen) <span class="class"><span class="keyword">struct</span> <span class="title">sockaddr</span> *   <span class="title">ai_addr</span>;</span>        <span class="comment">// Binary address</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">addrinfo</span> *   <span class="title">ai_next</span>;</span>        <span class="comment">// Next structure in linked list</span></span><br><span class="line">&#125;</span><br><span class="line">ADDRINFOA, *PADDRINFOA;</span><br></pre></td></tr></table></figure>
-
-
-
-<h4 id="defined-in-TI-lt-socket-h-gt"><a href="#defined-in-TI-lt-socket-h-gt" class="headerlink" title="defined in TI &lt;socket.h&gt;"></a>defined in <em><strong>TI</strong></em> <code>&lt;socket.h&gt;</code></h4><h5 id="IPv4套接字地址数据结构"><a href="#IPv4套接字地址数据结构" class="headerlink" title="IPv4套接字地址数据结构"></a>IPv4套接字地址数据结构</h5><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// AF_INET family (IPv4) Socket address data structure.</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">sockaddr_in</span> &#123;</span></span><br><span class="line">    UINT8   sin_len;            <span class="comment">// total length</span></span><br><span class="line">    UINT8   sin_family;         <span class="comment">// address family</span></span><br><span class="line">    UINT16  sin_port;           <span class="comment">// port</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span>  <span class="title">in_addr</span> <span class="title">sin_addr</span>;</span></span><br><span class="line">    INT8    sin_zero[<span class="number">8</span>];        <span class="comment">// fixed length address value</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-<h5 id="内核用地址存储数据结构"><a href="#内核用地址存储数据结构" class="headerlink" title="内核用地址存储数据结构"></a>内核用地址存储数据结构</h5><p>这个套娃里还有个套娃 <code>in_addr</code> ，这个结构体供内核调用，以储存更多地址数据。</p>
+<h3 id="netctrl-api">NETCTRL API</h3>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 初始化运行环境</span></span><br><span class="line"><span class="function">_extern <span class="keyword">int</span>  <span class="title">NC_SystemOpen</span><span class="params">( <span class="keyword">int</span> Priority, <span class="keyword">int</span> OpMode )</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">//第一个参数可选择任务等级高或任务等级低</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> NC_PRIORITY_LOW             OS_SCHEDULER_LOWPRI</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> NC_PRIORITY_HIGH            OS_SCHEDULER_HIGHPRI</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//定义打开模式为POLLING或中断</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> NC_OPMODE_POLLING           1</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> NC_OPMODE_INTERRUPT         2</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// NC_SystemOpen()的返回结果</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> NC_OPEN_SUCCESS             0</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> NC_OPEN_ILLEGAL_PRIORITY    -1</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> NC_OPEN_ILLEGAL_OPMODE      -2</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> NC_OPEN_MEMINIT_FAILED      -3</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> NC_OPEN_EVENTINIT_FAILED    -4</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 关闭运行环境</span></span><br><span class="line"><span class="function">_extern <span class="keyword">void</span> <span class="title">NC_SystemClose</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 使用提供的配置信息开启网络</span></span><br><span class="line"><span class="function">_extern <span class="keyword">int</span> <span class="title">NC_NetStart</span><span class="params">( HANDLE hCfg, <span class="keyword">void</span> (*NetStart)(),</span></span></span><br><span class="line"><span class="function"><span class="params">                        <span class="keyword">void</span> (*NetStop)(), <span class="keyword">void</span> (*NetIP)(IPN,uint,uint) )</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 断开网络</span></span><br><span class="line"><span class="function">_extern <span class="keyword">void</span> <span class="title">NC_NetStop</span><span class="params">( <span class="keyword">int</span> rc )</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 当Boot线程完成时被调用</span></span><br><span class="line"><span class="function">_extern <span class="keyword">void</span> <span class="title">NC_BootComplete</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 当IP地址被添加或移除时被调用</span></span><br><span class="line"><span class="function">_extern <span class="keyword">void</span> <span class="title">NC_IPUpdate</span><span class="params">( IPN IPAddr, uint IfIdx, uint fAdd )</span></span>;</span><br></pre></td></tr></table></figure>
+<h2 id="socket-api">SOCKET API</h2>
+<h3 id="universal_tcp">UNIVERSAL_TCP</h3>
+<h4 id="defined-in-ws2def.h">defined in <code>&lt;ws2def.h&gt;</code></h4>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">addrinfo</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    <span class="keyword">int</span>                 ai_flags;       <span class="comment">// AI_PASSIVE, AI_CANONNAME, AI_NUMERICHOST</span></span><br><span class="line">    <span class="keyword">int</span>                 ai_family;      <span class="comment">// PF_xxx</span></span><br><span class="line">    <span class="keyword">int</span>                 ai_socktype;    <span class="comment">// SOCK_xxx</span></span><br><span class="line">    <span class="keyword">int</span>                 ai_protocol;    <span class="comment">// 0 or IPPROTO_xxx for IPv4 and IPv6</span></span><br><span class="line">    <span class="keyword">size_t</span>              ai_addrlen;     <span class="comment">// Length of ai_addr</span></span><br><span class="line">    <span class="keyword">char</span> *              ai_canonname;   <span class="comment">// Canonical name for nodename</span></span><br><span class="line">    _Field_size_bytes_(ai_addrlen) <span class="class"><span class="keyword">struct</span> <span class="title">sockaddr</span> *   <span class="title">ai_addr</span>;</span>        <span class="comment">// Binary address</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">addrinfo</span> *   <span class="title">ai_next</span>;</span>        <span class="comment">// Next structure in linked list</span></span><br><span class="line">&#125;</span><br><span class="line">ADDRINFOA, *PADDRINFOA;</span><br></pre></td></tr></table></figure>
+<h4 id="defined-in-ti-socket.h">defined in <strong><em>TI</em></strong> <code>&lt;socket.h&gt;</code></h4>
+<h5 id="ipv4套接字地址数据结构">IPv4套接字地址数据结构</h5>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// AF_INET family (IPv4) Socket address data structure.</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">sockaddr_in</span> &#123;</span></span><br><span class="line">    UINT8   sin_len;            <span class="comment">// total length</span></span><br><span class="line">    UINT8   sin_family;         <span class="comment">// address family</span></span><br><span class="line">    UINT16  sin_port;           <span class="comment">// port</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span>  <span class="title">in_addr</span> <span class="title">sin_addr</span>;</span></span><br><span class="line">    INT8    sin_zero[<span class="number">8</span>];        <span class="comment">// fixed length address value</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h5 id="内核用地址存储数据结构">内核用地址存储数据结构</h5>
+<p>这个套娃里还有个套娃 <code>in_addr</code> ，这个结构体供内核调用，以储存更多地址数据。</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Structure used by kernel to store most addresses.</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">in_addr</span> &#123;</span></span><br><span class="line">    UINT32  s_addr;             <span class="comment">// 32 bit long IP address, net order</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-<h5 id="通用套接字地址储存数据结构"><a href="#通用套接字地址储存数据结构" class="headerlink" title="通用套接字地址储存数据结构"></a>通用套接字地址储存数据结构</h5><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Generic Socket address storage data structure.</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">sockaddr</span> &#123;</span></span><br><span class="line">    UINT8    sa_len;            <span class="comment">// Length </span></span><br><span class="line">    UINT8    sa_family;         <span class="comment">// address family</span></span><br><span class="line">    <span class="keyword">char</span>     sa_data[<span class="number">14</span>];       <span class="comment">// socket data</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">sockaddr</span>      <span class="title">SA</span>;</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">sockaddr</span>      *<span class="title">PSA</span>;</span></span><br></pre></td></tr></table></figure>
-
-
-
-
-
-
-
-
-
+<h5 id="通用套接字地址储存数据结构">通用套接字地址储存数据结构</h5>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Generic Socket address storage data structure.</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">sockaddr</span> &#123;</span></span><br><span class="line">    UINT8    sa_len;            <span class="comment">// Length </span></span><br><span class="line">    UINT8    sa_family;         <span class="comment">// address family</span></span><br><span class="line">    <span class="keyword">char</span>     sa_data[<span class="number">14</span>];       <span class="comment">// socket data</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">sockaddr</span>      <span class="title">SA</span>;</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">sockaddr</span>      *<span class="title">PSA</span>;</span></span><br></pre></td></tr></table></figure>
 <p>以下为Socket <strong>接口协议簇</strong> 、 <strong>接口类型</strong>、 <strong>接口协议</strong> ：</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">// Socket address families</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> AF_TASK         1               <span class="comment">// Intertask Communication</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> AF_INET         2               <span class="comment">// Internet: UDP, TCP, etc.</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> AF_INET6        10              <span class="comment">// IPV6</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">ifdef</span> _INCLUDE_NIMU_CODE</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> AF_RAWETH       12              <span class="comment">// Raw Ethernet Protocol</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">// Socket Types</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> SOCK_STREAM     1               <span class="comment">// stream socket</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> SOCK_DGRAM      2               <span class="comment">// datagram socket</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> SOCK_RAW        3               <span class="comment">// raw-protocol interface</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> SOCK_STREAMNC   4               <span class="comment">// non-copy stream socket</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">ifdef</span> _INCLUDE_NIMU_CODE</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> SOCK_RAWETH     5               <span class="comment">// non-copy raw eth socket</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">// Protocols</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> IPPROTO_IP      0               <span class="comment">// IP Placeholder</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> IPPROTO_ICMP    1               <span class="comment">// ICMP</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> IPPROTO_IGMP    2               <span class="comment">// IGMP</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> IPPROTO_TCP     6               <span class="comment">// TCP</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> IPPROTO_UDP     17              <span class="comment">// UDP</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> IPPROTO_IPV6    41              <span class="comment">// IPV6 </span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> IPPROTO_ICMPV6  58              <span class="comment">// ICMPV6 Header.</span></span></span><br></pre></td></tr></table></figure>
-
-
-
 <p>以下Socket接口均以Ti NDK为载体，以C为实现方式。</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Socket Oriented Functions</span></span><br><span class="line"><span class="function">SOCKET <span class="title">accept</span><span class="params">( SOCKET s, PSA pName, <span class="keyword">int</span> *plen )</span></span>;	<span class="comment">//接受一个套接字的连接</span></span><br><span class="line"><span class="function"><span class="keyword">int</span>    <span class="title">bind</span><span class="params">( SOCKET s, PSA pName, <span class="keyword">int</span> len )</span></span>;	<span class="comment">//给套接字绑定一个名字</span></span><br><span class="line"><span class="function"><span class="keyword">int</span>    <span class="title">connect</span><span class="params">( SOCKET s, PSA pName, <span class="keyword">int</span> len )</span></span>;		<span class="comment">//在一个套接字上初始化连接</span></span><br><span class="line"><span class="function"><span class="keyword">int</span>    <span class="title">getpeername</span><span class="params">( SOCKET s, PSA pName, <span class="keyword">int</span> *plen )</span></span>;	<span class="comment">//在已连接的peer上返回名称地址</span></span><br><span class="line"><span class="function"><span class="keyword">int</span>    <span class="title">getsockname</span><span class="params">( SOCKET s, PSA pName, <span class="keyword">int</span> *plen )</span></span>;	<span class="comment">//返回套接字的本地名称地址</span></span><br><span class="line"><span class="function"><span class="keyword">int</span>    <span class="title">getsockopt</span><span class="params">( SOCKET s, <span class="keyword">int</span> level, <span class="keyword">int</span> op, <span class="keyword">void</span> *pbuf, <span class="keyword">int</span> *pbufsize )</span></span>;	<span class="comment">//获取套接字设置信息</span></span><br><span class="line"><span class="function"><span class="keyword">int</span>    <span class="title">listen</span><span class="params">( SOCKET s, <span class="keyword">int</span> maxcon )</span></span>;		<span class="comment">//监听数据</span></span><br><span class="line"><span class="function"><span class="keyword">int</span>    <span class="title">recv</span><span class="params">( SOCKET s, <span class="keyword">void</span> *pbuf, <span class="keyword">int</span> size, <span class="keyword">int</span> flags )</span></span>;		<span class="comment">//接收数据</span></span><br><span class="line"><span class="function"><span class="keyword">int</span>    <span class="title">recvfrom</span><span class="params">( SOCKET s, <span class="keyword">void</span> *pbuf, <span class="keyword">int</span> size, <span class="keyword">int</span> flags, PSA pName, <span class="keyword">int</span> *plen )</span></span>;		<span class="comment">//从指定对象处接收信息</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span>    <span class="title">recvnc</span><span class="params">( SOCKET s, <span class="keyword">void</span> **ppbuf, <span class="keyword">int</span> flags, HANDLE *pHandle )</span></span>;	<span class="comment">//</span></span><br><span class="line"><span class="function"><span class="keyword">int</span>    <span class="title">recvncfrom</span><span class="params">( SOCKET s, <span class="keyword">void</span> **ppbuf, <span class="keyword">int</span> flags,</span></span></span><br><span class="line"><span class="function"><span class="params">                           PSA pName, <span class="keyword">int</span> *plen, HANDLE *pHandle )</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">void</span>   <span class="title">recvncfree</span><span class="params">( SOCKET Handle )</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span>    <span class="title">send</span><span class="params">( SOCKET s, <span class="keyword">void</span> *pbuf, <span class="keyword">int</span> size, <span class="keyword">int</span> flags )</span></span>;		<span class="comment">//发送信息</span></span><br><span class="line"><span class="function"><span class="keyword">int</span>    <span class="title">sendto</span><span class="params">( SOCKET s, <span class="keyword">void</span> *pbuf, <span class="keyword">int</span> size, <span class="keyword">int</span> flags, PSA pName, <span class="keyword">int</span> len )</span></span>;	<span class="comment">//在未连接的套接字上往指定目的地发送数据</span></span><br><span class="line"><span class="function"><span class="keyword">int</span>    <span class="title">setsockopt</span><span class="params">( SOCKET s, <span class="keyword">int</span> level, <span class="keyword">int</span> op, <span class="keyword">void</span> *pbuf, <span class="keyword">int</span> bufsize )</span></span>;	<span class="comment">//设置套接字设置</span></span><br><span class="line"><span class="function"><span class="keyword">int</span>    <span class="title">shutdown</span><span class="params">( SOCKET s, <span class="keyword">int</span> how )</span></span>;	<span class="comment">//关闭一半的套接字连接</span></span><br><span class="line"><span class="function">SOCKET <span class="title">socket</span><span class="params">( <span class="keyword">int</span> domain, <span class="keyword">int</span> type, <span class="keyword">int</span> protocol )</span></span>;	<span class="comment">//创建套接字</span></span><br></pre></td></tr></table></figure>
-
-
-
-<h3 id="SOCKET-API-IN-CLIENT"><a href="#SOCKET-API-IN-CLIENT" class="headerlink" title="SOCKET API IN CLIENT"></a>SOCKET API IN CLIENT</h3><hr>
-<div class="Step" style="font-size: 20px; font-weight: 700;">第一步 创建套接字</div>
-
-<p><code>SOCKET socket( int domain, int type, int protocol );</code> </p>
-<p>如果创建成功，则返回一个代表套接字的文件描述符。否则就返回一个 <code>INVALID_SOCKET </code> 值，并且可以调用 <code>fdError()</code> 来诊断错误原因。</p>
+<h3 id="socket-api-in-client">SOCKET API IN CLIENT</h3>
+<hr />
+<div class="Step" style="font-size: 20px; font-weight: 700;">
+第一步 创建套接字
+</div>
+<p><code>SOCKET socket( int domain, int type, int protocol );</code></p>
+<p>如果创建成功，则返回一个代表套接字的文件描述符。否则就返回一个 <code>INVALID_SOCKET</code> 值，并且可以调用 <code>fdError()</code> 来诊断错误原因。</p>
 <blockquote>
 <p><code>domain</code>是指链路层类型IPv4还是IPv6，分别书写为 <strong>AF_INET</strong> | <strong>AF_INET6</strong></p>
 <p><code>type</code>是指传输层套接字类型，共有 <strong>报文数据</strong>、<strong>流式数据</strong>、<strong>原始数据</strong> 三种可选，分别是 <strong>SOCK_DGRAM</strong> | <strong>SOCK_STREAM</strong> | <strong>SOCK_RAW</strong></p>
 <p><code>protocol</code>是指网络层协议类型，IPPROTO_TCP | IPPROTO_UDP，在套接字类型是原始数据时可以任意指定，如果是套接字类型是 <strong>SOCK_STREAM</strong>，则协议需要指定为 <strong>IPPROTO_TCP</strong></p>
 </blockquote>
-<div class="Step" style="font-size: 20px; font-weight: 700;">第二步 设定套接字参数</div>
-
+<div class="Step" style="font-size: 20px; font-weight: 700;">
+第二步 设定套接字参数
+</div>
 <p>通常在套接字创建之后，使用Pv4套接字地址数据结构 <code>sockaddr_in</code>设定参数，以下实例是下位机做客户端时的代码。</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">bzero(&amp;sin1, <span class="keyword">sizeof</span>(struct sockaddr_in));            <span class="comment">/* Set Port, IP address = IPAddrSend */</span></span><br><span class="line">sin1.sin_family = AF_INET;</span><br><span class="line">sin1.sin_len    = <span class="keyword">sizeof</span>(sin1);</span><br><span class="line">sin1.sin_addr.s_addr = inet_addr(REMOTE_IPADDR_STRING);          <span class="comment">//连接服务器的地址</span></span><br><span class="line">sin1.sin_port   = htons(TCP_CLIENT_PORT);</span><br></pre></td></tr></table></figure>
-
-
-
-<div class="Step" style="font-size: 20px; font-weight: 700;">第三步 连接</div>
-
+<div class="Step" style="font-size: 20px; font-weight: 700;">
+第三步 连接
+</div>
 <p><code>int    connect( SOCKET s, PSA pName, int len );</code></p>
 <blockquote>
-<p><code>PSA</code> 是 <code>sockaddr </code> 结构体的 <em><strong>指针</strong></em> 对象类型，定义为 <code>typedef struct sockaddr      *PSA;</code></p>
-<p>另，<code>SA</code> 是 <code>sockaddr </code> 结构体的对象类型。</p>
+<p><code>PSA</code> 是 <code>sockaddr</code> 结构体的 <strong><em>指针</em></strong> 对象类型，定义为 <code>typedef struct sockaddr      *PSA;</code></p>
+<p>另，<code>SA</code> 是 <code>sockaddr</code> 结构体的对象类型。</p>
 </blockquote>
 <p><code>sockaddr</code> 的定义如下：</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 通用套接字地址存储数据结构</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">sockaddr</span> &#123;</span></span><br><span class="line">    UINT8    sa_len;            <span class="comment">//套接字长度</span></span><br><span class="line">    UINT8    sa_family;         <span class="comment">//套接字类型，AF_INET</span></span><br><span class="line">    <span class="keyword">char</span>     sa_data[<span class="number">14</span>];       <span class="comment">//套接字数据</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
 <p>实际连接时，通常设置一定时间的任务休眠以等待网络稳定后再行连接，且连接次数自定。</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span>(count = <span class="number">0</span>; count &lt; <span class="number">30</span>; count ++)&#123;</span><br><span class="line">        res = connect(stcp, (PSA) &amp;sin1, <span class="keyword">sizeof</span>(sin1));</span><br><span class="line">        <span class="keyword">if</span>(res &lt; <span class="number">0</span>)&#123;</span><br><span class="line">            ConsoleWarning(<span class="string">&quot;网络连接失败！\n&quot;</span>);</span><br><span class="line">            TaskSleep(SLEEPTIME);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span>&#123;</span><br><span class="line">            ConsoleWarning(<span class="string">&quot;网络连接成功！\n&quot;</span>);</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
 <p>通过特定配置设置，打开网络。</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">_extern <span class="keyword">int</span> <span class="title">NC_NetStart</span><span class="params">( HANDLE hCfg,   <span class="keyword">void</span> (*NetStart)(),   <span class="keyword">void</span> (*NetStop)(),    <span class="keyword">void</span> (*NetIP)(IPN,uint,uint) )</span></span>;</span><br></pre></td></tr></table></figure>
-
-
-
-
-
-<h4 id="套接字"><a href="#套接字" class="headerlink" title="套接字"></a>套接字</h4><p>HANDLE  is a <em>void pointer*</em> defined in the <code>&lt;usertype.h&gt;</code>.</p>
+<h4 id="套接字">套接字</h4>
+<p>HANDLE is a <em>void pointer*</em> defined in the <code>&lt;usertype.h&gt;</code>.</p>
 <blockquote>
 <p>在<code>&lt;socket.h&gt;</code>中，<strong>SOCKET</strong>类型其实是个HANDLE，而<strong>HANDLE</strong>其实是<code>void*</code>数据。</p>
 <p><code>typedef HANDLE           SOCKET;          // OS Socket Type</code></p>
-<p><code>typedef void *         HANDLE;    </code></p>
+<p><code>typedef void *         HANDLE;</code></p>
 </blockquote>
-<h4 id="文件描述符"><a href="#文件描述符" class="headerlink" title="文件描述符"></a>文件描述符</h4><blockquote>
-<p>文件描述符，即 <em><strong>File Descriptor</strong></em>，其实一个是 <code>void* </code>类型</p>
+<h4 id="文件描述符">文件描述符</h4>
+<blockquote>
+<p>文件描述符，即 <strong><em>File Descriptor</em></strong>，其实一个是 <code>void*</code>类型</p>
 </blockquote>
-<h5 id="FD集"><a href="#FD集" class="headerlink" title="FD集"></a>FD集</h5><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">// Select uses bit masks of file descriptors.  These macros</span></span><br><span class="line"><span class="comment">// manipulate handle lists. FD_SETSIZE can be modified as</span></span><br><span class="line"><span class="comment">// needed.</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> FD_SETSIZE      16</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> _<span class="title">fd_set</span> &#123;</span></span><br><span class="line">    uint    count;</span><br><span class="line">    HANDLE  fd[FD_SETSIZE];</span><br><span class="line">&#125; fd_set;</span><br></pre></td></tr></table></figure>
-
-
-
-
-
-<h4 id="字节顺序转换函数"><a href="#字节顺序转换函数" class="headerlink" title="字节顺序转换函数"></a>字节顺序转换函数</h4><p>在C/C++写网络程序的时候，往往会遇到字节的网络顺序和主机顺序的问题。这是就可能用到<code>htons()</code> ,  <code>ntohl()</code> ,  <code>ntohs()</code>，<code>htons()</code>这4个函数。</p>
+<h5 id="fd集">FD集</h5>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">// Select uses bit masks of file descriptors.  These macros</span></span><br><span class="line"><span class="comment">// manipulate handle lists. FD_SETSIZE can be modified as</span></span><br><span class="line"><span class="comment">// needed.</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> FD_SETSIZE      16</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> _<span class="title">fd_set</span> &#123;</span></span><br><span class="line">    uint    count;</span><br><span class="line">    HANDLE  fd[FD_SETSIZE];</span><br><span class="line">&#125; fd_set;</span><br></pre></td></tr></table></figure>
+<h4 id="字节顺序转换函数">字节顺序转换函数</h4>
+<p>在C/C++写网络程序的时候，往往会遇到字节的网络顺序和主机顺序的问题。这是就可能用到<code>htons()</code> , <code>ntohl()</code> , <code>ntohs()</code>，<code>htons()</code>这4个函数。</p>
 <p>网络字节顺序与本地字节顺序之间的转换函数：</p>
 <blockquote>
-<p><code>htonl()</code>–”Host to Network Long”<br><code>ntohl()</code>–”Network to Host Long”<br><code>htons()</code>–”Host to Network Short”<br><code>ntohs()</code>–”Network to Host Short”</p>
+<p><code>htonl()</code>--"Host to Network Long" <code>ntohl()</code>--"Network to Host Long" <code>htons()</code>--"Host to Network Short" <code>ntohs()</code>--"Network to Host Short"</p>
 </blockquote>
-<p><em><strong>网络字节顺序(NBO, Network Byte Order):</strong></em> 按从高到低的顺序存储，在网络上使用统一的网络字节顺序，可以避免兼容性问题。</p>
-<p><em><strong>主机字节顺序(HBO, Host Byte Order):</strong></em> 不同的机器HBO不相同，与CPU设计有关，数据的顺序是由cpu决定的,而与操作系统无关。</p>
+<p><strong><em>网络字节顺序(NBO, Network Byte Order):</em></strong> 按从高到低的顺序存储，在网络上使用统一的网络字节顺序，可以避免兼容性问题。</p>
+<p><strong><em>主机字节顺序(HBO, Host Byte Order):</em></strong> 不同的机器HBO不相同，与CPU设计有关，数据的顺序是由cpu决定的,而与操作系统无关。</p>
 <blockquote>
-<p>如 Intel x86结构下, short型数 <code>0x1234</code> 表示为<code>34 12</code>, int型数 <code>0x12345678</code> 表示为<code> 78 56 34 12</code></p>
+<p>如 Intel x86结构下, short型数 <code>0x1234</code> 表示为<code>34 12</code>, int型数 <code>0x12345678</code> 表示为<code>78 56 34 12</code></p>
 <p>如 IBM power PC结构下, short型数<code>0x1234</code> 表示为 <code>12 34</code> , int型数 <code>0x12345678</code> 表示为 <code>12 34 56 78</code></p>
 </blockquote>
 <p>由于这个原因不同体系结构的机器之间无法通信,所以要转换成一种约定的数序,也就是网络字节顺序,其实就是如同power pc那样的顺序. 在PC开发中有ntohl和htonl函数可以用来进行网络字节和主机字节的转换.</p>
-<h4 id="timeval结构体"><a href="#timeval结构体" class="headerlink" title="timeval结构体"></a>timeval结构体</h4><blockquote>
+<h4 id="timeval结构体">timeval结构体</h4>
+<blockquote>
 <p>Ti SysBios中，<code>timeval</code> 是在 <code>&lt;SOCKET.H&gt;</code> 中被定义，被 <code>fdSelect()</code> 使用的；</p>
 </blockquote>
 <p>结构体定义与Linux C中的一致</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">timeval</span> &#123;</span></span><br><span class="line">    INT32 tv_sec;	<span class="comment">//Second Level</span></span><br><span class="line">    INT32 tv_usec;	<span class="comment">//Microsecond Level</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-<p>在 <em><strong>Linux C</strong></em> 中，<code>timeval</code> 与 <code>timezone</code> 结构体都隶属于 <code>sys/time.h</code> 头文件</p>
+<p>在 <strong><em>Linux C</em></strong> 中，<code>timeval</code> 与 <code>timezone</code> 结构体都隶属于 <code>sys/time.h</code> 头文件</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">timezone</span>&#123;</span></span><br><span class="line"><span class="keyword">int</span> tz_minuteswest;</span><br><span class="line"><span class="keyword">int</span> tz_dsttime;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
 <p><strong>Linux C 中对 TIMEVAL 使用的补充资料：</strong></p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">gettimeofday</span><span class="params">(struct timeval*tv, struct timezone *tz)</span></span>;</span><br></pre></td></tr></table></figure>
-
 <p>其参数tv是保存获取时间结果的结构体，参数tz用于保存时区结果，tz 参数若不使用则传入NULL即可。</p>
 <p><code>gettimeofday()</code> 使用举例-1：</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">timeval</span> <span class="title">tv_begin</span>, <span class="title">tv_end</span> ;</span></span><br><span class="line">gettimeofday(&amp;tv_begin, <span class="literal">NULL</span>);</span><br><span class="line">foo();</span><br><span class="line">gettimeofday(&amp;tv_end, <span class="literal">NULL</span>);</span><br></pre></td></tr></table></figure>
-
-
-
 <p><code>gettimeofday()</code> 使用举例-2：</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc,<span class="keyword">char</span> * argv[])</span></span></span><br><span class="line"><span class="function"> </span>&#123;</span><br><span class="line">  <span class="class"><span class="keyword">struct</span> <span class="title">timeval</span> <span class="title">tv</span>;</span></span><br><span class="line">   <span class="keyword">while</span>(<span class="number">1</span>)</span><br><span class="line">  &#123;</span><br><span class="line">      gettimeofday(&amp;tv,<span class="literal">NULL</span>);</span><br><span class="line">      <span class="built_in">printf</span>(<span class="string">&quot;time %u:%u\n&quot;</span>,tv.tv_sec,tv.tv_usec);</span><br><span class="line">      sleep(<span class="number">2</span>);</span><br><span class="line">    &#125;</span><br><span class="line">   <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
-
-<p><em>源自：<a target="_blank" rel="noopener" href="http://www.cnblogs.com/Neddy/archive/2012/01/31/2332957.html">http://www.cnblogs.com/Neddy/archive/2012/01/31/2332957.html</a></em></p>
-<h3 id="SOCKET-API-IN-SERVER"><a href="#SOCKET-API-IN-SERVER" class="headerlink" title="SOCKET API IN SERVER"></a>SOCKET API IN SERVER</h3><div class="Step" style="font-size: 20px; font-weight: 700;">第一步 创建套接字</div>
-
+<p><em>源自：http://www.cnblogs.com/Neddy/archive/2012/01/31/2332957.html</em></p>
+<h3 id="socket-api-in-server">SOCKET API IN SERVER</h3>
+<div class="Step" style="font-size: 20px; font-weight: 700;">
+第一步 创建套接字
+</div>
 <p>同client，略</p>
-<div class="Step" style="font-size: 20px; font-weight: 700;">第二步 监听套接字</div>
-
-<p><code>int    listen( SOCKET s, int maxcon );</code>    </p>
+<div class="Step" style="font-size: 20px; font-weight: 700;">
+第二步 监听套接字
+</div>
+<p><code>int    listen( SOCKET s, int maxcon );</code></p>
 <blockquote>
-<p> <code>maxcon</code> 参数用于定义最大的阻塞数，如果阻塞值最高，则会发送一个 <code>ECONNREFUSED</code> 错误给客户端</p>
+<p><code>maxcon</code> 参数用于定义最大的阻塞数，如果阻塞值最高，则会发送一个 <code>ECONNREFUSED</code> 错误给客户端</p>
 </blockquote>
 <ul>
-<li><p><code>listen()</code> 监听套接字上的连接请求。为了连接请求，需要先由<code>socket()</code> 函数创建套接字。</p>
-</li>
-<li><p><code>listen()</code> 函数用于等待设备接入并声明有限接入数的队列。</p>
-</li>
-<li><p>新连接接入时需要调用 <code>accept()</code> 函数。</p>
-</li>
+<li><p><code>listen()</code> 监听套接字上的连接请求。为了连接请求，需要先由<code>socket()</code> 函数创建套接字。</p></li>
+<li><p><code>listen()</code> 函数用于等待设备接入并声明有限接入数的队列。</p></li>
+<li><p>新连接接入时需要调用 <code>accept()</code> 函数。</p></li>
 </ul>
-<div class="Step" style="font-size: 20px; font-weight: 700;">第三步 从套接字接收数据</div>
-
+<div class="Step" style="font-size: 20px; font-weight: 700;">
+第三步 从套接字接收数据
+</div>
 <p><code>int    recv( SOCKET s, void *pbuf, int size, int flags );</code></p>
 <blockquote>
 <p><code>pbuf</code> 参数用于储存数据</p>
@@ -788,99 +808,83 @@
 <p><code>flags</code> 为接收不到数据时的行为定义</p>
 </blockquote>
 <table>
+<colgroup>
+<col style="width: 16%" />
+<col style="width: 83%" />
+</colgroup>
 <thead>
-<tr>
+<tr class="header">
 <th>FLAGS</th>
 <th>CONDITIONS</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr class="odd">
 <td>MSG_DONTWAIT</td>
 <td>Requests that the operation not block when no data is available</td>
 </tr>
-<tr>
+<tr class="even">
 <td>MSG_OOB</td>
 <td>Requests receipt of out-of-band data that would not be received in the normal data stream. Some protocols place expedited data at the head of the normal data queue, and thus, this flag cannot be used with such protocols.</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>MSG_PEEK</td>
 <td>Causes the receive operation to return data from the beginning of the receive queue without removing that data from the queue. Thus, a subsequent receive call will return the same data.</td>
 </tr>
-<tr>
+<tr class="even">
 <td>MSG_WAITALL</td>
 <td>Requests that the operation block until the full request is satisfied. However, the call may still return less data than requested if an error or disconnect occurs, or the next data to be received is of a different type than that returned.</td>
 </tr>
-</tbody></table>
-<h3 id="SOCKET-API-IN-SERVER-LINUX-C"><a href="#SOCKET-API-IN-SERVER-LINUX-C" class="headerlink" title="SOCKET API IN SERVER (LINUX C)"></a>SOCKET API IN SERVER (LINUX C)</h3><div class="Step" style="font-size: 20px; font-weight: 700;">第一步 创建套接字</div>
-
+</tbody>
+</table>
+<h3 id="socket-api-in-server-linux-c">SOCKET API IN SERVER (LINUX C)</h3>
+<div class="Step" style="font-size: 20px; font-weight: 700;">
+第一步 创建套接字
+</div>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> servSock;  <span class="comment">//Socket descriptor for server</span></span><br><span class="line"><span class="keyword">if</span>( ( servSock = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP ) ) &lt; <span class="number">0</span> ) <span class="built_in">printf</span>(<span class="string">&quot;socket() failed.\n&quot;</span>);</span><br></pre></td></tr></table></figure>
-
-
-
-<div class="Step" style="font-size: 20px; font-weight: 700;">第二步 套接字地址初始化</div>
-
+<div class="Step" style="font-size: 20px; font-weight: 700;">
+第二步 套接字地址初始化
+</div>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">sockaddr_in</span> <span class="title">servAddr</span>;</span></span><br><span class="line"><span class="built_in">memset</span>(&amp;servAddr, <span class="number">0</span>, <span class="keyword">sizeof</span>( servAddr ) );</span><br><span class="line">servAddr.sin_family = AF_INET;</span><br><span class="line">servAddr.sin_addr.s_addr = htonl( INADDR_ANY );</span><br><span class="line">servAddr.sin_port = htons( servPort );</span><br></pre></td></tr></table></figure>
-
-
-
-<div class="Step" style="font-size: 20px; font-weight: 700;">第三步 绑定套接字</div>
-
+<div class="Step" style="font-size: 20px; font-weight: 700;">
+第三步 绑定套接字
+</div>
 <p><strong>注意：</strong> <strong>客户端</strong>把服务器的地址提供给 <code>connect()</code> 以供连接至服务器，而 <strong>服务器</strong> 必须将自己的地址指定给 <code>bind()</code> 进行绑定。</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>( ( bind( servSock, (struct sockaddr*) &amp;servAddr, <span class="keyword">sizeof</span>( servAddr ) ) ) &lt; <span class="number">0</span>) <span class="built_in">printf</span>(<span class="string">&quot;bind() failed.\n&quot;</span>);</span><br></pre></td></tr></table></figure>
-
-
-
-<div class="Step" style="font-size: 20px; font-weight: 700;">第四步 监听套接字</div>
-
+<div class="Step" style="font-size: 20px; font-weight: 700;">
+第四步 监听套接字
+</div>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">short</span> MAXPENDING = <span class="number">5</span>;</span><br><span class="line"><span class="keyword">if</span>( ( listen( servSock, MAXPENDING ) ) &lt; <span class="number">0</span> ) <span class="built_in">printf</span>(<span class="string">&quot;listen() failed.\n&quot;</span>);</span><br></pre></td></tr></table></figure>
-
-
-
-<div class="Step" style="font-size: 20px; font-weight: 700;">第四步 处理程序 <div>
+<div class="Step" style="font-size: 20px; font-weight: 700;">
+第四步 处理程序
+<div>
 
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">    <span class="keyword">for</span>(;;)&#123;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">sockaaddr_in</span> <span class="title">cintAddr</span>;</span></span><br><span class="line">    <span class="keyword">socklen_t</span> clntAddrLen = <span class="keyword">sizeof</span>( clntAddr );</span><br><span class="line">    <span class="keyword">int</span> clntSock = accept( servSock, (struct sockaddr*)&amp;clntAddr, &amp;clntAddrLen );</span><br><span class="line">    <span class="keyword">if</span>( clntSock &lt; <span class="number">0</span> ) <span class="built_in">printf</span>(<span class="string">&quot;accept() failed.\n&quot;</span>);</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">char</span> clntName[ INET_ADDRSTRLEN ];</span><br><span class="line">    <span class="keyword">if</span>( inet_ntop( AF_INET, &amp;clntAddr.sin_addr.s_addr, clntName, <span class="keyword">sizeof</span>( clntName ) ) != <span class="literal">NULL</span> ) <span class="built_in">printf</span>(<span class="string">&quot;Handling client %s/%d.\n&quot;</span>, clntName, ntohs( clntAddr.sin_port ));</span><br><span class="line">    <span class="keyword">else</span> <span class="built_in">printf</span>(<span class="string">&quot;Unable to get client address.\n&quot;</span>);</span><br><span class="line">    </span><br><span class="line">    HandleTCPClient(clntSock);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-
-
-
-
-
-
-
-
-<h3 id="Daemon-API"><a href="#Daemon-API" class="headerlink" title="Daemon API"></a>Daemon API</h3><p>DAEMON，即TCP/UDP Server Daemon Support。</p>
+<h3 id="daemon-api">Daemon API</h3>
+<p>DAEMON，即TCP/UDP Server Daemon Support。</p>
 <p>A server daemon is a <strong>single network task</strong> that <strong>monitors the socket status of multiple network servers</strong>. When activity is detected, the <strong>daemon creates a task thread specifically to handle the new activity</strong>. This is more efficient than having multiple servers, <strong>each with their own listening thread</strong>.</p>
 <p>要使用服务器守护，首先要创建入口(entry)，创建成功时会返回一个句柄，失败则返回NULL。</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> *<span class="title">DaemonNew</span><span class="params">(<span class="keyword">uint32_t</span> Type, <span class="keyword">uint32_t</span> LocalAddress, <span class="keyword">uint32_t</span> LocalPort, <span class="keyword">int</span>(*pCb)(SOCKET,<span class="keyword">uint32_t</span>), </span></span></span><br><span class="line"><span class="function"><span class="params">                              <span class="keyword">uint32_t</span> Priority, <span class="keyword">uint32_t</span> StackSize, <span class="keyword">uint32_t</span> Argument, <span class="keyword">uint32_t</span> MaxSpawn)</span></span>;</span><br></pre></td></tr></table></figure>
-
 <blockquote>
-<p><code>Type</code> Socket type (SOCK_STREAM, SOCK_STREAMNC, or SOCK_DGRAM)<br><code>LocalAddress</code> Local IP address (set to NULL for wildcard)<br><code>LocalPort</code> Local Port to serve (cannot be NULL)<br><code>pCb</code> Pointer to callback to handle server event (connection or activity)<br><code>Priority</code> Priority of new task to create for callback function<br><code>StackSize</code> Stack size of new task to create for callback function<br><code>Argument</code> Argument (besides socket) to pass to callback function<br><code>MaxSpawn</code> Maximum number of callback function instances (must be 1 for UDP)</p>
+<p><code>Type</code> Socket type (SOCK_STREAM, SOCK_STREAMNC, or SOCK_DGRAM) <code>LocalAddress</code> Local IP address (set to NULL for wildcard) <code>LocalPort</code> Local Port to serve (cannot be NULL) <code>pCb</code> Pointer to callback to handle server event (connection or activity) <code>Priority</code> Priority of new task to create for callback function <code>StackSize</code> Stack size of new task to create for callback function <code>Argument</code> Argument (besides socket) to pass to callback function <code>MaxSpawn</code> Maximum number of callback function instances (must be 1 for UDP)</p>
 </blockquote>
 <p>在TCP环境中，当新连接稳定时，新任务线程会被创建，套接字Session会被打开。在新的任务线程上，用户的回调函数会被调用以供新连接上的套接字和调用的指定参数使用。回调函数可以一直维护套接字和任务线程。一旦完成连接它将从回调任务中返回。该任务能够判断是否关闭套接字（或翻译成：该任务能够在需要时关闭套接字）。</p>
-<p>In the case of TCP, when a new connection is established, a new task thread is created, and a socket session is opened. Then the user’s callback function is called on the new task thread, being supplied with both the socket to the new connection and the caller specified argument (as supplied to DaemonNew()). The callback function can keep the socket and task thread for as long as necessary. It returns from the callback once it is done with the connection. The function can choose to close the socket if desired. The return code informs the daemon whether the socket has been closed (0) or is still open (1).</p>
-<h2 id="NETCFG-H"><a href="#NETCFG-H" class="headerlink" title="NETCFG.H"></a>NETCFG.H</h2><blockquote>
+<p>In the case of TCP, when a new connection is established, a new task thread is created, and a socket session is opened. Then the user's callback function is called on the new task thread, being supplied with both the socket to the new connection and the caller specified argument (as supplied to DaemonNew()). The callback function can keep the socket and task thread for as long as necessary. It returns from the callback once it is done with the connection. The function can choose to close the socket if desired. The return code informs the daemon whether the socket has been closed (0) or is still open (1).</p>
+<h2 id="netcfg.h">NETCFG.H</h2>
+<blockquote>
 <p><code>CI</code> means <code>Configuration Item</code> , and <code>CFG</code> means <code>Configuration</code> .</p>
 </blockquote>
 <p>Data-type <code>UINT32</code> and <code>IPN</code> are both defined in the header file <code>&lt;usertype.h&gt;</code> .</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="keyword">unsigned</span> <span class="keyword">int</span>   UINT32;</span><br><span class="line"><span class="keyword">typedef</span> UINT32         IPN;             <span class="comment">// IP Address in NETWORK format</span></span><br></pre></td></tr></table></figure>
-
-<p>Structure  <code>CI_IPNET</code>  and structure  <code>CI_ROUTE</code>  are different from each other. </p>
-<p>Structure  <code>CI_IPNET</code>  is as follow:</p>
+<p>Structure <code>CI_IPNET</code> and structure <code>CI_ROUTE</code> are different from each other.</p>
+<p>Structure <code>CI_IPNET</code> is as follow:</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// IPNet Instance</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> _<span class="title">ci_ipnet</span> &#123;</span></span><br><span class="line">        uint    NetType;                <span class="comment">// 网络地址类型标志</span></span><br><span class="line">        IPN     IPAddr;                 <span class="comment">// 32bits地址((2^8)*4)</span></span><br><span class="line">        IPN     IPMask;                 <span class="comment">// 子网掩码</span></span><br><span class="line">        HANDLE  hBind;                  <span class="comment">// 绑定句柄</span></span><br><span class="line">        <span class="keyword">char</span>    Domain[CFG_DOMAIN_MAX]; <span class="comment">// 域名</span></span><br><span class="line">        &#125; CI_IPNET;</span><br></pre></td></tr></table></figure>
-
-
-
-<p>Structure  <code>CI_ROUTE</code>  is as follow:</p>
+<p>Structure <code>CI_ROUTE</code> is as follow:</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Route Instance</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> _<span class="title">ci_route</span> &#123;</span></span><br><span class="line">        IPN     IPDestAddr;             <span class="comment">// 目的地址</span></span><br><span class="line">        IPN     IPDestMask;             <span class="comment">// 目的地址掩码</span></span><br><span class="line">        IPN     IPGateAddr;             <span class="comment">// 默认网关地址</span></span><br><span class="line">        HANDLE  hRoute;                 <span class="comment">// Route handle (resets to NULL)</span></span><br><span class="line">        &#125; CI_ROUTE;</span><br></pre></td></tr></table></figure>
-
-
-
-
-
-<h2 id="CONFIGIF-H"><a href="#CONFIGIF-H" class="headerlink" title="CONFIGIF.H"></a>CONFIGIF.H</h2><p>请先阅读 <em>&lt;spru524k.pdf&gt;</em></p>
-<h3 id="Configuration-特性"><a href="#Configuration-特性" class="headerlink" title="Configuration 特性"></a>Configuration 特性</h3><ul>
+<h2 id="configif.h">CONFIGIF.H</h2>
+<p>请先阅读 <em>&lt;spru524k.pdf&gt;</em></p>
+<h3 id="configuration-特性">Configuration 特性</h3>
+<ul>
 <li>任何对（已激活）配置的作用都将立即生效。</li>
 </ul>
 <blockquote>
@@ -899,7 +903,7 @@
 <p><em>Both the configurations and configuration entries are referenced by a generic handle. Configuration functions (named as <code>CfgXxx()</code>) take a configuration handle parameter, while configuration entry functions (name as <code>CfgEntryXxx()</code>) take a configuration entry handle parameter. These handles are not interchangeable.</em></p>
 </blockquote>
 <ul>
-<li>配置条目(Entry)包含着*(contains)* 一个内部引用计数(Internal Reference Count)，即如果有任务想使用它，它就不能被其他任务销毁。配置条目被引用一次，引用计数就会加一。</li>
+<li>配置条目(Entry)包含着<em>(contains)</em> 一个内部引用计数(Internal Reference Count)，即如果有任务想使用它，它就不能被其他任务销毁。配置条目被引用一次，引用计数就会加一。</li>
 </ul>
 <blockquote>
 <p><em>Configuration entry handles are referenced. This means that each handle contains an internal reference count so that the handle is not destroyed by one task while another task expects it to stay valid. Functions that return a configuration entry handle supply a referenced handle in that its reference count has already been incremented for the caller.</em></p>
@@ -913,33 +917,29 @@
 <p><code>IF</code> 是指 Interface。<code>ifconfig</code> 是unix系统上的ip接口查看语句。而 <code>CONFIGIF</code> 是配置管理接口的意思。</p>
 <p><code>DeRef</code> ，即 <em>Dereference</em> 之意。</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">_extern <span class="keyword">int</span>  <span class="title">CfgAddEntry</span><span class="params">( HANDLE hCfg, uint Tag, uint Item, uint Mode, <span class="keyword">int</span> Size, UINT8 *pData, HANDLE *phCfgEntry )</span></span>;</span><br></pre></td></tr></table></figure>
-
 <blockquote>
 <p><code>HANDLE hCfg</code></p>
 <p><code>uint Tag</code></p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Defined Configuration Tags</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> CFGTAG_OS               0x0001          <span class="comment">// OS Configuration</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> CFGTAG_IP               0x0002          <span class="comment">// IP Stack Configuration</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> CFGTAG_SERVICE          0x0003          <span class="comment">// Service</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> CFGTAG_IPNET            0x0004          <span class="comment">// IP Network</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> CFGTAG_ROUTE            0x0005          <span class="comment">// Gateway Route</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> CFGTAG_CLIENT           0x0006          <span class="comment">// DHCPS Client</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> CFGTAG_SYSINFO          0x0007          <span class="comment">// System Information</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> CFGTAG_ACCT             0x0008          <span class="comment">// User Account</span></span></span><br></pre></td></tr></table></figure>
-
 <p><code>uint Item</code></p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">// Currently Used DHCP Compatible Items</span></span><br><span class="line"><span class="comment">// Multiple instances are always to be stored as multiple config entries, not a concatenated byte string in a single config entry.</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> CFGITEM_DHCP_DOMAINNAMESERVER   6       <span class="comment">// Stack&#x27;s DNS servers</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> CFGITEM_DHCP_HOSTNAME           12      <span class="comment">// Stack&#x27;s host name</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> CFGITEM_DHCP_NBNS               44      <span class="comment">// Stack&#x27;s NBNS servers</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> CFGITEM_DHCP_CLIENT_OPTION		61		<span class="comment">// Stack DHCP Client Identifier</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> CFGITEM_SYSINFO_REALM1          256     <span class="comment">// Realm Name 1 (max 31 chars)</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> CFGITEM_SYSINFO_REALM2          257     <span class="comment">// Realm Name 2 (max 31 chars)</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> CFGITEM_SYSINFO_REALM3          258     <span class="comment">// Realm Name 3 (max 31 chars)</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> CFGITEM_SYSINFO_REALM4          259     <span class="comment">// Realm Name 4 (max 31 chars)</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> CFGITEM_SYSINFO_REALMPPP        260     <span class="comment">// Realm Name PPP (max 31 chars)</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> CFGITEM_SYSINFO_EVALCALLBACK    261    <span class="comment">// Callback function to notify</span></span></span><br><span class="line">                                               <span class="comment">// application 5 min before</span></span><br><span class="line">                                               <span class="comment">// end of stack evaluation period         </span></span><br></pre></td></tr></table></figure>
-
 <p><code>uint Mode</code></p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Add Entry Flags</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> CFG_ADDMODE_UNIQUE      0x0001  <span class="comment">// Replace all previous instances</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> CFG_ADDMODE_DUPLICATE   0x0002  <span class="comment">// Allow duplicate data entry</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> CFG_ADDMODE_NOSAVE      0x0004  <span class="comment">// Don&#x27;t include this entry in CfgSave</span></span></span><br></pre></td></tr></table></figure>
-
-
 </blockquote>
-<h1 id="Socket-in-Windows"><a href="#Socket-in-Windows" class="headerlink" title="Socket in Windows"></a>Socket in Windows</h1><p>Windows Sockets可以保证应用程序在任何支持Windows Sockets API 的网络内正常通信。</p>
+<h1 id="socket-in-windows">Socket in Windows</h1>
+<p>Windows Sockets可以保证应用程序在任何支持Windows Sockets API 的网络内正常通信。</p>
 <p>流式Socket：基于TCP，数据无差错且无重复发送；</p>
 <p>数据报Socket：基于UDP，不能保证数据按发送顺序接收，可能丢失或重复。</p>
 <p>真正与客户端Socket对象通信都不是服务器 Socket对象，而是新创建的“临时”Socket对象</p>
 <blockquote>
 <p>构造函数：CAsyncSocket();</p>
-<p>Create();【成功返回非0，失败返回0】            //SOCK_DGRAM 数据报</p>
-<p>GetSockName();                //用于获取Socket对象的本地名称（自己的信息），ip地址及端口号，或</p>
-<p>GetPeerName();                //用于获取连接的Socket对象名称（对方的信息）</p>
-<p>Listen();                              //面向流式使用，参数范围1~5，表示等待连接队列的最大长度</p>
-<p>Accept();                            //用以接收等待队列中存在的连接请求</p>
-<p>Connect();                         //建立连接请求函数</p>
-<p>Send();                              //</p>
+<p>Create();【成功返回非0，失败返回0】 //SOCK_DGRAM 数据报</p>
+<p>GetSockName(); //用于获取Socket对象的本地名称（自己的信息），ip地址及端口号，或</p>
+<p>GetPeerName(); //用于获取连接的Socket对象名称（对方的信息）</p>
+<p>Listen(); //面向流式使用，参数范围1~5，表示等待连接队列的最大长度</p>
+<p>Accept(); //用以接收等待队列中存在的连接请求</p>
+<p>Connect(); //建立连接请求函数</p>
+<p>Send(); //</p>
 </blockquote>
 <p>除字符型与布尔型外，其余整型用于表示（可能）不同尺寸的整数。</p>
 <p>C++规定一个int（最小16bit）至少和一个short（16bit）一样大，一个long（最小32bit）至少和一个int一样大，一个long long（64bit）至少和一个long一样大。</p>
@@ -947,16 +947,18 @@
 <p>尽管字符型char有三种（char、signed char、unsigned char），但是字符的表现形式只有2种，signed或unsigned。类型char实际上会表现为其中一种，具体由编译器决定。</p>
 <p>字面值常量</p>
 <blockquote>
-<p>20           //十进制</p>
-<p>020        //0开头的为8进制</p>
-<p>0x20      //0x开头的为16进制</p>
+<p>20 //十进制</p>
+<p>020 //0开头的为8进制</p>
+<p>0x20 //0x开头的为16进制</p>
 </blockquote>
-<h1 id="SEND-BLOCKING"><a href="#SEND-BLOCKING" class="headerlink" title="SEND() BLOCKING"></a>SEND() BLOCKING</h1><blockquote>
+<h1 id="send-blocking">SEND() BLOCKING</h1>
+<blockquote>
 <p>In some cases where send() would block, it instead returns without copying all of the data as requested.</p>
 <p>In this case, the return value of send() indicates how many bytes were actually copied. One example of this is if your program is blocking on send() and then receives a signal from the operating system.</p>
 <p>In these cases, it is up to caller to try again with any remaining data.</p>
 </blockquote>
-<h1 id="套接字及流输入输出接口-IO"><a href="#套接字及流输入输出接口-IO" class="headerlink" title="套接字及流输入输出接口(IO)"></a>套接字及流输入输出接口(IO)</h1><p><strong>TOPIC</strong></p>
+<h1 id="套接字及流输入输出接口io">套接字及流输入输出接口(IO)</h1>
+<p><strong>TOPIC</strong></p>
 <blockquote>
 <ul>
 <li>文件描述符环境</li>
@@ -975,15 +977,13 @@
 <p>使用文件描述符前，需要一个任务首先创建一个文件描述符表格（FD table / session）。只需要在应用层调用文件描述符函数 <code>fdOpenSession()</code> 来完成。</p>
 <p>当任务结束使用FD接口，或被关闭时，调用 <code>fdCloseSession()</code> 。</p>
 <p>为确保堆栈操作正确，每个任务在使用FD相关的函数前，都应创建FD session，在使用完毕后关闭它。</p>
-<h2 id="Open-FD-Session"><a href="#Open-FD-Session" class="headerlink" title="Open FD Session"></a>Open FD Session</h2><ol>
-<li><p>最简单的方式就是用 <code>TaskCreate()</code> ，他可以（自动）在内部打开和关闭FD session。</p>
-</li>
-<li><p>另一种方式就是在函数调用的最开头进行session创建，在函数结束的末尾进行session关闭。如下：</p>
-</li>
+<h2 id="open-fd-session">Open FD Session</h2>
+<ol type="1">
+<li><p>最简单的方式就是用 <code>TaskCreate()</code> ，他可以（自动）在内部打开和关闭FD session。</p></li>
+<li><p>另一种方式就是在函数调用的最开头进行session创建，在函数结束的末尾进行session关闭。如下：</p></li>
 </ol>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">socket_task</span><span class="params">(<span class="keyword">int</span> IPAddr, <span class="keyword">int</span> TcpPort)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">        SOCKET s;</span><br><span class="line">        <span class="comment">// Open the file session</span></span><br><span class="line">        fdOpenSession(TaskSelf());</span><br><span class="line">       <span class="comment">// &lt; socket application code &gt;</span></span><br><span class="line">        <span class="comment">// Close the file session</span></span><br><span class="line">        fdCloseSession(TaskSelf());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<ol start="3">
+<ol start="3" type="1">
 <li>另一种方式就是创建子线程。注意的是，父线程需要保证子线程的任务被执行前打开子线程的session。可通过任务优先级或信标来完成，但会增加任务创建复杂度，并不是理想方案。</li>
 <li>也可以通过让子任务调用session创建函数，并且由父线程来监控和关闭子线程门。</li>
 </ol>
@@ -993,10 +993,8 @@
 </blockquote>
 <p><code>fdPoll()</code> 远比 <code>fdSelect()</code> 来得更有效率。它轮询提供的套接字列表，并指定以毫秒为单位的超时(或使用<em>POLLINFTIM</em> 来设置无限超时)。拥有 <code>fdSelect()</code> 的优点，即对原始文件描述符列表（或者套接字）的检验不会被结果所改写，因此可以不用重建便多次使用。</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> _<span class="title">fdpollitem</span> &#123;</span></span><br><span class="line">    <span class="keyword">void</span> *fd;  <span class="comment">//the fd or socket to check</span></span><br><span class="line">    <span class="keyword">uint16_t</span> eventsRequested;  <span class="comment">//a set of flags for requested events</span></span><br><span class="line">    <span class="keyword">uint16_t</span> eventsDetected;  <span class="comment">//a set of resulting flags for a detected event</span></span><br><span class="line">&#125; FDPOLLITEM;</span><br></pre></td></tr></table></figure>
-
-
-
-<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><ol>
+<h1 id="参考">参考</h1>
+<ol type="1">
 <li><a href="man7.org">Michael Kerrisk</a></li>
 </ol>
 
@@ -1008,8 +1006,8 @@
 
     <footer class="post-footer">
           <div class="reward-container">
-  <div>感谢支持和鼓励</div>
-  <button onclick="document.querySelector('.post-reward').classList.toggle('active');">
+  <div>感谢您的支持和鼓励</div>
+  <button>
     Donate
   </button>
   <div class="post-reward">
@@ -1029,21 +1027,16 @@
               <a href="/tags/Socket/" rel="tag"># Socket</a>
           </div>
 
-    <div id="vcomment" style="margin: 20px 0 0 0"></div>
-    <script>
-        new Valine({
-            el: '#vcomment' ,
-            appId: 'vRGM12EcYxDSM2lat5qjjSeY-gzGzoHsz',
-            appKey: 'WBgAb6NTAFQ7DYtgH0uOPNNh'
-        });
-    </script>
-</body>
-
-
-
-
         
 
+  <div id="vcomments" style="margin: 1rem 0 0 0;"></div>
+  <script>
+    new Valine({
+      el: '#vcomments',
+      appId: 'vRGM12EcYxDSM2lat5qjjSeY-gzGzoHsz',
+      appKey: 'WBgAb6NTAFQ7DYtgH0uOPNNh'
+    })
+  </script>
           <div class="post-nav">
             <div class="post-nav-item">
                 <a href="/2021/01/05/Programming/C++/2021-01-05-C++/" rel="prev" title="C++">
@@ -1064,7 +1057,8 @@
 
 
 
-<script src="/js/comments.js"></script>
+
+
 </div>
   </main>
 
@@ -1087,8 +1081,8 @@
   </footer>
 
   
-  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
-<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
 
   
 
@@ -1096,10 +1090,15 @@
 
 
 
-
   
 
 
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":"enable","tags":"none","js":{"url":"https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js","integrity":"sha256-r+3itOMtGGjap0x+10hu6jW/gZCzxHsoKrOd7gyRSGY="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
 
 
 

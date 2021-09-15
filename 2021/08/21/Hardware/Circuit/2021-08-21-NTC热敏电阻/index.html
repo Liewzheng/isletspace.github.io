@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"islet.space","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.7.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+<meta name="description" content="NTC及热敏电阻 NTC（Negative Temperature Coefficient）是指 随温度上升电阻呈指数关系减小、具有负温度系数的热敏电阻现象和材料。 该类材料是利用锰、铜、硅、钴、铁、镍、锌等两种或两种以上的金属氧化物进行充分混合、成型、烧结等工艺而成的半导体陶瓷，可制成具有负温度系数（NTC）的热敏电阻。其 电阻率 和 材料常数 随材料成分比例、烧结气氛、烧结温度和结构状态不同而">
+<meta property="og:type" content="article">
+<meta property="og:title" content="NTC热敏电阻">
+<meta property="og:url" content="http://islet.space/2021/08/21/Hardware/Circuit/2021-08-21-NTC%E7%83%AD%E6%95%8F%E7%94%B5%E9%98%BB/index.html">
+<meta property="og:site_name" content="Coder的孤岛">
+<meta property="og:description" content="NTC及热敏电阻 NTC（Negative Temperature Coefficient）是指 随温度上升电阻呈指数关系减小、具有负温度系数的热敏电阻现象和材料。 该类材料是利用锰、铜、硅、钴、铁、镍、锌等两种或两种以上的金属氧化物进行充分混合、成型、烧结等工艺而成的半导体陶瓷，可制成具有负温度系数（NTC）的热敏电阻。其 电阻率 和 材料常数 随材料成分比例、烧结气氛、烧结温度和结构状态不同而">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://pic.islet.space/2021/08/image-20210821102248552.png">
+<meta property="og:image" content="https://pic.islet.space/2021/08/pIYBAF4On2WAc2XpAAC6ucLpfUY488.png">
+<meta property="og:image" content="https://pic.islet.space/2021/08/image-20210821095249164.png">
+<meta property="article:published_time" content="2021-08-21T00:40:00.000Z">
+<meta property="article:modified_time" content="2021-08-22T17:17:40.344Z">
+<meta property="article:author" content="Liewzheng">
+<meta property="article:tag" content="NTC">
+<meta property="article:tag" content="热敏电阻">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://pic.islet.space/2021/08/image-20210821102248552.png">
+
+
+<link rel="canonical" href="http://islet.space/2021/08/21/Hardware/Circuit/2021-08-21-NTC%E7%83%AD%E6%95%8F%E7%94%B5%E9%98%BB/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://islet.space/2021/08/21/Hardware/Circuit/2021-08-21-NTC%E7%83%AD%E6%95%8F%E7%94%B5%E9%98%BB/","path":"2021/08/21/Hardware/Circuit/2021-08-21-NTC热敏电阻/","title":"NTC热敏电阻"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>NTC热敏电阻 | Coder的孤岛</title>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<!-- hexo injector head_end end --></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Coder的孤岛</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">islet of the coder</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-首页"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-文章"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>文章</a></li>
+        <li class="menu-item menu-item-目录"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>目录</a></li>
+        <li class="menu-item menu-item-标签"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-简历"><a href="/resume/" rel="section"><i class="fa fa-address-card fa-fw"></i>简历</a></li>
+        <li class="menu-item menu-item-友链"><a href="/friends/" rel="section"><i class="fa fa-group fa-fw"></i>友链</a></li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#ntc%E5%8F%8A%E7%83%AD%E6%95%8F%E7%94%B5%E9%98%BB"><span class="nav-number">1.</span> <span class="nav-text">NTC及热敏电阻</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#b%E5%80%BC%E7%89%B9%E6%80%A7"><span class="nav-number">2.</span> <span class="nav-text">B值特性</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%B8%A9%E5%BA%A6%E7%B3%BB%E6%95%B0"><span class="nav-number">3.</span> <span class="nav-text">温度系数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%98%BB%E5%80%BC%E7%89%B9%E6%80%A7%E8%A1%A8"><span class="nav-number">4.</span> <span class="nav-text">阻值特性表</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A1%88%E4%BE%8B"><span class="nav-number">5.</span> <span class="nav-text">案例</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%94%B5%E6%B0%94%E7%89%B9%E6%80%A7"><span class="nav-number">5.1.</span> <span class="nav-text">电气特性</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">6.</span> <span class="nav-text">参考</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Liewzheng</p>
+  <div class="site-description" itemprop="description">笔记分享的旮旯孤岛而已</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">88</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">163</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="mailto:liewzheng@foxmail.com" title="E-Mail → mailto:liewzheng@foxmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://islet.space/2021/08/21/Hardware/Circuit/2021-08-21-NTC%E7%83%AD%E6%95%8F%E7%94%B5%E9%98%BB/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Liewzheng">
+      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coder的孤岛">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          NTC热敏电阻
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-08-21 08:40:00" itemprop="dateCreated datePublished" datetime="2021-08-21T08:40:00+08:00">2021-08-21</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2021-08-23 01:17:40" itemprop="dateModified" datetime="2021-08-23T01:17:40+08:00">2021-08-23</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Hardware/" itemprop="url" rel="index"><span itemprop="name">Hardware</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="ntc及热敏电阻">NTC及热敏电阻</h1>
+<p><strong>NTC</strong>（<em>Negative Temperature Coefficient</em>）是指 <mark>随温度上升电阻呈指数关系减小、具有负温度系数的热敏电阻现象和材料</mark>。</p>
+<p>该类材料是利用锰、铜、硅、钴、铁、镍、锌等两种或两种以上的金属氧化物进行充分混合、成型、烧结等工艺而成的半导体陶瓷，可制成具有负温度系数（NTC）的热敏电阻。其 <strong>电阻率</strong> 和 <strong>材料常数</strong> 随材料成分比例、烧结气氛、烧结温度和结构状态不同而变化。现在还出现了以碳化硅、硒化锡、氮化钽等为代表的非氧化物系NTC热敏电阻材料。</p>
+<blockquote>
+<p>1834年，科学家首次发现了硫化银有 <strong>负温度系数</strong> 的特性。</p>
+<p>1930年，科学家发现氧化亚铜-氧化铜也具有负温度系数的性能，并将之成功地运用在航空仪器的温度补偿电路中。随后，由于晶体管技术的不断发展，热敏电阻器的研究取得重大进展。</p>
+<p>1960年研制出了NTC热敏电阻器。NTC热敏电阻器广泛用于测温、控温、温度补偿等方面。</p>
+</blockquote>
+<p><strong>热敏电阻</strong> （<em>Thermistor</em>）也可作为电子线路元件用于仪表线路温度补偿和温差电偶冷端温度补偿等。利用NTC热敏电阻的自热特性可实现自动增益控制，构成RC振荡器稳幅电路，延迟电路和保护电路。在自热温度远大于环境温度时阻值还与环境的散热条件有关，因此在流速计、流量计、气体分析仪、热导分析中常利用热敏电阻这一特性，制成专用的检测元件。</p>
+<p><strong>功率型NTC热敏电阻</strong> 多用于电源抑制浪涌。抑制浪涌用NTC热敏电阻器，是一种大功率的圆片式热敏电阻器，常用于有电容器、加热器和马达启动的电子电路中。 在电路电源接通瞬间，电路中会产生比正常工作时高出许多倍的浪涌电流，而NTC热敏电阻器的初始阻值较大，可以抑制电路中过大的电流，从而保护其电源电路及负载。当电路进入正常工作状态时，热敏电阻器由于通过电流而引起阻体温度上升，电阻值下降至很小，不会影响电路的正常工作。</p>
+<h1 id="b值特性">B值特性</h1>
+<p>热敏电阻的 <strong>B值</strong>（B-value） 是NTC的属性之一，B值简单的说就是 <strong>材料系数</strong>（<em>Material Coefficient</em>）。</p>
+<p><strong>相同温度区间不同的B值</strong>，说明材料可能不一样，因为NTC热敏电阻是负温度系数温度升高阻值成规律下降，B值代表曲线的弯曲程度或者说温度的敏感指数，单位温度变化的时候阻值增幅程度就代表B值。</p>
+<p>通俗的说，即当温度降低，阻值曲线发生变化时会陡一点还是平一点。一般来说B值越大曲线越陡，当曲线越陡说明电阻值的变化就越大，相对来说就灵敏些；B值越小曲线越平，当曲线越平说明电阻值的变化就没那么大，相对来说阻值温度系数也就越小。</p>
+<p><strong>注意</strong>：B值是 <u>经由人为计算出来的</u> 逼近某款热敏电阻 <u>在某个温度区间内的</u> 温度阻值特性曲线的 常数/系数。</p>
+<p>因为B值反映的是 <strong>两个温度点之间</strong> 的阻值变化规律，可以用以下公式来计算，以每摄氏度的百分比 <code>％/°C​​</code> 为单位。 <span class="math display">\[
+B = {ln(R_{T1}) - ln(R_{T2})\over {1 \over {T_1}} -{ 1 \over T_2}}
+\]</span></p>
+<blockquote>
+<p>$ R1 $ 或 $ RT1 $：温度T1的时候零功率电阻值</p>
+<p>$ R2 $​ 或 $ RT2 $​​：温度T2的时候零功率电阻值</p>
+<p>T1 = 273.15 k + (T1℃)</p>
+<p>T2 = 273.15 k + (T2℃)</p>
+</blockquote>
+<p>除非特别指出，B值通常是在[25, 50]这个温度范围中进行测量，由 <code>T1 = 25℃（298.15K）</code> 和 <code>T2 = 50℃（323.15K）</code> 时的零功率电阻值计算而得。</p>
+<p>根据式1，若已知B值的情况下，可以得出目标温度对应的阻值，如下式2： <span class="math display">\[
+R_{T2} = R_{T1} * e^{B * ({1 \over T_2} - {1 \over T_1})}
+\]</span></p>
+<blockquote>
+<p>e = 2.718281828459045</p>
+</blockquote>
+<h1 id="温度系数">温度系数</h1>
+<p>NTC热敏电阻的 <strong>温度系数</strong> 定义为 <mark>相对于温度变化的阻值的相对变化</mark>。计算NTC <strong>热敏电阻温度系数</strong> 的最简单转换公式如下： <span class="math display">\[
+α = {-β \over T^2}
+\]</span></p>
+<blockquote>
+<p><strong>β</strong>：B常数</p>
+<p><strong>T</strong>：25摄氏度时的电阻值</p>
+</blockquote>
+<p>最终结果之所以带上负号，因为是“负温度系数”啊，不带的话就是“正温度系数”。</p>
+<h1 id="阻值特性表">阻值特性表</h1>
+<p>厂家在提供热敏电阻电气特性时都会给出B值，但并不是是就不需要阻值特性表了。</p>
+<p>使用B值并能够推算出全部想要的温度阻值，因为B值所描述的是某个温度区间内的温度和阻值关系，而热敏电阻所呈现的是温度与阻值的非线性关系，也就是说这种关系没法通过B值和公式准确描述全部温度区间的阻值关系。否则一旦不同厂家的热敏电阻其B值相同，用公式来推导那岂不是阻值全是一样。</p>
+<figure>
+<img src="https://pic.islet.space/2021/08/image-20210821102248552.png" alt="image-20210821102248552" /><figcaption aria-hidden="true">image-20210821102248552</figcaption>
+</figure>
+<div style="font-size: 0.8rem; font-weight: 900; text-align: center;">
+某温度-阻值特性表示例
+</div>
+<p>例如，[-25℃ ~ 50℃]内的B值已给出，意思就是说在25~50度这个区间用公式是完全没有问题的，超出这个范围，那么B值是不同的，所以不在这个范围用公式得出的阻值也是不对的。</p>
+<p>如下图所示，为三款B值相同的热敏电阻，然而其阻值却不同。由此可知，B值只是一个针对每款热敏电阻的某区间参数，它只反应此热敏电阻的部分特性，并不是一个严谨的参数，在实际应用中，需要提供检测温度范围内的阻值表才是正确的做法。</p>
+<figure>
+<img src="https://pic.islet.space/2021/08/pIYBAF4On2WAc2XpAAC6ucLpfUY488.png" alt="热敏电阻应用详解" /><figcaption aria-hidden="true">热敏电阻应用详解</figcaption>
+</figure>
+<p>B值的范围一般在1800K ~ 5800k，其测温点范围通常为 [25, 50]、[25, 85]、 [0, 100] 或 [0, 50]，部分厂家可以提供特殊NTC热敏电阻 <u>B值的定制</u>。</p>
+<h1 id="案例">案例</h1>
+<p>假设客户订购10,000 W热敏电阻，其热敏电阻的精度为±0.5°C。部件号为MF52A-103，B值为3950 K.25°C（298.15 K）。</p>
+<p>根据 式3 求其 <strong>热敏电阻温度系数</strong> α ： <span class="math display">\[
+α = -{3950K \over (298.15K)^2} 
+ = - 4.44 \%/℃
+\]</span> 根据热敏电阻温度系数 α 和 其器件精度求得 25℃时的温度容差为： <span class="math display">\[
+Resistance \ Tolerance\ @25℃ = α *（±0.5℃） = -4.44\%/℃ * （±0.5℃） = ± 2.22\% \ @25℃
+\]</span></p>
+<h2 id="电气特性">电气特性</h2>
+<figure>
+<img src="https://pic.islet.space/2021/08/image-20210821095249164.png" alt="image-20210821095249164" /><figcaption aria-hidden="true">image-20210821095249164</figcaption>
+</figure>
+<ul>
+<li><strong>电阻值</strong>：R25 = 50kΩ ± 2% 。即在25摄氏度下，其阻值为50k欧姆，阻值允差为百分之二。</li>
+<li><strong>B常数</strong>： B25/50 = 3950K ± 2% 。即该NTC热敏电阻的材料系数B值，在25摄氏度至50摄氏度之间的B常数为3950K，允差为百分之二。</li>
+</ul>
+<h1 id="参考">参考</h1>
+<ol type="1">
+<li><a target="_blank" rel="noopener" href="http://www.elecfans.com/yuanqijian/ptc/202001031148953.htm">热敏电阻应用与参数详解</a></li>
+<li><a target="_blank" rel="noopener" href="https://baike.baidu.com/item/NTC/16035">NTC</a></li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>感谢您的支持和鼓励</div>
+  <button>
+    Donate
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="https://photo.islet.space/2021/00/IMG_4588.JPG" alt="Liewzheng WeChat Pay">
+        <span>WeChat Pay</span>
+      </div>
+      <div>
+        <img src="https://photo.islet.space/2021/00/IMG_4590.JPG" alt="Liewzheng Alipay">
+        <span>Alipay</span>
+      </div>
+
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/NTC/" rel="tag"># NTC</a>
+              <a href="/tags/%E7%83%AD%E6%95%8F%E7%94%B5%E9%98%BB/" rel="tag"># 热敏电阻</a>
+          </div>
+
+        
+
+  <div id="vcomments" style="margin: 1rem 0 0 0;"></div>
+  <script>
+    new Valine({
+      el: '#vcomments',
+      appId: 'vRGM12EcYxDSM2lat5qjjSeY-gzGzoHsz',
+      appKey: 'WBgAb6NTAFQ7DYtgH0uOPNNh'
+    })
+  </script>
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/08/18/Communication/2021-08-18-SPI%E9%80%9A%E4%BF%A1/" rel="prev" title="SPI通信">
+                  <i class="fa fa-chevron-left"></i> SPI通信
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/08/21/Others/2021-08-21-LaTex%E5%85%AC%E5%BC%8F%E5%85%A5%E9%97%A8/" rel="next" title="LaTex公式入门">
+                  LaTex公式入门 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">粤ICP备19004822号 </a>
+  </div>
+
+<div class="copyright">
+  &copy; 2019 – 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">liewzheng</span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":"enable","tags":"none","js":{"url":"https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js","integrity":"sha256-r+3itOMtGGjap0x+10hu6jW/gZCzxHsoKrOd7gyRSGY="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>

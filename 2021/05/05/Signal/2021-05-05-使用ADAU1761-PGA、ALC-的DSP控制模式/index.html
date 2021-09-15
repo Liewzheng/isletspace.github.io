@@ -1,13 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.css">
   <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="viewport" content="width=device-width">
 <meta name="theme-color" content="#222">
 <meta name="generator" content="Hexo 5.4.0">
 
-<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
@@ -17,16 +16,16 @@
 
 
 
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
-<script class="next-config" data-name="main" type="application/json">{&quot;hostname&quot;:&quot;islet.space&quot;,&quot;root&quot;:&quot;&#x2F;&quot;,&quot;images&quot;:&quot;&#x2F;images&quot;,&quot;scheme&quot;:&quot;Gemini&quot;,&quot;version&quot;:&quot;8.3.0&quot;,&quot;exturl&quot;:false,&quot;sidebar&quot;:{&quot;position&quot;:&quot;left&quot;,&quot;display&quot;:&quot;post&quot;,&quot;padding&quot;:18,&quot;offset&quot;:12},&quot;copycode&quot;:true,&quot;bookmark&quot;:{&quot;enable&quot;:false,&quot;color&quot;:&quot;#222&quot;,&quot;save&quot;:&quot;auto&quot;},&quot;fancybox&quot;:false,&quot;mediumzoom&quot;:false,&quot;lazyload&quot;:false,&quot;pangu&quot;:false,&quot;comments&quot;:{&quot;style&quot;:&quot;tabs&quot;,&quot;active&quot;:null,&quot;storage&quot;:true,&quot;lazyload&quot;:false,&quot;nav&quot;:null},&quot;motion&quot;:{&quot;enable&quot;:true,&quot;async&quot;:false,&quot;transition&quot;:{&quot;post_block&quot;:&quot;fadeIn&quot;,&quot;post_header&quot;:&quot;fadeInDown&quot;,&quot;post_body&quot;:&quot;fadeInDown&quot;,&quot;coll_header&quot;:&quot;fadeInLeft&quot;,&quot;sidebar&quot;:&quot;fadeInUp&quot;}},&quot;prism&quot;:false,&quot;i18n&quot;:{&quot;placeholder&quot;:&quot;Searching...&quot;,&quot;empty&quot;:&quot;We didn&#39;t find any results for the search: ${query}&quot;,&quot;hits_time&quot;:&quot;${hits} results found in ${time} ms&quot;,&quot;hits&quot;:&quot;${hits} results found&quot;}}</script>
-<meta name="description" content="使用ADAU1761 PGA &#x2F; ALC的DSP控制模式ADAU1761模拟前端具有ALC（自动电平控制）功能，可根据输入信号的电平动态设置差分输入路径的增益。但是，可以绕过ALC，DSP程序可以直接控制应用于 差分输入 的增益量。 为此，一个或两个通道的差分路径需要启用和取消静音。为了启用 差分路径，还应根据需要将LDBOOST（和&#x2F;或RDBOOST）设置为0 dB或20 dB。  然后，应将A">
+<script class="next-config" data-name="main" type="application/json">{"hostname":"islet.space","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.7.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+<meta name="description" content="使用ADAU1761 PGA &#x2F; ALC的DSP控制模式 ADAU1761模拟前端具有ALC（自动电平控制）功能，可根据输入信号的电平动态设置差分输入路径的增益。但是，可以绕过ALC，DSP程序可以直接控制应用于 差分输入 的增益量。 为此，一个或两个通道的差分路径需要启用和取消静音。为了启用 差分路径，还应根据需要将LDBOOST（和&#x2F;或RDBOOST）设置为0 dB或20 dB。  然后，应将">
 <meta property="og:type" content="article">
 <meta property="og:title" content="使用ADAU1761 PGA、ALC 的DSP控制模式">
 <meta property="og:url" content="http://islet.space/2021/05/05/Signal/2021-05-05-%E4%BD%BF%E7%94%A8ADAU1761-PGA%E3%80%81ALC-%E7%9A%84DSP%E6%8E%A7%E5%88%B6%E6%A8%A1%E5%BC%8F/index.html">
 <meta property="og:site_name" content="Coder的孤岛">
-<meta property="og:description" content="使用ADAU1761 PGA &#x2F; ALC的DSP控制模式ADAU1761模拟前端具有ALC（自动电平控制）功能，可根据输入信号的电平动态设置差分输入路径的增益。但是，可以绕过ALC，DSP程序可以直接控制应用于 差分输入 的增益量。 为此，一个或两个通道的差分路径需要启用和取消静音。为了启用 差分路径，还应根据需要将LDBOOST（和&#x2F;或RDBOOST）设置为0 dB或20 dB。  然后，应将A">
+<meta property="og:description" content="使用ADAU1761 PGA &#x2F; ALC的DSP控制模式 ADAU1761模拟前端具有ALC（自动电平控制）功能，可根据输入信号的电平动态设置差分输入路径的增益。但是，可以绕过ALC，DSP程序可以直接控制应用于 差分输入 的增益量。 为此，一个或两个通道的差分路径需要启用和取消静音。为了启用 差分路径，还应根据需要将LDBOOST（和&#x2F;或RDBOOST）设置为0 dB或20 dB。  然后，应将">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://ez.analog.com/cfs-filesystemfile/__key/communityserver-components-secureimagefileviewer/communityserver-wikis-components-files-00-00-00-01-75/1e169c85b74a88a01485d3c18fecd396.jpg_2D00_373x238.jpg?_=636716033579270573">
 <meta property="og:image" content="https://ez.analog.com/cfs-filesystemfile/__key/communityserver-components-secureimagefileviewer/communityserver-wikis-components-files-00-00-00-01-75/be2493be5fd62ceb941ade31bb1c2ea2.jpg_2D00_136x228.jpg?_=636716033581410640">
@@ -52,10 +51,10 @@
 
 
 
-<script class="next-config" data-name="page" type="application/json">{&quot;sidebar&quot;:&quot;&quot;,&quot;isHome&quot;:false,&quot;isPost&quot;:true,&quot;lang&quot;:&quot;en&quot;,&quot;comments&quot;:true,&quot;permalink&quot;:&quot;http:&#x2F;&#x2F;islet.space&#x2F;2021&#x2F;05&#x2F;05&#x2F;Signal&#x2F;2021-05-05-%E4%BD%BF%E7%94%A8ADAU1761-PGA%E3%80%81ALC-%E7%9A%84DSP%E6%8E%A7%E5%88%B6%E6%A8%A1%E5%BC%8F&#x2F;&quot;,&quot;path&quot;:&quot;2021&#x2F;05&#x2F;05&#x2F;Signal&#x2F;2021-05-05-使用ADAU1761-PGA、ALC-的DSP控制模式&#x2F;&quot;,&quot;title&quot;:&quot;使用ADAU1761 PGA、ALC 的DSP控制模式&quot;}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://islet.space/2021/05/05/Signal/2021-05-05-%E4%BD%BF%E7%94%A8ADAU1761-PGA%E3%80%81ALC-%E7%9A%84DSP%E6%8E%A7%E5%88%B6%E6%A8%A1%E5%BC%8F/","path":"2021/05/05/Signal/2021-05-05-使用ADAU1761-PGA、ALC-的DSP控制模式/","title":"使用ADAU1761 PGA、ALC 的DSP控制模式"}</script>
 
-<script class="next-config" data-name="calendar" type="application/json">&quot;&quot;</script>
-<title>使用ADAU1761 PGA、ALC 的DSP控制模式 | Coder的孤岛</title><script src="/js/config.js"></script>
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>使用ADAU1761 PGA、ALC 的DSP控制模式 | Coder的孤岛</title>
   
 
 
@@ -64,7 +63,9 @@
   <noscript>
     <link rel="stylesheet" href="/css/noscript.css">
   </noscript>
-</head>
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<!-- hexo injector head_end end --></head>
 
 <body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
   <div class="headband"></div>
@@ -100,7 +101,7 @@
 
 <nav class="site-nav">
   <ul class="main-menu menu">
-        <li class="menu-item menu-item-首页"><a href="https://islet.space/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-首页"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
         <li class="menu-item menu-item-文章"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>文章</a></li>
         <li class="menu-item menu-item-目录"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>目录</a></li>
         <li class="menu-item menu-item-标签"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
@@ -136,7 +137,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8ADAU1761-PGA-ALC%E7%9A%84DSP%E6%8E%A7%E5%88%B6%E6%A8%A1%E5%BC%8F"><span class="nav-number">1.</span> <span class="nav-text">使用ADAU1761 PGA &#x2F; ALC的DSP控制模式</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8adau1761-pga-alc%E7%9A%84dsp%E6%8E%A7%E5%88%B6%E6%A8%A1%E5%BC%8F"><span class="nav-number">1.</span> <span class="nav-text">使用ADAU1761 PGA &#x2F; ALC的DSP控制模式</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -148,26 +149,26 @@
 <div class="site-state-wrap site-overview-item animated">
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
-          <a href="/archives">
-          <span class="site-state-item-count">82</span>
+        <a href="/archives/">
+          <span class="site-state-item-count">88</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
-            <a href="/categories/">
-        <span class="site-state-item-count">14</span>
+          <a href="/categories/">
+        <span class="site-state-item-count">11</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
-            <a href="/tags/">
-        <span class="site-state-item-count">155</span>
+          <a href="/tags/">
+        <span class="site-state-item-count">163</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
 </div>
   <div class="links-of-author site-overview-item animated">
       <span class="links-of-author-item">
-        <a href="mailto:liewzheng@qq.com" title="E-Mail → mailto:liewzheng@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+        <a href="mailto:liewzheng@foxmail.com" title="E-Mail → mailto:liewzheng@foxmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
       </span>
   </div>
 
@@ -187,7 +188,6 @@
     <i class="fa fa-arrow-up"></i>
     <span>0%</span>
   </div>
-  <div class="reading-progress-bar"></div>
 
 <noscript>
   <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
@@ -223,6 +223,7 @@
 
         <div class="post-meta-container">
           <div class="post-meta">
+
     <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
     <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
     <span class="post-meta-item">
@@ -260,24 +261,25 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <h1 id="使用ADAU1761-PGA-ALC的DSP控制模式"><a href="#使用ADAU1761-PGA-ALC的DSP控制模式" class="headerlink" title="使用ADAU1761 PGA / ALC的DSP控制模式"></a>使用ADAU1761 PGA / ALC的DSP控制模式</h1><p>ADAU1761模拟前端具有ALC（自动电平控制）功能，可根据输入信号的电平动态设置差分输入路径的增益。但是，可以绕过ALC，DSP程序可以直接控制应用于 <strong>差分输入</strong> 的增益量。</p>
+        <h1 id="使用adau1761-pga-alc的dsp控制模式">使用ADAU1761 PGA / ALC的DSP控制模式</h1>
+<p>ADAU1761模拟前端具有ALC（自动电平控制）功能，可根据输入信号的电平动态设置差分输入路径的增益。但是，可以绕过ALC，DSP程序可以直接控制应用于 <strong>差分输入</strong> 的增益量。</p>
 <p>为此，一个或两个通道的差分路径需要<strong>启用和取消静音</strong>。为了启用 <strong>差分路径</strong>，还应根据需要将<strong>LDBOOST</strong>（和/或<strong>RDBOOST</strong>）设置为0 dB或20 dB。</p>
-<p><a target="_blank" rel="noopener" href="https://ez.analog.com/cfs-file/__key/communityserver-wikis-components-files/00-00-00-01-75/1e169c85b74a88a01485d3c18fecd396.jpg"><img src="https://ez.analog.com/cfs-filesystemfile/__key/communityserver-components-secureimagefileviewer/communityserver-wikis-components-files-00-00-00-01-75/1e169c85b74a88a01485d3c18fecd396.jpg_2D00_373x238.jpg?_=636716033579270573" alt="img"></a></p>
+<p><a target="_blank" rel="noopener" href="https://ez.analog.com/cfs-file/__key/communityserver-wikis-components-files/00-00-00-01-75/1e169c85b74a88a01485d3c18fecd396.jpg"><img src="https://ez.analog.com/cfs-filesystemfile/__key/communityserver-components-secureimagefileviewer/communityserver-wikis-components-files-00-00-00-01-75/1e169c85b74a88a01485d3c18fecd396.jpg_2D00_373x238.jpg?_=636716033579270573" alt="img" /></a></p>
 <p>然后，<strong>应将ALCSEL</strong>位设置为<strong>DSP控制</strong>模式。</p>
-<p><a target="_blank" rel="noopener" href="https://ez.analog.com/cfs-file/__key/communityserver-wikis-components-files/00-00-00-01-75/be2493be5fd62ceb941ade31bb1c2ea2.jpg"><img src="https://ez.analog.com/cfs-filesystemfile/__key/communityserver-components-secureimagefileviewer/communityserver-wikis-components-files-00-00-00-01-75/be2493be5fd62ceb941ade31bb1c2ea2.jpg_2D00_136x228.jpg?_=636716033581410640" alt="img"></a></p>
+<p><a target="_blank" rel="noopener" href="https://ez.analog.com/cfs-file/__key/communityserver-wikis-components-files/00-00-00-01-75/be2493be5fd62ceb941ade31bb1c2ea2.jpg"><img src="https://ez.analog.com/cfs-filesystemfile/__key/communityserver-components-secureimagefileviewer/communityserver-wikis-components-files-00-00-00-01-75/be2493be5fd62ceb941ade31bb1c2ea2.jpg_2D00_136x228.jpg?_=636716033581410640" alt="img" /></a></p>
 <p>现在，在DSP程序原理图中，用户可以将<strong>AIGC输出</strong>单元添加到项目中：</p>
-<p><a target="_blank" rel="noopener" href="https://ez.analog.com/cfs-file/__key/communityserver-wikis-components-files/00-00-00-01-75/a6abc0254ac0020e47fd1b347f706504.jpg"><img src="https://ez.analog.com/cfs-filesystemfile/__key/communityserver-components-secureimagefileviewer/communityserver-wikis-components-files-00-00-00-01-75/a6abc0254ac0020e47fd1b347f706504.jpg_2D00_215x49.jpg?_=636716033575290474" alt="img"></a></p>
+<p><a target="_blank" rel="noopener" href="https://ez.analog.com/cfs-file/__key/communityserver-wikis-components-files/00-00-00-01-75/a6abc0254ac0020e47fd1b347f706504.jpg"><img src="https://ez.analog.com/cfs-filesystemfile/__key/communityserver-components-secureimagefileviewer/communityserver-wikis-components-files-00-00-00-01-75/a6abc0254ac0020e47fd1b347f706504.jpg_2D00_215x49.jpg?_=636716033575290474" alt="img" /></a></p>
 <p>通道0映射到左侧的PGA。</p>
-<p><a target="_blank" rel="noopener" href="https://ez.analog.com/cfs-file/__key/communityserver-wikis-components-files/00-00-00-01-75/524d0fbf699c770a6e85e142dd636b3b.png"><img src="https://ez.analog.com/cfs-filesystemfile/__key/communityserver-components-secureimagefileviewer/communityserver-wikis-components-files-00-00-00-01-75/524d0fbf699c770a6e85e142dd636b3b.png_2D00_91x54.png?_=636716033578360546" alt="img"></a></p>
+<p><a target="_blank" rel="noopener" href="https://ez.analog.com/cfs-file/__key/communityserver-wikis-components-files/00-00-00-01-75/524d0fbf699c770a6e85e142dd636b3b.png"><img src="https://ez.analog.com/cfs-filesystemfile/__key/communityserver-components-secureimagefileviewer/communityserver-wikis-components-files-00-00-00-01-75/524d0fbf699c770a6e85e142dd636b3b.png_2D00_91x54.png?_=636716033578360546" alt="img" /></a></p>
 <p>通道1映射到右侧的PGA。</p>
-<p><a target="_blank" rel="noopener" href="https://ez.analog.com/cfs-file/__key/communityserver-wikis-components-files/00-00-00-01-75/3a9410be5a75f96f99e4087743e69d2f.jpg"><img src="https://ez.analog.com/cfs-filesystemfile/__key/communityserver-components-secureimagefileviewer/communityserver-wikis-components-files-00-00-00-01-75/3a9410be5a75f96f99e4087743e69d2f.jpg_2D00_94x57.jpg?_=636716033575450467" alt="img"></a></p>
+<p><a target="_blank" rel="noopener" href="https://ez.analog.com/cfs-file/__key/communityserver-wikis-components-files/00-00-00-01-75/3a9410be5a75f96f99e4087743e69d2f.jpg"><img src="https://ez.analog.com/cfs-filesystemfile/__key/communityserver-components-secureimagefileviewer/communityserver-wikis-components-files-00-00-00-01-75/3a9410be5a75f96f99e4087743e69d2f.jpg_2D00_94x57.jpg?_=636716033575450467" alt="img" /></a></p>
 <p>现在，馈送到这些单元中每个单元的5.23信号确定了相应PGA的增益。</p>
 <p>作为一个简单的示例，要将每个PGA的增益设置为0.5（或-6 dB），请从<strong>Sources</strong>库创建一个<strong>DC Input Entry</strong>单元并将其设置为0.5，然后将其连接到<strong>AIGC输出</strong>。</p>
-<p><a target="_blank" rel="noopener" href="https://ez.analog.com/cfs-file/__key/communityserver-wikis-components-files/00-00-00-01-75/462b7691a9c4c01ab55c2f09825bd18e.jpg"><img src="https://ez.analog.com/cfs-filesystemfile/__key/communityserver-components-secureimagefileviewer/communityserver-wikis-components-files-00-00-00-01-75/462b7691a9c4c01ab55c2f09825bd18e.jpg_2D00_208x103.jpg?_=636716033578360546" alt="img"></a></p>
+<p><a target="_blank" rel="noopener" href="https://ez.analog.com/cfs-file/__key/communityserver-wikis-components-files/00-00-00-01-75/462b7691a9c4c01ab55c2f09825bd18e.jpg"><img src="https://ez.analog.com/cfs-filesystemfile/__key/communityserver-components-secureimagefileviewer/communityserver-wikis-components-files-00-00-00-01-75/462b7691a9c4c01ab55c2f09825bd18e.jpg_2D00_208x103.jpg?_=636716033578360546" alt="img" /></a></p>
 <p>在下一个示例中，使用“<strong>乘”</strong>和“<strong>加”</strong>单元缩放并移动10 Hz的<strong>正弦音调</strong>，使其范围在0到1之间，然后将其发送到<strong>AIGC输出</strong>单元。这会导致PGA增益在0 dB和静音之间快速来回移动，从而产生颤音效果。</p>
-<p><a target="_blank" rel="noopener" href="https://ez.analog.com/cfs-file/__key/communityserver-wikis-components-files/00-00-00-01-75/8f391a0c6d528ce961e9f54617503cd9.jpg"><img src="https://ez.analog.com/cfs-filesystemfile/__key/communityserver-components-secureimagefileviewer/communityserver-wikis-components-files-00-00-00-01-75/8f391a0c6d528ce961e9f54617503cd9.jpg_2D00_349x178.jpg?_=636716033575530468" alt="img"></a></p>
+<p><a target="_blank" rel="noopener" href="https://ez.analog.com/cfs-file/__key/communityserver-wikis-components-files/00-00-00-01-75/8f391a0c6d528ce961e9f54617503cd9.jpg"><img src="https://ez.analog.com/cfs-filesystemfile/__key/communityserver-components-secureimagefileviewer/communityserver-wikis-components-files-00-00-00-01-75/8f391a0c6d528ce961e9f54617503cd9.jpg_2D00_349x178.jpg?_=636716033575530468" alt="img" /></a></p>
 <p>在下面的示例中，每个输入的峰值电平由“<strong>峰值包络”</strong>单元检测，并且使用“<strong>除法”</strong>单元和“ <strong>DC输入条目”</strong>单元创建该信号的反相。结果发送到<strong>AIGC输出</strong>单元。这意味着输入峰值电平的倒数用于缩放PGA增益。结果是，当输入信号为低电平时，增益较高；但是，当输入电平增加时，增益将降低以避免削波。</p>
-<p><a target="_blank" rel="noopener" href="https://ez.analog.com/cfs-file/__key/communityserver-wikis-components-files/00-00-00-01-75/d24015ce9b3e9d247f8a8fb1e43943a3.jpg"><img src="https://ez.analog.com/cfs-filesystemfile/__key/communityserver-components-secureimagefileviewer/communityserver-wikis-components-files-00-00-00-01-75/d24015ce9b3e9d247f8a8fb1e43943a3.jpg_2D00_400x379.jpg?_=636716033578810577" alt="img"></a></p>
+<p><a target="_blank" rel="noopener" href="https://ez.analog.com/cfs-file/__key/communityserver-wikis-components-files/00-00-00-01-75/d24015ce9b3e9d247f8a8fb1e43943a3.jpg"><img src="https://ez.analog.com/cfs-filesystemfile/__key/communityserver-components-secureimagefileviewer/communityserver-wikis-components-files-00-00-00-01-75/d24015ce9b3e9d247f8a8fb1e43943a3.jpg_2D00_400x379.jpg?_=636716033578810577" alt="img" /></a></p>
 <p>这些只是在ADAU1761的PGA上使用DSP控制模式可以完成的操作的几个示例。</p>
 
     </div>
@@ -288,8 +290,8 @@
 
     <footer class="post-footer">
           <div class="reward-container">
-  <div>感谢支持和鼓励</div>
-  <button onclick="document.querySelector('.post-reward').classList.toggle('active');">
+  <div>感谢您的支持和鼓励</div>
+  <button>
     Donate
   </button>
   <div class="post-reward">
@@ -313,21 +315,16 @@
               <a href="/tags/1761/" rel="tag"># 1761</a>
           </div>
 
-    <div id="vcomment" style="margin: 20px 0 0 0"></div>
-    <script>
-        new Valine({
-            el: '#vcomment' ,
-            appId: 'vRGM12EcYxDSM2lat5qjjSeY-gzGzoHsz',
-            appKey: 'WBgAb6NTAFQ7DYtgH0uOPNNh'
-        });
-    </script>
-</body>
-
-
-
-
         
 
+  <div id="vcomments" style="margin: 1rem 0 0 0;"></div>
+  <script>
+    new Valine({
+      el: '#vcomments',
+      appId: 'vRGM12EcYxDSM2lat5qjjSeY-gzGzoHsz',
+      appKey: 'WBgAb6NTAFQ7DYtgH0uOPNNh'
+    })
+  </script>
           <div class="post-nav">
             <div class="post-nav-item">
                 <a href="/2021/05/03/Signal/2021-05-03-%E9%9F%B3%E9%A2%91%E8%AE%BE%E5%A4%87%E8%BF%9E%E6%8E%A5%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" rel="prev" title="音频设备连接基础知识">
@@ -348,7 +345,8 @@
 
 
 
-<script src="/js/comments.js"></script>
+
+
 </div>
   </main>
 
@@ -371,8 +369,8 @@
   </footer>
 
   
-  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
-<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
 
   
 
@@ -380,10 +378,15 @@
 
 
 
-
   
 
 
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":"enable","tags":"none","js":{"url":"https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js","integrity":"sha256-r+3itOMtGGjap0x+10hu6jW/gZCzxHsoKrOd7gyRSGY="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
 
 
 

@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"islet.space","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.7.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+<meta name="description" content="[TOC] 公式书写 Typora虽然是支持Markdown出名，但是也支持LaTex公式，需要在Typora的设置中打开相关选项 Typora设置  在Typora的偏好设置 下，选择 Markdown 选项，勾选 內联公式（例：$\LaTeX$） 选项和 自动添加序号 选项（此项可不选） 在 “当复制或导出为无格式的HTML时” 选择 “使用LaTeX代码”   书写方法 设置完毕后，即可进入">
+<meta property="og:type" content="article">
+<meta property="og:title" content="LaTex公式入门">
+<meta property="og:url" content="http://islet.space/2021/08/21/Others/2021-08-21-LaTex%E5%85%AC%E5%BC%8F%E5%85%A5%E9%97%A8/index.html">
+<meta property="og:site_name" content="Coder的孤岛">
+<meta property="og:description" content="[TOC] 公式书写 Typora虽然是支持Markdown出名，但是也支持LaTex公式，需要在Typora的设置中打开相关选项 Typora设置  在Typora的偏好设置 下，选择 Markdown 选项，勾选 內联公式（例：$\LaTeX$） 选项和 自动添加序号 选项（此项可不选） 在 “当复制或导出为无格式的HTML时” 选择 “使用LaTeX代码”   书写方法 设置完毕后，即可进入">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://pic.islet.space/2021/09/image-20210904111919668.png">
+<meta property="og:image" content="https://pic.islet.space/2021/09/image-20210904113516554.png">
+<meta property="article:published_time" content="2021-08-21T01:50:00.000Z">
+<meta property="article:modified_time" content="2021-09-15T16:34:19.641Z">
+<meta property="article:author" content="Liewzheng">
+<meta property="article:tag" content="LaTex">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://pic.islet.space/2021/09/image-20210904111919668.png">
+
+
+<link rel="canonical" href="http://islet.space/2021/08/21/Others/2021-08-21-LaTex%E5%85%AC%E5%BC%8F%E5%85%A5%E9%97%A8/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://islet.space/2021/08/21/Others/2021-08-21-LaTex%E5%85%AC%E5%BC%8F%E5%85%A5%E9%97%A8/","path":"2021/08/21/Others/2021-08-21-LaTex公式入门/","title":"LaTex公式入门"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>LaTex公式入门 | Coder的孤岛</title>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<!-- hexo injector head_end end --></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Coder的孤岛</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">islet of the coder</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-首页"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-文章"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>文章</a></li>
+        <li class="menu-item menu-item-目录"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>目录</a></li>
+        <li class="menu-item menu-item-标签"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-简历"><a href="/resume/" rel="section"><i class="fa fa-address-card fa-fw"></i>简历</a></li>
+        <li class="menu-item menu-item-友链"><a href="/friends/" rel="section"><i class="fa fa-group fa-fw"></i>友链</a></li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%85%AC%E5%BC%8F%E4%B9%A6%E5%86%99"><span class="nav-number">1.</span> <span class="nav-text">公式书写</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#typora%E8%AE%BE%E7%BD%AE"><span class="nav-number">1.1.</span> <span class="nav-text">Typora设置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B9%A6%E5%86%99%E6%96%B9%E6%B3%95"><span class="nav-number">1.2.</span> <span class="nav-text">书写方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%86%85%E8%81%94%E5%85%AC%E5%BC%8F"><span class="nav-number">1.2.1.</span> <span class="nav-text">内联公式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9D%97%E5%85%AC%E5%BC%8F"><span class="nav-number">1.2.2.</span> <span class="nav-text">块公式</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9F%BA%E7%A1%80%E7%AC%A6%E5%8F%B7"><span class="nav-number">2.</span> <span class="nav-text">基础符号</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9D%97%E5%85%AC%E5%BC%8F%E6%A0%B7%E4%BE%8B"><span class="nav-number">3.</span> <span class="nav-text">块公式样例</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A0%B7%E4%BE%8B1"><span class="nav-number">3.1.</span> <span class="nav-text">样例1</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A0%B7%E4%BE%8B2"><span class="nav-number">3.2.</span> <span class="nav-text">样例2</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A0%B7%E4%BE%8B3"><span class="nav-number">3.3.</span> <span class="nav-text">样例3</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B8%8C%E8%85%8A%E5%AD%97%E6%AF%8D"><span class="nav-number">4.</span> <span class="nav-text">希腊字母</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Liewzheng</p>
+  <div class="site-description" itemprop="description">笔记分享的旮旯孤岛而已</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">88</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">163</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="mailto:liewzheng@foxmail.com" title="E-Mail → mailto:liewzheng@foxmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://islet.space/2021/08/21/Others/2021-08-21-LaTex%E5%85%AC%E5%BC%8F%E5%85%A5%E9%97%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Liewzheng">
+      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coder的孤岛">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          LaTex公式入门
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-08-21 09:50:00" itemprop="dateCreated datePublished" datetime="2021-08-21T09:50:00+08:00">2021-08-21</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2021-09-16 00:34:19" itemprop="dateModified" datetime="2021-09-16T00:34:19+08:00">2021-09-16</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Others/" itemprop="url" rel="index"><span itemprop="name">Others</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>[TOC]</p>
+<h1 id="公式书写">公式书写</h1>
+<p>Typora虽然是支持Markdown出名，但是也支持LaTex公式，需要在Typora的设置中打开相关选项</p>
+<h2 id="typora设置">Typora设置</h2>
+<ol type="1">
+<li><p>在Typora的偏好设置 下，选择 Markdown 选项，勾选 <code>內联公式（例：$\LaTeX$）</code> 选项和 <code>自动添加序号</code> 选项（此项可不选）</p></li>
+<li><p>在 “<strong>当复制或导出为无格式的HTML时</strong>” 选择 “<strong>使用LaTeX代码</strong>”</p></li>
+</ol>
+<p><img src="https://pic.islet.space/2021/09/image-20210904111919668.png" alt="image-20210904111919668" style="zoom:80%;" /></p>
+<h2 id="书写方法">书写方法</h2>
+<p>设置完毕后，即可进入公式书写。</p>
+<p>在使用Typora的Markdown语法来编辑LaTex公式，本身LaTex就与Markdown语法存在一定的冲突，但在Pandoc（Typora使用的效果渲染器）的加持下，显示效果较好，但公式写得多了或者书写过程中可能仍会存在一定的显示延迟（解决办法是：暂时没有）。</p>
+<p>以下全程默认使用Typora编辑器。</p>
+<p>使用LaTex支持两种书写方式，<strong>行模式</strong> 和 <strong>块模式</strong> ，对应的通用叫法是 <strong>内联公式</strong>（行内公式，inline） 和 <strong>块公式</strong>（block）。这里需要一点HTML5的知识，就是该公式是可以被存放在文字中间的，还是独占一行的，存放在文字中间的叫 <strong>内联</strong>，如 <span class="math inline">\(f(x)=x^2\)</span> ，独占一行的叫 <strong>块</strong>，如： <span class="math display">\[
+f(x)= \lambda e^{-\lambda x} \tag{样例公式}
+\]</span></p>
+<h3 id="内联公式">内联公式</h3>
+<p>书写内联公式时，只需要在同一行文字内书写两个美元符号 <code>$$</code> ，然后再两个美元符号中间书写内容即可。</p>
+<p>尝试复制粘贴右侧文字到typora吧： <code>$f(x)= x^2$</code>​</p>
+<h3 id="块公式">块公式</h3>
+<p>块公式需要在独占一行时书写 <code>$$</code>，然后按回车键，即可进入块编辑模式，编辑框如下：</p>
+<figure>
+<img src="https://pic.islet.space/2021/09/image-20210904113516554.png" alt="image-20210904113516554" /><figcaption aria-hidden="true">image-20210904113516554</figcaption>
+</figure>
+<p>不管是内联公式还是快公式都是支持实时编辑和实时显示的。</p>
+<h1 id="基础符号">基础符号</h1>
+<table>
+<thead>
+<tr class="header">
+<th>中文</th>
+<th>样式</th>
+<th>语法</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>上标</td>
+<td><span class="math inline">\(X^2\)</span><br><span class="math inline">\(X^{log(10)}\)</span></td>
+<td>X<sup>2<br>X</sup>{log(10)}</td>
+</tr>
+<tr class="even">
+<td>下标</td>
+<td><span class="math inline">\(X_i\)</span><br><span class="math inline">\(X_{a-b}\)</span></td>
+<td>X_i<br>X_{a-b}</td>
+</tr>
+<tr class="odd">
+<td>积分符号</td>
+<td><span class="math inline">\(\int\)</span></td>
+<td></td>
+</tr>
+<tr class="even">
+<td>无限</td>
+<td><span class="math inline">\(\infin\)</span></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>平均值符号</td>
+<td><span class="math inline">\(\overline x\)</span></td>
+<td>x</td>
+</tr>
+<tr class="even">
+<td>帽子符号</td>
+<td><span class="math inline">\(\hat{a}\)</span></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td></td>
+<td><span class="math inline">\(\widehat{a}\)</span></td>
+<td></td>
+</tr>
+<tr class="even">
+<td></td>
+<td><span class="math inline">\(\acute{a}\)</span></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td></td>
+<td><span class="math inline">\(\grave{a}\)</span></td>
+<td></td>
+</tr>
+<tr class="even">
+<td></td>
+<td><span class="math inline">\(\bar{a}\)</span></td>
+<td>{a}</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td><span class="math inline">\(\dot{a}\)</span></td>
+<td></td>
+</tr>
+<tr class="even">
+<td></td>
+<td><span class="math inline">\(\ddot{a}\)</span></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>短波浪号</td>
+<td><span class="math inline">\(\tilde{A_2}\)</span></td>
+<td></td>
+</tr>
+<tr class="even">
+<td>长波浪号</td>
+<td><span class="math inline">\(\widetilde{A_2}\)</span></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>上左箭头</td>
+<td><span class="math inline">\(\overleftarrow{N}\)</span></td>
+<td></td>
+</tr>
+<tr class="even">
+<td>上右箭头</td>
+<td><span class="math inline">\(\overrightarrow{N}\)</span></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>下左箭头</td>
+<td><span class="math inline">\(\underleftarrow{N}\)</span>​</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>下右箭头</td>
+<td><span class="math inline">\(\underrightarrow{N}\)</span>​</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>限制下标</td>
+<td><span class="math inline">\(\mathop{a}\limits_{i=1}\)</span></td>
+<td>_{i=1}</td>
+</tr>
+<tr class="even">
+<td>分子式</td>
+<td><span class="math inline">\(\frac{1}{2}\)</span></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>根号</td>
+<td><span class="math inline">\(\sqrt{2\pi}\)</span></td>
+<td></td>
+</tr>
+<tr class="even">
+<td>求和符号</td>
+<td><span class="math inline">\(\sum\)</span></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>三角符号</td>
+<td><span class="math inline">\(\triangle\)</span></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h1 id="块公式样例">块公式样例</h1>
+<p>直接复制代码框中的内容到typora即可。</p>
+<h2 id="样例1">样例1</h2>
+<p><span class="math display">\[
+f(x) = \left\{ 
+\displaylines{\lambda e^{-\lambda x}, x ≥ 0\\ 0,x &lt; 0} 
+\right. \tag{指数分布密度函数}
+\]</span></p>
+<figure class="highlight latex"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">$</span><span class="built_in">$</span></span><br><span class="line">f(x) = <span class="keyword">\left</span><span class="keyword">\&#123;</span> </span><br><span class="line"><span class="keyword">\displaylines</span>&#123;<span class="keyword">\lambda</span> e<span class="built_in">^</span>&#123;-<span class="keyword">\lambda</span> x&#125;, x ≥ 0<span class="keyword">\\</span> 0,x &lt; 0&#125; </span><br><span class="line"><span class="keyword">\right</span>. <span class="keyword">\tag</span>&#123;指数分布密度函数&#125;</span><br><span class="line"><span class="built_in">$</span><span class="built_in">$</span></span><br></pre></td></tr></table></figure>
+<h2 id="样例2">样例2</h2>
+<p><span class="math display">\[
+F(x) = \frac{1}{\sigma \sqrt{2\pi}} \int^x_0 \frac{1}{t} e^{-{(lnt-\mu)^2}/{2\sigma^2}} \ dt \tag{对数正态累积分布函数}
+\]</span></p>
+<figure class="highlight latex"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">$</span><span class="built_in">$</span></span><br><span class="line">F(x) = <span class="keyword">\frac</span>&#123;1&#125;&#123;<span class="keyword">\sigma</span> <span class="keyword">\sqrt</span>&#123;2<span class="keyword">\pi</span>&#125;&#125; <span class="keyword">\int</span><span class="built_in">^</span>x<span class="built_in">_</span>0 <span class="keyword">\frac</span>&#123;1&#125;&#123;t&#125; e<span class="built_in">^</span>&#123;-&#123;(lnt-<span class="keyword">\mu</span>)<span class="built_in">^</span>2&#125;/&#123;2<span class="keyword">\sigma</span><span class="built_in">^</span>2&#125;&#125; <span class="keyword">\ </span>dt <span class="keyword">\tag</span>&#123;对数正态累积分布函数&#125;</span><br><span class="line"><span class="built_in">$</span><span class="built_in">$</span></span><br></pre></td></tr></table></figure>
+<h2 id="样例3">样例3</h2>
+<p><span class="math display">\[
+\varphi(x) = \frac{1}{\sigma\sqrt{2\pi}}e^{-{(x-\mu)^2}/{2\sigma^2}} \tag{正态密度函数}
+\]</span></p>
+<figure class="highlight latex"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">$</span><span class="built_in">$</span></span><br><span class="line"><span class="keyword">\varphi</span>(x) = <span class="keyword">\frac</span>&#123;1&#125;&#123;<span class="keyword">\sigma</span><span class="keyword">\sqrt</span>&#123;2<span class="keyword">\pi</span>&#125;&#125;e<span class="built_in">^</span>&#123;-&#123;(x-<span class="keyword">\mu</span>)<span class="built_in">^</span>2&#125;/&#123;2<span class="keyword">\sigma</span><span class="built_in">^</span>2&#125;&#125; <span class="keyword">\tag</span>&#123;正态密度函数&#125;</span><br><span class="line"><span class="built_in">$</span><span class="built_in">$</span></span><br></pre></td></tr></table></figure>
+<h1 id="希腊字母">希腊字母</h1>
+<p>整理了常用的希腊字母及其Latex书写方式。</p>
+<p>LaTex书写希腊字母时都是使用 <strong>转义字符</strong> 进行的，即 <code>\</code> + <code>对应的英文</code> 。</p>
+<p>如果需要表现大写希腊字母，则对应英文的首字母大写，否则就用小写。</p>
+<p>需要注意的是，<em>epsilon</em> 和 <em>phi</em> 有额外的符号，所以会有额外的写法，如下方表格所示。</p>
+<table>
+<thead>
+<tr class="header">
+<th>序号</th>
+<th>大写</th>
+<th>LATEX</th>
+<th>小写</th>
+<th>LATEX</th>
+<th>英文</th>
+<th>国际音标[推荐]</th>
+<th>汉字注音</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>Α</td>
+<td><code>$Alpha$</code></td>
+<td>α</td>
+<td><code>$alpha$</code></td>
+<td>alpha</td>
+<td>/'ælfə/</td>
+<td>阿尔法</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>Β</td>
+<td><code>$Beta$</code></td>
+<td>β</td>
+<td><code>$beta$</code></td>
+<td>beta</td>
+<td>/'bi:tə/或/'beɪtə/</td>
+<td>贝塔/毕塔</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>Γ</td>
+<td><code>$Gamma$</code></td>
+<td>γ</td>
+<td><code>$gamma$</code></td>
+<td>gamma</td>
+<td>/'gæmə/</td>
+<td>伽玛/甘玛</td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td>Δ</td>
+<td><code>$Delta$</code></td>
+<td>δ</td>
+<td><code>$delta$</code></td>
+<td>delta</td>
+<td>/'deltə/</td>
+<td>德尔塔/岱欧塔</td>
+</tr>
+<tr class="odd">
+<td>5</td>
+<td>Ε</td>
+<td><code>$Epsilon$</code></td>
+<td>ε</td>
+<td><code>$epsilon$</code></td>
+<td>epsilon</td>
+<td>/'epsɪlɒn/</td>
+<td>艾普西龙</td>
+</tr>
+<tr class="even">
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td><code>$varepsilon$</code></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>6</td>
+<td>Ζ</td>
+<td><code>$Zeta$</code></td>
+<td>ζ</td>
+<td><code>$zeta$</code></td>
+<td>zeta</td>
+<td>/'zi:tə/</td>
+<td>泽塔</td>
+</tr>
+<tr class="even">
+<td>7</td>
+<td>Η</td>
+<td><code>$Eta$</code></td>
+<td>η</td>
+<td><code>$eta$</code></td>
+<td>eta</td>
+<td>/'i:tə/</td>
+<td>伊塔/诶塔</td>
+</tr>
+<tr class="odd">
+<td>8</td>
+<td>Θ</td>
+<td><code>$Theta$</code></td>
+<td>θ</td>
+<td><code>$theta$</code></td>
+<td>theta</td>
+<td>/'θi:tə/</td>
+<td>西塔</td>
+</tr>
+<tr class="even">
+<td>9</td>
+<td>Ι</td>
+<td><code>$Iota$</code></td>
+<td>ι</td>
+<td><code>$iota$</code></td>
+<td>iota</td>
+<td>/aɪ'əʊtə/</td>
+<td>埃欧塔</td>
+</tr>
+<tr class="odd">
+<td>10</td>
+<td>Κ</td>
+<td><code>$Kappa$</code></td>
+<td>κ</td>
+<td><code>$kappa$</code></td>
+<td>kappa</td>
+<td>/'kæpə/</td>
+<td>堪帕</td>
+</tr>
+<tr class="even">
+<td>11</td>
+<td>∧</td>
+<td><code>$Lambda$</code></td>
+<td>λ</td>
+<td><code>$lambda$</code></td>
+<td>lambda</td>
+<td>/'læmdə/</td>
+<td>兰姆达</td>
+</tr>
+<tr class="odd">
+<td>12</td>
+<td>Μ</td>
+<td><code>$Mu$</code></td>
+<td>μ</td>
+<td><code>$mu$</code></td>
+<td>mu</td>
+<td>/mju:/</td>
+<td>谬/穆</td>
+</tr>
+<tr class="even">
+<td>13</td>
+<td>Ν</td>
+<td><code>$Nu$</code></td>
+<td>ν</td>
+<td><code>$nu$</code></td>
+<td>nu</td>
+<td>/nju:/</td>
+<td>拗/奴</td>
+</tr>
+<tr class="odd">
+<td>14</td>
+<td>Ξ</td>
+<td><code>$Xi$</code></td>
+<td>ξ</td>
+<td><code>$xi$</code></td>
+<td>xi</td>
+<td>希腊:/ksi/英美:/ˈzaɪ/或/ˈksaɪ/</td>
+<td>可西/赛</td>
+</tr>
+<tr class="even">
+<td>15</td>
+<td>Ο</td>
+<td><code>$Omicron$</code></td>
+<td>ο</td>
+<td><code>$omicron$</code></td>
+<td>omicron</td>
+<td>/əuˈmaikrən/或/ˈɑmɪˌkrɑn/</td>
+<td>欧(阿~)米可荣</td>
+</tr>
+<tr class="odd">
+<td>16</td>
+<td>∏</td>
+<td><code>$Pi$</code></td>
+<td>π</td>
+<td><code>$pi$</code></td>
+<td>pi</td>
+<td>/paɪ/</td>
+<td>派</td>
+</tr>
+<tr class="even">
+<td>17</td>
+<td>Ρ</td>
+<td><code>$Rho$</code></td>
+<td>ρ</td>
+<td><code>$rho$</code></td>
+<td>rho</td>
+<td>/rəʊ/</td>
+<td>柔/若</td>
+</tr>
+<tr class="odd">
+<td>18</td>
+<td>∑</td>
+<td><code>$Sigma$</code></td>
+<td>σ</td>
+<td><code>$sigma$</code></td>
+<td>sigma</td>
+<td>/'sɪɡmə/</td>
+<td>西格玛</td>
+</tr>
+<tr class="even">
+<td>19</td>
+<td>Τ</td>
+<td><code>$Tau$</code></td>
+<td>τ</td>
+<td><code>$tau$</code></td>
+<td>tau</td>
+<td>/tɔ:/或/taʊ/</td>
+<td>套/驼</td>
+</tr>
+<tr class="odd">
+<td>20</td>
+<td>Υ</td>
+<td><code>$Upsilon$</code></td>
+<td>υ</td>
+<td><code>$upsilon$</code></td>
+<td>upsilon</td>
+<td>/ˈipsilon/或/ˈʌpsɨlɒn/</td>
+<td>宇(阿~)普西龙</td>
+</tr>
+<tr class="even">
+<td>21</td>
+<td>Φ</td>
+<td><code>$Phi$</code></td>
+<td>φ</td>
+<td><code>$varphi$</code></td>
+<td>phi</td>
+<td>/faɪ/</td>
+<td>弗爱/弗忆</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td><code>$phi$</code></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td>22</td>
+<td>Χ</td>
+<td><code>$chi$</code></td>
+<td>χ</td>
+<td><code>$chi$</code></td>
+<td>chi</td>
+<td>/kaɪ/</td>
+<td>凯/柯义</td>
+</tr>
+<tr class="odd">
+<td>23</td>
+<td>Ψ</td>
+<td><code>$Psi$</code></td>
+<td>ψ</td>
+<td><code>$psi$</code></td>
+<td>psi</td>
+<td>/psaɪ/</td>
+<td>赛/普赛/普西</td>
+</tr>
+<tr class="even">
+<td>24</td>
+<td>Ω</td>
+<td><code>$Omega$</code></td>
+<td>ω</td>
+<td><code>$omega$</code></td>
+<td>omega</td>
+<td>/'əʊmɪɡə/或/oʊ'meɡə/</td>
+<td>欧米伽/欧枚嘎</td>
+</tr>
+</tbody>
+</table>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>感谢您的支持和鼓励</div>
+  <button>
+    Donate
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="https://photo.islet.space/2021/00/IMG_4588.JPG" alt="Liewzheng WeChat Pay">
+        <span>WeChat Pay</span>
+      </div>
+      <div>
+        <img src="https://photo.islet.space/2021/00/IMG_4590.JPG" alt="Liewzheng Alipay">
+        <span>Alipay</span>
+      </div>
+
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/LaTex/" rel="tag"># LaTex</a>
+          </div>
+
+        
+
+  <div id="vcomments" style="margin: 1rem 0 0 0;"></div>
+  <script>
+    new Valine({
+      el: '#vcomments',
+      appId: 'vRGM12EcYxDSM2lat5qjjSeY-gzGzoHsz',
+      appKey: 'WBgAb6NTAFQ7DYtgH0uOPNNh'
+    })
+  </script>
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/08/21/Hardware/Circuit/2021-08-21-NTC%E7%83%AD%E6%95%8F%E7%94%B5%E9%98%BB/" rel="prev" title="NTC热敏电阻">
+                  <i class="fa fa-chevron-left"></i> NTC热敏电阻
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/08/31/Others/2021-08-31-%E5%8F%AF%E9%9D%A0%E6%80%A7%E5%B7%A5%E7%A8%8B%E5%B8%88%E7%AC%94%E8%AE%B0/" rel="next" title="可靠性工程师笔记">
+                  可靠性工程师笔记 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">粤ICP备19004822号 </a>
+  </div>
+
+<div class="copyright">
+  &copy; 2019 – 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">liewzheng</span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":"enable","tags":"none","js":{"url":"https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js","integrity":"sha256-r+3itOMtGGjap0x+10hu6jW/gZCzxHsoKrOd7gyRSGY="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>

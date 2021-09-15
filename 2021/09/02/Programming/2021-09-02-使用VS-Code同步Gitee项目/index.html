@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"islet.space","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.7.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+<meta name="description" content="自从Github被微软收购，除了Copilot这个AI代码写作助手，大家开源贡献的代码都被拿来用了之后，就不想在Github上贡献代码了。 转而使用Gitee，感觉也挺好。 生成并绑定公钥 使用terminal生成公钥： 1ssh-keygen 遇到选择就按回车，不用管就好。然后使用以下命令进行查看： 1cat ~&#x2F;.ssh&#x2F;id_rsa.pub 公钥样例（千万不要复制下面的模板）如下： 1ssh">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用VS Code同步Gitee项目">
+<meta property="og:url" content="http://islet.space/2021/09/02/Programming/2021-09-02-%E4%BD%BF%E7%94%A8VS-Code%E5%90%8C%E6%AD%A5Gitee%E9%A1%B9%E7%9B%AE/index.html">
+<meta property="og:site_name" content="Coder的孤岛">
+<meta property="og:description" content="自从Github被微软收购，除了Copilot这个AI代码写作助手，大家开源贡献的代码都被拿来用了之后，就不想在Github上贡献代码了。 转而使用Gitee，感觉也挺好。 生成并绑定公钥 使用terminal生成公钥： 1ssh-keygen 遇到选择就按回车，不用管就好。然后使用以下命令进行查看： 1cat ~&#x2F;.ssh&#x2F;id_rsa.pub 公钥样例（千万不要复制下面的模板）如下： 1ssh">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://pic.islet.space/2021/09/image-20210902220637986.png">
+<meta property="og:image" content="https://pic.islet.space/2021/09/image-20210902222312335.png">
+<meta property="og:image" content="https://pic.islet.space/2021/09/image-20210902222413221.png">
+<meta property="og:image" content="https://pic.islet.space/2021/09/image-20210902222531450.png">
+<meta property="og:image" content="https://pic.islet.space/2021/09/image-20210902222116108.png">
+<meta property="og:image" content="https://pic.islet.space/2021/09/image-20210902222631177.png">
+<meta property="og:image" content="https://pic.islet.space/2021/09/image-20210902222655162.png">
+<meta property="og:image" content="https://pic.islet.space/2021/09/image-20210902223026835.png">
+<meta property="og:image" content="https://pic.islet.space/2021/09/image-20210902223107646.png">
+<meta property="og:image" content="https://pic.islet.space/2021/09/image-20210902223222009.png">
+<meta property="og:image" content="https://pic.islet.space/2021/09/image-20210902223253826.png">
+<meta property="og:image" content="https://pic.islet.space/2021/09/image-20210902223319460.png">
+<meta property="og:image" content="https://pic.islet.space/2021/09/image-20210902224720818.png">
+<meta property="og:image" content="https://pic.islet.space/2021/09/image-20210902224904264.png">
+<meta property="og:image" content="https://pic.islet.space/2021/09/image-20210902225228260.png">
+<meta property="og:image" content="https://pic.islet.space/2021/09/image-20210902225338842.png">
+<meta property="article:published_time" content="2021-09-02T13:50:00.000Z">
+<meta property="article:modified_time" content="2021-09-15T16:33:06.995Z">
+<meta property="article:author" content="Liewzheng">
+<meta property="article:tag" content="Git">
+<meta property="article:tag" content="VSCode">
+<meta property="article:tag" content="Gitee">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://pic.islet.space/2021/09/image-20210902220637986.png">
+
+
+<link rel="canonical" href="http://islet.space/2021/09/02/Programming/2021-09-02-%E4%BD%BF%E7%94%A8VS-Code%E5%90%8C%E6%AD%A5Gitee%E9%A1%B9%E7%9B%AE/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://islet.space/2021/09/02/Programming/2021-09-02-%E4%BD%BF%E7%94%A8VS-Code%E5%90%8C%E6%AD%A5Gitee%E9%A1%B9%E7%9B%AE/","path":"2021/09/02/Programming/2021-09-02-使用VS-Code同步Gitee项目/","title":"使用VS Code同步Gitee项目"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>使用VS Code同步Gitee项目 | Coder的孤岛</title>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<!-- hexo injector head_end end --></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Coder的孤岛</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">islet of the coder</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-首页"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-文章"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>文章</a></li>
+        <li class="menu-item menu-item-目录"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>目录</a></li>
+        <li class="menu-item menu-item-标签"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-简历"><a href="/resume/" rel="section"><i class="fa fa-address-card fa-fw"></i>简历</a></li>
+        <li class="menu-item menu-item-友链"><a href="/friends/" rel="section"><i class="fa fa-group fa-fw"></i>友链</a></li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%94%9F%E6%88%90%E5%B9%B6%E7%BB%91%E5%AE%9A%E5%85%AC%E9%92%A5"><span class="nav-number">1.</span> <span class="nav-text">生成并绑定公钥</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BB%91%E5%AE%9A%E5%88%B0gitee%E9%85%8D%E7%BD%AE"><span class="nav-number">2.</span> <span class="nav-text">绑定到Gitee配置</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9C%A8gitee%E4%B8%8A%E7%94%9F%E6%88%90%E9%A1%B9%E7%9B%AE"><span class="nav-number">3.</span> <span class="nav-text">在Gitee上生成项目</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BB%91%E5%AE%9Avscode"><span class="nav-number">4.</span> <span class="nav-text">绑定VSCode</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E6%9C%AC%E5%9C%B0git%E5%8F%82%E6%95%B0"><span class="nav-number">5.</span> <span class="nav-text">配置本地git参数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%8B%89%E5%8F%96%E4%BB%93%E5%BA%93%E6%96%87%E4%BB%B6"><span class="nav-number">6.</span> <span class="nav-text">拉取仓库文件</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Liewzheng</p>
+  <div class="site-description" itemprop="description">笔记分享的旮旯孤岛而已</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">88</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">163</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="mailto:liewzheng@foxmail.com" title="E-Mail → mailto:liewzheng@foxmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://islet.space/2021/09/02/Programming/2021-09-02-%E4%BD%BF%E7%94%A8VS-Code%E5%90%8C%E6%AD%A5Gitee%E9%A1%B9%E7%9B%AE/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Liewzheng">
+      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coder的孤岛">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          使用VS Code同步Gitee项目
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-09-02 21:50:00" itemprop="dateCreated datePublished" datetime="2021-09-02T21:50:00+08:00">2021-09-02</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2021-09-16 00:33:06" itemprop="dateModified" datetime="2021-09-16T00:33:06+08:00">2021-09-16</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Programming/" itemprop="url" rel="index"><span itemprop="name">Programming</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>自从Github被微软收购，除了Copilot这个AI代码写作助手，大家开源贡献的代码都被拿来用了之后，就不想在Github上贡献代码了。</p>
+<p>转而使用Gitee，感觉也挺好。</p>
+<h1 id="生成并绑定公钥">生成并绑定公钥</h1>
+<p>使用terminal生成公钥：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen</span><br></pre></td></tr></table></figure>
+<p>遇到选择就按回车，不用管就好。然后使用以下命令进行查看：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat ~/.ssh/id_rsa.pub</span><br></pre></td></tr></table></figure>
+<p>公钥样例（千万不要复制下面的模板）如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh-rsa BBBBA3NzaC1yc2EBBBBDAQBABBBABQCoLmvwKsFETfy0Lj8VN0QwDj/fu2J1msoM+kWCLTj64zXXXXXXXXXSKQxj30zjVO4tZ9PsO/jaItdev1uV7a9lk9MiemLLAxc1LSYsBdki81tx+7941rl9y/XXXXXXXXXXDjNpPCMq6xH8ZSRoRLcgCz+gRaDfnQALWBcavEO0uVqYGn4I4KRFPup7gm+3j5gRpdm1uKtkrqHxqykErCwXXXXXXXXXX6+okRt/TN5jjq6zV44D6tRYAK6oCOFpwO/RTqTIUU//w/XXXXXXXXXXXXXXXXXXXXdPCqs8Zax9cH/31FJqltQzsRbGDLTFFXqyICK7QKVgFXGhrzM3AVvD xxxx@xxxx.local</span><br></pre></td></tr></table></figure>
+<h1 id="绑定到gitee配置">绑定到Gitee配置</h1>
+<p>这里就不延时注册Gitee账户了。</p>
+<p>在Gitee头像下点击 <strong>设置</strong> ，然后在左侧选择 <strong>SSH公钥</strong>，将生成的公钥粘贴进去，标题会自动识别和生成，使用默认标题即可，最后点击 <strong>确定</strong> 进行保存。</p>
+<figure>
+<img src="https://pic.islet.space/2021/09/image-20210902220637986.png" alt="image-20210902220637986" /><figcaption aria-hidden="true">image-20210902220637986</figcaption>
+</figure>
+<h1 id="在gitee上生成项目">在Gitee上生成项目</h1>
+<p>在gitee页面右上角选择那个 <code>+</code> 号，选择里面的 <strong>新建仓库</strong>。</p>
+<figure>
+<img src="https://pic.islet.space/2021/09/image-20210902222312335.png" alt="image-20210902222312335" /><figcaption aria-hidden="true">image-20210902222312335</figcaption>
+</figure>
+<p>跳转到 <strong>新建仓库</strong> 仓库页面，填写相关信息即可。</p>
+<figure>
+<img src="https://pic.islet.space/2021/09/image-20210902222413221.png" alt="image-20210902222413221" /><figcaption aria-hidden="true">image-20210902222413221</figcaption>
+</figure>
+<p>然后在仓库页面的 <strong>克隆/下载</strong> 处选择 <strong>HTTPS</strong> 源 并 <strong>复制</strong>。</p>
+<figure>
+<img src="https://pic.islet.space/2021/09/image-20210902222531450.png" alt="image-20210902222531450" /><figcaption aria-hidden="true">image-20210902222531450</figcaption>
+</figure>
+<h1 id="绑定vscode">绑定VSCode</h1>
+<p>在本地新建文件夹，命名和存储路径随意。</p>
+<figure>
+<img src="https://pic.islet.space/2021/09/image-20210902222116108.png" alt="image-20210902222116108" /><figcaption aria-hidden="true">image-20210902222116108</figcaption>
+</figure>
+<p>然后使用VSCode打开该文件夹，如下：</p>
+<figure>
+<img src="https://pic.islet.space/2021/09/image-20210902222631177.png" alt="image-20210902222631177" /><figcaption aria-hidden="true">image-20210902222631177</figcaption>
+</figure>
+<p>点选左侧树杈型图标，选择 <strong>初始化存储库</strong>。</p>
+<figure>
+<img src="https://pic.islet.space/2021/09/image-20210902222655162.png" alt="image-20210902222655162" /><figcaption aria-hidden="true">image-20210902222655162</figcaption>
+</figure>
+<p>在上方 <code>...</code> 处选择 <strong>远程</strong>，<strong>添加远程仓库</strong>。</p>
+<figure>
+<img src="https://pic.islet.space/2021/09/image-20210902223026835.png" alt="image-20210902223026835" /><figcaption aria-hidden="true">image-20210902223026835</figcaption>
+</figure>
+<p>粘贴刚刚复制过来的仓库地址。</p>
+<figure>
+<img src="https://pic.islet.space/2021/09/image-20210902223107646.png" alt="image-20210902223107646" /><figcaption aria-hidden="true">image-20210902223107646</figcaption>
+</figure>
+<p>填写远程存储库名称，就是仓库名称。</p>
+<figure>
+<img src="https://pic.islet.space/2021/09/image-20210902223222009.png" alt="image-20210902223222009" /><figcaption aria-hidden="true">image-20210902223222009</figcaption>
+</figure>
+<p>VSCode右下角会出现如下提示，选择 <strong>是</strong>。</p>
+<figure>
+<img src="https://pic.islet.space/2021/09/image-20210902223253826.png" alt="image-20210902223253826" /><figcaption aria-hidden="true">image-20210902223253826</figcaption>
+</figure>
+<p>正常来说点选 <strong>拉取</strong> 也是直接可以拉取到远程数据的，但是也可能因为配置错误导致拉取失败，出现如下提示。</p>
+<figure>
+<img src="https://pic.islet.space/2021/09/image-20210902223319460.png" alt="image-20210902223319460" /><figcaption aria-hidden="true">image-20210902223319460</figcaption>
+</figure>
+<figure>
+<img src="https://pic.islet.space/2021/09/image-20210902224720818.png" alt="image-20210902224720818" /><figcaption aria-hidden="true">image-20210902224720818</figcaption>
+</figure>
+<h1 id="配置本地git参数">配置本地git参数</h1>
+<p>如果拉取不成功，仍需要配置以下信息：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git config --global user.name <span class="string">&quot;xxxx&quot;</span></span><br><span class="line">git config --global user.email xxxx@xxx.com</span><br></pre></td></tr></table></figure>
+<p>其中xxxx需要替换成个人在gitee网站的用户名和对应的邮箱，如下：</p>
+<figure>
+<img src="https://pic.islet.space/2021/09/image-20210902224904264.png" alt="image-20210902224904264" /><figcaption aria-hidden="true">image-20210902224904264</figcaption>
+</figure>
+<h1 id="拉取仓库文件">拉取仓库文件</h1>
+<p>如果仍然无法拉取仓库文件，可以在VSCode下按 <code>CTRL</code> + <code>J</code> 或 <code>COMMAND</code> + <code>J</code> 来打开，然后输入如下命令进行 拉取，命令中对应的源需要替换。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git pull https://gitee.com/xxxx/xxxx.git master</span><br></pre></td></tr></table></figure>
+<p>拉取完后如下所示：</p>
+<figure>
+<img src="https://pic.islet.space/2021/09/image-20210902225228260.png" alt="image-20210902225228260" /><figcaption aria-hidden="true">image-20210902225228260</figcaption>
+</figure>
+<figure>
+<img src="https://pic.islet.space/2021/09/image-20210902225338842.png" alt="image-20210902225338842" /><figcaption aria-hidden="true">image-20210902225338842</figcaption>
+</figure>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>感谢您的支持和鼓励</div>
+  <button>
+    Donate
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="https://photo.islet.space/2021/00/IMG_4588.JPG" alt="Liewzheng WeChat Pay">
+        <span>WeChat Pay</span>
+      </div>
+      <div>
+        <img src="https://photo.islet.space/2021/00/IMG_4590.JPG" alt="Liewzheng Alipay">
+        <span>Alipay</span>
+      </div>
+
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/Git/" rel="tag"># Git</a>
+              <a href="/tags/VSCode/" rel="tag"># VSCode</a>
+              <a href="/tags/Gitee/" rel="tag"># Gitee</a>
+          </div>
+
+        
+
+  <div id="vcomments" style="margin: 1rem 0 0 0;"></div>
+  <script>
+    new Valine({
+      el: '#vcomments',
+      appId: 'vRGM12EcYxDSM2lat5qjjSeY-gzGzoHsz',
+      appKey: 'WBgAb6NTAFQ7DYtgH0uOPNNh'
+    })
+  </script>
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/08/31/Others/2021-08-31-%E5%8F%AF%E9%9D%A0%E6%80%A7%E5%B7%A5%E7%A8%8B%E5%B8%88%E7%AC%94%E8%AE%B0/" rel="prev" title="可靠性工程师笔记">
+                  <i class="fa fa-chevron-left"></i> 可靠性工程师笔记
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/09/10/Communication/2021-09-10-UART%E9%80%9A%E4%BF%A1/" rel="next" title="UART通信">
+                  UART通信 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">粤ICP备19004822号 </a>
+  </div>
+
+<div class="copyright">
+  &copy; 2019 – 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">liewzheng</span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":"enable","tags":"none","js":{"url":"https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js","integrity":"sha256-r+3itOMtGGjap0x+10hu6jW/gZCzxHsoKrOd7gyRSGY="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>

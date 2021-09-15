@@ -1,13 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.css">
   <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="viewport" content="width=device-width">
 <meta name="theme-color" content="#222">
 <meta name="generator" content="Hexo 5.4.0">
 
-<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
@@ -17,16 +16,16 @@
 
 
 
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
-<script class="next-config" data-name="main" type="application/json">{&quot;hostname&quot;:&quot;islet.space&quot;,&quot;root&quot;:&quot;&#x2F;&quot;,&quot;images&quot;:&quot;&#x2F;images&quot;,&quot;scheme&quot;:&quot;Gemini&quot;,&quot;version&quot;:&quot;8.3.0&quot;,&quot;exturl&quot;:false,&quot;sidebar&quot;:{&quot;position&quot;:&quot;left&quot;,&quot;display&quot;:&quot;post&quot;,&quot;padding&quot;:18,&quot;offset&quot;:12},&quot;copycode&quot;:true,&quot;bookmark&quot;:{&quot;enable&quot;:false,&quot;color&quot;:&quot;#222&quot;,&quot;save&quot;:&quot;auto&quot;},&quot;fancybox&quot;:false,&quot;mediumzoom&quot;:false,&quot;lazyload&quot;:false,&quot;pangu&quot;:false,&quot;comments&quot;:{&quot;style&quot;:&quot;tabs&quot;,&quot;active&quot;:null,&quot;storage&quot;:true,&quot;lazyload&quot;:false,&quot;nav&quot;:null},&quot;motion&quot;:{&quot;enable&quot;:true,&quot;async&quot;:false,&quot;transition&quot;:{&quot;post_block&quot;:&quot;fadeIn&quot;,&quot;post_header&quot;:&quot;fadeInDown&quot;,&quot;post_body&quot;:&quot;fadeInDown&quot;,&quot;coll_header&quot;:&quot;fadeInLeft&quot;,&quot;sidebar&quot;:&quot;fadeInUp&quot;}},&quot;prism&quot;:false,&quot;i18n&quot;:{&quot;placeholder&quot;:&quot;Searching...&quot;,&quot;empty&quot;:&quot;We didn&#39;t find any results for the search: ${query}&quot;,&quot;hits_time&quot;:&quot;${hits} results found in ${time} ms&quot;,&quot;hits&quot;:&quot;${hits} results found&quot;}}</script>
-<meta name="description" content="blog.csdn.net 简介每一个程序至少拥有一个线程，那就是执行 main() 函数的主线程，而多线程则是出现两个或两个以上的线程并行运行，即主线程和子线程在同一时间段同时运行。而在这个过程中会出现几种情况：  主线程先运行结束 子线程先运行结束 主子线程同时结束  在一些情况下需要在子线程结束后主线程才能结束，而一些情况则不需要等待，但需注意一点，并不是主线程结束了其他子线程就立即停止，其">
+<script class="next-config" data-name="main" type="application/json">{"hostname":"islet.space","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.7.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+<meta name="description" content="blog.csdn.net 简介 每一个程序至少拥有一个线程，那就是执行 main() 函数的主线程，而多线程则是出现两个或两个以上的线程并行运行，即主线程和子线程在同一时间段同时运行。而在这个过程中会出现几种情况：  主线程先运行结束 子线程先运行结束 主子线程同时结束  在一些情况下需要在子线程结束后主线程才能结束，而一些情况则不需要等待，但需注意一点，并不是主线程结束了其他子线程就立即停止，">
 <meta property="og:type" content="article">
 <meta property="og:title" content="C++11多线程join()和detach()的理解">
 <meta property="og:url" content="http://islet.space/2021/05/31/Programming/C++/2021-05-31-C%2011%E5%A4%9A%E7%BA%BF%E7%A8%8Bjoin()%E5%92%8Cdetach()%E7%9A%84%E7%90%86%E8%A7%A3/index.html">
 <meta property="og:site_name" content="Coder的孤岛">
-<meta property="og:description" content="blog.csdn.net 简介每一个程序至少拥有一个线程，那就是执行 main() 函数的主线程，而多线程则是出现两个或两个以上的线程并行运行，即主线程和子线程在同一时间段同时运行。而在这个过程中会出现几种情况：  主线程先运行结束 子线程先运行结束 主子线程同时结束  在一些情况下需要在子线程结束后主线程才能结束，而一些情况则不需要等待，但需注意一点，并不是主线程结束了其他子线程就立即停止，其">
+<meta property="og:description" content="blog.csdn.net 简介 每一个程序至少拥有一个线程，那就是执行 main() 函数的主线程，而多线程则是出现两个或两个以上的线程并行运行，即主线程和子线程在同一时间段同时运行。而在这个过程中会出现几种情况：  主线程先运行结束 子线程先运行结束 主子线程同时结束  在一些情况下需要在子线程结束后主线程才能结束，而一些情况则不需要等待，但需注意一点，并不是主线程结束了其他子线程就立即停止，">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://pic.islet.space/2021/05/image-20210531223156398.png">
 <meta property="og:image" content="https://pic.islet.space/2021/05/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2Nzg0OTc1,size_16,color_FFFFFF,t_70.png">
@@ -51,10 +50,10 @@
 
 
 
-<script class="next-config" data-name="page" type="application/json">{&quot;sidebar&quot;:&quot;&quot;,&quot;isHome&quot;:false,&quot;isPost&quot;:true,&quot;lang&quot;:&quot;en&quot;,&quot;comments&quot;:true,&quot;permalink&quot;:&quot;http:&#x2F;&#x2F;islet.space&#x2F;2021&#x2F;05&#x2F;31&#x2F;Programming&#x2F;C++&#x2F;2021-05-31-C%2011%E5%A4%9A%E7%BA%BF%E7%A8%8Bjoin()%E5%92%8Cdetach()%E7%9A%84%E7%90%86%E8%A7%A3&#x2F;&quot;,&quot;path&quot;:&quot;2021&#x2F;05&#x2F;31&#x2F;Programming&#x2F;C++&#x2F;2021-05-31-C 11多线程join()和detach()的理解&#x2F;&quot;,&quot;title&quot;:&quot;C++11多线程join()和detach()的理解&quot;}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://islet.space/2021/05/31/Programming/C++/2021-05-31-C%2011%E5%A4%9A%E7%BA%BF%E7%A8%8Bjoin()%E5%92%8Cdetach()%E7%9A%84%E7%90%86%E8%A7%A3/","path":"2021/05/31/Programming/C++/2021-05-31-C 11多线程join()和detach()的理解/","title":"C++11多线程join()和detach()的理解"}</script>
 
-<script class="next-config" data-name="calendar" type="application/json">&quot;&quot;</script>
-<title>C++11多线程join()和detach()的理解 | Coder的孤岛</title><script src="/js/config.js"></script>
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>C++11多线程join()和detach()的理解 | Coder的孤岛</title>
   
 
 
@@ -63,7 +62,9 @@
   <noscript>
     <link rel="stylesheet" href="/css/noscript.css">
   </noscript>
-</head>
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<!-- hexo injector head_end end --></head>
 
 <body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
   <div class="headband"></div>
@@ -99,7 +100,7 @@
 
 <nav class="site-nav">
   <ul class="main-menu menu">
-        <li class="menu-item menu-item-首页"><a href="https://islet.space/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-首页"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
         <li class="menu-item menu-item-文章"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>文章</a></li>
         <li class="menu-item menu-item-目录"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>目录</a></li>
         <li class="menu-item menu-item-标签"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
@@ -147,26 +148,26 @@
 <div class="site-state-wrap site-overview-item animated">
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
-          <a href="/archives">
-          <span class="site-state-item-count">82</span>
+        <a href="/archives/">
+          <span class="site-state-item-count">88</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
-            <a href="/categories/">
-        <span class="site-state-item-count">14</span>
+          <a href="/categories/">
+        <span class="site-state-item-count">11</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
-            <a href="/tags/">
-        <span class="site-state-item-count">155</span>
+          <a href="/tags/">
+        <span class="site-state-item-count">163</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
 </div>
   <div class="links-of-author site-overview-item animated">
       <span class="links-of-author-item">
-        <a href="mailto:liewzheng@qq.com" title="E-Mail → mailto:liewzheng@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+        <a href="mailto:liewzheng@foxmail.com" title="E-Mail → mailto:liewzheng@foxmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
       </span>
   </div>
 
@@ -186,7 +187,6 @@
     <i class="fa fa-arrow-up"></i>
     <span>0%</span>
   </div>
-  <div class="reading-progress-bar"></div>
 
 <noscript>
   <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
@@ -222,6 +222,7 @@
 
         <div class="post-meta-container">
           <div class="post-meta">
+
     <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
     <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
     <span class="post-meta-item">
@@ -260,49 +261,55 @@
     
     <div class="post-body" itemprop="articleBody">
         <p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_36784975/article/details/87699113">blog.csdn.net</a></p>
-<h1 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h1><p>每一个程序至少拥有一个线程，那就是执行 <code>main()</code> 函数的主线程，而多线程则是出现两个或两个以上的线程并行运行，即主线程和子线程在同一时间段同时运行。而在这个过程中会出现几种情况：</p>
-<ol>
+<h1 id="简介">简介</h1>
+<p>每一个程序至少拥有一个线程，那就是执行 <code>main()</code> 函数的主线程，而多线程则是出现两个或两个以上的线程并行运行，即主线程和子线程在同一时间段同时运行。而在这个过程中会出现几种情况：</p>
+<ol type="1">
 <li>主线程先运行结束</li>
 <li>子线程先运行结束</li>
 <li>主子线程同时结束</li>
 </ol>
 <p>在一些情况下需要在子线程结束后主线程才能结束，而一些情况则不需要等待，但需注意一点，并不是主线程结束了其他子线程就立即停止，其他子线程会进入后台运行</p>
-<h1 id="join"><a href="#join" class="headerlink" title="join()"></a>join()</h1><p>join()函数是一个等待线程完成函数，<mark>主线程需要等待子线程运行结束了才可以结束</mark></p>
-<img src="https://pic.islet.space/2021/05/image-20210531223156398.png" alt="image-20210531223156398" style="zoom:80%;" />
-
+<h1 id="join">join()</h1>
+<p>join()函数是一个等待线程完成函数，<mark>主线程需要等待子线程运行结束了才可以结束</mark></p>
+<p><img src="https://pic.islet.space/2021/05/image-20210531223156398.png" alt="image-20210531223156398" style="zoom:80%;" /></p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;thread&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">func</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">   <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">-10</span>; i &gt; <span class="number">-20</span>; i--)</span><br><span class="line">    &#123;</span><br><span class="line">        cout &lt;&lt; <span class="string">&quot;from func():&quot;</span> &lt;&lt; i &lt;&lt; endl;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span>  <span class="comment">//主线程</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	cout &lt;&lt; <span class="string">&quot;mian()&quot;</span> &lt;&lt; endl;</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;mian()&quot;</span> &lt;&lt; endl;</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;mian()&quot;</span> &lt;&lt; endl;</span><br><span class="line">	<span class="function">thread <span class="title">t</span><span class="params">(func)</span></span>;  <span class="comment">//子线程</span></span><br><span class="line">	t.<span class="built_in">join</span>();  <span class="comment">//等待子线程结束后才进入主线程</span></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><img src="https://pic.islet.space/2021/05/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2Nzg0OTc1,size_16,color_FFFFFF,t_70.png" alt="在这里插入图片描述"></p>
+<figure>
+<img src="https://pic.islet.space/2021/05/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2Nzg0OTc1,size_16,color_FFFFFF,t_70.png" alt="在这里插入图片描述" /><figcaption aria-hidden="true">在这里插入图片描述</figcaption>
+</figure>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;thread&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">func</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">   <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">-10</span>; i &gt; <span class="number">-20</span>; i--)</span><br><span class="line">    &#123;</span><br><span class="line">        cout &lt;&lt; <span class="string">&quot;from func():&quot;</span> &lt;&lt; i &lt;&lt; endl;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span>			<span class="comment">//主线程</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="function">thread <span class="title">t</span><span class="params">(func)</span></span>;	<span class="comment">//子线程</span></span><br><span class="line">	cout &lt;&lt; <span class="string">&quot;mian()&quot;</span> &lt;&lt; endl;</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;mian()&quot;</span> &lt;&lt; endl;</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;mian()&quot;</span> &lt;&lt; endl;</span><br><span class="line">	t.<span class="built_in">join</span>();		<span class="comment">//等待子线程结束后才进入主线程</span></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><img src="https://pic.islet.space/2021/05/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2Nzg0OTc1,size_16,color_FFFFFF,t_70-20210531224629846.png" alt="在这里插入图片描述"></p>
+<figure>
+<img src="https://pic.islet.space/2021/05/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2Nzg0OTc1,size_16,color_FFFFFF,t_70-20210531224629846.png" alt="在这里插入图片描述" /><figcaption aria-hidden="true">在这里插入图片描述</figcaption>
+</figure>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;thread&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">func</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">   <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">-10</span>; i &gt; <span class="number">-20</span>; i--)</span><br><span class="line">    &#123;</span><br><span class="line">        cout &lt;&lt; <span class="string">&quot;from func():&quot;</span> &lt;&lt; i &lt;&lt; endl;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span>			<span class="comment">//主线程</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="function">thread <span class="title">t</span><span class="params">(func)</span></span>;	<span class="comment">//子线程</span></span><br><span class="line">	t.<span class="built_in">join</span>();		<span class="comment">//等待子线程结束后才进入主线程</span></span><br><span class="line">	cout &lt;&lt; <span class="string">&quot;mian()&quot;</span> &lt;&lt; endl;</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;mian()&quot;</span> &lt;&lt; endl;</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;mian()&quot;</span> &lt;&lt; endl;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><img src="https://pic.islet.space/2021/05/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2Nzg0OTc1,size_16,color_FFFFFF,t_70-20210531224634866.png" alt="在这里插入图片描述"></p>
-<h1 id="detach"><a href="#detach" class="headerlink" title="detach()"></a>detach()</h1><p><img src="https://pic.islet.space/2021/06/image-20210601222337419.png" alt="image-20210601222337419"></p>
+<figure>
+<img src="https://pic.islet.space/2021/05/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2Nzg0OTc1,size_16,color_FFFFFF,t_70-20210531224634866.png" alt="在这里插入图片描述" /><figcaption aria-hidden="true">在这里插入图片描述</figcaption>
+</figure>
+<h1 id="detach">detach()</h1>
+<figure>
+<img src="https://pic.islet.space/2021/06/image-20210601222337419.png" alt="image-20210601222337419" /><figcaption aria-hidden="true">image-20210601222337419</figcaption>
+</figure>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;thread&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">func</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">   <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">-10</span>; i &gt; <span class="number">-20</span>; i--)</span><br><span class="line">    &#123;</span><br><span class="line">        cout &lt;&lt; <span class="string">&quot;from func():&quot;</span> &lt;&lt; i &lt;&lt; endl;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span>			<span class="comment">//主线程</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	cout &lt;&lt; <span class="string">&quot;mian()&quot;</span> &lt;&lt; endl;</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;mian()&quot;</span> &lt;&lt; endl;</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;mian()&quot;</span> &lt;&lt; endl;</span><br><span class="line">	<span class="function">thread <span class="title">t</span><span class="params">(func)</span></span>;	<span class="comment">//子线程</span></span><br><span class="line">	t.<span class="built_in">detach</span>();		<span class="comment">//分离子线程</span></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<p><img src="https://pic.islet.space/2021/05/20190220120254940.png" alt="在这里插入图片描述"></p>
-<p> 可以明显看到，主线程太快了，还没等子线程运行就结束了</p>
+<figure>
+<img src="https://pic.islet.space/2021/05/20190220120254940.png" alt="在这里插入图片描述" /><figcaption aria-hidden="true">在这里插入图片描述</figcaption>
+</figure>
+<p>可以明显看到，主线程太快了，还没等子线程运行就结束了</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;thread&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">func</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">   <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">-10</span>; i &gt; <span class="number">-20</span>; i--)</span><br><span class="line">    &#123;</span><br><span class="line">        cout &lt;&lt; <span class="string">&quot;from func():&quot;</span> &lt;&lt; i &lt;&lt; endl;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span>			<span class="comment">//主线程</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="function">thread <span class="title">t</span><span class="params">(func)</span></span>;	<span class="comment">//子线程</span></span><br><span class="line">	cout &lt;&lt; <span class="string">&quot;mian()&quot;</span> &lt;&lt; endl;</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;mian()&quot;</span> &lt;&lt; endl;</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;mian()&quot;</span> &lt;&lt; endl;</span><br><span class="line">	t.<span class="built_in">detach</span>();		<span class="comment">//分离子线程</span></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><img src="https://pic.islet.space/2021/05/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2Nzg0OTc1,size_16,color_FFFFFF,t_70-20210531224653683.png" alt="在这里插入图片描述"></p>
+<figure>
+<img src="https://pic.islet.space/2021/05/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2Nzg0OTc1,size_16,color_FFFFFF,t_70-20210531224653683.png" alt="在这里插入图片描述" /><figcaption aria-hidden="true">在这里插入图片描述</figcaption>
+</figure>
 <p>同样没等子线程运行完就结束了</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;thread&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">func</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">   <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">-10</span>; i &gt; <span class="number">-20</span>; i--)</span><br><span class="line">    &#123;</span><br><span class="line">        cout &lt;&lt; <span class="string">&quot;from func():&quot;</span> &lt;&lt; i &lt;&lt; endl;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span>			<span class="comment">//主线程</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="function">thread <span class="title">t</span><span class="params">(func)</span></span>;	<span class="comment">//子线程</span></span><br><span class="line">	cout &lt;&lt; <span class="string">&quot;mian()&quot;</span> &lt;&lt; endl;</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;mian()&quot;</span> &lt;&lt; endl;</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;mian()&quot;</span> &lt;&lt; endl;</span><br><span class="line">	t.<span class="built_in">detach</span>();		<span class="comment">//分离子线程</span></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><img src="https://pic.islet.space/2021/05/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2Nzg0OTc1,size_16,color_FFFFFF,t_70-20210531224659144.png" alt="在这里插入图片描述"></p>
+<figure>
+<img src="https://pic.islet.space/2021/05/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2Nzg0OTc1,size_16,color_FFFFFF,t_70-20210531224659144.png" alt="在这里插入图片描述" /><figcaption aria-hidden="true">在这里插入图片描述</figcaption>
+</figure>
 <p>没等子线程运行完就结束</p>
-<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><ul>
-<li><p>如果想要分离一个线程，可以在线程启动后，直接使用 <code>detach()</code> 进行分离。如果打算等待对应线程，则需要细心挑选调用 <code>join()</code> 的位置。当在线程运行之后产生异常，在 <code>join()</code> 调用之前抛出，就意味着很这次调用会被跳过。 </p>
-</li>
-<li><p><code>join()</code> 函数是一个<strong>等待线程函数</strong>，主线程需等待子线程运行结束后才可以结束（注意不是才可以运行，运行是并行的），如果打算等待对应线程，<mark>则需要细心挑选调用 <code>join()</code> 的位置</mark></p>
-</li>
-<li><p><code>detach()</code> 函数是子线程的分离函数，当调用该函数后，线程就被分离到后台运行，<mark>主线程不需要等待该线程结束才结束</mark></p>
-</li>
+<h1 id="总结">总结</h1>
+<ul>
+<li><p>如果想要分离一个线程，可以在线程启动后，直接使用 <code>detach()</code> 进行分离。如果打算等待对应线程，则需要细心挑选调用 <code>join()</code> 的位置。当在线程运行之后产生异常，在 <code>join()</code> 调用之前抛出，就意味着很这次调用会被跳过。</p></li>
+<li><p><code>join()</code> 函数是一个<strong>等待线程函数</strong>，主线程需等待子线程运行结束后才可以结束（注意不是才可以运行，运行是并行的），如果打算等待对应线程，<mark>则需要细心挑选调用 <code>join()</code> 的位置</mark></p></li>
+<li><p><code>detach()</code> 函数是子线程的分离函数，当调用该函数后，线程就被分离到后台运行，<mark>主线程不需要等待该线程结束才结束</mark></p></li>
 </ul>
-<p>​          </p>
+<p>​</p>
 
     </div>
 
@@ -312,8 +319,8 @@
 
     <footer class="post-footer">
           <div class="reward-container">
-  <div>感谢支持和鼓励</div>
-  <button onclick="document.querySelector('.post-reward').classList.toggle('active');">
+  <div>感谢您的支持和鼓励</div>
+  <button>
     Donate
   </button>
   <div class="post-reward">
@@ -336,21 +343,16 @@
               <a href="/tags/detach/" rel="tag"># detach</a>
           </div>
 
-    <div id="vcomment" style="margin: 20px 0 0 0"></div>
-    <script>
-        new Valine({
-            el: '#vcomment' ,
-            appId: 'vRGM12EcYxDSM2lat5qjjSeY-gzGzoHsz',
-            appKey: 'WBgAb6NTAFQ7DYtgH0uOPNNh'
-        });
-    </script>
-</body>
-
-
-
-
         
 
+  <div id="vcomments" style="margin: 1rem 0 0 0;"></div>
+  <script>
+    new Valine({
+      el: '#vcomments',
+      appId: 'vRGM12EcYxDSM2lat5qjjSeY-gzGzoHsz',
+      appKey: 'WBgAb6NTAFQ7DYtgH0uOPNNh'
+    })
+  </script>
           <div class="post-nav">
             <div class="post-nav-item">
                 <a href="/2021/05/29/Programming/C++/2021-05-29-C++11-lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F%E7%B2%BE%E8%AE%B2/" rel="prev" title="C++11 lambda表达式精讲">
@@ -371,7 +373,8 @@
 
 
 
-<script src="/js/comments.js"></script>
+
+
 </div>
   </main>
 
@@ -394,8 +397,8 @@
   </footer>
 
   
-  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
-<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
 
   
 
@@ -403,10 +406,15 @@
 
 
 
-
   
 
 
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":"enable","tags":"none","js":{"url":"https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js","integrity":"sha256-r+3itOMtGGjap0x+10hu6jW/gZCzxHsoKrOd7gyRSGY="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
 
 
 

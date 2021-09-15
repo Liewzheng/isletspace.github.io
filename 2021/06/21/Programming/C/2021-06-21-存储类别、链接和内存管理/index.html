@@ -1,13 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.css">
   <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="viewport" content="width=device-width">
 <meta name="theme-color" content="#222">
 <meta name="generator" content="Hexo 5.4.0">
 
-<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
@@ -17,16 +16,16 @@
 
 
 
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
-<script class="next-config" data-name="main" type="application/json">{&quot;hostname&quot;:&quot;islet.space&quot;,&quot;root&quot;:&quot;&#x2F;&quot;,&quot;images&quot;:&quot;&#x2F;images&quot;,&quot;scheme&quot;:&quot;Gemini&quot;,&quot;version&quot;:&quot;8.3.0&quot;,&quot;exturl&quot;:false,&quot;sidebar&quot;:{&quot;position&quot;:&quot;left&quot;,&quot;display&quot;:&quot;post&quot;,&quot;padding&quot;:18,&quot;offset&quot;:12},&quot;copycode&quot;:true,&quot;bookmark&quot;:{&quot;enable&quot;:false,&quot;color&quot;:&quot;#222&quot;,&quot;save&quot;:&quot;auto&quot;},&quot;fancybox&quot;:false,&quot;mediumzoom&quot;:false,&quot;lazyload&quot;:false,&quot;pangu&quot;:false,&quot;comments&quot;:{&quot;style&quot;:&quot;tabs&quot;,&quot;active&quot;:null,&quot;storage&quot;:true,&quot;lazyload&quot;:false,&quot;nav&quot;:null},&quot;motion&quot;:{&quot;enable&quot;:true,&quot;async&quot;:false,&quot;transition&quot;:{&quot;post_block&quot;:&quot;fadeIn&quot;,&quot;post_header&quot;:&quot;fadeInDown&quot;,&quot;post_body&quot;:&quot;fadeInDown&quot;,&quot;coll_header&quot;:&quot;fadeInLeft&quot;,&quot;sidebar&quot;:&quot;fadeInUp&quot;}},&quot;prism&quot;:false,&quot;i18n&quot;:{&quot;placeholder&quot;:&quot;Searching...&quot;,&quot;empty&quot;:&quot;We didn&#39;t find any results for the search: ${query}&quot;,&quot;hits_time&quot;:&quot;${hits} results found in ${time} ms&quot;,&quot;hits&quot;:&quot;${hits} results found&quot;}}</script>
-<meta name="description" content="存储类别即 stroage class，C语言提供了多种不同的模型和存储类别在内存中存储数据。  从硬件方面看， 被存储的每个值都占有一定的物理内存，C语言称之为对象（object）。 与面向对象编程中的对象不同，面向对象编程的对象指的是“类对象”。  1int entity &#x3D; 3;  该声明创造了一个名为 entity 的 标识符（identifier）。标识符可以用来 指定（desingat">
+<script class="next-config" data-name="main" type="application/json">{"hostname":"islet.space","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.7.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+<meta name="description" content="存储类别 即 stroage class，C语言提供了多种不同的模型和存储类别在内存中存储数据。  从硬件方面看， 被存储的每个值都占有一定的物理内存，C语言称之为对象（object）。 与面向对象编程中的对象不同，面向对象编程的对象指的是“类对象”。  1int entity &#x3D; 3; 该声明创造了一个名为 entity 的 标识符（identifier）。标识符可以用来 指定（desingat">
 <meta property="og:type" content="article">
 <meta property="og:title" content="存储类别、链接和内存管理">
 <meta property="og:url" content="http://islet.space/2021/06/21/Programming/C/2021-06-21-%E5%AD%98%E5%82%A8%E7%B1%BB%E5%88%AB%E3%80%81%E9%93%BE%E6%8E%A5%E5%92%8C%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/index.html">
 <meta property="og:site_name" content="Coder的孤岛">
-<meta property="og:description" content="存储类别即 stroage class，C语言提供了多种不同的模型和存储类别在内存中存储数据。  从硬件方面看， 被存储的每个值都占有一定的物理内存，C语言称之为对象（object）。 与面向对象编程中的对象不同，面向对象编程的对象指的是“类对象”。  1int entity &#x3D; 3;  该声明创造了一个名为 entity 的 标识符（identifier）。标识符可以用来 指定（desingat">
+<meta property="og:description" content="存储类别 即 stroage class，C语言提供了多种不同的模型和存储类别在内存中存储数据。  从硬件方面看， 被存储的每个值都占有一定的物理内存，C语言称之为对象（object）。 与面向对象编程中的对象不同，面向对象编程的对象指的是“类对象”。  1int entity &#x3D; 3; 该声明创造了一个名为 entity 的 标识符（identifier）。标识符可以用来 指定（desingat">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2021-06-21T13:50:00.000Z">
 <meta property="article:modified_time" content="2021-06-21T14:12:11.242Z">
@@ -42,10 +41,10 @@
 
 
 
-<script class="next-config" data-name="page" type="application/json">{&quot;sidebar&quot;:&quot;&quot;,&quot;isHome&quot;:false,&quot;isPost&quot;:true,&quot;lang&quot;:&quot;en&quot;,&quot;comments&quot;:true,&quot;permalink&quot;:&quot;http:&#x2F;&#x2F;islet.space&#x2F;2021&#x2F;06&#x2F;21&#x2F;Programming&#x2F;C&#x2F;2021-06-21-%E5%AD%98%E5%82%A8%E7%B1%BB%E5%88%AB%E3%80%81%E9%93%BE%E6%8E%A5%E5%92%8C%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86&#x2F;&quot;,&quot;path&quot;:&quot;2021&#x2F;06&#x2F;21&#x2F;Programming&#x2F;C&#x2F;2021-06-21-存储类别、链接和内存管理&#x2F;&quot;,&quot;title&quot;:&quot;存储类别、链接和内存管理&quot;}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://islet.space/2021/06/21/Programming/C/2021-06-21-%E5%AD%98%E5%82%A8%E7%B1%BB%E5%88%AB%E3%80%81%E9%93%BE%E6%8E%A5%E5%92%8C%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/","path":"2021/06/21/Programming/C/2021-06-21-存储类别、链接和内存管理/","title":"存储类别、链接和内存管理"}</script>
 
-<script class="next-config" data-name="calendar" type="application/json">&quot;&quot;</script>
-<title>存储类别、链接和内存管理 | Coder的孤岛</title><script src="/js/config.js"></script>
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>存储类别、链接和内存管理 | Coder的孤岛</title>
   
 
 
@@ -54,7 +53,9 @@
   <noscript>
     <link rel="stylesheet" href="/css/noscript.css">
   </noscript>
-</head>
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<!-- hexo injector head_end end --></head>
 
 <body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
   <div class="headband"></div>
@@ -90,7 +91,7 @@
 
 <nav class="site-nav">
   <ul class="main-menu menu">
-        <li class="menu-item menu-item-首页"><a href="https://islet.space/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-首页"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
         <li class="menu-item menu-item-文章"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>文章</a></li>
         <li class="menu-item menu-item-目录"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>目录</a></li>
         <li class="menu-item menu-item-标签"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
@@ -138,26 +139,26 @@
 <div class="site-state-wrap site-overview-item animated">
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
-          <a href="/archives">
-          <span class="site-state-item-count">82</span>
+        <a href="/archives/">
+          <span class="site-state-item-count">88</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
-            <a href="/categories/">
-        <span class="site-state-item-count">14</span>
+          <a href="/categories/">
+        <span class="site-state-item-count">11</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
-            <a href="/tags/">
-        <span class="site-state-item-count">155</span>
+          <a href="/tags/">
+        <span class="site-state-item-count">163</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
 </div>
   <div class="links-of-author site-overview-item animated">
       <span class="links-of-author-item">
-        <a href="mailto:liewzheng@qq.com" title="E-Mail → mailto:liewzheng@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+        <a href="mailto:liewzheng@foxmail.com" title="E-Mail → mailto:liewzheng@foxmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
       </span>
   </div>
 
@@ -177,7 +178,6 @@
     <i class="fa fa-arrow-up"></i>
     <span>0%</span>
   </div>
-  <div class="reading-progress-bar"></div>
 
 <noscript>
   <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
@@ -213,6 +213,7 @@
 
         <div class="post-meta-container">
           <div class="post-meta">
+
     <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
     <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
     <span class="post-meta-item">
@@ -244,13 +245,13 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <h1 id="存储类别"><a href="#存储类别" class="headerlink" title="存储类别"></a>存储类别</h1><p>即 stroage class，C语言提供了多种不同的模型和存储类别在内存中存储数据。</p>
+        <h1 id="存储类别">存储类别</h1>
+<p>即 stroage class，C语言提供了多种不同的模型和存储类别在内存中存储数据。</p>
 <blockquote>
 <p>从硬件方面看， 被存储的每个值都占有一定的物理内存，C语言称之为对象（object）。</p>
 <p>与面向对象编程中的对象不同，面向对象编程的对象指的是“类对象”。</p>
 </blockquote>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> entity = <span class="number">3</span>;</span><br></pre></td></tr></table></figure>
-
 <p>该声明创造了一个名为 entity 的 <strong>标识符</strong>（identifier）。标识符可以用来 <strong>指定</strong>（desingate）特定对象的内容，且须遵循变量的命名规则。</p>
 <p>标识符即 软件（C语言）指定硬件内存中的对象（内存区块）的方式。</p>
 <p>同时，那些指定对象的表达式被称为 <strong>左值</strong>。</p>
@@ -263,37 +264,40 @@
 <p>从一个左值中必定可以解析出对应对象的地址，除非该对象是位字段（bit-field）或者被声明为寄存器存储类。生成左值的运算符包括下标运算符（subscript operator）[]和间接运算符（indirection operator）*，如下表所示（如果 array 已被声明为数组，而 ptr 被声明为指针变量）。</p>
 <table>
 <thead>
-<tr>
+<tr class="header">
 <th>表达式</th>
 <th>是左值吗</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr class="odd">
 <td>array[1]</td>
 <td>是；一个数组元素是一个具有位置的对象</td>
 </tr>
-<tr>
+<tr class="even">
 <td>&amp;array[1]</td>
 <td>否；此对象的位置，并非一个具有位置的对象</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>ptr</td>
 <td>是；此指针变量是一个具有位詈的对象</td>
 </tr>
-<tr>
+<tr class="even">
 <td>*ptr</td>
 <td>是；指针所指的地方是一个具有位置的对象</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>ptr+1</td>
 <td>否；此加法产生一个新的地址值，但不是一个对象</td>
 </tr>
-<tr>
+<tr class="even">
 <td>*ptr+l</td>
 <td>否；此加法产生一个新的算术值，但不是一个对象</td>
 </tr>
-</tbody></table>
-<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><ol>
+</tbody>
+</table>
+<h1 id="参考">参考</h1>
+<ol type="1">
 <li>《C Primer Plus》, Stephen Prata</li>
 <li><a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E5%B7%A6%E5%80%BC">左值</a></li>
 <li><a target="_blank" rel="noopener" href="http://c.biancheng.net/view/281.html">C语言左值与右值详解</a></li>
@@ -307,8 +311,8 @@
 
     <footer class="post-footer">
           <div class="reward-container">
-  <div>感谢支持和鼓励</div>
-  <button onclick="document.querySelector('.post-reward').classList.toggle('active');">
+  <div>感谢您的支持和鼓励</div>
+  <button>
     Donate
   </button>
   <div class="post-reward">
@@ -331,21 +335,16 @@
               <a href="/tags/lvalue/" rel="tag"># lvalue</a>
           </div>
 
-    <div id="vcomment" style="margin: 20px 0 0 0"></div>
-    <script>
-        new Valine({
-            el: '#vcomment' ,
-            appId: 'vRGM12EcYxDSM2lat5qjjSeY-gzGzoHsz',
-            appKey: 'WBgAb6NTAFQ7DYtgH0uOPNNh'
-        });
-    </script>
-</body>
-
-
-
-
         
 
+  <div id="vcomments" style="margin: 1rem 0 0 0;"></div>
+  <script>
+    new Valine({
+      el: '#vcomments',
+      appId: 'vRGM12EcYxDSM2lat5qjjSeY-gzGzoHsz',
+      appKey: 'WBgAb6NTAFQ7DYtgH0uOPNNh'
+    })
+  </script>
           <div class="post-nav">
             <div class="post-nav-item">
                 <a href="/2021/05/31/Programming/C++/2021-05-31-C++%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86%EF%BC%88try-catch-throw%EF%BC%89%E5%AE%8C%E5%85%A8%E6%94%BB%E7%95%A5/" rel="prev" title="C++异常处理（try catch throw）完全攻略">
@@ -366,7 +365,8 @@
 
 
 
-<script src="/js/comments.js"></script>
+
+
 </div>
   </main>
 
@@ -389,8 +389,8 @@
   </footer>
 
   
-  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
-<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
 
   
 
@@ -398,10 +398,15 @@
 
 
 
-
   
 
 
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":"enable","tags":"none","js":{"url":"https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js","integrity":"sha256-r+3itOMtGGjap0x+10hu6jW/gZCzxHsoKrOd7gyRSGY="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
 
 
 
