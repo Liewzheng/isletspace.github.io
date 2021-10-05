@@ -133,7 +133,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">88</span>
+          <span class="site-state-item-count">90</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -144,7 +144,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">163</span>
+        <span class="site-state-item-count">166</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -178,6 +178,584 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://islet.space/2021/10/02/Communication/2021-10-02-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%8E%B0%E5%9C%BA%E6%80%BB%E7%BA%BF/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Liewzheng">
+      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coder的孤岛">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/10/02/Communication/2021-10-02-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%8E%B0%E5%9C%BA%E6%80%BB%E7%BA%BF/" class="post-title-link" itemprop="url">计算机网络体系结构与现场总线</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-10-02 13:20:00" itemprop="dateCreated datePublished" datetime="2021-10-02T13:20:00+08:00">2021-10-02</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2021-10-05 14:33:52" itemprop="dateModified" datetime="2021-10-05T14:33:52+08:00">2021-10-05</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Communication/" itemprop="url" rel="index"><span itemprop="name">Communication</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="计算机网络体系结构">计算机网络体系结构</h1>
+<p>计算机网络是计算机技术和通信技术相结合的技术领域。由若干计算机用通信信道连接至一起，互相交换信息共享资源，形成计算机网络。</p>
+<h2 id="osi-五层模型">OSI 五层模型</h2>
+<p>在国际标准化组织（ISO）提出 <strong>开放系统互联</strong>（OSI，Open System Interconnection）参考模型中，网络系统结构划分为7层。</p>
+<p>该OSI模型由上至下分别是 <strong>应用层</strong>、<strong>表示层</strong>、<strong>会话层</strong>、<strong>传输层</strong>、<strong>网络层</strong>、<strong>数据链路层</strong> 和 <strong>物理层</strong>。</p>
+<p><img src="https://pic.islet.space/2021/10/17849411-6cad6d1b0aafdd22.png" alt="img" style="zoom:67%;" /></p>
+<p>在本模型中，<strong>物理层</strong>、<strong>数据链路层</strong> 和 <strong>网络层</strong> 是 <strong>面向网络通信</strong> 的层级；<strong>会话层</strong>、<strong>表示层</strong> 和 <strong>应用层</strong> 是 <strong>面向信息处理</strong> 的层级。</p>
+<h3 id="应用层">应用层</h3>
+<p><strong>应用层</strong>，即Application Layer。OSI参考模型中最靠近用户的一层，是为计算机用户提供应用接口，也为用户直接提供各种网络服务。我们常见应用层的网络服务协议有：HTTP，HTTPS，FTP，POP3、SMTP等。</p>
+<blockquote>
+<p>实际公司A的老板就是我们所述的用户，而他要发送的商业报价单，就是应用层提供的一种网络服务，当然，老板也可以选择其他服务，比如说，发一份商业合同，发一份询价单，等等。</p>
+</blockquote>
+<p>OSI七层模型中，除了应用层以外，其他功能层级都与用户实际应用没有什么直接联系，能够直接为用户提供各种应用服务的是应用层。应用层可以包含各种应用程序，有些由于使用普遍而实行了标准化，进而形成了应用层上的各种应用协议，诸如SMTP、POP3、WWW、TELNET、FTP、HTTP、HTTPS等。</p>
+<h3 id="表示层">表示层</h3>
+<p><strong>表示层</strong>，即 Presentation Layer。其提供各种用于应用层数据的编码和转换功能，确保一个系统的应用层发送的数据能被另一个系统的应用层识别。如果必要，该层可提供一种标准表示形式，用于将计算机内部的多种数据格式转换成通信中采用的标准表示形式。数据压缩和加密也是表示层可提供的转换功能之一。</p>
+<blockquote>
+<p>由于公司A和公司B是不同国家的公司，他们之间的商定统一用英语作为交流的语言，所以此时表示层（公司的文秘），就是将应用层的传递信息转翻译成英语。同时为了防止别的公司看到，公司A的人也会对这份报价单做一些加密的处理。这就是表示的作用，将应用层的数据转换翻译等。</p>
+</blockquote>
+<h3 id="会话层">会话层</h3>
+<p><strong>会话层</strong>，即 Section Layer。负责建立、管理和终止表示层实体之间的通信会话。该层的通信由不同设备中的应用程序之间的服务请求和响应组成。</p>
+<blockquote>
+<p>会话层的同事拿到表示层的同事转换后资料，（会话层的同事类似公司的外联部），会话层的同事那里可能会掌握本公司与其他好多公司的联系方式，这里公司就是实际传递过程中的实体。他们要管理本公司与外界好多公司的联系会话。当接收到表示层的数据后，会话层将会建立并记录本次会话，他首先要找到公司B的地址信息，然后将整份资料放进信封，并写上地址和联系方式。准备将资料寄出。等到确定公司B接收到此份报价单后，此次会话就算结束了，外联部的同事就会终止此次会话。</p>
+</blockquote>
+<h3 id="传输层">传输层</h3>
+<p><strong>传输层</strong>，即 Transport Layer。负责建立了主机端到端的链接，传输层的作用是为上层协议提供端到端的可靠和透明的数据传输服务，包括 <strong>处理差错控制</strong> 和 <strong>流量控制</strong> 等问题。该层向高层屏蔽了下层数据通信的细节，使高层用户看到的只是在两个传输实体间的一条主机到主机的、可由用户控制和设定的、可靠的数据通路。我们通常说的，TCP/UDP就是在这一层。端口号既是这里的“端”。</p>
+<blockquote>
+<p>传输层就相当于公司中的负责快递邮件收发的人，公司自己的投递员，他们负责将上一层的要寄出的资料投递到快递公司或邮局。</p>
+</blockquote>
+<p>传输层位于第三层和高三层之间，也是 <strong>面向网路通信</strong> 和 <strong>面向信息处理</strong> 之间的重要层级，是整个协议层次的核心。</p>
+<p>传输层的任务是为高层从源端机到目的机提供可靠、经济的数据传输服务，而与具体网络无关。</p>
+<p>为了向用户提供经济有效的服务，传输层还提供多路复用和分流的功能。</p>
+<h3 id="网络层">网络层</h3>
+<p><strong>网络层</strong>，即 Network Layer。负责通过IP寻址来建立两个节点之间的连接，为源端的运输层送来的分组，选择合适的路由和交换节点，正确无误地按照地址传送给目的端的运输层。就是通常说的IP层。这一层就是我们经常说的IP协议层。IP协议是Internet的基础。</p>
+<blockquote>
+<p>网络层就相当于快递公司庞大的快递网络，全国不同的集散中心，比如说，从深圳发往北京的顺丰快递（陆运为例啊，空运好像直接就飞到北京了），首先要到顺丰的深圳集散中心，从深圳集散中心再送到武汉集散中心，从武汉集散中心再寄到北京顺义集散中心。这个每个集散中心，就相当于网络中的一个IP节点。</p>
+</blockquote>
+<h3 id="数据链路层">数据链路层</h3>
+<p><strong>数据链路层</strong>，即 Data Linker Layer。负责将比特组合成字节,再将字节组合成帧,使用链路层地址 (以太网使用MAC地址)来访问介质,并进行差错检测。数据链路层又分为2个子层：逻辑链路控制子层（LLC）和媒体访问控制子层（MAC）。MAC子层处理CSMA/CD算法、数据出错校验、成帧等；LLC子层定义了一些字段使上次协议能共享数据链路层。 在实际使用中，LLC子层并非必需的。</p>
+<p>这个没找到合适的例子</p>
+<p>在物理线路上，由于噪声干扰、信号衰减畸变等原因，传输过程中常常出现差错，物理层只负责透明传输无结构的原始比特流，不能进行任何差错控制。</p>
+<p>因此，在一条线路上传输数据时，除了必须有一条物理线路外，还需要必要规程来控制数据传输。把这些规程的软件/硬件加到链路上，就构成了数据链路层（Data Linker Layer）。</p>
+<p><strong>作用</strong>：通过一系列数据链路层协议，在不可靠的物理链路上实现可靠的数据传输。</p>
+<p>为此，通常将原始数据分割成一定长度的数据单元（帧），一帧内包含 <strong>同步信号</strong>、<strong>差错控制</strong>、<strong>流量控制</strong>、<strong>控制信息</strong>、<strong>数据信息</strong>、<strong>寻址</strong> 等。</p>
+<h4 id="差错控制">差错控制</h4>
+<p>差错控制涉及两方面的问题，即 <strong>如何检测错误</strong> 和 <strong>如何纠正错误</strong>。</p>
+<p><strong>检查错误</strong>：要判断一个数据块是否存在错误，发送端必须在数据块中加入冗余信息，使得数据块和冗余信息间存在某种关联，接收端通过验证其关联性来判断数据是否出错。<mark>在数据块中加入冗余信息的过程称为 <strong>差错编码</strong>。</mark></p>
+<p>差错编码有两种策略，即 <strong>仅带有检错能力的检错码</strong> 和 <strong>带有纠错能力的检错码/纠错码</strong>。但任何一种检/纠错码的能力都是有限的，即 <strong>不能检/纠出所有的错误</strong>。一般检错码的能力越强，所需的冗余信息就会越多，编码效率会随之降低。</p>
+<p>常见的差错编码有：</p>
+<ol type="1">
+<li><strong>海明码</strong>，即 Hamming Code。由 Richard Hamming 于1950年提出，可纠正一个 bit 错误的编码。</li>
+<li><strong>循环冗余码</strong>，即 Cyclic Redundancy Code，又名 多项式码。最广泛使用的编码，但 <strong>漏检率很低</strong>，只需要简单电路即可实现。</li>
+<li><strong>奇偶校验码</strong>，即 Parity Check Code。 最常见也最简单的编码，只需要一个比特，但只能检出奇数个错误，<strong>漏检率达50%</strong>。</li>
+<li><strong>校验和码</strong>，即 Checksum Code。也是最常见的检错方式，是传输的数据块中 <strong>各字节累加</strong> 后得到的 一个字节 或 按字“异或”运算 的结果。</li>
+</ol>
+<h3 id="物理层">物理层</h3>
+<p><strong>物理层</strong>，即 Physical Layer。实际最终信号的传输是通过物理层实现的。通过物理介质传输比特流。规定了电平、速度和电缆针脚。常用设备有（各种物理设备）集线器、中继器、调制解调器、网线、双绞线、同轴电缆。这些都是物理层的传输介质。</p>
+<blockquote>
+<p>快递寄送过程中的交通工具，就相当于我们的物理层，例如汽车，火车，飞机，船。</p>
+</blockquote>
+<p>其中物理层有几个概念需要了解和区分，包括 <strong>传输速率</strong>、<strong>信道容量</strong>、<strong>传输媒体</strong>、<strong>调制解调</strong>、<strong>交换技术</strong>、<strong>网络拓扑</strong> 和 <strong>多路复用</strong>。</p>
+<h4 id="传输速率">传输速率</h4>
+<p><strong>比特率</strong>：每秒传输的二进制位数。</p>
+<p><strong>波特率</strong>：每秒传输的码元率。</p>
+<p><strong>码元</strong>：单位携带的比特信息量。</p>
+<blockquote>
+<p>如果码元率为1比特，则波特率和比特率数值上相等。</p>
+</blockquote>
+<h4 id="信道容量">信道容量</h4>
+<p>信道容量，即信道能支持的最大数据传输速率，由信道带宽和信噪比决定。</p>
+<h4 id="传输媒体">传输媒体</h4>
+<p>传输媒体，即传输电信号的物理介质。可以是有线、无线、双绞线、同轴电缆 或 光纤 等。</p>
+<h4 id="调制解调">调制解调</h4>
+<p>调制解调，即一种数据转换成适合在信道上传输的某种电信号形式。</p>
+<p>数字信号转换为模拟信号有 <strong>调幅</strong>、<strong>调频</strong>、<strong>调相</strong> 等方式。</p>
+<p>数字信号的信道编码方式有 <strong>单极型脉冲</strong> 和 <strong>双极性脉冲编码</strong> （有归零码 和 不归零码 之分）及 <strong>曼彻斯特编码</strong> 等（信道编码）。</p>
+<h4 id="交换技术">交换技术</h4>
+<p>物理层的交换技术有三种：<strong>电路交换</strong>、<strong>报文交换</strong> 和 <strong>分组交换</strong>。</p>
+<table>
+<colgroup>
+<col style="width: 4%" />
+<col style="width: 32%" />
+<col style="width: 32%" />
+<col style="width: 30%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>TYPE</th>
+<th>PRINCIPLE</th>
+<th>ADVANTAGES</th>
+<th>DISADVANTAGES</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>电路交换</td>
+<td>要求通信双方之间建立一条实际的物理通道，并在整个通信过程中 <strong>通路独占</strong>。</td>
+<td>数据在中间环节无停留，传输可靠，实时效应好；</td>
+<td>电路不共享，资源浪费大，同时电路的建立和撤出的时间较长。</td>
+</tr>
+<tr class="even">
+<td>报文交换</td>
+<td>一个 <strong>大报文</strong>（长度无限制的数据块）在通过从源站到目的站之间的中间站时采用 <strong>存储-转发</strong> 方式（有缓冲区）。</td>
+<td>提高线路利用率</td>
+<td>大报文延迟时间长，出错率高。</td>
+</tr>
+<tr class="odd">
+<td>分组交换</td>
+<td>将一个大报文分割成一定长度的信息单元（分组），各单元以此编号，以分组为单位进行 <strong>存储-转发</strong>。</td>
+<td>除了线路共享外，要求中间环节的缓存区减少，也减少了分组在网络中的延迟时间。<br/>由于各分组在网络中可以走不同路径，该并行传输降低了报文的传输时间。分组长度变短同时降低了出错率（发现出错时重发数据所需时间也缩短）。</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h4 id="网络拓扑">网络拓扑</h4>
+<p><strong>网络拓扑</strong>（Network Topology）即网络中节点的互联结构形式，主要分为 <strong>星型结构</strong>、<strong>总线型结构</strong>、<strong>树型结构</strong>、<strong>环型结构</strong> 和 <strong>网型结构</strong>。（网络上很多文章都有 <strong>混合型结构</strong> 这一拓扑类型）</p>
+<p><img src="https://pic.islet.space/2021/10/1002_1.jpg" alt="1002_1" style="zoom: 25%;" /></p>
+<table style="width:100%;">
+<colgroup>
+<col style="width: 5%" />
+<col style="width: 30%" />
+<col style="width: 4%" />
+<col style="width: 30%" />
+<col style="width: 30%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>TYPE</th>
+<th>PRINCIPLE</th>
+<th>SWITCHING</th>
+<th>ADVANTAGES</th>
+<th>DISADVANTAGES</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>星型结构</td>
+<td>通过点对点连接至中央节点，任意两点的通信都依赖中央节点。</td>
+<td>电路交换</td>
+<td>任意节点故障都只会影响本站，而不影响全网。</td>
+<td>极大以来中央节点，对中央节点的可靠性和容量要求很高，同时因为需要中央节点连接，耗费大量电缆。</td>
+</tr>
+<tr class="even">
+<td>总线型结构</td>
+<td>采用单一信道作为传输介质，所有站点通过相应硬件结构接到公共信道（总线）上，任意站点发送的信息，所有其他站都能收到。</td>
+<td>分组交换</td>
+<td>所需电缆长度短，布线容易。<br>且总线仅仅是传输信道，无任何处理功能，属于无源器件，可靠性高，增加或减少站点都相对方便。</td>
+<td>由于所有节点共享一条公共信道，当多点同时发送信号时，信号会因相互碰撞而造成传输失败，称之为 <strong>冲突</strong>。<br>系统范围受到限制（传输速率和传输距离相互制约）。<mark>一个站点的故障可能影响整个网络，故障检测需要在各站点上进行。（待考究）</mark></td>
+</tr>
+<tr class="odd">
+<td>树形结构</td>
+<td>由总线型结构演化而来，从树根开始，每一个节点向下都可以由许多分支。</td>
+<td></td>
+<td>故障比较容易隔离和检查。</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>环型结构</td>
+<td>站点和连接站点的点-点链路组成一个闭合环路，每个站点从一条链路上接受数据，然后以相同的速率从另一条链路上发送出去。<br>链路大多数是单方向的，即数据沿一个方向在网上环行。</td>
+<td></td>
+<td>所需介质长度较短，由于链路单方向性，可以用光纤作为传输介质；</td>
+<td>与总线型结构一样存在冲突问题，一个站点故障会引起全网故障。</td>
+</tr>
+<tr class="odd">
+<td>网型结构</td>
+<td>每个站点都有一条或几条链路同其他站点连接。</td>
+<td></td>
+<td>由于站点间存在多条路径，数据传输时可以选择空闲站点或绕开故障点，因而 <strong>网络资源利用较为充分</strong>；<br>但站点或线路故障对网络整体影响较小，<strong>可靠性较高</strong>。</td>
+<td>结构较为复杂，成本较高。</td>
+</tr>
+</tbody>
+</table>
+<h4 id="多路复用技术">多路复用技术</h4>
+<p>传输媒体的能力（频带宽）往往很强，对传输资源能力的应用（复用）是指将多路信号组合在一条物理信道上进行传输，然后接收端再将各路信号分离开。常见的多路复用技术如 <strong>频分多路复用</strong>（FDM）、<strong>时分多路复用</strong>（TDM） 和 <strong>码分多址</strong>（CDMA）等。</p>
+<table>
+<thead>
+<tr class="header">
+<th>TYPE</th>
+<th>PRINCIPLE</th>
+<th>ADVANTAGES</th>
+<th>DISADVANTAGES</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>频分多路复用</td>
+<td>将信道带宽按频率分割为若干子信道，每个子信道用来传输一路信号。</td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td>时分多路复用</td>
+<td>将使用信道的时间分成一个个时间片，按一定规律将时间片分配给各路信号，每路信号只能在自己的时间片内独占信道进行传输。</td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>码分多址</td>
+<td>允许所有站点在同一时间使用整个信道进行数据传输。</td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>以上三类多路复用技术可以形象地比喻为多个人要发言讨论不同问题时，如何使用同一个会议厅（信道）。</p>
+<ul>
+<li><p>可以把会议厅分成几个小厅（好比频分多路复用），各小厅同时进行各自不同的发言，互不干扰；</p></li>
+<li><p>可以在一个厅内让各议题在固定的时间片内轮流发言（好比时分多路复用）；</p></li>
+<li><p>可以在一个厅内让各自议题同时发言，但是要用不同的语言（好比码分多址），对某个议题的人来说只能听懂自己的语言，而其他语言被视为随机噪音，可以排除。</p></li>
+</ul>
+</blockquote>
+<h2 id="tcpip-五层模型">TCP/IP 五层模型</h2>
+<p>实际TCP/IP使用的是5层模型，其中OSI模型中的 应用层、表示层 和 会话层 都用一层 应用层 进行表示，如下图。在每一层都工作着不同的设备，比如我们常用的交换机就工作在数据链路层的，一般的路由器是工作在网络层的。</p>
+<p><img src="https://pic.islet.space/2021/10/202110021438076.webp" alt="img" style="zoom:67%;" /></p>
+<p>在每一层实现的协议也各不同，即每一层的服务也不同，下图列出了每层主要的协议。</p>
+<p><img src="https://pic.islet.space/2021/10/202110021438379.webp" alt="img" style="zoom:67%;" /></p>
+<h1 id="现场总线">现场总线</h1>
+<p>在工业数据通信领域，<strong>总线</strong> 是指由导线组成的传输线束，连接多个传感器和执行器，实现各部件之间传送信息的公共通信干线。</p>
+<p>然后再来看国际电工技术委员会（IEC）在IEC 61158中对现场总线的标准定义：<mark><strong>现场总线</strong> 是安装在制造或过程区域的现场装置与控制室内的自动控制装置之间的数字式、串行、多点通信的数据总线。</mark></p>
+<p>从定义中可以看到，现场总线是一种数据总线技术，是一种通信协议，且该通信是数字式、串行、多节点的。</p>
+<p>目前，在工控领域，车间现场应用最广泛的是 <strong>工业以太网</strong> 技术和 <strong>工业现场总线</strong> 技术，为工厂实现自动化带来有力推动。</p>
+<p>现场总线应当是应用在生产最底层的一种总线型拓扑网络，即该总线是用于现场控制系统，直接与所有受控（设备）节点串行相连的通信网络。</p>
+<p>工业自动化控制的现场一般可以从一台家电设备到一个车间、一个工厂。控制设备和网络所处的环境以及报文结构都有其特殊性，对信号的干扰往往是多方面的，而要求控制必须实时性很强。</p>
+<h2 id="现场总线技术">现场总线技术</h2>
+<p><strong>现场总线</strong>（Fieldbus）是电气工程及其自动化领域发展起来的一种工业数据总线，它主要解决工业现场的智能化仪器仪表、控制器、执行机构等现场设备间的数字通信以及这些现场控制设备和高级控制系统之间的信息传递问题。由于现场总线简单、可靠、经济实用等一系列突出的优点，因而受到了许多标准团体和计算机厂商的高度重视</p>
+<p>传统控制系统难以实现设备之间 以及 系统与外界之间的信息交换，是一个“信息孤岛”。要满足自动化控制技术现代化的要求，同时实现整个企业的信息集成，实施综合自动化，就必须设计出一种能在工业设备之间的多点数字通信，实现底层现场设备之间以及生产现场与外界的信息交换。</p>
+<p>现场总线控制系统（Field Control System，FCS）既是一个开放通信网络，又是一种全分布控制系统。作为智能设备的联系纽带，把挂接在总线上、作为网络节点的智能设备连接为网络系统，并进一步构成合成系统，实现基本控制、补偿计算、参数修改、报警、显示、监控、优化 及 管控一体化的综合自动化功能。</p>
+<p><mark style="font-weight: 900;">现场总线技术是一项集嵌入式系统、控制、计算机、数字通信、网络为一体的综合技术。</mark></p>
+<h3 id="局限性">局限性</h3>
+<p>也可以说现场总线是工业控制和计算机网络两者的边缘产物。从纯理论的角度看，它应属于网络范畴。但是现有的网络技术不能完全适应工业现场控制系统的要求，无论是从网络的结构、协议、实时性，还是从适应性、灵活性、可靠性 乃至 成本 上进行考虑，工业控制的底层都有它的特殊性。</p>
+<p>现场总线其规模应属于局域网、总线型结构，简单但能满足现场使用需求，所传输信息短小且实时性很强、可靠性高（网络结构层次少，信息帧短小有利于提高实时性和降低受干扰的概率）。然而现场的环境干扰因数众多，有些很强烈且带突发性。</p>
+<h2 id="现场总线发展">现场总线发展</h2>
+<p>一般把50年代前的气动信号控制系统PCS称作 <strong>第一代</strong>，把4～20mA等电动模拟信号控制系统称为 <strong>第二代</strong>，把数字计算机集中式控制系统称为 <strong>第三代</strong>，而把70年代中期以来的集散式分布控制系统DCS称作 <strong>第四代</strong>。</p>
+<p>现场总线控制系统FCS作为新一代控制系统，一方面，突破了DCS系统采用通信专用网络的局限，采用了基于公开化、标准化的解决方案，克服了封闭系统所造成的缺陷；另一方面把DCS的集中与分散相结合的集散系统结构，变成了新型全分布式结构，把控制功能彻底下放到现场。可以说，开放性、分散性与数字通讯是现场总线系统最显著的特征。</p>
+<ul>
+<li>1984年美国Intel公司提出一种 <strong>计算机分布式控制系统-位总线</strong>（BITBUS），它主要是将低速的面向过程的 <strong>输入输出通道与高速的计算机多总线</strong>（MULTIBUS）分离，形成了现场总线的最初概念。</li>
+<li>80年代中期，美国Rosemount 公司开发了一种可寻址的远程传感器（HART）通信协议。采用在4～20mA模拟量叠加了一种频率信号，用双绞线实现数字信号传输。HART协议已是现场总线的雏形。</li>
+<li>1985年由Honeywell和Bailey等大公司发起，成立了World FIP制定了FIP协议。</li>
+<li>1987年，以Siemens，Rosemount，横河等几家著名公司为首也成立了一个专门委员会互操作系统协议（ISP）并制定了PROFIBUS协议。后来美国仪器仪表学会也制定了现场总线标准IEC/ISA SP50。</li>
+<li>随着时间的推移，世界逐渐形成了两个针锋相对的互相竞争的现场总线集团：一个是以Siemens、Rosemount，横河为首的ISP集团；另一个是由Honeywell、Bailey等公司牵头的WorldFIP集团。1994年，两大集团宣布合并，融合成现场总线基金会（Fieldbus Foundation）简称FF。对于现场总线的技术发展和制定标准，基金委员会取得以下共识：共同制定遵循IEC/ISA SP50协议标准；商定现场总线技术发展阶段时间表。</li>
+</ul>
+<h2 id="现场总线能力">现场总线能力</h2>
+<p>部分应用场景或产品开发时，会对现场总线的能力提出如下要求：</p>
+<p><strong>本质安全防爆</strong>：<strong>本质安全</strong> 是指通过设计等手段使生产设备或生产系统本身具有安全性，即使在误操作或发生故障的情况下也不会造成事故的功能。具体包括 <strong>失误—安全</strong>（误操作不会导致事故发生或自动阻止误操作）和 <strong>故障—安全</strong> 功能（设备、工艺发生故障时还能暂时正常工作或自动转变安全状态）。</p>
+<blockquote>
+<p>本质安全型电气设备的防爆原理：通过限制电气设备电路的各种参数，或采取保护措施来限制电路的火花放电能量和热能，使其在正常工作和规定的故障状态下产生的电火花和热效应均不能点燃周围环境的爆炸性混合物，从而实现了电气防爆，这种电气设备的电路本身就具有防爆性能，也就是从“本质”上就是安全的。</p>
+</blockquote>
+<h2 id="现场总线分类">现场总线分类</h2>
+<p>国际上有40多种现场总线，但没有任何一种现场总线能覆盖所有的应用面，按其传输数据的大小可分为3类：</p>
+<ol type="1">
+<li><strong>传感器总线</strong>（sensor bus），属于位传输；</li>
+<li><strong>设备总线</strong>（device bus），属于字节传输；</li>
+<li><strong>现场总线</strong>，属于数据流传输。</li>
+</ol>
+<h3 id="ff">FF</h3>
+<p>FF，即 Foundation Field bus，基金会现场总线。</p>
+<p>是以美国Fisher-Rouse mount公司为首的联合了横河、ABB、西门子、英维斯等80家公司制定的ISP协议和以Honeywell公司为首的联合欧洲等地150余家公司制定的World FIP协议于1994年9月合并的。该总线在过程自动化领域得到了广泛的应用，具有良好的发展前景。</p>
+<p>FF 总线采用国际标准化组织ISO的开放化系统互联OSI的简化模型(1，2，7层)，即物理层、数据链路层、应用层，另外增加了用户层。</p>
+<p>FF 分低速H1和高速H2两种通信速率，前者传输速率为31.25Kbit/秒，通信距离可达1900m，可支持总线供电和本质安全防爆环境。后者传输速率为1Mbit/秒和2.5Mbit/秒，通信距离为750m和500m，支持双绞线、光缆和无线发射，协议符号IEC1158-2标准。</p>
+<p>FF 的物理媒介的传输信号采用曼切斯特编码。</p>
+<h3 id="can">CAN</h3>
+<p>CAN，即Controller Area Network，控制器局域网络。</p>
+<p>最早由德国BOSCH公司推出，它广泛用于离散控制领域，其总线规范已被ISO国际标准组织制定为国际标准，得到了Intel、Motorola、NEC等公司的支持。CAN协议分为二层：物理层和数据链路层。CAN的信号传输采用短帧结构，传输时间短，具有自动关闭功能，具有较强的抗干扰能力。CAN支持多主工作方式，并采用了非破坏性总线仲裁技术，通过设置优先级来避免冲突，通讯距离最远可达10KM/5Kbps/s，通讯速率最高可达40M/1Mbp/s，网络节点数实际可达110个。目前已有多家公司开发了符合CAN协议的通信芯片。</p>
+<h3 id="lonworks">LonWorks</h3>
+<p>由美国Echelon公司推出，并由Motorola、Toshiba公司共同倡导。它采用ISO/OSI模型的全部7层通讯协议，采用面向对象的设计方法，通过网络变量把网络通信设计简化为参数设置。支持双绞线、同轴电缆、光缆和红外线等多种通信介质，通讯速率从300bit/s至1.5M/s不等，直接通信距离可达2700m(78Kbit/s)，被誉为通用控制网络。Lonworks技术采用的Lon Talk协议被封装到Neuron(神经元)的芯片中，并得以实现。采用LonWorks技术和神经元芯片的产品，被广泛应用在楼宇自动化、家庭自动化、保安系统、办公设备、交通运输、工业过程控制等行业。</p>
+<h3 id="device-net">Device Net</h3>
+<p>Device Net是一种低成本的通信连接也是一种简单的网络解决方案，有着开放的网络标准。Device Net具有的直接互联性不仅改善了设备间的通信而且提供了相当重要的设备级阵地功能。Device Net基于CAN技术，传输率为125Kbit/s至500Kbit/s，每个网络的最大节点为64个，其通信模式为：生产者/客户(Producer/Consumer)，采用多信道广播信息发送方式。位于Device Net网络上的设备可以自由连接或断开，不影响网上的其他设备，而且其设备的安装布线成本也较低。Device Net总线的组织结构是Open Device Net Vendor Association(开放式设备网络供应商协会，简称“ODVA”)。</p>
+<h3 id="profibus">PROFIBUS</h3>
+<p>PROFIBUS是德国标准(DIN19245)和欧洲标准(EN50170)的现场总线标准。由PROFIBUS--DP、PROFIBUS-FMS、PROFIBUS-PA系列组成。DP用于分散外设间高速数据传输，适用于加工自动化领域。FMS适用于纺织、楼宇自动化、可编程控制器、低压开关等。PA用于过程自动化的总线类型，服从IEC1158-2标准。PROFIBUS支持主-从系统、纯主站系统、多主多从混合系统等几种传输方式。PROFIBUS的传输速率为9.6Kbit/s至12Mbit/s，最大传输距离在9.6Kbit/s下为1200m，在12Mbit/s小为200m，可采用中继器延长至10km，传输介质为双绞线或者光缆，最多可挂接127个站点。</p>
+<h3 id="hart">HART</h3>
+<p>HART，即 Highway Addressable Remote Transducer，高速可寻址远程传感器。</p>
+<p>最早由Rosemount公司开发。其特点是在现有模拟信号传输线上实现数字信号通信，属于模拟系统向数字系统转变的过渡产品。其通信模型采用物理层、数据链路层和应用层三层，支持点对点主从应答方式和多点广播方式。由于它采用模拟数字信号混和，难以开发通用的通信接口芯片。</p>
+<p>HART能利用总线供电，可满足本质安全防爆的要求，并可用于由手持编程器与管理系统主机作为主设备的双主设备系统。</p>
+<h3 id="cc-link">CC-Link</h3>
+<p>CC-Link是Control&amp;Communication Link(控制与通信链路系统)的缩写，在1996年11月，由三菱电机为主导的多家公司推出，其增长势头迅猛，在亚洲占有较大份额。在其系统中，可以将控制和信息数据同是以10Mbit/s高速传送至现场网络，具有性能卓越、使用简单、应用广泛、节省成本等优点。其不仅解决了工业现场配线复杂的问题，同时具有优异的抗噪性能和兼容性。CC-Link是一个以设备层为主的网络，同时也可覆盖较高层次的控制层和较低层次的传感层。2005年7月CC-Link被中国国家标准委员会批准为中国国家标准指导性技术文件。</p>
+<h3 id="world-fip">World FIP</h3>
+<p>World FIP的北美部分与ISP合并为FF以后，World FIP的欧洲部分仍保持独立，总部设在法国。其在欧洲市场占有重要地位，特别是在法国占有率大约为60%。World FIP的特点是具有单一的总线结构来适用不同的应用领域的需求，而且没有任何网关或网桥，用软件的办法来解决高速和低速的衔接。World FIP与FFHSE可以实现“透明联接”，并对FF的H1进行了技术拓展，如速率等。在与IEC61158第一类型的连接方面，World FIP做得最好，走在世界前列。</p>
+<p>此外较有影响的现场总线还有丹麦公司Process-Data A/S提出的P-Net，该总线主要应用于农业、林业、水利、食品等行业；Swift Net现场总线主要使用在航空航天等领域，还有一些其他的现场总线这里就不再赘述了。</p>
+<h3 id="interbus">INTERBUS</h3>
+<p>INTERBUS是德国Phoenix公司推出的较早的现场总线，2000年2月成为国际标准IEC61158。INTERBUS采用国际标准化组织ISO的开放化系统互联OSI的简化模型(1，2，7层)，即物理层、数据链路层、应用层，具有强大的可靠性、可诊断性和易维护性。其采用集总帧型的数据环通信，具有低速度、高效率的特点，并严格保证了数据传输的同步性和周期性;该总线的实时性、抗干扰性和可维护性也非常出色。INTERBUS广泛地应用到汽车、烟草、仓储、造纸、包装、食品等工业，成为国际现场总线的领先者。</p>
+<h2 id="其他">其他</h2>
+<p>RS-485和现场总线同属于总线；ModBus和现场总线同属于通信协议；</p>
+<p>严格来讲，RS-485≠现场总线，ModBus≠现场总线，RS-485+ModBus（还有其他什么的）才构成现场总线，其中RS-485工作在现场总线的物理层，ModBus工作在现场总线的应用层；</p>
+<h1 id="参考">参考</h1>
+<ol type="1">
+<li>《现场总线CAN原理与技术应用》第二版，北京航空航天大学出版社，饶运涛、邹继军、王进宏、郑勇芸 编著</li>
+<li><a target="_blank" rel="noopener" href="https://baike.baidu.com/item/现场总线/304020">现场总线</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/f32cfd6c208b">OSI网络模型</a></li>
+<li><a target="_blank" rel="noopener" href="https://baike.baidu.com/item/本质安全/1078274">本质安全</a></li>
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/87868499">本质安全型电气设备防爆原理</a></li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://islet.space/2021/09/20/Communication/2021-09-20-%E6%97%A0%E7%BA%BF%E9%80%9A%E4%BF%A1%E7%BD%91%E7%BB%9C/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Liewzheng">
+      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coder的孤岛">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/09/20/Communication/2021-09-20-%E6%97%A0%E7%BA%BF%E9%80%9A%E4%BF%A1%E7%BD%91%E7%BB%9C/" class="post-title-link" itemprop="url">无线通信网络</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-09-20 14:45:00" itemprop="dateCreated datePublished" datetime="2021-09-20T14:45:00+08:00">2021-09-20</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2021-09-24 07:23:21" itemprop="dateModified" datetime="2021-09-24T07:23:21+08:00">2021-09-24</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Communication/" itemprop="url" rel="index"><span itemprop="name">Communication</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="前置知识">前置知识</h1>
+<ul>
+<li>带宽及传输速率转换</li>
+<li>TCP/IP网络协议</li>
+<li>硬件功耗计算和测量</li>
+</ul>
+<h1 id="概述">概述</h1>
+<p>将从通信速率、通信距离、通信功耗、组网能力/网路容量、 应用场景 及 安全性 等各方面来区分无线通信各种技术。</p>
+<h2 id="通信距离和通信速率">通信距离和通信速率</h2>
+<table>
+<thead>
+<tr class="header">
+<th></th>
+<th>超近距离<br>10公分以内</th>
+<th>近距离<br>1米以内</th>
+<th>近距离<br>20米以内</th>
+<th>中距离<br>20至100米</th>
+<th>远距离<br>1公里以内</th>
+<th>超远距离<br>1公里以上</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>超高速率</strong><br>&gt; 100Mbps</td>
+<td></td>
+<td>RFID</td>
+<td>WiFi</td>
+<td></td>
+<td>5G</td>
+<td></td>
+</tr>
+<tr class="even">
+<td><strong>高速率</strong><br>&lt; 100Mbps</td>
+<td></td>
+<td>RFID</td>
+<td>WiFi</td>
+<td></td>
+<td>3G/4G</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td><strong>中速率</strong><br>&lt; 10Mbps</td>
+<td></td>
+<td></td>
+<td>WiFi<br>Bluethooth</td>
+<td>Bluethooth</td>
+<td>CMDA2K1X<br>2G</td>
+<td></td>
+</tr>
+<tr class="even">
+<td><strong>低速率</strong><br>&lt; 1Mbps</td>
+<td>NFC</td>
+<td></td>
+<td></td>
+<td>ZigBee<br>Z-Ware</td>
+<td>《IEEE 802.11 ah》</td>
+<td>Lora<br>NB-IOT（基于MTC）<br>GPRS</td>
+</tr>
+<tr class="odd">
+<td><strong>超低速率</strong><br>&lt; 1Kbps</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td>Sigfox</td>
+</tr>
+</tbody>
+</table>
+<p>还有很多躺在历史垃圾堆角落里，没有得到使用和普及的通信协议，如 WiMax（IEEE 802.16），</p>
+<h2 id="通信功耗">通信功耗</h2>
+<p><strong>超高功耗</strong>：&gt; 100mA</p>
+<p><strong>高功耗</strong>：30~100mA</p>
+<p><strong>中功耗</strong>：&lt; 30mA</p>
+<p><strong>低功耗</strong>：&lt; 20mA</p>
+<p><strong>超低功耗</strong>：&lt; 10mA</p>
+<table>
+<thead>
+<tr class="header">
+<th>超低功耗</th>
+<th>低功耗</th>
+<th>中功耗</th>
+<th>高功耗</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="组网能力网路容量">组网能力/网路容量</h2>
+<h2 id="应用场景">应用场景</h2>
+<h2 id="lpwanlpwa">LPWAN/LPWA</h2>
+<p><strong>LPWAN</strong>， Low Power Wide Area Network，低功耗广域网络，也可以缩写为LPWA。</p>
+<p>LPWAN 不是指任何一种特定技术，而是作为任何网络的通用术语，这些网络旨在以比其他网络（如蜂窝、卫星或 WiFi）更低的功率进行无线通信。此外，与其他使用蓝牙或 NFC 的低功耗网络相比，LPWAN 的通信距离更远。</p>
+<p>LPWA 网络非常有限的带宽不适合大多数消费者和商业应用，例如语音、视频、音频甚至文本消息。因此，LPWA 网络几乎完全由物联网 (IoT) 和 M2M（机器对机器）通信中的设备使用。</p>
+<p>虽然冰箱、灯泡或 Nest 温度计等家用或商用设备都可以轻松搭载家庭或办公室 WiFi 连接，但某些设备不能依赖这种连接。</p>
+<p>LoRa、SigFox、NB-IoT 都属于 LPWA 的范畴，LoRa 不需要 SIM 卡，NB-IoT 需要 SIM 卡。</p>
+<figure>
+<img src="https://pic.islet.space/2021/09/image-20210920171429124.png" alt="image-20210920171429124" /><figcaption aria-hidden="true">image-20210920171429124</figcaption>
+</figure>
+<h1 id="lora">LoRa</h1>
+<p>LoRa是美国Semtech公司的专有技术，实际是一种采用扩频方案的无线调制解调技术。Semtech在2012年通过并购法国Cycleo公司获得LoRa的IP产权，以此设计制造射频芯片并进行市场销售，是一家纯半导体公司，垄断LoRa芯片的供货。目前Semtech虽然也进行少量LoRa的IP授权，如国内的阿里，但IP是Semtech专有，没有授权任何公司无法设计制造LoRa芯片，所以客户的选择余地很小。</p>
+<p>LoRa使用的也是公共频段进行射频信号传输，上层协议及规范由LoRaWan定义，LoRa联盟负责发布和维护。任何人可以购买LoRa芯片或者模块来设计LoRa终端和网关设备，也可以设计或者购买设备来搭建LoRa网络，所以目前多数的LoRa网络都是小区域和私有的，很少有全国性的通用物联网络，而设备和网络间的兼容也是一个很大的挑战。</p>
+<p>LoRa通过扩频技术实现高灵敏度，从而能够进行远距离传输，但是网络容量有限，无法高效实现大批量设备信息的并行接收和处理，这对于大面积或全国性的部署是个巨大挑战。</p>
+<h1 id="术语">术语</h1>
+<h2 id="link-budget">Link Budget</h2>
+<p>A link budget is used to compute cell coverage by accounting for all the factors that determine the cell coverage to balance the system cost against the required cell capacity. Link budget factors controlled by the RF engineer include transmitter-radiated power, antenna gain, noise figures, and co-channel interference (i.e., reuse factor <em>N</em>). Factors that cannot be controlled directly, but must be considered in the link budget, include propagation path loss and system bandwidth.</p>
+<p>链路预算是用来计算小区覆盖率的，它考虑了决定小区覆盖率的所有因素，以平衡系统成本和所需小区容量。由射频工程师控制的链路预算因素包括发射器辐射功率、天线增益、噪声数字和同信道干扰（即重用系数N）。不能直接控制，但必须在链路预算中考虑的因素包括传播路径损耗和系统带宽。</p>
+<h1 id="参考">参考</h1>
+<ol type="1">
+<li>《无线传感网络》杨博雄/倪玉华</li>
+<li><a target="_blank" rel="noopener" href="http://www.elecfans.com/iot/631444_a.html">物联网通信标准分类 谁最有优势？</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.zhihu.com/question/19687054/answer/632679689">为什么WIMAX没有普及？</a></li>
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/79948173">什么是LPWA</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.hisilicon.com/cn/techtalk/nb-iot">NB-IoT 通往智能世界的基础联接技术</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.sciencedirect.com/topics/engineering/link-budget">Link Budget - an overview | ScienceDirect Topics</a></li>
+<li><a target="_blank" rel="noopener" href="https://cloud.tencent.com/product/lpwa">LPWA 物联网络</a></li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1437,7 +2015,7 @@ R(100) = e^{-(100/1000)^2} = e^{-0.01} = 0.990049 ≈ 99\%
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-09-16 00:34:19" itemprop="dateModified" datetime="2021-09-16T00:34:19+08:00">2021-09-16</time>
+        <time title="Modified: 2021-10-05 14:36:56" itemprop="dateModified" datetime="2021-10-05T14:36:56+08:00">2021-10-05</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -1502,112 +2080,112 @@ f(x)= \lambda e^{-\lambda x} \tag{样例公式}
 <tr class="even">
 <td>下标</td>
 <td><span class="math inline">\(X_i\)</span><br><span class="math inline">\(X_{a-b}\)</span></td>
-<td>X_i<br>X_{a-b}</td>
+<td><code>X_i</code> 和 <code>X_&#123;a-b&#125;</code></td>
 </tr>
 <tr class="odd">
 <td>积分符号</td>
 <td><span class="math inline">\(\int\)</span></td>
-<td></td>
+<td><code>\int</code></td>
 </tr>
 <tr class="even">
 <td>无限</td>
 <td><span class="math inline">\(\infin\)</span></td>
-<td></td>
+<td><code>\infin</code></td>
 </tr>
 <tr class="odd">
 <td>平均值符号</td>
 <td><span class="math inline">\(\overline x\)</span></td>
-<td>x</td>
+<td><code>\overline x</code></td>
 </tr>
 <tr class="even">
 <td>帽子符号</td>
 <td><span class="math inline">\(\hat{a}\)</span></td>
-<td></td>
+<td><code>\hat&#123;a&#125;</code></td>
 </tr>
 <tr class="odd">
 <td></td>
 <td><span class="math inline">\(\widehat{a}\)</span></td>
-<td></td>
+<td><code>\widehat&#123;a&#125;</code></td>
 </tr>
 <tr class="even">
 <td></td>
 <td><span class="math inline">\(\acute{a}\)</span></td>
-<td></td>
+<td><code>\acute&#123;a&#125;</code></td>
 </tr>
 <tr class="odd">
 <td></td>
 <td><span class="math inline">\(\grave{a}\)</span></td>
-<td></td>
+<td><code>\grave&#123;a&#125;</code></td>
 </tr>
 <tr class="even">
 <td></td>
 <td><span class="math inline">\(\bar{a}\)</span></td>
-<td>{a}</td>
+<td><code>\bar&#123;a&#125;</code></td>
 </tr>
 <tr class="odd">
 <td></td>
 <td><span class="math inline">\(\dot{a}\)</span></td>
-<td></td>
+<td><code>\dot&#123;a&#125;</code></td>
 </tr>
 <tr class="even">
 <td></td>
 <td><span class="math inline">\(\ddot{a}\)</span></td>
-<td></td>
+<td><code>\ddot&#123;a&#125;</code></td>
 </tr>
 <tr class="odd">
 <td>短波浪号</td>
 <td><span class="math inline">\(\tilde{A_2}\)</span></td>
-<td></td>
+<td><code>\tilde&#123;A_2&#125;</code></td>
 </tr>
 <tr class="even">
 <td>长波浪号</td>
 <td><span class="math inline">\(\widetilde{A_2}\)</span></td>
-<td></td>
+<td><code>\widetilde&#123;A_2&#125;</code></td>
 </tr>
 <tr class="odd">
 <td>上左箭头</td>
 <td><span class="math inline">\(\overleftarrow{N}\)</span></td>
-<td></td>
+<td><code>\overleftarrow&#123;N&#125;</code></td>
 </tr>
 <tr class="even">
 <td>上右箭头</td>
 <td><span class="math inline">\(\overrightarrow{N}\)</span></td>
-<td></td>
+<td><code>\overrightarrow&#123;N&#125;</code></td>
 </tr>
 <tr class="odd">
 <td>下左箭头</td>
 <td><span class="math inline">\(\underleftarrow{N}\)</span>​</td>
-<td></td>
+<td><code>\underleftarrow&#123;N&#125;</code></td>
 </tr>
 <tr class="even">
 <td>下右箭头</td>
 <td><span class="math inline">\(\underrightarrow{N}\)</span>​</td>
-<td></td>
+<td><code>\underrightarrow&#123;N&#125;</code></td>
 </tr>
 <tr class="odd">
 <td>限制下标</td>
 <td><span class="math inline">\(\mathop{a}\limits_{i=1}\)</span></td>
-<td>_{i=1}</td>
+<td><code>\mathop&#123;a&#125;\limits_&#123;i=1&#125;</code></td>
 </tr>
 <tr class="even">
 <td>分子式</td>
 <td><span class="math inline">\(\frac{1}{2}\)</span></td>
-<td></td>
+<td><code>\frac&#123;1&#125;&#123;2&#125;</code></td>
 </tr>
 <tr class="odd">
 <td>根号</td>
 <td><span class="math inline">\(\sqrt{2\pi}\)</span></td>
-<td></td>
+<td><code>\sqrt&#123;2\pi&#125;</code></td>
 </tr>
 <tr class="even">
 <td>求和符号</td>
 <td><span class="math inline">\(\sum\)</span></td>
-<td></td>
+<td><code>\sum</code></td>
 </tr>
 <tr class="odd">
 <td>三角符号</td>
 <td><span class="math inline">\(\triangle\)</span></td>
-<td></td>
+<td><code>\triangle</code></td>
 </tr>
 </tbody>
 </table>
@@ -2574,737 +3152,6 @@ Resistance \ Tolerance\ @25℃ = α *（±0.5℃） = -4.44\%/℃ * （±0.5℃�
 <p>非隔离电源适合的场合：首先，是室内的灯具，这种室内用电环境较好，浪涌影响小。第二，使用的场合是高压小电流，低压大电流用非隔离没有意义，因为低压大电流非隔离的效率并不比隔离的高，成本也低不到多少去。第三，电压相对较稳定的环境中使用非隔离电源。当然，如果有办法解决掉抑制浪涌的问题，那么非隔离电源的应用范围将大大拓宽！</p>
 <p>隔离电源因为浪涌的问题，损坏率也不可小觑，一般那种返修回来，击坏保险，芯片，MOS的第一个应该想到是浪涌问题。为了减少损坏率，在设计时就行要考虑到浪涌的因素进去，或是在使用时要告戒用户，尽量避免浪涌发生。（如室内灯具，打雷时暂时先关掉）</p>
 <p>综合所述，使用隔离与非隔离很多时候都是因为浪涌这个问题，而浪涌问题和用电环境是息息相关的，所以很多时候使用隔离电源和非隔离电源不能一刀切，非隔离电源在节能，成本上都是很有优势的，所以要科学的选用非隔离还是隔离作为LED驱动电源。</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://islet.space/2021/07/15/Hardware/Circuit/2021-07-15-IGBT%E5%8F%8A%E5%85%B6%E9%A9%B1%E5%8A%A8%E8%8A%AF%E7%89%87%E8%A7%84%E6%A0%BC%E5%AD%A6%E4%B9%A0/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Liewzheng">
-      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Coder的孤岛">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/07/15/Hardware/Circuit/2021-07-15-IGBT%E5%8F%8A%E5%85%B6%E9%A9%B1%E5%8A%A8%E8%8A%AF%E7%89%87%E8%A7%84%E6%A0%BC%E5%AD%A6%E4%B9%A0/" class="post-title-link" itemprop="url">IGBT及其驱动芯片规格学习</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-
-    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
-    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2021-07-15 08:50:00" itemprop="dateCreated datePublished" datetime="2021-07-15T08:50:00+08:00">2021-07-15</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-07-17 14:13:02" itemprop="dateModified" datetime="2021-07-17T14:13:02+08:00">2021-07-17</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Hardware/" itemprop="url" rel="index"><span itemprop="name">Hardware</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>[TOC]</p>
-<p>IGBT和其驱动芯片的电气特性、引脚等参数的开发记录。</p>
-<h1 id="igbt">IGBT</h1>
-<p>IGBT芯片选型为 IKW50N65WR5。</p>
-<figure>
-<img src="https://pic.islet.space/2021/07/image-20210715090401339.png" alt="image-20210715090401339" /><figcaption aria-hidden="true">image-20210715090401339</figcaption>
-</figure>
-<figure>
-<img src="https://pic.islet.space/2021/07/image-20210715093221500.png" alt="image-20210715093221500" /><figcaption aria-hidden="true">image-20210715093221500</figcaption>
-</figure>
-<p>IGBT有三个极，发射极、集电极 和 栅极。</p>
-<p>从其电气性能表格中，可以看出：</p>
-<ul>
-<li>集电极到发射极的击穿电压 <em>最小</em> 为650V</li>
-<li>在 V<span style="font-size: 0.8rem; font-weight: 500;">GE</span> 完全导通（最高15V）时，集电极到发射极的饱和电压为1.8V以下，此时 IGBT 处于截止状态</li>
-<li>在 V<span style="font-size: 0.8rem; font-weight: 500;">GE</span> 完全截止（0V）时，二极管的正向电压为1.9V以下。<mark> 此时，V<span style="font-size: 0.8rem; font-weight: 500;">CE</span> 处于导通状态。</mark></li>
-</ul>
-<figure>
-<img src="https://pic.islet.space/2021/07/image-20210715094151439.png" alt="image-20210715094151439" /><figcaption aria-hidden="true">image-20210715094151439</figcaption>
-</figure>
-<p>从上方表中可以看出，在官方的《开关特性测试情况》下，V<span style="font-size: 0.8rem; font-weight: 500;">GE</span> 的通电情况是 0V 或者 15V，故此推断给此IGBT的栅极电源输入信号应该是0V ~ 15V的方波。</p>
-<p>因此，下图中IGBT器件的电路连接方式为：G 接0/15V方波信号，C 接最高650V电源，E 接地。</p>
-<figure>
-<img src="https://pic.islet.space/2021/07/image-20210715095656309.png" alt="image-20210715095656309" /><figcaption aria-hidden="true">image-20210715095656309</figcaption>
-</figure>
-<h1 id="driver-ic">DRIVER IC</h1>
-<p>选用芯片型号为 2EDL05I06PF。</p>
-<figure>
-<img src="https://pic.islet.space/2021/07/image-20210715102359830.png" alt="image-20210715102359830" /><figcaption aria-hidden="true">image-20210715102359830</figcaption>
-</figure>
-<p>根据表1索引可得，芯片封装类型为DSO-8，目标驱动芯片是 IGBT，而非 MOSFET。</p>
-<figure>
-<img src="https://pic.islet.space/2021/07/image-20210715102251417.png" alt="image-20210715102251417" /><figcaption aria-hidden="true">image-20210715102251417</figcaption>
-</figure>
-<p>再根据图3可得芯片引脚分布，根据表2可得所有引脚描述。</p>
-<figure>
-<img src="https://pic.islet.space/2021/07/image-20210715095931941.png" alt="image-20210715095931941" /><figcaption aria-hidden="true">image-20210715095931941</figcaption>
-</figure>
-<p>结合表2和图3，再根据图1的典型应用电路，可以大致知道芯片的连接方法。</p>
-<table>
-<thead>
-<tr class="header">
-<th>针脚</th>
-<th>功能描述</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>VDD</td>
-<td>芯片供电接口</td>
-</tr>
-<tr class="even">
-<td>GND</td>
-<td>芯片接地接口</td>
-</tr>
-<tr class="odd">
-<td>HIN</td>
-<td>调制波形输入接口——高位</td>
-</tr>
-<tr class="even">
-<td>LIN</td>
-<td>调制波形输入接口——低位</td>
-</tr>
-<tr class="odd">
-<td>VB</td>
-<td>高位正电</td>
-</tr>
-<tr class="even">
-<td>HO</td>
-<td>控制高位IGBT栅极的信号输出接口</td>
-</tr>
-<tr class="odd">
-<td>VS</td>
-<td>高位负电</td>
-</tr>
-<tr class="even">
-<td>LO</td>
-<td>控制低位IGBT栅极的信号输出接口</td>
-</tr>
-</tbody>
-</table>
-<blockquote>
-<p>还是不太明白VB和VS的作用</p>
-</blockquote>
-<p>表4给出了 V<span style="font-size: 0.8rem; font-weight: 500;">DD</span> 和 V<span style="font-size: 0.8rem; font-weight: 500;">B</span> 的供电范围：</p>
-<figure>
-<img src="https://pic.islet.space/2021/07/image-20210715105358524.png" alt="image-20210715105358524" /><figcaption aria-hidden="true">image-20210715105358524</figcaption>
-</figure>
-<figure>
-<img src="https://pic.islet.space/2021/07/image-20210715105816397.png" alt="image-20210715105816397" /><figcaption aria-hidden="true">image-20210715105816397</figcaption>
-</figure>
-<p>表6 给出了输入 V<span style="font-size: 0.8rem; font-weight: 500;">IN</span> 的逻辑电平高低的电压范围，高电平为1.7 ~ 2.4 V， 低电平为0.7 ~ 1.1V。</p>
-<figure>
-<img src="https://pic.islet.space/2021/07/image-20210715103507327.png" alt="image-20210715103507327" /><figcaption aria-hidden="true">image-20210715103507327</figcaption>
-</figure>
-<p>图2 提供了驱动芯片内部结构示意图</p>
-<p>概括地说，IGBT栅极驱动器是一个放大器，其通过提高电压和电流来放大控制信号。</p>
-<p>栅极驱动器的主要作用是对 <mark>IGBT的输入和反向输出电容放电</mark>。因此栅极驱动器（初其他影响因素外）与IGBT的开关性能密切相关，也与通态损耗与开关损耗有关。</p>
-<p>绝大多数IGBT驱动器都是基于电压源的，与电流源驱动器相比，电压源的优势是其功率损耗在栅极电阻上，而非驱动中的电流源内。通过栅极电阻，可以调整最大的栅极电流。另一优势是，电压源相对简单的电路和控制方法。</p>
-<h2 id="驱动功能">驱动功能</h2>
-<p>IGBT驱动电路为系统提供的功能：</p>
-<ol type="1">
-<li>在IGBT开通过程中，栅极处的电容充电直到IGBT的开通阈值电压，反向传输电容（密勒电容）也如此。</li>
-<li>在IGBT关断过程中，输入电容放电直到栅极电压达到关断阈值电压以下，反向传输电容（密勒电容）也如此。</li>
-<li>IGBT驱动可以具有保护IGBT免受损坏的功能，如 <strong>避免IGBT短路</strong> 和 <strong>过电压保护</strong>。</li>
-</ol>
-<h2 id="驱动供电">驱动供电</h2>
-<p>大部分情况下，IGBT驱动需要用隔离的供电电源。隔离电源可以看做是IGBT驱动的一部分。这些电源一般由 <strong>DC-DC变换器</strong> 或 <strong>自举电路</strong> 构成。</p>
-<p>同时，驱动会影响IGBT和续流二极管的动态特性，此外仍须确保IGBT输入电路电压（低压侧）和输出电路（高压侧）的电压隔离。<mark>低压侧与控制电路连接，高压侧与IGBT电路连接。</mark></p>
-<h2 id="信号传输">信号传输</h2>
-<p>阿博说的电路PCB布局要点：强弱隔离，数模隔离，信号沿地。</p>
-<p>IGBT需要隔离的控制信号 包括： <strong>开通信号</strong>、<strong>关断信号</strong>、<strong>反馈信号</strong>。</p>
-<p>这些控制信号的传输路径的隔离是通过 <strong>电隔离</strong> 或 <strong>非电隔离</strong> 的方式形成的，这种电隔离被进一步划分为基于磁感应的、光学的隔离，极少情况下是电容性的隔离。需要通过 <strong><em>IGBT阻断电压</em></strong> 或 <strong><em>应用电压的高低</em></strong> 来判断组个方式，在 高压应用 或 IGBT阻隔电压 U<span style="font-size: 0.6rem;">CES</span> 高至 <code>1.2kV</code> 时，采用磁感应式 或 光学式信号传送器；在 低压 或 中压 应用中 或 低于 <code>1.2kV</code> 时，采用光电耦合驱动芯片。</p>
-<p><img src="https://pic.islet.space/2021/07/image-20210717130119184.png" alt="image-20210717130119184" style="zoom:50%;" /></p>
-<div style="text-align: center; font-weight: 900;">
-图 Infineon对电气隔离的定义
-</div>
-<figure>
-<img src="https://pic.islet.space/2021/07/image-20210717115141036.png" alt="image-20210717115141036" /><figcaption aria-hidden="true">image-20210717115141036</figcaption>
-</figure>
-<h3 id="光电耦合器">光电耦合器</h3>
-<p>光电耦合器就是一种可以实现IGBT驱动的同时实现强弱电隔离的器件。由于光电耦合器的结构设计，集成光电耦合器的IGBT只能实现信息传递，不能为任何设备提供充足的能量支撑，需要一个隔离电源为驱动核心和光电耦合器的二次侧（高压侧）提供电能。</p>
-<p><img src="https://pic.islet.space/2021/07/image-20210717113118307.png" alt="image-20210717113118307" style="zoom:80%;" /></p>
-<p>另外有个相当重要的参数需要考虑——<strong><em>传输延迟时间</em></strong>，即 信号从光电耦合器IGBT输入到控制电流输出的时间。常规而言，传播延迟时间 <em>t</em><span style="font-size: 0.6rem;">PLH</span> 和 <em>t</em><span style="font-size: 0.6rem;">PHL</span> 在几百个纳秒时间，但通常大于200ns。这种延时本身不会构成真正的问题，因为微控制器的控制算法可以考虑这一点，最大的问题在于 延时的公差（传输延迟时间不匹配），即最小和最大延时的不一致性。一旦该公差越大，上下桥臂的IGBT死区时间 <em>t</em><span style="font-size: 0.6rem;">DT</span> 就越大，加重了逆变器输出电流的失真影响。光电耦合器里信号延迟的误差因为操作使用会发生巨大变化，最终可导致高达1us的偏差。</p>
-<figure>
-<img src="https://pic.islet.space/2021/07/image-20210717114405335.png" alt="image-20210717114405335" /><figcaption aria-hidden="true">image-20210717114405335</figcaption>
-</figure>
-<h3 id="脉冲变压器">脉冲变压器</h3>
-<p>利用脉冲变压器为信号传输的IGBT，可以达到较低的延时水平，但与光电耦合器一样，只能传输信号，提供所需能量仍需由隔离电源提供。</p>
-<figure>
-<img src="https://pic.islet.space/2021/07/image-20210717115333071.png" alt="image-20210717115333071" /><figcaption aria-hidden="true">image-20210717115333071</figcaption>
-</figure>
-<h3 id="单片电平转换器">单片电平转换器</h3>
-<p><strong>单片电平转换器</strong>，即 仅通过一个集成电路来实现 输入信号 和 输出信号 之间的隔离。需要注意的是，并不想光耦、变压器、脉冲等技术的完全绝缘的电气隔离，如果出现差错（如输出侧寄生电感产生的负电压瞬变），电路高压侧和地压侧将会直接连在一起（导致内部集成芯片的损坏）。将 <strong><em>SOI（绝缘硅）技术</em></strong> 应用于电平转换器可以解决这一缺陷，Infineon的产品大多都应用这项技术。这样的SOI装置不是由PN结反向偏置来提供内部电路隔离的，而是通过一层绝缘层（通常是二氧化硅 SiO2）来为不同的内部电路提供隔离，其反向电压耐压高达较高（因产品而不同）。</p>
-<p>单片电平转换器主要应用于 U<span style="font-size: 0.6rem;">CES</span> 低于 600V 的IGBT，通常一个驱动器有六路输出。但是在驱动 1.2kV 以上时，其驱动芯片和其他驱动方式相比成本劣势较少采用。</p>
-<figure>
-<img src="https://pic.islet.space/2021/07/image-20210717122123709.png" alt="image-20210717122123709" /><figcaption aria-hidden="true">image-20210717122123709</figcaption>
-</figure>
-<div style="text-align: center; font-weight: 900;">
-图 带电平转换器的IGBT工作原理
-</div>
-<h1 id="产品概念">产品概念</h1>
-<p>栅极驱动芯片 又可以称作 门极驱动芯片。按照门极驱动结构类型可以分为 <strong>单通道</strong>、<strong>双通道</strong>、<strong>四通道</strong> 和 <strong>六通道</strong>，又进一步划分 <strong>高边</strong>、<strong>地边</strong>、<strong>高低边</strong>、<strong>半桥</strong>、<strong>全桥</strong>、<strong>三相</strong>。</p>
-<figure>
-<img src="https://pic.islet.space/2021/07/image-20210717125203004.png" alt="image-20210717125203004" /><figcaption aria-hidden="true">image-20210717125203004</figcaption>
-</figure>
-<figure>
-<img src="https://pic.islet.space/2021/07/image-20210717125219691.png" alt="image-20210717125219691" /><figcaption aria-hidden="true">image-20210717125219691</figcaption>
-</figure>
-<figure>
-<img src="https://pic.islet.space/2021/07/image-20210717125337142.png" alt="image-20210717125337142" /><figcaption aria-hidden="true">image-20210717125337142</figcaption>
-</figure>
-<h2 id="eicedriver">EiceDriver</h2>
-<p>下图为Infineon提供的栅极驱动芯片品类示意：</p>
-<figure>
-<img src="https://pic.islet.space/2021/07/image-20210717120650887.png" alt="image-20210717120650887" /><figcaption aria-hidden="true">image-20210717120650887</figcaption>
-</figure>
-<h1 id="参考">参考</h1>
-<ol type="1">
-<li><a target="_blank" rel="noopener" href="https://storage.islet.space/01_Learning/12_Hardwares/03_Semiconductor/IGBT%E6%A8%A1%E5%9D%97%EF%BC%9A%E6%8A%80%E6%9C%AF%E9%A9%B1%E5%8A%A8%E5%92%8C%E5%BA%94%E7%94%A8.pdf">《IGBT模块：技术驱动和应用》</a></li>
-<li><a target="_blank" rel="noopener" href="https://toshiba.semicon-storage.com/content/dam/toshiba-ss/shared/docs/design-support/document/Reference-design/application-note/MOSFET-Gate-Drive-Circuit-Application-Notes_EN_36267-CN.pdf">《MOSFET 栅极驱动电路》</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.infineon.com/dgdl/Infineon-Power_and_Sensing-ProductSelectionGuide-v00_01-EN.pdf?fileId=5546d4625607bd13015621522aa012cb&amp;da=t">《Infineon-Power_and_Sensing-ProductSelectionGuide-v00_01-EN》</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.infineon.com/dgdl/Infineon-EiceDRIVER_Gate_Driver_ICs-ProductSelectionGuide-v01_01-CN.pdf?fileId=5546d46269e1c019016ab0ec653015cc">《Infineon-EiceDRIVER_Gate_Driver_ICs-ProductSelectionGuide-v01_01-CN》</a></li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://islet.space/2021/07/14/Hardware/2021-07-14-Semiconductor/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Liewzheng">
-      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Coder的孤岛">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/07/14/Hardware/2021-07-14-Semiconductor/" class="post-title-link" itemprop="url">Semiconductor</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-
-    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
-    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2021-07-14 20:30:00" itemprop="dateCreated datePublished" datetime="2021-07-14T20:30:00+08:00">2021-07-14</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-07-17 12:13:36" itemprop="dateModified" datetime="2021-07-17T12:13:36+08:00">2021-07-17</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Semiconductor/" itemprop="url" rel="index"><span itemprop="name">Semiconductor</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>本文章用于记录半导体（晶体管的工作原理等blablabla的知识）。</p>
-<h1 id="半导体的定义">半导体的定义</h1>
-<p><strong>半导体</strong> 是指常温下导电性能介于导体与绝缘体之间的材料。 按照国际通行的半导体产品标准方式进行分类，半导体可以分为四类：<strong>集成电路</strong>（Integer Circuit），<strong>分立器件</strong>（Discrete Device），<strong>传感器</strong>（Sensor） 和 <strong>光电子器件</strong>（Optoelectronic Devices） ，统称为半导体元件。</p>
-<p>分立器件按照功率转换进行分类，可以分为 <strong>功率器件</strong> 和 <strong>非功率器件</strong>，其中，<strong>传感器</strong> 和 <strong>光电器件</strong> 属于 分立器件下的 <strong>非功率器件</strong>，剩下的均是 <strong>功率器件</strong>，包含大部分晶体管，如 Zener Diode、BJT、IGFET、IGBT、Thyristor等。</p>
-<p><strong>注意</strong>：功率器件的概念很大，不仅在分立器件中存在功率半导体，在IC中也存在功率半导体的产品。</p>
-<h2 id="本征半导体">本征半导体</h2>
-<p><mark>导电性介于导体与绝缘体之间的物质</mark>称为 <strong>半导体</strong>。</p>
-<p><strong>导体</strong>：如铁、铝、铜等金属元素等低价元素，其最外层电子在外电场作用下很容易产生定向移动，形成电流。</p>
-<p><strong>绝缘体</strong>：如惰性气体、橡胶等，其原子的最外层电子受原子核的束缚力很强，只有在外电场强到一定程度时才可能导电。</p>
-<p><strong>半导体</strong>：如硅（Si）、锗（Ge），均为四价元素，它们原子的最外层电子受原子核的束缚力介于导体与绝缘体之间。</p>
-<p><strong>本征半导体</strong>：intrinsic semiconductor， 是 <strong>纯净</strong>（Purity）的 <strong>晶体结构</strong>（Crystal Texture）的 半导体；intrinsic 具有 “本质，固有” 之意。<strong>纯净</strong>，即无杂质之意；<strong>晶体结构</strong>，即稳定的结构。</p>
-<h2 id="pn型半导体">P/N型半导体</h2>
-<p>纯净的硅晶体不带电荷，不显示出任何导电特性。</p>
-<p><strong>自由电子</strong>（Electron）：由于热运动，具有足够能量的价电子挣脱共价键的束缚而成为自由电子</p>
-<p><strong>空穴</strong>（Hole）：自由电子的产生使共价键中留有一个空位置</p>
-<p><strong>复合</strong>：自由电子与空穴相碰同时消失</p>
-<p><strong>电荷</strong>：电子和空穴都是电荷，电子呈现负电荷，空穴呈现正电荷</p>
-<p><strong>载流子</strong>（Carrier）：运载电荷的粒子称为载流子</p>
-<p><strong>导电性</strong>：物体呈现出的传导电流的能力</p>
-<p><strong>多数载流子</strong>：在纯净硅晶体中掺杂数量较多的电荷称为多数载流子。</p>
-<p><strong>少数载流子</strong>：在纯净硅晶体中掺杂数量较少的电荷称为少数载流子。</p>
-<p>外加电场时，带负电的自由电子和带正电的空穴均参与导电，且运动方向相反。由于载流子数目很少，故导电性很差。温度升高，热运动加剧，载流子浓度增大，导电性增强。热力学温度0K时不导电。</p>
-<p><img src="https://pic.islet.space/2021/07/image-20210714204623205.png" alt="image-20210714204623205" style="zoom: 33%;" /></p>
-<div style="text-align: center; font-weight:900;">
-图 N型半导体结构
-</div>
-<p><img src="https://pic.islet.space/2021/07/image-20210714204653816.png" alt="image-20210714204653816" style="zoom: 33%;" /></p>
-<div style="text-align: center; font-weight:900;">
-图 P型半导体结构
-</div>
-<p>往纯净的硅晶体中掺杂一定浓度的 <strong>磷</strong>（P）或 <strong>硼</strong>（B）即可获得 使得硅晶半导体带上电子或空穴，即获得了 <strong>N型半导体</strong> 和 <strong>P型半导体</strong>。</p>
-<p><strong>杂质半导体</strong>：在本征的基础上掺杂其他元素。</p>
-<p><strong>P型半导体</strong>：掺杂了硼元素的硅晶体，空穴为多数载流子。</p>
-<p><strong>N型半导体</strong>：掺杂了磷元素的硅晶体。自由电子为多数载流子。</p>
-<h2 id="pn结">PN结</h2>
-<p><strong>结</strong>：即 Junction，在纯净硅晶体中掺杂两种不同电荷所形成的杂质接触截面。</p>
-<p><strong>扩散运动</strong>：物质 <mark>因浓度差而产生</mark> 的运动。气体、液体、固体均有之。扩散运动使靠近接触面P区的空穴浓度降低、靠近接触面N区的自由电子浓度降低，产生内电场。</p>
-<p><strong>漂移运动</strong>：因 <mark>电场作用</mark> 所产生的运动。</p>
-<p><strong>动态平衡</strong>：结处因空穴和电子一刻不停地复合和分离（官方：参与扩散运动和漂移运动的载流子数目相同）而形成 “无多数载流子” 的状态。</p>
-<blockquote>
-<p><strong>注意</strong>：扩散运动和漂移运动是相反的，</p>
-</blockquote>
-<p><img src="https://pic.islet.space/2021/07/image-20210714210922380.png" alt="image-20210714210922380" style="zoom:50%;" /></p>
-<div style="text-align: center; font-weight:900;">
-图 扩散运动
-</div>
-<p><img src="https://pic.islet.space/2021/07/image-20210714210942004.png" alt="image-20210714210942004" style="zoom:67%;" /></p>
-<div style="text-align: center; font-weight:900;">
-图 漂移运动
-</div>
-<p><strong>耗尽层</strong>：PN结处，因动态平衡而达到的“无多数载流子”的状态，该结的大小称为耗尽层。</p>
-<p>如果此时让P区的多数载流子，即空穴尽量往N区移动，让N区的多数载流子，即自由电子尽量往P区移动，则两种电荷进行复合，形成更宽的耗尽层，此时因为耗尽层因为没有多数载流子而呈现不导电特性。</p>
-<p>反之，让P区的多数载流子尽量往P区靠拢，让N区的多数载流子尽量往N区靠拢（注意，这里用的是“靠拢”，因为中间已经有耗尽层的形成，此时的“靠拢”是让耗尽层中已经复合消失的电子和空穴重新拆开，分别往各自原来的反向回归。），耗尽层的宽度会逐渐缩小，显现出导电特性。</p>
-<p><strong>正向</strong>：电源的正、负极分别对准半导体的P、N极进行连接。</p>
-<p><strong>反向</strong>：电源的正、负极分别对准半导体的N、P极进行连接。</p>
-<p><strong>正向导通</strong>：耗尽层变窄，扩散运动加剧，由于外电源的作用，形成扩散电流，PN结处于导通状态。</p>
-<p><strong>反向截止</strong>：耗尽层变宽，阻止扩散运动，有利于漂移运动，形成漂移电流。由于电流很小，故可近似认为其截止。</p>
-<p><img src="https://pic.islet.space/2021/07/image-20210714212136379.png" alt="image-20210714212136379" style="zoom:33%;" /></p>
-<div style="text-align: center; font-weight:900;">
-图 正向导通
-</div>
-<p><img src="https://pic.islet.space/2021/07/image-20210714212143706.png" alt="image-20210714212143706" style="zoom:33%;" /></p>
-<div style="text-align: center; font-weight:900;">
-图 反向截止
-</div>
-<h3 id="电容效应">电容效应</h3>
-<p><strong>势垒电容</strong>：PN结外加电压变化时，空间电荷区的宽度将发生变化，有电荷的积累和释放的过程，与电容的充放电相同，其等效电容称为势垒电容Cb。</p>
-<p><strong>扩散电容</strong>：PN结外加的正向电压变化时，在扩散路程中载流子的浓度及其梯度均有变化，也有电荷的积累和释放的过程，其等效电容称为扩散电容Cd。</p>
-<p><strong>结电容</strong>：等于 势垒电容 与 扩散电容 之和。但 <mark>结电容不是常量！</mark> 若PN结外加电压频率高到一定程度，则失去单向导电性！</p>
-<h1 id="二极管">二极管</h1>
-<p>The diode is the most used semiconductor device in electronics circuits. <strong><em>It is a two-terminal electrical check valve that allows the flow of current in one direction.</em></strong> They are mostly made up of <strong><em>silicon</em></strong> but <strong><em>germanium</em></strong> is also used. Usually, they are used for <strong><em>rectification</em></strong>. But there are different properties &amp; characteristics of diodes which can be used for different application. These characteristics are modified to form different types of diodes.</p>
-<figure>
-<img src="https://pic.islet.space/2021/07/image-20210713102126884.png" alt="image-20210713102126884" /><figcaption aria-hidden="true">image-20210713102126884</figcaption>
-</figure>
-<p><img src="https://pic.islet.space/2021/07/Types-of-Diodes-and-Their-Applications.jpg" alt="Types of Diodes and Their Applications" style="zoom:67%;" /></p>
-<div style="text-align: center; font-weight: 900;">
-图 二极管的几种外形
-</div>
-<figure>
-<img src="https://pic.islet.space/2021/07/image-20210713102141393.png" alt="image-20210713102141393" /><figcaption aria-hidden="true">image-20210713102141393</figcaption>
-</figure>
-<div style="text-align: center; font-weight: 900;">
-图 二极管的几种常见结构和符号
-</div>
-<h2 id="主要特征参数">主要特征参数</h2>
-<ol type="1">
-<li>最大整流电流（Maximum Rectification Current）</li>
-<li>最高反向工作电压（Maximum Reverse Voltage）</li>
-<li>反向电流（Reverse Current）</li>
-<li>最高工作频率（Maximum Frequency）</li>
-</ol>
-<h2 id="自举二极管">自举二极管</h2>
-<h1 id="晶体管">晶体管</h1>
-<p>晶体管主要分为两种类型，BJT 和 FET。</p>
-<p><strong>工作区域</strong>：晶体管的导通状态，分为三种，分别是饱和、截止和放大，分别是指</p>
-<h2 id="bjt">BJT</h2>
-<p>BJT，即 Bioplar Junction Transistor，双极性结型晶体管。</p>
-<figure>
-<img src="https://pic.islet.space/2021/07/image-20210714213248733.png" alt="image-20210714213248733" /><figcaption aria-hidden="true">image-20210714213248733</figcaption>
-</figure>
-<div style="text-align: center; font-weight:900;">
-图 晶体管内部结构和符号示意
-</div>
-<p><strong>注意</strong>：晶体管的符号示意中，箭头的方向永远是从P指向N的，此时先不用管c、b、e是怎么接，确定好。</p>
-<blockquote>
-<p>BJT结构特点：三极三区两PN结，发射区多子浓度高，基区多子浓度低且薄，集电区 面积大。</p>
-</blockquote>
-<p><strong>发射区</strong>：多数载流子较高的区域，自由电子流出的方向。</p>
-<p><strong>基区</strong>：多数载流子浓度较低且薄的区域。</p>
-<p><strong>集电区</strong>：面积大的区域，空穴流出的反向。</p>
-<blockquote>
-<p>某极 是根导线，与BJT中的物理区不同。</p>
-</blockquote>
-<p><strong>发射结</strong>：发射区和基区之间的PN结。</p>
-<p><strong>集电结</strong>：集电区和基区之间的PN结。</p>
-<blockquote>
-<p><strong>注意</strong>：以上多数载流子可以是 空穴 或 自由电子，因此 BJT 可以有 NPN 和 PNP 两种类型的BJT。</p>
-</blockquote>
-<p>联系到实际电路连接中，一般情况下，<strong>集电区</strong> 都是接 <strong>供电电源</strong> ， <strong>基区</strong> 都是接 <strong>控制电源</strong>， <strong>发射区</strong> 都是接 <strong>负端/地</strong>。控制电源的电压会低于供电电源的电压，但会大于发射区的电压。</p>
-<p>基区所连接的控制电源 为BJT提供 高电平或低电平 予以控制半导体的导通或截止，<mark>半导体所控制的负载的最大电压取决于发射极的供电电源电压 和 基区的控制电源电压</mark>。</p>
-<p><img src="https://pic.islet.space/2021/07/image-20210713104805683.png" alt="image-20210713104805683" style="zoom:67%;" /></p>
-<div style="text-align: center; font-weight: 900;">
-图 BJT的几种常见外形
-</div>
-<p><img src="https://pic.islet.space/2021/07/image-20210713105054978.png" alt="image-20210713105054978" style="zoom:67%;" /></p>
-<div style="text-align: center; font-weight: 900;">
-图 BJT的结构和符号
-</div>
-<h3 id="工作原理">工作原理</h3>
-<p>从下图可以看出，下图 BJT 为 NPN 型半导体，集电区接正电，发射区接地，基区接地。集电区与基区为反向截止状态，集电结的耗尽层增大，进一步阻止集电区和发射区之间的电流导通。</p>
-<p>若此时向基区施加正向电流，基区电压高于发射区电压，发射结正偏导通，发射区多子（电子）往基区流动，。发射区的电子能够顺利往集电区流动，集电区的电流往发射区流动，从而导通 该BJT。</p>
-<p><img src="https://pic.islet.space/2021/07/image-20210714215347959.png" alt="image-20210714215347959" style="zoom:33%;" /></p>
-<div style="text-align: center; font-weight:900;">
-图 BJT导通时的内部电荷流向示意
-</div>
-<p>集电极电流是漂移形成的，发射极电流是扩散形成的。</p>
-<p><strong>发射区电流</strong> I<span style="font-size: 0.8rem;">E</span> 是由 扩散运动形成的。</p>
-<p><strong>基区电流</strong> I<span style="font-size: 0.8rem;">B</span> 是由 复合运动形成的。</p>
-<p><strong>集电区电流</strong> I<span style="font-size: 0.8rem;">C</span> 是由 漂移运动形成的。</p>
-<p><img src="https://pic.islet.space/2021/07/image-20210714222731446.png" alt="image-20210714222731446" style="zoom:33%;" /></p>
-<div style="text-align: center; font-weight:900;">
-图 BJT输入特性曲线
-</div>
-<p><img src="https://pic.islet.space/2021/07/image-20210714222645318.png" alt="image-20210714222645318" style="zoom: 33%;" /></p>
-<div style="text-align: center; font-weight:900;">
-图 BJT输出特性曲线
-</div>
-<h3 id="工作区域">工作区域</h3>
-<p><img src="https://pic.islet.space/2021/07/image-20210714223024773.png" alt="image-20210714223024773" style="zoom:67%;" /></p>
-<div style="text-align: center; font-weight:900;">
-图 BJT工作区域
-</div>
-<h2 id="fet">FET</h2>
-<p><strong>场效应晶体管</strong> 简称 <strong>场效应管</strong>。主要有 <strong>结型场效应管</strong>（JFET）和 <strong>金属氧化物半导体场效应管</strong>（MOSFET）两种类型。</p>
-<h3 id="jfet">JFET</h3>
-<p><img src="https://pic.islet.space/2021/07/image-20210713105852012.png" alt="image-20210713105852012" style="zoom:67%;" /></p>
-<div style="text-align: center; font-weight: 900;">
-图 JFET的结构和符号
-</div>
-<h3 id="mosfet">MOSFET</h3>
-<p>在MOS管工作原理图上可以看到，漏极和源极之间有一个寄生二极管。这个叫体二极管，在驱动感性负载(如马达)，这个二极管很重要。顺便说一句，体二极管只在单个的MOS管中存在，在集成电路芯片内部通常是没有的。</p>
-<p>下图a中，为增强型P衬底N沟道MOS，其栅极接 <u>高电平</u> 即导通。</p>
-<p><img src="https://pic.islet.space/2021/07/image-20210713110023509.png" alt="image-20210713110023509" style="zoom:67%;" /></p>
-<div style="text-align: center; font-weight: 900;">
-图 N沟道增强型MOS管结构示意图 及 增强型MOS管的符号
-</div>
-<p><img src="https://pic.islet.space/2021/07/image-20210713110146838.png" alt="image-20210713110146838" style="zoom:67%;" /></p>
-<div style="text-align: center; font-weight: 900;">
-图 N沟道耗尽型MOS管结构示意图 及 耗尽型MOS管的符号
-</div>
-<h4 id="nmos工作原理">NMOS工作原理</h4>
-<iframe src="//player.bilibili.com/player.html?aid=931455726&amp;bvid=BV1DM4y1T7Yx&amp;cid=363622918&amp;page=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true">
-</iframe>
-<p>MOS管有4个端子，其符号也是四个端子组成的，以下用NMOS举例：</p>
-<p>NMOS底部端子连接到基板/主体（Substrate/Body），称为基板、衬底端子 或 <strong><em>主体端子</em></strong>。上方各有两个N沟道，各自连接 <strong><em>源极端子</em></strong> 和 <strong><em>漏极端子</em></strong>。两个端子中间添加了一层 薄绝缘体或电介质，在此层绝缘体上加了一个 <strong><em>栅极端子</em></strong>。</p>
-<p><img src="https://pic.islet.space/2021/07/image-20210716001316182.png" alt="image-20210716001316182" style="zoom:50%;" /></p>
-<p>在NMOS内部构造中，源极端子 和 衬底端子 在内部连接，因此外露出来的端子只有三个。此时因 源极 和 衬底 的电位相同，阻止了任何电流从衬底流向源极。</p>
-<p><img src="https://pic.islet.space/2021/07/image-20210716001716986.png" alt="image-20210716001716986" style="zoom:50%;" /></p>
-<p>在MOS中，希望电子从漏极流向源极，在两个极连接一个电源，其电压称为 V<span style="font-size: 0.6rem;">DS</span> ，此时加大电压，电流却不会增大，因为漏极沟道附近的耗尽层不断增大。</p>
-<p><img src="https://pic.islet.space/2021/07/image-20210716002453710.png" alt="image-20210716002453710" style="zoom:50%;" /></p>
-<p>栅极端子 和 主体端子 都有绝缘材料，当给栅极端子接电压较小的电压 V<span style="font-size: 0.6rem;">GS</span> 时，两个绝缘材料形成电容效应，栅极处的多子不断吸引自由电子往栅极移动，暂时形成带自由电子较多的N区，从而导通了 源极 和 漏极，暂时形成了回路。因为 栅极处的N区是暂时连接 源极和漏极的通道，因此也被称为 N沟道。随着电压的增大或减小，沟道的大小也会随着变化。足以形成沟道的最低栅极电压被称为 <strong>阈值电压</strong>。</p>
-<p><img src="https://pic.islet.space/2021/07/image-20210716002900372.png" alt="image-20210716002900372" style="zoom:50%;" /></p>
-<p>当不断增加栅极电压，漏极 和 衬底之间的耗尽层将因为 反向偏置 而不断增加。靠近漏极一侧的N沟道宽度将不断减小，直到某个电压点时，称为夹断效应。夹断下映实际上是说，沟道并未完全关闭，许多电子将保留通道，并不是停止了电流流动，而是出现了恒定的饱和电流，其电压被称为 饱和电压。</p>
-<p><img src="https://pic.islet.space/2021/07/image-20210716004255087.png" alt="image-20210716004255087" style="zoom:50%;" /></p>
-<div style="text-align: center; font-weight: 900;">
-表 FET的符号和特性
-</div>
-<figure>
-<img src="https://pic.islet.space/2021/07/image-20210713105437061.png" alt="image-20210713105437061" /><figcaption aria-hidden="true">image-20210713105437061</figcaption>
-</figure>
-<figure>
-<img src="https://pic.islet.space/2021/07/image-20210713105533255.png" alt="image-20210713105533255" /><figcaption aria-hidden="true">image-20210713105533255</figcaption>
-</figure>
-<h2 id="fet-and-bjt">FET and BJT</h2>
-<p>FET 的 <strong>栅极</strong>、<strong>源极</strong> 和 <strong>漏极</strong> 对应 BJT的 <strong>基极</strong>、<strong>发射极</strong> 和 <strong>集电极</strong>，其作用类似。</p>
-<table>
-<thead>
-<tr class="header">
-<th></th>
-<th>FET</th>
-<th>BJT</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>电流索取</td>
-<td>用“栅-源”电压控制漏极电流，栅极基本不取电流<br>【输入电阻高的电路选用】</td>
-<td>工作时基极总要索取一定的电流<br>【信号源若提供电流的选用】</td>
-</tr>
-<tr class="even">
-<td>导电情况</td>
-<td>仅多子参与导电</td>
-<td>多子少子均参与导电</td>
-</tr>
-<tr class="odd">
-<td>稳定性</td>
-<td>较好</td>
-<td>较差<br>【因少子数目受温度、辐射等因素影响较大，温度稳定性和抗辐射的能力较差些。】</td>
-</tr>
-<tr class="even">
-<td>噪声系数</td>
-<td>小<br>【低噪声放大器的输入级和信噪比要求高的电路选用】</td>
-<td>大</td>
-</tr>
-<tr class="odd">
-<td>源-漏互换</td>
-<td>可以互换，互换后特性变化不大</td>
-<td>互换后特性差异很大，特殊需求时互换</td>
-</tr>
-<tr class="even">
-<td>电压范围</td>
-<td>宽</td>
-<td>窄</td>
-</tr>
-<tr class="odd">
-<td>工艺</td>
-<td>简单</td>
-<td>复杂</td>
-</tr>
-<tr class="even">
-<td>耗电</td>
-<td>低</td>
-<td>高</td>
-</tr>
-</tbody>
-</table>
-<blockquote>
-<p>IGFET / MOS / MOSFET 是同一个东西，还有个词叫 MISFET（Metal-Insulated-Semiconductor Field Effect Transistor，金属绝缘半导体场效应管）</p>
-</blockquote>
-<h1 id="功率半导体">功率半导体</h1>
-<p><strong>功率半导体</strong> 器件大致分为两类： <strong>可控功率半导体</strong> 和 <strong>不可控功率半导体</strong>。<strong>可控功率半导体</strong> 如 Thyristor（晶闸管）、BJT（双极型晶体管）、功率MOSFET 和 IGBT 。不可控功率半导体 包括各种类型的功率二极管。</p>
-<p><img src="https://pic.islet.space/2021/07/image-20210713112224602.png" alt="image-20210713112224602" style="zoom:67%;" /></p>
-<div style="text-align: center; font-weight: 900;">
-图 常见功率半导体器件及其典型的功率范围、阻断电压和开关频率
-</div>
-<h1 id="igbt">IGBT</h1>
-<p><strong>绝缘栅型双极晶体管</strong>，即 <strong>IGBT</strong>（Insulated Gate Bipolar Transistor），是由 <strong><em>BJT</em></strong>（双极型三极管)）和 <strong><em>MOS</em></strong>（绝缘栅型场效应管）组成的 <strong>复合全控型电压驱动式功率半导体</strong> 器件, 兼有 <strong>MOSFET</strong>的 <u>高输入阻抗</u> 和 <strong>GTR</strong>的 <u>低导通压降</u> 两方面的优点。IGBT综合了以上两种器件的优点，驱动功率小而饱和压降低。非常适合应用于直流电压为600V及以上的变流系统如交流电机、变频器、开关电源、照明电路、牵引传动等领域。</p>
-<blockquote>
-<p>GTR 具有饱和压降低，载流密度大，但驱动电流较大的优点；</p>
-<p>MOSFET 具有驱动功率很小，开关速度快，但导通压降大，载流密度小的优点。</p>
-</blockquote>
-<p><strong>IGBT模块</strong> 是由 IGBT（绝缘栅双极型晶体管芯片）与FWD（续流二极管芯片）通过特定的电路桥接封装而成的模块化半导体产品；封装后的IGBT模块直接应用于变频器、UPS不间断电源等设备上；IGBT模块 具有节能、安装维修方便、散热稳定等特点；当前市场上销售的多为此类模块化产品，一般所说的IGBT也指IGBT模块；随着节能环保等理念的推进，此类产品在市场上将越来越多见；</p>
-<p><img src="https://pic.islet.space/2021/07/image-20210713142410853.png" alt="image-20210713142410853" style="zoom: 80%;" /></p>
-<div style="text-align: center; font-weight: 900;">
-图 IGBT内部结构和等效电路
-</div>
-<p>因为IGBT的构造所致，最好还是不要让IGBT长期工作在放大区，会让其降低使用寿命，因开关开断时而进入放大区无可避免，仅工作在 饱和区 和 截止区 即可。</p>
-<p><img src="https://pic.islet.space/2021/07/image-20210715221251088.png" alt="image-20210715221251088" style="zoom:80%;" /></p>
-<p>三个英文符号分别表示为 <strong>栅极</strong>（Gate）、<strong>集电极</strong>（Collector）、<strong>发射极</strong>（Emitter）。</p>
-<p>在漏极侧增加了高掺杂的P+层，称之为 <strong>集电极</strong>。</p>
-<ul>
-<li><p>当栅极接近 <u>负电压</u> 或 <u>零电压</u> 时，PN结 J2 阻断，发射极电压远低于集电极电压，IGBT 关断 （正向阻断）；但是此刻 结J1 和 结J3 <strong>正偏导通</strong>。</p></li>
-<li><p>当栅极接到 <u>正电压</u>（通常是15V）时，氧化层下方的 P区 建立 <strong>反型导电沟道</strong>，为 N-区 提供导电通路，电子从发射极到 N-区 降低了 N-区 的电位，PN结 J1导通，IGBT导通。</p></li>
-</ul>
-<p>如果栅极电压不够大，形成的反型层较弱，流入漂移区的电子数相对较少，IGBT压降增大，即进入特性曲线的 <strong>线性放大区</strong>。工作在线性放大区会加剧损耗或损坏 IGBT，因而除了开关瞬间，应避免进入线性放大区。</p>
-<p><img src="https://pic.islet.space/2021/07/image-20210713144038325.png" alt="image-20210713144038325" style="zoom:67%;" /></p>
-<div style="text-align: center; font-weight: 900;">
-图 IGBT的输出特性
-</div>
-<p>IGBT 的关断电流分为 <strong>MOSFET关断阶段</strong> 和 <strong>BJT关断阶段</strong>。第一个阶段时，关断反型沟道，电流迅速下降；第二个阶段时，会产生持续时间较长的拖尾电流。</p>
-<p>拖尾电流使得 IGBT 的关断损耗 高于 MOSFET 的关断损耗。</p>
-<p><img src="https://pic.islet.space/2021/07/image-20210713144838981.png" alt="image-20210713144838981" style="zoom: 67%;" /></p>
-<div style="text-align: center; font-weight: 900;">
-图 MOSFET和IGBT的主要开通和关断特性比较
-</div>
-<p>截止电压：</p>
-<p>饱和电压：</p>
-<p>击穿电压：</p>
-<p><strong>阈值电压</strong>：描述的是 <strong>栅极</strong> 和 <strong>发射极</strong> 之间刚好足以打开导流通道的电压。</p>
-<p><strong>漏电流</strong>：泄露电流，leakage current。主要是指栅极和发射极的在反向偏置状态的泄露电流，此处特性与二极管相近。</p>
-<h2 id="分类">分类</h2>
-<p>IGBT可以分为 <strong>穿通型</strong>（PT）IGBT、<strong>非穿通型</strong>（NPT）IGBT、<strong>场终止型</strong>（FS）IGBT、<strong>沟槽栅</strong>（Trench）IGBT、<strong>载流子存储沟槽栅双极晶体管</strong>（CSTBT）、<strong>注入增强晶体管</strong>（IEGT）、<strong>沟槽栅终止</strong>（Trench-FS）IGBT、<strong>逆导型</strong>（RC）IGBT。</p>
-<p><strong>平面栅极结构</strong> 的IGBT设计，形成了JFET结构，以及发射极区软弱的电导调制效应，载流子的浓度从集电极到发射极之间逐步降低。</p>
-<p><strong>沟槽型栅极结构</strong> 的IGBT设计，在平面型的基础上保持载流子浓度平均分布或逐步增加载流子浓度，进一步降低通态损耗，而不影响拖尾电流和关断损耗。</p>
-<p>载流子越少越有助于降低关断损耗。</p>
-<table>
-<colgroup>
-<col style="width: 16%" />
-<col style="width: 30%" />
-<col style="width: 12%" />
-<col style="width: 11%" />
-<col style="width: 30%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th>TYPE</th>
-<th>内部构造（原理）</th>
-<th>温度系数</th>
-<th>优点</th>
-<th>缺点</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>PT-IGBT<BR>穿通型IGBT</td>
-<td><img src="https://pic.islet.space/2021/07/image-20210713112637086.png" alt="image-20210713112637086" style="zoom:67%;" /></td>
-<td>正温度系数<br>负温度系数</td>
-<td></td>
-<td></td>
-</tr>
-<tr class="even">
-<td>NPT-IGBT<BR>非穿通型IGBT</td>
-<td><img src="https://pic.islet.space/2021/07/image-20210713112654444.png" alt="image-20210713112654444" style="zoom:67%;" /></td>
-<td>正温度系数</td>
-<td>1. 有利于IGBT并联</td>
-<td>1. 随着温度上升，损耗增大</td>
-</tr>
-<tr class="odd">
-<td>FS-IGBT<BR>场终止型IGBT</td>
-<td><img src="https://pic.islet.space/2021/07/image-20210713112712678.png" alt="image-20210713112712678" style="zoom:67%;" /></td>
-<td>正温度系数</td>
-<td></td>
-<td></td>
-</tr>
-<tr class="even">
-<td>Trench-IGBT<br>沟槽栅IGBT</td>
-<td><img src="https://pic.islet.space/2021/07/image-20210713112728045.png" alt="image-20210713112728045" style="zoom:67%;" /></td>
-<td></td>
-<td></td>
-<td>1. 更宽的导电沟道会增加IGBT短路时的电流</td>
-</tr>
-<tr class="odd">
-<td>CSTBT<br>载流子存储沟槽双极晶体管</td>
-<td><img src="https://pic.islet.space/2021/07/image-20210713122039519.png" alt="image-20210713122039519" style="zoom:67%;" /></td>
-<td></td>
-<td>1. 降低了IGBT的饱和压降</td>
-<td></td>
-</tr>
-<tr class="even">
-<td>IEGT<BR>注入增强栅晶体管</td>
-<td><img src="https://pic.islet.space/2021/07/image-20210713112841613.png" alt="image-20210713112841613" style="zoom:67%;" /></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr class="odd">
-<td>Trench-FS IGBT<br>沟槽栅终止IGBT</td>
-<td><img src="https://pic.islet.space/2021/07/image-20210713112933604.png" alt="image-20210713112933604" style="zoom:67%;" /></td>
-<td></td>
-<td></td>
-<td>1. 保持鲁棒性，通态损耗和开关损耗降低<br>2. 功率密度提升，即电流密度增大<br>3. 单位IGBT所需硅材料降低</td>
-</tr>
-<tr class="even">
-<td>RC-IGBT<BR>逆导型IGBT</td>
-<td><img src="https://pic.islet.space/2021/07/image-20210713122011473.png" alt="image-20210713122011473" style="zoom:67%;" /></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-</tbody>
-</table>
-<h1 id="术语总结">术语总结</h1>
-<p><strong>FET</strong>： Filed Effect Transistor，即 <strong>场效应管</strong>，是 <mark>利用输入回路的电场效应来控制输出回路电流</mark> 的一种半导体器件，故此得名。由于其仅靠半导体中的多数载流子导电，因此也称为 <strong>单极型晶体管</strong>。</p>
-<p><strong>JFET</strong>： Junction Filed Effect Transistor，即 <strong>结型场效应管</strong>，有 P沟道 和 N沟道 两种类型。</p>
-<p><strong>IGFET</strong>： Insulated Gate Field Effect Transistor，即 <strong>绝缘栅型场效应管</strong>。因栅极与源极、栅极与漏极之间均采用二氧化硅绝缘层进行阻隔而得名如此。又因栅极为金属铝，故又称为MOS管。具有 高输入阻抗、高开关频率 和 低驱动功率 的优点。</p>
-<p><strong>MOS</strong>： Metal-Oxide-Semiconductor，即 <strong>金属氧化物半导体</strong>。同上。</p>
-<p><strong>MOSFET</strong>： Metal-Oxide-Semiconductor Field Effect Transistor，即 <strong>金属氧化物半导体场效应管</strong>。同上。</p>
-<p><strong>BJT</strong>： Bipolar Junction Transistor， 即 <strong>双极结型晶体管</strong>。因带有两种不同极性电荷的载流子参与导电，故得名如此，或称 <strong>半导体三极管</strong>，简称 <strong>双极晶体管</strong> 或 <strong>晶体管</strong>。</p>
-<p><strong>UJT</strong>： Unijunction Transistor，即 <strong>单结晶体管</strong>。因有两个基极，也称为 <strong>双基极晶体管</strong>。</p>
-<p><strong>GTR</strong>： Giant Transistor，即 <strong>巨型晶体管</strong>。BJT的一种，亦称为 Power BJT（<strong>电力晶体管</strong>）。具有自关断、无须辅助关断电路、 高电流密度、低保和电压 和 耐高压 的优点。</p>
-<p><strong>IGBT</strong>： Insulated Gate Bipolar Transistor，即 <strong>绝缘栅双极型晶体管</strong>。</p>
-<p><strong>Thyristor</strong>：即 <strong>半导体闸流管</strong> 、<strong>晶闸管</strong>，又称为 <strong>硅可控元件</strong>（Silicon Controlled Rectifier）， 由按顺序排列的PNPN四层半导体组成。最外层的P区和N区构成了正负极，中间的P区构成了控制极（栅极），可以控制导通。具有耐压高、电流大、耐浪涌能力强 且 价格便宜 等优点。</p>
-<p><strong>GTO</strong>： Gate Turn-Off Thyristor，即 <strong>可关断晶闸管</strong>。是一种通过门极来控制器件导通和关断的电力半导体器件。具有 普通晶闸管 和 GTR的优点，是应用于高压大容量场合中的一种大功率开关器件。</p>
-<p><strong>PT</strong>： Power Transistor， 即 <strong>功率晶体管</strong> / <strong>功率管</strong>。</p>
-<p><strong>IPM</strong>： Intelligent Power Module，即 <strong>智能功率模块</strong>。具有GTR 和 MOSFET 的优点。而且IPM内部集成了逻辑、控制、检测和保护电路，使用起来方便,不仅减小了系统的体积以及开发时间，也大大增强了系统的可靠性。</p>
-<p><img src="https://pic.islet.space/2021/07/d4628535e5dde711c5d042b5a7efce1b9d166176" alt="img" style="zoom: 25%;" /></p>
-<div style="text-align: center; font-weight: 900;">
-图 IPM器件示意
-</div>
-<h1 id="参考">参考</h1>
-<ol type="1">
-<li>《模拟电子技术基础》高等教育出版社，童师白</li>
-<li>《IGBT模块：技术、驱动和应用》机械工业出版社，Andreas Volke and Michael Hornkamp</li>
-<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/366981878">逆变器的分类方式有哪些</a></li>
-<li><a target="_blank" rel="noopener" href="https://baike.baidu.com/item/IGBT/2078902?fromtitle=%E7%BB%9D%E7%BC%98%E6%A0%85%E5%8F%8C%E6%9E%81%E5%9E%8B%E6%99%B6%E4%BD%93%E7%AE%A1&amp;fromid=12731336">IGBT</a></li>
-<li><a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E5%9C%BA%E6%95%88%E5%BA%94%E7%AE%A1">场效应管</a></li>
-<li><a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E6%99%B6%E4%BD%93%E4%BA%8C%E6%9E%81%E7%AE%A1">晶体二极管</a></li>
-<li><a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E6%99%B6%E4%BD%93%E7%AE%A1/569042#:~:text=%E6%99%B6%E4%BD%93%E7%AE%A1%E6%9C%89%E6%97%B6%E5%A4%9A%E6%8C%87%E6%99%B6%E4%BD%93%E4%B8%89%E6%9E%81%E7%AE%A1%E3%80%82%20%E4%B8%89%E7%AB%AF%E5%AD%90%E6%99%B6%E4%BD%93%E7%AE%A1%E4%B8%BB%E8%A6%81%E5%88%86%E4%B8%BA%E4%B8%A4%E5%A4%A7%E7%B1%BB%EF%BC%9A%20%E5%8F%8C%E6%9E%81%E6%80%A7%E6%99%B6%E4%BD%93%E7%AE%A1,%EF%BC%88BJT%EF%BC%89%E5%92%8C%20%E5%9C%BA%E6%95%88%E5%BA%94%E6%99%B6%E4%BD%93%E7%AE%A1%20%EF%BC%88FET%EF%BC%8C%E5%8D%95%E6%9E%81%E6%80%A7%EF%BC%89%E3%80%82">晶体管</a></li>
-<li><a target="_blank" rel="noopener" href="https://circuitglobe.com/difference-between-diode-and-transistor.html">Difference Between Diode &amp; Transistor</a></li>
-<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/150177944">半导体分类知识大全</a></li>
-<li><a target="_blank" rel="noopener" href="https://xueqiu.com/3593206238/153075165">IGBT—功率半导体皇冠上的明珠</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.electricaltechnology.org/2018/12/types-of-diodes-their-applications.html">Types of Diodes and Their Applications - 24 Types of Diodes</a></li>
-</ol>
 
       
     </div>
