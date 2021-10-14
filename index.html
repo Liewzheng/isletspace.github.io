@@ -133,7 +133,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">90</span>
+          <span class="site-state-item-count">93</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -144,7 +144,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">166</span>
+        <span class="site-state-item-count">173</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -178,6 +178,357 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://islet.space/2021/10/12/Programming/C++/2021-10-12-C++%E5%A4%B4%E6%96%87%E4%BB%B6%E5%92%8C%E7%BC%96%E8%AF%91/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Liewzheng">
+      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coder的孤岛">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/10/12/Programming/C++/2021-10-12-C++%E5%A4%B4%E6%96%87%E4%BB%B6%E5%92%8C%E7%BC%96%E8%AF%91/" class="post-title-link" itemprop="url">C++头文件和编译</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-10-12 08:15:00" itemprop="dateCreated datePublished" datetime="2021-10-12T08:15:00+08:00">2021-10-12</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2021-10-14 23:58:13" itemprop="dateModified" datetime="2021-10-14T23:58:13+08:00">2021-10-14</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Programming/" itemprop="url" rel="index"><span itemprop="name">Programming</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="hpp头文件">HPP头文件</h1>
+<p><code>.hpp</code>，其实质就是将 <code>.cpp</code> 的实现代码混入 <code>.h</code> 头文件当中，定义与实现都包含在同一文件，则该类的使用只需要调用 <code>#include&lt;xxx.hpp&gt;</code> 以引用该文件即可，无需再将 <code>.cpp</code> 加入到project中进行编译。</p>
+<p>而实现代码将直接编译到调用者的 <code>.obj</code> 文件中，不再生成单独的 <code>.obj</code>，采用 <code>.hpp</code> 将大幅度减少调用 project中的 <code>.cpp</code> 文件数与编译次数，也不用再发布烦人的 <code>.lib</code> 与 <code>.dll</code> 文件，因此非常适合用来编写公用的开源库。</p>
+<h2 id="使用注意">使用注意</h2>
+<p><code>.hpp</code> 头文件的优点不少，但是编写中有以下几点要注意：</p>
+<ol type="1">
+<li><p>与 <code>.h</code> 类似，但 <code>.hpp</code> 是 <strong>Header Plus Plus</strong> 的简写，是 C++程序头文件 。</p></li>
+<li><p>是<a target="_blank" rel="noopener" href="http://www.huarw.com/program/vc/Index.html">VC</a>L专用的头文件，已预编译。</p></li>
+<li><p>是一般 <strong>模板类</strong> 的头文件。</p></li>
+<li><p>一般来说，<code>.h</code> 里面只有声明，没有实现，而 <code>.hpp</code> 里声明实现都有，后者可以减少 <code>.cpp</code> 的数量。</p></li>
+<li><p><code>.h</code> 里面可以有 <code>using namespace std;</code>，而 <code>.hpp</code> 里则无。</p></li>
+<li><p>不可包含 <strong>全局对象</strong> 和 <strong>全局函数</strong> 。由于 <code>.hpp</code> 本质上是作为 <code>.h</code> 被调用者所include，所以当 <code>.hpp</code> 文件中存在全局对象或者全局函数，而该 <code>.hpp</code> 被多个调用者include时，<mark>将在链接时导致符号重定义错误</mark>。<mark>要避免这种情况，需要去除全局对象，将全局函数封装为类的静态方法</mark>。</p></li>
+<li><p><strong>类之间不可循环调用</strong></p></li>
+</ol>
+<p>在.h和.cpp的场景中，当两个类或者多个类之间有循环调用关系时，只要预先在头文件做被调用类的声明即可，如下：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">B</span>;</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span>&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">someMethod</span><span class="params">(B b)</span></span>;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">B</span>&#123;</span></span><br><span class="line"><span class="keyword">public</span> :</span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">someMethod</span><span class="params">(A a)</span></span>;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>在 <code>.hpp</code> 场景中，由于定义与实现都已经存在于一个文件，调用者必需明确知道被调用者的所有定义，而不能等到 <code>.cpp</code> 中去编译。因此hpp中必须整理类之间调用关系，不可产生循环调用。同理，对于当两个类A和B分别定义在各自的 <code>.hpp</code> 文件中，形如以下的循环调用也将导致编译错误：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//a.hpp</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&quot;b.hpp&quot;</span></span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span>&#123;</span></span><br><span class="line"><span class="keyword">public</span> :</span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">someMethod</span><span class="params">(B b)</span></span>;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">//b.hpp</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&quot;a.hpp&quot;</span></span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">B</span>&#123;</span></span><br><span class="line"><span class="keyword">public</span> :</span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">someMethod</span><span class="params">(A a)</span></span>;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<ol start="9" type="1">
+<li><strong>不可使用静态成员</strong></li>
+</ol>
+<p>静态成员的使用限制在于如果类含有静态成员，则在 <code>.hpp</code> 中必需加入静态成员初始化代码，当该 <code>.hpp</code> 被多个文档include时，将产生符号重定义错误。唯一的例外是 <code>const static</code> 整型成员，因为在vs2003中，该类型允许在定义时初始化，如：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span>&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="keyword">const</span> <span class="keyword">static</span> <span class="keyword">int</span> intValue = <span class="number">123</span>;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>由于静态成员的使用是很常见的场景，无法强制清除，因此可以考虑以下几种方式（以下示例均为同一类中方法）</p>
+<ol type="1">
+<li>类中仅有一个静态成员时，且仅有一个调用者时，可以通过 <strong>局域静态变量模拟</strong></li>
+</ol>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//方法模拟获取静态成员</span></span><br><span class="line"><span class="function">someType <span class="title">getMember</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">static</span> someType <span class="title">value</span><span class="params">(xxx)</span></span>;<span class="comment">//作用域内静态变量</span></span><br><span class="line">    <span class="keyword">return</span> value;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ol start="2" type="1">
+<li>类中有多个方法需要调用静态成员，而且可能存在多个静态成员时，<mark style="font-weight: 900;">可以将每个静态成员封装一个模拟方法，供其他方法调用</mark>。</li>
+</ol>
+<p><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">someType <span class="title">getMemberA</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">static</span> someType <span class="title">value</span><span class="params">(xxx)</span></span>;<span class="comment">//作用域内静态变量</span></span><br><span class="line">    <span class="keyword">return</span> value;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function">someType <span class="title">getMemberB</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">static</span> someType <span class="title">value</span><span class="params">(xxx)</span></span>;<span class="comment">//作用域内静态变量</span></span><br><span class="line">    <span class="keyword">return</span> value;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">accessMemberA</span><span class="params">()</span></span>&#123;</span><br><span class="line">    someType member = <span class="built_in">getMemberA</span>();<span class="comment">//获取静态成员</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">//获取两个静态成员</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">accessStaticMember</span><span class="params">()</span></span>&#123;</span><br><span class="line">    someType a = <span class="built_in">getMemberA</span>();<span class="comment">//获取静态成员</span></span><br><span class="line">    someType b = <span class="built_in">getMemberB</span>();</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+<ol start="3" type="1">
+<li>第二种方法对于大部分情况是通用的，但是当所需的静态成员过多时，编写封装方法的工作量将非常巨大，在此种情况下，建议使用 <strong>Singleton模式</strong>，将被调用类定义成普通类，然后使用Singleton将其变为全局唯一的对象进行调用。</li>
+</ol>
+<p>如原 <code>.h</code> 和 <code>.cpp</code> 中的定义如下：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span>&#123;</span></span><br><span class="line"><span class="keyword">public</span> :</span><br><span class="line">    <span class="function">type <span class="title">getMember</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> member;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">static</span> type member;<span class="comment">//静态成员</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>采用singleton方式，实现代码可能如下（singleton实现请自行查阅相关文档）</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//实际实现类</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Aprovider</span>&#123;</span></span><br><span class="line"><span class="keyword">public</span> :</span><br><span class="line">    <span class="function">type <span class="title">getMember</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> member;</span><br><span class="line">    &#125;</span><br><span class="line">    type member;<span class="comment">//变为普通成员</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//提供给调用者的接口类</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span>&#123;</span></span><br><span class="line"><span class="keyword">public</span> :</span><br><span class="line">    <span class="function">type <span class="title">getMember</span><span class="params">()</span></span>&#123;</span><br><span class="line">    	<span class="keyword">return</span> Singleton&lt;AProvider &gt;::<span class="built_in">getInstance</span>()-&gt;<span class="built_in">getMember</span>();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="分离式编译">分离式编译</h1>
+<p>在介绍分离式编译之前需要先介绍一下 <strong>分离式代码</strong>，在C++代码中，声明和定义是可以分开写在多个文件中，当然也可以写在同一个文件里面的，如 <code>.hpp</code> 。</p>
+<p>往往是为了逻辑条理的清晰而分开书写，但使用 g++ 和 Terminal 直接编译 <code>main.cpp</code> 时，都是使用的 <code>g++ main.cpp -o main</code> 的命令，也就是只能编译该 <code>main.cpp</code> 一个文件，以生成 <code>main</code> 为名的二进制可运行文件，实际上，书写在其他 <code>.cpp</code> 文件中的代码也需要一同编译，这些书写在其他 <code>.cpp</code> 文件中的代码被称为 <strong>分离式代码</strong>，只编译 <code>main.cpp</code> 就会出现 <code>undefined reference</code> 之类的错误。</p>
+<h2 id="命令行g">命令行G++</h2>
+<p>在 Windows / Linux / Mac 的 Terminal 下都可以使用 <code>g++</code> 命令进行编译，格式如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">g++ -c main.cpp xxx1.cpp xxx2.cpp</span><br></pre></td></tr></table></figure>
+<p>使用 <code>-c</code> 选项，将包含 <code>main()</code> 的 <code>main.cpp</code> 与 其他分离式代码文件 <code>xxx1.cpp</code> 和 <code>xxx2.cpp</code> 一同编译，然后生成一个个对象文件（ <code>.o</code> 或 <code>.obj</code> ）。上面这种方法会生成三个文件 <code>main.o</code> 、<code>xxx1.o</code> 和 <code>xxx2.o</code> ，每个 <code>.o</code> 都是一个对象文件，但不一定可执行（因为缺少 <code>main()</code> 函数），仍需要通过进一步 <strong>链接</strong> 成可执行文件：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">g++ -o main main.o xxx1.o xxx2.o</span><br></pre></td></tr></table></figure>
+<p>通过上面这一行代码可以生成名为 <code>main</code> 的可执行二进制文件。</p>
+<p>以上两句命令也可以通过下面这句命令替代：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">g++ -o main main.cpp xxx1.cpp xxx2.cpp</span><br></pre></td></tr></table></figure>
+<h2 id="makefile">Makefile</h2>
+<p>Makefile 文件描述了 Linux 系统下 C/C++ 工程的编译规则，它用来自动化编译 C/C++ 项目。一旦写编写好 Makefile 文件，只需要一个 make 命令，整个工程就开始自动编译，不再需要手动执行 GCC 命令。</p>
+<p>一个中大型 C/C++ 工程的源文件有成百上千个，它们按照功能、模块、类型分别放在不同的目录中，Makefile 文件定义了一系列规则，指明了源文件的编译顺序、依赖关系、是否需要重新编译等。</p>
+<p>如果是在 Windows 下作开发的话不需要去考虑这个问题，因为 Windows 下的集成开发环境（IDE）。当然，Windows 下的 Visual Studio Code如果没配置好，也只是个编辑器而已，不算是个IDE。一般的MVS（Microsoft Visual Studio）都已经内置了 Makefile，或者说会自动生成 Makefile，不用去手动编写。</p>
+<p>Linux 中却不能这样，需要去手动的完成这项工作。Linux 下可以学习的开发语言有很多，常见的有 C/C++语言、python、java 等等。在 Linux(Unix) 下做开发的话，不了解 Makefile 是一件非常失败的事情。不懂 Makefile，就操作不了多文件编程，就完成不了相对于大的工程项目的操作。Makefile 可以说是必须掌握的一项技能。</p>
+<p>Makefile 可以简单的认为是一个工程文件的编译规则，描述了整个工程的 <strong>编译</strong> 和 <strong>链接</strong> 等规则。其中包含了那些文件需要编译，那些文件不需要编译，那些文件需要 <strong>先编译</strong>，那些文件需要 <strong>后编译</strong>，那些文件需要 <strong>重建</strong> 等等。编译整个工程需要涉及到的，在 Makefile 中都可以进行描述。换句话说，<mark style="font-weight: 900;">Makefile 可以使得我们的项目工程的编译变得自动化，不需要每次都手动输入一堆源文件和参数。</mark></p>
+<p>Makefile 可以彻底简化编译的操作。把要链接的库文件放在 Makefile 中，制定相应的规则和对应的链接顺序。这样只需要执行 make 命令，工程就会自动编译。每次想要编译工程的时候就执行 <code>make</code> 命令，省略掉手动编译中的参数选项和命令，非常的方便。</p>
+<p>Makefile 支持多线程并发操作，会极大的缩短编译时间，并且当修改了源文件之后，编译整个工程的时候，make 命令只会编译修改过的文件，没有修改的文件不用重新编译，也极大的解决了耗费时间的问题。</p>
+<h3 id="makefile-格式">Makefile 格式</h3>
+<figure>
+<img src="https://pic.islet.space/2021/10/20211012135030.png" alt="image-20211012134610578" /><figcaption aria-hidden="true">image-20211012134610578</figcaption>
+</figure>
+<blockquote>
+<ul>
+<li>targets：规则的目标，可以是 Object File（一般称它为中间文件），也可以是可执行文件，还可以是一个标签；</li>
+<li>prerequisites：是我们的依赖文件，要生成 targets 需要的文件或者是目标。可以是多个，也可以是没有；</li>
+<li>command：make 需要执行的命令（任意的 shell 命令）。可以有多条命令，每一条命令占一行。</li>
+</ul>
+</blockquote>
+<blockquote>
+<p>注意：我们的 <strong>目标</strong>（target） 和 <strong>依赖文件</strong>（prerequisite） 之间要使用 <strong>冒号</strong> <code>:</code> 分隔开，<strong>命令的开始</strong>（before the command） 一定要使用 <code>Tab</code> 键。</p>
+</blockquote>
+<h1 id="reference">Reference</h1>
+<ol type="1">
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/liuzhanchen1987/article/details/7270005">hpp.h与.h的区别</a></li>
+<li><a target="_blank" rel="noopener" href="http://c.biancheng.net/makefile/">Makefile教程：Makefile文件编写1天入门 (biancheng.net)</a></li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://islet.space/2021/10/05/Programming/C++/2021-10-05-C++-Templates/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Liewzheng">
+      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coder的孤岛">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/10/05/Programming/C++/2021-10-05-C++-Templates/" class="post-title-link" itemprop="url">C++ Templates</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-10-05 15:00:00" itemprop="dateCreated datePublished" datetime="2021-10-05T15:00:00+08:00">2021-10-05</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2021-10-07 04:14:16" itemprop="dateModified" datetime="2021-10-07T04:14:16+08:00">2021-10-07</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Programming/" itemprop="url" rel="index"><span itemprop="name">Programming</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="part-1-the-basics">PART 1 THE BASICS</h1>
+<div style="background-color: #555; color: #eeeeee; font-weight: 900;">
+WHY TEMPLATES?
+</div>
+<p>C++ 要求我们使用指定的类型来声明变量、函数 和 大部分其他实体。然而，很多代码对于不同的类型看起来都是一样的。比如，对于不同的数据结构，如 <code>int</code> 数组或 <code>string</code> 字符串向量，只要包含的类型可以相互比较，快速排序算法的实现在结构上看起来是一样的。</p>
+<p>如果使用的编程语言不支持 <strong>通用性</strong>（genericity）的 <strong>特殊语言功能</strong>（special language feature），将不得不面临如下选择，坏的选择（bad alternatives）：</p>
+<ul>
+<li>你可以为不同的数据类型一遍又一遍地进行着相同的行为声明；</li>
+<li>你可以为常见的基本类型（common base type）编写一段代码，例如 <code>object</code> 或 <code>void*</code> ；</li>
+<li>你可以使用特殊的预处理器。</li>
+</ul>
+<p>如果使用其他语言，可能以前就做过一些或者所有上方所述的内容了。然而，这些方法的每一种都有其缺点：</p>
+<ul>
+<li>如果你一遍又一遍地实现着这些行为，毫无疑问是叠矩重规（reinvent the wheel）。你犯了相同的错误，并且你试图寻找避免复杂但能更好的算法，因为它们会制造出更多的错误。</li>
+<li>如果你为常见基本类编写代码，你会失去类型检查的好处。另外，类可能要求继承于（be derived from）能够使代码更加难以维护的特殊基础类。</li>
+<li>如果你使用特殊的预处理器，代码会被一些没有 <strong>作用范围</strong>（scope）和类型且能够造成 <strong>奇怪语义错误</strong>（strange semantic errors）的 ”愚蠢的文本替换机制“ 替代掉。</li>
+</ul>
+<p>模板是能够解决重复代码编写问题且不会造成上述这些短板的方案。模板是为一种或更多尚未声明类型的函数或者类。当使用模板时，可以隐式或显式地将类型当做参数传递过去。因为模板是语言的特点，可以拥有全部的类型检查和作用范围的支持（full support of type checking and scope）。</p>
+<p>在C++标准库中，几乎所有的代码都是模板代码。该库提供排序算法以对 对象、指定类型的值、数据结构（也叫做 <strong>容器类</strong>（Container Classes）） 进行排序，以管理指定类型的元素 和 字符串（被参数化的字符串类型）等等。</p>
+<p>然而，以上仅是模板的使用入门，模板还允许 <strong>参数化行为</strong>（parameterize behavior） 以 <strong>优化代码</strong>（optimize code） 和 <strong>参数化信息</strong>（parameterize infomation）。</p>
+<h2 id="function-templates">FUNCTION TEMPLATES</h2>
+<p><strong>函数模板</strong>（function templates），即 <strong>参数化的函数</strong>（functions that are parameterized），因此代表了 <strong>一个函数系列</strong>（a family of functions）。</p>
+<p>函数模板为不同的数据类型提供了相同的功能行为调用，或换句话说，代表了一个函数系列。该函数系列看起来就像个普通函数，除了函数的某些元素未被确定，因为这些元素被参数化了。</p>
+<h3 id="templates-delaration-and-definition">TEMPLATES DELARATION AND DEFINITION</h3>
+<div style="background-color: #555; color: #eeeeee; font-size: 1.25rem; font-weight: 900;">
+EXAMPLE
+</div>
+<p>以下样例 <strong>声明</strong> 了一个函数系列，且下面参数的类型被空置（is left open），如参数 <code>T</code> ，</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line"><span class="function">T <span class="title">max</span><span class="params">(T a, T b)</span></span>&#123;</span><br><span class="line">  <span class="comment">// if b &lt; a then yield a else yield b</span></span><br><span class="line">  <span class="keyword">return</span> b &lt; a ? a : b;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在上述样例中，模板参数必须使用 <code>template &lt;comma-separated-list-of-parameters&gt;</code> 的格式进行声明。</p>
+<p>此处的关键字 <code>typename</code> 代表着类型参数，这是迄今为止C++程序中最常见的一种模板参数，当然其他参数也可以，后续介绍。此处的类型参数是 <code>T</code> ，可以使用任意标识符当做参数名称，但使用 <code>T</code> 就是惯例而已。类型参数代表着 <strong>任意类型</strong>（arbitrary type），当函数调用时，由调用的函数决定具体数据类型。开发者可以调用任何类型，只要其提供模板使用的操作。</p>
+<p>在上述样例中，类型 <code>T</code> 必须支持 <strong>操作符</strong>（operator） <code>&lt;</code> ，因为 <code>a</code> 和 <code>b</code> 使用该操作符进行比较，也许在 <code>max()</code> 的定义中很难发现，但要说明的是，<code>T</code> 类型必须是可复制的才能够被返回（T must be copyable in order to be returned）。</p>
+<p>由于历史遗留原因，仍可以使用关键词 <code>class</code> 来定义类型参数。<code>typename</code> 关键字是在 C++98 标准之后才出现的，在那之前，<code>class</code> 是引入类型参数的唯一方法，至今仍可以使用。因此，上述模板也可以用下面的代码平替（在语义上没有区别）。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">temelate&lt;<span class="class"><span class="keyword">class</span> <span class="title">T</span>&gt;</span></span><br><span class="line">  <span class="function">T <span class="title">max</span><span class="params">(T a, T b)</span></span>&#123;</span><br><span class="line">  <span class="keyword">return</span> b&lt;a?a:b;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>但因为 <code>class</code> 也是 <strong>类</strong> 的关键字，可能导致二义性，最好在声明模板时使用关键字 <code>typename</code> 。需要注意的是，与类声明不同，当声明类型参数时，关键字 <code>struct</code> 不能用来代替 <code>typename</code> 。</p>
+<p>在C++17之前，类型 <code>T</code> 也必须是可复制的，以确保能够传递参数。但C++17之后，可以传递临时数（temporary），即使没有一个备份或者一个构造器可用（even if neither a copy nor a move constructor is valid）。</p>
+<div style="background-color: #555; color: #eeeeee; font-weight: 900;">
+如何编写多个函数模板，需要注意什么？
+</div>
+<p>同一个文件内可以编写多个不同的模板函数，如下：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line"><span class="function">T <span class="title">Max</span><span class="params">(T a, T b)</span></span>&#123;</span><br><span class="line">	<span class="keyword">return</span> b&lt;a?a:b;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> t2&gt;</span><br><span class="line"><span class="function">t2 <span class="title">foo</span><span class="params">(t2*)</span></span>&#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上面两个模板函数就在同一个文件下，<code>typename</code> 关键字后面的 <code>T</code> 或者 <code>t2</code> 需要具有唯一性。</p>
+<h3 id="using-templates">USING TEMPLATES</h3>
+<p>需要注意的是，在使用该函数模板时，要在该函数前加上双冒号 <code>::</code> ，以确保函数模板能够在全局命名空间中被查找到。如果出现下方的 <code>call to ’sth.’ is ambiguous</code> 错误， 即是说需要调用的函数模糊不清，因为标准库中也有一个 <code>std::max()</code>，编译器查找不到该函数具体是在哪个函数文件中。</p>
+<figure>
+<img src="https://pic.islet.space/2021/10/image-20211005171952999.png" alt="image-20211005171952999" /><figcaption aria-hidden="true">image-20211005171952999</figcaption>
+</figure>
+<p>当然，以上错误也可以通过写不同的函数名称来避免。</p>
+<p><mark style="font-weight: 900;">模板并不是被编译成一个可以处理所有数据类型的实体，而是被编译成了所有不同数据类型的实体。</mark> 即，<code>int max()</code>、 <code>short max()</code> 、<code>string max()</code> 等等。单实体多适应 的模板虽然好像可行，但是实际上并不存在。所有的语言规则都遵循 ” <strong>不同的模板参数生成不同的实体</strong>“ 的原则。</p>
+<p>上面这种用具体类型取代模板参数的过程被称为 <strong>实体化</strong>（instantiation）。需要注意的是，仅仅是对函数模板的使用就可以触发该实体化过程，因此开发者就没有必要要求实体化过程单独进行（request the instantiation separately）。</p>
+<p>另外，只要产生的代码是有效的，<code>void</code> 型也是可用的模板参数，例如：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line"><span class="function">T <span class="title">foo</span><span class="params">(T*)</span></span>&#123;</span><br><span class="line">  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>和</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">void</span>* vp = <span class="literal">nullptr</span>;  <span class="comment">// 引出 void foo(void*)</span></span><br><span class="line"><span class="built_in"><span class="keyword">void</span></span>(vp);</span><br></pre></td></tr></table></figure>
+<h3 id="two-phase-translation">TWO-PHASE TRANSLATION</h3>
+<p><strong>两段式编译</strong>，即Two-phase translation。</p>
+<p>如果试图为一个不支持所有操作的模板进行实例化，将会导致编译时错误。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">std::complex&lt;<span class="keyword">float</span>&gt; c1, c2;  <span class="comment">//doesn&#x27;t provide operator &lt;</span></span><br><span class="line"></span><br><span class="line">::<span class="built_in">max</span>(c1, c2);  <span class="comment">//ERROR at compile time</span></span><br></pre></td></tr></table></figure>
+<p>因此，模板在被编译时会经过如下两个阶段：</p>
+<ol type="1">
+<li>在定义且没有实例化时，忽略模板参数来检查自身代码的正确性：
+<ul>
+<li>标点符号错误被发现，例如缺少分号 <code>;</code> ；</li>
+<li>使用不依赖已知模板参数的未知命名（类型名，函数名等）；</li>
+<li>不依赖于已检查模板参数的 <strong>静态断言</strong>（static assertions）</li>
+</ul></li>
+<li>在实例化时，模板代码会被再次检查以确保可用，特别是依赖于模板参数的都会被二次检查（double-checked），例如：</li>
+</ol>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">foo</span><span class="params">(T t)</span></span>&#123;</span><br><span class="line">  <span class="built_in">undeclared</span>();</span><br><span class="line">  <span class="built_in">undeclared</span>(t);</span><br><span class="line">  <span class="built_in"><span class="keyword">static_assert</span></span>(<span class="built_in"><span class="keyword">sizeof</span></span>(<span class="keyword">int</span>&gt;<span class="number">10</span>, <span class="string">&quot;int too small&quot;</span>);</span><br><span class="line">  <span class="built_in"><span class="keyword">static_assert</span></span>(<span class="built_in"><span class="keyword">sizeof</span></span>(T&gt;<span class="number">10</span>, <span class="string">&quot;T too small&quot;</span>);         </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>注意到某些编译器在第一阶段没有进行全面检查（don’t perform the full checks），所以直到在最后一阶段的模板代码实例化之前都没办法看到问题。</p>
+<div style="background-color: #555; color: #eeeeee; font-weight: 900;">
+COMPILE AND LINK
+</div>
+<p>在实际处理模板时，两段式编译会导致很多重要的问题：当函数模板被用于触发其实例化时，编译器（在某些点）需要查看模板定义。当一个函数的声明足以编译它时，就打破了普通函数通常的编译和连接的区别。</p>
+<h3 id="template-argument-deduction">TEMPLATE ARGUMENT DEDUCTION</h3>
+<p><strong>模板实参推断</strong>，即 Template argument deduction。</p>
+<p>当给函数模板传递实参时，模板参数由我们传递过去的实参决定。如果传递的是两个 <code>int</code> 型实参给 参数类型 <code>T</code> ，则C++编译器就能推断出此时的 <code>T</code> 一定是 <code>int</code> 。</p>
+<p>然而 <code>T</code> 可能只是该参数类型的一部分。例如，声明 <code>max()</code> 可以使用 <strong>常参</strong>（constant references）。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line"><span class="function">T <span class="title">max</span><span class="params">(T <span class="keyword">const</span>&amp; a, T <span class="keyword">const</span>&amp; b)</span></span>&#123;</span><br><span class="line">  <span class="keyword">return</span> b&lt;a?a:b;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如上方代码所示，传递 整型 <code>int</code> 参数，<code>T</code> 又会被推断为 <code>int</code> ，因为函数参数和 <code>int const&amp;</code> 匹配。</p>
+<h4 id="类型推导过程中的类型转换">类型推导过程中的类型转换</h4>
+<p>注意，自动类型转换被限制在类型推导期间：</p>
+<ul>
+<li><strong>引用传递</strong>：当通过引用声明来调用参数（declaring call parameters by reference）时，即使是 微不足道的转换（trivial conersion） 也不适用于类型推导。用同一个模板参数 <code>T</code> 声明的两个参数类型必须完全匹配。</li>
+<li><strong>按值传递</strong>：当按数值声明调用参数时，只支持 <code>decay</code> 的琐碎转换。带有const或volatile的限定被忽略，引用转换为被引用的类型，而原始数组或函数转换为相应的指针类型。对于用同一模板参数T声明的两个参数，<code>decayed</code> 的类型必须匹配。</li>
+</ul>
+<p><strong>错误提示</strong>：对int类型的非恒定值引用不能与int类型的临时值绑定</p>
+<figure>
+<img src="/Users/liewzheng/Library/Application%20Support/typora-user-images/image-20211007035818560.png" alt="image-20211007035818560" /><figcaption aria-hidden="true">image-20211007035818560</figcaption>
+</figure>
+<p>前方已经说了，类型的自动转换相关注意事项，同一模板参数的两个参数类型必须完全匹配。如果在同一个 <code>.cpp</code> 文件中书写下面下面代码，则会出现下方报错提示 “<strong>推导类型冲突</strong>（deduced conflicting types for parameter ’T’）”。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Max</span>(<span class="number">4</span>, <span class="number">7.2</span>);</span><br><span class="line"><span class="built_in">Max</span>(<span class="string">&quot;Hello&quot;</span>,s);</span><br></pre></td></tr></table></figure>
+<p>错误提示如下：</p>
+<figure>
+<img src="https://pic.islet.space/2021/10/image-20211007040416472.png" alt="image-20211007040416472" /><figcaption aria-hidden="true">image-20211007040416472</figcaption>
+</figure>
+<p>但是如果非要使用不一样的数据类型的两个参数来套用同一模板，以下有三种解决方法：</p>
+<ol type="1">
+<li>在 <code>.cpp</code> 文件中进行参数传递时，使用参数类型强制转换。如 <code>Max(static_cast&lt;double&gt;(4), 7.2);</code> 。</li>
+<li>在</li>
+</ol>
+<h1 id="terminology">TERMINOLOGY</h1>
+<ol type="1">
+<li>按值传递 passing by value</li>
+<li>引用传递 passing by reference</li>
+</ol>
+<h1 id="reference">REFERENCE</h1>
+<ol type="1">
+<li>&lt;C++ Templates&gt; David Vandecoorde</li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1284,7 +1635,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-09-16 00:33:41" itemprop="dateModified" datetime="2021-09-16T00:33:41+08:00">2021-09-16</time>
+        <time title="Modified: 2021-10-15 00:00:27" itemprop="dateModified" datetime="2021-10-15T00:00:27+08:00">2021-10-15</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -1706,7 +2057,7 @@ R(250) = 1-(1-\Phi(1.25)) = 1 - (1-0.89) = 0.89 \tag{例2-3 可靠度计算}
 <p><strong>特点</strong>：使用 对数正态分布 的对数变换 可以使得较大的数缩小为较小的数，且越大的数缩小的越明显。好处是使得较为分散的数据通过对数变换后，可以相对地集中起来，所以常把 <mark style="font-weight: 900;">跨几个数量级的数据用对数正态分布区拟合</mark>（如下方例题2-4）。</p>
 <p><strong>适用产品/场景</strong>：<strong>半导体器件</strong> 的可靠性分析、<strong>机械零件</strong> 的疲劳寿命分析 或 在 <strong>维修性分析</strong> 中对维修时间数据的分析。</p>
 <p>对数正态分布的密度函数如下，需要注意，该函数的取值范围为 <span class="math inline">\([0,\infin)\)</span>​ <span class="math display">\[
-f(x)=$\frac{1}{x\sigma\sqrt{2\pi}}e^{-(lnx-\mu)^2/2\sigma^2}$ \tag{对数正态分布密度函数}
+f(x)=\frac{1}{x\sigma\sqrt{2\pi}}e^{-(lnx-\mu)^2/2\sigma^2}\tag{对数正态分布密度函数}
 \]</span></p>
 <div style="text-align: center;">
 <img src="https://pic.islet.space/2021/09/image-20210903171208666.png" alt="image-20210903171208666" style="zoom: 80%;" /><img src="https://pic.islet.space/2021/09/image-20210903170823326.png" alt="image-20210903170823326" style="zoom:80%;" />
@@ -1900,13 +2251,42 @@ R(100) = e^{-(100/1000)^2} = e^{-0.01} = 0.990049 ≈ 99\%
 图 例题2-6 威布尔分布的 可靠度曲线 和 累积曲线
 </div>
 <h2 id="参数估计">参数估计</h2>
+<p>可靠性工程中，<strong>数理统计</strong> 是进行数据整理和分析的基础，<mark>其基本内容是统计推断</mark>。</p>
+<p><mark>随机变量的概率分布虽然能很好地描述随机分布，但是通常不能对研究对象的总体都进行观测和试验</mark>，只能从中随机地抽取一部分子样进行观察和试验，获得必要的数据，对齐进行分析处理，然后对总体的 <strong>分布类型</strong> 和 <strong>参数</strong> 进行推断。</p>
+<h3 id="抽样相关概念">抽样相关概念</h3>
+<p><strong>总体</strong>：也称为 <strong>母体</strong>，研究对象的全体。</p>
+<p><strong>个体</strong>：组成总体的每个基本单元。</p>
+<p><strong>样本</strong>：也称为 <strong>子样</strong>，在总体中随机抽取的部分个体。</p>
+<p><strong>样本值</strong>：在每次抽样后测得的具体数值（记为 <span class="math inline">\(x_1, x_2, x_3 ... x_n\)</span>）。</p>
+<p><strong>样本容量</strong>：样本所包含的个体数目（记为 <span class="math inline">\(n\)</span>）。</p>
+<p><strong>随机抽样</strong>：不掺入人为主观因素而具有随机性的抽样，即具有 <strong>代表性</strong> 和 <strong>独立性</strong> 的抽样。</p>
+<p><strong>样本统计量</strong>：是指子样 <span class="math inline">\(x_1, x_2, ..., x_n\)</span> 是从母体 <span class="math inline">\(X\)</span> 中随机抽取出来后，进一步提炼和加工后的统计量，如 <strong>均值</strong> <span class="math inline">\(\overline x\)</span> 、<strong>方差</strong> <span class="math inline">\(S^2\)</span>、<strong>极差</strong> <span class="math inline">\(R\)</span>​​</p>
+<p>子样之所以很宝贵，是因为包含了母体的各种信息，尚未对子样进一步提炼和加工处理前，母体的各种信息仍分散在子样中，子样经过加工成一些统计量之后可以反映出一些信息，如：<strong>均值</strong> 反映了母体数学期望信息，<strong>方差</strong> 反映了母体方差信息，<strong>极差</strong> 粗略地反映了母体分散程度，但不能直接用于估计母体的方差。下方为统计量的一些概念。</p>
+<h3 id="统计量相关概念">统计量相关概念</h3>
+<p><strong>均值</strong>：反映了母体数学期望的信息，表示为 <span class="math inline">\(\overline x =\frac{1}{n} \sum^n_{i=1}x_i\)</span>​​</p>
 <p><strong>平均差</strong>：平均差是表示各个变量值之间差异程度的数值之一。指各个变量值同平均数的离差绝对值的算术平均数。</p>
-<p><strong>标准差</strong>：是离均差平方的算术平均数的平方根，用σ表示。标准差是方差的算术平方根。</p>
-<p><strong>方差</strong>：方差是在概率论和统计方差衡量随机变量或一组数据时离散程度的度量。概率论中方差用来度量随机变量和其数学期望（即均值）之间的偏离程度。统计中的方差（样本方差）是每个样本值与全体样本值的平均数之差的平方值的平均数。</p>
-<p><strong>极差</strong>：极差又称范围误差或全距(Range)，以R表示，是用来表示统计资料中的变异量数(measures of variation)，其最大值与最小值之间的差距，即最大值减最小值后所得之数据。是指一组数据内的最大值和最小值之间的差异.</p>
-<p><strong>极大似然估计</strong>（Maximum Likelihood Estimate，MLE）：一种重要的估计方法，利用 <strong>总体分布函数表达式</strong> 和 <strong>样本数据</strong> 这两种信息来建立 <strong>似然函数</strong>。</p>
-<p>置信区间：</p>
-<p>置信度：</p>
+<p><strong>方差</strong>：方差是在概率论和统计方差衡量随机变量或一组数据时离散程度的度量。概率论中方差用来度量随机变量和其数学期望（即均值）之间的偏离程度。统计中的方差（样本方差）是每个样本值与全体样本值的平均数之差的平方值的平均数，表示为 <span class="math inline">\(S^2=\frac{1}{n-1}\sum ^n_{i=1}(x_i-\overline x)^2\)</span>​ 。</p>
+<p><strong>标准差</strong>：是离均差平方的算术平均数的平方根，是方差的算术平方根，表示为 <span class="math inline">\(\sigma=\sqrt{S^2}\)</span> 。</p>
+<p><strong>极差</strong>：极差又称范围误差或全距(Range)，以 <span class="math inline">\(R\)</span>​ 表示，是用来表示统计资料中的变异量数(measures of variation)，其最大值与最小值之间的差距，即最大值减最小值后所得之数据。是指一组数据内的最大值和最小值之间的差异，表示为 <span class="math inline">\(R=max(x_1,x_2, ..., x_n)-min(x1, x2, ..., xn)\)</span> 。</p>
+<h4 id="分布参数的点估计">分布参数的点估计</h4>
+<p>如果 <span class="math inline">\(X\)</span> 是一个具有概率分布 <span class="math inline">\(f(x)\)</span> 的随机变量，样本容量为 <span class="math inline">\(n\)</span>，样本值为 <span class="math inline">\(x_1, x_2, ..., x_n\)</span> ，则与其位置参数 <span class="math inline">\(\theta\)</span> 相应的统计量 <span class="math inline">\(\hat{\theta }\)</span> 的估计值。</p>
+<p>此处，<span class="math inline">\(\hat{\theta}\)</span> 是一个随机变量，因为它是样本数据的函数。在样本已经选好之后，就能得到一个确定的 <span class="math inline">\(\hat{\theta}\)</span> 值，就是 <span class="math inline">\(\theta\)</span> 的点估计。</p>
+<h5 id="点估计的解析法">点估计的解析法</h5>
+<p>在点估计的解析法中，有很多方法可以选择，如 矩法、最小二乘法、极大似然法、最好线性无偏估计、最好线性不变估计、简单线性无偏估计 和 不变估计。以上方法的特点如下：</p>
+<ul>
+<li>矩法只适用于完全样本；</li>
+<li>最好线性无偏估计 和 不变估计 已有国家标准《GB 2689.4-1981 寿命试验和加速寿命试验的最好线性无偏估计法（用于威布尔分布）》，但只适用于定数截尾情况，在一定样本量下有专用表格；</li>
+<li>极大似然法和最小二乘法适用于所有情况，极大似然法是精度最好的方法。</li>
+</ul>
+<h5 id="极大似然法">极大似然法</h5>
+<p>极大似然估计（Maximum Likelihood Estimate, MLE）是一种重要的估计方法，利用总体分布函数表达式及样本数据两种信息来建立似然函数。</p>
+<p><strong>特点</strong>：具有一致性、有效性 和 渐近无偏性 等优良性质。</p>
+<p><strong>缺点</strong>：求解方法最为复杂，需要用迭代法并借助计算机求解。</p>
+<h4 id="分布参数的区间估计">分布参数的区间估计</h4>
+<p><strong>区间估计</strong>：在实际问题中，对于未知参数 <span class="math inline">\(\theta\)</span> ，并不一定求出其点估计值 <span class="math inline">\(\hat{\theta}\)</span> 为满足，仍希望求出其范围，并希望知道该范围包含未制参数 <span class="math inline">\(\theta\)</span> 真值的置信概率的估计。</p>
+<p><strong>置信区间</strong>：表示计算估计的精确程度</p>
+<p><strong>置信度</strong>：是样品的试验结果在母体的概率分布参数（如均值或标准差）的某个区间内出现的概率，表示结果的可信性。</p>
+<p>与置信度不同，可靠度 是指 样品在规定条件下和规定时间内正常工作的概率，反映的是产品本身的质量状况。</p>
 <h1 id="可靠性设计与分析">可靠性设计与分析</h1>
 <h1 id="gitee项目分享">Gitee项目分享</h1>
 <p>适用于《可靠性工程师手册》的数学函数已经开源共享至Gitee，依托于 GNUPLOT 的图形绘制能力，可以轻松查看各种函数的曲线形状，十分方便。</p>
@@ -2906,272 +3286,8 @@ Resistance \ Tolerance\ @25℃ = α *（±0.5℃） = -4.44\%/℃ * （±0.5℃�
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://islet.space/2021/08/06/Blog/2021-08-06-%E8%A7%A3%E5%86%B3%E6%96%B0%E7%89%88hexo%E6%B2%A1%E6%9C%89%E7%9B%AE%E5%BD%95%E5%92%8C%E6%A0%87%E7%AD%BE%E9%A1%B5%E7%9A%84%E9%97%AE%E9%A2%98/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Liewzheng">
-      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Coder的孤岛">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/08/06/Blog/2021-08-06-%E8%A7%A3%E5%86%B3%E6%96%B0%E7%89%88hexo%E6%B2%A1%E6%9C%89%E7%9B%AE%E5%BD%95%E5%92%8C%E6%A0%87%E7%AD%BE%E9%A1%B5%E7%9A%84%E9%97%AE%E9%A2%98/" class="post-title-link" itemprop="url">解决新版hexo没有目录和标签页的问题</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-
-    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
-    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2021-08-06 23:40:00" itemprop="dateCreated datePublished" datetime="2021-08-06T23:40:00+08:00">2021-08-06</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-08-08 14:26:07" itemprop="dateModified" datetime="2021-08-08T14:26:07+08:00">2021-08-08</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Blog/" itemprop="url" rel="index"><span itemprop="name">Blog</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>新版hexo安装之后没有标签页，解决方法大致三步：</p>
-<ol type="1">
-<li><p>需要自行在 <code>/source/</code> 文件夹下添加一个 <code>categories</code> 和 <code>tags</code> 文件夹，然后往文件夹中分别写入一个 <code>index.md</code> 文件。</p></li>
-<li><p>然后在对应的 <code>index.md</code> 中写入 <em>YAML</em> 信息。</p></li>
-<li><p>在对应的主题配置文件，例如 <code>_config.yml</code> 中填写好配置。</p></li>
-</ol>
-<h1 id="新建目录和页面">新建目录和页面</h1>
-<p>可以通过两句语句来运行：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">hexo new page categories</span><br><span class="line">hexo new page tags</span><br></pre></td></tr></table></figure>
-<h1 id="添加type属性">添加type属性</h1>
-<p>编辑 <code>index.md</code>，修改信息如下，日期随意：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">---</span><br><span class="line">title: 目录</span><br><span class="line"><span class="built_in">type</span>: categories</span><br><span class="line">date: 2020-08-06 23:32:00</span><br><span class="line">---</span><br></pre></td></tr></table></figure>
-<p>注意上面写的一个属性 <code>type</code>，千万不能写错。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">---</span><br><span class="line">title: 标签</span><br><span class="line"><span class="built_in">type</span>: tags</span><br><span class="line">date: 2020-08-06 23:32:00</span><br><span class="line">---</span><br></pre></td></tr></table></figure>
-<h1 id="设置配置文件">设置配置文件</h1>
-<p>如下图所示修改即可：</p>
-<figure>
-<img src="https://pic.islet.space/2021/08/image-20210806235851123.png" alt="image-20210806235851123" /><figcaption aria-hidden="true">image-20210806235851123</figcaption>
-</figure>
-<p>最后重新清空、运行和预览即可。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">hexo clean</span><br><span class="line">hexo generate</span><br><span class="line">hexo site</span><br></pre></td></tr></table></figure>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://islet.space/2021/07/17/Hardware/Circuit/2021-07-17-%E7%94%B5%E9%9A%94%E7%A6%BB%E5%92%8C%E9%9D%9E%E7%94%B5%E9%9A%94%E7%A6%BB/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Liewzheng">
-      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Coder的孤岛">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/07/17/Hardware/Circuit/2021-07-17-%E7%94%B5%E9%9A%94%E7%A6%BB%E5%92%8C%E9%9D%9E%E7%94%B5%E9%9A%94%E7%A6%BB/" class="post-title-link" itemprop="url">电隔离和非电隔离</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-
-    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
-    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-      
-
-      <time title="Created: 2021-07-17 10:40:00 / Modified: 11:42:40" itemprop="dateCreated datePublished" datetime="2021-07-17T10:40:00+08:00">2021-07-17</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Hardware/" itemprop="url" rel="index"><span itemprop="name">Hardware</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>在产品设计时，倘若没有考虑应用环境对电源隔离的要求，产品到了应用时就会出现因设计方案的不当导致的系统不稳定，甚至出现高压损坏后级负载的情况，以及出现危害人身财产安全的情况。因此产品设计是否需要隔离至关重要。</p>
-<h1 id="定义">定义</h1>
-<p><strong>隔离电源</strong>：电源的输入回路和输出回路之间没有直接的电气连接，输入和输出之间是绝缘的高阻态，没有电流回路。</p>
-<p><img src="https://pic.islet.space/2021/07/60935d50373e5-thumb.png" alt="img" style="zoom:67%;" /></p>
-<div style="text-align: center; font-weight: 900;">
-图1 采用变压器的隔离电源
-</div>
-<p><strong>非隔离电源</strong>：输入和输出之间有直接的电流回路，例如，输入和输出之间是共地的。以隔离的反激电路和非隔离的BUCK电路为例。</p>
-<p><img src="https://pic.islet.space/2021/07/60935d4fef66f-thumb.png" alt="img" style="zoom:67%;" /></p>
-<div style="text-align: center; font-weight: 900;">
-图2 非隔离电源
-</div>
-<p><img src="https://pic.islet.space/2021/07/60935d5048313-thumb.png" alt="img" style="zoom:50%;" /></p>
-<h1 id="优缺点对比">优缺点对比</h1>
-<p>由上述概念可知，对于常用的电源拓扑而言，非隔离电源主要有：<strong><em>Buck</em></strong>、<strong><em>Boost</em></strong>、<strong><em>Buck-Boost</em></strong>等。而隔离电源主要有各种带隔离变压器的 <strong><em>反激</em></strong>、<strong><em>正激</em></strong>、<strong><em>半桥</em></strong>、<strong><em>LLC</em></strong> 等拓扑。</p>
-<p>结合常用的隔离与非隔离电源，我们从直观上就可得出它们的一些优缺点，两者的优缺点几乎是相反的。使用隔离或非隔离的电源，需了解实际项目对电源的需求是怎样的。</p>
-<p>隔离和非隔离电源的主要差别在于 隔离模块的可靠性高，但成本高，效率差点。非隔离模块的结构很简单，成本低，效率高，安全性能差。因此，在如下几个场合，建议用隔离电源：</p>
-<ol type="1">
-<li></li>
-</ol>
-<p>总结的表如表1所示，两者的优缺点几乎是相反的。</p>
-<div style="text-align: center; font-weight: 900;">
-表1 隔离电源和非隔离电源的优缺点
-</div>
-<p><img src="https://pic.islet.space/2021/07/60935d504e874-thumb.png" alt="img" style="zoom:80%;" /></p>
-<h1 id="适用场景">适用场景</h1>
-<p>一般场合使用对模块电源隔离电压要求不是很高，但是 <mark> 更高的隔离电压可以保证模块电源具有更小的漏电流，更高的安全性和可靠性，并且 <strong><em>EMC特性</em></strong> 也更好一些</mark>，因此目前业界普遍的隔离电压水平为1500VDC以上。</p>
-<p>了解了隔离与非隔离电源的优缺点，对于一些常用的嵌入式供电，其对应的场景及推荐隔离方案如下：</p>
-<ol type="1">
-<li>系统前级的电源，为提高抗干扰性能，保证可靠性，一般用隔离电源。</li>
-<li>对安全有要求的场合，如需接市电的AC-DC，或医疗用的电源和白色家电，为保证人身的安全，必须用隔离电源，有些场合还必须用加强隔离的电源。</li>
-<li>对于远程工业通信的供电，为有效降低地电势差和导线耦合干扰的影响，为每个通信节点单独供电一般都用隔离电源。</li>
-<li>内部IC或部分电路供电，从性价比和体积出发，优先选用非隔离电源。</li>
-<li>对于采用电池供电，<mark>对续航力要求严苛的场合，采用非隔离供电</mark>。</li>
-</ol>
-<h3 id="隔离电源">隔离电源</h3>
-<ol type="1">
-<li><p>涉及可能触电的场合，如从电网取电，转成低压直流的场合，需用隔离的AC-DC电源；</p></li>
-<li><p>串行通信总线通过RS-232、RS-485和控制器局域网(CAN)等物理网络传送数据，这些相互连接的系统每个都配备有自己的电源，而且各系统之间往往间隔较远，因此，我们通常需要隔离电源进行电气隔离来确保系统的物理安全，且通过隔离 <mark style="font-style: Italic; font-weight: 900;">切断接地回路</mark>，来保护系统免受瞬态高电压冲击，同时减少信号失真；</p></li>
-<li><p>对外的I/O端口，为保证系统的可靠运行，也建议对I/O端口做电源隔离。</p></li>
-</ol>
-<h3 id="非隔离电源">非隔离电源</h3>
-<p>电路板内的IC或部分电路供电，从性价比和体积出发，优先选用非隔离的方案；如MPS的MP150/157/MP174系列buck型非隔离AC-DC，适合于1~5W应用；</p>
-<p>对于工作电压低于36V，采用电池供电，对续航力要求严苛的场合，优先采用非隔离供电，如MPS的MP2451/MPQ2451。</p>
-<h1 id="隔离电源模块选型的注意事项">隔离电源模块选型的注意事项</h1>
-<p>电源的隔离耐压在GB-4943国标中又叫抗电强度，这个GB-4943标准就是我们常说的信息类设备的安全标准，就是为了防止人员受到物理和电气伤害的国家标准，其中包括避免人受到电击伤害、物理伤害、爆炸等伤害。如下图为隔离电源结构图。</p>
-<p><img src="https://pic.islet.space/2021/07/60935d4fe8f0d-thumb.png" alt="img" style="zoom:120%;" /></p>
-<div style="text-align: center; font-weight: 900;">
-图 隔离电源结构
-</div>
-<p>作为模块电源的重要指标，标准中也规定了隔离耐压相关测试方法，简单的测试时一般采用等电位连接测试，连接示意图如下：</p>
-<figure>
-<img src="https://pic.islet.space/2021/07/60935d4fc9c96-thumb.png" alt="img" /><figcaption aria-hidden="true">img</figcaption>
-</figure>
-<div style="text-align: center; font-weight: 900;">
-图 隔离耐压测试示意
-</div>
-<h2 id="测试方法">测试方法</h2>
-<ol type="1">
-<li><p>将耐压计的电压设为规定的耐压值，电流设为规定的漏电流值，时间设为规定的测试时间值；</p></li>
-<li><p>操作耐压计开始测试，开始加压，在规定的测试时间内，模块应无击穿，无飞弧现象。</p></li>
-<li><p>注意在测试时焊接电源模块要选取合适的温度，避免反复焊接，损坏电源模块。</p></li>
-<li><p>除此之外还要注意：</p>
-<ol type="1">
-<li>要注意是AC-DC还是DC-DC。</li>
-<li>隔离电源模块的隔离耐压。例如隔离1000V DC 是否满足绝缘要求。</li>
-<li>隔离电源模块是否有进行全面的可靠性测试。电源模块要经过性能测试、容差测试、瞬态条件测试、可靠性测试、EMC电磁兼容测试、高低温测试、极限测试、寿命测试、安规测试等。</li>
-<li>隔离电源模块的生产工厂产线是否规范。电源模块生产线需要通过ISO9001, ISO14001，OHSAS18001等多项国际认证，如下图3所示。</li>
-<li>隔离电源模块是否有应用在工业、汽车等恶劣环境。电源模块不仅仅大量应用与恶劣的工业环境，同时在新能源汽车的BMS管理系统中也游刃有余。</li>
-</ol></li>
-</ol>
-<figure>
-<img src="https://pic.islet.space/2021/07/60935d503580c-thumb.png" alt="img" /><figcaption aria-hidden="true">img</figcaption>
-</figure>
-<div style="text-align: center; font-weight: 900;">
-图 ISO认证
-</div>
-<h1 id="总结">总结</h1>
-<p>很多人认为非隔离电源不如隔离电源好，因为隔离电源贵，所以肯定贵的就好。前几年非隔离的稳定性确实没有隔离稳定，但随着研发技术的更新，现如今非隔离已经非常成熟，日渐稳定。说到安全性，其实现在非隔离电源也是很安全的，只要在结构稍微做下改动，对人体还是很安全的，同样的道理，非隔离电源也是可以过很多安规标准，例如:ULTUVSAACE等。</p>
-<p>实际上非隔离电源损坏的根源就是电源AC线两端的浪涌电压所致，也可以这么说，雷击浪涌吧，这种电压是加在电压AC线两端的瞬间高压，有时高达三千伏，但时间很短，能量却极强，在打雷时会发生，或是在同一条AC线上，当一个大的负载断开瞬间，因为电流惯性的原因也会发生，这个电压进入电源，对于非隔离BUCK电路，会瞬间传达到输出，击坏恒流检测环，或是进一步击坏芯片，造成300v直通，而烧掉整条灯管。对于隔离反激电源，会击坏MOS,现象就是保管，芯片，MOS管全烧坏。现在LED驱动电源，在使用过程中坏的，80%以上都是这两种类似现象。而且，小型开关电源，就算是电源适配器，也经常损坏的是这个现象，均是浪涌电压所致，而在LED电源里，表现的更加普遍，这是因为LED的负载特性是特别的怕浪涌电压的。</p>
-<p>如果按照一般的理论来讲，电子电路里，元器件越少，可靠性越高，相应越多的元件的电路板可靠性则越低。实际上非隔离电路的元件是比隔离电路要少的，为什么隔离电路可靠性高。其实说白了，不是什么可靠性，而是 <mark>非隔离电路对于浪涌太敏感，抑制能力差</mark>，隔离电路，因为能量是先进入变压器，然后从变压器再输送到LED负载的。BUCK电路是输入电源一部分直接加在了LED负载上，故前者对浪涌抑制和衰减能力强，所以浪涌来时损坏的机率小而已。实际上，非隔离电源的问题主要是在于浪涌问题，目前这个问题，因为只有LED灯具在大批量应用时，从概率上才能看出其解决的程度，所以很多人没有提出好的防治办法，更多的人则是不知道浪涌电压为何物。LED灯具坏了，很多人也找不到原因，最后只能一句，什么此电源不稳定就了结了，具体哪里不稳定，他不知道。</p>
-<p>非隔离电源的优势一是效率，二是成本。</p>
-<p>非隔离电源适合的场合：首先，是室内的灯具，这种室内用电环境较好，浪涌影响小。第二，使用的场合是高压小电流，低压大电流用非隔离没有意义，因为低压大电流非隔离的效率并不比隔离的高，成本也低不到多少去。第三，电压相对较稳定的环境中使用非隔离电源。当然，如果有办法解决掉抑制浪涌的问题，那么非隔离电源的应用范围将大大拓宽！</p>
-<p>隔离电源因为浪涌的问题，损坏率也不可小觑，一般那种返修回来，击坏保险，芯片，MOS的第一个应该想到是浪涌问题。为了减少损坏率，在设计时就行要考虑到浪涌的因素进去，或是在使用时要告戒用户，尽量避免浪涌发生。（如室内灯具，打雷时暂时先关掉）</p>
-<p>综合所述，使用隔离与非隔离很多时候都是因为浪涌这个问题，而浪涌问题和用电环境是息息相关的，所以很多时候使用隔离电源和非隔离电源不能一刀切，非隔离电源在节能，成本上都是很有优势的，所以要科学的选用非隔离还是隔离作为LED驱动电源。</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/9/">9</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/10/">10</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 

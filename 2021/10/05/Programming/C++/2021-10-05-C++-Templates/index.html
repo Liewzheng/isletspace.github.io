@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"islet.space","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.7.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+<meta name="description" content="PART 1 THE BASICS  WHY TEMPLATES?  C++ 要求我们使用指定的类型来声明变量、函数 和 大部分其他实体。然而，很多代码对于不同的类型看起来都是一样的。比如，对于不同的数据结构，如 int 数组或 string 字符串向量，只要包含的类型可以相互比较，快速排序算法的实现在结构上看起来是一样的。 如果使用的编程语言不支持 通用性（genericity）的 特殊语言功能">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C++ Templates">
+<meta property="og:url" content="http://islet.space/2021/10/05/Programming/C++/2021-10-05-C++-Templates/index.html">
+<meta property="og:site_name" content="Coder的孤岛">
+<meta property="og:description" content="PART 1 THE BASICS  WHY TEMPLATES?  C++ 要求我们使用指定的类型来声明变量、函数 和 大部分其他实体。然而，很多代码对于不同的类型看起来都是一样的。比如，对于不同的数据结构，如 int 数组或 string 字符串向量，只要包含的类型可以相互比较，快速排序算法的实现在结构上看起来是一样的。 如果使用的编程语言不支持 通用性（genericity）的 特殊语言功能">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://pic.islet.space/2021/10/image-20211005171952999.png">
+<meta property="og:image" content="http://islet.space/Users/liewzheng/Library/Application%20Support/typora-user-images/image-20211007035818560.png">
+<meta property="og:image" content="https://pic.islet.space/2021/10/image-20211007040416472.png">
+<meta property="article:published_time" content="2021-10-05T07:00:00.000Z">
+<meta property="article:modified_time" content="2021-10-06T20:14:16.470Z">
+<meta property="article:author" content="Liewzheng">
+<meta property="article:tag" content="C++">
+<meta property="article:tag" content="Templates">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://pic.islet.space/2021/10/image-20211005171952999.png">
+
+
+<link rel="canonical" href="http://islet.space/2021/10/05/Programming/C++/2021-10-05-C++-Templates/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://islet.space/2021/10/05/Programming/C++/2021-10-05-C++-Templates/","path":"2021/10/05/Programming/C++/2021-10-05-C++-Templates/","title":"C++ Templates"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>C++ Templates | Coder的孤岛</title>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<!-- hexo injector head_end end --></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Coder的孤岛</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">islet of the coder</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-首页"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-文章"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>文章</a></li>
+        <li class="menu-item menu-item-目录"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>目录</a></li>
+        <li class="menu-item menu-item-标签"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-简历"><a href="/resume/" rel="section"><i class="fa fa-address-card fa-fw"></i>简历</a></li>
+        <li class="menu-item menu-item-友链"><a href="/friends/" rel="section"><i class="fa fa-group fa-fw"></i>友链</a></li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#part-1-the-basics"><span class="nav-number">1.</span> <span class="nav-text">PART 1 THE BASICS</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#function-templates"><span class="nav-number">1.1.</span> <span class="nav-text">FUNCTION TEMPLATES</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#templates-delaration-and-definition"><span class="nav-number">1.1.1.</span> <span class="nav-text">TEMPLATES DELARATION AND DEFINITION</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#using-templates"><span class="nav-number">1.1.2.</span> <span class="nav-text">USING TEMPLATES</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#two-phase-translation"><span class="nav-number">1.1.3.</span> <span class="nav-text">TWO-PHASE TRANSLATION</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#template-argument-deduction"><span class="nav-number">1.1.4.</span> <span class="nav-text">TEMPLATE ARGUMENT DEDUCTION</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%B1%BB%E5%9E%8B%E6%8E%A8%E5%AF%BC%E8%BF%87%E7%A8%8B%E4%B8%AD%E7%9A%84%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2"><span class="nav-number">1.1.4.1.</span> <span class="nav-text">类型推导过程中的类型转换</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#terminology"><span class="nav-number">2.</span> <span class="nav-text">TERMINOLOGY</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#reference"><span class="nav-number">3.</span> <span class="nav-text">REFERENCE</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Liewzheng</p>
+  <div class="site-description" itemprop="description">笔记分享的旮旯孤岛而已</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">93</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">173</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="mailto:liewzheng@foxmail.com" title="E-Mail → mailto:liewzheng@foxmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://islet.space/2021/10/05/Programming/C++/2021-10-05-C++-Templates/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Liewzheng">
+      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coder的孤岛">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          C++ Templates
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-10-05 15:00:00" itemprop="dateCreated datePublished" datetime="2021-10-05T15:00:00+08:00">2021-10-05</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2021-10-07 04:14:16" itemprop="dateModified" datetime="2021-10-07T04:14:16+08:00">2021-10-07</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Programming/" itemprop="url" rel="index"><span itemprop="name">Programming</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="part-1-the-basics">PART 1 THE BASICS</h1>
+<div style="background-color: #555; color: #eeeeee; font-weight: 900;">
+WHY TEMPLATES?
+</div>
+<p>C++ 要求我们使用指定的类型来声明变量、函数 和 大部分其他实体。然而，很多代码对于不同的类型看起来都是一样的。比如，对于不同的数据结构，如 <code>int</code> 数组或 <code>string</code> 字符串向量，只要包含的类型可以相互比较，快速排序算法的实现在结构上看起来是一样的。</p>
+<p>如果使用的编程语言不支持 <strong>通用性</strong>（genericity）的 <strong>特殊语言功能</strong>（special language feature），将不得不面临如下选择，坏的选择（bad alternatives）：</p>
+<ul>
+<li>你可以为不同的数据类型一遍又一遍地进行着相同的行为声明；</li>
+<li>你可以为常见的基本类型（common base type）编写一段代码，例如 <code>object</code> 或 <code>void*</code> ；</li>
+<li>你可以使用特殊的预处理器。</li>
+</ul>
+<p>如果使用其他语言，可能以前就做过一些或者所有上方所述的内容了。然而，这些方法的每一种都有其缺点：</p>
+<ul>
+<li>如果你一遍又一遍地实现着这些行为，毫无疑问是叠矩重规（reinvent the wheel）。你犯了相同的错误，并且你试图寻找避免复杂但能更好的算法，因为它们会制造出更多的错误。</li>
+<li>如果你为常见基本类编写代码，你会失去类型检查的好处。另外，类可能要求继承于（be derived from）能够使代码更加难以维护的特殊基础类。</li>
+<li>如果你使用特殊的预处理器，代码会被一些没有 <strong>作用范围</strong>（scope）和类型且能够造成 <strong>奇怪语义错误</strong>（strange semantic errors）的 ”愚蠢的文本替换机制“ 替代掉。</li>
+</ul>
+<p>模板是能够解决重复代码编写问题且不会造成上述这些短板的方案。模板是为一种或更多尚未声明类型的函数或者类。当使用模板时，可以隐式或显式地将类型当做参数传递过去。因为模板是语言的特点，可以拥有全部的类型检查和作用范围的支持（full support of type checking and scope）。</p>
+<p>在C++标准库中，几乎所有的代码都是模板代码。该库提供排序算法以对 对象、指定类型的值、数据结构（也叫做 <strong>容器类</strong>（Container Classes）） 进行排序，以管理指定类型的元素 和 字符串（被参数化的字符串类型）等等。</p>
+<p>然而，以上仅是模板的使用入门，模板还允许 <strong>参数化行为</strong>（parameterize behavior） 以 <strong>优化代码</strong>（optimize code） 和 <strong>参数化信息</strong>（parameterize infomation）。</p>
+<h2 id="function-templates">FUNCTION TEMPLATES</h2>
+<p><strong>函数模板</strong>（function templates），即 <strong>参数化的函数</strong>（functions that are parameterized），因此代表了 <strong>一个函数系列</strong>（a family of functions）。</p>
+<p>函数模板为不同的数据类型提供了相同的功能行为调用，或换句话说，代表了一个函数系列。该函数系列看起来就像个普通函数，除了函数的某些元素未被确定，因为这些元素被参数化了。</p>
+<h3 id="templates-delaration-and-definition">TEMPLATES DELARATION AND DEFINITION</h3>
+<div style="background-color: #555; color: #eeeeee; font-size: 1.25rem; font-weight: 900;">
+EXAMPLE
+</div>
+<p>以下样例 <strong>声明</strong> 了一个函数系列，且下面参数的类型被空置（is left open），如参数 <code>T</code> ，</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line"><span class="function">T <span class="title">max</span><span class="params">(T a, T b)</span></span>&#123;</span><br><span class="line">  <span class="comment">// if b &lt; a then yield a else yield b</span></span><br><span class="line">  <span class="keyword">return</span> b &lt; a ? a : b;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在上述样例中，模板参数必须使用 <code>template &lt;comma-separated-list-of-parameters&gt;</code> 的格式进行声明。</p>
+<p>此处的关键字 <code>typename</code> 代表着类型参数，这是迄今为止C++程序中最常见的一种模板参数，当然其他参数也可以，后续介绍。此处的类型参数是 <code>T</code> ，可以使用任意标识符当做参数名称，但使用 <code>T</code> 就是惯例而已。类型参数代表着 <strong>任意类型</strong>（arbitrary type），当函数调用时，由调用的函数决定具体数据类型。开发者可以调用任何类型，只要其提供模板使用的操作。</p>
+<p>在上述样例中，类型 <code>T</code> 必须支持 <strong>操作符</strong>（operator） <code>&lt;</code> ，因为 <code>a</code> 和 <code>b</code> 使用该操作符进行比较，也许在 <code>max()</code> 的定义中很难发现，但要说明的是，<code>T</code> 类型必须是可复制的才能够被返回（T must be copyable in order to be returned）。</p>
+<p>由于历史遗留原因，仍可以使用关键词 <code>class</code> 来定义类型参数。<code>typename</code> 关键字是在 C++98 标准之后才出现的，在那之前，<code>class</code> 是引入类型参数的唯一方法，至今仍可以使用。因此，上述模板也可以用下面的代码平替（在语义上没有区别）。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">temelate&lt;<span class="class"><span class="keyword">class</span> <span class="title">T</span>&gt;</span></span><br><span class="line">  <span class="function">T <span class="title">max</span><span class="params">(T a, T b)</span></span>&#123;</span><br><span class="line">  <span class="keyword">return</span> b&lt;a?a:b;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>但因为 <code>class</code> 也是 <strong>类</strong> 的关键字，可能导致二义性，最好在声明模板时使用关键字 <code>typename</code> 。需要注意的是，与类声明不同，当声明类型参数时，关键字 <code>struct</code> 不能用来代替 <code>typename</code> 。</p>
+<p>在C++17之前，类型 <code>T</code> 也必须是可复制的，以确保能够传递参数。但C++17之后，可以传递临时数（temporary），即使没有一个备份或者一个构造器可用（even if neither a copy nor a move constructor is valid）。</p>
+<div style="background-color: #555; color: #eeeeee; font-weight: 900;">
+如何编写多个函数模板，需要注意什么？
+</div>
+<p>同一个文件内可以编写多个不同的模板函数，如下：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line"><span class="function">T <span class="title">Max</span><span class="params">(T a, T b)</span></span>&#123;</span><br><span class="line">	<span class="keyword">return</span> b&lt;a?a:b;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> t2&gt;</span><br><span class="line"><span class="function">t2 <span class="title">foo</span><span class="params">(t2*)</span></span>&#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上面两个模板函数就在同一个文件下，<code>typename</code> 关键字后面的 <code>T</code> 或者 <code>t2</code> 需要具有唯一性。</p>
+<h3 id="using-templates">USING TEMPLATES</h3>
+<p>需要注意的是，在使用该函数模板时，要在该函数前加上双冒号 <code>::</code> ，以确保函数模板能够在全局命名空间中被查找到。如果出现下方的 <code>call to ’sth.’ is ambiguous</code> 错误， 即是说需要调用的函数模糊不清，因为标准库中也有一个 <code>std::max()</code>，编译器查找不到该函数具体是在哪个函数文件中。</p>
+<figure>
+<img src="https://pic.islet.space/2021/10/image-20211005171952999.png" alt="image-20211005171952999" /><figcaption aria-hidden="true">image-20211005171952999</figcaption>
+</figure>
+<p>当然，以上错误也可以通过写不同的函数名称来避免。</p>
+<p><mark style="font-weight: 900;">模板并不是被编译成一个可以处理所有数据类型的实体，而是被编译成了所有不同数据类型的实体。</mark> 即，<code>int max()</code>、 <code>short max()</code> 、<code>string max()</code> 等等。单实体多适应 的模板虽然好像可行，但是实际上并不存在。所有的语言规则都遵循 ” <strong>不同的模板参数生成不同的实体</strong>“ 的原则。</p>
+<p>上面这种用具体类型取代模板参数的过程被称为 <strong>实体化</strong>（instantiation）。需要注意的是，仅仅是对函数模板的使用就可以触发该实体化过程，因此开发者就没有必要要求实体化过程单独进行（request the instantiation separately）。</p>
+<p>另外，只要产生的代码是有效的，<code>void</code> 型也是可用的模板参数，例如：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line"><span class="function">T <span class="title">foo</span><span class="params">(T*)</span></span>&#123;</span><br><span class="line">  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>和</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">void</span>* vp = <span class="literal">nullptr</span>;  <span class="comment">// 引出 void foo(void*)</span></span><br><span class="line"><span class="built_in"><span class="keyword">void</span></span>(vp);</span><br></pre></td></tr></table></figure>
+<h3 id="two-phase-translation">TWO-PHASE TRANSLATION</h3>
+<p><strong>两段式编译</strong>，即Two-phase translation。</p>
+<p>如果试图为一个不支持所有操作的模板进行实例化，将会导致编译时错误。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">std::complex&lt;<span class="keyword">float</span>&gt; c1, c2;  <span class="comment">//doesn&#x27;t provide operator &lt;</span></span><br><span class="line"></span><br><span class="line">::<span class="built_in">max</span>(c1, c2);  <span class="comment">//ERROR at compile time</span></span><br></pre></td></tr></table></figure>
+<p>因此，模板在被编译时会经过如下两个阶段：</p>
+<ol type="1">
+<li>在定义且没有实例化时，忽略模板参数来检查自身代码的正确性：
+<ul>
+<li>标点符号错误被发现，例如缺少分号 <code>;</code> ；</li>
+<li>使用不依赖已知模板参数的未知命名（类型名，函数名等）；</li>
+<li>不依赖于已检查模板参数的 <strong>静态断言</strong>（static assertions）</li>
+</ul></li>
+<li>在实例化时，模板代码会被再次检查以确保可用，特别是依赖于模板参数的都会被二次检查（double-checked），例如：</li>
+</ol>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">foo</span><span class="params">(T t)</span></span>&#123;</span><br><span class="line">  <span class="built_in">undeclared</span>();</span><br><span class="line">  <span class="built_in">undeclared</span>(t);</span><br><span class="line">  <span class="built_in"><span class="keyword">static_assert</span></span>(<span class="built_in"><span class="keyword">sizeof</span></span>(<span class="keyword">int</span>&gt;<span class="number">10</span>, <span class="string">&quot;int too small&quot;</span>);</span><br><span class="line">  <span class="built_in"><span class="keyword">static_assert</span></span>(<span class="built_in"><span class="keyword">sizeof</span></span>(T&gt;<span class="number">10</span>, <span class="string">&quot;T too small&quot;</span>);         </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>注意到某些编译器在第一阶段没有进行全面检查（don’t perform the full checks），所以直到在最后一阶段的模板代码实例化之前都没办法看到问题。</p>
+<div style="background-color: #555; color: #eeeeee; font-weight: 900;">
+COMPILE AND LINK
+</div>
+<p>在实际处理模板时，两段式编译会导致很多重要的问题：当函数模板被用于触发其实例化时，编译器（在某些点）需要查看模板定义。当一个函数的声明足以编译它时，就打破了普通函数通常的编译和连接的区别。</p>
+<h3 id="template-argument-deduction">TEMPLATE ARGUMENT DEDUCTION</h3>
+<p><strong>模板实参推断</strong>，即 Template argument deduction。</p>
+<p>当给函数模板传递实参时，模板参数由我们传递过去的实参决定。如果传递的是两个 <code>int</code> 型实参给 参数类型 <code>T</code> ，则C++编译器就能推断出此时的 <code>T</code> 一定是 <code>int</code> 。</p>
+<p>然而 <code>T</code> 可能只是该参数类型的一部分。例如，声明 <code>max()</code> 可以使用 <strong>常参</strong>（constant references）。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line"><span class="function">T <span class="title">max</span><span class="params">(T <span class="keyword">const</span>&amp; a, T <span class="keyword">const</span>&amp; b)</span></span>&#123;</span><br><span class="line">  <span class="keyword">return</span> b&lt;a?a:b;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如上方代码所示，传递 整型 <code>int</code> 参数，<code>T</code> 又会被推断为 <code>int</code> ，因为函数参数和 <code>int const&amp;</code> 匹配。</p>
+<h4 id="类型推导过程中的类型转换">类型推导过程中的类型转换</h4>
+<p>注意，自动类型转换被限制在类型推导期间：</p>
+<ul>
+<li><strong>引用传递</strong>：当通过引用声明来调用参数（declaring call parameters by reference）时，即使是 微不足道的转换（trivial conersion） 也不适用于类型推导。用同一个模板参数 <code>T</code> 声明的两个参数类型必须完全匹配。</li>
+<li><strong>按值传递</strong>：当按数值声明调用参数时，只支持 <code>decay</code> 的琐碎转换。带有const或volatile的限定被忽略，引用转换为被引用的类型，而原始数组或函数转换为相应的指针类型。对于用同一模板参数T声明的两个参数，<code>decayed</code> 的类型必须匹配。</li>
+</ul>
+<p><strong>错误提示</strong>：对int类型的非恒定值引用不能与int类型的临时值绑定</p>
+<figure>
+<img src="/Users/liewzheng/Library/Application%20Support/typora-user-images/image-20211007035818560.png" alt="image-20211007035818560" /><figcaption aria-hidden="true">image-20211007035818560</figcaption>
+</figure>
+<p>前方已经说了，类型的自动转换相关注意事项，同一模板参数的两个参数类型必须完全匹配。如果在同一个 <code>.cpp</code> 文件中书写下面下面代码，则会出现下方报错提示 “<strong>推导类型冲突</strong>（deduced conflicting types for parameter ’T’）”。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Max</span>(<span class="number">4</span>, <span class="number">7.2</span>);</span><br><span class="line"><span class="built_in">Max</span>(<span class="string">&quot;Hello&quot;</span>,s);</span><br></pre></td></tr></table></figure>
+<p>错误提示如下：</p>
+<figure>
+<img src="https://pic.islet.space/2021/10/image-20211007040416472.png" alt="image-20211007040416472" /><figcaption aria-hidden="true">image-20211007040416472</figcaption>
+</figure>
+<p>但是如果非要使用不一样的数据类型的两个参数来套用同一模板，以下有三种解决方法：</p>
+<ol type="1">
+<li>在 <code>.cpp</code> 文件中进行参数传递时，使用参数类型强制转换。如 <code>Max(static_cast&lt;double&gt;(4), 7.2);</code> 。</li>
+<li>在</li>
+</ol>
+<h1 id="terminology">TERMINOLOGY</h1>
+<ol type="1">
+<li>按值传递 passing by value</li>
+<li>引用传递 passing by reference</li>
+</ol>
+<h1 id="reference">REFERENCE</h1>
+<ol type="1">
+<li>&lt;C++ Templates&gt; David Vandecoorde</li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>感谢您的支持和鼓励</div>
+  <button>
+    Donate
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="https://photo.islet.space/2021/00/IMG_4588.JPG" alt="Liewzheng WeChat Pay">
+        <span>WeChat Pay</span>
+      </div>
+      <div>
+        <img src="https://photo.islet.space/2021/00/IMG_4590.JPG" alt="Liewzheng Alipay">
+        <span>Alipay</span>
+      </div>
+
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/C/" rel="tag"># C++</a>
+              <a href="/tags/Templates/" rel="tag"># Templates</a>
+          </div>
+
+        
+
+  <div id="vcomments" style="margin: 1rem 0 0 0;"></div>
+  <script>
+    new Valine({
+      el: '#vcomments',
+      appId: 'vRGM12EcYxDSM2lat5qjjSeY-gzGzoHsz',
+      appKey: 'WBgAb6NTAFQ7DYtgH0uOPNNh'
+    })
+  </script>
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/10/02/Communication/2021-10-02-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%8E%B0%E5%9C%BA%E6%80%BB%E7%BA%BF/" rel="prev" title="计算机网络体系结构与现场总线">
+                  <i class="fa fa-chevron-left"></i> 计算机网络体系结构与现场总线
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/10/12/Programming/C++/2021-10-12-C++%E5%A4%B4%E6%96%87%E4%BB%B6%E5%92%8C%E7%BC%96%E8%AF%91/" rel="next" title="C++头文件和编译">
+                  C++头文件和编译 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">粤ICP备19004822号 </a>
+  </div>
+
+<div class="copyright">
+  &copy; 2019 – 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">liewzheng</span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":"enable","tags":"none","js":{"url":"https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js","integrity":"sha256-r+3itOMtGGjap0x+10hu6jW/gZCzxHsoKrOd7gyRSGY="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>

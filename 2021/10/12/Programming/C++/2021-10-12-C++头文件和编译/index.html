@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"islet.space","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.7.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+<meta name="description" content="HPP头文件 .hpp，其实质就是将 .cpp 的实现代码混入 .h 头文件当中，定义与实现都包含在同一文件，则该类的使用只需要调用 #include&lt;xxx.hpp&gt; 以引用该文件即可，无需再将 .cpp 加入到project中进行编译。 而实现代码将直接编译到调用者的 .obj 文件中，不再生成单独的 .obj，采用 .hpp 将大幅度减少调用 project中的 .cpp 文件数">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C++头文件和编译">
+<meta property="og:url" content="http://islet.space/2021/10/12/Programming/C++/2021-10-12-C++%E5%A4%B4%E6%96%87%E4%BB%B6%E5%92%8C%E7%BC%96%E8%AF%91/index.html">
+<meta property="og:site_name" content="Coder的孤岛">
+<meta property="og:description" content="HPP头文件 .hpp，其实质就是将 .cpp 的实现代码混入 .h 头文件当中，定义与实现都包含在同一文件，则该类的使用只需要调用 #include&lt;xxx.hpp&gt; 以引用该文件即可，无需再将 .cpp 加入到project中进行编译。 而实现代码将直接编译到调用者的 .obj 文件中，不再生成单独的 .obj，采用 .hpp 将大幅度减少调用 project中的 .cpp 文件数">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://pic.islet.space/2021/10/20211012135030.png">
+<meta property="article:published_time" content="2021-10-12T00:15:00.000Z">
+<meta property="article:modified_time" content="2021-10-14T15:58:13.893Z">
+<meta property="article:author" content="Liewzheng">
+<meta property="article:tag" content="hpp">
+<meta property="article:tag" content="h">
+<meta property="article:tag" content="c++">
+<meta property="article:tag" content="compiler">
+<meta property="article:tag" content="makefile">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://pic.islet.space/2021/10/20211012135030.png">
+
+
+<link rel="canonical" href="http://islet.space/2021/10/12/Programming/C++/2021-10-12-C++%E5%A4%B4%E6%96%87%E4%BB%B6%E5%92%8C%E7%BC%96%E8%AF%91/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://islet.space/2021/10/12/Programming/C++/2021-10-12-C++%E5%A4%B4%E6%96%87%E4%BB%B6%E5%92%8C%E7%BC%96%E8%AF%91/","path":"2021/10/12/Programming/C++/2021-10-12-C++头文件和编译/","title":"C++头文件和编译"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>C++头文件和编译 | Coder的孤岛</title>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<!-- hexo injector head_end end --></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Coder的孤岛</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">islet of the coder</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-首页"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-文章"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>文章</a></li>
+        <li class="menu-item menu-item-目录"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>目录</a></li>
+        <li class="menu-item menu-item-标签"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-简历"><a href="/resume/" rel="section"><i class="fa fa-address-card fa-fw"></i>简历</a></li>
+        <li class="menu-item menu-item-友链"><a href="/friends/" rel="section"><i class="fa fa-group fa-fw"></i>友链</a></li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#hpp%E5%A4%B4%E6%96%87%E4%BB%B6"><span class="nav-number">1.</span> <span class="nav-text">HPP头文件</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E6%B3%A8%E6%84%8F"><span class="nav-number">1.1.</span> <span class="nav-text">使用注意</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%88%86%E7%A6%BB%E5%BC%8F%E7%BC%96%E8%AF%91"><span class="nav-number">2.</span> <span class="nav-text">分离式编译</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%91%BD%E4%BB%A4%E8%A1%8Cg"><span class="nav-number">2.1.</span> <span class="nav-text">命令行G++</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#makefile"><span class="nav-number">2.2.</span> <span class="nav-text">Makefile</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#makefile-%E6%A0%BC%E5%BC%8F"><span class="nav-number">2.2.1.</span> <span class="nav-text">Makefile 格式</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#reference"><span class="nav-number">3.</span> <span class="nav-text">Reference</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Liewzheng</p>
+  <div class="site-description" itemprop="description">笔记分享的旮旯孤岛而已</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">93</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">173</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="mailto:liewzheng@foxmail.com" title="E-Mail → mailto:liewzheng@foxmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://islet.space/2021/10/12/Programming/C++/2021-10-12-C++%E5%A4%B4%E6%96%87%E4%BB%B6%E5%92%8C%E7%BC%96%E8%AF%91/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Liewzheng">
+      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coder的孤岛">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          C++头文件和编译
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-10-12 08:15:00" itemprop="dateCreated datePublished" datetime="2021-10-12T08:15:00+08:00">2021-10-12</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2021-10-14 23:58:13" itemprop="dateModified" datetime="2021-10-14T23:58:13+08:00">2021-10-14</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Programming/" itemprop="url" rel="index"><span itemprop="name">Programming</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="hpp头文件">HPP头文件</h1>
+<p><code>.hpp</code>，其实质就是将 <code>.cpp</code> 的实现代码混入 <code>.h</code> 头文件当中，定义与实现都包含在同一文件，则该类的使用只需要调用 <code>#include&lt;xxx.hpp&gt;</code> 以引用该文件即可，无需再将 <code>.cpp</code> 加入到project中进行编译。</p>
+<p>而实现代码将直接编译到调用者的 <code>.obj</code> 文件中，不再生成单独的 <code>.obj</code>，采用 <code>.hpp</code> 将大幅度减少调用 project中的 <code>.cpp</code> 文件数与编译次数，也不用再发布烦人的 <code>.lib</code> 与 <code>.dll</code> 文件，因此非常适合用来编写公用的开源库。</p>
+<h2 id="使用注意">使用注意</h2>
+<p><code>.hpp</code> 头文件的优点不少，但是编写中有以下几点要注意：</p>
+<ol type="1">
+<li><p>与 <code>.h</code> 类似，但 <code>.hpp</code> 是 <strong>Header Plus Plus</strong> 的简写，是 C++程序头文件 。</p></li>
+<li><p>是<a target="_blank" rel="noopener" href="http://www.huarw.com/program/vc/Index.html">VC</a>L专用的头文件，已预编译。</p></li>
+<li><p>是一般 <strong>模板类</strong> 的头文件。</p></li>
+<li><p>一般来说，<code>.h</code> 里面只有声明，没有实现，而 <code>.hpp</code> 里声明实现都有，后者可以减少 <code>.cpp</code> 的数量。</p></li>
+<li><p><code>.h</code> 里面可以有 <code>using namespace std;</code>，而 <code>.hpp</code> 里则无。</p></li>
+<li><p>不可包含 <strong>全局对象</strong> 和 <strong>全局函数</strong> 。由于 <code>.hpp</code> 本质上是作为 <code>.h</code> 被调用者所include，所以当 <code>.hpp</code> 文件中存在全局对象或者全局函数，而该 <code>.hpp</code> 被多个调用者include时，<mark>将在链接时导致符号重定义错误</mark>。<mark>要避免这种情况，需要去除全局对象，将全局函数封装为类的静态方法</mark>。</p></li>
+<li><p><strong>类之间不可循环调用</strong></p></li>
+</ol>
+<p>在.h和.cpp的场景中，当两个类或者多个类之间有循环调用关系时，只要预先在头文件做被调用类的声明即可，如下：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">B</span>;</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span>&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">someMethod</span><span class="params">(B b)</span></span>;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">B</span>&#123;</span></span><br><span class="line"><span class="keyword">public</span> :</span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">someMethod</span><span class="params">(A a)</span></span>;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>在 <code>.hpp</code> 场景中，由于定义与实现都已经存在于一个文件，调用者必需明确知道被调用者的所有定义，而不能等到 <code>.cpp</code> 中去编译。因此hpp中必须整理类之间调用关系，不可产生循环调用。同理，对于当两个类A和B分别定义在各自的 <code>.hpp</code> 文件中，形如以下的循环调用也将导致编译错误：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//a.hpp</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&quot;b.hpp&quot;</span></span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span>&#123;</span></span><br><span class="line"><span class="keyword">public</span> :</span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">someMethod</span><span class="params">(B b)</span></span>;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">//b.hpp</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&quot;a.hpp&quot;</span></span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">B</span>&#123;</span></span><br><span class="line"><span class="keyword">public</span> :</span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">someMethod</span><span class="params">(A a)</span></span>;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<ol start="9" type="1">
+<li><strong>不可使用静态成员</strong></li>
+</ol>
+<p>静态成员的使用限制在于如果类含有静态成员，则在 <code>.hpp</code> 中必需加入静态成员初始化代码，当该 <code>.hpp</code> 被多个文档include时，将产生符号重定义错误。唯一的例外是 <code>const static</code> 整型成员，因为在vs2003中，该类型允许在定义时初始化，如：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span>&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="keyword">const</span> <span class="keyword">static</span> <span class="keyword">int</span> intValue = <span class="number">123</span>;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>由于静态成员的使用是很常见的场景，无法强制清除，因此可以考虑以下几种方式（以下示例均为同一类中方法）</p>
+<ol type="1">
+<li>类中仅有一个静态成员时，且仅有一个调用者时，可以通过 <strong>局域静态变量模拟</strong></li>
+</ol>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//方法模拟获取静态成员</span></span><br><span class="line"><span class="function">someType <span class="title">getMember</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">static</span> someType <span class="title">value</span><span class="params">(xxx)</span></span>;<span class="comment">//作用域内静态变量</span></span><br><span class="line">    <span class="keyword">return</span> value;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ol start="2" type="1">
+<li>类中有多个方法需要调用静态成员，而且可能存在多个静态成员时，<mark style="font-weight: 900;">可以将每个静态成员封装一个模拟方法，供其他方法调用</mark>。</li>
+</ol>
+<p><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">someType <span class="title">getMemberA</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">static</span> someType <span class="title">value</span><span class="params">(xxx)</span></span>;<span class="comment">//作用域内静态变量</span></span><br><span class="line">    <span class="keyword">return</span> value;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function">someType <span class="title">getMemberB</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">static</span> someType <span class="title">value</span><span class="params">(xxx)</span></span>;<span class="comment">//作用域内静态变量</span></span><br><span class="line">    <span class="keyword">return</span> value;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">accessMemberA</span><span class="params">()</span></span>&#123;</span><br><span class="line">    someType member = <span class="built_in">getMemberA</span>();<span class="comment">//获取静态成员</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">//获取两个静态成员</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">accessStaticMember</span><span class="params">()</span></span>&#123;</span><br><span class="line">    someType a = <span class="built_in">getMemberA</span>();<span class="comment">//获取静态成员</span></span><br><span class="line">    someType b = <span class="built_in">getMemberB</span>();</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+<ol start="3" type="1">
+<li>第二种方法对于大部分情况是通用的，但是当所需的静态成员过多时，编写封装方法的工作量将非常巨大，在此种情况下，建议使用 <strong>Singleton模式</strong>，将被调用类定义成普通类，然后使用Singleton将其变为全局唯一的对象进行调用。</li>
+</ol>
+<p>如原 <code>.h</code> 和 <code>.cpp</code> 中的定义如下：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span>&#123;</span></span><br><span class="line"><span class="keyword">public</span> :</span><br><span class="line">    <span class="function">type <span class="title">getMember</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> member;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">static</span> type member;<span class="comment">//静态成员</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>采用singleton方式，实现代码可能如下（singleton实现请自行查阅相关文档）</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//实际实现类</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Aprovider</span>&#123;</span></span><br><span class="line"><span class="keyword">public</span> :</span><br><span class="line">    <span class="function">type <span class="title">getMember</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> member;</span><br><span class="line">    &#125;</span><br><span class="line">    type member;<span class="comment">//变为普通成员</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//提供给调用者的接口类</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span>&#123;</span></span><br><span class="line"><span class="keyword">public</span> :</span><br><span class="line">    <span class="function">type <span class="title">getMember</span><span class="params">()</span></span>&#123;</span><br><span class="line">    	<span class="keyword">return</span> Singleton&lt;AProvider &gt;::<span class="built_in">getInstance</span>()-&gt;<span class="built_in">getMember</span>();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="分离式编译">分离式编译</h1>
+<p>在介绍分离式编译之前需要先介绍一下 <strong>分离式代码</strong>，在C++代码中，声明和定义是可以分开写在多个文件中，当然也可以写在同一个文件里面的，如 <code>.hpp</code> 。</p>
+<p>往往是为了逻辑条理的清晰而分开书写，但使用 g++ 和 Terminal 直接编译 <code>main.cpp</code> 时，都是使用的 <code>g++ main.cpp -o main</code> 的命令，也就是只能编译该 <code>main.cpp</code> 一个文件，以生成 <code>main</code> 为名的二进制可运行文件，实际上，书写在其他 <code>.cpp</code> 文件中的代码也需要一同编译，这些书写在其他 <code>.cpp</code> 文件中的代码被称为 <strong>分离式代码</strong>，只编译 <code>main.cpp</code> 就会出现 <code>undefined reference</code> 之类的错误。</p>
+<h2 id="命令行g">命令行G++</h2>
+<p>在 Windows / Linux / Mac 的 Terminal 下都可以使用 <code>g++</code> 命令进行编译，格式如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">g++ -c main.cpp xxx1.cpp xxx2.cpp</span><br></pre></td></tr></table></figure>
+<p>使用 <code>-c</code> 选项，将包含 <code>main()</code> 的 <code>main.cpp</code> 与 其他分离式代码文件 <code>xxx1.cpp</code> 和 <code>xxx2.cpp</code> 一同编译，然后生成一个个对象文件（ <code>.o</code> 或 <code>.obj</code> ）。上面这种方法会生成三个文件 <code>main.o</code> 、<code>xxx1.o</code> 和 <code>xxx2.o</code> ，每个 <code>.o</code> 都是一个对象文件，但不一定可执行（因为缺少 <code>main()</code> 函数），仍需要通过进一步 <strong>链接</strong> 成可执行文件：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">g++ -o main main.o xxx1.o xxx2.o</span><br></pre></td></tr></table></figure>
+<p>通过上面这一行代码可以生成名为 <code>main</code> 的可执行二进制文件。</p>
+<p>以上两句命令也可以通过下面这句命令替代：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">g++ -o main main.cpp xxx1.cpp xxx2.cpp</span><br></pre></td></tr></table></figure>
+<h2 id="makefile">Makefile</h2>
+<p>Makefile 文件描述了 Linux 系统下 C/C++ 工程的编译规则，它用来自动化编译 C/C++ 项目。一旦写编写好 Makefile 文件，只需要一个 make 命令，整个工程就开始自动编译，不再需要手动执行 GCC 命令。</p>
+<p>一个中大型 C/C++ 工程的源文件有成百上千个，它们按照功能、模块、类型分别放在不同的目录中，Makefile 文件定义了一系列规则，指明了源文件的编译顺序、依赖关系、是否需要重新编译等。</p>
+<p>如果是在 Windows 下作开发的话不需要去考虑这个问题，因为 Windows 下的集成开发环境（IDE）。当然，Windows 下的 Visual Studio Code如果没配置好，也只是个编辑器而已，不算是个IDE。一般的MVS（Microsoft Visual Studio）都已经内置了 Makefile，或者说会自动生成 Makefile，不用去手动编写。</p>
+<p>Linux 中却不能这样，需要去手动的完成这项工作。Linux 下可以学习的开发语言有很多，常见的有 C/C++语言、python、java 等等。在 Linux(Unix) 下做开发的话，不了解 Makefile 是一件非常失败的事情。不懂 Makefile，就操作不了多文件编程，就完成不了相对于大的工程项目的操作。Makefile 可以说是必须掌握的一项技能。</p>
+<p>Makefile 可以简单的认为是一个工程文件的编译规则，描述了整个工程的 <strong>编译</strong> 和 <strong>链接</strong> 等规则。其中包含了那些文件需要编译，那些文件不需要编译，那些文件需要 <strong>先编译</strong>，那些文件需要 <strong>后编译</strong>，那些文件需要 <strong>重建</strong> 等等。编译整个工程需要涉及到的，在 Makefile 中都可以进行描述。换句话说，<mark style="font-weight: 900;">Makefile 可以使得我们的项目工程的编译变得自动化，不需要每次都手动输入一堆源文件和参数。</mark></p>
+<p>Makefile 可以彻底简化编译的操作。把要链接的库文件放在 Makefile 中，制定相应的规则和对应的链接顺序。这样只需要执行 make 命令，工程就会自动编译。每次想要编译工程的时候就执行 <code>make</code> 命令，省略掉手动编译中的参数选项和命令，非常的方便。</p>
+<p>Makefile 支持多线程并发操作，会极大的缩短编译时间，并且当修改了源文件之后，编译整个工程的时候，make 命令只会编译修改过的文件，没有修改的文件不用重新编译，也极大的解决了耗费时间的问题。</p>
+<h3 id="makefile-格式">Makefile 格式</h3>
+<figure>
+<img src="https://pic.islet.space/2021/10/20211012135030.png" alt="image-20211012134610578" /><figcaption aria-hidden="true">image-20211012134610578</figcaption>
+</figure>
+<blockquote>
+<ul>
+<li>targets：规则的目标，可以是 Object File（一般称它为中间文件），也可以是可执行文件，还可以是一个标签；</li>
+<li>prerequisites：是我们的依赖文件，要生成 targets 需要的文件或者是目标。可以是多个，也可以是没有；</li>
+<li>command：make 需要执行的命令（任意的 shell 命令）。可以有多条命令，每一条命令占一行。</li>
+</ul>
+</blockquote>
+<blockquote>
+<p>注意：我们的 <strong>目标</strong>（target） 和 <strong>依赖文件</strong>（prerequisite） 之间要使用 <strong>冒号</strong> <code>:</code> 分隔开，<strong>命令的开始</strong>（before the command） 一定要使用 <code>Tab</code> 键。</p>
+</blockquote>
+<h1 id="reference">Reference</h1>
+<ol type="1">
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/liuzhanchen1987/article/details/7270005">hpp.h与.h的区别</a></li>
+<li><a target="_blank" rel="noopener" href="http://c.biancheng.net/makefile/">Makefile教程：Makefile文件编写1天入门 (biancheng.net)</a></li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>感谢您的支持和鼓励</div>
+  <button>
+    Donate
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="https://photo.islet.space/2021/00/IMG_4588.JPG" alt="Liewzheng WeChat Pay">
+        <span>WeChat Pay</span>
+      </div>
+      <div>
+        <img src="https://photo.islet.space/2021/00/IMG_4590.JPG" alt="Liewzheng Alipay">
+        <span>Alipay</span>
+      </div>
+
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/hpp/" rel="tag"># hpp</a>
+              <a href="/tags/h/" rel="tag"># h</a>
+              <a href="/tags/c/" rel="tag"># c++</a>
+              <a href="/tags/compiler/" rel="tag"># compiler</a>
+              <a href="/tags/makefile/" rel="tag"># makefile</a>
+          </div>
+
+        
+
+  <div id="vcomments" style="margin: 1rem 0 0 0;"></div>
+  <script>
+    new Valine({
+      el: '#vcomments',
+      appId: 'vRGM12EcYxDSM2lat5qjjSeY-gzGzoHsz',
+      appKey: 'WBgAb6NTAFQ7DYtgH0uOPNNh'
+    })
+  </script>
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/10/05/Programming/C++/2021-10-05-C++-Templates/" rel="prev" title="C++ Templates">
+                  <i class="fa fa-chevron-left"></i> C++ Templates
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">粤ICP备19004822号 </a>
+  </div>
+
+<div class="copyright">
+  &copy; 2019 – 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">liewzheng</span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":"enable","tags":"none","js":{"url":"https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js","integrity":"sha256-r+3itOMtGGjap0x+10hu6jW/gZCzxHsoKrOd7gyRSGY="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>
