@@ -133,7 +133,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">93</span>
+          <span class="site-state-item-count">95</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -144,7 +144,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">173</span>
+        <span class="site-state-item-count">174</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -178,6 +178,910 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://islet.space/2021/05/27/Linux/Shell/2021-05-27-UnixShell%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Liewzheng">
+      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coder的孤岛">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/05/27/Linux/Shell/2021-05-27-UnixShell%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/" class="post-title-link" itemprop="url">UnixShell常用命令</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-05-27 23:55:00" itemprop="dateCreated datePublished" datetime="2021-05-27T23:55:00+08:00">2021-05-27</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2021-05-28 00:33:04" itemprop="dateModified" datetime="2021-05-28T00:33:04+08:00">2021-05-28</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="coreshell">Core/Shell</h1>
+<p>首先，要理解Core / shell的概念，系统内核一般被称之为core，而unix及类unix（即与unix类似）系统（如linux）都继承了这一概念，都有其内核。</p>
+<p>古早时期，都是一台电脑就是一台服务器，为了提高服务器的利用率，大家都在用很多客户端登录系统，系统分时（电脑高效处理任务，看起来像是同时进行，其实还是存在先后顺序的）为许多客户端提供服务，即“一点对多点”式的服务模式，客户端都通过小黑窗进行操作。</p>
+<p>如今，独立PC都已经没了服务器这一概念，一台设备就只为一个客户服务（单点对单点），但是这个小黑窗的高效操作的理念却被保留了下来。</p>
+<p>因为所有的客户端对主机的使用都没有进入到内核层面，仅仅停留在表面，所以这种小黑窗的操作层被称为shell层，即外壳。</p>
+<p>逐渐衍生了终端的概念，即客户端即用户终端，即terminal；现在shell、terminal、command-line（命令行）这几个概念都可以被视为同一个概念。</p>
+<p>但shell的流行，逐渐衍生除了很多个人制作的版本，流行的有bash shell、zsh等。</p>
+<h1 id="目录操作">目录操作</h1>
+<h2 id="cd">cd</h2>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cd zplusplus</span><br></pre></td></tr></table></figure>
+<p>即Change directory，改变目录</p>
+<p>类unix中没有路径这个概念，只有目录。</p>
+<blockquote>
+<ul>
+<li><p><code>~</code> 主目录，个人目录</p></li>
+<li><p><code>/</code> 根目录，硬盘目录</p></li>
+</ul>
+</blockquote>
+<p>TIPS:</p>
+<ul>
+<li>按<code>tabs</code>键可以快速补全相符的目录名称</li>
+</ul>
+<p><code>cd ../</code>可以返回上一层文件目录</p>
+<figure>
+<img src="https://pic.islet.space/2021/05/image-20210528002003445.png" alt="image-20210528002003445" /><figcaption aria-hidden="true">image-20210528002003445</figcaption>
+</figure>
+<h2 id="mkdir">mkdir</h2>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkdir zplusplus</span><br></pre></td></tr></table></figure>
+<p>即make directory，创建目录</p>
+<figure>
+<img src="https://pic.islet.space/2021/05/image-20210528001730316.png" alt="image-20210528001730316" /><figcaption aria-hidden="true">image-20210528001730316</figcaption>
+</figure>
+<h2 id="mv">mv</h2>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mv zplusplus</span><br></pre></td></tr></table></figure>
+<p>即move，移动或删除</p>
+<blockquote>
+<ul>
+<li><code>-f</code> force 强制</li>
+</ul>
+</blockquote>
+<p>也可以用来改名，用法如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mv main.c test.c</span><br></pre></td></tr></table></figure>
+<p>其他类似的语句如 <code>rm</code>，可以参考手册</p>
+<h2 id="ls">ls</h2>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ls</span><br></pre></td></tr></table></figure>
+<p>即List，（展现）列表</p>
+<p>这个命令非常好用，学会了就基本忘不了，各别shell能够提供不同的色彩显示，对于文档类型识别来说非常高效。</p>
+<figure>
+<img src="https://pic.islet.space/2021/05/image-20210528001701289.png" alt="image-20210528001701289" /><figcaption aria-hidden="true">image-20210528001701289</figcaption>
+</figure>
+<h1 id="文件编辑">文件编辑</h1>
+<h2 id="vim">vim</h2>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim main.c</span><br></pre></td></tr></table></figure>
+<p><strong>注意</strong>：如果已经存在了<code>main.c</code> 他就不会新生成一个，否则就会新建。</p>
+<p><strong>操作方法</strong>：</p>
+<ol type="1">
+<li>刚进去的时候需要按 <code>i</code> 进行插入（insert）操作</li>
+<li>编辑完毕之后需要先按 <code>ESC</code> 键，在依次输入 <code>:</code> 及其他指令进行退出，具体参考下方，可以看手册。</li>
+</ol>
+<blockquote>
+<p><code>:</code> instructor 指令输入</p>
+<p><code>w</code> wirte</p>
+<p><code>q</code> quit</p>
+<p><code>!</code> 强制</p>
+</blockquote>
+<p><strong>编辑界面如下</strong>：</p>
+<figure>
+<img src="https://pic.islet.space/2021/05/image-20210528002252175.png" alt="image-20210528002252175" /><figcaption aria-hidden="true">image-20210528002252175</figcaption>
+</figure>
+<p><strong>科普视频</strong>：</p>
+<iframe src="//player.bilibili.com/player.html?aid=55498503&amp;bvid=BV164411P7tw&amp;cid=97032762&amp;page=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true">
+</iframe>
+<p><strong>自行科普</strong>：GUI，Graphic User Interface 图形用户界面</p>
+<h1 id="代码运行">代码运行</h1>
+<h2 id="gcc">gcc</h2>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gcc main.c </span><br></pre></td></tr></table></figure>
+<p>是<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/gnu/671972">GNU</a>下的GCC编译器之一，c的编译器是<code>gcc</code>，c++的编译器是<code>g++</code></p>
+<blockquote>
+<ul>
+<li><code>-o main</code> 参数</li>
+</ul>
+</blockquote>
+<figure>
+<img src="https://pic.islet.space/2021/05/image-20210528002708689.png" alt="image-20210528002708689" /><figcaption aria-hidden="true">image-20210528002708689</figcaption>
+</figure>
+<p>编译完成之后使用 <code>ls</code> 可以查看已生成的文件 <code>a.out</code>（默认命名）。</p>
+<figure>
+<img src="https://pic.islet.space/2021/05/image-20210528002757152.png" alt="image-20210528002757152" /><figcaption aria-hidden="true">image-20210528002757152</figcaption>
+</figure>
+<p>这个 <code>a.out</code> 文件是CPU能够直接识别和运行的文件，因此直接使用以下代码运行即可。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./a.out</span><br></pre></td></tr></table></figure>
+<p>运行效果如下：</p>
+<figure>
+<img src="https://pic.islet.space/2021/05/image-20210528002900901.png" alt="image-20210528002900901" /><figcaption aria-hidden="true">image-20210528002900901</figcaption>
+</figure>
+<p>遇到问题可以再进行调试。</p>
+<p>对GNU和开源的概念可以参考下方视频：</p>
+<iframe src="//player.bilibili.com/player.html?aid=413061830&amp;bvid=BV1zV411d7La&amp;cid=186095567&amp;page=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true">
+</iframe>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://islet.space/2021/05/25/Hardware/2021-05-25-Type-C-%E6%89%A9%E5%B1%95%E5%99%A8-%E6%96%B9%E6%A1%88%E6%8C%87%E5%8D%97%EF%BC%88DP-Alternative-Mode-%E7%AF%87%EF%BC%89/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Liewzheng">
+      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coder的孤岛">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/05/25/Hardware/2021-05-25-Type-C-%E6%89%A9%E5%B1%95%E5%99%A8-%E6%96%B9%E6%A1%88%E6%8C%87%E5%8D%97%EF%BC%88DP-Alternative-Mode-%E7%AF%87%EF%BC%89/" class="post-title-link" itemprop="url">Type-C 扩展器 方案指南（DP Alternative Mode 篇）</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-05-25 23:30:00" itemprop="dateCreated datePublished" datetime="2021-05-25T23:30:00+08:00">2021-05-25</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2021-05-26 00:08:05" itemprop="dateModified" datetime="2021-05-26T00:08:05+08:00">2021-05-26</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Hardware/" itemprop="url" rel="index"><span itemprop="name">Hardware</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>收藏转载自：<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/342165494">zhuanlan.zhihu.com</a></p>
+<h1 id="前言">前言</h1>
+<p>本篇还是USB-C 转接器指南贴，由于硬件上的不同，后续还会有一篇雷电专用的指南作为区分</p>
+<p>这篇内容其实在2016年的时候就有写的意向了（笑），当时12寸 Macbook 刚推出，Macbook Pro 也刚更新为全Type-C模具。</p>
+<p>当时对先进转接器需求最强烈的其实还是12英寸的用户，由于12英寸Macbook 只搭载了一个Type-C，还不是雷电（是的，Mac全系列唯一有Type-C却不是雷电的机型），导致接口丰富兼顾充电的雷电Dock产品无法正常使用，造成了外设和充电你死我活的尴尬境地</p>
+<p>所幸戴尔WD15的推出缓解了这个尴尬局面，然而17年之后Macbook 产品线再次被放弃，于此同时市面上类似的单Type-C 模具笔记本极为稀少，后继的Macbook Pro和 Macbook Air 都可以通过 PD充电+DA300的方式满足便携扩展需求，因此 放弃了在便携扩展器领域的进一步探索</p>
+<p>然而有趣的是从17年到20年，居然没有一个便携转接器能够在功能参数上全面追赶DA300，甚至有某品牌转接器烧毁Macbook 接口的负面新闻广为流传，抽了闲暇时间做了一定程度的调查，借此机会把目光重新放回了转接器领域</p>
+<p>这篇文章依然会是按照我先前的风格，从IC层面对市面上绝大部分的产品进行分类和归纳，从IC层面做出指南</p>
+<p><strong>不会对具体的产品进行推荐，适合自己的才是最好的，没空一一了解消费能力和理念，请见谅</strong></p>
+<p><strong>本文长达近 一万七千字，由于转接器硬件需求复杂，建议还是通读</strong></p>
+<h1 id="目录">目录</h1>
+<figure>
+<img src="https://pic.islet.space/2021/05/v2-2cfa4f5dd53c8f74f80203245dca1435_b.jpg" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<h1 id="总结与指南">总结与指南</h1>
+<p>总的来说转接器产品有两大特点不同于 朴素认知</p>
+<ul>
+<li>作为转接器的核心部件PD控制器并不影响转接器的主要功能（视频转换和USB、扩展）</li>
+<li>转接器接口多寡并不和其 成本 呈正相关 （原本可以给的接口会被阉割，市场内的常见手段），将多种接口整合变少才是本事（就像你用来扩展的Type C口）</li>
+</ul>
+<p>因此通过接口多寡来计算性价比（价格/接口）基本只能陷入坑货泥潭</p>
+<p>下图是目前常见的 支持 DP Alt Mode的控制器总结，由于PD控制器门槛不高，陆续会有MCU厂家涉足该领域，但和主流硬件选用相比不足为提。</p>
+<figure>
+<img src="https://pic.islet.space/2021/05/v2-b6b31e69d199a7bfcfc997f6c5d87cb6_b.jpg" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>此外 新款芯片一般至少需要一年的周期才能真正被采用到新产品里面，因此盲目追新 方案大可不必</p>
+<hr />
+<ul>
+<li><strong>推荐</strong></li>
+</ul>
+<p>尽管各头部厂商 由于历史原因或者其他的一些因素多少都有一些坑货，而下面的白莲花制造商也少之又少，即使是 Belkin 也能找出一些 智商税产品</p>
+<p>但是原则上依然推荐 HP，Dell，苹果，微软的新品转接器，这些厂子的转接器不分高端低端，出手即是代表性产品，但也导致开发成本以及最终价格极高</p>
+<p>这些头部厂商的产品也会有一个共性的缺点就是不会在自己的产品上集成读卡器功能</p>
+<p>其余的，功能和做工就拉不开多少差距了，很难说有完美的，各方面都做的很优秀的产品</p>
+<p>总结一下本文提到的带有拆解文章的产品，转接器功能需求复杂，产品或多或少存有不足，仅作参考，长期更新</p>
+<p>依然不建议依赖该表，建议通读</p>
+<figure>
+<img src="https://pic.islet.space/2021/05/v2-8660a99fbe26365d9a3d7488288971f6_b.jpg" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<hr />
+<ul>
+<li><strong>排雷</strong></li>
+</ul>
+<p>这个市场内显著的坑货有两大类</p>
+<p>一类是长得像 Belkin 的 非Belkin 产品</p>
+<figure>
+<img src="https://pic.islet.space/2021/05/v2-ed0fcb1bc9f15717df5a0549ff865e81_b.jpg" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<figure>
+<img src="https://pic.islet.space/2021/05/v2-395b6b257e5b4bfba528ae61084b04d9_b.jpg" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>这类产品一般都是VIA 的VL100系公模产品， 本来做的像样的也有，比如在我的专栏中拆过的Satechi</p>
+<p>但由于对压缩成本的追求，VIA的公版设计被无限压缩，导致市面上一大批的公模VIA产品坑点奇多，下面的雷至少踩两个：</p>
+<ul>
+<li>质劣价高（物料成本20块左右，直接抄公版设计无需研发成本，防护全无的扩展坞可以卖到150以上，200，300 也是常见）</li>
+<li>供电稀烂，带不动一块移动机械硬盘的读写耗电</li>
+<li>屏蔽基本无，是一个巨大的2.4Ghz污染源，干扰附近的蓝牙，WIFI设备的正常工作</li>
+<li>工厂品控稀烂</li>
+</ul>
+<p>涉及品牌包括 绿联，Orico，飞利浦（转接器业务已经被别家收购），Unitek，倍思</p>
+<p>国内能叫的上名字的配件厂几乎全部中枪，同样是 VL100系主控，没一家的做工和防护能比得上Satechi（苹果合作款）</p>
+<figure>
+<img src="https://pic.islet.space/2021/05/v2-3dfff693a1575ca58b5c3b089f8c59c5_b.jpg" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<figure>
+<img src="https://pic.islet.space/2021/05/v2-fd6a19341d4d279adceae25faa1f4837_b.jpg" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>另一类是长得像苹果的非苹果产品</p>
+<figure>
+<img src="https://pic.islet.space/2021/05/v2-222af6d53c029fc372a794c438375936_b.jpg" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>这类产品同样有VIA 阵营的VL100系产品牵涉其中</p>
+<p>但在低端攻城掠地的 龙讯LT8711H ，安格 AG9321 同样也籍由这样的外型活得滋润（物料成本估计 10块左右，售价一般在30，40元水平）</p>
+<p>此外 Fresco 的 FL5002 公版设计也是籍由这种 外形活得滋润，例如 小米ZJQ01TM[<a href="about:reader?url=https%3A%2F%2Fzhuanlan.zhihu.com%2Fp%2F342165494#ref_1">1]</a> ，联想也是[<a href="about:reader?url=https%3A%2F%2Fzhuanlan.zhihu.com%2Fp%2F342165494#ref_2">2]</a>，尽管TVS防护尚可，但是绝对不会装配 屏蔽罩，另外FL5002 发热较大</p>
+<p>还有一类较隐蔽坑货就是自己做标致的外壳，内藏稀烂的硬件</p>
+<p>外形就请自行想象了，以下三款图内PCBA的售价都在10元内</p>
+<figure>
+<img src="https://pic.islet.space/2021/05/v2-59012a67ebb1e0efd1eb6c053219cb6d_b.jpg" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<figure>
+<img src="https://pic.islet.space/2021/05/v2-17fd6a55704998d450f3a29924a272f2_b.jpg" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<figure>
+<img src="https://pic.islet.space/2021/05/v2-ceb7df6aa2250a6a365ee70f3d83296d_b.jpg" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<h1 id="qa扫盲">Q&amp;A扫盲</h1>
+<p>Q：为什么转接器标明的可以支持4K 60Hz显示输出，我买了以后不管怎么鼓捣都只能4K 30Hz？</p>
+<p>A：这类问题基本是由于转接器 在DP1.4下支持4K 60Hz，在DP1.2 下支持到4K 30Hz，你的Type-C接口只支持到DP1.2 造成了跟描述不同的问题，下文会有详细的原理说明和计算来解释原理和区别</p>
+<p>Q：为什么我的转接器插上东西之后，WIFI/蓝牙/无线接收器就卡的不行？</p>
+<p>A：老生常谈的问题，由于转接器的电磁屏蔽差劲，导致USB3.0工作时辐射出来的2.4GHz 射频信号[<a href="about:reader?url=https%3A%2F%2Fzhuanlan.zhihu.com%2Fp%2F342165494#ref_3">3]</a>干扰了处于相近频段的无线设备，2.4GHz WIFI，蓝牙，无线接收器都处于这一频道；总之建议更换配件一劳永逸；凑合的办法是用金属箔包住转接器可以减少干扰</p>
+<p>Q：这些USB转接器不是都从USB转接而来的吗？据我所知USB3.0只有5Gbps速度，怎么做到输出4K@60Hz的？</p>
+<p>A：那种纯靠USB转接视频输出的应用叫做Display Link，已经是比较有年岁的技术了。本篇涉及的主要技术是所谓的 Display Alt Mode，是将DP 信号直接跟USB一起塞到了 Type-C接口里，二者井水不犯河水。DP Alt Mode 借助 Power Delivery 报文[<a href="about:reader?url=https%3A%2F%2Fzhuanlan.zhihu.com%2Fp%2F342165494#ref_4">4]</a>来对Type-C 接口进行具体的配置，平常时Type-C只是一个普通的USB接口，链接特殊的配件可以把 ”可选模式“唤醒， 即 ”Alternative Mode“ ，从而在Type-C中直接引入DP信号输出视频，而不是通过USB转接</p>
+<p>Q：为什么要将USB-C 和雷电的转接器做区分呢，二者有什么区别？</p>
+<p>A：雷电转接器仅能配合雷电接口正常工作，设备会印有雷电logo，而多功能 USB-C 适配范围要广泛的多，除了雷电接口以外，常规计算机搭载的 多功能Type-C 不仅在Windows或者Mac OS，在Chrome OS, Ubuntu, RHEL 8都能使用，甚至 苹果 安卓阵营的移动平台（比如iPad Pro 以及 一加7 Pro，三星S7手机等）以及 Switch（注意兼容稀烂），都可以使用相同的硬件设计来完成转接任务</p>
+<p>目前最先进的单口Type-C 方案可以支持 单 8K@30Hz或者双4K<span class="citation" data-cites="60Hz">@60Hz</span> 输出，尽管比 JHL7440雷电方案 的40Gbps 输出能力还是逊色，但是满足日常的使用需求已经完全不成问题，因此这里先从 USB-C转接器进行归类介绍</p>
+<p>Q：是否能传输视频信号能充电的Type-C接口就是多功能Type-C？</p>
+<p>A：本文的多功能Type-C指狭义的，支持DP Alt Mode 的Type-C 接口（下文会有进阶介绍），包括雷电3雷电4接口也支持这个技术，本文介绍的所有配件都可以在雷电接口上使用。</p>
+<p>然而这里有几个盲区，1.除了DP Alt Mode，HDMI Alt Mode[<a href="about:reader?url=https%3A%2F%2Fzhuanlan.zhihu.com%2Fp%2F342165494#ref_5">5]</a>在技术层面上也是存在的，然而没有厂商支持该模式 。 2. 如上文提到过的Display Link 技术可以在通过常规的USB接口（无论Type-A，Type-B，Type-C）传输视频信号，但是需要额外的驱动，在Windows，Mac OS，Linux，Chrome OS，以及Android 都有广泛的支持，比如目前比较热门的VR头显 Oculus Quest2 用的串流技术即是 Display Link而非高端设备采用的 Alt Mode USB。</p>
+<p>此外还有MHL技术以及支持MHL技术的 Alt Mode也可以通过USB 物理接口直接传输视频信号，但基本限于手机应用，而 MHL Alt Mode 同样也没厂商做，所以不提了</p>
+<p>Q：那么DP Alt Mode 的 Type-C配件一般是什么样的呢？</p>
+<p>A：本次的分类几乎涵盖了所有类别的 非雷电非DisplayLink产品（Display Link 有空也许会在后期也更新进来），Alt Mode 配件和 Display Link配件的区别在于，Display Link的配件可以在 Type-A接口上正常工作，在系统中需要安装Display Link 驱动（Chrome OS已集成） 才能输出视频信号，而 DP Alt Mode配件不需要驱动就可以外接显示器，但只能在支持的 Type-C 主机接口上运行正常。（咋一看Display Link 确实适用范围更广，但是性能缺陷是绕不开的问题）</p>
+<p>涉及的产品主要形态如下：</p>
+<p>1.Type C 转换为任意视频接口的单转单线缆</p>
+<figure>
+<img src="https://pic.islet.space/2021/05/v2-90fca4eddcbd18bb79b5168133732cc6_b.jpg" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>2.便携型适配器，无论有或没有PD Pass Through 功能，都可以无需外接电源使用</p>
+<figure>
+<img src="https://pic.islet.space/2021/05/v2-10d2580b3567724941d4a97daacaa186_b.jpg" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<ol start="3" type="1">
+<li>坞站，通常需要大型的外置DC电源支持才能使用</li>
+</ol>
+<figure>
+<img src="https://pic.islet.space/2021/05/v2-430f652dde5f98949f553f875a9dd2f8_b.jpg" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<h1 id="前置进阶科普">前置进阶科普</h1>
+<p>这里就不啰嗦接口和协议的区分问题了，直接进入正题</p>
+<p>要先了解 全功能Type-C的大致机理，才能了解其配件的运作模式</p>
+<p>更进一步地，了解配件功能上限/功能潜力，也能把握未来配件的发展方向</p>
+<ul>
+<li><strong>DP Alt Mode Type-C性能维度</strong></li>
+</ul>
+<p>Type-C 的DP Alt Mode 模式被激活后可以维持三大功能同时正常运作，分别是供电、DP传输以及USB 传输，因此本文中Type-C的的性能按照 供电能力、DP输出能力、USB传输能力 这三条作为三维来衡量性能，以下为三维分别的分级：</p>
+<p><strong>供电能力</strong>：</p>
+<p>由于桌面平台的 多功能Type-C/雷电 不支持电源输入，因此无法与移动平台比较，本文只会罗列参数而不会具体比较</p>
+<p><strong>USB 带宽</strong>：</p>
+<p>在先前的移动硬盘指南中提及过目前先进的USB协议类型，Type-C Alt Mode 中常见的USB 带宽模式有以下几种</p>
+<p>USB3.2 Gen1 （5Gbps） 比如15~17年的12英寸 Macbook，比如华为Matebook 13，14 包括一加 7 Pro 等手机应用</p>
+<p>USB3.2 Gen2 （10Gbps） 比如所有计算机搭载的雷电3及雷电4接口，桌面PC 可以使用的UPD2018 DP alt mode Type C扩展卡，Surface Laptop 3 等应用</p>
+<p>理论上目前的技术是可以使Alt Mode支持 仅USB2.0 以及USB3.2 Gen2x2 模式的，但并没有实际产品可以参考</p>
+<p><strong>视频带宽</strong>：</p>
+<p>既然名为DP Alt Mode，那么在激活状态下输出的视频信号则为DP 信号</p>
+<p>类似于USB协议，DP协议的迭代也可以提高相同接口下的传输速率</p>
+<p>HBR2（DP1.2） 每Lane 5.4Gbps的理论传输速率，由于8b/10b编码，有效带宽为4.32Gbps</p>
+<p>HBR3（DP1.3&amp;DP1.4） 每Lane 8.1Gbps [<a href="about:reader?url=https%3A%2F%2Fzhuanlan.zhihu.com%2Fp%2F342165494#ref_6">6]</a>的理论传输速率，由于8b/10b编码，有效带宽为6.48Gbps</p>
+<p>常见显示分辨率所需带宽如下[<a href="about:reader?url=https%3A%2F%2Fzhuanlan.zhihu.com%2Fp%2F342165494#ref_7">7]</a>：</p>
+<table>
+<thead>
+<tr class="header">
+<th>分辨率</th>
+<th>所需的最小带宽</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1 x FHD (1920 x 1080) 显示屏 <span class="citation" data-cites="60">@60</span> Hz</td>
+<td>3.2 Gbps</td>
+</tr>
+<tr class="even">
+<td>1 x QHD (2560 x 1440) 显示屏 <span class="citation" data-cites="60">@60</span> Hz</td>
+<td>5.6 Gbps</td>
+</tr>
+<tr class="odd">
+<td>1 x 4K (3840 x 2160) 显示屏 <span class="citation" data-cites="30">@30</span> Hz</td>
+<td>6.2 Gbps</td>
+</tr>
+<tr class="even">
+<td>1 x 4K (3840 x 2160) 显示屏 <span class="citation" data-cites="60">@60</span> Hz</td>
+<td>12.5 Gbps</td>
+</tr>
+</tbody>
+</table>
+<p>可以看到，4K@60Hz所需带宽仅需2 Lane 的 HBR3 DP 通道即可满足，而HBR2 则不行。这是买了 支持 4k@60Hz实际却只能30Hz 这个问题的核心所在</p>
+<ul>
+<li><strong>DP Alt mode 主机口构成</strong></li>
+</ul>
+<p>多功能Type-C 主机接口本质上只要把USB和DP的线路塞在一个Type-C插头里就可以。但是为了灵活调用和防止Type-C正反插酿成悲剧，在接口屁股上又加了multiplexer（多路复用器，以下简称MUX）[<a href="about:reader?url=https%3A%2F%2Fzhuanlan.zhihu.com%2Fp%2F342165494#ref_8">8]</a>将USB和DP信号的物理线路随心所欲地排布在Type-C接口中，另外也增加了PD控制器用来控制MUX；同时这个控制器可以跟下游的PD控制器沟通，一旦对上暗号，那么两端就可以按照商量好的 DP Alt Mode 来控制MUX拍好输出线路的顺序，这样就可以USB 归USB，DP归DP了。</p>
+<p>可以从下图的功能框图看到，MUX和PD控制器的上游，则是主机的USB Host（USB主控）以及 DP Source（DP信号源）， Type-C的性能三维就是由这些上游的应用以及MUX本身的性能所决定的了（MUX走USB和DP信号，会影响这二维的性能）</p>
+<figure>
+<img src="https://pic.islet.space/2021/05/v2-322b8700e520c9d7f46d2c077d9c675e_b.jpg" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>举具体的例子</p>
+<p>例如USB 带宽方面，12英寸Macbook 之所以只能支持到 5Gbps的USB 3.2 Gen1 传输，是因为上游的USB Host只支持到 5Gbps。而UPD2018 的上游USB Host采用的是 ASM1142，一颗 USB3.2 Gen2主控，因此可以支持到10Gbps，但是Host上游的PCIe带宽只给了PCIe 3.0 X1，因此实际上也是不满10Gbps的</p>
+<figure>
+<img src="https://pic.islet.space/2021/05/v2-4b2043b71e05f2e51ab65dded0cf3516_b.jpg" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>DP （视频）带宽方面，很简单粗暴，直接看主机GPU的DP支持就可以了</p>
+<p>例如英特尔10代之前的移动端处理器核显仅支持DP1.2（HBR2）输出，因此导致18年19年款的13英寸 Macbook Pro 即使装备了支持DP1.4（HBR3）的Titan Ridge 雷电控制器，由于核显的拖累，依旧只能DP1.2 输出（笑）</p>
+<p>MUX支持方面，缺少比较直观的例子，拿雷电设备举例：早期的雷电3设备（Alpine Ridge时期的JHL/DSL6x40 系列）由于只支持 DP1.2 的信号源，在触发为DP Alt Mode之后也是只支持DP 1.2 输出；USB 也会受制于MUX ，比如 普瑞科技 的 PS8743 和 PS8750 作为母口端的MUX只支持USB3.2 Gen1 以及 HBR2 [<a href="about:reader?url=https%3A%2F%2Fzhuanlan.zhihu.com%2Fp%2F342165494#ref_9">9]</a></p>
+<ul>
+<li><strong>DP Alt mode 设备口构成</strong></li>
+</ul>
+<p>如下图所示[<a href="about:reader?url=https%3A%2F%2Fzhuanlan.zhihu.com%2Fp%2F342165494#ref_8">8]</a>总体来说跟主机口没什么区别，也还是 PD 控制器加上 MUX的形式，区别只在于这里的MUX是解复用功能</p>
+<figure>
+<img src="https://pic.islet.space/2021/05/v2-9ced86eb508a76eefd11c9ffaeec4aa4_b.jpg" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>但是，但是啊，我们已经拆过不少 Type-C转接器了，这些转接器里面 除了 DockCase DPR01S （DeMUX为PS8822）以外，<strong>为什么只有PD控制器而没有MUX？！</strong>这不是跟指导文档背道而驰吗</p>
+<p><a target="_blank" rel="noopener" href="https://www.zhihu.com/column/c_1326635507015319552">先进型 Type-C 扩展设备拆解存档</a></p>
+<figure>
+<img src="https://pic.islet.space/2021/05/v2-b6546a28845e426a25b971ce7fcab919_ipico.jpg" alt="图标" /><figcaption aria-hidden="true">图标</figcaption>
+</figure>
+<p>但其实文档介绍的是基于完整的 Type-C 接口所设计的结构，即设备端是具有完整的Type-C接口，需要独立的线缆进行连接的情况</p>
+<figure>
+<img src="https://pic.islet.space/2021/05/v2-88b4440cae89d86b165ebdf938fee0ca_b.jpg" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>在常规情况下，如果采用的是尿袋式的设计,比如下面这种Type-C 定义直接焊死而不是给一个Type-C 口随意插，那么在设计时就不需要 MUX来应对Type-C正反插情况了，在Cypress的指导中也有提及[<a href="about:reader?url=https%3A%2F%2Fzhuanlan.zhihu.com%2Fp%2F342165494#ref_10">10]</a></p>
+<blockquote>
+<p>If you are using type-C receptacle and plug combination you will not need a switch. If you have both USB-C connectors as receptacles, connected via a type-C cable (EMCA) then you will require a switch. DP source (FPGA) &lt;----&gt;Switch&lt;------&gt; USB-C receptacle &lt;---------------------&gt; USB-C plug &lt;------&gt; DP sink (FPGA) otherwise, DP source (FPGA) &lt;-----&gt; Switch &lt;-----&gt; USB-C receptacle &lt;---------- USB-C cable ----------&gt; USB-C receptacle &lt;-----&gt; Switch &lt;-----&gt; DP sink (FPGA)</p>
+</blockquote>
+<figure>
+<img src="https://pic.islet.space/2021/05/v2-26ab46bc6d083bd1a166199a4080a03e_b.jpg" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>当然，设备端的MUX也会影响最终性能，就如水路一样，最后的出水速度是受到整条链路上所有环节的影响的</p>
+<p>经过了设备端的解复用之后，留给下游的又是简单纯粹的 USB 协议口和 DP 协议口（USB2.0 和 DP的 Configuration 通道仍需要 PD控制器转发来保证正常功能），在原先开发的各种USB 玩法 以及 DP玩法 可以直接捡起来套上去，不得不说这样的Type-C 开发出来对原先的硬件环境十分友好，和先前仅有的区别是，原本井水不犯河水的 USB 和DP 配件，如今由于 DP Alt Mode的存在被整合到一块电路板上了。</p>
+<p>当然，遗憾也是有的，由于对广大的兼容性（免驱）考虑，很多应用难以得到推广</p>
+<p>比如转 4G无线网卡的应用</p>
+<figure>
+<img src="https://pic.islet.space/2021/05/v2-8f57bae7c539aade5bd5e273dce8664d_b.jpg" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>另外也是出于成本的考虑以及对 苹果模式的一味模仿，尿袋式的转接器设计依然大行其道。好好设计一个线缆收纳很难吗？</p>
+<ul>
+<li><strong>USB与DP 进阶硬件认识</strong></li>
+</ul>
+<p>在硬件上将 PD 控制器和 MUX 融入 Type-C以后，事实上 Type-C就可以被凹成各种形状了，但主流 的模式其实就两种（按性能分为两种，实际VESA对应定义了6种[<a href="about:reader?url=https%3A%2F%2Fzhuanlan.zhihu.com%2Fp%2F342165494#ref_4">4]</a>）</p>
+<p>首先我们需要对 USB 和 DP 有 基本的硬件认知</p>
+<p>目前的信号传输依然主要依靠铜线缆，差分对则是经典的用于铜缆系统的抗干扰硬件设计[<a href="about:reader?url=https%3A%2F%2Fzhuanlan.zhihu.com%2Fp%2F342165494#ref_11">11]</a></p>
+<p>简单的来说，我们使用两根线来传输一个信号，即一个差分对一个传输通道</p>
+<p>在USB3.2 Gen1和Gen2 中，他们使用一组两个差分对四根线分别实现 5Gbps 和 10Gbps 的收发活动即SSTX 差分对和SSRX 差分对</p>
+<p>R→Receive 收</p>
+<p>T→Transmit 发</p>
+<p>因此在USB中 一组收发 可以实现 10Gbps的 双向传输，USB3.2 Gen2x2可以启用两组共四对信号，因此可以实现 20Gbps 双向传输（是的，Gen2不需要D+D-来传输，Gen2 跟 Gen2x2 只是量变，Gen1 到 Gen2 才是质变，而只使用D+D- 的USB2.0则跟USB3.0可以算是两个物种了）</p>
+<figure>
+<img src="https://pic.islet.space/2021/05/v2-393f880610f4e5cd987f606c436ae1ee_b.jpg" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>一个完整的DP接口同样含有4对主要连接差分对，Mian Link Lane 0~3 (以下简称ML）</p>
+<p>在HBR2下可以完成 每Lane 5.4Gbps的单向传输，HBR3下则是8.1Gbps</p>
+<p>除此之外，DP接口还内置了Configuration 1&amp;2 用于协议配置，Auxiliary Channel +&amp;- （以下简称Aux对）用于音频传输，有趣的是，DP同样可以在仅 ML0，ML1 两条Lane的模式下工作</p>
+<figure>
+<img src="https://pic.islet.space/2021/05/v2-c339e6274c4434320a960af7ddb4e3e9_b.jpg" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>那么，把USB 限制在 2对差分模式，DP也限制在2对差分模式，可以拼在一起吗？</p>
+<ul>
+<li><strong>DP Alt Mode 主要模式</strong></li>
+</ul>
+<p>答案是肯定的</p>
+<p>用于通讯握手的PD协议必须占用一条 Configuration Channel（以下简称CC），电源线和接地定义也不能动，不过剩下的也足够其他协议分的了</p>
+<p>常规情况 USB 模式时 Type-C 的针脚分布如下</p>
+<figure>
+<img src="https://pic.islet.space/2021/05/v2-bb880cb32b70197fb69aa5e48e7c759a_b.jpg" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>当激活 DP Alt Mode 2Lane （Multi-Function DisplayPort,MFDP) 时，针脚功能如下</p>
+<figure>
+<img src="https://pic.islet.space/2021/05/v2-9d8fe2b6caf88d296c112dd79dbfcb7f_b.jpg" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>当激活成 DP Alt Mode 4Lane 时：</p>
+<figure>
+<img src="https://pic.islet.space/2021/05/v2-bffd5ba676c6ec65ec536294f20c4311_b.jpg" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>有没有觉得USB2.0 由于正反插支持占用了4个针脚，只有两个有效，而且480Mbps这么孱弱的速度塞进Type-C实在是丢人？</p>
+<p>如果把USB2.0的针脚设定为USB3.2 Gen1或者Gen2 就好了，这样的模式也是有的，被称为Virtual Link，是为VR应用所开发的，Nvidia 的2000系 和AMD 的6000系显卡所搭载的Type-C 就支持该模式[<a href="about:reader?url=https%3A%2F%2Fzhuanlan.zhihu.com%2Fp%2F342165494#ref_12">12]</a></p>
+<figure>
+<img src="https://pic.islet.space/2021/05/v2-18ecc3a36f700f8677e5990b3aa7fa8e_b.jpg" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>注意了，此模式不在 DP Alt Mode的范畴，常规设备是不支持也触发不了这个模式的。这个模式抛弃了USB2.0 链路导致该状态下是无法正常支持键鼠之类的应用。当然，作为专机专用模式也不用在意这种问题了</p>
+<p>在Virtual Link 模式下，Type-C和常规 Type-C线缆可以达到非雷电模式下的最高速度，高达4*8.1+10=<strong>42.4Gbps的输出带宽外加10Gbps的数据接收带宽</strong>，尽管相比标称<strong>双向40Gbps</strong>的雷电3和雷电4仍然有显著差距，但是满足绝大部分应用是完全不成问题的了。</p>
+<ul>
+<li><strong>如何触发 DP Alt Mode</strong></li>
+</ul>
+<p>如上文提到的， 不管是DP Alt Mode 还是上面提到的 Virtual Link，抑或是雷电，都是作为Alt Mode 触发的，而触发方式，都是通过Power Delivery 的通信功能</p>
+<figure>
+<img src="https://pic.islet.space/2021/05/v2-4945c8109a8ac189e840096ceec01824_b.jpg" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>Type-C Alt Mode 大致配置流程如下：</p>
+<ol type="1">
+<li>USB 连接 通过CC侦测到</li>
+<li>VBUS 引脚 提供默认电源配置 5V@500mA</li>
+<li>VBUS 所需的额外USB电力传输可以进行协商，Battery Charge 1.2（BC 1.2）或USB PD 都可以选择</li>
+<li>使用 结构化 供应商定义报文（VDM） 需要USB PD 来发送来协商 Alt Mode 握手</li>
+<li>USB 枚举</li>
+<li>如果 DP Alt Mode 协商已经完成，继续进行DP link training来建立DP连接</li>
+<li>USB和DP频道准备就绪进行Type-C 数据和视频信号传输。</li>
+</ol>
+<p>更具体的 PD 报文内容和触发逻辑不是本篇重点，想具体了解的推荐TI的文档或者去VESA翻更具体的资料</p>
+<p><a href="https://link.zhihu.com/?target=https%3A//www.ti.com/lit/an/slva844b/slva844b.pdf%3Fts%3D1614791986776%26ref_url%3Dhttps%253A%252F%252Fwww.ti.com%252Fsitesearch%252Fdocs%252Funiversalsearch.tsp%253FsearchTerm%253DAlternate%2BMode%2BSupport">PD Alternate Mode: DisplayPort</a></p>
+<p><a href="https://link.zhihu.com/?target=https%3A//www.ti.com/lit/an/slva844b/slva844b.pdf%3Fts%3D1614791986776%26ref_url%3Dhttps%253A%252F%252Fwww.ti.com%252Fsitesearch%252Fdocs%252Funiversalsearch.tsp%253FsearchTerm%253DAlternate%2BMode%2BSupport">www.ti.com</a></p>
+<h1 id="产品实现">产品实现</h1>
+<p>了解了 DP Alt Mode Type-C 的原理那么就可以观察他是怎么在产品上实现的了</p>
+<ul>
+<li><strong>典型 2Lane DP Alt Mode + DP1.2 产品拓补</strong></li>
+</ul>
+<p>直接用在国内销量极大的Type-C 转接器方案 VL100 系列所为案例了</p>
+<p>这是一个典型的VL103 转接器拓补，黄色 USB-C 为链接主机的上游接口，兰绿色为充放电专用的下游Type-C，典型应用可以参照Satechi 的多口Type-C转接器[<a href="about:reader?url=https%3A%2F%2Fzhuanlan.zhihu.com%2Fp%2F342165494#ref_13">13]</a></p>
+<figure>
+<img src="https://pic.islet.space/2021/05/v2-60d85aec0bf111a1b96a72244a2f5400_b.jpg" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<figure>
+<img src="https://pic.islet.space/2021/05/v2-cfaeb19dc5eb541b350a0c6fa38a0926_b.jpg" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<figure>
+<img src="https://pic2.zhimg.com/v2-0941dac75faafcaddc4997a371b05f25_b.jpg" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>在这个应用中，VL103就是作为PD 控制器，负责下游Type-C 的PD和QC等协议的调度（因此充电Type-C口会有USB2.0定义用于握手，但其实不能挂载USB设备）</p>
+<p>同时VL103作为PD控制器也负责DP Alt Mode的调度，但VL103完全不干预USB3.0 和DP 链路的走线，直接连接USB Hub芯片VL817 和 DP to HDMI芯片PS176，而读卡器芯片则是挂在VL817下游，提供了两个读卡器口。</p>
+<p>此外，作为固定尿袋外形的转接器，这个拓补方案不需要MUX芯片</p>
+<p>需要注意的是，这类典型应用需要兼顾USB3.0接口，因此只能选择 2 Lane DP Alt Mode 模式，，再加上PS176只能支持DP1.2的问题，导致转出的HDMI接口同样只能支持到 2Lane DP1.2的支持上限 4K 30Hz</p>
+<p>相似类型的还有采用 Fresco FL7102 PD控制器为主控的绿联功能扩展坞（带SD卡槽版）[<a href="about:reader?url=https%3A%2F%2Fzhuanlan.zhihu.com%2Fp%2F342165494#ref_14">14]</a></p>
+<figure>
+<img src="https://pic.islet.space/2021/05/v2-ef2d0e97afef9b1a26d267dd741d1faf_b.jpg" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>硬件拓补和上面的Satechi 基本相同，但又有略微的区别</p>
+<p>阳联 IT6564 对应 上个产品中的PS176，但 IT6564 可以将DP1.2 转换为 VGA和 HDMI两个输出（又是只支持 2Lane 的 DP1.2 输入，导致HDMI只能4k 30Hz输出。在绿联 CM260中 IT6564 可以获得 满血 4Lane DP1.2 输入 因此可以支持 4K 60Hz HDMI输出）</p>
+<p>在本应用中有 3<em>Type-A+ 一套转接器+网口共5个数据口，而常规USB3.0 hub 只能将一个USB扩展为 4个下游 USB，因此本应用中 套了两层GL3510（一个GL3510套在另一个下游，提供了共2</em>4-1=7个有效USB3.0接口） 一个被RTL8153B转为千兆网口，还有一个被GL224 转换为一套读卡器，有5个剩余USB下游口但只有3个被做出来，有两个被浪费了（笑）</p>
+<p>本应用中同样为了确保下游USB3.0 功能只能选择 2 Lane DP Alt Mode 触发，再由于IT6564只能支持DP1.2，因此HDMI还是只能支持到4k 30Hz</p>
+<p>使用该类型拓补的转接器是过去几年中的销售主力，兼顾USB3.x应用与4K 30Hz输出的转接器或者坞站基本都是这类结构，举几个常见的</p>
+<ol type="1">
+<li>华为MateDock 2[<a href="about:reader?url=https%3A%2F%2Fzhuanlan.zhihu.com%2Fp%2F342165494#ref_15">15]</a></li>
+<li>米物 Type-C 七合一多功能转接器 MWCMA01[<a href="about:reader?url=https%3A%2F%2Fzhuanlan.zhihu.com%2Fp%2F342165494#ref_16">16]</a></li>
+<li>惠普HP USB-C to Multi-Port Hub USB-C多端口集线器[<a href="about:reader?url=https%3A%2F%2Fzhuanlan.zhihu.com%2Fp%2F342165494#ref_17">17]</a></li>
+<li>ROG Phone (ZS600KL) ASUS Professional Dock[<a href="about:reader?url=https%3A%2F%2Fzhuanlan.zhihu.com%2Fp%2F342165494#ref_18">18]</a></li>
+<li>小米 ZJQ01TM USB-C至HDMI多功能转接器[<a href="about:reader?url=https%3A%2F%2Fzhuanlan.zhihu.com%2Fp%2F342165494#ref_1">1]</a></li>
+</ol>
+<ul>
+<li><strong>典型 2Lane DP Alt Mode + DP1.4（HBR3）产品拓补</strong></li>
+</ul>
+<p>DP1.2这么菜，导致 2 Lane DP模式只能支持输出4K 30Hz，那么我们引进DP1.4就能支持更高的带宽和分辨率了</p>
+<p>比如说DockCase DPR01S 支持到4K 60Hz 和 USB3.0应用共存[<a href="about:reader?url=https%3A%2F%2Fzhuanlan.zhihu.com%2Fp%2F342165494#ref_19">19]</a></p>
+<figure>
+<img src="https://pic.islet.space/2021/05/v2-c14f66052bca51b903261fa9ca68be02_b.jpg" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>这里采用的PD控制器FL7112是绿联系列采用的FL7102的后继型号，此外由于搭载了完整的正反插Type-C，使用了 PS882 MUX芯片进行支持； 总体结构和上文的 FL7102 转接器差别不大，但是从MUX到 DP转换器都 选用了支持 DP1.4（HBR3）的型号，PS176 换成了 PS186 用以支持将 2Lane DP1.4 转换为 HDMI 1.4，从而支持4K 60 Hz 输出，当然，前提是主机的Type-C也支持 DP1.4 输出</p>
+<p>该类型的转接器同样已经很比较普遍了，目前市面上既支持USB3.x 扩展又支持到4K 60Hz的转接器基本都是这个类型的拓补应用，举一些常见的例子</p>
+<ol type="1">
+<li>戴尔DA300[<a href="about:reader?url=https%3A%2F%2Fzhuanlan.zhihu.com%2Fp%2F342165494#ref_20">20]</a></li>
+<li>戴尔DA310[<a href="about:reader?url=https%3A%2F%2Fzhuanlan.zhihu.com%2Fp%2F342165494#ref_21">21]</a></li>
+<li>苹果 A2119[<a href="about:reader?url=https%3A%2F%2Fzhuanlan.zhihu.com%2Fp%2F342165494#ref_22">22]</a></li>
+</ol>
+<ul>
+<li><strong>典型4 Lane DP Alt Mode 产品拓补</strong></li>
+</ul>
+<p>上面两类拓补都是由于保证USB 3.0/USB3.2 Gen2 应用，导致被迫选择 2Lane DP模式，在只能支持DP1.2 的情境下极大限制了 视频传输的带宽，即使转接器支持到 HBR3，也由于大量主机只支持DP1.2 输出（比如雷电接口只能核显输出）导致最终只能被多功能转接器锁在4K 30Hz，因此在 Type-C HBR3 输出尚未普及的时候，选择4Lane DP Alt Mode 比升级到 HBR3 更明智一些</p>
+<p>于是大量的 4 Lane Mode专注于视频转接的线缆型单对单设备应运而生，比如 Nvidia USB-C to DisplayPort Adapter[<a href="about:reader?url=https%3A%2F%2Fzhuanlan.zhihu.com%2Fp%2F342165494#ref_23">23]</a></p>
+<figure>
+<img src="https://pic.islet.space/2021/05/v2-3814f250fd70c1e0171891cc398e0732_b.jpg" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<figure>
+<img src="https://pic.islet.space/2021/05/v2-b8485a62056f17a0e3b787a1c9bfc669_b.jpg" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<figure>
+<img src="https://pic.islet.space/2021/05/v2-ad3301d173bce644fc40e11de4b3ab82_b.jpg" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<figure>
+<img src="https://pic.islet.space/2021/05/v2-420fcfeb486e5c98d986324eab578b78_b.jpg" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>该配件全机仅有一个功能性配件，即VL103，与上文的Satechi 配件采用的PD主控是一样的， 但在这里被配置为触发的4Lane 模式，可以清晰地看到有四对差分线的走线从上游线直通DP 接口，即ML0~ML3，PD控制器仅负责对DP Alt Mode的触发，完全不干涉DP信号自身；理论上这款线缆在HBR3支持下是可以支持8K 30Hz的输出能力的</p>
+<p>在这样的4Lane 触发基础上加上DP信号转换即可以制作成各式各样的Type-C 转视频接口线，例如华为的CP76，Type-C转HDMI线缆[<a href="about:reader?url=https%3A%2F%2Fzhuanlan.zhihu.com%2Fp%2F342165494#ref_24">24]</a></p>
+<figure>
+<img src="https://pic.islet.space/2021/05/v2-ad8aeafa0ce502ef34f2df340be10e82_b.jpg" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>采用的，其实还是 VL103 + PS176 的硬件组合，与上文的 Satechi 主体相同，VL103 同样被设置为触发 4Lane 模式，PS176 即使只支持 DP1.2，也凭借着翻倍的带宽支持到了4K 60Hz，发挥了Type-C口完整的 DP输出能力，然而代价是牺牲掉了USB 3.0应用</p>
+<p>如果将PS176更换为PS186 设计，支持HBR3 的DP转换，那么HDMI的输出分辨率支持就能高达8K 30Hz了</p>
+<figure>
+<img src="https://pic.islet.space/2021/05/v2-e8c09344ceb408b843341959ba4e46ff_b.jpg" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<figure>
+<img src="https://pic.islet.space/2021/05/v2-a99ad2572163711133df31bee162ac7c_b.jpg" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>然而 4 Lane DP Alt Mode 相对于 2Lane 模式仅仅是牺牲了 USB3.x 的支持，照理来说USB2.0 和PD 功能依然健在，做出跟常规转接器形态一致的设备并不是难事。</p>
+<p>确实如此，只不过比较稀少，比如小米的 Type-C 转 Mini DP设备[<a href="about:reader?url=https%3A%2F%2Fzhuanlan.zhihu.com%2Fp%2F342165494#ref_25">25]</a></p>
+<figure>
+<img src="https://pic.islet.space/2021/05/v2-deec7db196937f5b5fc1759901fe7c45_b.jpg" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>PD控制器采用的是FL7102，可以清晰地看到4对 差分线地走线从Type-C直奔 下游的Mini DP，尽管USB Hub采用的是支持USB3.2 gen1 的FL5000，但上游的走线只给了USB2.0的D+D-定义，因此两个扩展的USB接口被迫限制在在USB2.0模式；此外装备了PD输入口，也算功能齐全了。这款转接器理论上在HBR3支持下也是可以支持到8K分辨率输出，只不过 mini DP的走线过长，抗干扰能力能否满足要求就不得而知了。</p>
+<p>目前市面上销售的 Type-C 转单视频口输出的应用可以说全都是应用了这个类型的结构，但是目前依然以支持到DP1.2 转换的为主流，支持到HBR3转换的较少（支持HBR3/DP1.4仍然可以向下兼容HBR2/DP1.2转换，图省事直接购买高规格的即可），支持4Lane 转换的多口转接器除上文提到的以外可以再举几个例子：</p>
+<ol type="1">
+<li>戴尔 USB-C 转 HDMI/DP 适配器[<a href="about:reader?url=https%3A%2F%2Fzhuanlan.zhihu.com%2Fp%2F342165494#ref_26">26]</a></li>
+</ol>
+<ul>
+<li><strong>可切换带宽型拓补</strong></li>
+</ul>
+<p>那么，既然4Lane 2Lane各有好处，我用什么的时候切什么不好么，再加上HBR3支持，那岂不是香的不行？</p>
+<p>其实也是有的，但是非常稀少。翻阅VL102，VL103的文档时，VIA Tech已经给出了实现该功能的拓补（同时也给出了将USB与充电C口融合的参考，然而做的厂家也非常稀少）</p>
+<figure>
+<img src="https://pic.islet.space/2021/05/v2-5e04ecfc898b01b77a6d97e6a229cefe_b.jpg" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>可以看到相对于上文的拓补，本案例中多出来了类似MUX的芯片VL170，该芯片就是可以用于把设备在2 Lane 与 4Lane 模式之间来回切换的关键</p>
+<figure>
+<img src="https://pic.islet.space/2021/05/v2-d606ef4c0362b25a358b2b3839fd7374_b.jpg" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>感谢 提供的机型线索</p>
+<p>这类拓补的应用实物之一就是 Startech DK30C2DAGPD， 很遗憾这里就没有拆解参考了</p>
+<figure>
+<img src="https://pic.islet.space/2021/05/v2-fa87401c31ca6f3bb52ffc4074495a42_b.jpg" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<figure>
+<img src="https://pic.islet.space/2021/05/v2-5a82fd7b9e0bfee74b9d7389a32adada_b.jpg" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<figure>
+<img src="https://pic.islet.space/2021/05/v2-0618d8ef8ed93e037e5b90c79d68d207_b.jpg" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>根据 Startach 本身提供的信息来看，采用的主要IC如下</p>
+<p>VIA/VLI - VL102</p>
+<p>VIA/VLI - VL170</p>
+<p>VIA/VLI - VL817</p>
+<p>MegaChips - STDP4320</p>
+<p>RealTek - RTL8153</p>
+<p>负责视频输出的 STDP4320 支持双DP++输出，只是可惜作为 仅支持DP1.2 输入的方案，最高也就支持到 单口4K 60Hz 或者双 4K 30Hz 输出了</p>
+<blockquote>
+<p>Dual DisplayPort displays: Up to 4096 x 2160p @ 24Hz or 3840 x 2160p @ 30Hz Single DisplayPort display: Up to 4096 x 2160p @ 60Hz or 3840 x 2160p @ 60Hz</p>
+</blockquote>
+<p>此外还有 Kensington 的 SD4820P USB-C 10Gbps Dual Video Driverless Docking Station 可惜这次连使用的芯片信息都没有了</p>
+<figure>
+<img src="https://pic.islet.space/2021/05/v2-1b2d7f13dfb8a4de886cca67fd4e364d_b.jpg" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<figure>
+<img src="https://pic.islet.space/2021/05/v2-f3d06ce5afcd1135c490f6255cf345dc_b.jpg" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>但是根据Kensington 的手册介绍，扩展坞在4 Lane Mode 下支持单 4k 60Hz 或者 双 4K 30Hz 输出，似乎也不支持 HBR3 应用，甚是可惜</p>
+<figure>
+<img src="https://pic.islet.space/2021/05/v2-c2503d9d9a6546e221326150a10394aa_b.jpg" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>除以上两例以外，目前暂时找不到更多类似拓补了，因此举不了更多实例了</p>
+<ul>
+<li><strong>再复用接口 拓补</strong></li>
+</ul>
+<p>还记得我们在起初的时候对 DP Alt Mode 主机口的认识吗</p>
+<p>多功能Type-C 主机口只要上游有 完整的USB通道和DP 信号源就可以以添加 PD控制器和MUX的方式组建了</p>
+<p>那么在经过设备的 Type-C 端口，Type C 传输信号被重新分解为 DP 与 USB之后，可以将USB信号复制之后再次和 DP信号 结合成 DP Alt Mode Type-C吗</p>
+<figure>
+<img src="https://pic3.zhimg.com/v2-8580acd1b17f56740c1f1745be4fa78a_b.jpg" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>答案依然是肯定的，DA310 就通过 增加 MUX 芯片的方式 在 Type-C 扩展器里实现了信号的重新结合，为下游提供了一个 多功能Type-C[<a href="about:reader?url=https%3A%2F%2Fzhuanlan.zhihu.com%2Fp%2F342165494#ref_21">21]</a></p>
+<p>然而美中不足的是该接口似乎吃了 2Lane 和 HBR2 两个DeBuff，最高只能支持到 4K 30hz 输出，装备了 支持 HBR3 的主机端MUX 芯片 PS8802 后表现这么拉跨只能说比较遗憾了</p>
+<figure>
+<img src="https://pic.islet.space/2021/05/v2-68bd1cc3e9713d420baa55432e7d7e45_b.jpg" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>但这些缺陷在戴尔的新 WD19DCS中都被解决了</p>
+<p>代价是连接主机的一个上游端口变为两根</p>
+<figure>
+<img src="https://pic.islet.space/2021/05/v2-7d4014fd7cafa7c5d1cc6a92c0249ef4_b.jpg" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<figure>
+<img src="https://pic.islet.space/2021/05/v2-0230b0e5f9fddf62bffb4cb17f0af7f4_b.jpg" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>单Type-C口可以支持到 8K 30Hz输出，显然是完成了4Lane HBR3 的支持，然而没有 拆解图观察还是比较可惜的。</p>
+<h1 id="硬件选用">硬件选用</h1>
+<ul>
+<li><strong>PD控制器概览</strong></li>
+</ul>
+<p>上文介绍的案例都是采用的专用PD控制器</p>
+<p>作为转接器核心部件的PD控制器其实门槛并不高，常规的MCU即可实现PD控制器的功能</p>
+<p>例如 STM 就基于自家的STM32F072 推出了STEVAL-USBC2DP 配件，希望能从 Type-C市场分一杯羹，上文提过的惠普HP USB-C to Multi-Port Hub USB-C多端口集线器[<a href="about:reader?url=https%3A%2F%2Fzhuanlan.zhihu.com%2Fp%2F342165494#ref_17">17]</a> 也是用的这个主控</p>
+<figure>
+<img src="https://pic.islet.space/2021/05/v2-775a929a96ed14fb25ac2f3a15c7b555_b.jpg" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>然而非专用化的设计必然在外部电路复杂度，功能开发，成本上处于弱势，因此使用这类主控的产品还是风毛菱角</p>
+<p>但是PD控制器只能做PD 控制器吗？跟USB Hub 甚至 视频转换 做在一起不行吗？</p>
+<p>可以的，也是有产品的</p>
+<p>比如 Fresco 的 FL5002 即是 PD控制器 + USB 3.0集线器 （小米，联想有成品，皆是公版仿苹果A2119外形）</p>
+<p>Genesys Logic 的GL3510 也是 PD控制器+USB3.0 集线器（米物 转接器）</p>
+<p>更进一步的比如 龙讯 LT8711H，安格 AG9321 ，一颗芯片就可完成视频转换，PD充电 的功能</p>
+<figure>
+<img src="https://pic.islet.space/2021/05/v2-7ea776cc7b2541fa2b06a28b6ee53b17_b.jpg" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<ul>
+<li><strong>主控产品格局</strong></li>
+</ul>
+<p>介绍一下主控在Type-C 转接器市场中的主要IC和格局</p>
+<p><a href="https://link.zhihu.com/?target=https%3A//docs.qq.com/sheet/DWmZoUFJpTmVXRkVa">腾讯文档</a></p>
+<p><a href="https://link.zhihu.com/?target=https%3A//docs.qq.com/sheet/DWmZoUFJpTmVXRkVa">docs.qq.com</a></p>
+<figure>
+<img src="https://pic.islet.space/2021/05/v2-1e8f184208cc70de95edd04e901f402c_b.jpg" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>Texas Instrument 我想EE背景的同学就算没用过应该也都听说过，它对电源，信号类的应用市场有着统治级的影响力，其 产品和企业价值观 对全球的 EE 领域从业者都有着深远影响；各位如果拆开自己的笔记本，九成九都可以在主板上发现 TI的芯片。</p>
+<p>Cypress 不像 Texas Instrument 那么巨无霸，但在消费电子领域也是巨头，为各类应用都提供了可靠高效的解决方案</p>
+<p>这两家巨头 所提供的IC 基本代表了 Type-C 转接设备的顶级产品方案（不止DP Alt Mode，雷电也是）作为头部计算机制造商 HP，Dell 甚至 微软，Apple 的产品使用的都是来自这两大巨头的主控，唯一的遗憾可能就是 TI的主控至今都没有支持 PD Pass through的产品，只有 DC供电的坞站形态或者无供电转接器形态</p>
+<p>比如</p>
+<p>Dell DA300[<a href="about:reader?url=https%3A%2F%2Fzhuanlan.zhihu.com%2Fp%2F342165494#ref_20">20]</a> （TPS65988 ，Texas Instrument）</p>
+<p>Dell DA310[<a href="about:reader?url=https%3A%2F%2Fzhuanlan.zhihu.com%2Fp%2F342165494#ref_21">21]</a> （CYPD4226+CY7C65219，Cypress）</p>
+<p>Dell WD15 （TPS65982，Texas Instruments）</p>
+<p>戴尔 USB-C 转 HDMI/DP 适配器[<a href="about:reader?url=https%3A%2F%2Fzhuanlan.zhihu.com%2Fp%2F342165494#ref_26">26]</a>（CYPD4226+CY7C65219，Cypress）</p>
+<p>Surface Dock2[<a href="about:reader?url=https%3A%2F%2Fzhuanlan.zhihu.com%2Fp%2F342165494#ref_27">27]</a> （非Type-C 配件，TPS65988，Texas Instrument）</p>
+<p>Apple A2119[<a href="about:reader?url=https%3A%2F%2Fzhuanlan.zhihu.com%2Fp%2F342165494#ref_22">22]</a> （CYPD5225+CY7C65211，Cypress）</p>
+<p>中高端&amp;中端：Parade/Fresco</p>
+<p>Fresco 已经被Parade 收购，两家的产品也完成了进一步的整合，目前的第三方新转接器产品基本都使用的该公司主控，并且整体设计方案和防护设计基本都到位，目前综合价格和性能来看还是比较理想的选择</p>
+<p>中端：Genesys Logic</p>
+<p>因为这家厂子隐藏自家产品资料并且广签NDA导致可获得的资料极少</p>
+<p>产品还可以但真正使用Genesys 作为核心设计的产品并不多，基本是以 USB Hub 主控活跃在各家转接器上（苹果与微软的转接器都有用到）</p>
+<p>中端&amp;中低端：VIA Tech</p>
+<p>VIA算是我们的老朋友了，VIA与国内的第三方厂商联系甚密，产品特点是下限有一定保证，但基本没有再次开发的空间（下限可以且上下限差距极小）</p>
+<p>低端：Lontium（龙讯），Algoltek（安格）</p>
+<p>虽然两家的 LT8711H 以及 AG9321 公版设计 就是奔着缩成本去的简陋和稀烂，但是低价产品对市场带来的冲击是巨大的。</p>
+<p>国内30+元，海外4.5USD，为上述中端产品的生存带来了巨大的压力</p>
+<ul>
+<li><strong>常见下级视频类应用</strong></li>
+</ul>
+<p>在上文所举例的应用中，我们已经可以看到一些转换器常见的转换应用，比如PS176，PS186，都是基于DP输出的单对单视频转换，由于苹果的采用才在第三方转接器中风行开来</p>
+<p>单对单转换的意思是........ 单入单出，那么单个DP输入像USB分线器那样扩展成多屏应用可以吗</p>
+<p>也可以的，使用的技术主要是 DP MST （DP菊花链）根据所设置的分辨率（占用带宽）决定显示器扩展数量的上限，分配比例灵活，可以独立设置每个屏幕，但下游的单个显示器也有带宽限制</p>
+<p>这里由于转换类型和应用太多所以暂时不做表了</p>
+<ul>
+<li><strong>可靠外围设计示例</strong></li>
+</ul>
+<p>由于转接器使用环境复杂，比如：</p>
+<ul>
+<li>大功耗外围（USB等）设备需要电源设计来保证供电，亦需要应对过流等预期外情况设计保险</li>
+<li>信号线本身工作时载有高频跳变的电压，可以将线路当作天线辐射出射频信号，会干扰周围无线设备或被外界干扰，因此也需要无线屏蔽/隔断设计</li>
+<li>人体（或其他物体）触摸转接器时可能带有高水平的电荷（静电）从而造成放电现象，放电过程会有极高可能性损坏转接器芯片，甚至损坏连接的主机接口</li>
+</ul>
+<p>这些情景却并不是单靠上文提到过的芯片本身的设计指南所能搞定的，需要PCB设计，相关安全器件和设计，产品设计一同来保障</p>
+<p>第一点一般会有专用的器件来搞定，比如在DA310 中内置的 TPS2554 作为电流保险</p>
+<figure>
+<img src="https://pic3.zhimg.com/v2-fd1fddbd162751ea3a0260a9d2519202_b.jpg" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>第二点一般利用法拉第笼的原理在转接器外围造一层金属罩进行无线屏蔽</p>
+<figure>
+<img src="https://pic.islet.space/2021/05/v2-68a8b3984897e0937f3446f56b255dea_b.jpg" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<figure>
+<img src="https://pic.islet.space/2021/05/v2-e4e71c2210d763b837b9cee71ee442e5_b.jpg" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>第三点则较为复杂，尽管目前多数IC都会内置 ESD （electrical state discharge）防护，然而并不能确保芯片可以在较恶劣的环境下存活下来，因此外挂各种防护措施还是有价值的，毕竟要是把主机口也挂了那麻烦就大了</p>
+<p>其中TVS管就是最常用的方式</p>
+<figure>
+<img src="https://pic.islet.space/2021/05/v2-0cb4401a831b61646eaed46f15b20eca_b.jpg" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>其他的防护措施这里就不一一介绍了，可以参考该文 <a href="https://link.zhihu.com/?target=https%3A//acroname.com/blog/industrial-usb-hub-teardown-esd-robustness">INDUSTRIAL USB HUB TEARDOWN: ESD ROBUSTNESS</a> 仅作参考，该文是较为典型的过分堆料</p>
+<figure>
+<img src="https://pic.islet.space/2021/05/v2-98c67086b6a85d7b4014e261e778443e_b.jpg" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>一般情况下只要做到像TI参考设计的程度就足够了，即 使用TVS管作为ESD防护以及电源总线上附带过流保险</p>
+<figure>
+<img src="https://pic.islet.space/2021/05/v2-f402b8767c2e6bbfdb96f8a06921c8b3_b.jpg" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<figure>
+<img src="https://pic.islet.space/2021/05/v2-c79f4ee4605017330e342cd9edb71679_b.jpg" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>此外，PCB的走线也会影响 ESD效果以及对外的无线干扰辐射[<a href="about:reader?url=https%3A%2F%2Fzhuanlan.zhihu.com%2Fp%2F342165494#ref_28">28]</a>，总之转接器PCB做工是一件比较复杂的考量事项。</p>
+<h1 id="总结与指南-1">总结与指南</h1>
+<p>总的来说转接器产品有两大特点不同于 朴素认知</p>
+<ul>
+<li>作为转接器的核心部件PD控制器并不影响转接器的主要功能（视频转换和USB、扩展）</li>
+<li>转接器接口多寡并不和其 成本 呈正相关 （原本可以给的接口会被阉割，市场内的常见手段），将多种接口整合变少才是本事（就像你用来扩展的Type C口）</li>
+</ul>
+<p>因此通过接口多寡来计算性价比（价格/接口）基本只能陷入坑货泥潭</p>
+<p>此外 新款芯片一般至少需要一年的周期才能真正被采用到新产品里面，因此盲目追新 方案大可不必</p>
+<hr />
+<ul>
+<li><strong>推荐</strong></li>
+</ul>
+<p>尽管各头部厂商 由于历史原因或者其他的一些因素多少都有一些坑货，而下面的白莲花制造商也少之又少，即使是 Belkin 也能找出一些 智商税产品</p>
+<p>但是原则上依然推荐 HP，Dell，苹果，微软的新品转接器，这些厂子的转接器不分高端低端，出手即是代表性产品，但也导致</p>
+<p>这些头部厂商的产品也会有一个共性的缺点就是不会在自己的产品上集成读卡器功能</p>
+<p>其余的，功能和做工就拉不开多少差距了，很难说有完美的，各方面都做的很优秀的产品</p>
+<p>总结一下本文提到的带有拆解文章的产品，转接器功能需求复杂，产品或多或少存有不足，仅作参考，长期更新</p>
+<p>依然不建议依赖该表，建议通读</p>
+<figure>
+<img src="https://pic.islet.space/2021/05/v2-8660a99fbe26365d9a3d7488288971f6_b-20210526000705763.jpg" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<hr />
+<ul>
+<li><strong>排雷</strong></li>
+</ul>
+<p>这个市场内显著的坑货有两大类</p>
+<p>一类是长得像 Belkin 的 非Belkin 产品</p>
+<figure>
+<img src="https://pic2.zhimg.com/v2-ed0fcb1bc9f15717df5a0549ff865e81_b.jpg" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<figure>
+<img src="https://pic2.zhimg.com/v2-395b6b257e5b4bfba528ae61084b04d9_b.jpg" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>这类产品一般都是VIA 的VL100系公模产品， 本来做的像样的也有，比如在我的专栏中拆过的Satechi</p>
+<p>但由于对压缩成本的追求，VIA的公版设计被无限压缩，导致市面上一大批的公模VIA产品坑点奇多，下面的雷至少踩两个：</p>
+<ul>
+<li>质劣价高（物料成本20块左右，直接抄公版设计无需研发成本，防护全无的扩展坞可以卖到150以上，200，300 也是常见）</li>
+<li>供电稀烂，带不动一块移动机械硬盘的读写耗电</li>
+<li>屏蔽基本无，是一个巨大的2.4Ghz污染源，干扰附近的蓝牙，WIFI设备的正常工作</li>
+<li>工厂品控稀烂</li>
+</ul>
+<p>涉及品牌包括 绿联，Orico，飞利浦（转接器业务已经被别家收购），Unitek，倍思</p>
+<p>国内能叫的上名字的配件厂几乎全部中枪，同样是 VL100系主控，没一家的做工和防护能比得上Satechi（苹果合作款）</p>
+<figure>
+<img src="https://pic2.zhimg.com/v2-3dfff693a1575ca58b5c3b089f8c59c5_b.jpg" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<figure>
+<img src="https://pic4.zhimg.com/v2-fd6a19341d4d279adceae25faa1f4837_b.jpg" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>另一类是长得像苹果的非苹果产品</p>
+<figure>
+<img src="https://pic3.zhimg.com/v2-222af6d53c029fc372a794c438375936_b.jpg" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>这类产品同样有VIA 阵营的VL100系产品牵涉其中</p>
+<p>但在低端攻城掠地的 龙讯LT8711H ，安格 AG9321 同样也籍由这样的外型活得滋润（物料成本估计 10块左右，售价一般在30，40元水平）</p>
+<p>此外 Fresco 的 FL5002 公版设计也是籍由这种 外形活得滋润，例如 小米ZJQ01TM[<a href="about:reader?url=https%3A%2F%2Fzhuanlan.zhihu.com%2Fp%2F342165494#ref_1">1]</a> ，联想也是[<a href="about:reader?url=https%3A%2F%2Fzhuanlan.zhihu.com%2Fp%2F342165494#ref_2">2]</a>，尽管TVS防护尚可，但是绝对不会装配 屏蔽罩，另外FL5002 发热较大</p>
+<p>还有一类较隐蔽坑货就是自己做标致的外壳，内藏稀烂的硬件</p>
+<p>外形就请自行想象了，以下三款图内PCBA的售价都在10元内</p>
+<figure>
+<img src="https://pic2.zhimg.com/v2-59012a67ebb1e0efd1eb6c053219cb6d_b.jpg" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<figure>
+<img src="https://pic3.zhimg.com/v2-17fd6a55704998d450f3a29924a272f2_b.jpg" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<figure>
+<img src="https://pic2.zhimg.com/v2-ceb7df6aa2250a6a365ee70f3d83296d_b.jpg" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<h1 id="参考">参考</h1>
+<ol type="1">
+<li><a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>(about:reader?url=https%3A%2F%2Fzhuanlan.zhihu.com%2Fp%2F342165494#ref_1_0)<a href="about:reader?url=https%3A%2F%2Fzhuanlan.zhihu.com%2Fp%2F342165494#ref_1_1">b</a><a href="about:reader?url=https%3A%2F%2Fzhuanlan.zhihu.com%2Fp%2F342165494#ref_1_2">c</a>全网首拆：小米USB-C至HDMI多功能转接器ZJQ01TM拆解 http://consumer.linxee.cn/CPLT/132.html</li>
+<li><a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>(about:reader?url=https%3A%2F%2Fzhuanlan.zhihu.com%2Fp%2F342165494#ref_2_0)<a href="about:reader?url=https%3A%2F%2Fzhuanlan.zhihu.com%2Fp%2F342165494#ref_2_1">b</a>拆解报告：联想USB-C迷你集线器 https://www.chongdiantou.com/wp/archives/27256.html</li>
+<li>[^](about:reader?url=https%3A%2F%2Fzhuanlan.zhihu.com%2Fp%2F342165494#ref_3_0)INTEL 对USB3.0 射频干扰的测试和相关建议 https://www.intel.com/content/www/us/en/products/docs/io/universal-serial-bus/usb3-frequency-interference-paper.html</li>
+<li><a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>(about:reader?url=https%3A%2F%2Fzhuanlan.zhihu.com%2Fp%2F342165494#ref_4_0)<a href="about:reader?url=https%3A%2F%2Fzhuanlan.zhihu.com%2Fp%2F342165494#ref_4_1">b</a>TI文档，PD Alternative Mode：Display Port <a target="_blank" rel="noopener" href="https://www.ti.com/lit/an/slva844b/slva844b.pdf?ts=1614791986776&amp;ref_url=https%3A%2F%2Fwww.ti.com%2Fsitesearch%2Fdocs%2Funiversalsearch.tsp%3FsearchTerm%3DAlternate%2BMode%2BSupport">https://www.ti.com/lit/an/slva844b/slva844b.pdf?ts=1614791986776&amp;ref_url=https%253A%252F%252Fwww.ti.com%252Fsitesearch%252Fdocs%252Funiversalsearch.tsp%253FsearchTerm%253DAlternate%2BMode%2BSupport</a></li>
+<li>[^](about:reader?url=https%3A%2F%2Fzhuanlan.zhihu.com%2Fp%2F342165494#ref_5_0)HDMI组织官网对HDMI Alt Mode 的介绍 https://www.hdmi.org/spec/typec</li>
+<li>[^](about:reader?url=https%3A%2F%2Fzhuanlan.zhihu.com%2Fp%2F342165494#ref_6_0)视频标准电子协会 VESA 的说明 <a target="_blank" rel="noopener" href="https://vesa.org/featured-articles/vesa-rolls-out-early-certification-program-for-video-source-and-display-products-using-hbr3-high-bandwidth-link-rate/#:~:text=DisplayPort&#39;s%20new%20HBR3%20data%20rate,at%208.1%20Gbps%20per%20lane">https://vesa.org/featured-articles/vesa-rolls-out-early-certification-program-for-video-source-and-display-products-using-hbr3-high-bandwidth-link-rate/#:~:text=DisplayPort's%20new%20HBR3%20data%20rate,at%208.1%20Gbps%20per%20lane</a></li>
+<li>[^](about:reader?url=https%3A%2F%2Fzhuanlan.zhihu.com%2Fp%2F342165494#ref_7_0)Dell官方 关于显示带宽的说明 <a target="_blank" rel="noopener" href="https://www.dell.com/support/manuals/zh-cn/dell-wd19dcs-dock/wd19dcs_user_guide/显示带宽?guid=guid-f73113c5-ee42-47fe-a849-d669e93440e2&amp;lang=zh-cn">https://www.dell.com/support/manuals/zh-cn/dell-wd19dcs-dock/wd19dcs_user_guide/%E6%98%BE%E7%A4%BA%E5%B8%A6%E5%AE%BD?guid=guid-f73113c5-ee42-47fe-a849-d669e93440e2&amp;lang=zh-cn</a></li>
+<li><a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a>(about:reader?url=https%3A%2F%2Fzhuanlan.zhihu.com%2Fp%2F342165494#ref_8_0)<a href="about:reader?url=https%3A%2F%2Fzhuanlan.zhihu.com%2Fp%2F342165494#ref_8_1">b</a>TI 文档 Alternative Mode on Type-C https://zhuanlan.zhihu.com/p/335164290</li>
+<li>[^](about:reader?url=https%3A%2F%2Fzhuanlan.zhihu.com%2Fp%2F342165494#ref_9_0)普瑞科技主控产品清单 https://www.paradetech.com/products/</li>
+<li>[^](about:reader?url=https%3A%2F%2Fzhuanlan.zhihu.com%2Fp%2F342165494#ref_10_0)Cypress， 提问是否需要在设备端使用MUX https://community.cypress.com/t5/USB-EZ-PD-Type-C/do-we-need-a-switch-like-PS8740B-on-both-the-source-and-sink/td-p/187782?start=0&amp;tstart=0</li>
+<li>[^](about:reader?url=https%3A%2F%2Fzhuanlan.zhihu.com%2Fp%2F342165494#ref_11_0)TI中文社区对差分对的介绍 https://e2echina.ti.com/blogs_/archives/b/signal_integrity_/archive/2015/05/13/51961</li>
+<li>[^](about:reader?url=https%3A%2F%2Fzhuanlan.zhihu.com%2Fp%2F342165494#ref_12_0)Wiki 关于 Virtual Link https://en.wikipedia.org/wiki/VirtualLink</li>
+<li>[^](about:reader?url=https%3A%2F%2Fzhuanlan.zhihu.com%2Fp%2F342165494#ref_13_0)Satechi 多口转接器拆解 https://zhuanlan.zhihu.com/p/155895919</li>
+<li>[^](about:reader?url=https%3A%2F%2Fzhuanlan.zhihu.com%2Fp%2F342165494#ref_14_0)充电头网 拆解报告：UGREEN绿联3A1C四口多功能扩展坞（带SD卡槽版） https://www.chongdiantou.com/wp/archives/44723.html</li>
+<li>[^](about:reader?url=https%3A%2F%2Fzhuanlan.zhihu.com%2Fp%2F342165494#ref_15_0)华为MateDock2扩展坞拆解 http://blog.sina.com.cn/s/blog_702183da0102xf73.html</li>
+<li>[^](about:reader?url=https%3A%2F%2Fzhuanlan.zhihu.com%2Fp%2F342165494#ref_16_0)拆解报告：米物3A1C七合一多功能扩展坞MWCMA01 https://www.chongdiantou.com/wp/archives/61247.html</li>
+<li><a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a>(about:reader?url=https%3A%2F%2Fzhuanlan.zhihu.com%2Fp%2F342165494#ref_17_0)<a href="about:reader?url=https%3A%2F%2Fzhuanlan.zhihu.com%2Fp%2F342165494#ref_17_1">b</a>售完存档：全新原装惠普HP USB-C to Multi-Port Hub USB-C多端口集线器外接HDMI USB-C USB3.0 1BG94AA 918965-001 919666-001 https://qzxx.com/49896.html</li>
+<li>[^](about:reader?url=https%3A%2F%2Fzhuanlan.zhihu.com%2Fp%2F342165494#ref_18_0)售完存档：全新散装华硕ROG Phone (ZS600KL) ASUS Professional Dock Type-C 游戏手机 电脑 Macbook PD供电 HDMI USB3.0 千M网口 USB-C接口五合一扩展坞ADSU001 https://qzxx.com/44938.html</li>
+<li>[^](about:reader?url=https%3A%2F%2Fzhuanlan.zhihu.com%2Fp%2F342165494#ref_19_0)【TearDown】DockCase DPR01S 可视化扩展坞 4K@60Hz 分线款 拆解 https://zhuanlan.zhihu.com/p/345184683</li>
+<li><a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a>(about:reader?url=https%3A%2F%2Fzhuanlan.zhihu.com%2Fp%2F342165494#ref_20_0)<a href="about:reader?url=https%3A%2F%2Fzhuanlan.zhihu.com%2Fp%2F342165494#ref_20_1">b</a>【Teardown】Dell 配件 DA300 拆解 https://zhuanlan.zhihu.com/p/339830297</li>
+<li><a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a>(about:reader?url=https%3A%2F%2Fzhuanlan.zhihu.com%2Fp%2F342165494#ref_21_0)<a href="about:reader?url=https%3A%2F%2Fzhuanlan.zhihu.com%2Fp%2F342165494#ref_21_1">b</a><a href="about:reader?url=https%3A%2F%2Fzhuanlan.zhihu.com%2Fp%2F342165494#ref_21_2">c</a>【TearDown】 Dell DA310 初步测试和拆解 https://zhuanlan.zhihu.com/p/350808731</li>
+<li><a href="#fn8" class="footnote-ref" id="fnref8" role="doc-noteref"><sup>8</sup></a>(about:reader?url=https%3A%2F%2Fzhuanlan.zhihu.com%2Fp%2F342165494#ref_22_0)<a href="about:reader?url=https%3A%2F%2Fzhuanlan.zhihu.com%2Fp%2F342165494#ref_22_1">b</a>拆解报告：苹果最新USB-C 数字影音多端口转换器A2119 https://www.chongdiantou.com/wp/archives/38952.html</li>
+<li>[^](about:reader?url=https%3A%2F%2Fzhuanlan.zhihu.com%2Fp%2F342165494#ref_23_0)售完存档：原装Nvidia 雷电3 USB-C to DisplayPort Adapter USB-C转DP显卡转换线 支持3840*2160 4K 60Hz 030-1036-00 DJ8A5T-4000-10H https://qzxx.com/44009.html</li>
+<li>[^](about:reader?url=https%3A%2F%2Fzhuanlan.zhihu.com%2Fp%2F342165494#ref_24_0) 拆解报告：华为高清投屏连接线（CP76） https://www.chongdiantou.com/wp/archives/27141.html</li>
+<li>[^](about:reader?url=https%3A%2F%2Fzhuanlan.zhihu.com%2Fp%2F342165494#ref_25_0)小米第二款DOCK转换器拆解：支持DP，用料残暴 https://www.sohu.com/a/150498171_296845</li>
+<li><a href="#fn9" class="footnote-ref" id="fnref9" role="doc-noteref"><sup>9</sup></a>(about:reader?url=https%3A%2F%2Fzhuanlan.zhihu.com%2Fp%2F342165494#ref_26_0)<a href="about:reader?url=https%3A%2F%2Fzhuanlan.zhihu.com%2Fp%2F342165494#ref_26_1">b</a>拆解报告：DELL戴尔Type-C三合一多功能扩展坞 https://www.chongdiantou.com/wp/archives/66590.html</li>
+<li>[^](about:reader?url=https%3A%2F%2Fzhuanlan.zhihu.com%2Fp%2F342165494#ref_27_0)Surface Dock 2 teardown https://dancharblog.wordpress.com/2020/05/28/surface-dock-2-teardown/comment-page-1/#comment-7200</li>
+<li>[^](about:reader?url=https%3A%2F%2Fzhuanlan.zhihu.com%2Fp%2F342165494#ref_28_0)ESD Protection Layout Guide <a target="_blank" rel="noopener" href="https://www.ti.com/lit/an/slva680/slva680.pdf?ts=1616140396901&amp;ref_url=https%3A%2F%2Fwww.google.com%2F">https://www.ti.com/lit/an/slva680/slva680.pdf?ts=1616140396901&amp;ref_url=https%253A%252F%252Fwww.google.com%252F</a></li>
+</ol>
+<p>​</p>
+<section class="footnotes" role="doc-endnotes">
+<hr />
+<ol>
+<li id="fn1" role="doc-endnote"><p>a<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2" role="doc-endnote"><p>a<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3" role="doc-endnote"><p>a<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4" role="doc-endnote"><p>a<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn5" role="doc-endnote"><p>a<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn6" role="doc-endnote"><p>a<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn7" role="doc-endnote"><p>a<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn8" role="doc-endnote"><p>a<a href="#fnref8" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn9" role="doc-endnote"><p>a<a href="#fnref9" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -2079,290 +2983,6 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">#if defined OPT_1 </span><br><span class="line">	&#x2F;* Do option_1 *&#x2F; </span><br><span class="line">#elif defined OPT_2 </span><br><span class="line">	&#x2F;* Do option_2 *&#x2F; </span><br><span class="line">#else </span><br><span class="line">	#error *** You must define one of OPT_1 or OPT_2 *** </span><br><span class="line">#endif </span><br></pre></td></tr></table></figure>
 <p>Now the compilation fails, but at least it tells the user explicitly what to do to make the module compile. I know that if this procedure had been adopted universally, I would have saved a lot of time over the years trying to reuse other people's code.</p>
 <p>So there you have it. Now tell me, don't you agree that <code>#error</code> is a really useful part of the preprocessor, worthy of your frequent use-and occasional praise?</p>
-<p>​</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://islet.space/2021/05/19/Web/2021-05-19-What-is-the-meaning-of--savefor-NPM-install-/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Liewzheng">
-      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Coder的孤岛">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/05/19/Web/2021-05-19-What-is-the-meaning-of--savefor-NPM-install-/" class="post-title-link" itemprop="url">What is the meaning of '-save' for NPM install ?</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-
-    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
-    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2021-05-19 20:10:00" itemprop="dateCreated datePublished" datetime="2021-05-19T20:10:00+08:00">2021-05-19</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-08-07 00:03:57" itemprop="dateModified" datetime="2021-08-07T00:03:57+08:00">2021-08-07</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Networking/" itemprop="url" rel="index"><span itemprop="name">Networking</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p><a target="_blank" rel="noopener" href="https://www.geeksforgeeks.org/what-is-the-meaning-of-save-for-npm-install/">geeksforgeeks.org</a></p>
-<p><strong><a target="_blank" rel="noopener" href="https://www.geeksforgeeks.org/node-js-npm-node-package-manager/">NPM (Node Package Manager)</a></strong> is the default package manager employed in JavaScript runtime environment in Node.js. It has a very frequently used command <strong>npm install [Package Name] –save</strong>. But the fact is there is no difference between <strong>npm install [Package Name]</strong> and <strong>npm install [Package Name] –save</strong> in the later version after npm 5.0.0 onwards.</p>
-<p>Before npm 5.0.0, it was necessary to add <code>--save</code> after package name because it will save the installed package to package.json file in the dependency section. If you are using a recent version of npm save yourself from unnecessary typing and use <strong>npm install [Package Name]</strong> instead of <strong>npm install [Package Name] <code>--save</code></strong> by default it will add the installed package to the dependency list in the package.json file.</p>
-<p><strong>NPM has several commands which are listed below:</strong></p>
-<ol type="1">
-<li><p>–save or -S:</p>
-<p>When the following command is used with npm install this will save all your installed core packages into the dependency section in the package.json file. Core dependencies are those packages without which your application will not give desired results. But as mentioned earlier, it is an unnecessary feature in the npm 5.0.0 version onwards.</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install --save</span><br></pre></td></tr></table></figure></li>
-<li><p>–save-prod or -P:</p>
-<p>The following command is introduced in the later version of npm it will perform the same task as the</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">--save</span><br></pre></td></tr></table></figure>
-<p>command unless any other command such as</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-D</span><br></pre></td></tr></table></figure>
-<p>or</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-O</span><br></pre></td></tr></table></figure>
-<p>is present.</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install --save-prod</span><br></pre></td></tr></table></figure></li>
-<li><p>–save-dev or -D:</p>
-<p>With</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">--save-dev</span><br></pre></td></tr></table></figure>
-<p>or</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-D</span><br></pre></td></tr></table></figure>
-<p>command your installed packages will be added to devDependency section of the package.json file. Development dependencies are those packages which only meant for development purpose it will not affect the application’s result.</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install --save-dev</span><br></pre></td></tr></table></figure></li>
-<li><p>–save-optional or -O:</p>
-<p>When this command is used the install the that packages will be listed under the optional Dependency section of the package.json file. Optional dependencies are those packages which are only used when a particular feature of the application is used and will not be required if that functionality isn’t used.</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install --save-optional</span><br></pre></td></tr></table></figure></li>
-<li><p>–no-save:</p>
-<p>When this command is used with npm install it will not allow the installed packages from being saved into the dependency section.</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install --no-save</span><br></pre></td></tr></table></figure></li>
-</ol>
-<p><strong>Note:</strong> NPM provides two additional options to save dependencies into package.json file.</p>
-<ol type="1">
-<li><p>–save-exact or -E:</p>
-<p>This is an additional or optional command provided by the npm that will save the exact version of the installed packages which are configured at the time of development. It will not download the dependencies from npm’s default server range operator.</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install --save-exact</span><br></pre></td></tr></table></figure></li>
-<li><p>–save-bundle or -B:</p>
-<p>The following command is also an optional command when</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">--save-bundle</span><br></pre></td></tr></table></figure>
-<p>or</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-B</span><br></pre></td></tr></table></figure>
-<p>is used. This will also add the saved dependencies under the bundleDependency list.</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install --save-bundle</span><br></pre></td></tr></table></figure></li>
-</ol>
-<p>​</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://islet.space/2021/05/17/Computer/2021-05-17-%E5%86%85%E5%AD%98%E5%9C%B0%E5%9D%80%E5%AF%B9%E9%BD%90/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Liewzheng">
-      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Coder的孤岛">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/05/17/Computer/2021-05-17-%E5%86%85%E5%AD%98%E5%9C%B0%E5%9D%80%E5%AF%B9%E9%BD%90/" class="post-title-link" itemprop="url">内存地址对齐</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-
-    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
-    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-      
-
-      <time title="Created: 2021-05-17 20:10:00 / Modified: 20:32:07" itemprop="dateCreated datePublished" datetime="2021-05-17T20:10:00+08:00">2021-05-17</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Computer/" itemprop="url" rel="index"><span itemprop="name">Computer</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/mhq-martin/p/11537873.html">cnblogs.com</a></p>
-<h1 id="对齐定义">对齐定义</h1>
-<p>内存地址对齐，是一种在计算机内存中排列数据、访问数据的一种方式。</p>
-<h1 id="对齐分类">对齐分类</h1>
-<p>内存地址对齐包含了两种相互独立又相互关联的部分：<strong>基本数据对齐</strong> 和 <strong>结构体数据对齐</strong>。</p>
-<p>当今的计算机在计算机内存中读写数据时都是 <mark>按字(word)大小块来进行操作</mark> 的。在32位系统中，数据总线宽度为32位，每次能读取4bytes，地址总线宽度为32，因此最大的寻址空间为2<sup>32</sup>bits=4GB，但是最低2位A[0]、A[1]是不用于寻址，A[2-31]才能存储器相连，因此只能访问4的倍数地址空间，但是总的寻址空间还是2<sup>30</sup>bits字长=4GB，因此在 <mark>内存中所有存放的基本类型数据的首地址的最低两位都是0，除结构体中的成员变量</mark> 。</p>
-<blockquote>
-<p>基本类型数据对齐就是数据在内存中的 <mark>偏移地址必须等于一个字的倍数</mark>，按这种存储数据的方式，可以提升系统在读取数据时的性能。<mark>为了对齐数据，可能必须在上一个数据结束和下一个数据开始的地方插入一些没有用处字节，这就是结构体数据对齐</mark>。</p>
-</blockquote>
-<h2 id="基本数据对齐示例">基本数据对齐示例</h2>
-<p>例如，假设计算机的字大小为4bytes，因此变量在内存中的首地址都是满足4地址对齐，CPU只能对4的倍数的地址进行读取，而每次能读取4个字节大小的数据。</p>
-<p>假设有一个整型的数据a的首地址不是4的倍数(如下图所示)，不妨设为 <code>0X00FFFFF3</code>，则该整型数据存储在地址范围为<code>0X00FFFFF3</code> ~<code>0X00FFFFF6</code>的存储空间中，而CPU每次只能对4的倍数内存地址进行读取，因此想读取a的数据，CPU要分别在 <code>0X00FFFFF0</code> 和 <code>0X00FFFFF4</code> 进行两次内存读取，而且还要对两次读取的数据进行处理才能得到a的数据，而一个程序的瓶颈往往不是CPU的速度，而是取决于内存的带宽，因为CPU得处理速度要远大于从内存中读取数据的速度，因此减少对内存空间的访问是提高程序性能的关键。从上例可以看出，采取内存地址对齐策略是提高程序性能的关键。</p>
-<p><mark>也就是说，不对齐内存地址的话会造成CPU对内存中数据访问范围的增大，造成性能浪费。</mark></p>
-<h2 id="结构体对齐示例">结构体对齐示例</h2>
-<p>首先我们先看看下面的C语言的结构体：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">typedef struct MemAlign</span><br><span class="line">&#123;</span><br><span class="line">    int a;</span><br><span class="line">    char b[3];</span><br><span class="line">    int c;</span><br><span class="line">&#125;MemAlign;</span><br></pre></td></tr></table></figure>
-<p>以上这个结构体占用内存多少空间呢？</p>
-<p>也许你会说，这个简单，计算每个类型的大小，将它们相加就行了，以32bit平台为例，int类型占4bytes，char占用1byte，所以：4 + 3 + 4 = 11bytes，那么这个结构体一共占用11字节空间。</p>
-<p>实际上用sizeof运算符来求出这个结构体占用内存空间大小，sizeof(MemAlign)，出乎意料的是，结果居然为12？</p>
-<p>是因为这个结构体被优化了，这个优化有个另外一个名字叫“对齐”，那么这个对齐到底做了什么样的优化呢。</p>
-<figure>
-<img src="https://pic.islet.space/2021/05/1231881-20190917224404418-1265388453.png" alt="img" /><figcaption aria-hidden="true">img</figcaption>
-</figure>
-<p>相信学过汇编的朋友都很熟悉这张图，这张图就是CPU与内存如何进行数据交换的模型，其中，左边蓝色的方框是CPU，右边绿色的方框是内存，内存上面的0～3是内存地址。</p>
-<p>上图以32位CPU作为代表，<mark>32位CPU是以双字（DWORD）为单位进行数据传输的</mark>，因此 <mark>在32位系统中，无论是8位、16位还是32位都是以双字进行数据传输</mark> 。</p>
-<h2 id="非32位数据非对齐传输示例">非32位数据非对齐传输示例</h2>
-<p>8位或16位一样可以传输，但是事情并非像我们想象的那么简单。</p>
-<p>一个int类型4字节的数据如果放在上图内存地址1开始的位置，那么这个数据占用的内存地址为1～4，那么这个数据就被分为了2个部分，一个部分在地址0～3中，另外一部分在地址4～7中，又由于32位CPU以双字进行传输，所以，CPU会分2次进行读取，一次先读取地址0～3中内容，再一次读取地址4～7中数据，最后CPU提取并组合出正确的int类型数据，舍弃掉无关数据。那么反过来，如果我们把这个int类型4字节的数据放在上图从地址0开始的位置会怎样呢？读到这里，也许你明白了，CPU只要进行一次读取就可以得到这个int类型数据了。没错，就是这样，这次CPU只用了一个周期就得到了数据，由此可见，对内存数据的摆放是多么重要啊，<mark>摆放正确位置可以减少CPU的使用资源</mark>。</p>
-<h1 id="对齐原则">对齐原则</h1>
-<ul>
-<li><p>第一个成员的首地址为0</p></li>
-<li><p>每个成员的首地址是自身大小的整数倍</p>
-<ul>
-<li>以4bytes对齐为例，如果自身大小大于4bytes，都以4bytes整数倍为基准对齐。</li>
-</ul></li>
-<li><p>最后以结构总体对齐。</p>
-<ul>
-<li>以4字节bytes为例，取结构体中最大成员类型倍数，如果超过4字节，都以4字节整数倍为基准对齐。（其中这一条还有个名字叫：“补齐”，补齐的目的就是多个结构变量挨着摆放的时候也满足对齐的要求。）</li>
-</ul></li>
-</ul>
-<h2 id="基本数据对齐与结构补齐示例">基本数据对齐与结构补齐示例</h2>
-<p>上述的三原则听起来还是比较抽象，那么接下来我们通过一个例子来加深对内存对齐概念的理解，下面是一个结构体，我们动手算出下面结构体一共占用多少内存？假设我们以32位平台并且以4字节对齐方式：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">#pragma pack(4)</span><br><span class="line">typedef struct MemAlign</span><br><span class="line">&#123;</span><br><span class="line">    char a[18];</span><br><span class="line">    double b;    </span><br><span class="line">    char c;</span><br><span class="line">    int d;    </span><br><span class="line">    short e;    </span><br><span class="line">&#125;MemAlign;</span><br></pre></td></tr></table></figure>
-<p>下图为对齐后结构如下：</p>
-<figure>
-<img src="https://pic.islet.space/2021/05/1231881-20190917224631323-2009020349.png" alt="img" /><figcaption aria-hidden="true">img</figcaption>
-</figure>
-<p>我们就以这个图来讲解是如何对齐的：</p>
-<p>第一个成员（char a[18]）：首先，假设我们把它放到内存开始地址为0的位置，由于第一个成员占18个字节，所以第一个成员占用内存地址范围为0～18。</p>
-<p>第二个成员（double b）：由于double类型占8字节，又因为8字节大于4字节，所以就以4字节对齐为基准。由于第一个成员结束地址为18，那么地址18并不是4的整数倍，我们需要再加2个字节，也就是从地址20开始摆放第二个成员。</p>
-<p>第三个成员（char c）：由于char类型占1字节，任意地址是1字节的整数倍，所以我们就直接将其摆放到紧接第二个成员之后即可。</p>
-<p>第四个成员（int d）：由于int类型占4字节，但是地址29并不是4的整数倍，所以我们需要再加3个字节，也就是从地址32开始摆放这个成员。</p>
-<p>第五个成员（short e）：由于short类型占2字节，地址36正好是2的整数倍，这样我们就可以直接摆放，无需填充字节,紧跟其后即可。</p>
-<p>这样我们内存对齐就完成了。但是离成功还差那么一步，那是什么呢？对，是对整个结构体补齐，接下来我们就补齐整个结构体。那么，先让我们回顾一下补齐的原则：“以4字节对齐为例，取结构体中最大成员类型倍数，如果超过4字节，都以4字节整数倍为基准对齐。”在这个结构体中最大类型为double类型（占8字节），又由于8字节大于4字 节，所以我们还是以4字节补齐为基准，整个结构体结束地址为38，而地址38并不是4的整数倍，所以我们还需要加额外2个字节来填充结构体，如下图红色的就是补齐出来的空间：</p>
-<figure>
-<img src="https://pic.islet.space/2021/05/1231881-20190917224653471-2076639760.png" alt="img" /><figcaption aria-hidden="true">img</figcaption>
-</figure>
-<p>到此为止，我们内存对齐与补齐就完毕了！接下来我们用实验来证明真理，程序如下：</p>
-<figure>
-<img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码" /><figcaption aria-hidden="true">复制代码</figcaption>
-</figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;stdio.h&gt;</span><br><span class="line">#include &lt;memory.h&gt;</span><br><span class="line"> </span><br><span class="line">&#x2F;&#x2F; 由于VS2010默认是8字节对齐，我们</span><br><span class="line">&#x2F;&#x2F; 通过预编译来通知编译器我们以4字节对齐</span><br><span class="line">#pragma pack(4)</span><br><span class="line"> </span><br><span class="line">&#x2F;&#x2F; 用于测试的结构体</span><br><span class="line">typedef struct MemAlign</span><br><span class="line">&#123;</span><br><span class="line">    char a[18];    &#x2F;&#x2F; 18 bytes</span><br><span class="line">    double b;    &#x2F;&#x2F; 08 bytes    </span><br><span class="line">    char c;        &#x2F;&#x2F; 01 bytes</span><br><span class="line">    int d;        &#x2F;&#x2F; 04 bytes</span><br><span class="line">    short e;    &#x2F;&#x2F; 02 bytes</span><br><span class="line">&#125;MemAlign;</span><br><span class="line"> </span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    &#x2F;&#x2F; 定义一个结构体变量</span><br><span class="line">    MemAlign m;</span><br><span class="line">    &#x2F;&#x2F; 定义个以指向结构体指针</span><br><span class="line">    MemAlign *p &#x3D; &amp;m;</span><br><span class="line">    &#x2F;&#x2F; 依次对各个成员进行填充，这样我们可以</span><br><span class="line">    &#x2F;&#x2F; 动态观察内存变化情况</span><br><span class="line">    memset( &amp;m.a, 0x11, sizeof(m.a) );</span><br><span class="line">    memset( &amp;m.b, 0x22, sizeof(m.b) );</span><br><span class="line">    memset( &amp;m.c, 0x33, sizeof(m.c) );</span><br><span class="line">    memset( &amp;m.d, 0x44, sizeof(m.d) );</span><br><span class="line">    memset( &amp;m.e, 0x55, sizeof(m.e) );</span><br><span class="line">    &#x2F;&#x2F; 由于有补齐原因，所以我们需要对整个</span><br><span class="line">    &#x2F;&#x2F; 结构体进行填充，补齐对齐剩下的字节</span><br><span class="line">    &#x2F;&#x2F; 以便我们可以观察到变化</span><br><span class="line">    memset( &amp;m, 0x66, sizeof(m) );</span><br><span class="line">    &#x2F;&#x2F; 输出结构体大小</span><br><span class="line">    printf( &quot;sizeof(MemAlign) &#x3D; %d&quot;, sizeof(m) );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure>
-<img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码" /><figcaption aria-hidden="true">复制代码</figcaption>
-</figure>
-<p>程序运行过程中，查看内存如下：</p>
-<figure>
-<img src="https://pic.islet.space/2021/05/1231881-20190917225512389-1581088258.png" alt="img" /><figcaption aria-hidden="true">img</figcaption>
-</figure>
-<p>其中，各种颜色带下划线的代表各个成员变量，蓝色方框的代表为内存对齐时候填补的多余字节，由于这里看不到补齐效果，我们接下来看下图，下图篮框包围的字节就是与上图的交集以外的部分就是补齐所填充的字节。</p>
-<figure>
-<img src="https://pic.islet.space/2021/05/1231881-20190917225534651-684741719.png" alt="img" /><figcaption aria-hidden="true">img</figcaption>
-</figure>
-<p>在最后，我在谈一谈关于补齐的作用，<mark>补齐其实就是为了让这个结构体定义的数组变量时候，数组内部，也同样满足内存对齐的要求</mark>，为了更好的理解这点，我做了一个跟本例子相对照的图：</p>
-<figure>
-<img src="https://pic.islet.space/2021/05/1231881-20190917225553591-1418591054.png" alt="img" /><figcaption aria-hidden="true">img</figcaption>
-</figure>
-<h1 id="参考链接">参考链接</h1>
-<p>https://blog.csdn.net/donkeylong/article/details/4909720</p>
-<p>https://blog.csdn.net/cyousui/article/details/17655051</p>
 <p>​</p>
 
       

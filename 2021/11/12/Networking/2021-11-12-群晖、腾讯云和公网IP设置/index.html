@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"islet.space","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.7.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+<meta name="description" content="双十一豪豪酱买了群晖DS220j家用NAS服务器，为了方便工作文件的备份传输，让电脑（PC、Mac）能用上远程网络驱动，就需要让服务器穿透内网，并申请一个独立域名，想着就用腾讯云和家里的小米路由器AX3600来干吧。下方是对硬件上需要的一些要求： 光猫：使用 桥接模式，具有 独立公网IP 路由器：使用 PPPoE模式 进行拨号、支持 端口映射、 端口转发 和 DMZ 群晖NAS：支持 DDNS、U">
+<meta property="og:type" content="article">
+<meta property="og:title" content="群晖、腾讯云和公网IP设置">
+<meta property="og:url" content="http://islet.space/2021/11/12/Networking/2021-11-12-%E7%BE%A4%E6%99%96%E3%80%81%E8%85%BE%E8%AE%AF%E4%BA%91%E5%92%8C%E5%85%AC%E7%BD%91IP%E8%AE%BE%E7%BD%AE/index.html">
+<meta property="og:site_name" content="Coder的孤岛">
+<meta property="og:description" content="双十一豪豪酱买了群晖DS220j家用NAS服务器，为了方便工作文件的备份传输，让电脑（PC、Mac）能用上远程网络驱动，就需要让服务器穿透内网，并申请一个独立域名，想着就用腾讯云和家里的小米路由器AX3600来干吧。下方是对硬件上需要的一些要求： 光猫：使用 桥接模式，具有 独立公网IP 路由器：使用 PPPoE模式 进行拨号、支持 端口映射、 端口转发 和 DMZ 群晖NAS：支持 DDNS、U">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://pic.islet.space/2021/11/202111130020050.png">
+<meta property="og:image" content="https://pic.islet.space/2021/11/202111130020200.png">
+<meta property="og:image" content="https://pic.islet.space/2021/11/202111130022335.png">
+<meta property="og:image" content="https://pic.islet.space/2021/11/202111130022186.png">
+<meta property="og:image" content="https://pic.islet.space/2021/11/202111130022727.png">
+<meta property="og:image" content="https://pic.islet.space/2021/11/202111130022986.png">
+<meta property="og:image" content="https://pic.islet.space/2021/11/202111130022401.png">
+<meta property="og:image" content="https://pic.islet.space/2021/11/202111211632483.png">
+<meta property="og:image" content="https://pic.islet.space/2021/11/202111130022536.png">
+<meta property="og:image" content="https://pic.islet.space/2021/11/202111130022178.png">
+<meta property="og:image" content="https://pic.islet.space/2021/11/202111130022255.png">
+<meta property="og:image" content="https://pic.islet.space/2021/11/202111130022517.png">
+<meta property="og:image" content="https://pic.islet.space/2021/11/202111130022177.png">
+<meta property="og:image" content="https://pic.islet.space/2021/11/202111130029734.png">
+<meta property="og:image" content="https://pic.islet.space/2021/11/202111130022518.png">
+<meta property="og:image" content="https://pic.islet.space/2021/11/202111130022793.png">
+<meta property="og:image" content="https://pic.islet.space/2021/11/202111130022607.png">
+<meta property="og:image" content="https://pic.islet.space/2021/11/202111130022504.png">
+<meta property="article:published_time" content="2021-11-12T09:30:00.000Z">
+<meta property="article:modified_time" content="2021-11-21T08:35:30.979Z">
+<meta property="article:author" content="Liewzheng">
+<meta property="article:tag" content="群晖">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://pic.islet.space/2021/11/202111130020050.png">
+
+
+<link rel="canonical" href="http://islet.space/2021/11/12/Networking/2021-11-12-%E7%BE%A4%E6%99%96%E3%80%81%E8%85%BE%E8%AE%AF%E4%BA%91%E5%92%8C%E5%85%AC%E7%BD%91IP%E8%AE%BE%E7%BD%AE/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://islet.space/2021/11/12/Networking/2021-11-12-%E7%BE%A4%E6%99%96%E3%80%81%E8%85%BE%E8%AE%AF%E4%BA%91%E5%92%8C%E5%85%AC%E7%BD%91IP%E8%AE%BE%E7%BD%AE/","path":"2021/11/12/Networking/2021-11-12-群晖、腾讯云和公网IP设置/","title":"群晖、腾讯云和公网IP设置"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>群晖、腾讯云和公网IP设置 | Coder的孤岛</title>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<!-- hexo injector head_end end --></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Coder的孤岛</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">islet of the coder</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-首页"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-文章"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>文章</a></li>
+        <li class="menu-item menu-item-目录"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>目录</a></li>
+        <li class="menu-item menu-item-标签"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-简历"><a href="/resume/" rel="section"><i class="fa fa-address-card fa-fw"></i>简历</a></li>
+        <li class="menu-item menu-item-友链"><a href="/friends/" rel="section"><i class="fa fa-group fa-fw"></i>友链</a></li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E6%9C%9F%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C"><span class="nav-number">1.</span> <span class="nav-text">前期准备工作</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9B%B4%E6%94%B9%E5%B7%A5%E4%BD%9C%E6%A8%A1%E5%BC%8F"><span class="nav-number">1.1.</span> <span class="nav-text">更改工作模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%9A%E9%87%8Dnat%E6%94%B9%E6%88%90%E5%85%AC%E7%BD%91ip"><span class="nav-number">1.2.</span> <span class="nav-text">多重NAT改成公网IP</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ddns%E5%9F%9F%E5%90%8D%E7%BB%91%E5%AE%9A"><span class="nav-number">1.3.</span> <span class="nav-text">DDNS域名绑定</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#api-token%E7%94%B3%E8%AF%B7"><span class="nav-number">1.3.1.</span> <span class="nav-text">API Token申请</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ddns%E6%B7%BB%E5%8A%A0"><span class="nav-number">1.3.2.</span> <span class="nav-text">DDNS添加</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AB%AF%E5%8F%A3%E6%98%A0%E5%B0%84%E5%92%8C%E8%BD%AC%E5%8F%91"><span class="nav-number">1.4.</span> <span class="nav-text">端口映射和转发</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%89%8B%E5%8A%A8%E7%AB%AF%E5%8F%A3%E8%BD%AC%E5%8F%91%E6%88%96%E8%87%AA%E5%8A%A8%E7%AB%AF%E5%8F%A3%E8%BD%AC%E5%8F%91"><span class="nav-number">1.4.1.</span> <span class="nav-text">手动端口转发或自动端口转发</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%85%8D%E7%BD%AEdmz"><span class="nav-number">1.5.</span> <span class="nav-text">配置DMZ</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#dmz%E5%BC%80%E5%90%AF%E5%89%8D"><span class="nav-number">1.5.1.</span> <span class="nav-text">DMZ开启前</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#dmz%E5%BC%80%E5%90%AF%E5%90%8E"><span class="nav-number">1.5.2.</span> <span class="nav-text">DMZ开启后</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E5%85%A8%E8%AF%81%E4%B9%A6%E8%AE%BE%E7%BD%AE"><span class="nav-number">1.6.</span> <span class="nav-text">安全证书设置</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%90%8E%E5%8F%B0%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%AE%BF%E9%97%AE"><span class="nav-number">2.</span> <span class="nav-text">后台服务器访问</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%BF%9C%E7%A8%8B%E9%A9%B1%E5%8A%A8%E5%99%A8%E8%AE%BE%E7%BD%AE"><span class="nav-number">3.</span> <span class="nav-text">远程驱动器设置</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">4.</span> <span class="nav-text">参考</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Liewzheng</p>
+  <div class="site-description" itemprop="description">笔记分享的旮旯孤岛而已</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">95</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">174</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="mailto:liewzheng@foxmail.com" title="E-Mail → mailto:liewzheng@foxmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://islet.space/2021/11/12/Networking/2021-11-12-%E7%BE%A4%E6%99%96%E3%80%81%E8%85%BE%E8%AE%AF%E4%BA%91%E5%92%8C%E5%85%AC%E7%BD%91IP%E8%AE%BE%E7%BD%AE/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Liewzheng">
+      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coder的孤岛">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          群晖、腾讯云和公网IP设置
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-11-12 17:30:00" itemprop="dateCreated datePublished" datetime="2021-11-12T17:30:00+08:00">2021-11-12</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2021-11-21 16:35:30" itemprop="dateModified" datetime="2021-11-21T16:35:30+08:00">2021-11-21</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Networking/" itemprop="url" rel="index"><span itemprop="name">Networking</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>双十一豪豪酱买了群晖DS220j家用NAS服务器，为了方便工作文件的备份传输，让电脑（PC、Mac）能用上远程网络驱动，就需要让服务器穿透内网，并申请一个独立域名，想着就用腾讯云和家里的小米路由器AX3600来干吧。下方是对硬件上需要的一些要求：</p>
+<p><strong>光猫</strong>：使用 <strong>桥接模式</strong>，具有 <strong>独立公网IP</strong></p>
+<p><strong>路由器</strong>：使用 <strong>PPPoE模式</strong> 进行拨号、支持 <strong>端口映射</strong>、 <strong>端口转发</strong> 和 <strong>DMZ</strong></p>
+<p><strong>群晖NAS</strong>：支持 <strong>DDNS</strong>、<strong>UPnP</strong> 协议、支持 <strong>证书使用范围管理</strong></p>
+<h1 id="前期准备工作">前期准备工作</h1>
+<h2 id="更改工作模式">更改工作模式</h2>
+<p><strong>光猫</strong> 和 <strong>路由器</strong> 都支持 <strong>路由模式</strong> 和 <strong>桥接模式</strong>，都支持多个无线接入和有线接入，但因为自己购买的路由器具有更多不一样的功能，例如支持UPnP等，而且光猫是连接物理光纤进行上网的，而自己购买的路由器不能直接连接光纤上网，还得依赖于光猫，所以可以认为是两种不一样的工作硬件。</p>
+<p>如果光猫已经工作在桥接模式（通过查看路由器后台的 <strong>上网方式</strong> 是否为PPPoE，如果是则说明自己购买的路由器工作在路由模式，电信光猫工作在桥接模式）。一般没有此类服务器需求的家庭网络，都是让光猫工作在路由拨号模式（即路由模式）的，而路由器则工作在桥接模式，此情况则需要将两个硬件设备的工作模式进行互换，参考以下步骤：</p>
+<ol type="1">
+<li>打电话给电信营业厅 <code>(0000)10000</code> （前方的 <code>(0000)</code> 是自己的市区号），确认一下光猫是路由模式还是桥接模式，如果是路由模式，则将其改成桥接模式。</li>
+<li>确认改成桥接模式后，询问宽带的账户和密码，在路由器后台输入账户密码并连接测试，确保路由器工作在拨号模式，而光猫工作在桥接模式。</li>
+</ol>
+<blockquote>
+<p>目前国内家庭宽带都是默认内网IP，想要公网IP就只能向运营商申请了，这并不需要额外的收费。电信手上的IP资源最多，也最大方。我也是照着别人的说法，打电话给电信客服，说装监控需要公网IP，客服登记之后，过几个小时就打电话说已经换好了，干净利落，服务好。目前好像还没见到过电信要不到公网IP的情况。</p>
+<p>——《<a target="_blank" rel="noopener" href="https://post.smzdm.com/p/awxqqwkg/">BT下载教程 篇一：BT下载大提速！ 获取公网IP和端口映射转发简单教程</a> 》</p>
+</blockquote>
+<figure>
+<img src="https://pic.islet.space/2021/11/202111130020050.png" alt="image-20211113000614809" /><figcaption aria-hidden="true">image-20211113000614809</figcaption>
+</figure>
+<h2 id="多重nat改成公网ip">多重NAT改成公网IP</h2>
+<p>同样是打给电信，然后申请公网IP，电信客服专员一般会在一个小时内处理完毕，然后就可以得到公网IP了。</p>
+<p>“谁拨号，谁就有公网IP” ——即此时如果路由器已经成功设置了路由模式（使用PPPoE拨号上网），则可以在路由器后台查看到其公网IP地址，如：</p>
+<figure>
+<img src="https://pic.islet.space/2021/11/202111130020200.png" alt="image-20211113001927548" /><figcaption aria-hidden="true">image-20211113001927548</figcaption>
+</figure>
+<h2 id="ddns域名绑定">DDNS域名绑定</h2>
+<p>虽然已经获得公网IP，但是该IP还是会随机变动，还会需要使用DDNS服务将公网IP映射到对应域名上，而群辉服务器则提供此功能，此处需要自己申请一个域名（此步骤省略）。进入群辉服务器后台，开启DDNS功能，将域名和随机公网IP绑定和更新。</p>
+<p>另外，需要自己上所用的服务器上开启API Token，并提供给群辉DDNS服务（类似于授权，可以由DDNS服务自己检测家庭网络的公网IP，并自动绑定最新的公网IP）。</p>
+<h3 id="api-token申请">API Token申请</h3>
+<p>下方以腾讯云的DNSPOD为例，点击DNSPOD中的 <strong>API密钥</strong>，进行 <strong>新建密钥</strong> 即可，将对应的 <strong>SecretId</strong> 和 <strong>SecretKey</strong> 复制下来。</p>
+<figure>
+<img src="https://pic.islet.space/2021/11/202111130022335.png" alt="image-20211113002208036" /><figcaption aria-hidden="true">image-20211113002208036</figcaption>
+</figure>
+<figure>
+<img src="https://pic.islet.space/2021/11/202111130022186.png" alt="image-20211113001142315" /><figcaption aria-hidden="true">image-20211113001142315</figcaption>
+</figure>
+<h3 id="ddns添加">DDNS添加</h3>
+<p>将获取到的 <strong>SecretId</strong> 填写到 <strong>用户名/电子邮件</strong> 中， 将 <strong>SecretKey</strong> 填写到 <strong>密码/密钥</strong> 中。</p>
+<figure>
+<img src="https://pic.islet.space/2021/11/202111130022727.png" alt="image-20211113001623814" /><figcaption aria-hidden="true">image-20211113001623814</figcaption>
+</figure>
+<p>经过前面的步骤，可以看到群晖NAS服务器自动测试的 <strong>DDNS状态</strong> 为 <strong>正常</strong> 即可。</p>
+<figure>
+<img src="https://pic.islet.space/2021/11/202111130022986.png" alt="image-20211112175853513" /><figcaption aria-hidden="true">image-20211112175853513</figcaption>
+</figure>
+<h2 id="端口映射和转发">端口映射和转发</h2>
+<p><strong>端口映射</strong>：Port Mapping， 即将内网中的主机的一个端口映射到外网主机的一个端口，以提供相应的服务。当用户访问外网IP的这个端口时，服务器自动将请求映射到对应局域网内部的机器上。</p>
+<p><strong>端口转发</strong>：Port Forwarding， 即将外网对应 EA 端口上收到的数据转发到内网某个主机对应的某个 IA 端口上，或者反过来将内网某个主机 IB 端口的数据转发到对应外网的 EB端口 上。</p>
+<p><strong>UPnP协议</strong>：Universal Plug and Play，即 即插即用。主要是微软在推行的一个标准，适用于家庭网络，用于设备间的发现和连接。UPnP 最大的愿景就是希望实现任何设备只要一接入网络就能被网络中的所有其它设备发现，做到完全的即插即用。UPnP是一个多层协议构成的框架体系，每一层都以相邻的下层为基础，同时又是相邻上层的基础。直至达到应用层为止。</p>
+<h3 id="手动端口转发或自动端口转发">手动端口转发或自动端口转发</h3>
+<p>手动端口转发：</p>
+<p>自动端口转发：</p>
+<figure>
+<img src="https://pic.islet.space/2021/11/202111130022401.png" alt="image-20211112180357037" /><figcaption aria-hidden="true">image-20211112180357037</figcaption>
+</figure>
+<figure>
+<img src="https://pic.islet.space/2021/11/202111211632483.png" alt="image-20211112175632036" /><figcaption aria-hidden="true">image-20211112175632036</figcaption>
+</figure>
+<figure>
+<img src="https://pic.islet.space/2021/11/202111130022536.png" alt="image-20211112180450097" /><figcaption aria-hidden="true">image-20211112180450097</figcaption>
+</figure>
+<h2 id="配置dmz">配置DMZ</h2>
+<blockquote>
+<p>通过配置DMZ，我们可以将需要保护的Web应用程序服务器和数据库系统放在内网中，把没有包含敏感数据、担当代理数据访问职责的主机放置于DMZ中，这样就为应用系统安全提供了保障。</p>
+<p>DMZ使包含重要数据的内部系统免于直接暴露给外部网络而受到攻击，攻击者即使初步入侵成功，还要面临DMZ设置的新的障碍。</p>
+</blockquote>
+<figure>
+<img src="https://pic.islet.space/2021/11/202111130022178.png" alt="image-20211112172411026" /><figcaption aria-hidden="true">image-20211112172411026</figcaption>
+</figure>
+<h3 id="dmz开启前">DMZ开启前</h3>
+<figure>
+<img src="https://pic.islet.space/2021/11/202111130022255.png" alt="image-20211112172343953" /><figcaption aria-hidden="true">image-20211112172343953</figcaption>
+</figure>
+<h3 id="dmz开启后">DMZ开启后</h3>
+<p>虽然也是随机公网IP，但是可以使用DMZ将连接到路由器的设备映射到外网上。</p>
+<figure>
+<img src="https://pic.islet.space/2021/11/202111130022517.png" alt="image-20211112175925384" /><figcaption aria-hidden="true">image-20211112175925384</figcaption>
+</figure>
+<h2 id="安全证书设置">安全证书设置</h2>
+<p>设置安全证书及其使用范围，<mark style="font-weight: 900;">不要使用自我签名的证书，所有浏览器都会识别和阻止你访问的</mark>。</p>
+<p>经过前面DDNS的 API token 配置之后，群晖NAS能够获取到对应域名的免费证书，并提供页面进行管理，将所有使用到的应用安全验证证书都设置为对应云服务提供商提供的证书即可。</p>
+<figure>
+<img src="https://pic.islet.space/2021/11/202111130022177.png" alt="image-20211112180133874" /><figcaption aria-hidden="true">image-20211112180133874</figcaption>
+</figure>
+<h1 id="后台服务器访问">后台服务器访问</h1>
+<p>经过上面复杂的折腾之后，就可以使用自定义的域名进行后台登录和管理了。</p>
+<p>输入 <code>https://nax.xxx.xxx:5000</code> 即可进行后台服务器的访问，也可以使用 ping 进行测试，如下：</p>
+<figure>
+<img src="https://pic.islet.space/2021/11/202111130029734.png" alt="image-20211113002928045" /><figcaption aria-hidden="true">image-20211113002928045</figcaption>
+</figure>
+<h1 id="远程驱动器设置">远程驱动器设置</h1>
+<ol type="1">
+<li>在文件管理器中右键点击 <strong>此电脑</strong> 的属性</li>
+<li>然后点击 <strong>映射网络驱动器</strong></li>
+</ol>
+<figure>
+<img src="https://pic.islet.space/2021/11/202111130022518.png" alt="image-20211112174837538" /><figcaption aria-hidden="true">image-20211112174837538</figcaption>
+</figure>
+<ol start="3" type="1">
+<li>选择本地的 <strong>虚拟驱动号</strong> 进行设置</li>
+<li>输入 <strong>网络地址</strong> 和 <strong>端口号</strong>，格式如 <code>https://nas.xxx.xxx:5006</code></li>
+</ol>
+<figure>
+<img src="https://pic.islet.space/2021/11/202111130022793.png" alt="image-20211112175022321" /><figcaption aria-hidden="true">image-20211112175022321</figcaption>
+</figure>
+<ol start="5" type="1">
+<li>按照提示输入群晖提供的账户名和密码即可进行连接</li>
+</ol>
+<figure>
+<img src="https://pic.islet.space/2021/11/202111130022607.png" alt="image-20211112174513370" /><figcaption aria-hidden="true">image-20211112174513370</figcaption>
+</figure>
+<ol start="6" type="1">
+<li>连接完毕即可查看到对应的网络驱动器</li>
+</ol>
+<figure>
+<img src="https://pic.islet.space/2021/11/202111130022504.png" alt="image-20211112174559989" /><figcaption aria-hidden="true">image-20211112174559989</figcaption>
+</figure>
+<h1 id="参考">参考</h1>
+<ol type="1">
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/75648110">【干货】什么是端口转发？什么是端口映射？如何设置端口映射？</a></li>
+<li><a target="_blank" rel="noopener" href="https://baike.baidu.com/item/DMZ/631225#6">DMZ</a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/braddoris/article/details/41646789">upnp协议简介（一）</a></li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>感谢您的支持和鼓励</div>
+  <button>
+    Donate
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="https://photo.islet.space/2021/00/IMG_4588.JPG" alt="Liewzheng WeChat Pay">
+        <span>WeChat Pay</span>
+      </div>
+      <div>
+        <img src="https://photo.islet.space/2021/00/IMG_4590.JPG" alt="Liewzheng Alipay">
+        <span>Alipay</span>
+      </div>
+
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/%E7%BE%A4%E6%99%96/" rel="tag"># 群晖</a>
+          </div>
+
+        
+
+  <div id="vcomments" style="margin: 1rem 0 0 0;"></div>
+  <script>
+    new Valine({
+      el: '#vcomments',
+      appId: 'vRGM12EcYxDSM2lat5qjjSeY-gzGzoHsz',
+      appKey: 'WBgAb6NTAFQ7DYtgH0uOPNNh'
+    })
+  </script>
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/10/27/Programming/C++/2021-10-27-C++-Primer-Plus-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" rel="prev" title="C++ Primer Plus 学习笔记">
+                  <i class="fa fa-chevron-left"></i> C++ Primer Plus 学习笔记
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">粤ICP备19004822号 </a>
+  </div>
+
+<div class="copyright">
+  &copy; 2019 – 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">liewzheng</span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":"enable","tags":"none","js":{"url":"https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js","integrity":"sha256-r+3itOMtGGjap0x+10hu6jW/gZCzxHsoKrOd7gyRSGY="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>

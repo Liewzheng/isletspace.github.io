@@ -133,7 +133,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">93</span>
+          <span class="site-state-item-count">95</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -144,7 +144,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">173</span>
+        <span class="site-state-item-count">174</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -178,6 +178,602 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://islet.space/2021/11/12/Networking/2021-11-12-%E7%BE%A4%E6%99%96%E3%80%81%E8%85%BE%E8%AE%AF%E4%BA%91%E5%92%8C%E5%85%AC%E7%BD%91IP%E8%AE%BE%E7%BD%AE/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Liewzheng">
+      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coder的孤岛">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/11/12/Networking/2021-11-12-%E7%BE%A4%E6%99%96%E3%80%81%E8%85%BE%E8%AE%AF%E4%BA%91%E5%92%8C%E5%85%AC%E7%BD%91IP%E8%AE%BE%E7%BD%AE/" class="post-title-link" itemprop="url">群晖、腾讯云和公网IP设置</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-11-12 17:30:00" itemprop="dateCreated datePublished" datetime="2021-11-12T17:30:00+08:00">2021-11-12</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2021-11-21 16:35:30" itemprop="dateModified" datetime="2021-11-21T16:35:30+08:00">2021-11-21</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Networking/" itemprop="url" rel="index"><span itemprop="name">Networking</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>双十一豪豪酱买了群晖DS220j家用NAS服务器，为了方便工作文件的备份传输，让电脑（PC、Mac）能用上远程网络驱动，就需要让服务器穿透内网，并申请一个独立域名，想着就用腾讯云和家里的小米路由器AX3600来干吧。下方是对硬件上需要的一些要求：</p>
+<p><strong>光猫</strong>：使用 <strong>桥接模式</strong>，具有 <strong>独立公网IP</strong></p>
+<p><strong>路由器</strong>：使用 <strong>PPPoE模式</strong> 进行拨号、支持 <strong>端口映射</strong>、 <strong>端口转发</strong> 和 <strong>DMZ</strong></p>
+<p><strong>群晖NAS</strong>：支持 <strong>DDNS</strong>、<strong>UPnP</strong> 协议、支持 <strong>证书使用范围管理</strong></p>
+<h1 id="前期准备工作">前期准备工作</h1>
+<h2 id="更改工作模式">更改工作模式</h2>
+<p><strong>光猫</strong> 和 <strong>路由器</strong> 都支持 <strong>路由模式</strong> 和 <strong>桥接模式</strong>，都支持多个无线接入和有线接入，但因为自己购买的路由器具有更多不一样的功能，例如支持UPnP等，而且光猫是连接物理光纤进行上网的，而自己购买的路由器不能直接连接光纤上网，还得依赖于光猫，所以可以认为是两种不一样的工作硬件。</p>
+<p>如果光猫已经工作在桥接模式（通过查看路由器后台的 <strong>上网方式</strong> 是否为PPPoE，如果是则说明自己购买的路由器工作在路由模式，电信光猫工作在桥接模式）。一般没有此类服务器需求的家庭网络，都是让光猫工作在路由拨号模式（即路由模式）的，而路由器则工作在桥接模式，此情况则需要将两个硬件设备的工作模式进行互换，参考以下步骤：</p>
+<ol type="1">
+<li>打电话给电信营业厅 <code>(0000)10000</code> （前方的 <code>(0000)</code> 是自己的市区号），确认一下光猫是路由模式还是桥接模式，如果是路由模式，则将其改成桥接模式。</li>
+<li>确认改成桥接模式后，询问宽带的账户和密码，在路由器后台输入账户密码并连接测试，确保路由器工作在拨号模式，而光猫工作在桥接模式。</li>
+</ol>
+<blockquote>
+<p>目前国内家庭宽带都是默认内网IP，想要公网IP就只能向运营商申请了，这并不需要额外的收费。电信手上的IP资源最多，也最大方。我也是照着别人的说法，打电话给电信客服，说装监控需要公网IP，客服登记之后，过几个小时就打电话说已经换好了，干净利落，服务好。目前好像还没见到过电信要不到公网IP的情况。</p>
+<p>——《<a target="_blank" rel="noopener" href="https://post.smzdm.com/p/awxqqwkg/">BT下载教程 篇一：BT下载大提速！ 获取公网IP和端口映射转发简单教程</a> 》</p>
+</blockquote>
+<figure>
+<img src="https://pic.islet.space/2021/11/202111130020050.png" alt="image-20211113000614809" /><figcaption aria-hidden="true">image-20211113000614809</figcaption>
+</figure>
+<h2 id="多重nat改成公网ip">多重NAT改成公网IP</h2>
+<p>同样是打给电信，然后申请公网IP，电信客服专员一般会在一个小时内处理完毕，然后就可以得到公网IP了。</p>
+<p>“谁拨号，谁就有公网IP” ——即此时如果路由器已经成功设置了路由模式（使用PPPoE拨号上网），则可以在路由器后台查看到其公网IP地址，如：</p>
+<figure>
+<img src="https://pic.islet.space/2021/11/202111130020200.png" alt="image-20211113001927548" /><figcaption aria-hidden="true">image-20211113001927548</figcaption>
+</figure>
+<h2 id="ddns域名绑定">DDNS域名绑定</h2>
+<p>虽然已经获得公网IP，但是该IP还是会随机变动，还会需要使用DDNS服务将公网IP映射到对应域名上，而群辉服务器则提供此功能，此处需要自己申请一个域名（此步骤省略）。进入群辉服务器后台，开启DDNS功能，将域名和随机公网IP绑定和更新。</p>
+<p>另外，需要自己上所用的服务器上开启API Token，并提供给群辉DDNS服务（类似于授权，可以由DDNS服务自己检测家庭网络的公网IP，并自动绑定最新的公网IP）。</p>
+<h3 id="api-token申请">API Token申请</h3>
+<p>下方以腾讯云的DNSPOD为例，点击DNSPOD中的 <strong>API密钥</strong>，进行 <strong>新建密钥</strong> 即可，将对应的 <strong>SecretId</strong> 和 <strong>SecretKey</strong> 复制下来。</p>
+<figure>
+<img src="https://pic.islet.space/2021/11/202111130022335.png" alt="image-20211113002208036" /><figcaption aria-hidden="true">image-20211113002208036</figcaption>
+</figure>
+<figure>
+<img src="https://pic.islet.space/2021/11/202111130022186.png" alt="image-20211113001142315" /><figcaption aria-hidden="true">image-20211113001142315</figcaption>
+</figure>
+<h3 id="ddns添加">DDNS添加</h3>
+<p>将获取到的 <strong>SecretId</strong> 填写到 <strong>用户名/电子邮件</strong> 中， 将 <strong>SecretKey</strong> 填写到 <strong>密码/密钥</strong> 中。</p>
+<figure>
+<img src="https://pic.islet.space/2021/11/202111130022727.png" alt="image-20211113001623814" /><figcaption aria-hidden="true">image-20211113001623814</figcaption>
+</figure>
+<p>经过前面的步骤，可以看到群晖NAS服务器自动测试的 <strong>DDNS状态</strong> 为 <strong>正常</strong> 即可。</p>
+<figure>
+<img src="https://pic.islet.space/2021/11/202111130022986.png" alt="image-20211112175853513" /><figcaption aria-hidden="true">image-20211112175853513</figcaption>
+</figure>
+<h2 id="端口映射和转发">端口映射和转发</h2>
+<p><strong>端口映射</strong>：Port Mapping， 即将内网中的主机的一个端口映射到外网主机的一个端口，以提供相应的服务。当用户访问外网IP的这个端口时，服务器自动将请求映射到对应局域网内部的机器上。</p>
+<p><strong>端口转发</strong>：Port Forwarding， 即将外网对应 EA 端口上收到的数据转发到内网某个主机对应的某个 IA 端口上，或者反过来将内网某个主机 IB 端口的数据转发到对应外网的 EB端口 上。</p>
+<p><strong>UPnP协议</strong>：Universal Plug and Play，即 即插即用。主要是微软在推行的一个标准，适用于家庭网络，用于设备间的发现和连接。UPnP 最大的愿景就是希望实现任何设备只要一接入网络就能被网络中的所有其它设备发现，做到完全的即插即用。UPnP是一个多层协议构成的框架体系，每一层都以相邻的下层为基础，同时又是相邻上层的基础。直至达到应用层为止。</p>
+<h3 id="手动端口转发或自动端口转发">手动端口转发或自动端口转发</h3>
+<p>手动端口转发：</p>
+<p>自动端口转发：</p>
+<figure>
+<img src="https://pic.islet.space/2021/11/202111130022401.png" alt="image-20211112180357037" /><figcaption aria-hidden="true">image-20211112180357037</figcaption>
+</figure>
+<figure>
+<img src="https://pic.islet.space/2021/11/202111211632483.png" alt="image-20211112175632036" /><figcaption aria-hidden="true">image-20211112175632036</figcaption>
+</figure>
+<figure>
+<img src="https://pic.islet.space/2021/11/202111130022536.png" alt="image-20211112180450097" /><figcaption aria-hidden="true">image-20211112180450097</figcaption>
+</figure>
+<h2 id="配置dmz">配置DMZ</h2>
+<blockquote>
+<p>通过配置DMZ，我们可以将需要保护的Web应用程序服务器和数据库系统放在内网中，把没有包含敏感数据、担当代理数据访问职责的主机放置于DMZ中，这样就为应用系统安全提供了保障。</p>
+<p>DMZ使包含重要数据的内部系统免于直接暴露给外部网络而受到攻击，攻击者即使初步入侵成功，还要面临DMZ设置的新的障碍。</p>
+</blockquote>
+<figure>
+<img src="https://pic.islet.space/2021/11/202111130022178.png" alt="image-20211112172411026" /><figcaption aria-hidden="true">image-20211112172411026</figcaption>
+</figure>
+<h3 id="dmz开启前">DMZ开启前</h3>
+<figure>
+<img src="https://pic.islet.space/2021/11/202111130022255.png" alt="image-20211112172343953" /><figcaption aria-hidden="true">image-20211112172343953</figcaption>
+</figure>
+<h3 id="dmz开启后">DMZ开启后</h3>
+<p>虽然也是随机公网IP，但是可以使用DMZ将连接到路由器的设备映射到外网上。</p>
+<figure>
+<img src="https://pic.islet.space/2021/11/202111130022517.png" alt="image-20211112175925384" /><figcaption aria-hidden="true">image-20211112175925384</figcaption>
+</figure>
+<h2 id="安全证书设置">安全证书设置</h2>
+<p>设置安全证书及其使用范围，<mark style="font-weight: 900;">不要使用自我签名的证书，所有浏览器都会识别和阻止你访问的</mark>。</p>
+<p>经过前面DDNS的 API token 配置之后，群晖NAS能够获取到对应域名的免费证书，并提供页面进行管理，将所有使用到的应用安全验证证书都设置为对应云服务提供商提供的证书即可。</p>
+<figure>
+<img src="https://pic.islet.space/2021/11/202111130022177.png" alt="image-20211112180133874" /><figcaption aria-hidden="true">image-20211112180133874</figcaption>
+</figure>
+<h1 id="后台服务器访问">后台服务器访问</h1>
+<p>经过上面复杂的折腾之后，就可以使用自定义的域名进行后台登录和管理了。</p>
+<p>输入 <code>https://nax.xxx.xxx:5000</code> 即可进行后台服务器的访问，也可以使用 ping 进行测试，如下：</p>
+<figure>
+<img src="https://pic.islet.space/2021/11/202111130029734.png" alt="image-20211113002928045" /><figcaption aria-hidden="true">image-20211113002928045</figcaption>
+</figure>
+<h1 id="远程驱动器设置">远程驱动器设置</h1>
+<ol type="1">
+<li>在文件管理器中右键点击 <strong>此电脑</strong> 的属性</li>
+<li>然后点击 <strong>映射网络驱动器</strong></li>
+</ol>
+<figure>
+<img src="https://pic.islet.space/2021/11/202111130022518.png" alt="image-20211112174837538" /><figcaption aria-hidden="true">image-20211112174837538</figcaption>
+</figure>
+<ol start="3" type="1">
+<li>选择本地的 <strong>虚拟驱动号</strong> 进行设置</li>
+<li>输入 <strong>网络地址</strong> 和 <strong>端口号</strong>，格式如 <code>https://nas.xxx.xxx:5006</code></li>
+</ol>
+<figure>
+<img src="https://pic.islet.space/2021/11/202111130022793.png" alt="image-20211112175022321" /><figcaption aria-hidden="true">image-20211112175022321</figcaption>
+</figure>
+<ol start="5" type="1">
+<li>按照提示输入群晖提供的账户名和密码即可进行连接</li>
+</ol>
+<figure>
+<img src="https://pic.islet.space/2021/11/202111130022607.png" alt="image-20211112174513370" /><figcaption aria-hidden="true">image-20211112174513370</figcaption>
+</figure>
+<ol start="6" type="1">
+<li>连接完毕即可查看到对应的网络驱动器</li>
+</ol>
+<figure>
+<img src="https://pic.islet.space/2021/11/202111130022504.png" alt="image-20211112174559989" /><figcaption aria-hidden="true">image-20211112174559989</figcaption>
+</figure>
+<h1 id="参考">参考</h1>
+<ol type="1">
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/75648110">【干货】什么是端口转发？什么是端口映射？如何设置端口映射？</a></li>
+<li><a target="_blank" rel="noopener" href="https://baike.baidu.com/item/DMZ/631225#6">DMZ</a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/braddoris/article/details/41646789">upnp协议简介（一）</a></li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://islet.space/2021/10/27/Programming/C++/2021-10-27-C++-Primer-Plus-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Liewzheng">
+      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coder的孤岛">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/10/27/Programming/C++/2021-10-27-C++-Primer-Plus-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="post-title-link" itemprop="url">C++ Primer Plus 学习笔记</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-10-27 11:00:00" itemprop="dateCreated datePublished" datetime="2021-10-27T11:00:00+08:00">2021-10-27</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2021-10-31 10:40:41" itemprop="dateModified" datetime="2021-10-31T10:40:41+08:00">2021-10-31</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Programming/" itemprop="url" rel="index"><span itemprop="name">Programming</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>本笔记不是全面的C++学习笔记，而是基于个人在原有的C语言基础和浅薄的C++的开发经验上的补足笔记。</p>
+<p>本笔记仅供个人学习记录，不提供完整学习指导，如有需要请自行阅读《<a target="_blank" rel="noopener" href="https://storage.islet.space/01_Learning/02_CPP/C%2B%2B_Primer_Plus.pdf">C++ Primer Plus</a>》。</p>
+<p>本文会参考 GNU C++ 进行代码调试，部分文档内容会参考 MS C++ 进行理解。</p>
+<h1 id="简介">简介</h1>
+<p>C++融合了三种不同的编程方式：</p>
+<ul>
+<li>面向过程编程（继承于C）</li>
+<li>面向对象编程</li>
+<li>泛型编程（Generic Programming），即C++模板（Template）</li>
+</ul>
+<h2 id="过程-vs-对象">过程 VS 对象</h2>
+<p><strong>面向过程编程</strong>（Process Oriented Programming），即 <strong>结构化编程</strong> 或 <strong>过程结构化编程</strong>，是指根据执行的操作来构思一个程序。程序任务需要解决的问题按照 “1、2、3、4” 这样的顺序一一编写，如果程序任务过大，则将较大的任务拆解成较小的可以理清结构逻辑的小任务去完成。C语言的编程开发思路就是使用程序模块（函数）来表示各个任务模块。</p>
+<p><strong>面向对象编程</strong>（Object Oriented Programming），简称 OOP。</p>
+<p>结构化编程在程序逻辑的清晰度和可靠性上占据优势，但是在代码量上和面向对象相比不占优势</p>
+<blockquote>
+<p>为了应付代码量的挑战，与强调算法的过程性编程不同，OOP强调数据。过程性编程试图使问题满足语言要求，OOP则是使语言满足问题的要求。</p>
+</blockquote>
+<p><strong>类</strong>（Class） 是规定了 <strong>数据</strong> 和 <strong>操作</strong> 的 <strong>数据类型</strong>（Data Type）。类所创建的实体称为对象。</p>
+<blockquote>
+<p>OOP 强调的是编程的数据方面，GP编程强调的是 <mark style="font-weight: 900;">独立于特定数据类型</mark>，即强调 <strong>通用</strong> 和 <strong>非特定</strong> 类型。</p>
+</blockquote>
+<figure>
+<img src="https://pic.islet.space/2021/10/20211030171646.png" alt="image-20211027135117490" /><figcaption aria-hidden="true">image-20211027135117490</figcaption>
+</figure>
+<h2 id="系统的位数">系统的位数</h2>
+<ul>
+<li>系统的位数是由什么决定的？包括嵌入式系统的8位、16位、32位和通用系统的32位和64位？</li>
+</ul>
+<p>位数 是由CPU的最大寻址空间决定的。</p>
+<h1 id="new-features-in-c">New Features in C++</h1>
+<p>以下主要从C++和C的区别点进行记录，是个人之前从未掌握过的知识，另外也会记录C++的一些高级用法。</p>
+<h2 id="statement">Statement</h2>
+<ul>
+<li>C与C++的语句申明位置有哪些差异？</li>
+</ul>
+<p>C语言的变量声明通常都应位于函数或过程开始位置（Pascal也是），而C++并没有该限制，因此这点可以说是C++的优点也可以是缺点。</p>
+<h3 id="range-based-for">Range-based for</h3>
+<p>C++11 引入了一种崭新的 <code>for()</code> 循环形式，可以逐一迭代某个给定的 <strong>区间</strong>、<strong>数组</strong> 或 <strong>集合</strong>（range, array or collection） 内的每一个元素。而其他语言可能称之为 <code>foreach</code> 循环，其一般性用法如下：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span>(decl:coll)&#123;</span><br><span class="line">    statement</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>其中：</p>
+<ul>
+<li><em>decl</em> 是给定之 <em>coll</em> 集合中的每个元素的声明。</li>
+<li><em>statement</em> 会针对给定之 <em>decl</em> 进行执行</li>
+</ul>
+</blockquote>
+<p>使用样例（下左）及其输出结果（下右）如：</p>
+<figure>
+<img src="https://pic.islet.space/2021/10/20211030171650.png" alt="image-20211030084723644" /><figcaption aria-hidden="true">image-20211030084723644</figcaption>
+</figure>
+<p>而且上面这种是基于 C-style array 的新旧语法搭配的 C++，实际上如果 <em>coll</em> 集合提供成员函数 <code>begin()</code> 和 <code>end()</code> ，那么使用 <code>for(decl:coll)</code> 时便等同于使用 <code>for(auto _pos=coll.begin(), _end=coll.end(); _pos!=_end;++_pos)</code></p>
+<h2 id="data-type">Data Type</h2>
+<ul>
+<li>数据类型的大小由什么决定？数据类型大小（即占空内存空间）与系统位数、编译器的关联性？</li>
+<li>嵌入式系统与通用系统的数据类型大小差异在哪？</li>
+<li>double 和 float 在内存上的差异？</li>
+</ul>
+<p>在 C++ 中， <strong>变量</strong>（Variable） 一词通常用于 引用 <strong>标量数据类型</strong> 的 实例，而 <strong>其他类型</strong>（class / struct）的实例通常称为 <strong>对象</strong>（Object）。</p>
+<p>C++ 是 <strong>强类型语言</strong> ，也是 <strong>静态类型</strong>。</p>
+<p>在代码中声明变量时，必须 <mark>显式指定其类型</mark>，或使用 关键字指示编译器从初始值表达式 <strong><code>auto</code></strong> 推断类型。 在代码中声明函数时，必须指定每个参数的类型及其返回值；如果函数未返回任何 <strong><code>void</code></strong> 值，则必须指定 。当使用允许任意类型参数的函数模板时例外。</p>
+<h3 id="基本内置类型">基本（内置）类型</h3>
+<p><strong>基本数据类型</strong>，简称 <strong>基本类型</strong> 或 <strong>基类型</strong>。</p>
+<p>下图显示了 Microsoft C++ 实现中的内置类型的相对大小：</p>
+<figure>
+<img src="https://pic.islet.space/2021/10/20211030171653.png" alt="多个内置类型的相对大小（以字节为单位）的关系图。" /><figcaption aria-hidden="true">多个内置类型的相对大小（以字节为单位）的关系图。</figcaption>
+</figure>
+<p>下表列出了最常用的基本类型及其在 Microsoft C++ 实现中的大小：</p>
+<table>
+<colgroup>
+<col style="width: 21%" />
+<col style="width: 9%" />
+<col style="width: 68%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>类型</th>
+<th>大小</th>
+<th>评论</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong><code>int</code></strong></td>
+<td>4 个字节</td>
+<td>整数值的默认选择。</td>
+</tr>
+<tr class="even">
+<td><strong><code>double</code></strong></td>
+<td>8 个字节</td>
+<td>浮点值的默认选择。</td>
+</tr>
+<tr class="odd">
+<td><strong><code>bool</code></strong></td>
+<td>1 个字节</td>
+<td>表示可为 true 或 false 的值。</td>
+</tr>
+<tr class="even">
+<td><strong><code>char</code></strong></td>
+<td>1 个字节</td>
+<td>用于早期 C 样式字符串或 std:: 字符串对象中无需转换为 UNICODE 的 ASCII 字符。</td>
+</tr>
+<tr class="odd">
+<td><strong><code>wchar_t</code></strong></td>
+<td>2 个字节</td>
+<td>表示可能以 UNICODE 格式进行编码的“宽”字符值（Windows 上为 UTF-16，其他操作系统上可能不同）。 这是用于 <code>std::wstring</code> 类型字符串的字符类型。</td>
+</tr>
+<tr class="even">
+<td><strong><code>unsigned char</code></strong></td>
+<td>1 个字节</td>
+<td>C++ 没有内置字节类型。 使用 <strong><code>unsigned char</code></strong> 表示字节值。</td>
+</tr>
+<tr class="odd">
+<td><strong><code>unsigned int</code></strong></td>
+<td>4 个字节</td>
+<td>位标志的默认选项。</td>
+</tr>
+<tr class="even">
+<td><strong><code>long long</code></strong></td>
+<td>8 个字节</td>
+<td>表示非常大的整数值。</td>
+</tr>
+</tbody>
+</table>
+<p>类型数据的宽度（Width），即占用内存大小是由 <strong>计算机字长</strong> 和 <strong>编译程序</strong> 决定的。计算机字长提供了硬件计算精度的支持，编译程序则提供了源程序到机器码的转换。</p>
+<p>下方为C/C++ 在通用系统或嵌入式系统中的常见数据类型的大小，所有值的单位均为 <em>bit</em> 。</p>
+<table>
+<colgroup>
+<col style="width: 9%" />
+<col style="width: 5%" />
+<col style="width: 8%" />
+<col style="width: 6%" />
+<col style="width: 17%" />
+<col style="width: 18%" />
+<col style="width: 17%" />
+<col style="width: 15%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>BASIC DATA TYPE</th>
+<th>8 bit MCU</th>
+<th>16bit MCU (51)</th>
+<th>32bit (x86)</th>
+<th>32bit (TI F28004x)<br>CLA ON</th>
+<th>32bit (TI F28004x)<br>CLA OFF</th>
+<th>64bit (x86)<br>in C++ (g++)</th>
+<th>64bit (x86)<br>in C (gcc)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>char</td>
+<td></td>
+<td>8</td>
+<td>8</td>
+<td>8</td>
+<td>8</td>
+<td>8</td>
+<td>8</td>
+</tr>
+<tr class="even">
+<td>short</td>
+<td></td>
+<td>16</td>
+<td>16</td>
+<td>16</td>
+<td>8</td>
+<td>16</td>
+<td>16</td>
+</tr>
+<tr class="odd">
+<td>int</td>
+<td></td>
+<td>16</td>
+<td>32</td>
+<td>32</td>
+<td><mark>16</mark></td>
+<td>32</td>
+<td>32</td>
+</tr>
+<tr class="even">
+<td>long</td>
+<td></td>
+<td>32</td>
+<td>32</td>
+<td>32</td>
+<td><mark>16</mark></td>
+<td>64</td>
+<td>64</td>
+</tr>
+<tr class="odd">
+<td>long long</td>
+<td></td>
+<td>/</td>
+<td>64</td>
+<td>64</td>
+<td>32</td>
+<td>64</td>
+<td>64</td>
+</tr>
+<tr class="even">
+<td>float</td>
+<td></td>
+<td>32</td>
+<td>32</td>
+<td>32</td>
+<td>32</td>
+<td>32</td>
+<td>32</td>
+</tr>
+<tr class="odd">
+<td>double</td>
+<td></td>
+<td>32</td>
+<td>64</td>
+<td></td>
+<td>16</td>
+<td>64</td>
+<td>64</td>
+</tr>
+<tr class="even">
+<td>long double</td>
+<td></td>
+<td>/</td>
+<td></td>
+<td></td>
+<td>32</td>
+<td>128</td>
+<td>128</td>
+</tr>
+</tbody>
+</table>
+<p>下方内容转自网络，待验证。</p>
+<blockquote>
+<p>（x86平台下）<code>long int</code> 即 <code>long</code>，给人的感觉好像是长整型，但实际上，它和 <code>int</code> 一样，只有32位。cppreference 给出的定义如下，但在实际的使用中，<code>long</code> 与 <code>int</code> 几乎没有区别。</p>
+<blockquote>
+<p><strong><em>int</em></strong> - basic integer type. The keyword int may be omitted if any of the modifiers listed below are used. If no length modifiers are present, it’s guaranteed to have a width of at least 16 bits. However, on 32/64 bit systems it is almost exclusively guaranteed to have width of at least 32 bits. <strong><em>long</em></strong> - target type will have width of at least 32 bits.</p>
+</blockquote>
+</blockquote>
+<p><strong>实际上经过测试</strong>：在 x86_64 平台下，C 和 C++ 中的 <code>long</code> 长度都是要比 <code>int</code> 更长的，即 <code>int</code> 默认为 <code>32bit</code> 宽度，<code>long</code> 为 <code>64bit</code> 宽度。</p>
+<figure>
+<img src="https://pic.islet.space/2021/10/20211030171657.png" alt="image-20211028101248341" /><figcaption aria-hidden="true">image-20211028101248341</figcaption>
+</figure>
+<h3 id="embedded-system">Embedded System</h3>
+<p>嵌入式C语言中常用的数据类型如下图所示，而不同的</p>
+<p><img src="https://pic.islet.space/2021/10/20211030171712.png" alt="image-20211027155153218" style="zoom: 67%;" /></p>
+<h3 id="double-float">double / float</h3>
+<p><strong>IEEE二进制浮点数算术标准</strong>（<strong>IEEE 754</strong>）是20世纪80年代以来最广泛使用的浮点数运算标准，为许多CPU与浮点运算器所采用。这个标准定义了表示浮点数的格式（包括负零-0）与反常值（denormal number）），一些特殊数值（无穷（Inf）与非数值（NaN）），以及这些数值的“浮点数运算符”；它也指明了四种数值舍入规则和五种例外状况（包括例外发生的时机与处理方式）。</p>
+<p>IEEE 754规定了四种表示浮点数值的方式：单精确度（32位）、双精确度（64位）、延伸单精确度（43比特以上，很少使用）与延伸双精确度（79比特以上，通常以80比特实做）。只有32位模式有强制要求，其他都是选择性的。大部分编程语言都有提供IEEE浮点数格式与算术，但有些将其列为非必需的。例如，IEEE 754问世之前就有的C语言，现在有包括IEEE算术，但不算作强制要求（C语言的<code>float</code>通常是指IEEE单精确度，而<code>double</code>是指双精确度）。</p>
+<p>该标准的全称为<strong>IEEE二进制浮点数算术标准（ANSI/IEEE Std 754-1985）</strong>，又称<strong>IEC 60559:1989，微处理器系统的二进制浮点数算术</strong>（本来的编号是IEC 559:1989）。后来还有“与基数无关的浮点数”的“IEEE 854-1987标准”，有规定基数为2跟10的状况。现在最新标准是“IEEE 854-2008标准”。</p>
+<h2 id="variable">Variable</h2>
+<p>C++ 与 ANSI C（C99标准）不同之处，在于后者只保证名称中的前63个字符有意义，即使第64个字符不同，但是只要前63个字符相同的变量则被认为是相同的。</p>
+<p>在某些情况下，其他程序员会使用的变量命名风格及其意义：</p>
+<ul>
+<li><code>str</code> 或 <code>sz</code> 前缀：表示以空字符结束的字符串</li>
+<li><code>b</code> 前缀：表示布尔值</li>
+<li><code>p</code> 前缀：表示指针</li>
+<li><code>c</code> 前缀：表示单个字符</li>
+</ul>
+<h2 id="class">Class</h2>
+<p><strong>类</strong>：（用户定义/标准的）数据类型规范，详细描述了如何表示信息以及对数据执行的操作。</p>
+<p><strong>对象</strong>：是根据类规范创建的实体（好似之于变量和基本数据类型）。</p>
+<p>就像函数可以来自函数库一样，类也可以来自 <strong>类库</strong>。从技术上说，大部分类库都没有被内置到C++语言中，而是语言标准指定的类。<strong>类定义</strong> 位于类库文件中，并没有被内置到编译器里（有需要可以修改，虽然不建议）。</p>
+<p>C++之所以如此有吸引力，很大程度上是由于存在大量支持UNIX、Macintosh 和 Windows 编程的类库。</p>
+<p><strong>类描述</strong> 指定了可以对类对象执行的所有操作。要对特定对象执行这些允许的操作有两种方法，一是直接使用类方法（本质即函数调用），二是重定义运算符（如 <code>cin</code> 和 <code>cout</code> 使用的 <code>&gt;&gt;</code> 和 <code>&lt;&lt;</code> ）</p>
+<h2 id="function">Function</h2>
+<p>被调用的函数称为 <strong>被调用函数</strong>（called function），包含函数调用的函数称为 <strong>调用函数</strong>（calling function）。</p>
+<p><strong>函数原型</strong>：即 <strong>函数声明</strong>，函数原型或声明只描述函数接口，指仅有函数头和分号 <code>;</code> 而没有函数体的语句。函数原型定义了需要传递给函数的参数以及函数本身需要返回的值的类型。</p>
+<p><strong>库文件</strong>：存放了函数编译代码的文件。</p>
+<p><strong>头文件</strong>：包含了函数原型的文件。</p>
+<figure>
+<img src="https://pic.islet.space/2021/10/20211030171703.png" alt="image-20211028085847535" /><figcaption aria-hidden="true">image-20211028085847535</figcaption>
+</figure>
+<blockquote>
+<p>在有些语言中，有返回值的函数被称为 <strong>函数</strong>（function），无返回值的函数被称为 <strong>过程</strong>（procedure） 或 子程序（subroutine）。</p>
+<p>但在C/C++中，都被称为 <strong>函数</strong>。</p>
+</blockquote>
+<h3 id="main-function">Main Function</h3>
+<ul>
+<li>有什么有些IDE中的main函数的括号里是带参数的？</li>
+</ul>
+<p>是否在 主函数<code>main()</code> 参数括号 <code>()</code> 中使用关键字 <code>void</code> ，在C++和C中有明显的区别：</p>
+<ul>
+<li>在C++中，让括号空着和在括号中写 <code>void</code> 等效。</li>
+<li>而在C中，让括号空着意味着对是否接受参数保持沉默。</li>
+</ul>
+<blockquote>
+<p><code>int main(int argc, const char * argv[])</code> 是UNIX和linux中的标准写法。<code>int main()</code> 只是默许的用法。</p>
+<p>使用main函数时经常都是不带参数的，因此main 后的括号都是空括号。实际上，main函数可以带参数，这个参数可以认为是 main函数的 <strong>形式参数</strong>。</p>
+<p>Ｃ语言规定</p>
+<ol type="1">
+<li>main函数的参数只能有两个，习惯上这两个参数写为 <code>argc</code> 和 <code>argv</code>。因此，main函数的函数头可写为：<code>main (argc,argv)</code> 。</li>
+<li><code>argc</code> （第一个形参）必须是 <strong>整型变量</strong> ，<code>argv</code> （第二个形参）必须是指向字符串的 <strong>指针数组</strong>。</li>
+</ol>
+<p>由于main函数不能被其它函数调用，因此不可能在程序内部取得实际值。那么，在何处把实参值赋予main函数的形参呢?</p>
+<p>实际上，main函数的参数值是从 <strong>操作系统命令行</strong>/Terminal 上获得的。当我们要运行一个可执行文件时，输入空格，输入文件名，再输入实际参数即可把这些实参传送到main的形参中去。</p>
+</blockquote>
+<p><code>argc</code> 的数值会随着通过命令行传递给可执行文件的参数的增加而增加，即 <code>argc</code> 其实是代表着 <strong>参数的数量</strong>。</p>
+<figure>
+<img src="https://pic.islet.space/2021/10/20211030171706.png" alt="image-20211027144512641" /><figcaption aria-hidden="true">image-20211027144512641</figcaption>
+</figure>
+<h2 id="编译指令">编译指令</h2>
+<p><code>using</code> 是编译指令的关键字，</p>
+<h1 id="参考">参考</h1>
+<ol type="1">
+<li>《<a target="_blank" rel="noopener" href="https://storage.islet.space/01_Learning/02_CPP/C%2B%2B_Primer_Plus.pdf">C++ Primer Plus</a>》</li>
+<li><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/ab21bfe6a5b2">int main(int argc, const char * argv[])</a></li>
+<li><a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/cpp/cpp/cpp-type-system-modern-cpp?view=msvc-160">C++ 类型系统</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.cnblogs.com/noble/p/4144120.html">IEEE二进制浮点数算术标准（IEEE 754）</a></li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -380,7 +976,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-10-07 04:14:16" itemprop="dateModified" datetime="2021-10-07T04:14:16+08:00">2021-10-07</time>
+        <time title="Modified: 2021-11-21 16:38:34" itemprop="dateModified" datetime="2021-11-21T16:38:34+08:00">2021-11-21</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -490,7 +1086,7 @@ COMPILE AND LINK
 </ul>
 <p><strong>错误提示</strong>：对int类型的非恒定值引用不能与int类型的临时值绑定</p>
 <figure>
-<img src="/Users/liewzheng/Library/Application%20Support/typora-user-images/image-20211007035818560.png" alt="image-20211007035818560" /><figcaption aria-hidden="true">image-20211007035818560</figcaption>
+<img src="https://pic.islet.space/2021/11/image-20211007035818560.png" alt="image-20211007035818560" /><figcaption aria-hidden="true">image-20211007035818560</figcaption>
 </figure>
 <p>前方已经说了，类型的自动转换相关注意事项，同一模板参数的两个参数类型必须完全匹配。如果在同一个 <code>.cpp</code> 文件中书写下面下面代码，则会出现下方报错提示 “<strong>推导类型冲突</strong>（deduced conflicting types for parameter ’T’）”。</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Max</span>(<span class="number">4</span>, <span class="number">7.2</span>);</span><br><span class="line"><span class="built_in">Max</span>(<span class="string">&quot;Hello&quot;</span>,s);</span><br></pre></td></tr></table></figure>
@@ -2869,405 +3465,6 @@ F(x) = \frac{1}{\sigma \sqrt{2\pi}} \int^x_0 \frac{1}{t} e^{-{(lnt-\mu)^2}/{2\si
 </tr>
 </tbody>
 </table>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://islet.space/2021/08/21/Hardware/Circuit/2021-08-21-NTC%E7%83%AD%E6%95%8F%E7%94%B5%E9%98%BB/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Liewzheng">
-      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Coder的孤岛">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/08/21/Hardware/Circuit/2021-08-21-NTC%E7%83%AD%E6%95%8F%E7%94%B5%E9%98%BB/" class="post-title-link" itemprop="url">NTC热敏电阻</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-
-    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
-    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2021-08-21 08:40:00" itemprop="dateCreated datePublished" datetime="2021-08-21T08:40:00+08:00">2021-08-21</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-08-23 01:17:40" itemprop="dateModified" datetime="2021-08-23T01:17:40+08:00">2021-08-23</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Hardware/" itemprop="url" rel="index"><span itemprop="name">Hardware</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="ntc及热敏电阻">NTC及热敏电阻</h1>
-<p><strong>NTC</strong>（<em>Negative Temperature Coefficient</em>）是指 <mark>随温度上升电阻呈指数关系减小、具有负温度系数的热敏电阻现象和材料</mark>。</p>
-<p>该类材料是利用锰、铜、硅、钴、铁、镍、锌等两种或两种以上的金属氧化物进行充分混合、成型、烧结等工艺而成的半导体陶瓷，可制成具有负温度系数（NTC）的热敏电阻。其 <strong>电阻率</strong> 和 <strong>材料常数</strong> 随材料成分比例、烧结气氛、烧结温度和结构状态不同而变化。现在还出现了以碳化硅、硒化锡、氮化钽等为代表的非氧化物系NTC热敏电阻材料。</p>
-<blockquote>
-<p>1834年，科学家首次发现了硫化银有 <strong>负温度系数</strong> 的特性。</p>
-<p>1930年，科学家发现氧化亚铜-氧化铜也具有负温度系数的性能，并将之成功地运用在航空仪器的温度补偿电路中。随后，由于晶体管技术的不断发展，热敏电阻器的研究取得重大进展。</p>
-<p>1960年研制出了NTC热敏电阻器。NTC热敏电阻器广泛用于测温、控温、温度补偿等方面。</p>
-</blockquote>
-<p><strong>热敏电阻</strong> （<em>Thermistor</em>）也可作为电子线路元件用于仪表线路温度补偿和温差电偶冷端温度补偿等。利用NTC热敏电阻的自热特性可实现自动增益控制，构成RC振荡器稳幅电路，延迟电路和保护电路。在自热温度远大于环境温度时阻值还与环境的散热条件有关，因此在流速计、流量计、气体分析仪、热导分析中常利用热敏电阻这一特性，制成专用的检测元件。</p>
-<p><strong>功率型NTC热敏电阻</strong> 多用于电源抑制浪涌。抑制浪涌用NTC热敏电阻器，是一种大功率的圆片式热敏电阻器，常用于有电容器、加热器和马达启动的电子电路中。 在电路电源接通瞬间，电路中会产生比正常工作时高出许多倍的浪涌电流，而NTC热敏电阻器的初始阻值较大，可以抑制电路中过大的电流，从而保护其电源电路及负载。当电路进入正常工作状态时，热敏电阻器由于通过电流而引起阻体温度上升，电阻值下降至很小，不会影响电路的正常工作。</p>
-<h1 id="b值特性">B值特性</h1>
-<p>热敏电阻的 <strong>B值</strong>（B-value） 是NTC的属性之一，B值简单的说就是 <strong>材料系数</strong>（<em>Material Coefficient</em>）。</p>
-<p><strong>相同温度区间不同的B值</strong>，说明材料可能不一样，因为NTC热敏电阻是负温度系数温度升高阻值成规律下降，B值代表曲线的弯曲程度或者说温度的敏感指数，单位温度变化的时候阻值增幅程度就代表B值。</p>
-<p>通俗的说，即当温度降低，阻值曲线发生变化时会陡一点还是平一点。一般来说B值越大曲线越陡，当曲线越陡说明电阻值的变化就越大，相对来说就灵敏些；B值越小曲线越平，当曲线越平说明电阻值的变化就没那么大，相对来说阻值温度系数也就越小。</p>
-<p><strong>注意</strong>：B值是 <u>经由人为计算出来的</u> 逼近某款热敏电阻 <u>在某个温度区间内的</u> 温度阻值特性曲线的 常数/系数。</p>
-<p>因为B值反映的是 <strong>两个温度点之间</strong> 的阻值变化规律，可以用以下公式来计算，以每摄氏度的百分比 <code>％/°C​​</code> 为单位。 <span class="math display">\[
-B = {ln(R_{T1}) - ln(R_{T2})\over {1 \over {T_1}} -{ 1 \over T_2}}
-\]</span></p>
-<blockquote>
-<p>$ R1 $ 或 $ RT1 $：温度T1的时候零功率电阻值</p>
-<p>$ R2 $​ 或 $ RT2 $​​：温度T2的时候零功率电阻值</p>
-<p>T1 = 273.15 k + (T1℃)</p>
-<p>T2 = 273.15 k + (T2℃)</p>
-</blockquote>
-<p>除非特别指出，B值通常是在[25, 50]这个温度范围中进行测量，由 <code>T1 = 25℃（298.15K）</code> 和 <code>T2 = 50℃（323.15K）</code> 时的零功率电阻值计算而得。</p>
-<p>根据式1，若已知B值的情况下，可以得出目标温度对应的阻值，如下式2： <span class="math display">\[
-R_{T2} = R_{T1} * e^{B * ({1 \over T_2} - {1 \over T_1})}
-\]</span></p>
-<blockquote>
-<p>e = 2.718281828459045</p>
-</blockquote>
-<h1 id="温度系数">温度系数</h1>
-<p>NTC热敏电阻的 <strong>温度系数</strong> 定义为 <mark>相对于温度变化的阻值的相对变化</mark>。计算NTC <strong>热敏电阻温度系数</strong> 的最简单转换公式如下： <span class="math display">\[
-α = {-β \over T^2}
-\]</span></p>
-<blockquote>
-<p><strong>β</strong>：B常数</p>
-<p><strong>T</strong>：25摄氏度时的电阻值</p>
-</blockquote>
-<p>最终结果之所以带上负号，因为是“负温度系数”啊，不带的话就是“正温度系数”。</p>
-<h1 id="阻值特性表">阻值特性表</h1>
-<p>厂家在提供热敏电阻电气特性时都会给出B值，但并不是是就不需要阻值特性表了。</p>
-<p>使用B值并能够推算出全部想要的温度阻值，因为B值所描述的是某个温度区间内的温度和阻值关系，而热敏电阻所呈现的是温度与阻值的非线性关系，也就是说这种关系没法通过B值和公式准确描述全部温度区间的阻值关系。否则一旦不同厂家的热敏电阻其B值相同，用公式来推导那岂不是阻值全是一样。</p>
-<figure>
-<img src="https://pic.islet.space/2021/08/image-20210821102248552.png" alt="image-20210821102248552" /><figcaption aria-hidden="true">image-20210821102248552</figcaption>
-</figure>
-<div style="font-size: 0.8rem; font-weight: 900; text-align: center;">
-某温度-阻值特性表示例
-</div>
-<p>例如，[-25℃ ~ 50℃]内的B值已给出，意思就是说在25~50度这个区间用公式是完全没有问题的，超出这个范围，那么B值是不同的，所以不在这个范围用公式得出的阻值也是不对的。</p>
-<p>如下图所示，为三款B值相同的热敏电阻，然而其阻值却不同。由此可知，B值只是一个针对每款热敏电阻的某区间参数，它只反应此热敏电阻的部分特性，并不是一个严谨的参数，在实际应用中，需要提供检测温度范围内的阻值表才是正确的做法。</p>
-<figure>
-<img src="https://pic.islet.space/2021/08/pIYBAF4On2WAc2XpAAC6ucLpfUY488.png" alt="热敏电阻应用详解" /><figcaption aria-hidden="true">热敏电阻应用详解</figcaption>
-</figure>
-<p>B值的范围一般在1800K ~ 5800k，其测温点范围通常为 [25, 50]、[25, 85]、 [0, 100] 或 [0, 50]，部分厂家可以提供特殊NTC热敏电阻 <u>B值的定制</u>。</p>
-<h1 id="案例">案例</h1>
-<p>假设客户订购10,000 W热敏电阻，其热敏电阻的精度为±0.5°C。部件号为MF52A-103，B值为3950 K.25°C（298.15 K）。</p>
-<p>根据 式3 求其 <strong>热敏电阻温度系数</strong> α ： <span class="math display">\[
-α = -{3950K \over (298.15K)^2} 
- = - 4.44 \%/℃
-\]</span> 根据热敏电阻温度系数 α 和 其器件精度求得 25℃时的温度容差为： <span class="math display">\[
-Resistance \ Tolerance\ @25℃ = α *（±0.5℃） = -4.44\%/℃ * （±0.5℃） = ± 2.22\% \ @25℃
-\]</span></p>
-<h2 id="电气特性">电气特性</h2>
-<figure>
-<img src="https://pic.islet.space/2021/08/image-20210821095249164.png" alt="image-20210821095249164" /><figcaption aria-hidden="true">image-20210821095249164</figcaption>
-</figure>
-<ul>
-<li><strong>电阻值</strong>：R25 = 50kΩ ± 2% 。即在25摄氏度下，其阻值为50k欧姆，阻值允差为百分之二。</li>
-<li><strong>B常数</strong>： B25/50 = 3950K ± 2% 。即该NTC热敏电阻的材料系数B值，在25摄氏度至50摄氏度之间的B常数为3950K，允差为百分之二。</li>
-</ul>
-<h1 id="参考">参考</h1>
-<ol type="1">
-<li><a target="_blank" rel="noopener" href="http://www.elecfans.com/yuanqijian/ptc/202001031148953.htm">热敏电阻应用与参数详解</a></li>
-<li><a target="_blank" rel="noopener" href="https://baike.baidu.com/item/NTC/16035">NTC</a></li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://islet.space/2021/08/18/Communication/2021-08-18-SPI%E9%80%9A%E4%BF%A1/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Liewzheng">
-      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Coder的孤岛">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/08/18/Communication/2021-08-18-SPI%E9%80%9A%E4%BF%A1/" class="post-title-link" itemprop="url">SPI通信</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-
-    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
-    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2021-08-18 07:50:00" itemprop="dateCreated datePublished" datetime="2021-08-18T07:50:00+08:00">2021-08-18</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-09-16 00:29:44" itemprop="dateModified" datetime="2021-09-16T00:29:44+08:00">2021-09-16</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Communication/" itemprop="url" rel="index"><span itemprop="name">Communication</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="串行外设接口">串行外设接口</h1>
-<p><strong>串行外设接口</strong>（Serial Peripheral Interface，SPI）是微控制器和外围IC（如传感器、ADC、DAC、移位寄存器、SRAM等）之间使用最广泛的接口之一。</p>
-<p>SPI是一种同步、全双工、主从式接口。来自主机或从机的数据在时钟<mark>上升沿或下降沿同步</mark>。主机和从机可以同时传输数据。SPI接口可以是 <strong>3线式</strong> 或 <strong>4线式</strong>。后述中重点介绍常用的4线SPI接口。</p>
-<p>与I2C的 <strong>多主多从</strong> 模式不同，SPI协议为 <strong>一主多从</strong> 模式。SPI所消耗的接口数也大大提升。</p>
-<h2 id="接口介绍">接口介绍</h2>
-<p><img src="https://pic.islet.space/2021/08/image-20210819075248043.png" alt="image-20210819075248043" style="zoom: 33%;" /></p>
-<div style="font-weight: 900; text-align: center;">
-图1. 含主机和从机的SPI配置
-</div>
-<p>4线SPI器件有四个信号：</p>
-<ul>
-<li>时钟(SPI CLK, SCLK)</li>
-<li>片选(CS)</li>
-<li>主机输出、从机输入(MOSI)</li>
-<li>主机输入、从机输出(MISO)</li>
-</ul>
-<p>产生时钟信号的器件称为主机。主机和从机之间传输的数据与主机产生的时钟同步。同I2C接口相比，SPI器件支持更高的时钟频率。查阅相关产品数据手册以了解SPI接口的时钟频率规格。</p>
-<p><mark style="font-weight: 900;">SPI接口只能有一个主机，但可以有一个或多个从机。</mark>图1显示了主机和从机之间的SPI连接。</p>
-<p>来自主机的片选信号用于选择从机。这 <mark style="font-weight: 900;">通常是一个低电平有效信号，拉高时从机与SPI总线断开连接</mark>。当使用多个从机时，主机需要为每个从机提供单独的片选信号。<u>本文中</u> 的片选信号始终是低电平有效信号。</p>
-<p>MOSI和MISO是数据线。MOSI将数据从主机发送到从机，MISO将数据从从机发送到主机。</p>
-<h2 id="数据传输">数据传输</h2>
-<p>要开始SPI通信，主机必须发送时钟信号，并通过使能CS信号选择从机。片选通常是低电平有效信号。因此，主机必须在该信号上发送逻辑0以选择从机。SPI是全双工接口，主机和从机可以分别通过MOSI和MISO线路同时发送数据。在SPI通信期间，数据的发送（串行移出到MOSI/SDO总线上）和接收（采样或读入总线(MISO/SDI)上的数据）同时进行。串行时钟沿同步数据的移位和采样。SPI接口允许用户灵活选择时钟的上升沿或下降沿来采样和/或移位数据。</p>
-<p><strong>需要注意</strong>：SPI接口传输的 <strong>数据位数</strong> 仍需查阅器件数据手册。</p>
-<h2 id="时钟极性和时钟相位">时钟极性和时钟相位</h2>
-<p>在SPI中，主机可以选择 <strong>时钟极性</strong>（Clock Polarity，<strong>CPOL</strong>）和 <strong>时钟相位</strong>（Clock Phase，<strong>CPHA</strong>）。</p>
-<p>在空闲状态期间，CPOL 控制 时钟极性。空闲状态是指传输开始时CS为高电平且在向低电平转变的期间，以及传输结束时CS为低电平且在向高电平转变的期间。</p>
-<p>CPHA 控制 时钟相位。<mark>根据CPHA位的状态，使用时钟上升沿或下降沿来采样和/或移位数据</mark>。主机必须 <mark>根据从机的要求选择时钟极性和时钟相位</mark>。根据CPOL和CPHA位的选择，有四种SPI模式可用，如下表：</p>
-<table>
-<thead>
-<tr class="header">
-<th>SPI 模式</th>
-<th>CPOL</th>
-<th>CPHA</th>
-<th>空闲状态下的时钟极性</th>
-<th>用于采样和/或移位数据的时钟相应</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>逻辑低电平</td>
-<td>数据在上升沿采样，在下降沿移出</td>
-</tr>
-<tr class="even">
-<td>1</td>
-<td>0</td>
-<td>1</td>
-<td>逻辑低电平</td>
-<td>数据在下降沿采样，在上升沿移出</td>
-</tr>
-<tr class="odd">
-<td>2</td>
-<td>1</td>
-<td>1</td>
-<td>逻辑低电平</td>
-<td>数据在下降沿采样，在上升沿移出</td>
-</tr>
-<tr class="even">
-<td>3</td>
-<td>1</td>
-<td>0</td>
-<td>逻辑低电平</td>
-<td>数据在上升沿采样，在下降沿移出</td>
-</tr>
-</tbody>
-</table>
-<p>下图为TI公司F280049芯片的SPI时钟模式：</p>
-<figure>
-<img src="https://pic.islet.space/2021/08/image-20210819084200284.png" alt="image-20210819084200284" /><figcaption aria-hidden="true">image-20210819084200284</figcaption>
-</figure>
-<p>下图为ADI公司ADSP21479芯片的SPI时钟模式：</p>
-<figure>
-<img src="https://pic.islet.space/2021/08/image-20210819084447672.png" alt="image-20210819084447672" /><figcaption aria-hidden="true">image-20210819084447672</figcaption>
-</figure>
-<p>后述 图2 至 图5 显示了四种SPI模式下的通信示例。</p>
-<p>在这些示例中，数据显示在MOSI和MISO线上。传输的开始和结束用绿色虚线表示，采样边沿用橙色虚线表示，移位边沿用蓝色虚线表示。请注意，这些图形仅供参考。要成功进行SPI通信，用户须参阅产品数据手册并确保满足器件的时序规格。</p>
-<p><img src="https://pic.islet.space/2021/08/205973_fig_02.png" alt="图2. SPI模式0，CPOL = 0，CPHA = 0：CLK空闲状态 = 低电平，数据在上升沿采样，并在下降沿移出" style="zoom: 60%;" /></p>
-<div style="font-weight: 900; text-align: center;">
-图2. SPI模式0，CPOL = 0，CPHA = 0：CLK空闲状态 = 低电平，数据在上升沿采样，并在下降沿移出
-</div>
-<p>图3给出了SPI模式1的时序图。在此模式下，时钟极性为0，表示时钟信号的空闲状态为低电平。此模式下的时钟相位为1，表示数据在下降沿采样（由橙色虚线显示），并且数据在时钟信号的上升沿移出（由蓝色虚线显示）。</p>
-<p><img src="https://www.analog.com/-/media/images/analog-dialogue/en/volume-52/number-3/articles/introduction-to-spi-interface/205973_fig_03.png?la=en&vs=1" alt="图3. SPI模式1，CPOL = 0，CPHA = 1：CLK空闲状态 = 低电平，数据在下降沿采样，并在上升沿移出" style="zoom:50%;" /></p>
-<div style="font-weight: 900; text-align: center;">
-图3. SPI模式1，CPOL = 0，CPHA = 1：CLK空闲状态 = 低电平，数据在下降沿采样，并在上升沿移出
-</div>
-<p>图4给出了SPI模式2的时序图。在此模式下，时钟极性为1，表示时钟信号的空闲状态为高电平。此模式下的时钟相位为1，表示数据在下降沿采样（由橙色虚线显示），并且数据在时钟信号的上升沿移出（由蓝色虚线显示）。</p>
-<p><img src="https://www.analog.com/-/media/images/analog-dialogue/en/volume-52/number-3/articles/introduction-to-spi-interface/205973_fig_04.png?la=en&vs=1" alt="图4. SPI模式2，CPOL = 1，CPHA = 1：CLK空闲状态 = 高电平，数据在下降沿采样，并在上升沿移出" style="zoom:50%;" /></p>
-<div style="font-weight: 900; text-align: center;">
-图4. SPI模式2，CPOL = 1，CPHA = 1：CLK空闲状态 = 高电平，数据在下降沿采样，并在上升沿移出。
-</div>
-<p>图5给出了SPI模式3的时序图。在此模式下，时钟极性为1，表示时钟信号的空闲状态为高电平。此模式下的时钟相位为0，表示数据在上升沿采样（由橙色虚线显示），并且数据在时钟信号的下降沿移出（由蓝色虚线显示）。</p>
-<p><img src="https://www.analog.com/-/media/images/analog-dialogue/en/volume-52/number-3/articles/introduction-to-spi-interface/205973_fig_05.png?la=en&vs=1" alt="图5. SPI模式3，CPOL = 1，CPHA = 0：CLK空闲状态 = 高电平，数据在上升沿采样，并在下降沿移出" style="zoom:50%;" /></p>
-<div style="font-weight: 900; text-align: center;">
-图5. SPI模式3，CPOL = 1，CPHA = 0：CLK空闲状态 = 高电平，数据在上升沿采样，并在下降沿移出
-</div>
-<h2 id="多从机配置">多从机配置</h2>
-<p>多个从机可与单个SPI主机一起使用。从机可以采用常规模式连接，或采用菊花链模式连接。</p>
-<h3 id="常规spi模式">常规SPI模式</h3>
-<figure>
-<img src="https://pic.islet.space/2021/08/image-20210819075431419.png" alt="image-20210819075431419" /><figcaption aria-hidden="true">image-20210819075431419</figcaption>
-</figure>
-<div style="font-weight: 900; text-align: center;">
-图6. 多从机SPI配置
-</div>
-<p>在常规模式下，主机需要为每个从机提供单独的片选信号。一旦主机使能（拉低）片选信号，MOSI/MISO线上的时钟和数据便可用于所选的从机。如果使能多个片选信号，则MISO线上的数据会被破坏，因为主机无法识别哪个从机正在传输数据。</p>
-<p>从图6可以看出，随着从机数量的增加，来自主机的片选线的数量也增加。这会快速增加主机需要提供的输入和输出数量，并限制可以使用的从机数量。可以使用其他技术来增加常规模式下的从机数量，例如使用多路复用器产生片选信号。</p>
-<h3 id="菊花链模式">菊花链模式</h3>
-<p><img src="https://pic.islet.space/2021/08/image-20210819075542602.png" alt="image-20210819075542602" style="zoom:67%;" /></p>
-<div style="font-weight: 900; text-align: center;">
-图7. 多从机SPI菊花链配置
-</div>
-<p>在菊花链模式下，所有从机的片选信号连接在一起，数据从一个从机传播到下一个从机。在此配置中，所有从机同时接收同一SPI时钟。来自主机的数据直接送到第一个从机，该从机将数据提供给下一个从机，依此类推。</p>
-<p><mark style="font-weight: 900;">使用该方法时，由于数据是从一个从机传播到下一个从机，所以传输数据所需的时钟周期数与菊花链中的从机位置成比例（成比例倍增）。</mark></p>
-<p>例如在图7所示的8位系统中，<mark>为使第3个从机能够获得数据，需要24个时钟脉冲，而常规SPI模式下只需8个时钟脉冲</mark>。图8显示了时钟周期和通过菊花链的数据传播。并非所有SPI器件都支持菊花链模式。请参阅产品数据手册以确认菊花链是否可用。</p>
-<p><img src="https://www.analog.com/-/media/images/analog-dialogue/en/volume-52/number-3/articles/introduction-to-spi-interface/205973_fig_08.png?la=en&vs=1" alt="图8. 菊花链配置：数据传播" style="zoom: 50%;" /></p>
-<div style="font-weight: 900; text-align: center;">
-图8. 菊花链配置：数据传播
-</div>
-<h1 id="adi公司支持spi的模拟开关与多路转换器">ADI公司支持SPI的模拟开关与多路转换器</h1>
-<p>ADI公司最新一代支持SPI的开关可在不影响精密开关性能的情况下显著节省空间。本文的这一部分将讨论一个案例研究，说明支持SPI的开关或多路复用器如何能够大大简化系统级设计并减少所需的GPIO数量。</p>
-<p><a target="_blank" rel="noopener" href="https://www.analog.com/cn/products/adg1412.html">ADG1412</a> 是一款四通道、单刀单掷(SPST)开关，需要四个GPIO连接到每个开关的控制输入。图9显示了微控制器和一个ADG1412之间的连接。</p>
-<p><img src="https://pic.islet.space/2021/08/image-20210819075642098.png" alt="image-20210819075642098" style="zoom: 80%;" /></p>
-<div style="font-weight: 900; text-align: center;">
-图9. 微控制器GPIO用作开关的控制信号
-</div>
-<p>随着电路板上开关数量的增加，所需GPIO的数量也会显著增加。例如，当设计一个测试仪器系统时，会使用大量开关来增加系统中的通道数。在4×4交叉点矩阵配置中，使用四个ADG1412。此系统需要16个GPIO，限制了标准微控制器中的可用GPIO。图10显示了使用微控制器的16个GPIO连接四个ADG1412。</p>
-<p><img src="https://www.analog.com/-/media/images/analog-dialogue/en/volume-52/number-3/articles/introduction-to-spi-interface/205973_fig_10.png?la=en&vs=1" alt="图10. 在多从机配置中，所需GPIO的数量大幅增加" style="zoom:50%;" /></p>
-<div style="font-weight: 900; text-align: center;">
-图10. 在多从机配置中，所需GPIO的数量大幅增加
-</div>
-<p>为了减少GPIO数量，一种方法是使用串行转并行转换器，如图11所示。该器件输出的并行信号可连接到开关控制输入，器件可通过串行接口SPI配置。此方法的缺点是外加器件会导致物料清单增加。</p>
-<p><img src="https://pic.islet.space/2021/08/image-20210819075735043.png" alt="image-20210819075735043" style="zoom:67%;" /></p>
-<div style="font-weight: 900; text-align: center;">
-图11. 使用串行转并行转换器的多从机开关
-</div>
-<p>另一种方法是使用SPI控制的开关。此方法的优点是可减少所需GPIO的数量，并且还能消除外加串行转并行转换器的开销。如图12所示，不需要16个微控制器GPIO，只需要7个微控制器GPIO就可以向4个ADGS1412提供SPI信号。</p>
-<p><img src="https://pic.islet.space/2021/08/image-20210819080000988.png" alt="image-20210819080000988" style="zoom: 67%;" /></p>
-<div style="font-weight: 900; text-align: center;">
-图12. 支持SPI的开关节省微控制器GPIO
-</div>
-<p>开关可采用菊花链配置，以进一步优化GPIO数量。在菊花链配置中，无论系统使用多少开关，都只使用主机（微控制器）的四个GPIO。</p>
-<p><img src="https://pic.islet.space/2021/08/image-20210819080021307.png" alt="image-20210819080021307" style="zoom:67%;" /></p>
-<div style="font-weight: 900; text-align: center;">
-图13. 菊花链配置的SPI开关可进一步优化GPIO
-</div>
-<p>图13用于说明目的。ADGS1412数据手册建议在SDO引脚上使用一个上拉电阻。有关菊花链模式的更多信息，请参阅ADGS1412数据手册。为简单起见，此示例使用了四个开关。随着系统中开关数量的增加，电路板简单和节省空间的优点很重要。在6层电路板上放置8个四通道SPST开关，采用4×8交叉点配置时，ADI公司支持SPI的开关可节省20%的总电路板空间。文章《<a target="_blank" rel="noopener" href="https://www.analog.com/cn/analog-dialogue/articles/precision-spi-switch-configuration-increases-channel-density.html">精密SPI开关配置提高通道密度</a>》详细说明了精密SPI开关配置如何提高通道密度。</p>
-<h1 id="术语">术语</h1>
-<p><strong>MISO</strong> / <strong>SOMI</strong> / <strong>SDO</strong>： Master Input and Slaver Output / Slaver Output and Master Input / Slaver Data Output</p>
-<p><strong>MOSI</strong> / <strong>SIMO</strong> / <strong>SDI</strong>： Master Output and Slaver Input / Salver Input and Master Output / Slaver Data Input</p>
-<p><strong>SCLK</strong>： Serial Clock</p>
-<p><strong>CS</strong> / <strong>STE</strong>： Chip Select / Slaver Transmit Enable</p>
-<h1 id="参考">参考</h1>
-<ol type="1">
-<li><a target="_blank" rel="noopener" href="https://www.analog.com/cn/analog-dialogue/articles/introduction-to-spi-interface.html">SPI接口简介</a></li>
-<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/150121520">SPI通信协议详解（spi总线）</a></li>
-<li><a target="_blank" rel="noopener" href="http://www.microchip.com.cn/community/Uploads/Download/Library/39699a_cn.pdf">第23 章 串行外设接口(SPI)</a></li>
-</ol>
 
       
     </div>
