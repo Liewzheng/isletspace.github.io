@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"islet.space","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.7.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+<meta name="description" content="cnblogs.com 名词解析 PCM(Pulse Code Modulation)也被称为脉码编码调制，PCM中的声音数据没有被压缩，它是由模拟信号经过采样、量化、编码转换成的标准的数字音频数据。采样转换方式参考下图进行了解：  img  音频采样包含以下几大要素： 采样率 采样率表示音频信号每秒的数字快照数。该速率决定了音频文件的频率范围。采样率越高，数字波形的形状越接近原始模拟波形。低采样">
+<meta property="og:type" content="article">
+<meta property="og:title" content="PCM&#x2F;WAV格式">
+<meta property="og:url" content="http://islet.space/2021/07/02/Signal/2021-07-02-PCMWAV%E6%A0%BC%E5%BC%8F/index.html">
+<meta property="og:site_name" content="Coder的孤岛">
+<meta property="og:description" content="cnblogs.com 名词解析 PCM(Pulse Code Modulation)也被称为脉码编码调制，PCM中的声音数据没有被压缩，它是由模拟信号经过采样、量化、编码转换成的标准的数字音频数据。采样转换方式参考下图进行了解：  img  音频采样包含以下几大要素： 采样率 采样率表示音频信号每秒的数字快照数。该速率决定了音频文件的频率范围。采样率越高，数字波形的形状越接近原始模拟波形。低采样">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://img2018.cnblogs.com/blog/682616/202001/682616-20200104125147149-1090015063.png">
+<meta property="og:image" content="https://img2018.cnblogs.com/blog/682616/202001/682616-20200104124551841-1606892798.png">
+<meta property="og:image" content="https://img2018.cnblogs.com/blog/682616/202001/682616-20200104124756569-1015603325.png">
+<meta property="og:image" content="https://img2018.cnblogs.com/blog/682616/202001/682616-20200104124916045-1853047547.png">
+<meta property="og:image" content="https://img2018.cnblogs.com/blog/682616/202001/682616-20200104112313716-290297915.png">
+<meta property="og:image" content="https://img2018.cnblogs.com/blog/682616/202001/682616-20200104131622902-1855086338.png">
+<meta property="og:image" content="https://img2018.cnblogs.com/blog/682616/202001/682616-20200104131832991-1533022058.png">
+<meta property="article:published_time" content="2021-07-02T02:10:00.000Z">
+<meta property="article:modified_time" content="2021-12-10T14:37:12.301Z">
+<meta property="article:author" content="Liewzheng">
+<meta property="article:tag" content="PCM">
+<meta property="article:tag" content="WAV">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://img2018.cnblogs.com/blog/682616/202001/682616-20200104125147149-1090015063.png">
+
+
+<link rel="canonical" href="http://islet.space/2021/07/02/Signal/2021-07-02-PCMWAV%E6%A0%BC%E5%BC%8F/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://islet.space/2021/07/02/Signal/2021-07-02-PCMWAV%E6%A0%BC%E5%BC%8F/","path":"2021/07/02/Signal/2021-07-02-PCMWAV格式/","title":"PCM/WAV格式"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>PCM/WAV格式 | Coder的孤岛</title>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<!-- hexo injector head_end end --></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Coder的孤岛</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">islet of the coder</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-首页"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-文章"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>文章</a></li>
+        <li class="menu-item menu-item-目录"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>目录</a></li>
+        <li class="menu-item menu-item-标签"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-简历"><a href="/resume/" rel="section"><i class="fa fa-address-card fa-fw"></i>简历</a></li>
+        <li class="menu-item menu-item-友链"><a href="/friends/" rel="section"><i class="fa fa-group fa-fw"></i>友链</a></li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%90%8D%E8%AF%8D%E8%A7%A3%E6%9E%90"><span class="nav-number">1.</span> <span class="nav-text">名词解析</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%87%87%E6%A0%B7%E7%8E%87"><span class="nav-number">1.1.</span> <span class="nav-text">采样率</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%8D%E6%B7%B1%E5%BA%A6"><span class="nav-number">1.2.</span> <span class="nav-text">位深度</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#pcm"><span class="nav-number">2.</span> <span class="nav-text">PCM</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#pcm%E9%9F%B3%E9%A2%91%E6%95%B0%E6%8D%AE%E5%AD%98%E5%82%A8%E6%96%B9%E5%BC%8F"><span class="nav-number">2.1.</span> <span class="nav-text">PCM音频数据存储方式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#pcm-%E9%9F%B3%E9%A2%91%E6%95%B0%E6%8D%AE%E7%9A%84%E5%8F%82%E6%95%B0"><span class="nav-number">2.2.</span> <span class="nav-text">PCM 音频数据的参数</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#wav"><span class="nav-number">3.</span> <span class="nav-text">WAV</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#pcm-wav-%E5%BC%80%E5%8F%91%E5%AE%9E%E8%B7%B5"><span class="nav-number">4.</span> <span class="nav-text">PCM &amp; WAV 开发实践</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#pcm%E6%A0%BC%E5%BC%8F%E8%BD%AC%E4%B8%BAwav%E6%A0%BC%E5%BC%8F%E5%9F%BA%E4%BA%8Ec%E8%AF%AD%E8%A8%80"><span class="nav-number">4.1.</span> <span class="nav-text">PCM格式转为WAV格式（基于C语言）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#pcm%E9%99%8D%E4%BD%8E%E6%9F%90%E4%B8%AA%E5%A3%B0%E9%81%93%E7%9A%84%E9%9F%B3%E9%87%8F%E5%9F%BA%E4%BA%8Ec%E8%AF%AD%E8%A8%80"><span class="nav-number">4.2.</span> <span class="nav-text">PCM降低某个声道的音量（基于C语言）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%86%E7%A6%BBpcm%E9%9F%B3%E9%A2%91%E6%95%B0%E6%8D%AE%E5%B7%A6%E5%8F%B3%E5%A3%B0%E9%81%93%E7%9A%84%E6%95%B0%E6%8D%AE"><span class="nav-number">4.3.</span> <span class="nav-text">分离PCM音频数据左右声道的数据</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%8Epcm16le%E5%8D%95%E5%A3%B0%E9%81%93%E9%9F%B3%E9%A2%91%E9%87%87%E6%A0%B7%E6%95%B0%E6%8D%AE%E4%B8%AD%E6%88%AA%E5%8F%96%E4%B8%80%E9%83%A8%E5%88%86%E6%95%B0%E6%8D%AE"><span class="nav-number">4.4.</span> <span class="nav-text">从PCM16LE单声道音频采样数据中截取一部分数据</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B0%86pcm16le%E5%8F%8C%E5%A3%B0%E9%81%93%E9%9F%B3%E9%A2%91%E9%87%87%E6%A0%B7%E6%95%B0%E6%8D%AE%E8%BD%AC%E6%8D%A2%E4%B8%BApcm8%E9%9F%B3%E9%A2%91%E9%87%87%E6%A0%B7%E6%95%B0%E6%8D%AE"><span class="nav-number">4.5.</span> <span class="nav-text">将PCM16LE双声道音频采样数据转换为PCM8音频采样数据</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B0%86pcm16le%E5%8F%8C%E5%A3%B0%E9%81%93%E9%9F%B3%E9%A2%91%E9%87%87%E6%A0%B7%E6%95%B0%E6%8D%AE%E7%9A%84%E5%A3%B0%E9%9F%B3%E9%80%9F%E5%BA%A6%E6%8F%90%E9%AB%98%E4%B8%80%E5%80%8D"><span class="nav-number">4.6.</span> <span class="nav-text">将PCM16LE双声道音频采样数据的声音速度提高一倍</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">5.</span> <span class="nav-text">参考</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Liewzheng</p>
+  <div class="site-description" itemprop="description">笔记分享的旮旯孤岛而已</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">99</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">183</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="mailto:liewzheng@foxmail.com" title="E-Mail → mailto:liewzheng@foxmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://islet.space/2021/07/02/Signal/2021-07-02-PCMWAV%E6%A0%BC%E5%BC%8F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Liewzheng">
+      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coder的孤岛">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          PCM/WAV格式
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-07-02 10:10:00" itemprop="dateCreated datePublished" datetime="2021-07-02T10:10:00+08:00">2021-07-02</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2021-12-10 22:37:12" itemprop="dateModified" datetime="2021-12-10T22:37:12+08:00">2021-12-10</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Signal/" itemprop="url" rel="index"><span itemprop="name">Signal</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/renhui/p/12148330.html">cnblogs.com</a></p>
+<h1 id="名词解析">名词解析</h1>
+<p>PCM(Pulse Code Modulation)也被称为脉码编码调制，PCM中的声音数据没有被压缩，它是由模拟信号经过采样、量化、编码转换成的标准的数字音频数据。采样转换方式参考下图进行了解：</p>
+<figure>
+<img src="https://img2018.cnblogs.com/blog/682616/202001/682616-20200104125147149-1090015063.png" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>音频采样包含以下几大要素：</p>
+<h2 id="采样率">采样率</h2>
+<p>采样率表示音频信号每秒的数字快照数。该速率决定了音频文件的频率范围。采样率越高，数字波形的形状越接近原始模拟波形。低采样率会限制可录制的频率范围，这可导致录音表现原始声音的效果不佳。根据奈奎斯特采样定理，为了重现给定频率，采样率必须至少是该频率的两倍。例如，一般CD唱片的采样率为每秒 44,100 个采样，因此可重现最高为 22,050 Hz 的频率，此频率刚好超过人类的听力极限 20,000 Hz。</p>
+<figure>
+<img src="https://img2018.cnblogs.com/blog/682616/202001/682616-20200104124551841-1606892798.png" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>图中A是低采样率的音频信号，其效果已经将原始声波进行了扭曲，B则是完全重现原始声波的高采样率的音频信号。</p>
+<p>数字音频常用的采样率如下：</p>
+<figure>
+<img src="https://img2018.cnblogs.com/blog/682616/202001/682616-20200104124756569-1015603325.png" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<h2 id="位深度">位深度</h2>
+<p>位深度决定动态范围。采样声波时，为每个采样指定最接近原始声波振幅的振幅值。较高的位深度可提供更多可能的振幅值，产生更大的动态范围、更低的噪声基准和更高的保真度。</p>
+<figure>
+<img src="https://img2018.cnblogs.com/blog/682616/202001/682616-20200104124916045-1853047547.png" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>位深度越高，提供的动态范围越大。</p>
+<h1 id="pcm">PCM</h1>
+<p>在上面的名词解析中我们应该对PCM有了一定的理解和认识，下面我们将对PCM做更多的讲解。</p>
+<h2 id="pcm音频数据存储方式">PCM音频数据存储方式</h2>
+<p>如果是单声道的文件，采样数据按时间的先后顺序依次存入。如果是单声道的音频文件，采样数据按时间的先后顺序依次存入（也可能采用 LRLRLR 方式存储，只是另一个声道的数据为 0）。</p>
+<p>如果是双声道的话通常按照 LRLRLR 的方式存储，存储的时候还和机器的大小端有关。（关于字节序大小端的相关内容可参考《<a target="_blank" rel="noopener" href="https://www.cnblogs.com/renhui/p/13600572.html">字节序问题之大小端模式讲解</a>》进行了解）</p>
+<p>PCM的存储方式为小端模式，存储Data数据排列如下图所示：</p>
+<figure>
+<img src="https://img2018.cnblogs.com/blog/682616/202001/682616-20200104112313716-290297915.png" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<h2 id="pcm-音频数据的参数">PCM 音频数据的参数</h2>
+<p>描述 PCM 音频数据的参数的时候有如下描述方式：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">44100HZ 16bit stereo: 每秒钟有 44100 次采样, 采样数据用 16 位（2 字节）记录, 双声道（立体声）</span><br><span class="line">22050HZ 8bit  mono: 每秒钟有 22050 次采样, 采样数据用 8 位（1 字节）记录, 单声道</span><br><span class="line">48000HZ 32bit 51ch: 每秒钟有 48000 次采样, 采样数据用 32 位（4 字节浮点型）记录, 5.1 声道</span><br></pre></td></tr></table></figure>
+<p>44100Hz 指的是采样率，它的意思是每秒取样 44100 次。采样率越大，存储数字音频所占的空间就越大。</p>
+<p>16bit 指的是采样精度，意思是原始模拟信号被采样后，每一个采样点在计算机中用 16 位（两个字节）来表示。采样精度越高越能精细地表示模拟信号的差异。</p>
+<p>Stereo 指的是声道数，也即采样时用到的麦克风的数量，麦克风越多就越能还原真实的采样环境（当然麦克风的放置位置也是有规定的）。</p>
+<h1 id="wav">WAV</h1>
+<p>WAV 是 Microsoft 和 IBM 为 PC 开发的一种声音文件格式，它符合 RIFF（Resource Interchange File Format）文件规范，用于保存 Windows 平台的音频信息资源，被 Windows 平台及其应用程序所广泛支持。WAVE 文件通常只是一个具有单个 “WAVE” 块的 RIFF 文件，该块由两个子块（”fmt” 子数据块和 ”data” 子数据块），它的格式如下图所示：</p>
+<figure>
+<img src="https://img2018.cnblogs.com/blog/682616/202001/682616-20200104131622902-1855086338.png" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p><strong>WAV 格式定义</strong></p>
+<p>该格式的实质就是在 PCM 文件的前面加了一个文件头，每个字段的的含义如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">typedef struct &#123;</span><br><span class="line">    char          ChunkID[4]; &#x2F;&#x2F;内容为&quot;RIFF&quot;</span><br><span class="line">    unsigned long ChunkSize;  &#x2F;&#x2F;存储文件的字节数（不包含ChunkID和ChunkSize这8个字节）</span><br><span class="line">    char          Format[4];  &#x2F;&#x2F;内容为&quot;WAVE“</span><br><span class="line">&#125; WAVE_HEADER;</span><br><span class="line"> </span><br><span class="line">typedef struct &#123;</span><br><span class="line">   char           Subchunk1ID[4]; &#x2F;&#x2F;内容为&quot;fmt&quot;</span><br><span class="line">   unsigned long  Subchunk1Size;  &#x2F;&#x2F;存储该子块的字节数（不含前面的Subchunk1ID和Subchunk1Size这8个字节）</span><br><span class="line">   unsigned short AudioFormat;    &#x2F;&#x2F;存储音频文件的编码格式，例如若为PCM则其存储值为1。</span><br><span class="line">   unsigned short NumChannels;    &#x2F;&#x2F;声道数，单声道(Mono)值为1，双声道(Stereo)值为2，等等</span><br><span class="line">   unsigned long  SampleRate;     &#x2F;&#x2F;采样率，如8k，44.1k等</span><br><span class="line">   unsigned long  ByteRate;       &#x2F;&#x2F;每秒存储的bit数，其值 &#x3D; SampleRate * NumChannels * BitsPerSample &#x2F; 8</span><br><span class="line">   unsigned short BlockAlign;     &#x2F;&#x2F;块对齐大小，其值 &#x3D; NumChannels * BitsPerSample &#x2F; 8</span><br><span class="line">   unsigned short BitsPerSample;  &#x2F;&#x2F;每个采样点的bit数，一般为8,16,32等。</span><br><span class="line">&#125; WAVE_FMT;</span><br><span class="line"> </span><br><span class="line">typedef struct &#123;</span><br><span class="line">   char          Subchunk2ID[4]; &#x2F;&#x2F;内容为“data”</span><br><span class="line">   unsigned long Subchunk2Size;  &#x2F;&#x2F;接下来的正式的数据部分的字节数，其值 &#x3D; NumSamples * NumChannels * BitsPerSample &#x2F; 8</span><br><span class="line">&#125; WAVE_DATA;</span><br></pre></td></tr></table></figure>
+<p><strong>WAV 文件头解析</strong></p>
+<p>这里是一个 WAVE 文件的开头 72 字节，字节显示为十六进制数字：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">52 49 46 46 | 24 08 00 00 | 57 41 56 45</span><br><span class="line">66 6d 74 20 | 10 00 00 00 | 01 00 02 00 </span><br><span class="line">22 56 00 00 | 88 58 01 00 | 04 00 10 00</span><br><span class="line">64 61 74 61 | 00 08 00 00 | 00 00 00 00 </span><br><span class="line">24 17 1E F3 | 3C 13 3C 14 | 16 F9 18 F9</span><br><span class="line">34 E7 23 A6 | 3C F2 24 F2 | 11 CE 1A 0D</span><br></pre></td></tr></table></figure>
+<p>字段解析如下图：</p>
+<figure>
+<img src="https://img2018.cnblogs.com/blog/682616/202001/682616-20200104131832991-1533022058.png" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<h1 id="pcm-wav-开发实践">PCM &amp; WAV 开发实践</h1>
+<h2 id="pcm格式转为wav格式基于c语言">PCM格式转为WAV格式（基于C语言）</h2>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br></pre></td><td class="code"><pre><span class="line">int simplest_pcm16le_to_wave(const char *pcmpath,int channels,int sample_rate,const char *wavepath)</span><br><span class="line">&#123;</span><br><span class="line">    typedef struct WAVE_HEADER&#123;  </span><br><span class="line">        char         fccID[4];        </span><br><span class="line">        unsigned   long    dwSize;            </span><br><span class="line">        char         fccType[4];    </span><br><span class="line">    &#125;WAVE_HEADER;  </span><br><span class="line">    typedef struct WAVE_FMT&#123;  </span><br><span class="line">        char         fccID[4];        </span><br><span class="line">        unsigned   long       dwSize;            </span><br><span class="line">        unsigned   short     wFormatTag;    </span><br><span class="line">        unsigned   short     wChannels;  </span><br><span class="line">        unsigned   long       dwSamplesPerSec;  </span><br><span class="line">        unsigned   long       dwAvgBytesPerSec;  </span><br><span class="line">        unsigned   short     wBlockAlign;  </span><br><span class="line">        unsigned   short     uiBitsPerSample;  </span><br><span class="line">    &#125;WAVE_FMT;  </span><br><span class="line">    typedef struct WAVE_DATA&#123;  </span><br><span class="line">        char       fccID[4];          </span><br><span class="line">        unsigned long dwSize;              </span><br><span class="line">    &#125;WAVE_DATA;  </span><br><span class="line">    if(channels&#x3D;&#x3D;0||sample_rate&#x3D;&#x3D;0)&#123;</span><br><span class="line">    channels &#x3D; 2;</span><br><span class="line">    sample_rate &#x3D; 44100;</span><br><span class="line">    &#125;</span><br><span class="line">    int bits &#x3D; 16;</span><br><span class="line">    WAVE_HEADER   pcmHEADER;  </span><br><span class="line">    WAVE_FMT   pcmFMT;  </span><br><span class="line">    WAVE_DATA   pcmDATA;  </span><br><span class="line"> </span><br><span class="line">    unsigned   short   m_pcmData;</span><br><span class="line">    FILE   *fp,*fpout;  </span><br><span class="line">    fp&#x3D;fopen(pcmpath, &quot;rb&quot;);</span><br><span class="line">    if(fp &#x3D;&#x3D; NULL) &#123;  </span><br><span class="line">        printf(&quot;open pcm file error\n&quot;);</span><br><span class="line">        return -1;  </span><br><span class="line">    &#125;</span><br><span class="line">    fpout&#x3D;fopen(wavepath,   &quot;wb+&quot;);</span><br><span class="line">    if(fpout &#x3D;&#x3D; NULL) &#123;    </span><br><span class="line">        printf(&quot;create wav file error\n&quot;);  </span><br><span class="line">        return -1; </span><br><span class="line">    &#125;        </span><br><span class="line">    &#x2F;&#x2F;WAVE_HEADER</span><br><span class="line">    memcpy(pcmHEADER.fccID,&quot;RIFF&quot;,strlen(&quot;RIFF&quot;));                    </span><br><span class="line">    memcpy(pcmHEADER.fccType,&quot;WAVE&quot;,strlen(&quot;WAVE&quot;));  </span><br><span class="line">    fseek(fpout,sizeof(WAVE_HEADER),1); </span><br><span class="line">    &#x2F;&#x2F;WAVE_FMT</span><br><span class="line">    pcmFMT.dwSamplesPerSec&#x3D;sample_rate;  </span><br><span class="line">    pcmFMT.dwAvgBytesPerSec&#x3D;pcmFMT.dwSamplesPerSec*sizeof(m_pcmData);  </span><br><span class="line">    pcmFMT.uiBitsPerSample&#x3D;bits;</span><br><span class="line">    memcpy(pcmFMT.fccID,&quot;fmt &quot;,strlen(&quot;fmt &quot;));  </span><br><span class="line">    pcmFMT.dwSize&#x3D;16;  </span><br><span class="line">    pcmFMT.wBlockAlign&#x3D;2;  </span><br><span class="line">    pcmFMT.wChannels&#x3D;channels;  </span><br><span class="line">    pcmFMT.wFormatTag&#x3D;1;  </span><br><span class="line"> </span><br><span class="line">    fwrite(&amp;pcmFMT,sizeof(WAVE_FMT),1,fpout); </span><br><span class="line">    &#x2F;&#x2F;WAVE_DATA;</span><br><span class="line">    memcpy(pcmDATA.fccID,&quot;data&quot;,strlen(&quot;data&quot;));  </span><br><span class="line">    pcmDATA.dwSize&#x3D;0;</span><br><span class="line">    fseek(fpout,sizeof(WAVE_DATA),SEEK_CUR);</span><br><span class="line">    fread(&amp;m_pcmData,sizeof(unsigned short),1,fp);</span><br><span class="line">    while(!feof(fp))&#123;  </span><br><span class="line">        pcmDATA.dwSize+&#x3D;2;</span><br><span class="line">        fwrite(&amp;m_pcmData,sizeof(unsigned short),1,fpout);</span><br><span class="line">        fread(&amp;m_pcmData,sizeof(unsigned short),1,fp);</span><br><span class="line">    &#125;  </span><br><span class="line">    pcmHEADER.dwSize&#x3D;44+pcmDATA.dwSize;</span><br><span class="line">    rewind(fpout);</span><br><span class="line">    fwrite(&amp;pcmHEADER,sizeof(WAVE_HEADER),1,fpout);</span><br><span class="line">    fseek(fpout,sizeof(WAVE_FMT),SEEK_CUR);</span><br><span class="line">    fwrite(&amp;pcmDATA,sizeof(WAVE_DATA),1,fpout);</span><br><span class="line">    </span><br><span class="line">    fclose(fp);</span><br><span class="line">    fclose(fpout);</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>注意：函数里声明的数据类型unsigned long在有些C编译器上是64位的，这时候要改成unsigned int才可以，否则wav头有88bytes，标准的是44bytes，改完就正常了，对C还不熟悉的人小小的心得，另外，声道数和采样率也要注意，一般采样率有44100/16000/8000，要确认是哪个，声道是1还是2，这两个参数要设置好才会有正确的转换结果。</p>
+<h2 id="pcm降低某个声道的音量基于c语言">PCM降低某个声道的音量（基于C语言）</h2>
+<p>一般来说 PCM 数据中的波形幅值越大，代表音量越大，对于 PCM 音频数据而言，它的幅值（即该采样点采样值的大小）代表音量的大小。</p>
+<p>如果我们需要降低某个声道的音量，可以通过减小某个声道的数据的值来实现降低某个声道的音量。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">int pcm16le_half_volume_left( char *url ) &#123;</span><br><span class="line">    FILE *fp_in &#x3D; fopen( url, &quot;rb+&quot; );</span><br><span class="line">    FILE *fp_out &#x3D; fopen( &quot;output_half_left.pcm&quot;, &quot;wb+&quot; );</span><br><span class="line">    unsigned char *sample &#x3D; ( unsigned char * )malloc(4); &#x2F;&#x2F; 一次读取一个sample，因为是2声道，所以是4字节 </span><br><span class="line">    while ( !feof( fp_in ) )&#123;</span><br><span class="line">        fread( sample, 1, 4, fp_in );</span><br><span class="line">        short* sample_num &#x3D; ( short* )sample; &#x2F;&#x2F; 转成左右声道两个short数据</span><br><span class="line">        *sample_num &#x3D; *sample_num &#x2F; 2; &#x2F;&#x2F; 左声道数据减半</span><br><span class="line">        fwrite( sample, 1, 2, fp_out ); &#x2F;&#x2F; L</span><br><span class="line">        fwrite( sample + 2, 1, 2, fp_out ); &#x2F;&#x2F; R</span><br><span class="line">    &#125;</span><br><span class="line">    free( sample );</span><br><span class="line">    fclose( fp_in );</span><br><span class="line">    fclose( fp_out );</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上述代码做的事情是：在读出左声道的 2 Byte 的取样值之后，将其转成了 C 语言中的一个 short 类型的变量。将该数值除以 2 之后写回到了 PCM 文件中。</p>
+<h2 id="分离pcm音频数据左右声道的数据">分离PCM音频数据左右声道的数据</h2>
+<p>因为PCM音频数据是按照LRLRLR的方式来存储左右声道的音频数据的，所以我们可以通过将它们交叉的读出来的方式来分离左右声道的数据：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">int simplest_pcm16le_split(char *url) &#123;</span><br><span class="line">    FILE *fp&#x3D;fopen(url,&quot;rb+&quot;);</span><br><span class="line">    FILE *fp1&#x3D;fopen(&quot;output_l.pcm&quot;,&quot;wb+&quot;);</span><br><span class="line">    FILE *fp2&#x3D;fopen(&quot;output_r.pcm&quot;,&quot;wb+&quot;);</span><br><span class="line">    unsigned char *sample&#x3D;(unsigned char *)malloc(4);</span><br><span class="line">    while(!feof(fp))&#123;</span><br><span class="line">        fread(sample,1,4,fp);</span><br><span class="line">        &#x2F;&#x2F;L</span><br><span class="line">        fwrite(sample,1,2,fp1);</span><br><span class="line">        &#x2F;&#x2F;R</span><br><span class="line">        fwrite(sample+2,1,2,fp2);</span><br><span class="line">    &#125;</span><br><span class="line">    free(sample);</span><br><span class="line">    fclose(fp);</span><br><span class="line">    fclose(fp1);</span><br><span class="line">    fclose(fp2);</span><br><span class="line">    return 0;</span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
+<h2 id="从pcm16le单声道音频采样数据中截取一部分数据">从PCM16LE单声道音频采样数据中截取一部分数据</h2>
+<p>本程序中的函数可以从PCM16LE单声道数据中截取一段数据，并输出截取数据的样值。函数的代码如下所示：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;**</span><br><span class="line"> * Cut a 16LE PCM single channel file.</span><br><span class="line"> * @param url        Location of PCM file.</span><br><span class="line"> * @param start_num  start point</span><br><span class="line"> * @param dur_num    how much point to cut</span><br><span class="line"> *&#x2F;</span><br><span class="line">int simplest_pcm16le_cut_singlechannel(char *url,int start_num,int dur_num)&#123;</span><br><span class="line">    FILE *fp&#x3D;fopen(url,&quot;rb+&quot;);</span><br><span class="line">    FILE *fp1&#x3D;fopen(&quot;output_cut.pcm&quot;,&quot;wb+&quot;);</span><br><span class="line">    FILE *fp_stat&#x3D;fopen(&quot;output_cut.txt&quot;,&quot;wb+&quot;);</span><br><span class="line"> </span><br><span class="line">    unsigned char *sample&#x3D;(unsigned char *)malloc(2);</span><br><span class="line"> </span><br><span class="line">    int cnt&#x3D;0;</span><br><span class="line">    while(!feof(fp))&#123;</span><br><span class="line">        fread(sample,1,2,fp);</span><br><span class="line">        if(cnt&gt;start_num&amp;&amp;cnt&lt;&#x3D;(start_num+dur_num))&#123;</span><br><span class="line">            fwrite(sample,1,2,fp1);</span><br><span class="line"> </span><br><span class="line">            short samplenum&#x3D;sample[1];</span><br><span class="line">            samplenum&#x3D;samplenum*256;</span><br><span class="line">            samplenum&#x3D;samplenum+sample[0];</span><br><span class="line"> </span><br><span class="line">            fprintf(fp_stat,&quot;%6d,&quot;,samplenum);</span><br><span class="line">            if(cnt%10&#x3D;&#x3D;0)</span><br><span class="line">                fprintf(fp_stat,&quot;\n&quot;,samplenum);</span><br><span class="line">        &#125;</span><br><span class="line">        cnt++;</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    free(sample);</span><br><span class="line">    fclose(fp);</span><br><span class="line">    fclose(fp1);</span><br><span class="line">    fclose(fp_stat);</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="将pcm16le双声道音频采样数据转换为pcm8音频采样数据">将PCM16LE双声道音频采样数据转换为PCM8音频采样数据</h2>
+<p>本程序中的函数可以通过计算的方式将PCM16LE双声道数据16bit的采样位数转换为8bit。函数的代码如下所示：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;**</span><br><span class="line"> * Convert PCM-16 data to PCM-8 data.</span><br><span class="line"> * @param url  Location of PCM file.</span><br><span class="line"> *&#x2F;</span><br><span class="line">int simplest_pcm16le_to_pcm8(char *url)&#123;</span><br><span class="line">    FILE *fp&#x3D;fopen(url,&quot;rb+&quot;);</span><br><span class="line">    FILE *fp1&#x3D;fopen(&quot;output_8.pcm&quot;,&quot;wb+&quot;);</span><br><span class="line"> </span><br><span class="line">    int cnt&#x3D;0;</span><br><span class="line"> </span><br><span class="line">    unsigned char *sample&#x3D;(unsigned char *)malloc(4);</span><br><span class="line"> </span><br><span class="line">    while(!feof(fp))&#123;</span><br><span class="line"> </span><br><span class="line">        short *samplenum16&#x3D;NULL;</span><br><span class="line">        char samplenum8&#x3D;0;</span><br><span class="line">        unsigned char samplenum8_u&#x3D;0;</span><br><span class="line">        fread(sample,1,4,fp);</span><br><span class="line">        &#x2F;&#x2F;(-32768-32767)</span><br><span class="line">        samplenum16&#x3D;(short *)sample;</span><br><span class="line">        samplenum8&#x3D;(*samplenum16)&gt;&gt;8;</span><br><span class="line">        &#x2F;&#x2F;(0-255)</span><br><span class="line">        samplenum8_u&#x3D;samplenum8+128;</span><br><span class="line">        &#x2F;&#x2F;L</span><br><span class="line">        fwrite(&amp;samplenum8_u,1,1,fp1);</span><br><span class="line"> </span><br><span class="line">        samplenum16&#x3D;(short *)(sample+2);</span><br><span class="line">        samplenum8&#x3D;(*samplenum16)&gt;&gt;8;</span><br><span class="line">        samplenum8_u&#x3D;samplenum8+128;</span><br><span class="line">        &#x2F;&#x2F;R</span><br><span class="line">        fwrite(&amp;samplenum8_u,1,1,fp1);</span><br><span class="line">        cnt++;</span><br><span class="line">    &#125;</span><br><span class="line">    printf(&quot;Sample Cnt:%d\n&quot;,cnt);</span><br><span class="line"> </span><br><span class="line">    free(sample);</span><br><span class="line">    fclose(fp);</span><br><span class="line">    fclose(fp1);</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>PCM16LE格式的采样数据的取值范围是-32768到32767，而PCM8格式的采样数据的取值范围是0到255。所以PCM16LE转换到PCM8需要经过两个步骤：第一步是将-32768到32767的16bit有符号数值转换为-128到127的8bit有符号数值，第二步是将-128到127的8bit有符号数值转换为0到255的8bit无符号数值。在本程序中，16bit采样数据是通过short类型变量存储的，而8bit采样数据是通过unsigned char类型存储的。</p>
+<h2 id="将pcm16le双声道音频采样数据的声音速度提高一倍">将PCM16LE双声道音频采样数据的声音速度提高一倍</h2>
+<p>本程序中的函数可以通过抽象的方式将PCM16LE双声道数据的速度提高一倍，采用采样每个声道奇(偶)数点的样值的方式，函数的代码如下所示：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;**</span><br><span class="line"> * Re-sample to double the speed of 16LE PCM file</span><br><span class="line"> * @param url  Location of PCM file.</span><br><span class="line"> *&#x2F;</span><br><span class="line">int simplest_pcm16le_doublespeed(char *url)&#123;</span><br><span class="line">    FILE *fp&#x3D;fopen(url,&quot;rb+&quot;);</span><br><span class="line">    FILE *fp1&#x3D;fopen(&quot;output_doublespeed.pcm&quot;,&quot;wb+&quot;);</span><br><span class="line"> </span><br><span class="line">    int cnt&#x3D;0;</span><br><span class="line"> </span><br><span class="line">    unsigned char *sample&#x3D;(unsigned char *)malloc(4);</span><br><span class="line"> </span><br><span class="line">    while(!feof(fp))&#123;</span><br><span class="line"> </span><br><span class="line">        fread(sample,1,4,fp);</span><br><span class="line"> </span><br><span class="line">        if(cnt%2!&#x3D;0)&#123;</span><br><span class="line">            &#x2F;&#x2F;L</span><br><span class="line">            fwrite(sample,1,2,fp1);</span><br><span class="line">            &#x2F;&#x2F;R</span><br><span class="line">            fwrite(sample+2,1,2,fp1);</span><br><span class="line">        &#125;</span><br><span class="line">        cnt++;</span><br><span class="line">    &#125;</span><br><span class="line">    printf(&quot;Sample Cnt:%d\n&quot;,cnt);</span><br><span class="line"> </span><br><span class="line">    free(sample);</span><br><span class="line">    fclose(fp);</span><br><span class="line">    fclose(fp1);</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="参考">参考</h1>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/leixiaohua1020/article/details/50534316">视音频数据处理入门：PCM音频采样数据处理</a> --&gt; 致敬雷神！</p>
+<p>​</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>感谢您的支持和鼓励</div>
+  <button>
+    Donate
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="https://photo.islet.space/2021/00/IMG_4588.JPG" alt="Liewzheng WeChat Pay">
+        <span>WeChat Pay</span>
+      </div>
+      <div>
+        <img src="https://photo.islet.space/2021/00/IMG_4590.JPG" alt="Liewzheng Alipay">
+        <span>Alipay</span>
+      </div>
+
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/PCM/" rel="tag"># PCM</a>
+              <a href="/tags/WAV/" rel="tag"># WAV</a>
+          </div>
+
+        
+
+  <div id="vcomments" style="margin: 1rem 0 0 0;"></div>
+  <script>
+    new Valine({
+      el: '#vcomments',
+      appId: 'vRGM12EcYxDSM2lat5qjjSeY-gzGzoHsz',
+      appKey: 'WBgAb6NTAFQ7DYtgH0uOPNNh'
+    })
+  </script>
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/06/30/Hardware/DSP/2021-06-30-ADSP%E6%B7%B7%E5%90%88%E7%BC%96%E7%A8%8B/" rel="prev" title="ADSP混合编程">
+                  <i class="fa fa-chevron-left"></i> ADSP混合编程
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/07/05/Programming/C++/2021-07-05-%E5%9C%A8linux%E4%B8%8A%E7%BC%96%E5%86%99%E6%B1%82%E8%A7%A3ADAU1772%E7%9A%84PLL%E7%B3%BB%E6%95%B0/" rel="next" title="在linux上编写求解ADAU1772的PLL系数">
+                  在linux上编写求解ADAU1772的PLL系数 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">粤ICP备19004822号 </a>
+  </div>
+
+<div class="copyright">
+  &copy; 2019 – 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">liewzheng</span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":"enable","tags":"none","js":{"url":"https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js","integrity":"sha256-r+3itOMtGGjap0x+10hu6jW/gZCzxHsoKrOd7gyRSGY="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>
