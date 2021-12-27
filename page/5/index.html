@@ -162,7 +162,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">99</span>
+          <span class="site-state-item-count">100</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -173,7 +173,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">183</span>
+        <span class="site-state-item-count">184</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -207,6 +207,111 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://islet.space/2021/05/23/Programming/C++/2021-05-23-%E5%9F%BA%E6%9C%AC%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B-%E4%B8%8E-%E6%9E%84%E9%80%A0%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Liewzheng">
+      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coder的孤岛">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/05/23/Programming/C++/2021-05-23-%E5%9F%BA%E6%9C%AC%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B-%E4%B8%8E-%E6%9E%84%E9%80%A0%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/" class="post-title-link" itemprop="url">基本数据类型 与 构造数据类型</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2021-05-23 19:21:00 / Modified: 23:50:04" itemprop="dateCreated datePublished" datetime="2021-05-23T19:21:00+08:00">2021-05-23</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Programming/" itemprop="url" rel="index"><span itemprop="name">Programming</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>[cnblogs.com](https://www.cnblogs.com/ybtools/p/6432464.html#:~:text=构造数据类型指可以通过其他的数据类型进行构造，可由程序员自定义，故又称为 ",自定义数据类型 "。 基本数据类型包括整型（short%2Cint%2Clong）、实型（又称浮点型）（float和double）、字符型char、布尔型bool等，他们都可以用于定义常量和变量。)</p>
+<p>PS：本文以C++为例介绍数据类型。</p>
+<h1 id="数据类型">数据类型　</h1>
+<p>从广义上根据量的值是否可变，可分为<strong>常量</strong>和<strong>变量</strong>两种数据类型。</p>
+<p>根据数据复杂程度，划分为<strong>基本数据类型</strong>和<strong>构造数据类型</strong>这两大类。</p>
+<p><strong>基本数据类型</strong> 包括：整型（short,int,long）、实型（又称浮点型）（float和double）、字符型char、布尔型bool等。</p>
+<p><strong>构造数据类型</strong> 包括：数组类型、枚举类型enum、指针类型、引用类型、结构体struct、联合体union（又称联合，共用体）、类class等。</p>
+<p>构造数据类型指可以通过其他的数据类型进行构造，可由程序员自定义，故又称为 "<strong>自定义数据类型</strong>"。</p>
+<h1 id="基本数据类型">基本数据类型</h1>
+<p>基本数据类型包括整型（short,int,long）、实型（又称浮点型）（float和double）、字符型char、布尔型bool等，他们都可以用于定义常量和变量。</p>
+<p>基本数据类型，也叫做基础类型，或内置类型。</p>
+<p><strong>1、整型（short,int,long）</strong></p>
+<p>整型量，包括短整型short、整型int、长整型long，而且3种类型都可以分别再细分为：有符号(signed)以及无符号(unsigned)。</p>
+<p><strong>2、实型（又称浮点型）（float和double）</strong></p>
+<p>实型，又称为浮点型，它包括两种数据类型：单精度浮点数float和双精度浮点数double。他们都是有符号数据类型。如果一个数值常量，包含小数点、指数部分（字符e），则为浮点数。</p>
+<p>双精度浮点型，还可细分为双精度（double型）、长双精度（long double）</p>
+<p><strong>3、字符型char</strong></p>
+<p>字符型char类型定义的常量，必须要用单括号括起来。</p>
+<p>例如：char ch='a' ; //把字符常量'a'存储到ch中。</p>
+<p>字符型char类型量也可以细分为有符号(char)和无符号(unsigned char)。</p>
+<p><strong>4、布尔型bool</strong></p>
+<p>布尔型的取值为true或者false。</p>
+<p>布尔型变量的说明：例：bool flag，则布尔型数据的变量flag取值：只有 false 和 true 两个值，即分别是0和1。</p>
+<h1 id="构造数据类型">构造数据类型</h1>
+<p>有些比较复杂的数据，单纯用基本数据类型未能表示，在C++中程序员可以用基本数据类型来自定义构造出新的数据类型，称构造数据类型，也称作 <strong><em>构造类型</em></strong>、<strong><em>构造数据类型</em></strong>。</p>
+<p>构造数据类型除了可以用常见的如int、float和double、char、bool等基本数据类型进行构造，也可以包含其他构造类型的数据。</p>
+<p>构造数据类型包括：数组类型、枚举类型enum、指针类型、引用类型、结构体struct、联合体union（又称联合，共用体）、class类等，他们可以通过其他的数据类型进行构造，由程序员自定义，所以又称为自定义数据类型。</p>
+<p>参考：http://blog.csdn.net/u013174689/article/details/17484223</p>
+<p>​</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -2173,382 +2278,6 @@
 <ol type="1">
 <li><a target="_blank" rel="noopener" href="https://www.nxp.com/docs/en/user-guide/UM10204.pdf">《NXP_UM10204_I2C-bus specification and user manual》</a></li>
 </ol>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://islet.space/2021/05/13/Linux/Firewalld/2021-05-13-Firewalld%E9%98%B2%E7%81%AB%E5%A2%99%E8%AF%A6%E8%A7%A3/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Liewzheng">
-      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Coder的孤岛">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/05/13/Linux/Firewalld/2021-05-13-Firewalld%E9%98%B2%E7%81%AB%E5%A2%99%E8%AF%A6%E8%A7%A3/" class="post-title-link" itemprop="url">Firewalld防火墙详解</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-
-    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
-    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2021-05-13 14:10:00" itemprop="dateCreated datePublished" datetime="2021-05-13T14:10:00+08:00">2021-05-13</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-05-14 19:47:48" itemprop="dateModified" datetime="2021-05-14T19:47:48+08:00">2021-05-14</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p><a target="_blank" rel="noopener" href="https://blog.51cto.com/andyxu/2137046">blog.51cto.com</a></p>
-<p>众所周知，在RHEL7系统中，firewalld防火墙取代了iptables防火墙。我们都知道iptables的防火墙策略是交由内核层面的netfilter网络过滤器来处理的，而firewalld则是交由内核层面的nftables包过滤框架来处理。 相较于iptables防火墙而言，firewalld支持动态更新技术并加入了区域（zone）的概念。简单来说，区域就是firewalld预先准备了几套防火墙策略集合（策略模板），用户可以根据生产场景的不同而选择合适的策略集合，从而实现防火墙策略之间的快速切换。</p>
-<blockquote>
-<p>Firewalld provides a dynamically managed firewall with support for network/firewall zones to define the trust level of network connections or interfaces. It has support for IPv4, IPv6 firewall settings and for ethernet bridges and has <strong>a separation of runtime and permanent configuration options.</strong> It also supports an interface for services or applications to add firewall rules directly.</p>
-</blockquote>
-<h1 id="基本概念">基本概念</h1>
-<h2 id="区域">区域</h2>
-<p><strong>表1：firewalld中常用的区域名称及策略规则</strong></p>
-<table>
-<colgroup>
-<col style="width: 16%" />
-<col style="width: 83%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th>区域（zone）</th>
-<th>默认策略规则</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>trusted</td>
-<td>允许所有的数据包进出</td>
-</tr>
-<tr class="even">
-<td>home</td>
-<td>拒绝进入的流量，除非与出去的流量相关；而如果流量与ssh、mdns、ipp-client、amba-client与dhcpv6-client服务相关，则允许进入</td>
-</tr>
-<tr class="odd">
-<td>Internal</td>
-<td>等同于home区域</td>
-</tr>
-<tr class="even">
-<td>work</td>
-<td>拒绝进入的流量，除非与出去的流量相关；而如果流量与ssh、ipp-client与dhcpv6-client服务相关，则允许进入</td>
-</tr>
-<tr class="odd">
-<td>public</td>
-<td>拒绝进入的流量，除非与出去的流量相关；而如果流量与ssh、dhcpv6-client服务相关，则允许进入</td>
-</tr>
-<tr class="even">
-<td>external</td>
-<td>拒绝进入的流量，除非与出去的流量相关；而如果流量与ssh服务相关，则允许进入</td>
-</tr>
-<tr class="odd">
-<td>dmz</td>
-<td>拒绝进入的流量，除非与出去的流量相关；而如果流量与ssh服务相关，则允许进入</td>
-</tr>
-<tr class="even">
-<td>block</td>
-<td>拒绝进入的流量，除非与出去的流量相关</td>
-</tr>
-<tr class="odd">
-<td>drop</td>
-<td>拒绝进入的流量，除非与出去的流量相关</td>
-</tr>
-</tbody>
-</table>
-<blockquote>
-<p>These are the zones provided by firewalld sorted according to the default trust level of the zones <strong>from untrusted to trusted</strong>:</p>
-<p><strong>drop</strong> : Any incoming network packets are dropped, there is no reply. Only outgoing network connections are possible.</p>
-<p><strong>block</strong> : Any incoming network connections are rejected with an icmp-host-prohibited message for IPv4 and icmp6-adm-prohibited for IPv6. Only network connections initiated within this system are possible.</p>
-<p><strong>public</strong> : For use in public areas. You do not trust the other computers on networks to not harm your computer. Only selected incoming connections are accepted.</p>
-<p><strong>external</strong> : For use on external networks with masquerading enabled especially for routers. You do not trust the other computers on networks to not harm your computer. Only selected incoming connections are accepted.</p>
-<p><strong>dmz</strong> : For computers in your demilitarized zone that are publicly-accessible with limited access to your internal network. Only selected incoming connections are accepted.</p>
-<p><strong>work</strong> : For use in work areas. You mostly trust the other computers on networks to not harm your computer. Only selected incoming connections are accepted.</p>
-<p><strong>home</strong> : For use in home areas. You mostly trust the other computers on networks to not harm your computer. Only selected incoming connections are accepted.</p>
-<p><strong>internal</strong> : For use on internal networks. You mostly trust the other computers on the networks to not harm your computer. Only selected incoming connections are accepted.</p>
-<p><strong>trusted</strong> : All network connections are accepted.</p>
-</blockquote>
-<p><strong>动静态更新技术之间的区别</strong>：iptables每一个更改都需要先清除所有旧有的规则，然后重新加载所有的规则（包括新的和修改后的规则）；<mark>而firewalld任何规则的变更都不需要对整个防火墙规则重新加载</mark>。</p>
-<h2 id="配置">配置</h2>
-<p>firewalld服务的主配置文件是firewalld.conf，防火墙策略的配置文件是以xml格式为主，存放在以下两个目录里。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">/etc/firewalld   # 用户配置文件</span><br><span class="line">/usr/lib/firewalld    #系统配置文件，预定义配置文件</span><br></pre></td></tr></table></figure>
-<p>firewalld有基于CLI（命令行界面）和基于GUI（图形用户界面)两种管理方式，即：firewall-cmd（终端管理工具）和firewall-config（图形管理工具）。</p>
-<p>firewalld的参数一般都是以“长格式”来提供的，但是在RHEL7系统里支持部分命令的参数补齐，其中就包括firewall-cmd命令，也就是说可以用Tab键来补齐长格式参数，很酷吧。</p>
-<h2 id="命令">命令</h2>
-<p><strong>表2：firewall-cmd命令中使用的参数以及作用</strong></p>
-<table>
-<thead>
-<tr class="header">
-<th>参数</th>
-<th>作用</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>--get-default-zone</td>
-<td>查访默认的区域名称</td>
-</tr>
-<tr class="even">
-<td>--set-default-zone=<区域名称></td>
-<td>设置默认的区域，使其永久生效</td>
-</tr>
-<tr class="odd">
-<td>--get-zones</td>
-<td>显示可用的区域</td>
-</tr>
-<tr class="even">
-<td>--get-services</td>
-<td>显示预定义的服务</td>
-</tr>
-<tr class="odd">
-<td>--get-active-zones</td>
-<td>显示当前正在使用的区域、来源地址和网卡名称</td>
-</tr>
-<tr class="even">
-<td>--add-source=</td>
-<td>将源自此IP或子网的流量导向指定的区域</td>
-</tr>
-<tr class="odd">
-<td>--remove-source=</td>
-<td>不再将源自此IP或子网的流量导向这个区域</td>
-</tr>
-<tr class="even">
-<td>--add-interface=<网卡名称></td>
-<td>将源自该网卡的所有流量都导向某个指定区域</td>
-</tr>
-<tr class="odd">
-<td>--change-interface=<网卡名称></td>
-<td>将某个网卡与区域进行关联</td>
-</tr>
-<tr class="even">
-<td>--list-all</td>
-<td>显示当前区域的网卡配置参数、资源、端口以及服务等信息</td>
-</tr>
-<tr class="odd">
-<td>--list-all-zones</td>
-<td>显示所有区域的网卡配置参数、资源、端口以及服务等信息</td>
-</tr>
-<tr class="even">
-<td>--add-service=<服务名></td>
-<td>设置默认区域允许该服务的流量</td>
-</tr>
-<tr class="odd">
-<td>--add-port=<端口号/协议></td>
-<td>设置默认区域允许该端口的流量</td>
-</tr>
-<tr class="even">
-<td>--remove-service=<服务名></td>
-<td>设置默认区域不再允许该服务的流量</td>
-</tr>
-<tr class="odd">
-<td>--remove-port=<端口号/协议></td>
-<td>设置默认区域不再允许该端口的流量</td>
-</tr>
-<tr class="even">
-<td>--reload</td>
-<td>让“永久生效”的配置规则立即生效，并覆盖当前的配置规则</td>
-</tr>
-<tr class="odd">
-<td>--panic-on</td>
-<td>开启应急状况模式</td>
-</tr>
-<tr class="even">
-<td>--panic-off</td>
-<td>关闭应急状况模式</td>
-</tr>
-</tbody>
-</table>
-<p>firewalld配置的防火墙策略默认为运行时（Runtime）模式，又称为当前生效模式，而且随着系统的重启会失效。如果想让配置策略一直存在，就需要使用永久（Permanent）模式了，方法就是在firewall-cmd命令后面添加--permanent参数，这样配置的防火墙策略就可以永久生效了。但是，永久生效模式有一个“不近人情”的特点，就是使用它设置的策略只有在系统重启后才会生效。如果想让配置的永久策略立即生效，需要手动执行firewall-cmd --reload命令。</p>
-<p><em>注：remove掉ssh服务或者ssh端口，当前远程登陆会话不会断开，退出后就无法远程连接了。</em></p>
-<p>firewalld服务启动、重启、停止</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">systemctl start firewalld</span><br><span class="line">systemctl restart firewalld</span><br><span class="line">systemctl stop firewalld</span><br></pre></td></tr></table></figure>
-<p>重新加载防火墙配置 <code>firewall-cmd --reload</code></p>
-<p>查看firewalld的运行状态 <code>firewall-cmd --state</code></p>
-<p>查看默认当前使用的区域 <code>firewall-cmd --get-default-zone</code></p>
-<p>查看系统默认活动区域名称、来源地址和关联的网卡 <code>firewall-cmd --get-active-zones</code></p>
-<figure>
-<img src="https://pic.islet.space/2021/05/777d5cabb7eb51fbb84c7058129368d9.png" alt="firewalld防火墙详解" /><figcaption aria-hidden="true">firewalld防火墙详解</figcaption>
-</figure>
-<p>查看所有可用区域 <code>firewall-cmd --get-zones</code></p>
-<p>查看区域的所有设置</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">firewall-cmd --zone&#x3D;internal --list-all   </span><br><span class="line">firewall-cmd --list-all   </span><br></pre></td></tr></table></figure>
-<figure>
-<img src="https://pic.islet.space/2021/05/4d9b1b3e6c45a33748d4892e6dd2736d.png" alt="firewalld防火墙详解" /><figcaption aria-hidden="true">firewalld防火墙详解</figcaption>
-</figure>
-<blockquote>
-<p>Target：目标 icmp-block-inversion：ICMP协议类型黑白名单开关（yes/no） Interfaces：关联的网卡接口 sources：来源，可以是IP地址，也可以是mac地址 services：允许的服务 ports：允许的目标端口，即本地开放的端口 protocols：允许通过的协议 masquerade：是否允许伪装（yes/no），可改写来源IP地址及mac地址 forward-ports：允许转发的端口 source-ports：允许的来源端口 icmp-blocks：可添加ICMP类型，当icmp-block-inversion为no时，这些ICMP类型被拒绝；当icmp-block-inversion为yes时，这些ICMP类型被允许。 rich rules：富规则，即更细致、更详细的防火墙规则策略，它的优先级在所有的防火墙策略中也是最高的。</p>
-</blockquote>
-<h3 id="开始">开始</h3>
-<p>查看所有预设的服务 <code>firewall-cmd --get-services</code> 此时将会列出/usr/lib/firewalld/services/目录中所有的服务名称。</p>
-<p>查看所有区域的设置 <code>firewall-cmd --list-all-zones</code></p>
-<p>查看指定网卡所在的区域 <code>firewall-cmd --get-zone-of-interface=ens32</code></p>
-<p>把firewalld的当前默认区域设置为drop，此为永久设置 <code>firewall-cmd --set-default-zone=drop</code></p>
-<p>把ens32网卡关联的区域修改为drop</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">firewall-cmd --permanent --zone&#x3D;drop --change-interface&#x3D;ens32   # 永久设置</span><br><span class="line">firewall-cmd --zone&#x3D;drop --change-interface&#x3D;ens32   # 当前生效</span><br></pre></td></tr></table></figure>
-<figure>
-<img src="https://pic.islet.space/2021/05/aafb80274a54961a3c0c1a50989b7fd3.png" alt="firewalld防火墙详解" /><figcaption aria-hidden="true">firewalld防火墙详解</figcaption>
-</figure>
-<p>我们后面的设置命令将全部使用运行时模式，即当前生效模式。 将来自ens33网卡的流量都作用到默认的drop区域</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">firewall-cmd --zone&#x3D;drop -add-interface&#x3D;ens33   # 作用在指定区域</span><br><span class="line">firewall-cmd -add-interface&#x3D;ens33   # 作用在默认区域</span><br><span class="line">firewall-cmd -remove-interface&#x3D;ens33  # 禁止ens33网卡作用在drop区域</span><br></pre></td></tr></table></figure>
-<p><em>注：不指定--zone参数的话，将会对默认区域进行设置</em> 启动关闭firewalld防火墙服务的应急状况模式，远程连接服务器时请慎用</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">firewall-cmd --panic-on  </span><br><span class="line">firewall-cmd --panic-off  </span><br><span class="line">firewall-cmd --query-panic  </span><br></pre></td></tr></table></figure>
-<p>设置一个来源地址作用在drop区域上面</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">firewall-cmd --zone&#x3D;drop --add-source&#x3D;192.168.1.12  # 作用在指定区域</span><br><span class="line">firewall-cmd --add-source&#x3D;192.168.1.12  # 作用在默认区域</span><br><span class="line">firewall-cmd --remove-source&#x3D;192.168.1.12  # 取消源IP为192.168.1.12的包作用在drop区域</span><br></pre></td></tr></table></figure>
-<p>说明：凡是IP为192.168.1.12发来包将会使用drop区域设置的规则</p>
-<p>对于一个接收到的请求具体使用哪个zone，firewalld是通过三种方式来判断的：</p>
-<p>1、source，来源地址 2、Interface，接收请求的网卡 3、firewalld配置的默认区域（zone）</p>
-<p>这三个方式的优先级按顺序依次降低，也就是说如果按照source可以找到就不会再按interface去找，如果前两个都找不到才会使用第三个默认区域。 查询drop区域是否允许请求ssh和https服务的流量</p>
-<h3 id="常用命令">常用命令</h3>
-<p>在drop区域开放https服务 <code>firewall-cmd --zone=drop --add-service=https</code></p>
-<p>取消开放https服务，即禁止https服务 <code>firewall-cmd --zone=drop --remove-service=https</code></p>
-<p>开放22端口 <code>firewall-cmd --zone=drop --add-port=22/tcp</code></p>
-<p>取消开放22端口 <code>firewall-cmd --zone=drop --remove-port=22/tcp</code></p>
-<p>开放8080和8081端口 <code>firewall-cmd --zone=drop --add-port=8080-8081/tcp</code></p>
-<p><strong>查询drop区域开放了哪些端口</strong> <code>firewall-cmd --zone=drop --list-ports</code></p>
-<p>允许icmp协议流量，即允许ping <code>firewall-cmd --zone=drop --add-protocol=icmp</code></p>
-<p>取消允许icmp协议的流量，即禁ping <code>firewall-cmd --zone=drop --remove-protocol=icmp</code></p>
-<p>查询drop区域开放了哪些协议 <code>firewall-cmd --zone=drop --list-protocols</code></p>
-<h3 id="端口转发">端口转发</h3>
-<p>将原本访问本机888端口的流量转发到本机22端口 <code>firewall-cmd --zone=drop --add-forward-port=port=888:proto=tcp:toport=22</code></p>
-<p>将原本访问本机888端口的流量转发到ip为192.168.2.208的主机的22端口，需要开启masquerade</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">firewall-cmd --zone&#x3D;drop --add-masquerade</span><br><span class="line">firewall-cmd --zone&#x3D;drop --add-forward-port&#x3D;port&#x3D;888:proto&#x3D;tcp:toport&#x3D;22:toaddr&#x3D;192.168.2.208</span><br></pre></td></tr></table></figure>
-<p>测试端口转发功能是否生效 在客户端尝试访问192.168.2.210主机的888端口，连上去后发现实际连接的是192.168.2.208主机，测试OK。</p>
-<figure>
-<img src="https://pic.islet.space/2021/05/34e156798d037e1dcc1e63d506fd2960.png" alt="firewalld防火墙详解" /><figcaption aria-hidden="true">firewalld防火墙详解</figcaption>
-</figure>
-<figure>
-<img src="https://pic.islet.space/2021/05/fec17bffb6fb66b9c077d844956a7699.png" alt="firewalld防火墙详解" /><figcaption aria-hidden="true">firewalld防火墙详解</figcaption>
-</figure>
-<h3 id="富规则">富规则</h3>
-<p>接下来我们来看富规则的设置，即 <strong><em>rich rules</em></strong></p>
-<p>允许192.168.2.208主机的所有流量 <code>firewall-cmd --zone=drop --add-rich-rule="rule family="ipv4" source address="192.168.2.208" accept"</code></p>
-<p>允许192.168.2.208主机的icmp协议，即允许192.168.2.208主机ping <code>firewall-cmd --add-rich-rule="rule family="ipv4" source address="192.168.2.208" protocol value="icmp" accept"</code></p>
-<p>取消允许192.168.2.208主机的所有流量 <code>firewall-cmd --zone=drop --remove-rich-rule="rule family="ipv4" source address="192.168.2.208" accept"</code></p>
-<p>允许192.168.2.208主机访问ssh服务 <code>firewall-cmd --zone=drop --add-rich-rule="rule family="ipv4" source address="192.168.2.208" service name="ssh" accept"</code></p>
-<p>禁止192.168.2.208访问https服务，并返回错误信息 <code>firewall-cmd --zone=drop --add-rich-rule="rule family="ipv4" source address="192.168.2.208" service name="https" reject"</code> <em>注：如果是drop的话是直接丢弃，会返回timeout（连接超时）</em></p>
-<p>允许192.168.2.0/24网段的主机访问22端口 <code>firewall-cmd --zone=drop --add-rich-rule="rule family="ipv4" source address="192.168.2.0/24" port protocol="tcp" port="22" accept"</code></p>
-<p>每分钟允许2个新连接访问ftp服务 <code>firewall-cmd --add-rich-rule="rule service name=ftp limit value=2/m accept"</code></p>
-<p>允许新的ipv4和ipv6连接ftp，并使用日志和审核，每分钟允许访问一次 <code>firewall-cmd --add-rich-rule="rule service name=ftp log limit value="1/m" audit accept"</code></p>
-<p>拒绝来自192.168.2.0/24网段的连接，10秒后自动取消 <code>firewall-cmd --add-rich-rule="rule family=ipv4 source address=192.168.2.0/24 reject" --timeout=10</code></p>
-<p>允许ipv6地址为2001:db8::/64子网的主机访问dns服务，并且每小时审核一次，300秒后自动取消 <code>firewall-cmd --add-rich-rule="rule family=ipv6 source address="2001:db8::/64" service name="dns" audit limit value="1/h" reject" --timeout=300</code></p>
-<p>将来自192.168.2.0/24网段访问本机80端口的流量转发到本机的22端口 <code>firewall-cmd --zone=drop --add-rich-rule="rule family=ipv4 source address=192.168.2.0/24 forward-port port=80 protocol=tcp to-port=22"</code></p>
-<p>将来自192.168.2.0/24网段访问本地80端口的流量转发到192.168.2.208主机的22端口 <code>firewall-cmd --zone=drop --add-rich-rule="rule family=ipv4 source address=192.168.2.0/24 forward-port port=80 protocol=tcp to-port=22 to-addr=192.168.2.208"</code></p>
-<p>伪装，将来自局域网192.168.2.0/24网段访问外网的流量映射为网络出口公网IP，即修改源IP地址</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">firewall-cmd --zone&#x3D;drop --add-masquerade</span><br><span class="line">firewall-cmd --zone&#x3D;drop --add-rich-rule&#x3D;&quot;rule family&#x3D;ipv4 source address&#x3D;192.168.2.0&#x2F;24 masquerade&quot;</span><br></pre></td></tr></table></figure>
-<p>好了，写的差不多了，工作中基本上够用了</p>
-<h2 id="gui配置">GUI配置</h2>
-<p>在RHEL7之前的发行版本默认的防火墙中，几乎没有图形化的防火墙管理工具，但是firewalld却有，firewall-config是firewalld防火墙配置管理工具的GUI（图开用户界面）版本，几乎可以实现所有命令行执行的操作。即使没有扎实的Linux命令基础，也完合可以通过它来妥善配置firewalld防火墙策略。Firewall-config的界面如下图所示，功能具体如下：</p>
-<figure>
-<img src="https://pic.islet.space/2021/05/cfe328ae0f110db0798a9d5edde8a2ba.png" alt="firewalld防火墙详解" /><figcaption aria-hidden="true">firewalld防火墙详解</figcaption>
-</figure>
-<p>1、选择运行时（Runtime）模式或永久（Permanent）模式。 2、可选的策略集合区域列表。 3、常用的系统服务列表。 4、当前正在使用的区域。 5、管理当前被选中区域中的服务。 6、管理当前被选中区域中的端口。 7、开启或关闭SNAT（源地址转换协议）技术。 8、设置端口转发策略。 9、控制请求icmp服务的流量。 10、管理防火墙的富规则。 11、管理网卡设备。 12、被选中区域的服务，若勾选了相应服务前面的复选框，则表示允许与之相关的流量。 13、Firewall-config工具的运行状态。</p>
-<p>对外开放http服务，如下图</p>
-<figure>
-<img src="https://pic.islet.space/2021/05/fc3e7d116afe83c1bfe5980bfd928849.png" alt="firewalld防火墙详解" /><figcaption aria-hidden="true">firewalld防火墙详解</figcaption>
-</figure>
-<p>添加一条防火墙规则，使其放行访问8080-8088端口（TCP协议）的流量，并且永久生效</p>
-<figure>
-<img src="https://pic.islet.space/2021/05/b9719667bc933bd079c526d733de7646.png" alt="firewalld防火墙详解" /><figcaption aria-hidden="true">firewalld防火墙详解</figcaption>
-</figure>
-<p>单击Options菜单中的Reload Firewalld选项，让上面配置的永久规则立即生效，这与在命令行中执行--reload参数的效果一样。</p>
-<figure>
-<img src="https://pic.islet.space/2021/05/8bbca43ed6964afbbeeff8ff711dbcde.png" alt="firewalld防火墙详解" /><figcaption aria-hidden="true">firewalld防火墙详解</figcaption>
-</figure>
-<p>SNAT技术相信很多人都知道，那现在我们来开启SNAT技术，其实就是命令行下的masquerade。</p>
-<figure>
-<img src="https://pic.islet.space/2021/05/695086a6a2aaf59d79bfe99bb5a02d85.png" alt="firewalld防火墙详解" /><figcaption aria-hidden="true">firewalld防火墙详解</figcaption>
-</figure>
-<p>下面我们来配置一个端口转发规则，将888端口的流量转发到其他主机的22端口上。 <em>注：转发本机端口不需要开启masquerade，转发到别的主机才需要开启masquerade。</em></p>
-<figure>
-<img src="https://pic.islet.space/2021/05/e66fb33793bf0ab48346c83b6a383d68.png" alt="firewalld防火墙详解" /><figcaption aria-hidden="true">firewalld防火墙详解</figcaption>
-</figure>
-<p>配置富规则，允许192.168.2.206主机访问本机的1234端口号</p>
-<figure>
-<img src="https://pic.islet.space/2021/05/5e75f674b7cbf921f7e2c0d3d13384e9.png" alt="firewalld防火墙详解" /><figcaption aria-hidden="true">firewalld防火墙详解</figcaption>
-</figure>
-<p>最后来看一下区域和网卡的关联，增加网卡的话只需要输入网卡名称即可。</p>
-<figure>
-<img src="https://pic.islet.space/2021/05/51e73b7f425667cd83cc981c26fea0a2.png" alt="firewalld防火墙详解" /><figcaption aria-hidden="true">firewalld防火墙详解</figcaption>
-</figure>
-<p>下面是我自己写的一个简单的防火墙初始化脚本，5210是ssh端口号，192.168.2.208是<strong>保垒机</strong>，192.168.2.206是<strong>备用ssh机器</strong>。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">systemctl stop firewalld</span><br><span class="line">\cp -p &#x2F;usr&#x2F;lib&#x2F;firewalld&#x2F;zones&#x2F;drop.xml &#x2F;etc&#x2F;firewalld&#x2F;zones&#x2F;</span><br><span class="line">systemctl start firewalld</span><br><span class="line">firewall-cmd --set-default-zone&#x3D;drop</span><br><span class="line">firewall-cmd --permanent --zone&#x3D;drop --change-interface&#x3D;ens32</span><br><span class="line">firewall-cmd --permanent --zone&#x3D;drop --add-service&#x3D;https</span><br><span class="line">firewall-cmd --permanent --zone&#x3D;drop --add-protocol&#x3D;icmp</span><br><span class="line">firewall-cmd --permanent --zone&#x3D;drop --add-masquerade</span><br><span class="line">firewall-cmd --permanent --zone&#x3D;drop --add-rich-rule&#x3D;&quot;rule family&#x3D;&quot;ipv4&quot; source address&#x3D;&quot;192.168.2.208&quot; port protocol&#x3D;&quot;tcp&quot; port&#x3D;&quot;5210&quot; accept&quot;</span><br><span class="line">firewall-cmd --permanent --zone&#x3D;drop --add-rich-rule&#x3D;&quot;rule family&#x3D;&quot;ipv4&quot; source address&#x3D;&quot;192.168.2.206&quot; port protocol&#x3D;&quot;tcp&quot; port&#x3D;&quot;5210&quot; accept&quot;</span><br><span class="line">firewall-cmd --permanent --zone&#x3D;drop --add-rich-rule&#x3D;&quot;rule family&#x3D;&quot;ipv4&quot; source address&#x3D;&quot;116.226.230.115&quot; port protocol&#x3D;&quot;tcp&quot; port&#x3D;&quot;8023&quot; accept&quot;</span><br><span class="line">firewall-cmd --reload</span><br></pre></td></tr></table></figure>
-<p>​</p>
-<p>​</p>
-<p><a target="_blank" rel="noopener" href="https://firewalld.org/documentation/howto/enable-and-disable-firewalld.html">firewalld.org</a></p>
-<h1 id="enable-and-disable-firewalld">Enable and Disable firewalld</h1>
-<p>firewalld provides an init script for systems using classic SysVinit and also a systemd service file. The following documentation is about the systemd service used in Fedora, RHEL and CentOS distributions.</p>
-<p>It is not recommended to use iptables directly while firewalld is running as this could lead into some unexpected issues. If a user, for example, is removing base rules or chains of the chain structure, then a firewalld reload might be needed to create them again.</p>
-<h2 id="install-and-enable-firewalld">Install and enable firewalld</h2>
-<p>If the iptables, ip6tables, ebtables and ipset services are in use:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">systemctl disable --now iptables.service</span><br><span class="line">systemctl disable --now ip6tables.service</span><br><span class="line">systemctl disable --now etables.service</span><br><span class="line">systemctl disable --now ipset.service</span><br><span class="line">dnf install firewalld firewall-config firewall-applet</span><br><span class="line">systemctl unmask --now firewalld.service</span><br><span class="line">systemctl enable --now firewalld.service</span><br></pre></td></tr></table></figure>
-<p>To check the firewall state you have different options. The fist option is to use <code>systemctl status firewalld</code> the other one is to use <code>firewall-cmd --state</code>.</p>
-<p>The output of the systemctl command should look like this:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">$ systemctl status firewalld</span><br><span class="line">● firewalld.service - firewalld - dynamic firewall daemon</span><br><span class="line">   Loaded: loaded (&#x2F;usr&#x2F;lib&#x2F;systemd&#x2F;system&#x2F;firewalld.service; enabled; vendor pr</span><br><span class="line">   Active: active (running) since Wed 2016-06-29 14:28:51 CEST; 1 weeks 6 days a</span><br><span class="line">     Docs: man:firewalld(1)</span><br><span class="line"> Main PID: 24540 (firewalld)</span><br><span class="line">    Tasks: 2 (limit: 512)</span><br><span class="line">   CGroup: &#x2F;system.slice&#x2F;firewalld.service</span><br><span class="line">           └─24540 &#x2F;usr&#x2F;bin&#x2F;python3 -Es &#x2F;usr&#x2F;sbin&#x2F;firewalld --nofork --nopid</span><br></pre></td></tr></table></figure>
-<p>The output of the firewall-cmd command should look like this:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ firewall-cmd --state</span><br><span class="line">running</span><br></pre></td></tr></table></figure>
-<h2 id="install-and-enable-iptables-ip6tables-ebtables-and-ipset-services">Install and enable iptables, ip6tables, ebtables and ipset services</h2>
-<p>If firewalld is enabled and you want to enable the iptables, ip6tables, ebtables and ipset services instead:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">dnf install iptables-services ebtables ipset-service</span><br><span class="line">systemctl mask --now firewalld.service</span><br><span class="line">systemctl enable --now iptables.service</span><br><span class="line">systemctl enable --now ip6tables.service</span><br><span class="line">systemctl enable --now etables.service</span><br><span class="line">systemctl enable --now ipset.service</span><br></pre></td></tr></table></figure>
-<p>The use of the mask line is recommended as systemd will start firewalld if there is another service requires it or if the D-Bus interface of firewalld is used. If the service only gets disabled, then it will not be auto started anymore.</p>
-<p>​</p>
-<p>​</p>
 
       
     </div>

@@ -162,7 +162,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">99</span>
+          <span class="site-state-item-count">100</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -173,7 +173,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">183</span>
+        <span class="site-state-item-count">184</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -207,6 +207,110 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://islet.space/2019/03/03/Linux/SSH/%E4%BD%BF%E7%94%A8SELinux%E5%BC%80%E6%94%BESSH%E7%AB%AF%E5%8F%A3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Liewzheng">
+      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coder的孤岛">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2019/03/03/Linux/SSH/%E4%BD%BF%E7%94%A8SELinux%E5%BC%80%E6%94%BESSH%E7%AB%AF%E5%8F%A3/" class="post-title-link" itemprop="url">使用SELinux开放SSH端口</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2019-03-03 12:00:00" itemprop="dateCreated datePublished" datetime="2019-03-03T12:00:00+08:00">2019-03-03</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2019-03-05 13:59:48" itemprop="dateModified" datetime="2019-03-05T13:59:48+08:00">2019-03-05</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="什么是selinux">什么是SELinux</h1>
+<p>SELinux(Security-Enhanced Linux) 是美国国家安全局（NSA）对于强制访问控制的实现，是 Linux历史上最杰出的新安全子系统。</p>
+<p>NSA是在Linux社区的帮助下开发了一种访问控制体系，在这种访问控制体系的限制下，进程只能访问那些在他的任务中所需要文件。SELinux 默认安装在 Fedora 和 Red Hat Enterprise Linux 上，也可以作为其他发行版上容易安装的包得到。</p>
+<h1 id="使用selinux开放ssh端口">使用SELinux开放SSH端口</h1>
+<ol type="1">
+<li>查看SELinux开放给ssh使用的端口</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">semanage port -l|grep ssh</span><br></pre></td></tr></table></figure>
+<p>如果系统打印如下，则说明没有开放新添加端口。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh_port_t                    tcp      22</span><br></pre></td></tr></table></figure>
+<ol start="2" type="1">
+<li>添加新端口</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">semanage port -a -t ssh_port_t -p tcp 22222</span><br></pre></td></tr></table></figure>
+<p>正确添加后再次查看，会显示如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh_port_t                    tcp      22，22222</span><br></pre></td></tr></table></figure>
+<h1 id="参考链接">参考链接</h1>
+<ol type="1">
+<li>《<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/SElinux">SELinux</a>》</li>
+<li>《<a target="_blank" rel="noopener" href="https://blog.csdn.net/ausboyue/article/details/53691953">CentOS7增加或修改SSH端口号</a>》</li>
+<li>《<a target="_blank" rel="noopener" href="http://cn.linux.vbird.org/linux_basic/0440processcontrol.php">第十七章、程序管理与 SELinux 初探</a>》</li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1238,124 +1342,6 @@
 <h2 id="导出export">导出（Export）</h2>
 <h2 id="冲突conflict">冲突（Conflict）</h2>
 <p>当两方更动同一份文件会发生冲突。</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://islet.space/2019/01/14/Hardware/ESP32/2019-01-14-ESP32%E7%9B%B8%E5%85%B3%E6%9C%AF%E8%AF%AD%E6%95%B4%E7%90%86/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Liewzheng">
-      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Coder的孤岛">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2019/01/14/Hardware/ESP32/2019-01-14-ESP32%E7%9B%B8%E5%85%B3%E6%9C%AF%E8%AF%AD%E6%95%B4%E7%90%86/" class="post-title-link" itemprop="url">ESP32相关术语整理</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-
-    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
-    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2019-01-14 15:30:00" itemprop="dateCreated datePublished" datetime="2019-01-14T15:30:00+08:00">2019-01-14</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2019-01-25 16:42:41" itemprop="dateModified" datetime="2019-01-25T16:42:41+08:00">2019-01-25</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/InternetOfThings/" itemprop="url" rel="index"><span itemprop="name">InternetOfThings</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>以下为本人在学习ESP32开发的途中的一些资料整理。</p>
-<h1 id="gpio">GPIO</h1>
-<p>General-purpose input/output，通用型输入输出。其接脚可以供使用者由程控自由使用，PIN脚依现实考量可作为通用输入（GPI）或通用输出（GPO）或通用输入与输出（GPIO），如当clk generator, chip select等。 既然一个引脚可以用于输入、输出或其他特殊功能，那么一定有寄存器用来选择这些功能。对于输入，一定可以通过<strong>读取某个寄存器来确定引脚电位的高低</strong> ；对于输出，一定可以通过写入某个寄存器来让这个引脚输出高电位或者低电位；对于其他特殊功能，则有另外的寄存器来控制它们。</p>
-<h1 id="xtensa">Xtensa</h1>
-<p>Xtensa 是Tensilica公司的处理器。</p>
-<h1 id="openocd">OpenOCD</h1>
-<p>OpenOCD（Open On-Chip Debugger）开源片上调试器，是一款开源软件，最初是由Dominic Rath同学还在大学期间发起的（2005年）项目。OpenOCD旨在提供针对嵌入式设备的调试、系统编程和边界扫描功能。</p>
-<p>OpenOCD的功能是在仿真器的辅助下完成的，仿真器是能够提供调试目标的电信号的小型硬件单元。仿真器是必须的，因为调试主机（运行OpenOCD的主机）通常不具备这种电信号的直接解析功能。</p>
-<p>仿真器支持一个或多个传输协议，每个协议涉及不同的电信号，且使用不同的协议栈进行消息传递。市面上有很多种仿真器，并且这些仿真器的命名没有统一的规律。</p>
-<p>仿真器有时候会被封装成独立的加密狗，这种称为硬件接口加密狗。一些开发板上面直接集成了硬件接口加密狗，这样可以使开发板通过USB直接连到主机上进行调试。</p>
-<p>例如，JTAG仿真器支持JTAG协议的信号，可以用来进行TAPs和目标板子之间符合JTAG协议（IEEE 1149.1）的通讯。TAP（Test Access Port）是处理特殊指令和数据的单元。TAPs在芯片与板子之间和之内以菊花链的形式进行连接。JTAG支持调试和边界扫描。</p>
-<p>还有SWD仿真器，这种仿真器支持使用SWD（Serial Wire Debug）信号与一些比较新的ARM芯片进行通讯，而且还可以作为那些同时支持JTAG和SWD的芯片的仿真器。不过SWD仅支持调试，不支持边检扫描。</p>
-<p>对于一些芯片，还有专门的编程下载器，这些下载器仅支持擦写FLASH的功能，不支持调试和边界扫描。对于此类专用下载器，OpenOCD暂时并不支持。</p>
-<h3 id="加密狗">加密狗</h3>
-<p>OpenOCD目前支持多种类型的硬件加密狗：基于USB的，基于并行端口的，以及其他在内部运行OpenOCD的独立盒子。 请参见第2章[仿真器硬件]，第5页。</p>
-<h3 id="gdb调试">GDB调试</h3>
-<p>它允许ARM7（ARM7TDMI和ARM720t），ARM9（ARM920T，ARM922T，ARM926EJ-S，ARM966E-S），XScale（PXA25x，IXP42x），Cortex-M3（Stellaris LM3，ST STM32和Energy Micro EFM32）和基于Intel Quark（x10xx）的内核使用GDB协议进行调试。</p>
-<h3 id="flash编程">Flash编程</h3>
-<p>擦写FLASH支持外部CFI兼容NOR闪存（Intel和AMD / Spansion命令集）和几个内部闪存（LPC1700，LPC1800，LPC2000，LPC4300，AT91SAM7，AT91SAM3U，STR7x，STR9x，LM3，STM32x和EFM32）。包括各种NAND闪存控制器（LPC3180，Orion，S3C24xx等）的初步支持。</p>
-<h2 id="at指令">AT指令</h2>
-<p>即Attention，AT指令集是从终端设备(Terminal Equipment，TE)或数据终端设备(Data Terminal Equipment，DTE)向终端适配器(Terminal Adapter， TA)或数据电路终端设备AT(Data Circuit Terminal Equipment，DCE)发送的。通过TA，TE发送AT指令来控制移动台(Mobile Station，MS)的功能，与GSM 网络业务进行交互。用户可以通过AT指令进行呼叫、短信、电话本、数据业务、传真等方面的控制。</p>
-<h1 id="measured-power">Measured Power</h1>
-<p>之所以所有文档都将Measure_Power变量的值定为C5，是因为此处C5为RSSI 在 1m时强度大小。见（RSSI @ 1m [ RSSI at 1 meter ] ）文档《Active Beacon Packet 170512.pdf》。</p>
-<figure>
-<img src="http://uk-liewzheng-blog-pic.oss-eu-west-1.aliyuncs.com/2019/01/14/%E5%9B%BE%E7%89%871.png" alt="iBeacon Format" /><figcaption aria-hidden="true">iBeacon Format</figcaption>
-</figure>
-<p>Measure Power 是Beacon距离测量设备1m时的信号强度（0xC5,要求反码）。实际过程中，根据接收到的RSSI值与0xC5（-59dbm）做对比得出当前设备距离，算法由厂商提供，iOS自带算法。</p>
-<figure>
-<img src="http://uk-liewzheng-blog-pic.oss-eu-west-1.aliyuncs.com/2019/01/14/%E5%9B%BE%E7%89%872.png" alt="Measure Power" /><figcaption aria-hidden="true">Measure Power</figcaption>
-</figure>
-<h1 id="参考文献">参考文献</h1>
-<ol type="1">
-<li>《<a target="_blank" rel="noopener" href="https://blog.csdn.net/zqixiao_09/article/details/52506452">AT指令介绍及用法,AT 指令集合</a>》</li>
-<li>《<a target="_blank" rel="noopener" href="http://www.warski.org/blog/2014/01/how-ibeacons-work/">How do iBeacons work?</a>》</li>
-<li>《<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/GPIO">GPIO</a>》</li>
-</ol>
 
       
     </div>
