@@ -14,12 +14,14 @@
 
 <link rel="stylesheet" href="/css/main.css">
 
-
+<link rel="stylesheet" href="https://code.islet.space/font//css?family=/CascadiaCode/CascadiaCode:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/themes/blue/pace-theme-minimal.css">
+  <script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
 
-<script class="next-config" data-name="main" type="application/json">{"hostname":"islet.space","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.7.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+<script class="next-config" data-name="main" type="application/json">{"hostname":"islet.space","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.7.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/db.json","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":true}}</script><script src="/js/config.js"></script>
 <meta name="description" content="[TOC] 概述 命名方法 TMS320F28004x 下称 本系列芯片，本系列设备型号命名方法：  开发手册 开发本系列芯片可能需要使用到的文件如下：  image-20210724112707176  注意：下文中《TRM》 与《SPRUI33D》为同一份文件。 封装形式 C28004x 共有2种芯片封装形式： LQFP 和 VQFN 。VQFN 仅有56针，LQFP 有 100针和 64针的">
 <meta property="og:type" content="article">
 <meta property="og:title" content="F280041PM开发笔记">
@@ -301,7 +303,7 @@
 <meta property="og:image" content="https://pic.islet.space/2021/08/image-20210817085055902.png">
 <meta property="og:image" content="https://pic.islet.space/2021/08/image-20210817085234005.png">
 <meta property="article:published_time" content="2021-07-10T03:10:00.000Z">
-<meta property="article:modified_time" content="2021-10-14T16:00:01.560Z">
+<meta property="article:modified_time" content="2021-10-14T16:00:01.550Z">
 <meta property="article:author" content="Liewzheng">
 <meta property="article:tag" content="TI">
 <meta property="article:tag" content="C2000">
@@ -356,6 +358,7 @@
 
   <div class="site-nav-right">
     <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
     </div>
   </div>
 </div>
@@ -369,12 +372,38 @@
         <li class="menu-item menu-item-目录"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>目录</a></li>
         <li class="menu-item menu-item-标签"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
         <li class="menu-item menu-item-简历"><a href="/resume/" rel="section"><i class="fa fa-address-card fa-fw"></i>简历</a></li>
-        <li class="menu-item menu-item-友链"><a href="/friends/" rel="section"><i class="fa fa-group fa-fw"></i>友链</a></li>
+        <li class="menu-item menu-item-友链"><a href="/friends/" rel="section"><i class="fa fa-heartbeat fa-fw"></i>友链</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
   </ul>
 </nav>
 
 
 
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
 
 </div>
         
@@ -1083,7 +1112,8 @@
 <p>定时器配置：</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">Uint32 temp;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 初始化定时器周期</span></span><br><span class="line">Timer-&gt;CPUFreqInMHz = Freq;</span><br><span class="line">Timer-&gt;PeriodInUSec = Period;</span><br><span class="line">temp = (<span class="keyword">long</span>) (Freq * Period);</span><br><span class="line">Timer-&gt;RegsAddr-&gt;PRD.all = temp;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 将定时器的预分频初始化并保持与系统时钟一致的速率</span></span><br><span class="line">Timer-&gt;RegsAddr-&gt;TPR.all  = <span class="number">0</span>;</span><br><span class="line">Timer-&gt;RegsAddr-&gt;TPRH.all  = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 初始化定时器控制寄存器</span></span><br><span class="line">Timer-&gt;RegsAddr-&gt;TCR.bit.TSS = <span class="number">1</span>;    <span class="comment">// 1 = Stop timer, 0 = Start/Restart Timer</span></span><br><span class="line">Timer-&gt;RegsAddr-&gt;TCR.bit.TRB = <span class="number">1</span>;    <span class="comment">// 1 = reload timer</span></span><br><span class="line">Timer-&gt;RegsAddr-&gt;TCR.bit.SOFT = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">Timer-&gt;RegsAddr-&gt;TCR.bit.FREE = <span class="number">0</span>;    <span class="comment">// Timer Free Run Disabled</span></span><br><span class="line">Timer-&gt;RegsAddr-&gt;TCR.bit.TIE = <span class="number">1</span>;    <span class="comment">// 0 = Disable 1 = Enable Timer Interrupt</span></span><br><span class="line">Timer-&gt;InterruptCount = <span class="number">0</span>;    <span class="comment">// Reset interrupt counter</span></span><br></pre></td></tr></table></figure>
 <p>将定时器的清空和配置两个操作步骤类似，可以简单归纳成流程图形式：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">graph LR</span><br><span class="line">初始化周期 --&gt; 设定定时器速率 --&gt; 设置定时器工作方式</span><br></pre></td></tr></table></figure>
+<pre class="mermaid">graph LR
+初始化周期 --> 设定定时器速率 --> 设置定时器工作方式</pre>
 <h3 id="配置方法">配置方法</h3>
 <p>上电时，默认情况下任何中断都不被使能。PIEIER 寄存器和 IER寄存器被清除， INTM寄存器被设置。应用代码负责配置和使能所有外设中断。</p>
 <h4 id="使能中断">使能中断</h4>
@@ -1104,7 +1134,8 @@
 </ol>
 <p>上表中，横向为组，如 [x,y]，x为组。</p>
 <p><mark>上方使能中断的流程，即中断初始化和配置的流程，重新用流程图的方式总结如下：</mark></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">graph LR</span><br><span class="line">初始化PIE --&gt; 关闭所有中断 --&gt; 清空PIE向量表 --&gt; 将ISR绑定中断向量表 --&gt;初始化CPU定时器 --&gt;调整CPU定时器周期和工作方式 --&gt; 打开对应的组中断 --&gt; 打开对应的中断向量 --&gt; 使能中断</span><br></pre></td></tr></table></figure>
+<pre class="mermaid">graph LR
+初始化PIE --> 关闭所有中断 --> 清空PIE向量表 --> 将ISR绑定中断向量表 -->初始化CPU定时器 -->调整CPU定时器周期和工作方式 --> 打开对应的组中断 --> 打开对应的中断向量 --> 使能中断</pre>
 <p>以下代码为上方流程的示例，部分代码也仅为函数封装，具体内容需要参考详细文档描述。</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">InitPieCtrl();            <span class="comment">//初始化PIE（外设中断）模块</span></span><br><span class="line">ClearCPUInterrupt();      <span class="comment">//关闭并清除所有CPU中断</span></span><br><span class="line">InitPieVectTable();       <span class="comment">//清空PIE（外设中断）向量表</span></span><br><span class="line"></span><br><span class="line">EALLOW;  <span class="comment">//关闭中断向量表寄存器写保护</span></span><br><span class="line">PieVectTable.ADCA1_INT = &amp;adcA1ISR;   <span class="comment">//为ADCA的中断INT1（即ADCA1）绑定中断应用（的向量地址） &amp;adcA1ISR</span></span><br><span class="line">PieVectTable.ADCC2_INT = &amp;adcC2ISR;   <span class="comment">//绑定中断服务程序至中断向量表，C0通道和C2通道同用一个程序</span></span><br><span class="line">PieVectTable.TIMER0_INT = &amp;cpuTimer0ISR;   <span class="comment">// 将cpuTimer0ISR定时器0中断服务器程序绑定至对应的中断向量表</span></span><br><span class="line">EDIS;</span><br><span class="line"></span><br><span class="line">InitCpuTimers();  <span class="comment">//初始化CPU定时器</span></span><br><span class="line"></span><br><span class="line">ConfigCpuTimer(&amp;CpuTimer0, <span class="number">100</span>, TIMER0_PRD);   <span class="comment">//第一个参数填写定时器序号，第二个参数填写CPU主频，第三个参数填写定时器中断周期（微秒）</span></span><br><span class="line"></span><br><span class="line">CpuTimer0Regs.TCR.all = <span class="number">0x4000</span>;</span><br><span class="line"></span><br><span class="line">IER |= M_INT1;               <span class="comment">// 打开组1中断（group 1 interrupt）， ADC A模块 和 CPU定时器0 的 中断处理程序需要使用</span></span><br><span class="line">IER |= M_INT10;             <span class="comment">// 打开组10中断（group 10 interrupt），ADC C模块中断处理程序需要使用</span></span><br><span class="line"></span><br><span class="line">PieCtrlRegs.PIEIER1.bit.INTx1 = ON;  <span class="comment">//打开中断向量表中的1.1中断，其中PIEIER是中断使能寄存器，其后的数字1是组1，INTx1是指第一个中断</span></span><br><span class="line">PieCtrlRegs.PIEIER10.bit.INTx10 = ON;  <span class="comment">//打开ADCC2对应的中断向量</span></span><br><span class="line">PieCtrlRegs.PIEIER1.bit.INTx7 = ON;  <span class="comment">//打开定时器0对应的中断向量</span></span><br><span class="line"></span><br><span class="line">EINT;                               <span class="comment">// 使能中断</span></span><br><span class="line">ERTM;                             <span class="comment">// 打开调试模式</span></span><br></pre></td></tr></table></figure>
 <h4 id="处理中断">处理中断</h4>
@@ -1600,7 +1631,8 @@ Acquisition window = (ACQPS + 1)∙(System Clock (SYSCLK) cycle time)
 </figure>
 <h4 id="配置流程">配置流程</h4>
 <p>在配置ADC时，需要思考好项目应用的具体场景和功能，设置哪个通道（Channel，如ADCA1）来检测信号，设置哪个模块的哪个SOC来绑定该通道（如ADCA的SOC1），SOC和EOC是一一对应的，接着需要设置EOC和哪个模块中断（<code>INTx</code>）进行绑定。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">graph TD</span><br><span class="line">将通道中断&#x2F;中断程序与中断向量表绑定 --&gt; 设置参考电压VREF --&gt; 配置Module --&gt; 配置SOC --&gt; 配置EOC&#x2F;中断</span><br></pre></td></tr></table></figure>
+<pre class="mermaid">graph TD
+将通道中断/中断程序与中断向量表绑定 --> 设置参考电压VREF --> 配置Module --> 配置SOC --> 配置EOC/中断</pre>
 <p>如果不涉及超采样、多重采样等模式，可以不考虑SOC的优先级配置。</p>
 <h3 id="总结">总结</h3>
 <p>外设ADC配置过程中，最容易将ADC模块（A/B/C）、SOC序号、EOC序号、通道序号 和 模块中断序号之间互相搞混，配置时需要先画草图理清思路再行配置。</p>
@@ -2537,9 +2569,11 @@ F_{Synchronous}=\frac{LSPCLK}{16} \tag{同步波特率计算公式}
 图 占空比为20%的测试波形
 </div>
 <h2 id="工作流程">工作流程</h2>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">graph TB</span><br><span class="line">系统初始化 --&gt; 使能PWM模块时钟 --&gt; 初始化PWM模块 --&gt; PWM工作</span><br></pre></td></tr></table></figure>
+<pre class="mermaid">graph TB
+系统初始化 --> 使能PWM模块时钟 --> 初始化PWM模块 --> PWM工作</pre>
 <h3 id="初始化pwm流程">初始化PWM流程</h3>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">graph TB</span><br><span class="line">配置TB子系统 --&gt; 配置CMPA和CMPB --&gt; 设置CMPC寄存器 --&gt; 配置TZ子系统 --&gt; 配置AQ子系统 --&gt; 配置DB子系统 --&gt; 配置ET子系统</span><br></pre></td></tr></table></figure>
+<pre class="mermaid">graph TB
+配置TB子系统 --> 配置CMPA和CMPB --> 设置CMPC寄存器 --> 配置TZ子系统 --> 配置AQ子系统 --> 配置DB子系统 --> 配置ET子系统</pre>
 <h2 id="pll设置">PLL设置</h2>
 <ul>
 <li><code>TMS320F280041</code> 的外部晶振输入频率 f<span style="font-size: 0.8rem;">XTAL</span> 在 10 ~ 20 MHz 之间，自身工作频率f<span style="font-size: 0.8rem;">SYSCLK</span> 在 2 ~ 100MHz之间。</li>
@@ -2573,7 +2607,8 @@ F_{Synchronous}=\frac{LSPCLK}{16} \tag{同步波特率计算公式}
 <h4 id="初始化外设">初始化外设</h4>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*-----------------------------------------------------------------------</span></span><br><span class="line"><span class="comment"> * 【函数】：void EPWM1_Init(void);</span></span><br><span class="line"><span class="comment"> * 【参数】：无</span></span><br><span class="line"><span class="comment"> * 【说明】：需要查阅《TRM》或开发文档相关说明</span></span><br><span class="line"><span class="comment"> *                     本代码文件中仅包含ePWM6模块的使用，其中ET开头的寄存器为事件</span></span><br><span class="line"><span class="comment"> *                     触发相关寄存器，用以触发ADC转换（SOC）</span></span><br><span class="line"><span class="comment"> *                     需要配置的寄存器有：</span></span><br><span class="line"><span class="comment"> * 【其他】：注意，EPWM设置时必须开着时钟（PCLKCR2）进行配置，否则配置</span></span><br><span class="line"><span class="comment"> *                     会失败</span></span><br><span class="line"><span class="comment"> * 【参考】：</span></span><br><span class="line"><span class="comment">----------------------------------------------------------------------- */</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">EPWM1_Init</span><span class="params">(<span class="keyword">void</span>)</span></span>&#123;</span><br><span class="line"></span><br><span class="line">    EALLOW;                                                           <span class="comment">//打开保护区域写入权限</span></span><br><span class="line">    CpuSysRegs.PCLKCR2.bit.EPWM1 = ON;           <span class="comment">// 打开CPUSYSREG 地址下PCLKCR2寄存器上的EPWM1位</span></span><br><span class="line">    CpuSysRegs.PCLKCR0.bit.TBCLKSYNC = OFF;   <span class="comment">//关闭TBCLK时钟同步</span></span><br><span class="line">    EDIS;                                                                 <span class="comment">//关闭保护区域写入权限</span></span><br><span class="line"></span><br><span class="line">    EPwm1Regs.TBPRD = EPWM1_TIMER_TBPRD;       <span class="comment">// 设定定时器周期</span></span><br><span class="line">    EPwm1Regs.TBPHS.bit.TBPHS = <span class="number">0x0000</span>;                 <span class="comment">// 初始化相位</span></span><br><span class="line">    EPwm1Regs.TBCTR = <span class="number">0x0000</span>;                                  <span class="comment">// 初始化（清空）TB计数器</span></span><br><span class="line"></span><br><span class="line">    EPwm1Regs.CMPA.bit.CMPA = EPWM1_CMPA;    <span class="comment">// 设定高边值</span></span><br><span class="line">    EPwm1Regs.CMPB.bit.CMPB = EPWM1_CMPB;    <span class="comment">// 设定低边值</span></span><br><span class="line"></span><br><span class="line">    EPwm1Regs.TBCTL.bit.CTRMODE = TB_COUNT_UPDOWN;      <span class="comment">//设置TB计数器为增减计数模式</span></span><br><span class="line">    EPwm1Regs.TBCTL.bit.PHSEN = TB_DISABLE;                              <span class="comment">// 关闭相位载入</span></span><br><span class="line">    EPwm1Regs.TBCTL.bit.SYNCOSEL = TB_SYNC_DISABLE;            <span class="comment">//关闭各PWM间的同步</span></span><br><span class="line">    EPwm1Regs.TBCTL.bit.HSPCLKDIV = TB_DIV1;                            <span class="comment">// 调节本值可以设置TB速率，详见开发文档</span></span><br><span class="line">    EPwm1Regs.TBCTL.bit.CLKDIV = TB_DIV2;                                   <span class="comment">// 调节本值可以设置TB速率，详见开发文档</span></span><br><span class="line">    EPwm1Regs.TBCTL.bit.FREE_SOFT = <span class="number">0x03</span>;                                   <span class="comment">//不停止，free-run 模式</span></span><br><span class="line"></span><br><span class="line">    EPwm1Regs.CMPCTL.bit.SHDWAMODE = CC_SHADOW;    <span class="comment">//打开CC子模块下的影子寄存器A</span></span><br><span class="line">    EPwm1Regs.CMPCTL.bit.SHDWBMODE = CC_SHADOW;</span><br><span class="line">    EPwm1Regs.CMPCTL.bit.LOADAMODE = CC_CTR_ZERO_PRD; <span class="comment">// Load on Zero</span></span><br><span class="line">    EPwm1Regs.CMPCTL.bit.LOADBMODE = CC_CTR_ZERO_PRD;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    EPwm1Regs.TZSEL.bit.OSHT1 = <span class="number">1</span>;   <span class="comment">//为PWM1使能单次事件触发TZ</span></span><br><span class="line">    EPwm1Regs.TZCTL.bit.TZA = <span class="number">2</span>;    <span class="comment">// EPWMA会被强制置低</span></span><br><span class="line">    EPwm1Regs.TZCTL.bit.DCAEVT1 = TZ_LOW_STATE;</span><br><span class="line">    EPwm1Regs.TZCTL.bit.DCAEVT2 = TZ_LOW_STATE;</span><br><span class="line"></span><br><span class="line">    EPwm1Regs.TZCTL.bit.TZB = <span class="number">2</span>;   <span class="comment">// EPWMB会被强制置低</span></span><br><span class="line">    EPwm1Regs.TZCTL.bit.DCBEVT1 = TZ_LOW_STATE;</span><br><span class="line">    EPwm1Regs.TZCTL.bit.DCBEVT2 = TZ_LOW_STATE;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 设定事件触发结果，当CMPx == TBCTR时该如何动作，此处需要高边A和低边B的动作随着TB增减而相反</span></span><br><span class="line">    EPwm1Regs.AQCTLA.bit.CAU = AQ_SET;</span><br><span class="line">    EPwm1Regs.AQCTLB.bit.CBU = AQ_CLEAR;</span><br><span class="line">    EPwm1Regs.AQCTLA.bit.CAD = AQ_CLEAR;</span><br><span class="line">    EPwm1Regs.AQCTLB.bit.CBD = AQ_SET;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//死区控制</span></span><br><span class="line">    EPwm1Regs.DBCTL.bit.OUT_MODE = DB_FULL_ENABLE;   <span class="comment">//0x3   MODE2 AHC high level delay</span></span><br><span class="line">    EPwm1Regs.DBCTL.bit.POLSEL = DB_ACTV_HIC;        <span class="comment">//0x2</span></span><br><span class="line">    EPwm1Regs.DBCTL.bit.IN_MODE = DBA_ALL;</span><br><span class="line">    EPwm1Regs.DBRED.all = <span class="number">120</span>;                        <span class="comment">// 上升沿延时   0us  0个(15MHz)   注意：只有10位，最大1023</span></span><br><span class="line">    EPwm1Regs.DBFED.all = <span class="number">120</span>;                        <span class="comment">// 下降沿延时   0us  (15MHz)   注意：只有10位，最大1023</span></span><br><span class="line"></span><br><span class="line">    EPwm1Regs.ETSEL.bit.INTEN = ON;                <span class="comment">// 关闭EPWM外设的中断</span></span><br><span class="line">    EPwm1Regs.ETSEL.bit.SOCAEN = ON;            <span class="comment">// 打开ePWM1的SOCA脉冲</span></span><br><span class="line">    EPwm1Regs.ETSEL.bit.SOCASEL = <span class="number">0x02</span>;          <span class="comment">// TB计数器等予周期时触发事件</span></span><br><span class="line">    EPwm1Regs.ETPS.bit.SOCAPRD = <span class="number">0x01</span>;          <span class="comment">// 在第一次事件时生成脉冲</span></span><br><span class="line"></span><br><span class="line">    EALLOW;</span><br><span class="line">    EPwm1Regs.TBCTL.bit.PHSEN = ON;                  <span class="comment">//打开从相位寄存器载入</span></span><br><span class="line">    EPwm1Regs.TBCTL.bit.SYNCOSEL = OFF;          <span class="comment">//同步输出源选择</span></span><br><span class="line">    EPwm1Regs.TBCTL.bit.SWFSYNC = OFF;           <span class="comment">//软件强制同步脉冲</span></span><br><span class="line">    CpuSysRegs.PCLKCR0.bit.TBCLKSYNC = ON;   <span class="comment">//打开TBCLK时钟同步</span></span><br><span class="line">    EDIS;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>从上面代码里总结出下面配置步骤：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">graph LR</span><br><span class="line">配置开始 --&gt; 配置TBCLK --&gt; 配置影子寄存器ShadowRegister --&gt; 配置CMP --&gt; 配置TripZone --&gt; 配置AactionQualifier --&gt; 配置ePWM中断 --&gt; 配置结束</span><br></pre></td></tr></table></figure>
+<pre class="mermaid">graph LR
+配置开始 --> 配置TBCLK --> 配置影子寄存器ShadowRegister --> 配置CMP --> 配置TripZone --> 配置AactionQualifier --> 配置ePWM中断 --> 配置结束</pre>
 <h3 id="epwmclk">EPWMCLK</h3>
 <figure>
 <img src="https://pic.islet.space/2021/07/image-20210726110116356.png" alt="image-20210726110116356" /><figcaption aria-hidden="true">image-20210726110116356</figcaption>
@@ -2638,9 +2673,12 @@ T_{EPWM} = (TBPRD +1) · T_{TBCLK} =  {(TBPRD +1) · HSPCLKDIV · CLKDIV \over F
 </ol>
 <p>数模转换开发不同于ePWM配置开发，不仅信号输入和子模块配置方式上有许多不同点，最明显的不同是高频逆变器不需要使用到触发中断，但ADC模块不论是转换触发还是读取数值都需要中断来进行操作，即由外部中断脉冲输入ADC模块，促使ADC模块将电容电压依据参考电压转换为数值并存写到寄存器中，然后生成中断脉冲，触发中断程序来读取其中的数值。</p>
 <h2 id="工作流程-1">工作流程</h2>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">graph TB</span><br><span class="line">进入ADC中断 --&gt; 读取ADC寄存器数值并存储至全局变量 --&gt; 交由主循环计算电压&#x2F;电流&#x2F;温度值并判断是否安全 --&gt; id1[定时器中断检查开关&#x2F;安全] --是--&gt; 保持PWM开启</span><br><span class="line">id1 --否--&gt; 关闭PWM</span><br></pre></td></tr></table></figure>
+<pre class="mermaid">graph TB
+进入ADC中断 --> 读取ADC寄存器数值并存储至全局变量 --> 交由主循环计算电压/电流/温度值并判断是否安全 --> id1[定时器中断检查开关/安全] --是--> 保持PWM开启
+id1 --否--> 关闭PWM</pre>
 <h3 id="adc配置流程">ADC配置流程</h3>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">graph LR</span><br><span class="line">系统初始化 --&gt; 使能ADC模块时钟 --&gt; 配置模块参考电压 --&gt; 配置模块时钟 --&gt; 配置SOC通道 --&gt; 配置采样周期 --&gt; 配置采样触发源 --&gt; 配置EOC中断触发源</span><br></pre></td></tr></table></figure>
+<pre class="mermaid">graph LR
+系统初始化 --> 使能ADC模块时钟 --> 配置模块参考电压 --> 配置模块时钟 --> 配置SOC通道 --> 配置采样周期 --> 配置采样触发源 --> 配置EOC中断触发源</pre>
 <h3 id="配置示例-1">配置示例</h3>
 <p>ADC模块在功能描述上也有别于ePWM，ePWM采用许多子模块的描述方法，ADC则使用 <strong>通道</strong>（CHNL，或 channel）、<strong>SOC</strong>、<strong>EOC</strong>、<strong>INT</strong> 等描述词汇，需要区分理解，且ADC模块从顶自下参数都有许多配置限制，具体看前面的描述吧。</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*-----------------------------------------------------------------------</span></span><br><span class="line"><span class="comment"> * 【函数】：void ADC_Init(void);</span></span><br><span class="line"><span class="comment"> * 【参数】：无</span></span><br><span class="line"><span class="comment"> * 【说明】：配置ADC模块的电压、时钟、脉冲生成时间和开关</span></span><br><span class="line"><span class="comment"> * 【其他】：以下所有配置项（电压、时钟、脉冲生成时间和开关）都是以模块（A</span></span><br><span class="line"><span class="comment"> *                      /B/C）为最小单位进行配置的，需要启动ADCB和ADCC则需要在此处</span></span><br><span class="line"><span class="comment"> *                      进行相似配置</span></span><br><span class="line"><span class="comment"> * 【参考】：</span></span><br><span class="line"><span class="comment">----------------------------------------------------------------------- */</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">ADC_Init</span><span class="params">(<span class="keyword">void</span>)</span></span>&#123;</span><br><span class="line">    SetVREF(ADC_ADCA, ADC_EXTERNAL, ADC_VREF2P5);  <span class="comment">//为ADC A提供外部参考电压</span></span><br><span class="line"></span><br><span class="line">    EALLOW;</span><br><span class="line">    AdcaRegs.ADCCTL2.bit.PRESCALE = <span class="number">0x02</span>;         <span class="comment">//`0010`，ADCCLK = 输入时钟 / 2.0，即50MHz</span></span><br><span class="line">    AdcaRegs.ADCCTL1.bit.INTPULSEPOS = <span class="number">0x1</span>;    <span class="comment">// 写1的话，在ADC转换完成时（ADC捕获窗口周期结束时）生成脉冲中断</span></span><br><span class="line">                                               <span class="comment">// 写0的话，就是在窗口周期结束时加上一组系统时钟周期后再生成中断，具体看《TRM》P1499</span></span><br><span class="line">    AdcaRegs.ADCCTL1.bit.ADCPWDNZ = ON;     <span class="comment">// 打开ADC A 的所有模拟电路</span></span><br><span class="line">    EDIS;</span><br><span class="line"></span><br><span class="line">    DELAY_US(<span class="number">1000</span>);  <span class="comment">//延迟1ms</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">/*-----------------------------------------------------------------------</span></span><br><span class="line"><span class="comment"> * 【函数】：void ADC_SOC_Init(void);</span></span><br><span class="line"><span class="comment"> * 【参数】：无</span></span><br><span class="line"><span class="comment"> * 【说明】：配置ADC模块下的SOC，设置通道和中断相关内容</span></span><br><span class="line"><span class="comment"> * 【其他】：ADCINTSEL1N2寄存器是设置中断源相关的，</span></span><br><span class="line"><span class="comment"> * 【参考】：</span></span><br><span class="line"><span class="comment">----------------------------------------------------------------------- */</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">ADC_SOC_Init</span><span class="params">(<span class="keyword">void</span>)</span></span>&#123;</span><br><span class="line">    EALLOW;</span><br><span class="line">    AdcaRegs.ADCSOC0CTL.bit.CHSEL = <span class="number">0x1</span>;           <span class="comment">// channel select，为SOC0选择通道ADCA1，可设置范围为0~F</span></span><br><span class="line">    AdcaRegs.ADCSOC0CTL.bit.ACQPS = <span class="number">0x1FF</span>;      <span class="comment">// acquisition window, AW = (ACQPS+1) * SYSCLK，需要结合实际硬件设计进行计算，计算代码在文档中，1~511</span></span><br><span class="line">    AdcaRegs.ADCSOC0CTL.bit.TRIGSEL = <span class="number">0x0F</span>;      <span class="comment">// trigger select，触发源选择为ePWM6，每一次ePWM</span></span><br><span class="line">    AdcaRegs.ADCINTSEL1N2.bit.INT1SEL = <span class="number">0x0</span>;     <span class="comment">// 由EOC0来触发ADCA模块的第一个中断（INT1）</span></span><br><span class="line">    AdcaRegs.ADCINTSEL1N2.bit.INT1E = ON;        <span class="comment">// 打开ADCA模块的第一个中断（INT1）</span></span><br><span class="line">                                                 <span class="comment">// 此处没有设置ADC A的 中断生成模式（INT1CONT），默认为0x0，即手动清除中断标志时生成中断脉冲</span></span><br><span class="line">    AdcaRegs.ADCINTFLGCLR.bit.ADCINT1 = <span class="number">0x1</span>;   <span class="comment">//  清除ADC中断1的标志</span></span><br><span class="line">    EDIS;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">/*-----------------------------------------------------------------------</span></span><br><span class="line"><span class="comment"> * 【函数】：__interrupt void adcA1ISR(void);</span></span><br><span class="line"><span class="comment"> * 【参数】：无</span></span><br><span class="line"><span class="comment"> * 【说明】：ADC外设中断的处理程序</span></span><br><span class="line"><span class="comment"> * 【其他】：注意需要加 __interrupt 关键字，加了的话编译器会自动处理 保持和恢</span></span><br><span class="line"><span class="comment"> *                     复特定的CPU寄存器状态（如果需要）且在人为清除中断组PIEACK位</span></span><br><span class="line"><span class="comment"> *                     后会自动使用IRET指令来返回；如果不加，则保持和恢复工作 以及 返</span></span><br><span class="line"><span class="comment"> *                     回工作需要人为处理。</span></span><br><span class="line"><span class="comment"> * 【参考】：详见开发文档的处理中断部分，或《TRM》P85</span></span><br><span class="line"><span class="comment">----------------------------------------------------------------------- */</span></span><br><span class="line"><span class="function">__interrupt <span class="keyword">void</span> <span class="title">adcA1ISR</span><span class="params">(<span class="keyword">void</span>)</span></span>&#123;</span><br><span class="line">    sampleResult = AdcaResultRegs.ADCRESULT0;</span><br><span class="line"></span><br><span class="line">    AdcaRegs.ADCINTFLGCLR.bit.ADCINT1 = <span class="number">1</span>;   <span class="comment">// ADCA模块上的第一个中断</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>(<span class="number">1</span> == AdcaRegs.ADCINTOVF.bit.ADCINT1)&#123;</span><br><span class="line">        AdcaRegs.ADCINTOVFCLR.bit.ADCINT1 = <span class="number">1</span>;  <span class="comment">//清除中断溢出</span></span><br><span class="line">        AdcaRegs.ADCINTFLGCLR.bit.ADCINT1 = <span class="number">1</span>;   <span class="comment">// ADCA模块上的第一个中断</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    PieCtrlRegs.PIEACK.all = PIEACK_GROUP1;    <span class="comment">// 确认中断</span></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -2699,7 +2737,8 @@ R_{thermal} = {ADC_{MAX} · 3.3 · R \over ADC · 3.3} - R = {ADC_{MAX}·R \over
 <h1 id="谐振检测开发">谐振检测开发</h1>
 <p><strong>开发目标</strong>：实现对 <strong>PWM边沿</strong> 和 <strong>IGBT分压电流过零点</strong> 的相位时间差 <em>δt</em> 的检测，已达到是否达到谐振。</p>
 <h2 id="工作流程-2">工作流程</h2>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">graph TB</span><br><span class="line">系统初始化 --&gt; 使能ECAP模块时钟</span><br></pre></td></tr></table></figure>
+<pre class="mermaid">graph TB
+系统初始化 --> 使能ECAP模块时钟</pre>
 <h1 id="项目flash烧录">项目FLASH烧录</h1>
 <p>项目Flash烧录即将代码从Debug模式变成Release模式，将代码的存放区域从RAM变成FLASH。需要在项目属性中修改原有的Release配置，或者复制原有的调试模式进行部分修改。</p>
 <p>在前方已经调试好项目的情况下，FLASH模式较调试时使用DEBUG模式需要增加以下内容或步骤：</p>
@@ -2747,7 +2786,8 @@ R_{thermal} = {ADC_{MAX} · 3.3 · R \over ADC · 3.3} - R = {ADC_{MAX}·R \over
 </figure>
 <h1 id="测试与优化">测试与优化</h1>
 <p>硬件工作流程要求如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">graph LR</span><br><span class="line">开机 --&gt; id1[待机模式] --检测到工作设备--&gt; id2[工作模式] --检测到设备离开--&gt; id1</span><br></pre></td></tr></table></figure>
+<pre class="mermaid">graph LR
+开机 --> id1[待机模式] --检测到工作设备--> id2[工作模式] --检测到设备离开--> id1</pre>
 <h2 id="待机模式">待机模式</h2>
 <p>开机后立即进入待机模式，对待机模式下的要求：</p>
 <ol type="1">
@@ -2755,9 +2795,11 @@ R_{thermal} = {ADC_{MAX} · 3.3 · R \over ADC · 3.3} - R = {ADC_{MAX}·R \over
 <li>ADC外设需要时刻检测外面温度、电压和电流</li>
 </ol>
 <p>开机启动流程：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">graph</span><br><span class="line">id1([开机启动]) --&gt; id2[系统初始化&#x2F;开启各外设时钟] --&gt; 各外设寄存器清空并初始化 --&gt; id3&#123;&#123;初始化成功&#125;&#125; --是--&gt; id4([进入待机模式])</span><br></pre></td></tr></table></figure>
+<pre class="mermaid">graph
+id1([开机启动]) --> id2[系统初始化/开启各外设时钟] --> 各外设寄存器清空并初始化 --> id3 --是--> id4([进入待机模式])</pre>
 <p>待机工作流程：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">flowchart</span><br><span class="line">id[定时器1启动] </span><br></pre></td></tr></table></figure>
+<pre class="mermaid">flowchart
+id[定时器1启动]</pre>
 <p>为了达到 <span class="math inline">\(4\mu s\)</span>​​ 的脉冲电路，需要设置<code>CMPA = 100</code> ，在 <code>TBCTR = 100</code> 且 <code>TBCTR DIRECTION = UP</code> 时</p>
 <ol type="1">
 <li>能通过直接关闭外设时钟来关闭外设吗？会否清除寄存器相关设置？重新启动时是否有延时？</li>
@@ -2794,9 +2836,11 @@ CMP = T_{HighLevel} / (T_{TBCLK} *2) = 4*10^{-6}s/(2*2*10^{-8}s) = 100
 <li>使用中断或者主程序对数据进行接收和解读</li>
 </ol>
 <h2 id="工作流程-3">工作流程</h2>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">graph TB</span><br><span class="line">系统初始化 --&gt; 使能SCI通信模块时钟 --&gt; 配置LSP时钟分频 --&gt; 配置SCI模块 --&gt; 使用中断或主程序接收处理上位机指令</span><br></pre></td></tr></table></figure>
+<pre class="mermaid">graph TB
+系统初始化 --> 使能SCI通信模块时钟 --> 配置LSP时钟分频 --> 配置SCI模块 --> 使用中断或主程序接收处理上位机指令</pre>
 <h3 id="sci配置流程">SCI配置流程</h3>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">graph LR</span><br><span class="line">配置SCIFIFO模块 --&gt; 初始化SCI相关寄存器 --&gt; 配置SCI相关寄存器</span><br></pre></td></tr></table></figure>
+<pre class="mermaid">graph LR
+配置SCIFIFO模块 --> 初始化SCI相关寄存器 --> 配置SCI相关寄存器</pre>
 <p>配置SCI相关寄存器需要设置到以下几个参数位：</p>
 <ul>
 <li>单次通信传递字符数量 <code>SCICHAR</code></li>
@@ -2832,7 +2876,9 @@ CMP = T_{HighLevel} / (T_{TBCLK} *2) = 4*10^{-6}s/(2*2*10^{-8}s) = 100
 <p>使用RS485的优势是，RS232/RS485转换器间存在电气隔离，RS485和TTL之间也存在电气隔离，一旦被控设备发生浪涌，不会损坏PC机。</p>
 <h2 id="通信控制">通信控制</h2>
 <p>通信控制相关流程如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">graph </span><br><span class="line">id1[等待上位机数据] --&gt; 收到通信数据 --&gt; id2&#123;判断FLAG对应的位是否使能&#125; --是--&gt; 修改对应的数据 --&gt; 结束</span><br><span class="line">id2 --否--&gt; id1</span><br></pre></td></tr></table></figure>
+<pre class="mermaid">graph 
+id1[等待上位机数据] --> 收到通信数据 --> id2{判断FLAG对应的位是否使能} --是--> 修改对应的数据 --> 结束
+id2 --否--> id1</pre>
 <p>传输时，需要注意对应的数据是否为 <code>16bit</code> 或 <code>8bit</code> ，如PWM周期值为 <code>16bit</code> 寄存器，而传输过程需要使用 <code>8bit</code> 的 <code>unsigned char</code> 字符进行传输，则需要下位机对收到的字符进行位移和按位或运算。</p>
 <p><strong>通信格式约定如下</strong>：</p>
 <ol type="1">
@@ -3161,10 +3207,15 @@ CMP = (1- Duty)·(TBPRD-DB)
 <script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
 
   
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
 
 
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdn.jsdelivr.net/npm/mermaid@8.12.0/dist/mermaid.min.js","integrity":"sha256-0dD7vUjUCTGJjeLnPotQQJIcSzug5fO6WDMYYyNIX4c="}}</script>
+  <script src="/js/third-party/tags/mermaid.js"></script>
 
 
+  <script src="/js/third-party/pace.js"></script>
 
   
 
@@ -3173,7 +3224,7 @@ CMP = (1- Duty)·(TBPRD-DB)
 
   
 
-  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":"enable","tags":"none","js":{"url":"https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js","integrity":"sha256-r+3itOMtGGjap0x+10hu6jW/gZCzxHsoKrOd7gyRSGY="}}</script>
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":"enable","tags":"all","js":{"url":"https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js","integrity":"sha256-r+3itOMtGGjap0x+10hu6jW/gZCzxHsoKrOd7gyRSGY="}}</script>
 <script src="/js/third-party/math/mathjax.js"></script>
 
 
