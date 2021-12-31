@@ -162,7 +162,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">100</span>
+          <span class="site-state-item-count">101</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -207,6 +207,252 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://islet.space/2021/07/15/Hardware/Circuit/2021-07-15-IGBT%E5%8F%8A%E5%85%B6%E9%A9%B1%E5%8A%A8%E8%8A%AF%E7%89%87%E8%A7%84%E6%A0%BC%E5%AD%A6%E4%B9%A0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Liewzheng">
+      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coder的孤岛">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/07/15/Hardware/Circuit/2021-07-15-IGBT%E5%8F%8A%E5%85%B6%E9%A9%B1%E5%8A%A8%E8%8A%AF%E7%89%87%E8%A7%84%E6%A0%BC%E5%AD%A6%E4%B9%A0/" class="post-title-link" itemprop="url">IGBT及其驱动芯片规格学习</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-07-15 08:50:00" itemprop="dateCreated datePublished" datetime="2021-07-15T08:50:00+08:00">2021-07-15</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2021-07-17 14:13:02" itemprop="dateModified" datetime="2021-07-17T14:13:02+08:00">2021-07-17</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Hardware/" itemprop="url" rel="index"><span itemprop="name">Hardware</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>[TOC]</p>
+<p>IGBT和其驱动芯片的电气特性、引脚等参数的开发记录。</p>
+<h1 id="igbt">IGBT</h1>
+<p>IGBT芯片选型为 IKW50N65WR5。</p>
+<figure>
+<img src="https://pic.islet.space/2021/07/image-20210715090401339.png" alt="image-20210715090401339" /><figcaption aria-hidden="true">image-20210715090401339</figcaption>
+</figure>
+<figure>
+<img src="https://pic.islet.space/2021/07/image-20210715093221500.png" alt="image-20210715093221500" /><figcaption aria-hidden="true">image-20210715093221500</figcaption>
+</figure>
+<p>IGBT有三个极，发射极、集电极 和 栅极。</p>
+<p>从其电气性能表格中，可以看出：</p>
+<ul>
+<li>集电极到发射极的击穿电压 <em>最小</em> 为650V</li>
+<li>在 V<span style="font-size: 0.8rem; font-weight: 500;">GE</span> 完全导通（最高15V）时，集电极到发射极的饱和电压为1.8V以下，此时 IGBT 处于截止状态</li>
+<li>在 V<span style="font-size: 0.8rem; font-weight: 500;">GE</span> 完全截止（0V）时，二极管的正向电压为1.9V以下。<mark> 此时，V<span style="font-size: 0.8rem; font-weight: 500;">CE</span> 处于导通状态。</mark></li>
+</ul>
+<figure>
+<img src="https://pic.islet.space/2021/07/image-20210715094151439.png" alt="image-20210715094151439" /><figcaption aria-hidden="true">image-20210715094151439</figcaption>
+</figure>
+<p>从上方表中可以看出，在官方的《开关特性测试情况》下，V<span style="font-size: 0.8rem; font-weight: 500;">GE</span> 的通电情况是 0V 或者 15V，故此推断给此IGBT的栅极电源输入信号应该是0V ~ 15V的方波。</p>
+<p>因此，下图中IGBT器件的电路连接方式为：G 接0/15V方波信号，C 接最高650V电源，E 接地。</p>
+<figure>
+<img src="https://pic.islet.space/2021/07/image-20210715095656309.png" alt="image-20210715095656309" /><figcaption aria-hidden="true">image-20210715095656309</figcaption>
+</figure>
+<h1 id="driver-ic">DRIVER IC</h1>
+<p>选用芯片型号为 2EDL05I06PF。</p>
+<figure>
+<img src="https://pic.islet.space/2021/07/image-20210715102359830.png" alt="image-20210715102359830" /><figcaption aria-hidden="true">image-20210715102359830</figcaption>
+</figure>
+<p>根据表1索引可得，芯片封装类型为DSO-8，目标驱动芯片是 IGBT，而非 MOSFET。</p>
+<figure>
+<img src="https://pic.islet.space/2021/07/image-20210715102251417.png" alt="image-20210715102251417" /><figcaption aria-hidden="true">image-20210715102251417</figcaption>
+</figure>
+<p>再根据图3可得芯片引脚分布，根据表2可得所有引脚描述。</p>
+<figure>
+<img src="https://pic.islet.space/2021/07/image-20210715095931941.png" alt="image-20210715095931941" /><figcaption aria-hidden="true">image-20210715095931941</figcaption>
+</figure>
+<p>结合表2和图3，再根据图1的典型应用电路，可以大致知道芯片的连接方法。</p>
+<table>
+<thead>
+<tr class="header">
+<th>针脚</th>
+<th>功能描述</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>VDD</td>
+<td>芯片供电接口</td>
+</tr>
+<tr class="even">
+<td>GND</td>
+<td>芯片接地接口</td>
+</tr>
+<tr class="odd">
+<td>HIN</td>
+<td>调制波形输入接口——高位</td>
+</tr>
+<tr class="even">
+<td>LIN</td>
+<td>调制波形输入接口——低位</td>
+</tr>
+<tr class="odd">
+<td>VB</td>
+<td>高位正电</td>
+</tr>
+<tr class="even">
+<td>HO</td>
+<td>控制高位IGBT栅极的信号输出接口</td>
+</tr>
+<tr class="odd">
+<td>VS</td>
+<td>高位负电</td>
+</tr>
+<tr class="even">
+<td>LO</td>
+<td>控制低位IGBT栅极的信号输出接口</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>还是不太明白VB和VS的作用</p>
+</blockquote>
+<p>表4给出了 V<span style="font-size: 0.8rem; font-weight: 500;">DD</span> 和 V<span style="font-size: 0.8rem; font-weight: 500;">B</span> 的供电范围：</p>
+<figure>
+<img src="https://pic.islet.space/2021/07/image-20210715105358524.png" alt="image-20210715105358524" /><figcaption aria-hidden="true">image-20210715105358524</figcaption>
+</figure>
+<figure>
+<img src="https://pic.islet.space/2021/07/image-20210715105816397.png" alt="image-20210715105816397" /><figcaption aria-hidden="true">image-20210715105816397</figcaption>
+</figure>
+<p>表6 给出了输入 V<span style="font-size: 0.8rem; font-weight: 500;">IN</span> 的逻辑电平高低的电压范围，高电平为1.7 ~ 2.4 V， 低电平为0.7 ~ 1.1V。</p>
+<figure>
+<img src="https://pic.islet.space/2021/07/image-20210715103507327.png" alt="image-20210715103507327" /><figcaption aria-hidden="true">image-20210715103507327</figcaption>
+</figure>
+<p>图2 提供了驱动芯片内部结构示意图</p>
+<p>概括地说，IGBT栅极驱动器是一个放大器，其通过提高电压和电流来放大控制信号。</p>
+<p>栅极驱动器的主要作用是对 <mark>IGBT的输入和反向输出电容放电</mark>。因此栅极驱动器（初其他影响因素外）与IGBT的开关性能密切相关，也与通态损耗与开关损耗有关。</p>
+<p>绝大多数IGBT驱动器都是基于电压源的，与电流源驱动器相比，电压源的优势是其功率损耗在栅极电阻上，而非驱动中的电流源内。通过栅极电阻，可以调整最大的栅极电流。另一优势是，电压源相对简单的电路和控制方法。</p>
+<h2 id="驱动功能">驱动功能</h2>
+<p>IGBT驱动电路为系统提供的功能：</p>
+<ol type="1">
+<li>在IGBT开通过程中，栅极处的电容充电直到IGBT的开通阈值电压，反向传输电容（密勒电容）也如此。</li>
+<li>在IGBT关断过程中，输入电容放电直到栅极电压达到关断阈值电压以下，反向传输电容（密勒电容）也如此。</li>
+<li>IGBT驱动可以具有保护IGBT免受损坏的功能，如 <strong>避免IGBT短路</strong> 和 <strong>过电压保护</strong>。</li>
+</ol>
+<h2 id="驱动供电">驱动供电</h2>
+<p>大部分情况下，IGBT驱动需要用隔离的供电电源。隔离电源可以看做是IGBT驱动的一部分。这些电源一般由 <strong>DC-DC变换器</strong> 或 <strong>自举电路</strong> 构成。</p>
+<p>同时，驱动会影响IGBT和续流二极管的动态特性，此外仍须确保IGBT输入电路电压（低压侧）和输出电路（高压侧）的电压隔离。<mark>低压侧与控制电路连接，高压侧与IGBT电路连接。</mark></p>
+<h2 id="信号传输">信号传输</h2>
+<p>阿博说的电路PCB布局要点：强弱隔离，数模隔离，信号沿地。</p>
+<p>IGBT需要隔离的控制信号 包括： <strong>开通信号</strong>、<strong>关断信号</strong>、<strong>反馈信号</strong>。</p>
+<p>这些控制信号的传输路径的隔离是通过 <strong>电隔离</strong> 或 <strong>非电隔离</strong> 的方式形成的，这种电隔离被进一步划分为基于磁感应的、光学的隔离，极少情况下是电容性的隔离。需要通过 <strong><em>IGBT阻断电压</em></strong> 或 <strong><em>应用电压的高低</em></strong> 来判断组个方式，在 高压应用 或 IGBT阻隔电压 U<span style="font-size: 0.6rem;">CES</span> 高至 <code>1.2kV</code> 时，采用磁感应式 或 光学式信号传送器；在 低压 或 中压 应用中 或 低于 <code>1.2kV</code> 时，采用光电耦合驱动芯片。</p>
+<p><img src="https://pic.islet.space/2021/07/image-20210717130119184.png" alt="image-20210717130119184" style="zoom:50%;" /></p>
+<div style="text-align: center; font-weight: 900;">
+图 Infineon对电气隔离的定义
+</div>
+<figure>
+<img src="https://pic.islet.space/2021/07/image-20210717115141036.png" alt="image-20210717115141036" /><figcaption aria-hidden="true">image-20210717115141036</figcaption>
+</figure>
+<h3 id="光电耦合器">光电耦合器</h3>
+<p>光电耦合器就是一种可以实现IGBT驱动的同时实现强弱电隔离的器件。由于光电耦合器的结构设计，集成光电耦合器的IGBT只能实现信息传递，不能为任何设备提供充足的能量支撑，需要一个隔离电源为驱动核心和光电耦合器的二次侧（高压侧）提供电能。</p>
+<p><img src="https://pic.islet.space/2021/07/image-20210717113118307.png" alt="image-20210717113118307" style="zoom:80%;" /></p>
+<p>另外有个相当重要的参数需要考虑——<strong><em>传输延迟时间</em></strong>，即 信号从光电耦合器IGBT输入到控制电流输出的时间。常规而言，传播延迟时间 <em>t</em><span style="font-size: 0.6rem;">PLH</span> 和 <em>t</em><span style="font-size: 0.6rem;">PHL</span> 在几百个纳秒时间，但通常大于200ns。这种延时本身不会构成真正的问题，因为微控制器的控制算法可以考虑这一点，最大的问题在于 延时的公差（传输延迟时间不匹配），即最小和最大延时的不一致性。一旦该公差越大，上下桥臂的IGBT死区时间 <em>t</em><span style="font-size: 0.6rem;">DT</span> 就越大，加重了逆变器输出电流的失真影响。光电耦合器里信号延迟的误差因为操作使用会发生巨大变化，最终可导致高达1us的偏差。</p>
+<figure>
+<img src="https://pic.islet.space/2021/07/image-20210717114405335.png" alt="image-20210717114405335" /><figcaption aria-hidden="true">image-20210717114405335</figcaption>
+</figure>
+<h3 id="脉冲变压器">脉冲变压器</h3>
+<p>利用脉冲变压器为信号传输的IGBT，可以达到较低的延时水平，但与光电耦合器一样，只能传输信号，提供所需能量仍需由隔离电源提供。</p>
+<figure>
+<img src="https://pic.islet.space/2021/07/image-20210717115333071.png" alt="image-20210717115333071" /><figcaption aria-hidden="true">image-20210717115333071</figcaption>
+</figure>
+<h3 id="单片电平转换器">单片电平转换器</h3>
+<p><strong>单片电平转换器</strong>，即 仅通过一个集成电路来实现 输入信号 和 输出信号 之间的隔离。需要注意的是，并不想光耦、变压器、脉冲等技术的完全绝缘的电气隔离，如果出现差错（如输出侧寄生电感产生的负电压瞬变），电路高压侧和地压侧将会直接连在一起（导致内部集成芯片的损坏）。将 <strong><em>SOI（绝缘硅）技术</em></strong> 应用于电平转换器可以解决这一缺陷，Infineon的产品大多都应用这项技术。这样的SOI装置不是由PN结反向偏置来提供内部电路隔离的，而是通过一层绝缘层（通常是二氧化硅 SiO2）来为不同的内部电路提供隔离，其反向电压耐压高达较高（因产品而不同）。</p>
+<p>单片电平转换器主要应用于 U<span style="font-size: 0.6rem;">CES</span> 低于 600V 的IGBT，通常一个驱动器有六路输出。但是在驱动 1.2kV 以上时，其驱动芯片和其他驱动方式相比成本劣势较少采用。</p>
+<figure>
+<img src="https://pic.islet.space/2021/07/image-20210717122123709.png" alt="image-20210717122123709" /><figcaption aria-hidden="true">image-20210717122123709</figcaption>
+</figure>
+<div style="text-align: center; font-weight: 900;">
+图 带电平转换器的IGBT工作原理
+</div>
+<h1 id="产品概念">产品概念</h1>
+<p>栅极驱动芯片 又可以称作 门极驱动芯片。按照门极驱动结构类型可以分为 <strong>单通道</strong>、<strong>双通道</strong>、<strong>四通道</strong> 和 <strong>六通道</strong>，又进一步划分 <strong>高边</strong>、<strong>地边</strong>、<strong>高低边</strong>、<strong>半桥</strong>、<strong>全桥</strong>、<strong>三相</strong>。</p>
+<figure>
+<img src="https://pic.islet.space/2021/07/image-20210717125203004.png" alt="image-20210717125203004" /><figcaption aria-hidden="true">image-20210717125203004</figcaption>
+</figure>
+<figure>
+<img src="https://pic.islet.space/2021/07/image-20210717125219691.png" alt="image-20210717125219691" /><figcaption aria-hidden="true">image-20210717125219691</figcaption>
+</figure>
+<figure>
+<img src="https://pic.islet.space/2021/07/image-20210717125337142.png" alt="image-20210717125337142" /><figcaption aria-hidden="true">image-20210717125337142</figcaption>
+</figure>
+<h2 id="eicedriver">EiceDriver</h2>
+<p>下图为Infineon提供的栅极驱动芯片品类示意：</p>
+<figure>
+<img src="https://pic.islet.space/2021/07/image-20210717120650887.png" alt="image-20210717120650887" /><figcaption aria-hidden="true">image-20210717120650887</figcaption>
+</figure>
+<h1 id="参考">参考</h1>
+<ol type="1">
+<li><a target="_blank" rel="noopener" href="https://storage.islet.space/01_Learning/12_Hardwares/03_Semiconductor/IGBT%E6%A8%A1%E5%9D%97%EF%BC%9A%E6%8A%80%E6%9C%AF%E9%A9%B1%E5%8A%A8%E5%92%8C%E5%BA%94%E7%94%A8.pdf">《IGBT模块：技术驱动和应用》</a></li>
+<li><a target="_blank" rel="noopener" href="https://toshiba.semicon-storage.com/content/dam/toshiba-ss/shared/docs/design-support/document/Reference-design/application-note/MOSFET-Gate-Drive-Circuit-Application-Notes_EN_36267-CN.pdf">《MOSFET 栅极驱动电路》</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.infineon.com/dgdl/Infineon-Power_and_Sensing-ProductSelectionGuide-v00_01-EN.pdf?fileId=5546d4625607bd13015621522aa012cb&amp;da=t">《Infineon-Power_and_Sensing-ProductSelectionGuide-v00_01-EN》</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.infineon.com/dgdl/Infineon-EiceDRIVER_Gate_Driver_ICs-ProductSelectionGuide-v01_01-CN.pdf?fileId=5546d46269e1c019016ab0ec653015cc">《Infineon-EiceDRIVER_Gate_Driver_ICs-ProductSelectionGuide-v01_01-CN》</a></li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -4135,444 +4381,8 @@ CMP = (1- Duty)·(TBPRD-DB)
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://islet.space/2021/06/28/Communication/2021-06-28-I2S%E9%80%9A%E4%BF%A1/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Liewzheng">
-      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Coder的孤岛">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/06/28/Communication/2021-06-28-I2S%E9%80%9A%E4%BF%A1/" class="post-title-link" itemprop="url">I2S通信</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-
-    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
-    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2021-06-28 08:40:00" itemprop="dateCreated datePublished" datetime="2021-06-28T08:40:00+08:00">2021-06-28</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-07-09 00:15:13" itemprop="dateModified" datetime="2021-07-09T00:15:13+08:00">2021-07-09</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Communication/" itemprop="url" rel="index"><span itemprop="name">Communication</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>数字音频信号的传输标准，如：</p>
-<ul>
-<li><strong><em>I2S</em></strong>、<strong><em>PCM</em></strong> (Pulse Code Modulation) 和 <strong><em>PDM</em></strong> (Pulse Density Modulation)主要用于同一块电路板上芯片之间音频信号的传输；</li>
-<li><strong><em>Intel HDA</em></strong> (Intel High Definition Audio) 用于PC的Audio子系统（声卡）应用；</li>
-<li><strong><em>S/PDIF</em></strong> 和 <strong><em>Ethernet AVB</em></strong> 主要应用于板间长距离及需要电缆连接的场合。</li>
-</ul>
-<h1 id="philips-i2s-标准">Philips I2S 标准</h1>
-<p>I2S的标准文件源自 <strong>飞利浦半导体</strong>（Philips Semiconductors）发表于1986年的《<strong>I2S bus specification</strong>（1996年修订版）》。</p>
-<blockquote>
-<p>I2S（Inter-IC Sound）采用了独立的导线传输时钟与数据信号的设计，通过将数据和时钟信号分离，避免了因时差诱发的失真，为用户节省了购买抵抗音频抖动的专业设备的费用。</p>
-</blockquote>
-<p><strong>需要注意</strong>：I2S是一种音频编码协议，同时也是一种音频接口，因此采用I2S接口方式的不一定采用I2S编码，还可以采用 <strong>左对齐</strong>（Left Justifying）编码 或 <strong>右对齐</strong>（Right Justifying）编码。</p>
-<figure>
-<img src="https://pic.islet.space/2021/06/20210629145837.png" alt="image-20210629145800027" /><figcaption aria-hidden="true">image-20210629145800027</figcaption>
-</figure>
-<h2 id="特点">特点</h2>
-<ol type="1">
-<li><p>支持全双工/半双工</p></li>
-<li><p>支持主/从模式</p></li>
-<li><p>和PCM相比，I2S更适合立体声系统。当然，I2S的变体也支持多通道的时分复用，因此可以支持多声道。</p></li>
-</ol>
-<h2 id="硬件特性">硬件特性</h2>
-<h3 id="总线介绍">总线介绍</h3>
-<blockquote>
-<p>To minimize the number of pins required and to keep wiring simple, a <strong><em>3-line serial bus is used</em></strong> consisting of a line for <strong><em>two time-multiplexed data channels</em></strong>, <strong><em>a word select line</em></strong>(WS) and <strong><em>a clock line</em></strong> (SCK).</p>
-</blockquote>
-<p><img src="https://pic.islet.space/2021/06/20210629172149.png" alt="image-20210629112429113" style="zoom:67%;" /></p>
-<p>从上图得知，I2S总线共需要三个引脚：</p>
-<ul>
-<li>连续串行时钟线（<strong>SCK</strong> / <strong>SCLK</strong> / <strong>BCLK</strong>），也叫位时钟，即对应数字音频的每一位数据，SCLK都有1个脉冲。SCLK的频率=2×采样频率×采样位数。</li>
-<li>字选择线（<strong>WS</strong> / <strong>LRCLK</strong>），也叫帧时钟，用于切换左右声道的数据。LRCK为“1”表示正在传输的是右声道的数据，为“0”则表示正在传输的是左声道的数据。LRCK的频率等于采样频率。</li>
-<li>时分多路复用（简称 TDM）数据线，即串行数据（<strong>SD</strong> 或 <strong>SDATA</strong>），就是<mark>用二进制补码表示的</mark>音频数据。</li>
-</ul>
-<p>另，有时为了使系统间能够更好地同步，还需要另外传输一个信号MCLK，称为<strong>主时钟</strong>，也叫系统时钟（Sys Clock），<mark>是采样频率的256倍或384倍</mark>。</p>
-<p><strong><em>注意</em></strong>：能够生成SCK和WS的就是主设备（Master）。</p>
-<h3 id="电压要求">电压要求</h3>
-<table>
-<thead>
-<tr class="header">
-<th></th>
-<th>VL</th>
-<th>VH</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>输出电平</td>
-<td>&lt;0.4V</td>
-<td>&gt;2.4V</td>
-</tr>
-<tr class="even">
-<td>输入电平</td>
-<td>0.8V</td>
-<td>2.0V</td>
-</tr>
-</tbody>
-</table>
-<p>这是使用的TTL电平标准，随着其他IC（LSI）的流行，其他电平也会支持。</p>
-<h2 id="串行数据">串行数据</h2>
-<blockquote>
-<p>I2S格式的信号无论有多少位有效数据，数据的最高位总是出现在LRCK变化（也就是一帧开始）后的第2个SCLK脉冲处。这就使得<mark>接收端与发送端的有效位数可以不同</mark>。如果接收端能处理的有效位数少于发送端，可以放弃数据帧中多余的低位数据；如果接收端能处理的有效位数多于发送端，可以自行补足剩余的位。这种同步机制使得数字音频设备的互连更加方便，而且不会造成数据错位。</p>
-<p>随着技术的发展，在统一的 <strong>I2S接口</strong> 下，出现了多种不同的数据格式。根据SDATA数据相对于LRCK和SCLK的位置不同，分为左对齐（较少使用）、I2S格式（即飞利浦规定的格式）和右对齐（也叫日本格式、普通格式）。</p>
-<p>为了保证数字音频信号的正确传输，发送端和接收端应该采用相同的数据格式和长度。当然，对I2S格式来说数据长度可以不同。</p>
-</blockquote>
-<h2 id="字选择">字选择</h2>
-<p>字选择（word select），也可以叫命令选择线，表明了正在被传输的声道。</p>
-<ul>
-<li><code>WS=0</code> ，表示正在传输的是 <strong>左声道</strong> 的数据。</li>
-<li><code>WS=1</code> ，表示正在传输的是 <strong>右声道</strong> 的数据。</li>
-</ul>
-<p>WS可以在串行时钟的上升沿或者下降沿发生改变，并且WS信号不需要一定是对称的。在从属装置端，WS<mark>在时钟信号的上升沿发生改变</mark>。WS总是<mark>在最高位传输前的一个时钟周期发生改变</mark>，这样可以使从属装置得到与被传输的串行数据同步的时间，并且使接收端存储当前的命令以及为下次的命令清除空间。</p>
-<h1 id="adi-codec-i2s移植">ADI-Codec I2S移植</h1>
-<p>以下文章/教程仅针对官方提供的例程《AD1939_I2S_Sample_Based_Talkthru》进行修改。</p>
-<blockquote>
-<ul>
-<li><code>&lt;ad1939.h&gt;</code> 定义了ADAU1939的宏定义，包括锁相环、时钟、DAC、ADC等的寄存器，与直接从SigmaStudio导出的文件并没有太大差别，应该经过精简。</li>
-<li></li>
-</ul>
-</blockquote>
-<p>首先，需要清晰认识1939和1772的硬件差异。ADAU1939和ADAU1772硬件上的异同，都有4个差分输入，但是1939有8个差分输出，1772有2个双声道输出（4个差分输出）。</p>
-<figure>
-<img src="https://pic.islet.space/2021/06/20210628095302.png" alt="image-20210628095252103" /><figcaption aria-hidden="true">image-20210628095252103</figcaption>
-</figure>
-<blockquote>
-<p><strong><em>SPORTS</em></strong> ，即Serial Ports的简称，串行接口。</p>
-</blockquote>
-<p>在<code>&lt;ADDS_21479_EzKit.h&gt;</code> 头文件里，以下声明适用于21479和1939的音频通信通道，定义了 <strong><em>2个双声道输入</em></strong> 和 <strong><em>4个双声道输出</em></strong> ，正好符合1939的 <strong><em>4个差分输入</em></strong> 和 <strong><em>8个差分输出</em></strong> 的硬件描述，对应修改到1772时需要减少输出的声音通道。本文件仅对一些全局变量、声音通道、函数等做出声明，具体应用在其他.c文件或.asm文件中。</p>
-<p>通过 <strong><em>Sport1 A</em></strong> 从Codec接收数据，并通过 <strong><em>Sport0 A/B</em></strong> 和 <strong><em>Sport2 A/B</em></strong> 将音频数据传输至Codec的四个立体声DAC接口。Sport1 接收中断服务程序以在 DMA接收缓存 <code>rx1a_buf</code> 上完成算术运算（arithmetic computations），并将计算结果存放至 DMA传输缓存 <code>tx0a_buf</code> 。</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/******************************************************************************************************</span></span><br><span class="line"><span class="comment">/                                                                                                     /</span></span><br><span class="line"><span class="comment">/                            AD1939 - SPORT1 RX INTERRUPT SERVICE ROUTINE                             /</span></span><br><span class="line"><span class="comment">/                                                                                                     /</span></span><br><span class="line"><span class="comment">/    Receives input data from the AD1939 ADCs via SPORT1 A and transmits processed audio data         /</span></span><br><span class="line"><span class="comment">/    back out to the four AD1939 Stereo DACs/Line Outputs through SPORT0 A/B and SPORT2 A/B           /</span></span><br><span class="line"><span class="comment">/                                                                                                     /</span></span><br><span class="line"><span class="comment">/                                                                                                     /</span></span><br><span class="line"><span class="comment">/   This Serial Port 1 Recieve Interrupt Service Routine performs arithmetic computations on          /</span></span><br><span class="line"><span class="comment">/   the SPORT1 receive DMA buffer (rx1a_buf) and places results to SPORT0 transmit                    /</span></span><br><span class="line"><span class="comment">/   DMA buffer (tx0a_buf)                                                                             /</span></span><br><span class="line"><span class="comment">/                                                                                                     /</span></span><br><span class="line"><span class="comment">/  rx1a_buf[2] - DSP SPORT0 A receive buffer - AD1939 ASDATA1                                         /</span></span><br><span class="line"><span class="comment">/  Slot # Description                             DSP Data Memory Address                             /</span></span><br><span class="line"><span class="comment">/  ------ --------------------------------------  --------------------------------------------------  /</span></span><br><span class="line"><span class="comment">/  0      Internal ADC 0 Left Channel             DM(_rx1a_buf + 0) = DM(_rx1a_buf + Internal_ADC_L1) /</span></span><br><span class="line"><span class="comment">/  1      Internal ADC 0 Right Channel            DM(_rx1a_buf + 1) = DM(_rx1a_buf + Internal_ADC_R1) /</span></span><br><span class="line"><span class="comment">/                                                                                                     /</span></span><br><span class="line"><span class="comment">/  rx1b_buf[2] - DSP SPORT0 B receive buffer - AD1939 ASDATA2                                         /</span></span><br><span class="line"><span class="comment">/  Slot # Description                             DSP Data Memory Address                             /</span></span><br><span class="line"><span class="comment">/  ------ --------------------------------------  --------------------------------------------------  /</span></span><br><span class="line"><span class="comment">/  0      Internal ADC 1 Left Channel             DM(_rx1b_buf + 2) = DM(_rx1b_buf + Internal_ADC_L2) /</span></span><br><span class="line"><span class="comment">/  1      Internal ADC 1 Right Channel            DM(_rx1b_buf + 3) = DM(_rx1b_buf + Internal_ADC_R2) /</span></span><br><span class="line"><span class="comment">/                                                                                                     /</span></span><br><span class="line"><span class="comment">/  tx0a_buf[2] - DSP SPORT0 A transmit buffer - AD1939 DSDATA1                                        /</span></span><br><span class="line"><span class="comment">/  Slot # Description                             DSP Data Memory Address                             /</span></span><br><span class="line"><span class="comment">/  ------ --------------------------------------  --------------------------------------------------  /</span></span><br><span class="line"><span class="comment">/  0      Internal DAC 1 Left Channel             DM(_tx0a_buf + 0) = DM(_tx0a_buf + Internal_DAC_L1) /</span></span><br><span class="line"><span class="comment">/  1      Internal DAC 1 Right Channel            DM(_tx0a_buf + 1) = DM(_tx0a_buf + Internal_DAC_R1) /</span></span><br><span class="line"><span class="comment">/                                                                                                     /</span></span><br><span class="line"><span class="comment">/  tx0a_buf[2] - DSP SPORT0 B transmit buffer - AD1939 DSDATA2                                        /</span></span><br><span class="line"><span class="comment">/  Slot # Description                             DSP Data Memory Address                             /</span></span><br><span class="line"><span class="comment">/  ------ --------------------------------------  --------------------------------------------------  /</span></span><br><span class="line"><span class="comment">/  2      Internal DAC 2 Left Channel             DM(_tx0b_buf + 2) = DM(_tx0b_buf + Internal_DAC_L2) /</span></span><br><span class="line"><span class="comment">/  3      Internal DAC 2 Right Channel            DM(_tx0b_buf + 3) = DM(_tx0b_buf + Internal_DAC_R2) /</span></span><br><span class="line"><span class="comment">/                                                                                                     /</span></span><br><span class="line"><span class="comment">/  tx2a_buf[2] - DSP SPORT2 A transmit buffer - AD1939 DSDATA3                                        /</span></span><br><span class="line"><span class="comment">/  Slot # Description                             DSP Data Memory Address                             /</span></span><br><span class="line"><span class="comment">/  ------ --------------------------------------  --------------------------------------------------  /</span></span><br><span class="line"><span class="comment">/  4      Internal DAC 3 Left Channel             DM(_tx2a_buf + 4) = DM(_tx2a_buf + Internal_DAC_L3) /</span></span><br><span class="line"><span class="comment">/  5      Internal DAC 3 Right Channel            DM(_tx2a_buf + 5) = DM(_tx2a_buf + Internal_DAC_R3) /</span></span><br><span class="line"><span class="comment">/                                                                                                     /</span></span><br><span class="line"><span class="comment">/  tx2b_buf[2] - DSP SPORT2 B transmit buffer - AD1939 DSDATA4                                        /</span></span><br><span class="line"><span class="comment">/  Slot # Description                             DSP Data Memory Address                             /</span></span><br><span class="line"><span class="comment">/  ------ --------------------------------------  --------------------------------------------------  /</span></span><br><span class="line"><span class="comment">/  6      Internal DAC 4 Left Channel             DM(_tx2b_buf + 6) = DM(_tx2b_buf + Internal_DAC_L4) /</span></span><br><span class="line"><span class="comment">/  7      Internal DAC 4 Right Channel            DM(_tx2b_buf + 7) = DM(_tx2b_buf + Internal_DAC_R4) /</span></span><br><span class="line"><span class="comment">/                                                                                                     /</span></span><br><span class="line"><span class="comment">******************************************************************************************************/</span></span><br></pre></td></tr></table></figure>
-<h2 id="sptcl寄存器操作">SPTCL寄存器操作</h2>
-<p>下方代码是官方示例给出，并经过唐昊整合修改过，其寄存器设置的功能解读和验证如下：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">*pSPCTL0 = (SPTRAN | OPMODE | SLEN32 | SPEN_A | SCHEN_A | SDEN_A | SPEN_B | SCHEN_B | SDEN_B);</span><br><span class="line">*pSPCTL1 = (OPMODE | SLEN32 | SPEN_A | SCHEN_A | SDEN_A | SPEN_B | SCHEN_B | SDEN_B);</span><br><span class="line">*pSPCTL2 = (OPMODE | SLEN32 | SPEN_A | SCHEN_A | SDEN_A | SPEN_B | SCHEN_B | SDEN_B);</span><br></pre></td></tr></table></figure>
-<p><strong>SPTRAN</strong>: Serial port Data Transfer Direction. Transfer / Receive from both Channel A and Channel B. 需要注意的是，传输和接收功能只有一个会在 <code>SOPRTx_CLK</code> 和 <code>SPORTx_FS</code> 控制 <strong><em>传输/接收位移寄存器</em></strong>（Transmit/Receive shift register） 时被激活。</p>
-<p><strong>OPMODE</strong>: SPORT Operation Mode, <strong><em>I2S</em></strong> / <strong><em>packed</em></strong>, <strong><em>left-justified</em></strong> mode</p>
-<p><strong>SLEN32</strong>: Serial port word length, in I2S / left-justified mode , we used SLEN8 ~ SLEN32. <mark>但实际上，1772输出的I2S声道字长度是24bits</mark>。</p>
-<p><strong>SPEN_A</strong>: Serial port <strong><em>Channel A DMA</em></strong> enabled.</p>
-<p><strong>SCHEN_A</strong>: Serial port <strong><em>Channel A DMA Chainning</em></strong> enabled.</p>
-<p><strong>SDEN_A</strong>: Serial port <strong><em>Channel A DMA</em></strong> enabled.</p>
-<p><strong>SPEN_B</strong>: Serial port <strong><em>Channel B DMA</em></strong> enabled.</p>
-<p><strong>SCHEN_B</strong>: Serial port <strong><em>Channel B DMA Chainning</em></strong> enabled.</p>
-<p><strong>SDEN_B</strong>: Serial port <strong><em>Channel B DMA</em></strong> enabled.</p>
-<p>通过查询表《HWR》中的表A-84可知，SPORT 0 ~ 2 的设置符合 0用于传输，1和2用于接收的要求。</p>
-<figure>
-<img src="https://pic.islet.space/2021/07/20210702110602.png" alt="image-20210702110559930" /><figcaption aria-hidden="true">image-20210702110559930</figcaption>
-</figure>
-<p>需要尽可能拉高逻辑分析仪的采样频率，如24MHz以上。</p>
-<figure>
-<img src="https://pic.islet.space/2021/07/20210702111537.png" alt="image-20210702111535166" /><figcaption aria-hidden="true">image-20210702111535166</figcaption>
-</figure>
-<p>1772下I2S的数据深度为16 ~ 24bit，后面的长度都会由0补齐，采集显示设置时可以设置32bit或24bit皆可。</p>
-<figure>
-<img src="https://pic.islet.space/2021/07/20210702113337.png" alt="image-20210702113249646" /><figcaption aria-hidden="true">image-20210702113249646</figcaption>
-</figure>
-<figure>
-<img src="https://pic.islet.space/2021/07/20210702113543.png" alt="image-20210702113540262" /><figcaption aria-hidden="true">image-20210702113540262</figcaption>
-</figure>
-<h1 id="asrc-of-adau1772">ASRC OF ADAU1772</h1>
-<p>ADAU1772 master clock input, but the LRCLK and BCLK must be synchronous to each other. The LRCLK and BCLK pins are used to clock both the serial input and output ports.</p>
-<p>ADAU1772 can be set to be either the master or the slave in a system. <mark>Because there is only one set of serial data clocks, the input and output ports must always both be either master or slave.</mark></p>
-<p>It is <mark>recommended to use the high drive settings on the serial port pins</mark>.</p>
-<p>串行音频接口的通信时序说明图如下，</p>
-<p>其中， t<sub>SOD</sub> 是指：ADC_SDATAx delay; time from BCLK falling (master and slave modes)。从下图中看出PDM（ LJ / RJ / I2S ）都有 t<sub>SOD</sub> 。</p>
-<p><img src="https://pic.islet.space/2021/07/20210702135103.png" alt="image-20210702111739875" style="zoom: 80%;" /></p>
-<p>虽然同样是I2S，且LJ的标准和飞利浦I2S的标准都是左端对齐，但是飞利浦的数据会比LRCLK延时一个完整的时钟周期。而标准LJ则是LRCLK、BCLK 和 SDATA 完全对齐。</p>
-<h2 id="通信时钟要求">通信时钟要求</h2>
-<p>量产版采用统一的 <code>16.6MHz</code> 为2个codecs和1个DSP主芯片提供时钟。</p>
-<figure>
-<img src="https://pic.islet.space/2021/07/image-20210705151852538.png" alt="image-20210705151852538" /><figcaption aria-hidden="true">image-20210705151852538</figcaption>
-</figure>
-<p>异步设备通信开发顺利的前提要求是两者的通信时钟能否保持一致，即最关键的通信时钟信号（<strong><em>BCLK</em></strong> / <strong><em>LRCLK</em></strong>）是否符合设定要求(3.072MHz / 48KHz)。</p>
-<figure>
-<img src="https://pic.islet.space/2021/07/20210705084415.png" alt="image-20210705084133066" /><figcaption aria-hidden="true">image-20210705084133066</figcaption>
-</figure>
-<p>使用逻辑分析仪去测量音频设备的输出 <strong>帧时钟</strong>（LRCLK） 频率，如果其时钟输出结果符合设置的 <code>48KHz</code> 要求，则说明正确。其 <strong>位时钟频率要求</strong> 应等于 <code>帧时钟长度 * 数据深度 * 2</code> ，如 帧时钟频率为48KHz的 位时钟频率为 <code>48KHz * 32bits * 2</code> ，大致等于 <code>3.072 MHz</code> 。</p>
-<p><strong>注意</strong>：逻辑分析仪能否清晰测量和指示波形周期，仍需要该设备自身支持较高频率的采样速率，最好采样速率能与需要采样的目标速率成倍数关系。如果速率过低，则会出现采样变形。如下图中的位时钟采样和测量为 <code>3MHz</code> ，中途会偶然出现 <code>3.429MHz</code>。</p>
-<figure>
-<img src="https://pic.islet.space/2021/07/20210705095045.png" alt="image-20210705095017424" /><figcaption aria-hidden="true">image-20210705095017424</figcaption>
-</figure>
-<figure>
-<img src="https://pic.islet.space/2021/07/20210705095205.png" alt="image-20210705095203461" /><figcaption aria-hidden="true">image-20210705095203461</figcaption>
-</figure>
-<p>在设置错误时，会出现如下情况：</p>
-<figure>
-<img src="https://pic.islet.space/2021/07/20210705085250.png" alt="image-20210705085041206" /><figcaption aria-hidden="true">image-20210705085041206</figcaption>
-</figure>
-<p>在21479上设置好I2S的 slave端 代码，被动接收master端音频并转发回给master端，而ADAU1772在使用USBi单独通信设置好通信频率48KHz后，成功与21479实现全双工音频转发。</p>
-<p>在评估版用户手册中，提示需要16.625MHz的时钟提供给DSP21479。通过修改量产板上codec的PLL寄存器设置，发现 <code>16.625MHz</code> 无效，设置时不起作用，因为与所提供的时钟频率（16.6MHz）不符。</p>
-<p><img src="https://pic.islet.space/2021/07/20210705134121.png" alt="image-20210705104426587" style="zoom: 50%;" /></p>
-<p><img src="https://pic.islet.space/2021/07/image-20210705143238320.png" alt="image-20210705143238320" style="zoom: 80%;" /></p>
-<p>设置成 <code>16.6MHz</code> 则可以工作，能够顺利采集到数据（暂停时刻查看缓存数据）。</p>
-<p><img src="https://pic.islet.space/2021/07/image-20210705143246050.png" alt="image-20210705143246050" style="zoom: 80%;" /></p>
-<p><img src="https://pic.islet.space/2021/07/image-20210705143606164.png" alt="image-20210705143606164" style="zoom:67%;" /></p>
-<p>仔细阅读以下寄存器信息。</p>
-<figure>
-<img src="https://pic.islet.space/2021/07/image-20210705145709904.png" alt="image-20210705145709904" /><figcaption aria-hidden="true">image-20210705145709904</figcaption>
-</figure>
-<p><strong>注意</strong>：SigmaStudio中，设置 <strong>输入时钟信号</strong>（MCLK input）和 <strong>输出时钟信号</strong>（VCO Output）后，仅有 <strong>输入信号分频</strong>（input clock divider，下简称 <strong><em>ICD</em></strong>）是可以设置的，其他参数由 <code>load parameters</code> 自动计算。在 <strong><em>输入频率</em></strong> <code>16.6MHz</code> 和 <strong><em>输出频率</em></strong> <code>24.576MHz</code> 不变的情况下，改变 输入信号分频 以生成下表：</p>
-<table>
-<thead>
-<tr class="header">
-<th></th>
-<th>ICD = 1</th>
-<th>ICD = 2</th>
-<th>ICD = 3</th>
-<th>ICD = 4</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>PLL_CTRL0</td>
-<td>0x08</td>
-<td>0x08</td>
-<td>0x08</td>
-<td>0x08</td>
-</tr>
-<tr class="even">
-<td>PLL_CTRL1</td>
-<td>0x1B</td>
-<td>0x1B</td>
-<td>0x1B</td>
-<td>0x1B</td>
-</tr>
-<tr class="odd">
-<td>PLL_CTRL2</td>
-<td>0x07</td>
-<td>0x07</td>
-<td>0x17</td>
-<td>0x1F</td>
-</tr>
-<tr class="even">
-<td>PLL_CTRL3</td>
-<td>0xCA</td>
-<td>0x79</td>
-<td>0x5E</td>
-<td>0x28</td>
-</tr>
-<tr class="odd">
-<td>PLL_CTRL4</td>
-<td>0x11</td>
-<td>0x2B</td>
-<td>0x35</td>
-<td>0x47</td>
-</tr>
-<tr class="even">
-<td>PLL_CTRL5</td>
-<td>0x01</td>
-<td>0x01</td>
-<td>0x01</td>
-<td>0x01</td>
-</tr>
-</tbody>
-</table>
-<ul>
-<li><code>PLL_CTRL0</code> 和 <code>PLL_CTRL1</code> 分别构成 PLL分母（denominator）的高位和低位。</li>
-<li><code>PLL_CTRL2</code> 和 <code>PLL_CTRL3</code> 分别构成 PLL分子（numerator）的高位和低位。</li>
-<li><code>PLL_CTRL4</code> 控制着 <strong>PLL类型</strong>（整数型/分数型）、<strong>输入时钟分频</strong>（1 - 4）和 PLL设置的 <strong>整数部分</strong>。</li>
-<li><code>PLL_CTRL5</code> 目前只能是 <code>0x00</code> 或 <code>0x01</code> 。</li>
-</ul>
-<p>以下为PLL_CTRL4寄存器的位描述：n</p>
-<figure>
-<img src="https://pic.islet.space/2021/07/image-20210706101429733.png" alt="image-20210706101429733" /><figcaption aria-hidden="true">image-20210706101429733</figcaption>
-</figure>
-<p>至于 <code>CLK_CONTROL</code> 寄存器，主要是数值 <code>0x89</code> 和 <code>0x8F</code> 的差别。见下表可知，是关于PLL分频的问题。</p>
-<figure>
-<img src="https://pic.islet.space/2021/07/image-20210705153843902.png" alt="image-20210705153843902" /><figcaption aria-hidden="true">image-20210705153843902</figcaption>
-</figure>
-<p>通过自行编写的代码，遍历所有可更改的系数进行计算求解，取得小数点后9位精度，并且符合要求的系数如下（含1/2系数）：</p>
-<p>根据PLL_CTRL4寄存器，ICD=3、IS=8时，该寄存器的值为 <code>01000101</code> ，即 <code>0x45</code> 。（下图IDC更正为ICD）</p>
-<figure>
-<img src="https://pic.islet.space/2021/07/image-20210706001243698.png" alt="image-20210706001243698" /><figcaption aria-hidden="true">image-20210706001243698</figcaption>
-</figure>
-<p>以下为不含1/2系数的结果：</p>
-<p>根据PLL_CTRL4寄存器，ICD=3、IS=4时，该寄存器的值为 <code>00100101</code> ，即 <code>0x25</code> 。</p>
-<figure>
-<img src="https://pic.islet.space/2021/07/image-20210706001350802.png" alt="image-20210706001350802" /><figcaption aria-hidden="true">image-20210706001350802</figcaption>
-</figure>
-<ul>
-<li>CLK_IN mean value is 16.6Mhz</li>
-<li>LRCLK mean value is 45.92Khz</li>
-</ul>
-<h1 id="anc主板硬件量产">ANC主板硬件（量产）</h1>
-<p>以下为ADAU1772的特征：</p>
-<p><strong>Master clock</strong> = <strong>core clock</strong> = 12.288 MHz</p>
-<p><strong>serial input sample rate</strong> = 48 kHz</p>
-<p><strong>measurement bandwidth</strong> = 20 Hz to 20 kHz</p>
-<p><strong>word width</strong> = 24 bits</p>
-<p><strong>ambient temperature</strong> = 25°C</p>
-<p><strong>outputs line loaded</strong> with 10 kΩ</p>
-<p>Codec A是接了DAC输出的，Codec B没有，其地址分别为 <code>0x3D</code> 与 <code>0x3E</code>。</p>
-<h2 id="twi-i2c">TWI (I2C)</h2>
-<table>
-<thead>
-<tr class="header">
-<th></th>
-<th>Codec A</th>
-<th>Codec B</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>SCK</td>
-<td>DPI_P08</td>
-<td>DPI_P08</td>
-</tr>
-<tr class="even">
-<td>SDA</td>
-<td>DPI_P07</td>
-<td>DPI_P07</td>
-</tr>
-<tr class="odd">
-<td>ADDR0</td>
-<td>+3.3VA</td>
-<td>AGND</td>
-</tr>
-<tr class="even">
-<td>ADDR1</td>
-<td>AGND</td>
-<td>+3.3VA</td>
-</tr>
-</tbody>
-</table>
-<h2 id="i2s">I2S</h2>
-<table>
-<thead>
-<tr class="header">
-<th></th>
-<th>Codec A</th>
-<th>Codec B</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>ADC_SDATA_0</td>
-<td>DAI_P13</td>
-<td>DAI_P15</td>
-</tr>
-<tr class="even">
-<td>ADC_SDATA_1 <em>(clock)</em></td>
-<td>DAI_P03</td>
-<td>DAI_P16</td>
-</tr>
-<tr class="odd">
-<td>LRCLK</td>
-<td>DAI_P02</td>
-<td>DAI_P11 (<em>useless</em>)</td>
-</tr>
-<tr class="even">
-<td>BCLK</td>
-<td>DAI_P01</td>
-<td>DAI_P12 (<em>useless</em>)</td>
-</tr>
-<tr class="odd">
-<td>DAC_SDATA</td>
-<td>DAI_P07</td>
-<td>/</td>
-</tr>
-</tbody>
-</table>
-<p><img src="https://pic.islet.space/2021/07/20210702100719.png" alt="image-20210702100716720" style="zoom:80%;" /></p>
-<p><img src="https://pic.islet.space/2021/07/20210702101017.png" alt="image-20210702100920210" style="zoom:67%;" /><img src="https://pic.islet.space/2021/07/20210702101020.png" alt="image-20210702101004870" style="zoom:67%;" /></p>
-<h2 id="spi">SPI</h2>
-<table>
-<thead>
-<tr class="header">
-<th></th>
-<th>FLASH</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>SPI_SOMI</td>
-<td>DPI_P01</td>
-</tr>
-<tr class="even">
-<td>SPI_SIMO</td>
-<td>DPI_P02</td>
-</tr>
-<tr class="odd">
-<td>SPI_CLK</td>
-<td>DPI_P03</td>
-</tr>
-<tr class="even">
-<td>SPI_SCS</td>
-<td>DPI_P05</td>
-</tr>
-</tbody>
-</table>
-<h1 id="参考">参考</h1>
-<ol type="1">
-<li><p>《<a href="">I2S bus specification</a>》</p></li>
-<li><p><a target="_blank" rel="noopener" href="https://baike.baidu.com/item/I2S/3443390">I2S</a></p></li>
-<li><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/q2519008/article/details/80413695">【音频】I2S协议详解</a></p></li>
-<li><p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/353520173">I2S/PCM</a></p></li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/2/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/10/">10</a><a class="extend next" rel="next" href="/page/4/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <a class="extend prev" rel="prev" href="/page/2/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/11/">11</a><a class="extend next" rel="next" href="/page/4/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 
