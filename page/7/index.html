@@ -162,7 +162,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">101</span>
+          <span class="site-state-item-count">105</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -173,7 +173,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">184</span>
+        <span class="site-state-item-count">193</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -207,6 +207,719 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://islet.space/2021/05/05/Signal/2021-05-05-%E6%A8%A1%E6%95%B0%E6%8E%A5%E5%8F%A3%E4%B8%AD%E7%9A%84%E5%8F%AF%E7%BC%96%E7%A8%8B%E5%A2%9E%E7%9B%8A%E6%94%BE%E5%A4%A7%E5%99%A8%EF%BC%88PGA%EF%BC%89/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Liewzheng">
+      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coder的孤岛">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/05/05/Signal/2021-05-05-%E6%A8%A1%E6%95%B0%E6%8E%A5%E5%8F%A3%E4%B8%AD%E7%9A%84%E5%8F%AF%E7%BC%96%E7%A8%8B%E5%A2%9E%E7%9B%8A%E6%94%BE%E5%A4%A7%E5%99%A8%EF%BC%88PGA%EF%BC%89/" class="post-title-link" itemprop="url">模数接口中的可编程增益放大器（PGA）</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-05-05 23:58:32" itemprop="dateCreated datePublished" datetime="2021-05-05T23:58:32+08:00">2021-05-05</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2021-05-20 22:53:04" itemprop="dateModified" datetime="2021-05-20T22:53:04+08:00">2021-05-20</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Signal/" itemprop="url" rel="index"><span itemprop="name">Signal</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>原文出处：https://www.21ic.com/app/analog/201207/134812.htm</p>
+<p>用可编程增益放大器(PGA)处理数据采集系统中传感器/变送器模拟输出和信号处理数字之间的接口。单片和高集成度PGA现在被可编程、更高精度、更高吞吐量和更小封装尺寸的模块和混合方案替代。</p>
+<p>由于来自传感器/变送器的模拟信号的本性，使其工作必须具备相当大的动态范围。这要求采用连续增益级在进行任何实际的数字处理之前增大这些信号，PGA能满足这种要求。</p>
+<p>PGA是可变增益放大器(VGA)的一种。VGA提供可变和连续增益控制，而PGA <mark>必须在软件控制下以固定步(通常6dB步)做到可变增益控制</mark>。达到更精细的分辨步0.5dB是可能的。 一般多通道数据采集系统用很多不同类型的传感器/变送器，这包括 <strong>热电偶</strong>、<strong>惠斯登电桥</strong>，<strong>热敏电阻</strong>、<strong>应变计</strong> 和 <strong>超声系统</strong>。虽然，传感器/变送器是基于不同的物理原理，但大多数产品是 <strong>以电压做为输出</strong>。甚至这会产生中间值(如电容或电阻)，但最终变换为电压，以便在数据采集系统中进行</p>
+<p><img src="http://pic.islet.space/2021/04/fb222bc5a544088d5a7fc0c708476621.jpg" /></p>
+<p>传感器/变送器的输出可覆盖非常大的范围，需要PGA来处理传感器/变送器输出到ADC的接口。</p>
+<blockquote>
+<p>例如，在工业过程控制系统中，低频信号可以几毫伏到几伏变化。需要PGA来匹配这种宽传感器/变送器输出范围到特定的ADC输入范围。通常，在输入数据采集通道最低信号电平与最高信号电平之比是2个量级或更大。 12位ADC接收小于ADC满标输入十分之一的信号仅可提供8位分辨率，除非在信号到达ADC之前用PGA放大。PGA允许在软件控制下使接收信号的增益达到宽范围增益一带宽乘积。这可避免钳位并允许采用较便宜的ADC，如用12位ADC替代16位ADC。</p>
+</blockquote>
+<p>PGA可做更多事情。PGA缓冲来自前级(通常是多路转换器)ADC的输入，防止多路转换器导通电阻所引起的加载。PGA也提供差分别单端的变换，大多数跟踪和保持型ADC需要单输入。把PGA连接到差分多路转换器输出时，PGA提供共模抑制。</p>
+<p>在市场上可以得到很多种PGA和支持元件。这包括可独立应用的运放被专门设计成PGA、ASIC、集成有可编程滤波器的PGA、仪表放大器PGA、用于运放的数字电位器前端、PGA用数字可编程分压器、ADC驱动器。有时把PGA和DAC集成在同一芯片上。</p>
+<p>对于不需要信号宽动态范围的应用，PGA不是必须的。放大器可以直接接口传感器/变送器到ADC。</p>
+<blockquote>
+<p>例如，Maxim的MAX1494仪表放大器适合于250V/V或更小增益范围的应用。</p>
+</blockquote>
+<h1 id="各种性能的pga">各种性能的PGA</h1>
+<p>对于特殊性能参量(如高增益稳定性和高精度，低漂移，低失真，高输出驱动电流，高转换率，快速建立时间，高共模抑制比，低功率和小尺寸)有很多PGA是最佳的。</p>
+<blockquote>
+<ul>
+<li>Microchip公司的MCP6S2X家族PGA具有2、6和8通道输入，包含多路转换器并可通过串行外设接口(SPI)总线进行增益控制和通道选择。</li>
+<li>NS公司的LMH6718IC是双PGA，具有高输出(200mA)驱动信号。<br />
+</li>
+<li>高性能小封装的PAG有ADI公司的AD8555，这是封装在微型8引线SOIC中的数字可编程信号调理自动零放大器，它包含放大器，比较器，用Digit Trim技术的电阻调节分压器和缓冲器。其500V/℃总输入失调漂移是其他竞争产品的1/20。</li>
+<li>Linear公司的LTC6915A也是小封装高性能PGA。此仪表放大器封装为16引线SSOP或12引线DFN，可把它放置在最靠近传感器/变送器的地方。它所占电路板面积是等效分立方案的1/6。零漂移特性具有高达4096的宽可编程动态范围(增益精度0.1%)。它也有50mV/℃漂移和与增益无关的125dB CMRR。<br />
+</li>
+<li>对于低失真是主要考虑因素的应用，可以选择Intersil公司PGA缓冲器HFA11XX，其低失真电平低到-73dBc、噪声电平低到7"9nV/√Hz。</li>
+<li>TI公司的THS7001/7002单/双PGA采用Power PAD封装，包含分离的低噪声前置放大器和增益放大级。此器件可达到非常低的噪声电平(低到1.7nV/√Hz)。</li>
+<li>其他可注意的PGA包括ADI公司的AD628首款具有可编程增益的共模差分放大器和Linear公司的LTC1564 PGA(除放大器外，它还具有8阶软件可编程抗混淆滤波器)。</li>
+</ul>
+</blockquote>
+<p>PGA也集成有其他前端电路。</p>
+<blockquote>
+<p>如Maxim公司的MAX14XX家族，这是包含PGA的信号调理ASIC。这种器件直接用于传感器/变送器和ADC之间。</p>
+<p>Maxim公司的ADC驱动器MAX2055具有低失真(-76dBc 2次谐波和-69dBc 3次谐波)特性，其差分输出是为驱动高速ADC专门设计的。</p>
+</blockquote>
+<p>一些PGA供应商也提供驱动PGA前端的数字电位计和分压器IC。</p>
+<blockquote>
+<p>例如，Maxim公司的MAX5420/21数字可编程电压分压器；</p>
+<p>ADI公司的AD5321数字电位计(常用于可编程增益和衰减的非易失性存储器)。</p>
+<p>另外，Xicor也提供不少PGA器件，这些PGA器件对于执行数字控制的电位计(DCP)是最佳的。</p>
+</blockquote>
+<h1 id="集成方案">集成方案</h1>
+<p>现在，很多公司把PGA和其他信号调理电路直接集成在ADC芯片上。这种方法有利于所占空间更小，比分离PGA和ADC方案具有更好的性能。然而，其成本比较高，集成PGA在ADC上除灵活性较低外，还有 <mark>较高的时钟噪声电平</mark>。</p>
+<blockquote>
+<p>带线化前端的Maxim公司的MAX1457(图2)传统器线性化IC就是其中一种，它包含12位ADC。</p>
+<p>ADI公司的ADC7707高精度信号调理16位S-D ADC包含多路转换器、缓冲器、PGA、电荷平衡电路、串行接口和时钟产生器。</p>
+<p>ADI公司的ADC7708/18S-D6位/24位ADC具有与AD7707相同的电路，但它们的目标是低电压和低功率应用。</p>
+</blockquote>
+<figure>
+<img src="http://pic.islet.space/2021/04/8b55f596bcfdf9a408bd3c959504fb21.jpg" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>一个感兴趣的高集成度ADC是ADC7731 24位S-D器件，它具有ADC77017的所有电路。另外，还加上定标微控制器(图3)。此IC的目标是低噪声高吞吐量应用。</p>
+<p>Maxim公司也有带集成PGA的双6位ADC，它具有90Sample/s吞吐率、功耗仅550mW。</p>
+<p><img src="http://pic.islet.space/2021/04/8CzZ7BjS2OMEYQJ.jpg" /></p>
+<p>我们将会看到更多包含PGA和其他信号处理电路的ADC吗？</p>
+<p>不可回避的事实是高集成度是IC业的准则，而PGA和其他信号调理支持电路也不例外。所以希望看到PGA与ADC集成在同一芯片，并能解决片上性能参量(如时钟引起的噪声)和降低高分辨率器件的单个ADC价格。</p>
+<p>事实上，设计人员主要的目标是把传感器/变送器电路放在高集成度ADC上。</p>
+<p>这将是最终解决问题：现实世界模拟信号与计算机的数字世界结合起来的途经。</p>
+<p>这也将聚焦在模拟和数字电路设计的两种不同方法。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://islet.space/2021/05/05/Signal/2021-05-05-%E5%88%86%E8%B4%9D/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Liewzheng">
+      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coder的孤岛">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/05/05/Signal/2021-05-05-%E5%88%86%E8%B4%9D/" class="post-title-link" itemprop="url">分贝</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-05-05 14:30:32" itemprop="dateCreated datePublished" datetime="2021-05-05T14:30:32+08:00">2021-05-05</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2021-05-09 13:01:39" itemprop="dateModified" datetime="2021-05-09T13:01:39+08:00">2021-05-09</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Signal/" itemprop="url" rel="index"><span itemprop="name">Signal</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p><a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E5%88%86%E8%B2%9D">Wikipedia</a></p>
+<h1 id="分貝">分貝</h1>
+<p><strong>分贝</strong>（decibel）是量度两个相同单位之数量<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/比例">比例</a>的单位，常用<strong>dB</strong>表示。“<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/分">分</a>”（deci-）指十分之一，个位是“贝”或“贝尔”（bel，纪念发明家<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/亚历山大·格拉汉姆·贝尔">亚历山大·格拉汉姆·贝尔</a>），但一般只用分贝。</p>
+<table>
+<thead>
+<tr class="header">
+<th>dB</th>
+<th>声能比</th>
+<th>声压比</th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>100</td>
+<td>10 000 000 000</td>
+<td></td>
+<td>100 000</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>90</td>
+<td>1 000 000 000</td>
+<td></td>
+<td>31 623</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>80</td>
+<td>100 000 000</td>
+<td></td>
+<td>10 000</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>70</td>
+<td>10 000 000</td>
+<td></td>
+<td>3 162</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>60</td>
+<td>1 000 000</td>
+<td></td>
+<td>1 000</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>50</td>
+<td>100 000</td>
+<td></td>
+<td>316</td>
+<td>.2</td>
+</tr>
+<tr class="odd">
+<td>40</td>
+<td>10 000</td>
+<td></td>
+<td>100</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>30</td>
+<td>1 000</td>
+<td></td>
+<td>31</td>
+<td>.62</td>
+</tr>
+<tr class="odd">
+<td>20</td>
+<td>100</td>
+<td></td>
+<td>10</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>10</td>
+<td>10</td>
+<td></td>
+<td>3</td>
+<td>.162</td>
+</tr>
+<tr class="odd">
+<td>6</td>
+<td>3</td>
+<td>.981（≈4）</td>
+<td>1</td>
+<td>.995（≈2）</td>
+</tr>
+<tr class="even">
+<td>3</td>
+<td>1</td>
+<td>.995（≈2）</td>
+<td>1</td>
+<td>.413（≈√2）</td>
+</tr>
+<tr class="odd">
+<td>1</td>
+<td>1</td>
+<td>.259</td>
+<td>1</td>
+<td>.122</td>
+</tr>
+<tr class="even">
+<td>0</td>
+<td>1</td>
+<td></td>
+<td>1</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>-3</td>
+<td>0</td>
+<td>.501（≈½）</td>
+<td>0</td>
+<td>.708（≈√½）</td>
+</tr>
+<tr class="even">
+<td>-6</td>
+<td>0</td>
+<td>.251（≈¼）</td>
+<td>0</td>
+<td>.501（≈½）</td>
+</tr>
+<tr class="odd">
+<td>-10</td>
+<td>0</td>
+<td>.1</td>
+<td>0</td>
+<td>.316 2</td>
+</tr>
+<tr class="even">
+<td>-20</td>
+<td>0</td>
+<td>.01</td>
+<td>0</td>
+<td>.1</td>
+</tr>
+<tr class="odd">
+<td>-30</td>
+<td>0</td>
+<td>.001</td>
+<td>0</td>
+<td>.031 62</td>
+</tr>
+<tr class="even">
+<td>-40</td>
+<td>0</td>
+<td>.000 1</td>
+<td>0</td>
+<td>.01</td>
+</tr>
+<tr class="odd">
+<td>-50</td>
+<td>0</td>
+<td>.000 01</td>
+<td>0</td>
+<td>.003 162</td>
+</tr>
+<tr class="even">
+<td>-60</td>
+<td>0</td>
+<td>.000 001</td>
+<td>0</td>
+<td>.001</td>
+</tr>
+<tr class="odd">
+<td>-70</td>
+<td>0</td>
+<td>.000 000 1</td>
+<td>0</td>
+<td>.000 316 2</td>
+</tr>
+<tr class="even">
+<td>-80</td>
+<td>0</td>
+<td>.000 000 01</td>
+<td>0</td>
+<td>.000 1</td>
+</tr>
+<tr class="odd">
+<td>-90</td>
+<td>0</td>
+<td>.000 000 001</td>
+<td>0</td>
+<td>.000 031 62</td>
+</tr>
+<tr class="even">
+<td>-100</td>
+<td>0</td>
+<td>.000 000 000 1</td>
+<td>0</td>
+<td>.000 01</td>
+</tr>
+</tbody>
+</table>
+<p>这是一个说明声源能量 (<img src="https://wikimedia.org/api/rest_v1/media/math/render/svg/87f9e315fd7e2ba406057a97300593c4802b53e4" alt="x" />), 声压 (<img src="https://wikimedia.org/api/rest_v1/media/math/render/svg/d62b24be305beff66cba9bfbcc01a362ba390f44" alt="{}" />)，与声音分贝数 dB (![{_{10}{x}}](https://wikimedia.org/api/rest_v1/media/math/render/svg/be2b0b75f65fbc06b19e6e8548ce8ec33b0c0c4f)) 正比关系的对照表 从声音分贝数 dB 只有 2~3 个数字的差异，相比声源或声压 9~10 个数字的差异，dB可<strong>帮助人们更快的理解数字代表的意义</strong>。</p>
+<h2 id="计算方法">计算方法</h2>
+<p>分贝（dB）是十分之一贝尔（B）：<code>1B = 10dB</code>。1贝尔的两个功率量的比值是10:1，1贝尔的两个场量的比值是<img src="https://wikimedia.org/api/rest_v1/media/math/render/svg/2f35055a56f97ce282bf4797deddb716cfa8a924" alt="{}:1" />[<a href="about:reader?url=https%3A%2F%2Fzh.wikipedia.org%2Fwiki%2F%E5%88%86%E8%B2%9D#cite_note-1">1]</a>。'</p>
+<p>场量（field quantity）是诸如<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/电压">电压</a>、<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/电流">电流</a>、<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/声压">声压</a>、<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/电场强度">电场强度</a>、<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/速度">速度</a>、<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/電荷密度">电荷密度</a>等量值，其平方值在一个线性系统中与功率成比例。功率量（power quantity）是功率值或者直接与功率值成比例的其它量，如<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/能量密度">能量密度</a>、<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/音强">音强</a>、<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/发光强度">发光强度</a>等。</p>
+<p>分贝的计算，依赖于是 <strong>功率量</strong> 还是 <strong>场量</strong> 而不同。</p>
+<p>两个信号具有1分贝的差异，那么其功率比值是1.25892（即<img src="https://wikimedia.org/api/rest_v1/media/math/render/svg/99d92002d56747705f253a7c0aac2c7e4c310f20" alt="10^{}," />）而幅值之比是1.12202（即<img src="https://wikimedia.org/api/rest_v1/media/math/render/svg/a515a9617441696adc7fb0f3a2cd1f74210cee64" alt="{}^{}," />）[<a href="about:reader?url=https%3A%2F%2Fzh.wikipedia.org%2Fwiki%2F%E5%88%86%E8%B2%9D#cite_note-2">2]</a>。</p>
+<h2 id="好处">好处</h2>
+<p>使用分贝有很多便利之处：</p>
+<ul>
+<li>分贝实际上是对数值，因此可以用常用的数量来表示非常大的比值，可以清楚地表示非常大的数量变化。</li>
+<li>多部件系统的整体增益（如级联的<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/放大器">放大器</a>）可以直接用各部件的增益分贝相加而求得。不必把这些增益值相乘（例如log(A × B × C) = log(A) + log(B) + log(C)）。</li>
+<li>人对强度的感知，如声音或者光照，更接近与强度的对数成正比而不是强度值本身，依据<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/韋伯定理">韦伯定理</a>，因此分贝值可用于描述感知级别或级差。</li>
+</ul>
+<h2 id="使用">使用</h2>
+<h3 id="声学">声学</h3>
+<p>声学中，<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/声强">声音的强度</a>定义为声压。计算分贝值时采用20微帕斯卡为参考值[<a href="about:reader?url=https%3A%2F%2Fzh.wikipedia.org%2Fwiki%2F%E5%88%86%E8%B2%9D#cite_note-ElectronicEngineersHandbook-5">5]</a>。这一参考值是人类对声音能够感知的阈值下限。声压是场量，因此使用声压计算分贝时使用下述版本的公式：</p>
+<figure>
+<img src="https://wikimedia.org/api/rest_v1/media/math/render/svg/3994b439a75418d133c3c75063bdea671f5f16ae" alt="声音强度公式" /><figcaption aria-hidden="true">声音强度公式</figcaption>
+</figure>
+<p>在空气中 <strong>1帕斯卡等于94分贝声压级</strong>。在其他介质，如水下，1微帕斯卡更为普遍[<a href="about:reader?url=https%3A%2F%2Fzh.wikipedia.org%2Fwiki%2F%E5%88%86%E8%B2%9D#cite_note-Morfey-6">6]</a>。这些标准被<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/ANSI">ANSI</a>S1.1-1994.所收录[<a href="about:reader?url=https%3A%2F%2Fzh.wikipedia.org%2Fwiki%2F%E5%88%86%E8%B2%9D#cite_note-7">7]</a>。</p>
+<p>人耳对声音感知具有很大的<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/动态范围">动态范围</a>。从短期暴露即会永久损害听力的声强到最静的人耳能听到的声强，其比值是1万亿（10<sup>12</sup>）。[<a href="about:reader?url=https%3A%2F%2Fzh.wikipedia.org%2Fwiki%2F%E5%88%86%E8%B2%9D#cite_note-8">8]</a>这么大的比值范围表示为对数度量：1万亿（10<sup>12</sup>）基于10的对数为12，用分贝表示是240。人的听力并不是对所有频率都是相同敏感，最敏感的频率范围是20<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/赫兹">Hz</a>~20<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/千赫兹">kHz</a>.</p>
+<p>当一个空间受外来声音干扰，而影响预期的正常作息时，需要建置一个六面结构的宁静空间，而当宁静空间建置完成后，能否达到预期的效果，则于施工前制定一个规范，此规范即为声学规范。</p>
+<h3 id="电子学">电子学</h3>
+<p>电子学中，通常用分贝表示功率或幅值之比（<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/增益">增益</a>），而不常用算术比或者百分比。一项好处是一些列部件组成的系统的总增益是各部件增益之和。类似的，电信领域中，从一个发射器到一个接收器通过一些媒介（<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/w/index.php?title=光无线通信&amp;action=edit&amp;redlink=1">光无线通信</a>、<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/波导">波导</a>、<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/同轴电缆">同轴电缆</a>、<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/光纤">光纤</a>等等）的信号增益用分贝表示，用于<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/链路预算">链路预算</a>。</p>
+<p>分贝也可以组合一些后缀，表示电功率的绝对单位。例如，后缀"m"表示"毫瓦"组合出"dBm"，0 dBm等于1毫瓦，1 dBm约为1.259 毫瓦。</p>
+<p>在专业声学领域，常用单位是dBu。"u"代表"unloaded"。dBu是电压的<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/平方平均数">平方平均数</a>（RMS）度量的单位，其参考电压约为 0.775 VRMS。由于历史原因，此参考电压是在600欧姆电阻上耗散1 mW功率的电压，用于电话音频电路的标准阻抗。</p>
+<h2 id="后缀与参考值">后缀与参考值</h2>
+<p>dB与后缀的组合，指出计算比值时的参考值。例如dBm指示功率值与1毫瓦的比值的分贝数。</p>
+<p>如果计算分贝时的参考值明确、确切地给出，那么分贝数值可以作为绝对量，如同被测量的功率量或者场量。例如，20dBm即为100毫瓦。</p>
+<p>SI国际单位制不允许使用分贝与后缀的组合形式如dBm, dBu, dBA，等等[<a href="about:reader?url=https%3A%2F%2Fzh.wikipedia.org%2Fwiki%2F%E5%88%86%E8%B2%9D#cite_note-13">13]</a>。但这种不遵从SI单位制的表示却广泛应用于很多场合。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://islet.space/2021/05/05/Signal/2021-05-05-%E4%BD%BF%E7%94%A8ADAU1761-PGA%E3%80%81ALC-%E7%9A%84DSP%E6%8E%A7%E5%88%B6%E6%A8%A1%E5%BC%8F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Liewzheng">
+      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coder的孤岛">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/05/05/Signal/2021-05-05-%E4%BD%BF%E7%94%A8ADAU1761-PGA%E3%80%81ALC-%E7%9A%84DSP%E6%8E%A7%E5%88%B6%E6%A8%A1%E5%BC%8F/" class="post-title-link" itemprop="url">使用ADAU1761 PGA、ALC 的DSP控制模式</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-05-05 11:00:32" itemprop="dateCreated datePublished" datetime="2021-05-05T11:00:32+08:00">2021-05-05</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2021-05-09 13:01:38" itemprop="dateModified" datetime="2021-05-09T13:01:38+08:00">2021-05-09</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Signal/" itemprop="url" rel="index"><span itemprop="name">Signal</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="使用adau1761-pga-alc的dsp控制模式">使用ADAU1761 PGA / ALC的DSP控制模式</h1>
+<p>ADAU1761模拟前端具有ALC（自动电平控制）功能，可根据输入信号的电平动态设置差分输入路径的增益。但是，可以绕过ALC，DSP程序可以直接控制应用于 <strong>差分输入</strong> 的增益量。</p>
+<p>为此，一个或两个通道的差分路径需要<strong>启用和取消静音</strong>。为了启用 <strong>差分路径</strong>，还应根据需要将<strong>LDBOOST</strong>（和/或<strong>RDBOOST</strong>）设置为0 dB或20 dB。</p>
+<p><a target="_blank" rel="noopener" href="https://ez.analog.com/cfs-file/__key/communityserver-wikis-components-files/00-00-00-01-75/1e169c85b74a88a01485d3c18fecd396.jpg"><img src="https://ez.analog.com/cfs-filesystemfile/__key/communityserver-components-secureimagefileviewer/communityserver-wikis-components-files-00-00-00-01-75/1e169c85b74a88a01485d3c18fecd396.jpg_2D00_373x238.jpg?_=636716033579270573" alt="img" /></a></p>
+<p>然后，<strong>应将ALCSEL</strong>位设置为<strong>DSP控制</strong>模式。</p>
+<p><a target="_blank" rel="noopener" href="https://ez.analog.com/cfs-file/__key/communityserver-wikis-components-files/00-00-00-01-75/be2493be5fd62ceb941ade31bb1c2ea2.jpg"><img src="https://ez.analog.com/cfs-filesystemfile/__key/communityserver-components-secureimagefileviewer/communityserver-wikis-components-files-00-00-00-01-75/be2493be5fd62ceb941ade31bb1c2ea2.jpg_2D00_136x228.jpg?_=636716033581410640" alt="img" /></a></p>
+<p>现在，在DSP程序原理图中，用户可以将<strong>AIGC输出</strong>单元添加到项目中：</p>
+<p><a target="_blank" rel="noopener" href="https://ez.analog.com/cfs-file/__key/communityserver-wikis-components-files/00-00-00-01-75/a6abc0254ac0020e47fd1b347f706504.jpg"><img src="https://ez.analog.com/cfs-filesystemfile/__key/communityserver-components-secureimagefileviewer/communityserver-wikis-components-files-00-00-00-01-75/a6abc0254ac0020e47fd1b347f706504.jpg_2D00_215x49.jpg?_=636716033575290474" alt="img" /></a></p>
+<p>通道0映射到左侧的PGA。</p>
+<p><a target="_blank" rel="noopener" href="https://ez.analog.com/cfs-file/__key/communityserver-wikis-components-files/00-00-00-01-75/524d0fbf699c770a6e85e142dd636b3b.png"><img src="https://ez.analog.com/cfs-filesystemfile/__key/communityserver-components-secureimagefileviewer/communityserver-wikis-components-files-00-00-00-01-75/524d0fbf699c770a6e85e142dd636b3b.png_2D00_91x54.png?_=636716033578360546" alt="img" /></a></p>
+<p>通道1映射到右侧的PGA。</p>
+<p><a target="_blank" rel="noopener" href="https://ez.analog.com/cfs-file/__key/communityserver-wikis-components-files/00-00-00-01-75/3a9410be5a75f96f99e4087743e69d2f.jpg"><img src="https://ez.analog.com/cfs-filesystemfile/__key/communityserver-components-secureimagefileviewer/communityserver-wikis-components-files-00-00-00-01-75/3a9410be5a75f96f99e4087743e69d2f.jpg_2D00_94x57.jpg?_=636716033575450467" alt="img" /></a></p>
+<p>现在，馈送到这些单元中每个单元的5.23信号确定了相应PGA的增益。</p>
+<p>作为一个简单的示例，要将每个PGA的增益设置为0.5（或-6 dB），请从<strong>Sources</strong>库创建一个<strong>DC Input Entry</strong>单元并将其设置为0.5，然后将其连接到<strong>AIGC输出</strong>。</p>
+<p><a target="_blank" rel="noopener" href="https://ez.analog.com/cfs-file/__key/communityserver-wikis-components-files/00-00-00-01-75/462b7691a9c4c01ab55c2f09825bd18e.jpg"><img src="https://ez.analog.com/cfs-filesystemfile/__key/communityserver-components-secureimagefileviewer/communityserver-wikis-components-files-00-00-00-01-75/462b7691a9c4c01ab55c2f09825bd18e.jpg_2D00_208x103.jpg?_=636716033578360546" alt="img" /></a></p>
+<p>在下一个示例中，使用“<strong>乘”</strong>和“<strong>加”</strong>单元缩放并移动10 Hz的<strong>正弦音调</strong>，使其范围在0到1之间，然后将其发送到<strong>AIGC输出</strong>单元。这会导致PGA增益在0 dB和静音之间快速来回移动，从而产生颤音效果。</p>
+<p><a target="_blank" rel="noopener" href="https://ez.analog.com/cfs-file/__key/communityserver-wikis-components-files/00-00-00-01-75/8f391a0c6d528ce961e9f54617503cd9.jpg"><img src="https://ez.analog.com/cfs-filesystemfile/__key/communityserver-components-secureimagefileviewer/communityserver-wikis-components-files-00-00-00-01-75/8f391a0c6d528ce961e9f54617503cd9.jpg_2D00_349x178.jpg?_=636716033575530468" alt="img" /></a></p>
+<p>在下面的示例中，每个输入的峰值电平由“<strong>峰值包络”</strong>单元检测，并且使用“<strong>除法”</strong>单元和“ <strong>DC输入条目”</strong>单元创建该信号的反相。结果发送到<strong>AIGC输出</strong>单元。这意味着输入峰值电平的倒数用于缩放PGA增益。结果是，当输入信号为低电平时，增益较高；但是，当输入电平增加时，增益将降低以避免削波。</p>
+<p><a target="_blank" rel="noopener" href="https://ez.analog.com/cfs-file/__key/communityserver-wikis-components-files/00-00-00-01-75/d24015ce9b3e9d247f8a8fb1e43943a3.jpg"><img src="https://ez.analog.com/cfs-filesystemfile/__key/communityserver-components-secureimagefileviewer/communityserver-wikis-components-files-00-00-00-01-75/d24015ce9b3e9d247f8a8fb1e43943a3.jpg_2D00_400x379.jpg?_=636716033578810577" alt="img" /></a></p>
+<p>这些只是在ADAU1761的PGA上使用DSP控制模式可以完成的操作的几个示例。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://islet.space/2021/05/03/Signal/2021-05-03-%E9%9F%B3%E9%A2%91%E8%AE%BE%E5%A4%87%E8%BF%9E%E6%8E%A5%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Liewzheng">
+      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coder的孤岛">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/05/03/Signal/2021-05-03-%E9%9F%B3%E9%A2%91%E8%AE%BE%E5%A4%87%E8%BF%9E%E6%8E%A5%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" class="post-title-link" itemprop="url">音频设备连接基础知识</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-05-03 17:08:00" itemprop="dateCreated datePublished" datetime="2021-05-03T17:08:00+08:00">2021-05-03</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2021-08-07 00:03:25" itemprop="dateModified" datetime="2021-08-07T00:03:25+08:00">2021-08-07</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Signal/" itemprop="url" rel="index"><span itemprop="name">Signal</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>​</p>
+<p><a target="_blank" rel="noopener" href="https://www.sohu.com/a/418986148_142772">sohu.com</a></p>
+<h1 id="阻抗介绍">阻抗介绍</h1>
+<p>仅针对音频系统中的电路进行说明</p>
+<ul>
+<li>在对电路施加电压时，电阻抗是 <strong>对电路中交流电的抵抗力的度量</strong>。</li>
+<li>阻抗以欧姆为单位（类似于电阻）测量，并且 <strong>可以认为是交流电路中的一种“交流电阻”</strong>。</li>
+<li>音频信号是交流电压，因为它们同时具有负电压和正电压（信号的正振幅和负振幅）。<strong>因此，音频信号是交流电</strong>（具有负电流和正电流）。</li>
+<li>仅当<strong>上级设备</strong>输出连接到前置放大器（或串联的下一个音频设备）时，音频信号才会通过。（上级设备的输出必须创建一个带有负载的电路，以使音频信号流动。）</li>
+</ul>
+<p><img src="https://pic.islet.space/2021/05/a0fcf0d70d88400289cafcd70441614e.png" alt="img" style="zoom:33%;" /></p>
+<p>在音频系统的连接中，有各式各样的设备进行设备串联，首先说两个概念：</p>
+<blockquote>
+<p><strong>输出阻抗</strong>： 音频设备输出端上的固有阻抗。</p>
+<p><strong>负载阻抗</strong>： 音频设备下一级（通常是前置放大器）的输入阻抗，该阻抗与上级的输出共同构成电路。</p>
+</blockquote>
+<p>在音频行业内，行业规定 <mark>输入接口的阻抗应为输出阻抗的10倍以上，这样才能保证音频信号的传输质量</mark>。</p>
+<p><mark>这样的 “<strong>阻抗匹配</strong>” 其实是为了 “<strong>电压匹配</strong>” ，而不是传统电学概念中的输入输出等阻抗的“阻抗匹配”。</mark></p>
+<p>源输出阻抗和输入阻抗之间的电压传递公式：</p>
+<p><strong>V<sub>L</sub>= Z<sub>L</sub>·V<sub>S</sub> / (Z<sub>S</sub>+ Z<sub>L</sub>)</strong></p>
+<blockquote>
+<p>V<sub>L</sub>输入端 =前置放大器输入端的电压。</p>
+<p>V<sub>S</sub>输出端 =麦克风输出端的电压。</p>
+<p>Z<sub>L</sub>输入端 =前置放大器的输入阻抗（麦克风负载阻抗）。</p>
+<p>Z<sub>S</sub>输出端 =麦克风输出阻抗。</p>
+</blockquote>
+<p>可以将其可视化为简单的分压器：</p>
+<p><img src="https://pic.islet.space/2021/05/db9e3783f23c47a4b3529b34e2d8710a.png" alt="img" style="zoom: 33%;" /></p>
+<div style="text-align: center; font-size: 10px; color: #aaa;">
+图 简化电路
+</div>
+<p>不难推算，如果其他所有条件保持不变，增加负载阻抗“ Z输入端”可使上级设备的输出电压与前置放大器的输入电压之间的匹配度更高。</p>
+<p>Z输入端起码要达到Z输出端的10倍以上，电压才可达到源输出端电压的90%，但是我们也不希望输入端的阻抗过大，因为阻抗过高会增加线路出现噪音的可能。</p>
+<p>这种最大化的电压传输称为“阻抗桥接”，或者称为“电压匹配”。</p>
+<h1 id="音频信号">音频信号</h1>
+<p>HOLA，在了解完阻抗的秘密之后，在这里我们简单说一下各个种类的信号等级和阻抗的差异。我们在这说下经常遇到的三类信号：<strong>麦克风信号</strong>、<strong>线路信号</strong>、<strong>乐器信号</strong>。</p>
+<div style="text-align: center; font-size: 10px; color: #aaa;">
+表 各类信号参数表
+</div>
+<p><img src="https://pic.islet.space/2021/05/0a2b0b9619794c908f565d648a72eec6.png" alt="img" style="zoom:50%;" /></p>
+<p><strong>麦克风信号</strong>，就是麦克风输出的信号，其电平大概在 <strong>-60dBV和-40dBV（0.001V - 0.010V)之间</strong>，通常需要前级放大器的放大才能正常使用，麦克风的<strong>输出阻抗通常在150Ω至200Ω之间</strong>。</p>
+<p>所以呢，你的声卡或者话放的Mic Input（麦克风输入）接口的阻值应至少该有1500Ω。</p>
+<p><img src="https://pic.islet.space/2021/05/d969f365edb84996b66525d18320fe3c.jpeg" alt="img" style="zoom:50%;" /></p>
+<div style="text-align: center; font-size: 10px; color: #aaa;">
+图 麦克风信号输入接口
+</div>
+<p><strong>线路信号</strong>也就是Line Level Signal，一般由TRS（大三芯）平衡线缆传递，比如一些播放器、效果器的输出信号都为线路信号，<strong>其电平约为0dBV（1V）</strong>，<strong>是麦克风信号电平的100倍-1000倍</strong>；<strong>其输出阻抗通常在100Ω至600Ω之间</strong>，Line Input（线路信号输入）接口的阻抗通常大于10,000Ω。有些音频接口有独立的Line Input，有的则是复合型。比如M-Audio Air192 | 4</p>
+<p><img src="https://pic.islet.space/2021/05/image-20210503171654739.png" alt="M-Audio  Air192|4" style="zoom: 50%;" /></p>
+<div style="text-align: center; font-size: 10px; color: #aaa;">
+图 M-Audio Air192 | 4
+</div>
+<p><strong>乐器信号</strong> - Instrument Level Signal，乐器信号的电平位于麦克风信号和线路信号之间，通常以TS（大两芯）线缆传递，通常需要<strong>前级放大器</strong>将其提升到合适的<strong>线路电平等级</strong>；电吉他、电贝斯、带有拾音器的原声乐器输出的信号均为乐器信号，通常这些乐器的输出阻抗非常高，约在7,000Ω至15,000Ω甚至更高。因此你经常能看到话放、声卡的线路输入通道上有“Hi-Z(高阻抗）”或者“Line/Instrument”切换开关，能使线路输入接口的阻值增加，以适配乐器信号输入，有些音频接口则直接独立出来高阻乐器输入接口。乐器输入接口阻值通常在1MΩ（100万欧姆）左右。</p>
+<p>在前文说过，如果<strong>乐器输入接口阻值过低时，信号会失真、高频丢失，声音听起来会很沉闷</strong>；而<strong>阻值过高时，会增加线路出现噪音</strong>的可能。而有一类设备能完美的解决这一问题，让你随心所欲的调节满意的音色。比如：</p>
+<p>IK Multimedia的Z‑Tone系列产品可对这些变量进行控制，通过使用高质量的前置放大器，并配备可调的输入阻抗，以使各种拾音器都能发出其完美的声音。Z-Tone系列有两款相关产品，有体积较大的Z‑Tone DI和更紧凑的Z‑Tone Buffer Boost。</p>
+<figure>
+<img src="https://pic.islet.space/2021/05/image-20210503172016745.png" alt="Z‑Tone Buffer Boost" /><figcaption aria-hidden="true">Z‑Tone Buffer Boost</figcaption>
+</figure>
+<div style="text-align: center; font-size: 10px; color: #aaa;">
+图 Z‑Tone Buffer Boost
+</div>
+<h1 id="实际应用">实际应用</h1>
+<p>如果<strong>将高阻抗输出输入到低阻抗麦克风电平输入中，它通常会使前置放大器过载</strong>。这将导致<strong>失真</strong>，甚至可能<strong>损坏前置放大器的电路</strong>！</p>
+<p>例如，如果你想将合成器、吉他等高阻信号插入调音台、音频接口的麦克风（XLR）输入，建议你使用<strong>DI盒转换</strong>，将高阻抗信号转换为低阻抗信号。</p>
+<p><img src="https://pic.islet.space/2021/05/c9178428f8ad4ecf8272344c07e24c02.jpeg" alt="img" style="zoom:50%;" /></p>
+<div style="text-align: center; font-size: 10px; color: #aaa;">
+图 使用Z-Tone DI录制箱琴
+</div>
+<p><strong>注意</strong>：最好将DI盒尽可能靠近高阻抗输出源，较长的走线应将转换后的低阻抗信号传送到调音台或声卡。通俗点说就是，连接时，两芯线短，卡农线长。这将有助于节省更多的音频信号高端频率。</p>
+<p>那么有的好奇的同学会问，低阻抗的输出接入高阻抗会怎样呢？按理论来说，低阻出，高阻入，很完美呀！但是…</p>
+<p>举个栗子🌰，我们的麦克风是低阻输出，你的吉他单块效果器是高阻输入，串联在一起是理想的选择，也有一些朋友想实现这样的操作，让声音变得更有意思。但是你直接拿XLR卡农转TS大两芯，从麦克风插到效果器上，这样是有问题的。</p>
+<p>问题在于，线路或乐器输入需要线路或乐器信号等级。线路和乐器信号的电压比麦克风信号高得多。</p>
+<p><strong>将低阻抗麦克风插入高阻抗乐器或线路输入会产生很低的电平信号。音频信号将接近接收端设备本底噪声，因此当你提升放大器的增益时也会产生更大噪声，这种不良的信噪比是很令人绝望的。</strong></p>
+<p>这时候你就需要Re-amp盒或者类似AXE I/O这种带有Re-amp功能的音频接口来实现你的这一想法。</p>
+<p><img src="https://pic.islet.space/2021/05/cb59d2afa93b469b91fe410bbc38df23.jpeg" alt="img" style="zoom:50%;" /></p>
+<div style="text-align: center; font-size: 10px; color: #aaa;">
+图 IK Multimedia AXE I/O
+</div>
+<p>​</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1846,646 +2559,6 @@ Shop Arrow.com选择了数字RF步进衰减器，数字音频衰减器等。 <a 
 <p>You can check out our <a target="_blank" rel="noopener" href="http://www.learningaboutelectronics.com/Articles/Bypass-capacitor-calculator.php">bypass capacitor calculator</a> to calculate the value of a bypass capacitor based on the input AC signal frequency and the value of the resistor in parallel.</p>
 <p>Related Resources</p>
 <p>​</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://islet.space/2021/04/20/Networking/2021-04-20-Networking/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Liewzheng">
-      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Coder的孤岛">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/04/20/Networking/2021-04-20-Networking/" class="post-title-link" itemprop="url">Networking</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-
-    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
-    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2021-04-20 23:58:32" itemprop="dateCreated datePublished" datetime="2021-04-20T23:58:32+08:00">2021-04-20</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-04-26 00:14:57" itemprop="dateModified" datetime="2021-04-26T00:14:57+08:00">2021-04-26</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Networking/" itemprop="url" rel="index"><span itemprop="name">Networking</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h3 id="cdn">CDN</h3>
-<blockquote>
-<p><em>内容分发网络（Content Delivery Network，CDN）是建立并覆盖在承载网上，由不同区域的服务器组成的分布式网络。将源站资源缓存到全国各地的边缘服务器，供用户就近获取，降低源站压力。</em></p>
-<p>——阿里云</p>
-<p><em>CDN是构建在现有网络基础之上的智能虚拟网络，依靠 <strong>部署在各地的边缘服务器</strong>，通过中心平台的负载均衡、内容分发、调度等功能模块，使用户就近获取所需内容，降低网络拥塞，提高用户访问响应速度和命中率。CDN的关键技术主要有内容存储和分发技术。</em></p>
-<p>——百度百科</p>
-</blockquote>
-<p>个人理解，实际部署CDN中最重要的概念即 <strong>节点</strong>、<strong>缓存服务器</strong> 和 <strong>中心平台</strong>。</p>
-<ul>
-<li>节点是指在足够广的范围内识别出合适数量的网络拓扑节点，这些节点往往处在网络所及最远之处的各地，能够有效分摊用户访问对主干网络的压力；</li>
-<li>而缓存服务器即“部署在各地的边缘服务器”，是指能够 <strong>制定规则</strong> <strong>自动识别并缓存数据</strong> 以供用户快速访问，分担主干网络压力的实体。</li>
-<li>中心平台可以对缓存服务器实现负载均衡、内容分发和调度等功能。</li>
-</ul>
-<h4 id="工作原理">工作原理</h4>
-<blockquote>
-<p>假设您的加速域名为<code>www.a.com</code>，接入CDN网络，开始使用加速服务后，当终端用户（北京）发起HTTP请求时，处理流程如下图所示。</p>
-<ol type="1">
-<li>当终端用户（北京）向<code>www.a.com</code>下的指定资源发起请求时，首先向LDNS（本地DNS）发起域名解析请求。<br />
-</li>
-<li>LDNS检查缓存中是否有<code>www.a.com</code>的IP地址记录。如果有，则直接返回给终端用户；如果没有，则向授权DNS查询。<br />
-</li>
-<li>当授权DNS解析<code>www.a.com</code>时，返回域名CNAME <code>www.a.tbcdn.com</code>对应IP地址。<br />
-</li>
-<li>域名解析请求发送至阿里云DNS调度系统，并为请求分配最佳节点IP地址。</li>
-<li>LDNS获取DNS返回的解析IP地址。</li>
-<li>用户获取解析IP地址。</li>
-<li>用户向获取的IP地址发起对该资源的访问请求。
-<ul>
-<li>如果该IP地址对应的节点已缓存该资源，则会将数据直接返回给用户，例如，图中步骤7和8，请求结束。</li>
-<li>如果该IP地址对应的节点未缓存该资源，则节点向源站发起对该资源的请求。获取资源后，结合用户自定义配置的缓存策略，将资源缓存至节点，例如，图中的北京节点，并返回给用户，请求结束。配置缓存策略的操作方法，请参见<a target="_blank" rel="noopener" href="https://help.aliyun.com/document_detail/27136.htm?spm=a2c4g.11186623.2.3.694925b3RabzbR#concept-f24-32d-xdb">缓存配置</a>。</li>
-</ul></li>
-</ol>
-<p><img src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/04/p4886.png" alt="img" style="zoom: 67%;" /></p>
-<p>——阿里云</p>
-</blockquote>
-<h4 id="应用场景">应用场景</h4>
-<h5 id="场景概述">场景概述</h5>
-<p>CDN的业务使用场景分为 <strong>静态内容加速</strong>、<strong>动态内容加速</strong> 和 <strong>安全加速</strong> 。</p>
-<blockquote>
-<p><strong>静态内容（静态资源）</strong></p>
-<p>静态内容是指在不同请求中访问到的数据都相同的静态文件。例如：图片、视频、网站中的文件（html、css、js）、软件安装包、apk文件、压缩包文件等。</p>
-<p>CDN加速的本质是 <strong>缓存加速</strong>。将您服务器上存储的静态内容缓存在阿里云CDN节点上，当您访问这些静态内容时，无需访问服务器源站，就近访问阿里云CDN节点即可获取相同内容。从而达到加速的效果，同时减轻服务器源站的压力。</p>
-<p><strong>动态内容（动态资源）</strong></p>
-<p>动态内容是指在不同请求中访问到的数据不相同的动态内容。例如：网站中的文件（asp、jsp、php、perl、cgi）、API接口、数据库交互请求等。</p>
-<p><strong>当您访问这些动态内容时，每次都需要访问您的服务器，由服务器动态生成实时的数据并返回给您。</strong>因此CDN的缓存加速不适用于加速动态内容，CDN无法缓存实时变化的动态内容。对于动态内容请求，CDN节点只能转发回您的服务器源站，没有加速效果。</p>
-<p>如果您的网站或App应用有较多动态内容，例如需要对各种API接口进行加速，则需要使用 <a target="_blank" rel="noopener" href="https://www.alibabacloud.com/zh/product/dcdn">阿里云全站加速</a> 产品。全站加速能同时加速动态和静态内容，加速方式如下：</p>
-<ul>
-<li>静态内容使用CDN加速。</li>
-<li>动态内容通过阿里云的 <strong>路由优化</strong>、<strong>传输优化</strong> 等动态加速技术以最快的速度访问您的服务器源站获取数据。从而达到全站加速的效果。</li>
-</ul>
-<p>——阿里云</p>
-</blockquote>
-<h5 id="全站加速">全站加速</h5>
-<blockquote>
-<p>全站加速（Dynamic Route for Content Delivery Network）是阿里云自主研发的融合了动态加速和静态加速技术的CDN产品。该产品一站式解决了页面动静态资源混杂、跨运营商、网络不稳定、单线源站、突发流量、网络拥塞等诸多因素导致的响应慢、丢包、服务不稳定的问题，提升全站性能和用户体验。</p>
-<p><strong>工作原理</strong></p>
-<p>阿里云全站加速通过智能路由区分客户请求内容，实现动静态加速。通过架构图，您可以了解全站加速的工作原理。</p>
-<p><img src="https://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/zh-CN/5931788951/p6063.png" style="zoom: 40%;" /></p>
-<ul>
-<li>智能区分动静态内容：域名接入阿里云全站加速后，通过域名访问的动静态内容将被智能识别并区分。</li>
-<li>动静态内容同时加速：静态内容使用阿里云CDN加速，缓存在CDN节点上，供您就近访问。动态内容通过 <strong>智能路由优化</strong>、<strong>协议优化</strong> 等动态加速技术快速回源获取。</li>
-</ul>
-<p><strong>全站加速与CDN对比</strong></p>
-<p><img src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/04/image-20210414100053078.png" alt="image-20210414100053078" style="zoom: 80%;" /></p>
-</blockquote>
-<h3 id="ssh">SSH</h3>
-<p>SSH is a program for logging into a remote machine and for excuting commands on a remote machine.</p>
-<p>It's intended to provide secure encrypted communications between two untrusted hosts over and insecure network.</p>
-<p>X11 connections, arbitrary TCP ports and UNIX-domain sockets can also be forwarded over the secure channel.</p>
-<h4 id="authentication">Authentication</h4>
-<p>The OpenSSH SSH client supports SSH protocol 2.</p>
-<p>Five available authentication methods: GSSAPI-based / host-based / public key / challenge-response and password.</p>
-<h5 id="host-based">Host-based</h5>
-<p>If the machine the user logs in from is listed in <code>/etc/hosts.equiv</code> or <code>/etc/ssh/shosts.equiv</code> on the remote machine, the user is non-root and the user names are the same on both sides, or if the files <code>~/.rhosts</code> or <code>~/.shosts</code> exist in the user's home directory on the remote machine and contain a line containing the name of the client machine and the name of the user on that machine, the user is considered for login. Additionally, the server must be able to verify the client's host key (see the description of <code>/etc/ssh/ssh_known_hosts</code> and <code>~/.ssh/known_hosts</code>, below) for login to be permitted. This authentication method closes security holes due to IP spoofing, DNS spoofing, and routing spoofing.</p>
-<p>[<strong>Note to the administrator</strong>: <code>/etc/hosts.equiv</code>, <code>~/.rhosts</code>, and the rlogin/rsh protocol in general, are inherently insecure and should be disabled if security is desired.]</p>
-<h5 id="public-key">Public key</h5>
-<p>The scheme is based on public-key cryptography, using cryptosystems where encryption and decryption are done using separate keys, and it is unfeasible to derive the decryption key from the encryption key. The idea is that each user creates a public/private key pair for authentication purposes.</p>
-<p><strong><em>The server knows the public key, and only the user knows the private key.</em></strong> ssh implements public key authentication protocol automatically, using one of the <strong>DSA</strong>, <strong>ECDSA</strong>, <strong>Ed25519</strong> or <strong>RSA</strong> algorithms. The HISTORY section of ssl(8) <a target="_blank" rel="noopener" href="http://www.openbsd.org/cgi-bin/man.cgi?query=ssl&amp;sektion=8#HISTORY">[i]</a> on non-OpenBSD systems contains a brief discussion of the DSA and RSA algorithms.</p>
-<p>The file <code>~/.ssh/authorized_keys</code> lists the public keys that are permitted for logging in. When the user logs in, the ssh program tells the server which key pair it would like to use for authentication. The client proves that it has access to the private key and the server checks that the corresponding public key is authorized to accept the account.</p>
-<p>The user should then <mark>copy the public key to <code>~/.ssh/authorized_keys</code> in his/her home directory on the remote machine.</mark> The authorized_keys file corresponds to the conventional <code>~/.rhosts</code> file, and has one key per line, though the lines can be very long. After this, the user can log in without giving the password.</p>
-<h6 id="ssh-keygen">ssh-keygen</h6>
-<p>To generate a public key for ssh, we need to use:</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh-kegen -t rsa</span><br></pre></td></tr></table></figure>
-<p>The terminal will ask if <code>/root/.ssh/id_rsa</code> the file you save the key:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Generating public&#x2F;private rsa key pair.</span><br><span class="line">Enter file in which to save the key (&#x2F;root&#x2F;.ssh&#x2F;id_rsa):</span><br></pre></td></tr></table></figure>
-<p>The terminal will require you to enter the <em>passphrase</em> twice.</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Enter passphrase (empty for no passphrase):</span><br><span class="line">Enter same passphrase again:</span><br></pre></td></tr></table></figure>
-<p><strong><em>Identification</em></strong> is the private key used by the server(the remote machine). And the <strong><em>public key</em></strong> is generated for the client to authenticate while logging in the server.</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Your identification has been saved in &#x2F;root&#x2F;.ssh&#x2F;id_rsa</span><br><span class="line">Your public key has been saved in &#x2F;root&#x2F;.ssh&#x2F;id_rsa.pub</span><br><span class="line">The key fingerprint is:</span><br><span class="line">SHA256: *******</span><br><span class="line">The key&#39;s randomart imge is:</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>The user creates his/her key pair by running ssh-keygen(1).</p>
-<p>This stores the <strong><em>private key</em></strong> in <code>~/.ssh/id_dsa</code> (DSA), <code>~/.ssh/id_ecdsa</code> (ECDSA), <code>~/.ssh/id_ecdsa_sk</code> (authenticator-hosted ECDSA), <code>~/.ssh/id_ed25519</code> (Ed25519), <code>~/.ssh/id_ed25519_sk</code> (authenticator-hosted Ed25519), or <code>~/.ssh/id_rsa</code> (RSA) .</p>
-<p>The the <strong><em>public key</em></strong> stores in <code>~/.ssh/id_dsa.pub</code> (DSA), <code>~/.ssh/id_ecdsa.pub</code> (ECDSA), <code>~/.ssh/id_ecdsa_sk.pub</code> (authenticator-hosted ECDSA), <code>~/.ssh/id_ed25519.pub</code> (Ed25519), <code>~/.ssh/id_ed25519_sk.pub</code> (authenticator-hosted Ed25519), or <code>~/.ssh/id_rsa.pub</code> (RSA) in the <strong>user's home directory</strong>.</p>
-</blockquote>
-<p>Check and copy your <code>.pub</code> file to the local computer.</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> ~/.ssh/</span><br><span class="line">vim id_rsa.pub</span><br></pre></td></tr></table></figure>
-<h6 id="permissions-0644">Permissions 0644</h6>
-<p><img src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/04/image-20210423135807684.png" alt="image-20210423135807684" style="zoom: 80%;" /></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chmod 0600 ~/.ssh/id_rsa</span><br></pre></td></tr></table></figure>
-<h4 id="login-format">Login Format</h4>
-<p><code>user@hostname</code> : <code>root@qq.com</code></p>
-<p><code>ssh://root@hostname:port</code> : <code>ssh://root@qq.com:666</code></p>
-<h3 id="ssl">SSL</h3>
-<p>基于 SSL 证书，可将站点由 HTTP（Hypertext Transfer Protocol）切换到 HTTPS（Hyper Text Transfer Protocol over Secure Socket Layer），即基于安全套接字层（SSL）进行安全数据传输的加密版 HTTP 协议。</p>
-<h4 id="ssl优势">SSL优势</h4>
-<ul>
-<li><p><strong>防流量劫持：</strong>全站 HTTPS 是根治运营商、中间人流量劫持的解决方案，不仅可以杜绝网页中显示的小广告，更可以保护用户隐私安全。</p></li>
-<li><p><strong>提升搜索排名：</strong>采用 HTTPS 可以帮忙搜索排名的提升，提高站点的可信度和品牌形象。</p></li>
-<li><p><strong>杜绝钓鱼网站：</strong>HTTPS 地址栏绿色图标可以帮助用户识别出钓鱼网站，保障用户和企业的利益不受损害，增强用户信任。</p></li>
-</ul>
-<h4 id="ssl证书签发">SSL证书签发</h4>
-<p>域名型证书由以下品牌提供自动审核认证，快速签发。</p>
-<ul>
-<li><strong>SecureSite</strong>：全球最大的信息安全厂商和服务商，最权威的数字证书颁发机构，为企业、个人用户和服务供应商提供广泛的内容和网络安全解决方案，全球500强中有93%选择了 VeriSign SSL 数字证书，目前均由 SecureSite 提供服务。</li>
-<li><strong>TrustAsia®（亚洲诚信）</strong>：亚数信息科技（上海）有限公司应用于信息安全领域的品牌，是 SecureSite 的白金合作伙伴，专业为企业提供包含数字证书在内的所有网络安全服务。</li>
-<li><strong>GeoTrust</strong>：GeoTrust 是全球第二大数字证书颁发机构（CA），也是身份认证和信任认证领域的领导者，该公司各种先进的技术使得任何大小的机构和公司都能安全地低成本地部署 SSL 数字证书和实现各种身份认证。从2001年成立到2006年占领全球市场25%的市场份额，VeriSign 于2006年5月 - 2006年9月以1.25亿美元收购 GeoTrust，目前也同为 SecureSite 旗下 SSL 证书的<strong>性价比高</strong>的品牌。</li>
-<li><strong>GlobalSign</strong>： GlobalSign 成立于1996年，是一家声誉卓著，备受信赖的 CA 中s心和 SSL 数字证书提供商，在全球总计颁发超过2000万张数字证书。GlobalSign 的专业实力获得中国网络市场众多服务器、域名注册商、系统服务供应商的青睐，成为其数字证书服务的合作伙伴。</li>
-<li><strong>WoTrus（沃通）</strong>：沃通电子认证服务有限公司（WoTrus CA Limited）是同时获得国内电子认证服务许可证（由工信部颁发）和通过国际认证的证书颁发机构（CA）。专业为企业提供权威第三方数字身份认证服务，颁发全球信任的各种数字证书产品。</li>
-<li><strong>DNSPod 品牌国密标准（SM2）证书</strong>：DNSPod 为腾讯云自有品牌，采用国密标准，并且是纯国产数字证书，由国内知名 CA 机构提供基础设置支撑，敏捷高效，同时满足国家监管需求。</li>
-</ul>
-<h4 id="ssl证书品牌差异">SSL证书品牌差异</h4>
-<p>不同品牌的证书在浏览器地址栏、加密强度、赔付保障上均存在差异，最重要的差异点在于根证书。</p>
-<p>例如，GeoTrust 通配符是 GeoTrust 根证书签发的，而 SecureSite 通配符是 SecureSite 根证书签发的。<mark>Digicert 根证书可以兼容市面上所有的浏览器，对移动端的支持也是最好的</mark>，而 Trustasia 通配符也是 Digicert 根证书签发的，GlobalSign 通配符是 GlobalSign 的根证书签发的，DNSPod 是由 Wotrus 的根证书签发的，Wotrus 通配符是 Sectigo 的根证书签发的。</p>
-<blockquote>
-<p><strong>通配符：</strong></p>
-<p><strong>根证书：</strong></p>
-</blockquote>
-<p>单纯从技术角度，SecureSite（原 Verisign）和 GeoTrust 的区别如下：</p>
-<ul>
-<li>算法支持上 SecureSite（支持 RSA、DSA、ECC 三种算法）优于 GeoTrust（支持 RSA、DSA 两种算法）。</li>
-<li>兼容性 SecureSite 优于 GeoTrust，SecureSite 可兼容市面上所有的浏览器，对移动端的支持也是极好的。</li>
-<li>OCSP 响应速度上 SecureSite 优于 GeoTrust。</li>
-<li>CA 安全性方面 SecureSite 优于 GeoTrust，SecureSite 是国际知名安全厂商，CA 的安全级别也是国际第一的安全系数。</li>
-<li>SecureSite 证书除实现加密传输以外，还另外有恶意软件扫描和漏洞评估的附加功能。</li>
-<li>SecureSite 对证书有商业保险赔付保障，金额最高为175万美金，GeoTrust 最高为150万美金。</li>
-</ul>
-<h4 id="ssl证书格式">SSL证书格式</h4>
-<p>SSL证书分为 <code>pem</code> 和 <code>key</code> 这两种格式，分别存储的是 <strong>证书base64加密</strong> 和 <strong>私钥base64加密</strong> 还有 格式分割符，也就是说pem存的是证书，key 存的是私钥。</p>
-<p>如pem中的内容：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">-----BEGIN CERTIFICATE-----</span><br><span class="line">略</span><br><span class="line">-----END CERTIFICATE-----</span><br></pre></td></tr></table></figure>
-<p><code>-----BEGIN CERTIFICATE-----</code> 和 <code>-----END CERTIFICATE-----</code> 为分割分，表示在这两个中间存的是证书的base64编码</p>
-<p>备注：</p>
-<p>如key中的内容：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">-----BEGIN RSA PRIVATE KEY-----</span><br><span class="line">略</span><br><span class="line">-----END RSA PRIVATE KEY-----</span><br></pre></td></tr></table></figure>
-<p><code>-----BEGIN RSA PRIVATE KEY-----</code> 和 <code>-----END RSA PRIVATE KEY-----</code> 为分割符号，表示在这两个中间存的是私钥的base64编码</p>
-<p>备注：CERTIFICATE 单词代表证书的意思；PRIVATE KEY 单词代表 私钥、秘钥的意思。</p>
-<h4 id="ssl证书配置">SSL证书配置</h4>
-<p>以下以“阿里云OSS"及“腾讯云COS”的对象存储（bucket）与域名（name）绑定过程中，对SSL证书的配置为例，进行解释和说明，不对详细步骤进行描述，仅解释原理。</p>
-<h5 id="域名及bucket绑定">域名及Bucket绑定</h5>
-<p>阿里云及腾讯云都可以申请对象存储和域名，所申请的域名按正规流程均需要经过挂载至某个服务器进行备案（国内公安要求）后才可以与对象存储绑定，进而颁发证书给挂载至对象存储的域名。</p>
-<h5 id="ssl证书申请及配置">SSL证书申请及配置</h5>
-<p>若域名互相绑定后未配置SSL则会导致https访问失败，配置SSL需要给自己的域名申请免费SSL证书，阿里云及腾讯云都可以免费申请为期一年的证书，按流程填写信息并等待审核下发即可；获得证书后需要选择“其他”类型的证书进行下载。证书中需要的 <strong>公钥</strong> 即 <code>.pem</code> 格式文件，而 <strong>私钥</strong> 即 <code>.key</code> 格式文件，分别填写到Bucket的域名管理页面内下的 <strong>证书上传</strong> 中。</p>
-<p>流程大致如下：</p>
-<pre class="mermaid">graph LR
-    开始 --> Bucket申请--可选CDN加速开启--> 获得Bucket域名或CDN加速域名 --CNAME解析-->域名绑定-->结束
-    开始 --> 域名申请 --> 域名备案 --CNAME解析--> 域名绑定
-    域名申请 --> SSL证书申请 --> 下载证书 --复制粘贴至Bucket的域名管理页面--> 证书上传--> 结束</pre>
-<h3 id="ddos">DDos</h3>
-<h4 id="常见流量攻击">常见流量攻击</h4>
-<h5 id="syn-flood">SYN Flood</h5>
-<p>Flood即洪水之意，SYN是指TCP通信中用于建立连接时标志位之一。</p>
-<p>此时需要用到 TCP Three-way Handshake的知识点，当需要建立连接时：</p>
-<ul>
-<li>Client向Server <mark>发去SYN标志</mark></li>
-<li>Server收到后向Client <mark>回复SYN和ACK标志</mark></li>
-<li>Client收到由Server发过来的SYN和ACK后 <mark>回复一个ACK标志</mark></li>
-</ul>
-<p>以上即为三次握手协议的主要流程，其实只有Server收到该ACK时，才标志着双方建立连接。以下介绍几种”意外“情况。</p>
-<p><strong>情况一：</strong>当Client第一次收到SYN和ACK时，Client就单方面“认为”自己已经和Server建立连接了。但网络通信时并不能百分百保证可靠，假如Client发了ACK，但Server并未收到，则Server就并不”认为“自己与Client建立了连接。Server和Client都有自己的定时器，在发送数据之后就开始计时，不管如何，此时Client都已经发了ACK了，“觉得”自己已经建立了连接，而Server不然，Server就会再次发送SYN和ACK以请求Client的确认。</p>
-<p><strong>情况二：</strong>多个Client向Server同时发送SYN请求，Server收到信息后立即回复SYN和ACK，并且需要为每一个Client设立一个计时器以等待他们的ACK信息。假如此刻Client的数量非常多且每一个都发送了一次SYN请求，则Server的计时器则会立刻被用光，导致任何正常请求都无法连接。（针对此种攻击方式，提出了二次SYN当成一次SYN的防攻击手段，即Client需要连续发两次SYN在标明自己是真的“有意”连接，不是恶意发送攻击的，但此类二次验证方式比较简单，仍然容易被模仿）</p>
-<h5 id="icmp-flood">ICMP Flood</h5>
-<p>ICMP也算是网络层协议的一员，封装在IP协议中，是IP协议的附属协议，可以直接被用户进程直接使用。</p>
-<p>此处的ICMP Flood指的是利用集群设备在同一时间使用 ping 功能对目标主机发起请求，强制主机进行回复，致使目标主机瘫痪。</p>
-<p>以下为ping的英文解释</p>
-<blockquote>
-<p><em>PING - Send ICMP ECHO_REQUEST to network hosts</em></p>
-<p><em>Ping uses the ICMP protocol's mandatory ECHO_REQUEST datagram to elicit an ICMP ECHO_RESPONSE from a host or gateway.</em></p>
-<p>—— from 'manual of ping' in linux</p>
-</blockquote>
-<h3 id="选择数据库服务器的五个原则">选择数据库服务器的五个原则</h3>
-<h4 id="高性能原则">　　1)高性能原则</h4>
-<p>保证所选购的服务器，不仅能够满足运营系统的运行和业务处理的需要，而且能够满足一定时期业务量的增长。一般可以根据经验公式计算出所需的服务器TpmC值(Tpmc是衡量计算机系统的事务处理能力的程序)，然后比较各服务器厂商和TPC组织公布的TpmC值，选择相应的机型。同时，用服务器的市场价/报价除去计算出来的TpmC值得出单位TpmC值的价格，进而选择高性能价格比的服务器。</p>
-<p><strong>结论：</strong>服务器处理器性能很关键，CPU的主频要高，要有较大的缓存</p>
-<h4 id="可靠性原则">　　2)可靠性原则</h4>
-<p>可靠性原则是所有选择设备和系统中首要考虑的，尤其是在大型的、有大量处理要求的、需要长期运行的系统上。考虑服务器系统的可靠性，不仅要考虑服务器单个节点的可靠性或稳定性，而且要考虑服务器与相关辅助系统之间连接的整体可靠性，如：网络系统、安全系统、远程打印系统等。在必要时，还应考虑对关键服务器采用集群技术，如：双机热备份或集群并行访问技术，甚至采用可能的完全容错机。</p>
-<p><strong>结论：</strong>服务器要具备冗余技术，同时像硬盘、网卡、内存、电源此类设备要以稳定耐用为主，性能其次。</p>
-<h4 id="可扩展性原则">　　3)可扩展性原则</h4>
-<p>保证所选购的服务器具有优秀的可扩展性原则。因为服务器是所有系统处理的核心，要求具有大数据吞吐速率，包括：I/O速率和网络通讯速率，而且服务器需要能够处理一定时期的业务发展所带来的数据量，需要服务器能够在相应时间对其自身根据业务发展的需要进行相应的升级，如：CPU型号升级、内存扩大、硬盘扩大、更换网卡、增加终端数目、挂接磁盘阵列或与其他服务器组成对集中数据的并发访问的集群系统等。这都需要所选购的服务器在整体上具有一个良好的可扩充余地。一般数据库和计费应用服务器在大型计费系统的设计中就会采用集群方式来增加可靠性，其中挂接的磁盘存储系统，根据数据量和投资考虑，可以采用DAS、NAS或SAN等实现技术。</p>
-<p><strong>结论：</strong>服务器的IO要高，否则在CPU和内存都是高性能的情况下，会出现瓶颈。除此之外，服务器的扩展性要好，为的是满足企业在日后发展的需要。</p>
-<h4 id="安全性原则">　　4)安全性原则</h4>
-<p>服务器处理的大都是相关系统的核心数据，其上存放和运行着关键的交易和重要的数据。这些交易和数据对于拥有者来说是一笔重要的资产，他们的安全性就非常敏感。服务器的安全性与系统的整体安全性密不可分，如：网络系统的安全、数据加密、密码体制等。服务器需要在其自身，包括软硬件，都应该从安全的角度上设计考虑，在借助于外界的安全设施保障下，更要保证本身的高安全性。</p>
-<p><strong>结论：</strong>首先从服务器的材料上来说要具备高硬度高防护性等条件，其次服务器的冷却系统和对环境的适应能力要强，这样才能够在硬件上满足服务器安全的要求。</p>
-<h4 id="可管理性原则">　　5)可管理性原则</h4>
-<p>服务器既是核心又是系统整体中的一个节点部分，就像网络系统需要进行管理维护一样，也需要对服务器进行有效的管理。这需要服务器的软硬件对标准的管理系统支持，尤其是其上的操作系统，也包括一些重要的系统部件。</p>
-<p><strong>结论：</strong>尽量选择支持系统多的服务器，因为服务器兼容的系统越多，你就可以拥有更大选择空间。</p>
-<p><strong>总结：</strong>首先数据库服务器的性能要求很高，所以在CPU，内存，以及硬盘等方面都有很高的要求，其次是存储，存储要具备良好的稳定性，来满足长期运作的服务器随时读取写入等操作不会出现错误。最后希望通过总结的以上五点，帮助你挑选你所需要的数据库服务器。</p>
-<h3 id="服务器产品结构">服务器产品结构</h3>
-<p>U是厚度要求，是一种表示服务器外部尺寸的单位，是unit的缩略语，详细的尺寸由作为业界团体的美国电子工业协会（EIA）所决定。 <code>1U=4.445cm</code> ， 1U至7U的产品结构是指外形满足EIA规格、厚度为4.445cm-31.115cm的服务器。</p>
-<p>多少U是指服务器的尺寸大小。在专业机房，托管的服务器一般是放在机柜里面的，机柜从上到下有很多单位格，我们叫一格为1U(U是unit的意思)。如果一个机柜是42U高，如果每2个服务器中间留1U空间，那么可以放21个1U的主机。同样情况放2U主机就只能放14台了。</p>
-<p>很多机房托管费用会按所占U的多少来收费的。</p>
-<h3 id="nat">NAT</h3>
-<p>NAT（Network Address Translation，网络地址转换）是1994年提出的。</p>
-<p>当在专用网内部的一些主机本来已经分配到了本地IP地址（即仅在本专用网内使用的专用地址），但现在又想和因特网上的主机通信（并不需要加密）时，可使用NAT方法。 这种方法需要在专用网（私网IP）连接到因特网（公网IP）的路由器上 <mark>安装NAT软件</mark> 。装有NAT软件的路由器叫做NAT路由器，它至少有一个有效的外部全球IP地址（公网IP地址）。</p>
-<p>这样，所有使用本地地址（私网IP地址）的主机在和外界通信时，都要在 <strong>NAT路由器</strong> 上将其本地地址转换成全球IP地址，才能和因特网连接。 另外，这种通过使用少量的全球IP地址（公网IP地址）代表较多的私有IP地址的方式，将有助于减缓可用的IP地址空间的枯竭。在RFC 2663中有对NAT的说明。</p>
-<p><strong>举例</strong>：</p>
-<blockquote>
-<p>在内网下 <code>192.168.0.100</code> 这台电脑上开了一个http网站服务，那么端口默认是 <code>80</code>，在内网下你直接通过浏览器输入 <code>http://192.168.0.100</code> 直接打开网站，这个内网链接地址在外是打不开的。 通过内网穿透后平台 <strong>分配</strong> 一个公网地址（给内网的设备）,比如 <code>http://test123k.nat.nsloop.com</code> 用户在外时就可以通过这个公网地址打开网站。</p>
-</blockquote>
-<p>要使用内网穿透服务，需要先确定好 <mark>内网要映射的IP和端口</mark> ，穿透成功后内网的IP+端口，映射成为公网的域名+端口（如需要IP，可以在CMD命令下PING 服务器的IP地址） 穿透前: 访问IP地址 <code>192.168.0.100</code> 端口 <code>3389</code> 穿透后：访问地址 <code>s0.nsloop.com</code> 端口 <code>12843</code> 。</p>
-<p>内网穿透是通过服务器中继转发数据来实现的将内网端口映射到公网，速度上没有P2P直连的快。</p>
-<h3 id="异地组网">异地组网</h3>
-<h3 id="内网穿透">内网穿透</h3>
-<p>内网穿透（Intranet penetration），也即 NAT 穿透，进行 NAT 穿透是为了使具有某一个特定源 IP 地址和源端口号的数据包 <mark>不被 NAT 设备屏蔽而正确路由到内网主机</mark> 。</p>
-<p>UDP 内网穿透的实质是利用路由器上的NAT 系统。NAT 是一种将私有（保留）地址转化为合法IP地址的转换技术，它被广泛应用于各种类型 Internet 接入方式和各种类型的网络中。<mark>NAT可以完成重用地址，并且对于内部的网络结构可以实现对外隐蔽</mark>。</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://islet.space/2021/04/20/Networking/2021-04-20-Unix%20domain%20socket%20%E7%AE%80%E4%BB%8B/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Liewzheng">
-      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Coder的孤岛">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/04/20/Networking/2021-04-20-Unix%20domain%20socket%20%E7%AE%80%E4%BB%8B/" class="post-title-link" itemprop="url">Unix domain socket 简介</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-
-    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
-    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2021-04-20 23:58:32" itemprop="dateCreated datePublished" datetime="2021-04-20T23:58:32+08:00">2021-04-20</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-04-29 00:52:30" itemprop="dateModified" datetime="2021-04-29T00:52:30+08:00">2021-04-29</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Networking/" itemprop="url" rel="index"><span itemprop="name">Networking</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/sparkdev/p/8359028.html">cnblogs.com</a></p>
-<p><strong>Unix domain socket 又叫 IPC(inter-process communication 进程间通信) socket，用于实现同一主机上的进程间通信。</strong>socket 原本是为网络通讯设计的，但后来在 socket 的框架上发展出一种 IPC 机制，就是 UNIX domain socket。虽然网络 socket 也可用于同一台主机的进程间通讯(通过 loopback 地址 127.0.0.1)，但是 UNIX domain socket 用于 IPC 更有效率：不需要经过网络协议栈，不需要打包拆包、计算校验和、维护序号和应答等，只是将应用层数据从一个进程拷贝到另一个进程。这是因为，IPC 机制本质上是可靠的通讯，而网络协议是为不可靠的通讯设计的。 UNIX domain socket 是全双工的，API 接口语义丰富，相比其它 IPC 机制有明显的优越性，目前已成为使用最广泛的 IPC 机制，比如 X Window 服务器和 GUI 程序之间就是通过 UNIX domain socket 通讯的。 Unix domain socket 是 POSIX 标准中的一个组件，所以不要被名字迷惑，linux 系统也是支持它的。</p>
-<p>下面通过一个简单的 demo 来理解相关概念。程序分为服务器端和客户端两部分，它们之间通过 unix domain socket 进行通信。</p>
-<h1 id="服务器端程序">服务器端程序</h1>
-<p>下面是一个非常简单的服务器端程序，它从客户端读字符，然后将每个字符转换为大写并回送给客户端：</p>
-<figure>
-<img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码" /><figcaption aria-hidden="true">复制代码</figcaption>
-</figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;stdlib.h&gt;  </span><br><span class="line">#include &lt;stdio.h&gt;  </span><br><span class="line">#include &lt;stddef.h&gt;  </span><br><span class="line">#include &lt;sys&#x2F;socket.h&gt;  </span><br><span class="line">#include &lt;sys&#x2F;un.h&gt;  </span><br><span class="line">#include &lt;errno.h&gt;  </span><br><span class="line">#include &lt;string.h&gt;  </span><br><span class="line">#include &lt;unistd.h&gt;  </span><br><span class="line">#include &lt;ctype.h&gt;   </span><br><span class="line"> </span><br><span class="line">#define MAXLINE 80  </span><br><span class="line"> </span><br><span class="line">char *socket_path &#x3D; &quot;server.socket&quot;;  </span><br><span class="line"> </span><br><span class="line">int main(void)  </span><br><span class="line">&#123;  </span><br><span class="line">    struct sockaddr_un serun, cliun;  </span><br><span class="line">    socklen_t cliun_len;  </span><br><span class="line">    int listenfd, connfd, size;  </span><br><span class="line">    char buf[MAXLINE];  </span><br><span class="line">    int i, n;  </span><br><span class="line"> </span><br><span class="line">    if ((listenfd &#x3D; socket(AF_UNIX, SOCK_STREAM, 0)) &lt; 0) &#123;  </span><br><span class="line">        perror(&quot;socket error&quot;);  </span><br><span class="line">        exit(1);  </span><br><span class="line">    &#125;  </span><br><span class="line"> </span><br><span class="line">    memset(&amp;serun, 0, sizeof(serun));  </span><br><span class="line">    serun.sun_family &#x3D; AF_UNIX;  </span><br><span class="line">    strcpy(serun.sun_path, socket_path);  </span><br><span class="line">    size &#x3D; offsetof(struct sockaddr_un, sun_path) + strlen(serun.sun_path);  </span><br><span class="line">    unlink(socket_path);  </span><br><span class="line">    if (bind(listenfd, (struct sockaddr *)&amp;serun, size) &lt; 0) &#123;  </span><br><span class="line">        perror(&quot;bind error&quot;);  </span><br><span class="line">        exit(1);  </span><br><span class="line">    &#125;  </span><br><span class="line">    printf(&quot;UNIX domain socket bound\n&quot;);  </span><br><span class="line">      </span><br><span class="line">    if (listen(listenfd, 20) &lt; 0) &#123;  </span><br><span class="line">        perror(&quot;listen error&quot;);  </span><br><span class="line">        exit(1);          </span><br><span class="line">    &#125;  </span><br><span class="line">    printf(&quot;Accepting connections ...\n&quot;);  </span><br><span class="line"> </span><br><span class="line">    while(1) &#123;  </span><br><span class="line">        cliun_len &#x3D; sizeof(cliun);         </span><br><span class="line">        if ((connfd &#x3D; accept(listenfd, (struct sockaddr *)&amp;cliun, &amp;cliun_len)) &lt; 0)&#123;  </span><br><span class="line">            perror(&quot;accept error&quot;);  </span><br><span class="line">            continue;  </span><br><span class="line">        &#125;  </span><br><span class="line">          </span><br><span class="line">        while(1) &#123;  </span><br><span class="line">            n &#x3D; read(connfd, buf, sizeof(buf));  </span><br><span class="line">            if (n &lt; 0) &#123;  </span><br><span class="line">                perror(&quot;read error&quot;);  </span><br><span class="line">                break;  </span><br><span class="line">            &#125; else if(n &#x3D;&#x3D; 0) &#123;  </span><br><span class="line">                printf(&quot;EOF\n&quot;);  </span><br><span class="line">                break;  </span><br><span class="line">            &#125;  </span><br><span class="line">              </span><br><span class="line">            printf(&quot;received: %s&quot;, buf);  </span><br><span class="line"> </span><br><span class="line">            for(i &#x3D; 0; i &lt; n; i++) &#123;  </span><br><span class="line">                buf[i] &#x3D; toupper(buf[i]);  </span><br><span class="line">            &#125;  </span><br><span class="line">            write(connfd, buf, n);  </span><br><span class="line">        &#125;  </span><br><span class="line">        close(connfd);  </span><br><span class="line">    &#125;  </span><br><span class="line">    close(listenfd);  </span><br><span class="line">    return 0;  </span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
-<figure>
-<img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码" /><figcaption aria-hidden="true">复制代码</figcaption>
-</figure>
-<p>简单介绍一下这段代码：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">int socket(int family, int type, int protocol);</span><br></pre></td></tr></table></figure>
-<p>使用 UNIX domain socket 的过程和网络 socket 十分相似，也要先调用 socket() 创建一个 socket 文件描述符. <strong>family</strong> 指定为 AF_UNIX，使用 AF_UNIX 会在系统上创建一个 socket 文件，不同进程通过读写这个文件来实现通信。 <strong>type</strong> 可以选择 SOCK_DGRAM 或 SOCK_STREAM。SOCK_STREAM 意味着会提供按顺序的、可靠、双向、面向连接的比特流。SOCK_DGRAM 意味着会提供定长的、不可靠、无连接的通信。 <strong>protocol</strong> 参数指定为 0 即可。 UNIX domain socket 与网络 socket 编程最明显的不同在于地址格式不同，用结构体 sockaddr_un 表示，网络编程的 socket 地址是 IP 地址加端口号，而 UNIX domain socket 的地址是一个 socket 类型的文件在文件系统中的路径，这个 socket 文件由 bind() 调用创建，如果调用 bind() 时该文件已存在，则 bind() 错误返回。因此，一般在调用 bind() 前会检查 socket 文件是否存在，如果存在就删除掉。 网络 socket 编程类似，在 bind 之后要 listen，表示通过 bind 的地址（也就是 socket 文件）提供服务。 接下来必须用 accept() 函数初始化连接。accept() 为每个连接创立新的套接字并从监听队列中移除这个连接。</p>
-<h1 id="客户端程序">客户端程序</h1>
-<p>下面是客户端程序，它接受用户的输入，并把字符串发送给服务器，然后接收服务器返回的字符串并打印：</p>
-<figure>
-<img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码" /><figcaption aria-hidden="true">复制代码</figcaption>
-</figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;stdlib.h&gt;  </span><br><span class="line">#include &lt;stdio.h&gt;  </span><br><span class="line">#include &lt;stddef.h&gt;  </span><br><span class="line">#include &lt;sys&#x2F;socket.h&gt;  </span><br><span class="line">#include &lt;sys&#x2F;un.h&gt;  </span><br><span class="line">#include &lt;errno.h&gt;  </span><br><span class="line">#include &lt;string.h&gt;  </span><br><span class="line">#include &lt;unistd.h&gt;  </span><br><span class="line"> </span><br><span class="line">#define MAXLINE 80  </span><br><span class="line"> </span><br><span class="line">char *client_path &#x3D; &quot;client.socket&quot;;  </span><br><span class="line">char *server_path &#x3D; &quot;server.socket&quot;;  </span><br><span class="line"> </span><br><span class="line">int main() &#123;  </span><br><span class="line">    struct  sockaddr_un cliun, serun;  </span><br><span class="line">    int len;  </span><br><span class="line">    char buf[100];  </span><br><span class="line">    int sockfd, n;  </span><br><span class="line"> </span><br><span class="line">    if ((sockfd &#x3D; socket(AF_UNIX, SOCK_STREAM, 0)) &lt; 0)&#123;  </span><br><span class="line">        perror(&quot;client socket error&quot;);  </span><br><span class="line">        exit(1);  </span><br><span class="line">    &#125;  </span><br><span class="line">      </span><br><span class="line">    &#x2F;&#x2F; 一般显式调用bind函数，以便服务器区分不同客户端  </span><br><span class="line">    memset(&amp;cliun, 0, sizeof(cliun));  </span><br><span class="line">    cliun.sun_family &#x3D; AF_UNIX;  </span><br><span class="line">    strcpy(cliun.sun_path, client_path);  </span><br><span class="line">    len &#x3D; offsetof(struct sockaddr_un, sun_path) + strlen(cliun.sun_path);  </span><br><span class="line">    unlink(cliun.sun_path);  </span><br><span class="line">    if (bind(sockfd, (struct sockaddr *)&amp;cliun, len) &lt; 0) &#123;  </span><br><span class="line">        perror(&quot;bind error&quot;);  </span><br><span class="line">        exit(1);  </span><br><span class="line">    &#125;  </span><br><span class="line"> </span><br><span class="line">    memset(&amp;serun, 0, sizeof(serun));  </span><br><span class="line">    serun.sun_family &#x3D; AF_UNIX;  </span><br><span class="line">    strcpy(serun.sun_path, server_path);  </span><br><span class="line">    len &#x3D; offsetof(struct sockaddr_un, sun_path) + strlen(serun.sun_path);  </span><br><span class="line">    if (connect(sockfd, (struct sockaddr *)&amp;serun, len) &lt; 0)&#123;  </span><br><span class="line">        perror(&quot;connect error&quot;);  </span><br><span class="line">        exit(1);  </span><br><span class="line">    &#125;  </span><br><span class="line"> </span><br><span class="line">    while(fgets(buf, MAXLINE, stdin) !&#x3D; NULL) &#123;    </span><br><span class="line">         write(sockfd, buf, strlen(buf));    </span><br><span class="line">         n &#x3D; read(sockfd, buf, MAXLINE);    </span><br><span class="line">         if ( n &lt; 0 ) &#123;    </span><br><span class="line">            printf(&quot;the other side has been closed.\n&quot;);    </span><br><span class="line">         &#125;else &#123;    </span><br><span class="line">            write(STDOUT_FILENO, buf, n);    </span><br><span class="line">         &#125;    </span><br><span class="line">    &#125;   </span><br><span class="line">    close(sockfd);  </span><br><span class="line">    return 0;  </span><br><span class="line">&#125;  </span><br></pre></td></tr></table></figure>
-<figure>
-<img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码" /><figcaption aria-hidden="true">复制代码</figcaption>
-</figure>
-<p>与网络 socket 编程不同的是，UNIX domain socket 客户端一般要显式调用 bind 函数，而不依赖系统自动分配的地址。客户端 bind 一个自己指定的 socket 文件名的好处是，该文件名可以包含客户端的 pid 等信息以便服务器区分不同的客户端。</p>
-<h1 id="运行上面的程序">运行上面的程序</h1>
-<p>分别把服务器端程序和客户端程序保存为 server.c 和 client.c 文件，并编译：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ gcc server.c -o server</span><br><span class="line">$ gcc client.c -o client</span><br></pre></td></tr></table></figure>
-<p>先启动服务器端程序，然后启动客户端程序输入字符串并回车：</p>
-<figure>
-<img src="https://images2017.cnblogs.com/blog/952033/201801/952033-20180126125928506-239880118.png" alt="img" /><figcaption aria-hidden="true">img</figcaption>
-</figure>
-<p>还不错，客户端得到了服务器端返回的大写字符串。接下来看看当前目录下的文件：</p>
-<figure>
-<img src="https://images2017.cnblogs.com/blog/952033/201801/952033-20180126125951834-1641586991.png" alt="img" /><figcaption aria-hidden="true">img</figcaption>
-</figure>
-<p>哈哈，多了两个 socket 文件。</p>
-<h1 id="总结">总结</h1>
-<p>Unix domain socket 主要用于同一主机上的进程间通信。与主机间的进程通信不同，它不是通过 "IP地址 + TCP或UDP端口号" 的方式进程通信，而是使用 socket 类型的文件来完成通信，因此在稳定性、可靠性以及效率方面的表现都很不错。</p>
-<p><strong>参考：</strong> <a target="_blank" rel="noopener" href="http://docs.linuxtone.org/ebooks/C&amp;CPP/c/ch37s04.html">UNIX Domain Socket IPC</a> [<a target="_blank" rel="noopener" href="http://blog.csdn.net/tzshlyt/article/details/53391655">linux] unix domain socket 例子</a></p>
-<p>​</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://islet.space/2021/04/19/Signal/MIC%20LEVEL%20vs%20LINE%20LEVEL%20Audio%20Levels%20Explained/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Liewzheng">
-      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Coder的孤岛">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/04/19/Signal/MIC%20LEVEL%20vs%20LINE%20LEVEL%20Audio%20Levels%20Explained/" class="post-title-link" itemprop="url">MIC LEVEL vs LINE LEVEL--Audio Levels Explained</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-
-    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
-    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2021-04-19 23:58:32" itemprop="dateCreated datePublished" datetime="2021-04-19T23:58:32+08:00">2021-04-19</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-04-29 00:54:07" itemprop="dateModified" datetime="2021-04-29T00:54:07+08:00">2021-04-29</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Signal/" itemprop="url" rel="index"><span itemprop="name">Signal</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p><a target="_blank" rel="noopener" href="https://audiouniversityonline.com/mic-level-vs-line-level-audio-levels-explained/">audiouniversityonline.com</a></p>
-<p>In this post, you’ll learn the difference between microphone level and line level, as well as other levels commonly used in professional audio such as instrument level and speaker level.</p>
-<p>What is the difference between microphone level and line level?</p>
-<p><strong>Microphones and instruments output very low signal voltages, while +4dBu is the line level is the standard voltage level for professional audio equipment.</strong></p>
-<p><strong>In pro audio, you’ll generally be dealing with four types of audio signals: Mic Level, Instrument Level, Line Level, and Speaker Level</strong></p>
-<h1 id="microphone-level">Microphone Level</h1>
-<p>A microphone captures sound by converting pressure changes in the air into electrical currents in a wire. The electrical currents created by these pressure changes are very subtle. That’s why we use a microphone preamp – to amplify the signal to a more usable level.</p>
-<p>A microphone preamp takes in a mic level signal, amplifies it, and outputs a line level signal. This is controlled by the gain knob on your mixing console, audio interface, or outboard mic pre.</p>
-<p><img src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/04/Mic-Level-Chart-900.jpg" alt="img" style="zoom:50%;" /></p>
-<h1 id="instrument-level">Instrument Level</h1>
-<p>The pickups of an electric guitar convert the vibrations of the strings into electrical currents. Similar to those from a microphone, the electrical currents from a guitar pickup are very weak.</p>
-<p>A preamp can also be used to boost instrument level signals to line level.</p>
-<p><img src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/04/Instrument-Level-Chart-900.jpg" alt="img" style="zoom: 50%;" /></p>
-<p>Once an input signal is brought up to line level, it is optimized for use with professional audio equipment, such as mixing consoles, outboard effects, and amplifiers.</p>
-<p><img src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/04/Line-Level-Chart-900.jpg" alt="img" style="zoom:50%;" /></p>
-<h1 id="professional-vs-consumer-line-level">Professional vs Consumer Line Level</h1>
-<p>There are two standards for line level: +4 dBu (professional) and -10 dBV (consumer).</p>
-<p>Watch this video to learn the difference between professional and consumer line level. I also wrote a post on <a target="_blank" rel="noopener" href="https://audiouniversityonline.com/consumer-vs-professional-audio-levels-what-is-the-difference/">professional vs consumer audio levels</a> that will help you understand the difference.</p>
-<h1 id="speaker-level">Speaker Level</h1>
-<p>Line level is adequate for sending signals between devices, but not strong enough to power a speaker.In order to power a speaker, the line level signal needs to be amplified again.</p>
-<p>This can be done with a power amplifier. A power amp takes in a line level signal, amplifies it, and outputs a speaker level signal that is strong enough to power a speaker.</p>
-<p><img src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/04/Speaker-Level-Chart-900.jpg" alt="img" style="zoom:50%;" /></p>
-<h1 id="a-complete-audio-system">A Complete Audio System</h1>
-<p>In a complete system, you might run a microphone through a preamp and an electric guitar through another preamp.</p>
-<p>Once those signals are at line level, you can send them through outboard effects and eventually to an amplifier, which will add enough gain to the signal to power a speaker.</p>
-<p><img src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/04/Complete-Chart-900.jpg" alt="img" style="zoom:50%;" /></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://islet.space/2021/04/11/Web/2021-04-11-JavaScript/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Liewzheng">
-      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Coder的孤岛">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/04/11/Web/2021-04-11-JavaScript/" class="post-title-link" itemprop="url">Javascript</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-
-    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
-    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2021-04-11 23:58:32" itemprop="dateCreated datePublished" datetime="2021-04-11T23:58:32+08:00">2021-04-11</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-04-26 00:13:21" itemprop="dateModified" datetime="2021-04-26T00:13:21+08:00">2021-04-26</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Networking/" itemprop="url" rel="index"><span itemprop="name">Networking</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="面向对象编程">面向对象编程</h1>
-<h2 id="对象的抽象">对象的抽象</h2>
-<p><strong>抽象</strong> 是指一种归纳或总结，<strong>对象</strong> 是现实世界物体特征的实体。万事万物不论大小皆可看做对象， <strong>类</strong> 则是对各种不同对象的 <em>归纳总结</em>，类是对象的 <em>抽象表示形式</em>。</p>
-<blockquote>
-<p>例如，男演员Jack可以看做是一个对象，女演员Rose也可以看过是一个对象，而两者会被统一归纳为Person或者Human的类（或抽象）。每一个对象都有其独特的属性（Property）或功能（Function），而归纳总结出来的类则具有不同对象的相同属性或功能。</p>
-</blockquote>
-<p>基于类的面向对象语言是面向对象世界里的主流。虽然大多数面向对象开发语言都使用类来完成面向对象编程，但类不是面向对象编程的实质内涵。面向对象的实质内涵是将所有业务逻辑单元都视为一个对象（即，对象是目的或结果），且类不是唯一用来完成面向对象编程的方法。</p>
-<p>面向对象不能被当做面向类，否则会进入误区。对象和类的关系相当于一般程序设计语言中的 <strong>变量</strong> 和 <strong>变量类型</strong> 的关系。所以，有时类也被称为是一种数据类型，可以看做抽象数据类型的具体实现。此时的数据类型则是 <strong>数据 </strong>和 <strong>操作</strong> 的集合。</p>
-<h2 id="面向对象与面向过程的区别">面向对象与面向过程的区别</h2>
-<p>面向过程程序设计，即结构化程序设计，诸如Pascal、C。</p>
-<p>面向对象程序设计解决了结构化程序设计代码复用的难题，如C++、C#、Java、JavaScript、Python等都是。</p>
-<p><img src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/04/image-20210413144641711.png" alt="image-20210413144641711" style="zoom: 67%;" /></p>
-<p>面向过程也是把程序定义为“数据+作用于数据的操作算法”，但最重要的区别是：面向过程编程 <mark>使用过程操作数据结构</mark>， 而面向对象编程将过程和数据结构捆绑，使对象 <mark>操作自己的数据结构</mark>。</p>
-<h1 id="javascript的类">JavaScript的类</h1>
-<h2 id="类的创建">类的创建</h2>
-<p>JavaScript可以用关键字 <code>class</code> 进行赋值。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Rectangle</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="title">constructor</span>(<span class="params">height, width</span>)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.height = height;</span><br><span class="line">        <span class="built_in">this</span>.width = width;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 方法一：参数赋值法，间接调用构造器赋值</span></span><br><span class="line"><span class="keyword">var</span> oRectangle = <span class="keyword">new</span> Rectangle(<span class="number">10</span>, <span class="number">20</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 方法二：生成对象后单独调用赋值</span></span><br><span class="line"><span class="comment">// var oRectangle = new Rectangle();</span></span><br><span class="line"><span class="comment">// oRectangle.height = 10;</span></span><br><span class="line"><span class="comment">// oRectangle.width = 30;</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(oRectangle.height, oRectangle.width)</span><br></pre></td></tr></table></figure>
-<p>在MDN Web Docs中，对JavaScript类的定义如下：</p>
-<blockquote>
-<p>实际上，类是“特殊的函数”，就像你能够定义的函数表达式和函数声明一样，类语法有两个组成部分：<strong>类表达式 </strong>和 <strong>类声明</strong>。</p>
-</blockquote>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">HelloWrold</span>(<span class="params"></span>)</span>&#123;    <span class="comment">//To use keyword `function` instead of `class` to define a class</span></span><br><span class="line">    <span class="built_in">this</span>.printInfo = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;Hi! JavaScript!\n&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> oHelloWorld = <span class="keyword">new</span> HelloWorld();    <span class="comment">// Make a new object of the class named `HelloWorld`</span></span><br><span class="line"><span class="keyword">var</span> result = oHelloWorld.printInfo();    <span class="comment">//Call the method of the object to assign</span></span><br><span class="line"><span class="built_in">document</span>.write(result);</span><br></pre></td></tr></table></figure>
-<h2 id="构造器">构造器</h2>
-<p><strong>构造器（Constructor）</strong>，或称 <strong>构造方法</strong>，一种用于创建和初始化<code>class</code>创建的对象的特殊 <strong>方法（Methods）</strong>。<code>constructor([arguments]) &#123; ... &#125;</code>， 其中 <code>arguments</code> 看情况而定，可以省略。</p>
-<p><strong>注意</strong>：</p>
-<ol type="1">
-<li>在一个类中只能有一个名为 <code>constructor</code> 的特殊方法。 一个类中出现多次构造函数 (constructor)方法将会抛出一个 <code>SyntaxError</code> 错误。</li>
-<li>在一个构造方法中可以使用 <code>super</code> 关键字来 <mark>调用一个父类的构造方法</mark>。</li>
-<li>如果没有显式指定构造方法，则会添加默认的 constructor 方法。</li>
-</ol>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Polygon</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="title">constructor</span>(<span class="params">arg0, arg1</span>)</span> &#123;</span><br><span class="line">    <span class="built_in">this</span>.name = <span class="string">&#x27;Polygon&#x27;</span>;</span><br><span class="line">    <span class="built_in">this</span>.body = arg0 + arg1;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> poly1 = <span class="keyword">new</span> Polygon(<span class="number">10</span>,<span class="number">20</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(poly1.name, poly1.body);</span><br><span class="line"><span class="comment">// expected output: &quot;Polygon&quot; 30</span></span><br></pre></td></tr></table></figure>
 
       
     </div>

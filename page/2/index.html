@@ -162,7 +162,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">101</span>
+          <span class="site-state-item-count">105</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -173,7 +173,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">184</span>
+        <span class="site-state-item-count">193</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -207,6 +207,881 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://islet.space/2021/10/22/Networking/2021-10-22-traceroute-&-tracert/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Liewzheng">
+      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coder的孤岛">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/10/22/Networking/2021-10-22-traceroute-&-tracert/" class="post-title-link" itemprop="url">traceroute & tracert</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-10-22 08:30:00" itemprop="dateCreated datePublished" datetime="2021-10-22T08:30:00+08:00">2021-10-22</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2021-12-10 22:29:39" itemprop="dateModified" datetime="2021-12-10T22:29:39+08:00">2021-12-10</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Networking/" itemprop="url" rel="index"><span itemprop="name">Networking</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/75a5822d0eec">Traceroute（路由追踪）的原理及实现</a></p>
+<p>traceroute 和 tracert 是Linux和Windows平台下用于追踪网络设备距离远近的工具，向目标设备发包，从 <code>TTL=1</code> 开始向外发包，逐渐增加 <code>TTL</code> 的值，直到目标主机。在介绍traceroute和tracert的原理之前，需要了解几个技术名词：</p>
+<blockquote>
+<p><strong>IP</strong>，协议是TCP/IP协议族中最核心的部分，它的作用是在两台主机之间传输数据，所有上层协议的数据（HTTP、TCP、UDP等）都会被封装在一个个的IP数据包中被发送到网络上。</p>
+</blockquote>
+<blockquote>
+<p><strong>ICMP</strong>，即 <em>Internet Control Message Protocol</em>，互联网控制报文协议，它常用于传递错误信息，ICMP协议是IP层的一部分，它的报文也是通过IP数据包来传输的。</p>
+</blockquote>
+<blockquote>
+<p><strong>TTL</strong>，即 <em>time-to-live</em>，是IP数据包中的一个字段，它指定了数据包最多能经过几次路由器。从我们源主机发出去的数据包在到达目的主机的路上要经过许多个路由器的转发，在发送数据包的时候源主机会设置一个TTL的值，每经过一个路由器TTL就会被减去一，当TTL为0的时候该数据包会被直接丢弃（不再继续转发），并发送一个超时ICMP报文给源主机。</p>
+</blockquote>
+<h1 id="实现方案">实现方案</h1>
+<p>tracert （windows）只支持基于 ICMP 报文发送，而 traceroute（Linux/Mac） 支持多种报文协议（UDP、ICMP、TCP）的发送，但不带任何选项（Options）时默认使用的是UDP。（具体参数和选项自行请自行 <code>man</code> 以查看手册）</p>
+<p>下方所示图片分别为 tracert （windows）的帮助手册，以及在traceroute（Linux）上分别使用三种协议追踪 <code>baidu.com</code> 的结果截图。后续仅对UDP及ICMP追踪做较为详细的说明。</p>
+<figure>
+<img src="https://pic.islet.space/2021/10/20211022084346.png" alt="tracert的帮助说明" /><figcaption aria-hidden="true">tracert的帮助说明</figcaption>
+</figure>
+<p>使用 TCP 报文的 traceroute：</p>
+<figure>
+<img src="https://pic.islet.space/2021/10/20211022085430.png" alt="基于TCP报文的traceroute" /><figcaption aria-hidden="true">基于TCP报文的traceroute</figcaption>
+</figure>
+<p>使用 ICMP 报文的 traceroute：</p>
+<figure>
+<img src="https://pic.islet.space/2021/10/20211022085432.png" alt="基于ICMP报文的traceroute" /><figcaption aria-hidden="true">基于ICMP报文的traceroute</figcaption>
+</figure>
+<p>使用 UDP 报文的 traceroute：</p>
+<figure>
+<img src="https://pic.islet.space/2021/10/20211022085433.png" alt="基于UDP报文的traceroute" /><figcaption aria-hidden="true">基于UDP报文的traceroute</figcaption>
+</figure>
+<h2 id="基于udp实现">基于UDP实现</h2>
+<p>在基于UDP的实现中，客户端发送的数据包是通过UDP协议来传输的，使用了一个大于 <code>30000</code> 的端口号，服务器在收到这个数据包的时候会返回一个<strong>端口不可达</strong>的ICMP错误信息，客户端通过判断收到的错误信息是TTL超时还是端口不可达来判断数据包是否到达目标主机，具体的流程如图：</p>
+<figure>
+<img src="https://pic.islet.space/2021/10/20211022085956.png" alt="image-20211022085752243" /><figcaption aria-hidden="true">image-20211022085752243</figcaption>
+</figure>
+<h3 id="实现流程">实现流程</h3>
+<ol type="1">
+<li>客户端发送一个TTL为 <code>1</code> ，端口号大于 <code>30000</code> 的UDP数据包，到达第一站路由器之后TTL被减去 <code>1</code> ，返回了一个超时的ICMP数据包，客户端得到第一跳路由器的地址。</li>
+<li>客户端发送一个TTL为 <code>2</code> 的数据包，在第二跳的路由器节点处超时，得到第二跳路由器的地址。</li>
+<li>客户端发送一个TTL为 <code>3</code> 的数据包，数据包成功到达目标主机，返回一个<strong>端口不可达</strong>错误，traceroute结束。</li>
+</ol>
+<p>Linux和macOS系统自带了一个<code>traceroute</code>指令，可以结合Wireshark抓包来看看它的实现原理。首先对百度的域名进行traceroute：<code>traceroute www.baidu.com</code>，每一跳默认发送三个数据包，我们会看到下面这样的输出：</p>
+<figure>
+<img src="https://pic.islet.space/2021/10/20211022092354.png" alt="image-20211022085720428" /><figcaption aria-hidden="true">image-20211022085720428</figcaption>
+</figure>
+<p>对该域名的IP：<code>115.239.210.27</code>进行traceroute，此时Wireshark抓包的结果如下：</p>
+<figure>
+<img src="https://pic.islet.space/2021/10/20211022092351.png" alt="image-20211022085739900" /><figcaption aria-hidden="true">image-20211022085739900</figcaption>
+</figure>
+<h3 id="抓包结果">抓包结果</h3>
+<p>注意看红框处的内容，跟第一张图对比，可以看到<code>traceroute</code>程序首先通过UDP协议向目标地址115.239.210.27发送了一个<strong>TTL为1</strong>的数据包，然后在第一个路由器中TTL超时，返回一个错误类型为<code>Time-to-live exceeded</code>的ICMP数据包，此时我们通过该数据包的源地址可知第一站路由器的地址为<code>10.242.0.1</code>。之后只需要不停增加TTL的值就能得到每一跳的地址了。</p>
+<p>然而一直跑下去会发现，traceroute并不能到达目的地，当TTL增加到一定大小之后就一直拿不到返回的数据包了：</p>
+<figure>
+<img src="https://pic.islet.space/2021/10/20211022092302.png" alt="image-20211022085834275" /><figcaption aria-hidden="true">image-20211022085834275</figcaption>
+</figure>
+<p>结果全是丢失，其实这个时候数据包已经到达目标服务器了，但是因为安全问题大部分的应用服务器都不提供UDP服务（或者被防火墙挡掉），所以我们拿不到服务器的任何返回，程序就理所当然的认为还没有结束，一直尝试增加数据包的TTL。</p>
+<p>目前在网上找到许多开源iOS traceroute实现大多都是基于UDP的方案，实际用起来并不能达到想要的效果，所以我们需要采用另一种方案来实现。</p>
+<h2 id="基于icmp实现">基于ICMP实现</h2>
+<p>上述方案失败的原因是由于服务器对于UDP数据包的处理，所以在这一种实现中我们不使用UDP协议，而是直接发送一个<strong>ICMP回显请求（echo request）</strong>数据包，服务器在收到回显请求的时候会向客户端发送一个<strong>ICMP回显应答（echo reply）</strong>数据包，在这之后的流程还是跟第一种方案一样。这样就避免了我们的traceroute数据包被服务器的防火墙策略墙掉。</p>
+<p>采用这种方案的实现流程如下：</p>
+<figure>
+<img src="https://pic.islet.space/2021/10/20211022085956.png" alt="image-20211022085752243" /><figcaption aria-hidden="true">image-20211022085752243</figcaption>
+</figure>
+<h3 id="实现流程-1">实现流程</h3>
+<ol type="1">
+<li>客户端发送一个TTL为1的<strong>ICMP请求回显</strong>数据包，在第一跳的时候超时并返回一个ICMP超时数据包，得到第一跳的地址。</li>
+<li>客户端发送一个TTL为2的ICMP请求回显数据包，得到第二跳的地址。</li>
+<li>客户端发送一个TTL为3的ICMP请求回显数据包，到达目标主机，目标主机返回一个<strong>ICMP回显应答</strong>，traceroute结束。</li>
+</ol>
+<p>可以看出与第一种实现相比，区别主要在发送的数据包类型以及对于结束的判断上，大体的流程还是一致的。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://islet.space/2021/10/12/Programming/C++/2021-10-12-C++%E5%A4%B4%E6%96%87%E4%BB%B6%E5%92%8C%E7%BC%96%E8%AF%91/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Liewzheng">
+      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coder的孤岛">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/10/12/Programming/C++/2021-10-12-C++%E5%A4%B4%E6%96%87%E4%BB%B6%E5%92%8C%E7%BC%96%E8%AF%91/" class="post-title-link" itemprop="url">C++头文件和编译</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-10-12 08:15:00" itemprop="dateCreated datePublished" datetime="2021-10-12T08:15:00+08:00">2021-10-12</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2021-10-14 23:58:13" itemprop="dateModified" datetime="2021-10-14T23:58:13+08:00">2021-10-14</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Programming/" itemprop="url" rel="index"><span itemprop="name">Programming</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="hpp头文件">HPP头文件</h1>
+<p><code>.hpp</code>，其实质就是将 <code>.cpp</code> 的实现代码混入 <code>.h</code> 头文件当中，定义与实现都包含在同一文件，则该类的使用只需要调用 <code>#include&lt;xxx.hpp&gt;</code> 以引用该文件即可，无需再将 <code>.cpp</code> 加入到project中进行编译。</p>
+<p>而实现代码将直接编译到调用者的 <code>.obj</code> 文件中，不再生成单独的 <code>.obj</code>，采用 <code>.hpp</code> 将大幅度减少调用 project中的 <code>.cpp</code> 文件数与编译次数，也不用再发布烦人的 <code>.lib</code> 与 <code>.dll</code> 文件，因此非常适合用来编写公用的开源库。</p>
+<h2 id="使用注意">使用注意</h2>
+<p><code>.hpp</code> 头文件的优点不少，但是编写中有以下几点要注意：</p>
+<ol type="1">
+<li><p>与 <code>.h</code> 类似，但 <code>.hpp</code> 是 <strong>Header Plus Plus</strong> 的简写，是 C++程序头文件 。</p></li>
+<li><p>是<a target="_blank" rel="noopener" href="http://www.huarw.com/program/vc/Index.html">VC</a>L专用的头文件，已预编译。</p></li>
+<li><p>是一般 <strong>模板类</strong> 的头文件。</p></li>
+<li><p>一般来说，<code>.h</code> 里面只有声明，没有实现，而 <code>.hpp</code> 里声明实现都有，后者可以减少 <code>.cpp</code> 的数量。</p></li>
+<li><p><code>.h</code> 里面可以有 <code>using namespace std;</code>，而 <code>.hpp</code> 里则无。</p></li>
+<li><p>不可包含 <strong>全局对象</strong> 和 <strong>全局函数</strong> 。由于 <code>.hpp</code> 本质上是作为 <code>.h</code> 被调用者所include，所以当 <code>.hpp</code> 文件中存在全局对象或者全局函数，而该 <code>.hpp</code> 被多个调用者include时，<mark>将在链接时导致符号重定义错误</mark>。<mark>要避免这种情况，需要去除全局对象，将全局函数封装为类的静态方法</mark>。</p></li>
+<li><p><strong>类之间不可循环调用</strong></p></li>
+</ol>
+<p>在.h和.cpp的场景中，当两个类或者多个类之间有循环调用关系时，只要预先在头文件做被调用类的声明即可，如下：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">B</span>;</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span>&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">someMethod</span><span class="params">(B b)</span></span>;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">B</span>&#123;</span></span><br><span class="line"><span class="keyword">public</span> :</span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">someMethod</span><span class="params">(A a)</span></span>;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>在 <code>.hpp</code> 场景中，由于定义与实现都已经存在于一个文件，调用者必需明确知道被调用者的所有定义，而不能等到 <code>.cpp</code> 中去编译。因此hpp中必须整理类之间调用关系，不可产生循环调用。同理，对于当两个类A和B分别定义在各自的 <code>.hpp</code> 文件中，形如以下的循环调用也将导致编译错误：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//a.hpp</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&quot;b.hpp&quot;</span></span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span>&#123;</span></span><br><span class="line"><span class="keyword">public</span> :</span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">someMethod</span><span class="params">(B b)</span></span>;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">//b.hpp</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&quot;a.hpp&quot;</span></span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">B</span>&#123;</span></span><br><span class="line"><span class="keyword">public</span> :</span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">someMethod</span><span class="params">(A a)</span></span>;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<ol start="9" type="1">
+<li><strong>不可使用静态成员</strong></li>
+</ol>
+<p>静态成员的使用限制在于如果类含有静态成员，则在 <code>.hpp</code> 中必需加入静态成员初始化代码，当该 <code>.hpp</code> 被多个文档include时，将产生符号重定义错误。唯一的例外是 <code>const static</code> 整型成员，因为在vs2003中，该类型允许在定义时初始化，如：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span>&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="keyword">const</span> <span class="keyword">static</span> <span class="keyword">int</span> intValue = <span class="number">123</span>;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>由于静态成员的使用是很常见的场景，无法强制清除，因此可以考虑以下几种方式（以下示例均为同一类中方法）</p>
+<ol type="1">
+<li>类中仅有一个静态成员时，且仅有一个调用者时，可以通过 <strong>局域静态变量模拟</strong></li>
+</ol>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//方法模拟获取静态成员</span></span><br><span class="line"><span class="function">someType <span class="title">getMember</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">static</span> someType <span class="title">value</span><span class="params">(xxx)</span></span>;<span class="comment">//作用域内静态变量</span></span><br><span class="line">    <span class="keyword">return</span> value;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ol start="2" type="1">
+<li>类中有多个方法需要调用静态成员，而且可能存在多个静态成员时，<mark style="font-weight: 900;">可以将每个静态成员封装一个模拟方法，供其他方法调用</mark>。</li>
+</ol>
+<p><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">someType <span class="title">getMemberA</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">static</span> someType <span class="title">value</span><span class="params">(xxx)</span></span>;<span class="comment">//作用域内静态变量</span></span><br><span class="line">    <span class="keyword">return</span> value;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function">someType <span class="title">getMemberB</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">static</span> someType <span class="title">value</span><span class="params">(xxx)</span></span>;<span class="comment">//作用域内静态变量</span></span><br><span class="line">    <span class="keyword">return</span> value;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">accessMemberA</span><span class="params">()</span></span>&#123;</span><br><span class="line">    someType member = <span class="built_in">getMemberA</span>();<span class="comment">//获取静态成员</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">//获取两个静态成员</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">accessStaticMember</span><span class="params">()</span></span>&#123;</span><br><span class="line">    someType a = <span class="built_in">getMemberA</span>();<span class="comment">//获取静态成员</span></span><br><span class="line">    someType b = <span class="built_in">getMemberB</span>();</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+<ol start="3" type="1">
+<li>第二种方法对于大部分情况是通用的，但是当所需的静态成员过多时，编写封装方法的工作量将非常巨大，在此种情况下，建议使用 <strong>Singleton模式</strong>，将被调用类定义成普通类，然后使用Singleton将其变为全局唯一的对象进行调用。</li>
+</ol>
+<p>如原 <code>.h</code> 和 <code>.cpp</code> 中的定义如下：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span>&#123;</span></span><br><span class="line"><span class="keyword">public</span> :</span><br><span class="line">    <span class="function">type <span class="title">getMember</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> member;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">static</span> type member;<span class="comment">//静态成员</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>采用singleton方式，实现代码可能如下（singleton实现请自行查阅相关文档）</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//实际实现类</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Aprovider</span>&#123;</span></span><br><span class="line"><span class="keyword">public</span> :</span><br><span class="line">    <span class="function">type <span class="title">getMember</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> member;</span><br><span class="line">    &#125;</span><br><span class="line">    type member;<span class="comment">//变为普通成员</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//提供给调用者的接口类</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span>&#123;</span></span><br><span class="line"><span class="keyword">public</span> :</span><br><span class="line">    <span class="function">type <span class="title">getMember</span><span class="params">()</span></span>&#123;</span><br><span class="line">    	<span class="keyword">return</span> Singleton&lt;AProvider &gt;::<span class="built_in">getInstance</span>()-&gt;<span class="built_in">getMember</span>();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="分离式编译">分离式编译</h1>
+<p>在介绍分离式编译之前需要先介绍一下 <strong>分离式代码</strong>，在C++代码中，声明和定义是可以分开写在多个文件中，当然也可以写在同一个文件里面的，如 <code>.hpp</code> 。</p>
+<p>往往是为了逻辑条理的清晰而分开书写，但使用 g++ 和 Terminal 直接编译 <code>main.cpp</code> 时，都是使用的 <code>g++ main.cpp -o main</code> 的命令，也就是只能编译该 <code>main.cpp</code> 一个文件，以生成 <code>main</code> 为名的二进制可运行文件，实际上，书写在其他 <code>.cpp</code> 文件中的代码也需要一同编译，这些书写在其他 <code>.cpp</code> 文件中的代码被称为 <strong>分离式代码</strong>，只编译 <code>main.cpp</code> 就会出现 <code>undefined reference</code> 之类的错误。</p>
+<h2 id="命令行g">命令行G++</h2>
+<p>在 Windows / Linux / Mac 的 Terminal 下都可以使用 <code>g++</code> 命令进行编译，格式如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">g++ -c main.cpp xxx1.cpp xxx2.cpp</span><br></pre></td></tr></table></figure>
+<p>使用 <code>-c</code> 选项，将包含 <code>main()</code> 的 <code>main.cpp</code> 与 其他分离式代码文件 <code>xxx1.cpp</code> 和 <code>xxx2.cpp</code> 一同编译，然后生成一个个对象文件（ <code>.o</code> 或 <code>.obj</code> ）。上面这种方法会生成三个文件 <code>main.o</code> 、<code>xxx1.o</code> 和 <code>xxx2.o</code> ，每个 <code>.o</code> 都是一个对象文件，但不一定可执行（因为缺少 <code>main()</code> 函数），仍需要通过进一步 <strong>链接</strong> 成可执行文件：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">g++ -o main main.o xxx1.o xxx2.o</span><br></pre></td></tr></table></figure>
+<p>通过上面这一行代码可以生成名为 <code>main</code> 的可执行二进制文件。</p>
+<p>以上两句命令也可以通过下面这句命令替代：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">g++ -o main main.cpp xxx1.cpp xxx2.cpp</span><br></pre></td></tr></table></figure>
+<h2 id="makefile">Makefile</h2>
+<p>Makefile 文件描述了 Linux 系统下 C/C++ 工程的编译规则，它用来自动化编译 C/C++ 项目。一旦写编写好 Makefile 文件，只需要一个 make 命令，整个工程就开始自动编译，不再需要手动执行 GCC 命令。</p>
+<p>一个中大型 C/C++ 工程的源文件有成百上千个，它们按照功能、模块、类型分别放在不同的目录中，Makefile 文件定义了一系列规则，指明了源文件的编译顺序、依赖关系、是否需要重新编译等。</p>
+<p>如果是在 Windows 下作开发的话不需要去考虑这个问题，因为 Windows 下的集成开发环境（IDE）。当然，Windows 下的 Visual Studio Code如果没配置好，也只是个编辑器而已，不算是个IDE。一般的MVS（Microsoft Visual Studio）都已经内置了 Makefile，或者说会自动生成 Makefile，不用去手动编写。</p>
+<p>Linux 中却不能这样，需要去手动的完成这项工作。Linux 下可以学习的开发语言有很多，常见的有 C/C++语言、python、java 等等。在 Linux(Unix) 下做开发的话，不了解 Makefile 是一件非常失败的事情。不懂 Makefile，就操作不了多文件编程，就完成不了相对于大的工程项目的操作。Makefile 可以说是必须掌握的一项技能。</p>
+<p>Makefile 可以简单的认为是一个工程文件的编译规则，描述了整个工程的 <strong>编译</strong> 和 <strong>链接</strong> 等规则。其中包含了那些文件需要编译，那些文件不需要编译，那些文件需要 <strong>先编译</strong>，那些文件需要 <strong>后编译</strong>，那些文件需要 <strong>重建</strong> 等等。编译整个工程需要涉及到的，在 Makefile 中都可以进行描述。换句话说，<mark style="font-weight: 900;">Makefile 可以使得我们的项目工程的编译变得自动化，不需要每次都手动输入一堆源文件和参数。</mark></p>
+<p>Makefile 可以彻底简化编译的操作。把要链接的库文件放在 Makefile 中，制定相应的规则和对应的链接顺序。这样只需要执行 make 命令，工程就会自动编译。每次想要编译工程的时候就执行 <code>make</code> 命令，省略掉手动编译中的参数选项和命令，非常的方便。</p>
+<p>Makefile 支持多线程并发操作，会极大的缩短编译时间，并且当修改了源文件之后，编译整个工程的时候，make 命令只会编译修改过的文件，没有修改的文件不用重新编译，也极大的解决了耗费时间的问题。</p>
+<h3 id="makefile-格式">Makefile 格式</h3>
+<figure>
+<img src="https://pic.islet.space/2021/10/20211012135030.png" alt="image-20211012134610578" /><figcaption aria-hidden="true">image-20211012134610578</figcaption>
+</figure>
+<blockquote>
+<ul>
+<li>targets：规则的目标，可以是 Object File（一般称它为中间文件），也可以是可执行文件，还可以是一个标签；</li>
+<li>prerequisites：是我们的依赖文件，要生成 targets 需要的文件或者是目标。可以是多个，也可以是没有；</li>
+<li>command：make 需要执行的命令（任意的 shell 命令）。可以有多条命令，每一条命令占一行。</li>
+</ul>
+</blockquote>
+<blockquote>
+<p>注意：我们的 <strong>目标</strong>（target） 和 <strong>依赖文件</strong>（prerequisite） 之间要使用 <strong>冒号</strong> <code>:</code> 分隔开，<strong>命令的开始</strong>（before the command） 一定要使用 <code>Tab</code> 键。</p>
+</blockquote>
+<h1 id="reference">Reference</h1>
+<ol type="1">
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/liuzhanchen1987/article/details/7270005">hpp.h与.h的区别</a></li>
+<li><a target="_blank" rel="noopener" href="http://c.biancheng.net/makefile/">Makefile教程：Makefile文件编写1天入门 (biancheng.net)</a></li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://islet.space/2021/10/05/Programming/C++/2021-10-05-C++-Templates/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Liewzheng">
+      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coder的孤岛">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/10/05/Programming/C++/2021-10-05-C++-Templates/" class="post-title-link" itemprop="url">C++ Templates</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-10-05 15:00:00" itemprop="dateCreated datePublished" datetime="2021-10-05T15:00:00+08:00">2021-10-05</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2021-11-21 16:38:34" itemprop="dateModified" datetime="2021-11-21T16:38:34+08:00">2021-11-21</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Programming/" itemprop="url" rel="index"><span itemprop="name">Programming</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="part-1-the-basics">PART 1 THE BASICS</h1>
+<div style="background-color: #555; color: #eeeeee; font-weight: 900;">
+WHY TEMPLATES?
+</div>
+<p>C++ 要求我们使用指定的类型来声明变量、函数 和 大部分其他实体。然而，很多代码对于不同的类型看起来都是一样的。比如，对于不同的数据结构，如 <code>int</code> 数组或 <code>string</code> 字符串向量，只要包含的类型可以相互比较，快速排序算法的实现在结构上看起来是一样的。</p>
+<p>如果使用的编程语言不支持 <strong>通用性</strong>（genericity）的 <strong>特殊语言功能</strong>（special language feature），将不得不面临如下选择，坏的选择（bad alternatives）：</p>
+<ul>
+<li>你可以为不同的数据类型一遍又一遍地进行着相同的行为声明；</li>
+<li>你可以为常见的基本类型（common base type）编写一段代码，例如 <code>object</code> 或 <code>void*</code> ；</li>
+<li>你可以使用特殊的预处理器。</li>
+</ul>
+<p>如果使用其他语言，可能以前就做过一些或者所有上方所述的内容了。然而，这些方法的每一种都有其缺点：</p>
+<ul>
+<li>如果你一遍又一遍地实现着这些行为，毫无疑问是叠矩重规（reinvent the wheel）。你犯了相同的错误，并且你试图寻找避免复杂但能更好的算法，因为它们会制造出更多的错误。</li>
+<li>如果你为常见基本类编写代码，你会失去类型检查的好处。另外，类可能要求继承于（be derived from）能够使代码更加难以维护的特殊基础类。</li>
+<li>如果你使用特殊的预处理器，代码会被一些没有 <strong>作用范围</strong>（scope）和类型且能够造成 <strong>奇怪语义错误</strong>（strange semantic errors）的 ”愚蠢的文本替换机制“ 替代掉。</li>
+</ul>
+<p>模板是能够解决重复代码编写问题且不会造成上述这些短板的方案。模板是为一种或更多尚未声明类型的函数或者类。当使用模板时，可以隐式或显式地将类型当做参数传递过去。因为模板是语言的特点，可以拥有全部的类型检查和作用范围的支持（full support of type checking and scope）。</p>
+<p>在C++标准库中，几乎所有的代码都是模板代码。该库提供排序算法以对 对象、指定类型的值、数据结构（也叫做 <strong>容器类</strong>（Container Classes）） 进行排序，以管理指定类型的元素 和 字符串（被参数化的字符串类型）等等。</p>
+<p>然而，以上仅是模板的使用入门，模板还允许 <strong>参数化行为</strong>（parameterize behavior） 以 <strong>优化代码</strong>（optimize code） 和 <strong>参数化信息</strong>（parameterize infomation）。</p>
+<h2 id="function-templates">FUNCTION TEMPLATES</h2>
+<p><strong>函数模板</strong>（function templates），即 <strong>参数化的函数</strong>（functions that are parameterized），因此代表了 <strong>一个函数系列</strong>（a family of functions）。</p>
+<p>函数模板为不同的数据类型提供了相同的功能行为调用，或换句话说，代表了一个函数系列。该函数系列看起来就像个普通函数，除了函数的某些元素未被确定，因为这些元素被参数化了。</p>
+<h3 id="templates-delaration-and-definition">TEMPLATES DELARATION AND DEFINITION</h3>
+<div style="background-color: #555; color: #eeeeee; font-size: 1.25rem; font-weight: 900;">
+EXAMPLE
+</div>
+<p>以下样例 <strong>声明</strong> 了一个函数系列，且下面参数的类型被空置（is left open），如参数 <code>T</code> ，</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line"><span class="function">T <span class="title">max</span><span class="params">(T a, T b)</span></span>&#123;</span><br><span class="line">  <span class="comment">// if b &lt; a then yield a else yield b</span></span><br><span class="line">  <span class="keyword">return</span> b &lt; a ? a : b;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在上述样例中，模板参数必须使用 <code>template &lt;comma-separated-list-of-parameters&gt;</code> 的格式进行声明。</p>
+<p>此处的关键字 <code>typename</code> 代表着类型参数，这是迄今为止C++程序中最常见的一种模板参数，当然其他参数也可以，后续介绍。此处的类型参数是 <code>T</code> ，可以使用任意标识符当做参数名称，但使用 <code>T</code> 就是惯例而已。类型参数代表着 <strong>任意类型</strong>（arbitrary type），当函数调用时，由调用的函数决定具体数据类型。开发者可以调用任何类型，只要其提供模板使用的操作。</p>
+<p>在上述样例中，类型 <code>T</code> 必须支持 <strong>操作符</strong>（operator） <code>&lt;</code> ，因为 <code>a</code> 和 <code>b</code> 使用该操作符进行比较，也许在 <code>max()</code> 的定义中很难发现，但要说明的是，<code>T</code> 类型必须是可复制的才能够被返回（T must be copyable in order to be returned）。</p>
+<p>由于历史遗留原因，仍可以使用关键词 <code>class</code> 来定义类型参数。<code>typename</code> 关键字是在 C++98 标准之后才出现的，在那之前，<code>class</code> 是引入类型参数的唯一方法，至今仍可以使用。因此，上述模板也可以用下面的代码平替（在语义上没有区别）。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">temelate&lt;<span class="class"><span class="keyword">class</span> <span class="title">T</span>&gt;</span></span><br><span class="line">  <span class="function">T <span class="title">max</span><span class="params">(T a, T b)</span></span>&#123;</span><br><span class="line">  <span class="keyword">return</span> b&lt;a?a:b;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>但因为 <code>class</code> 也是 <strong>类</strong> 的关键字，可能导致二义性，最好在声明模板时使用关键字 <code>typename</code> 。需要注意的是，与类声明不同，当声明类型参数时，关键字 <code>struct</code> 不能用来代替 <code>typename</code> 。</p>
+<p>在C++17之前，类型 <code>T</code> 也必须是可复制的，以确保能够传递参数。但C++17之后，可以传递临时数（temporary），即使没有一个备份或者一个构造器可用（even if neither a copy nor a move constructor is valid）。</p>
+<div style="background-color: #555; color: #eeeeee; font-weight: 900;">
+如何编写多个函数模板，需要注意什么？
+</div>
+<p>同一个文件内可以编写多个不同的模板函数，如下：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line"><span class="function">T <span class="title">Max</span><span class="params">(T a, T b)</span></span>&#123;</span><br><span class="line">	<span class="keyword">return</span> b&lt;a?a:b;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> t2&gt;</span><br><span class="line"><span class="function">t2 <span class="title">foo</span><span class="params">(t2*)</span></span>&#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上面两个模板函数就在同一个文件下，<code>typename</code> 关键字后面的 <code>T</code> 或者 <code>t2</code> 需要具有唯一性。</p>
+<h3 id="using-templates">USING TEMPLATES</h3>
+<p>需要注意的是，在使用该函数模板时，要在该函数前加上双冒号 <code>::</code> ，以确保函数模板能够在全局命名空间中被查找到。如果出现下方的 <code>call to ’sth.’ is ambiguous</code> 错误， 即是说需要调用的函数模糊不清，因为标准库中也有一个 <code>std::max()</code>，编译器查找不到该函数具体是在哪个函数文件中。</p>
+<figure>
+<img src="https://pic.islet.space/2021/10/image-20211005171952999.png" alt="image-20211005171952999" /><figcaption aria-hidden="true">image-20211005171952999</figcaption>
+</figure>
+<p>当然，以上错误也可以通过写不同的函数名称来避免。</p>
+<p><mark style="font-weight: 900;">模板并不是被编译成一个可以处理所有数据类型的实体，而是被编译成了所有不同数据类型的实体。</mark> 即，<code>int max()</code>、 <code>short max()</code> 、<code>string max()</code> 等等。单实体多适应 的模板虽然好像可行，但是实际上并不存在。所有的语言规则都遵循 ” <strong>不同的模板参数生成不同的实体</strong>“ 的原则。</p>
+<p>上面这种用具体类型取代模板参数的过程被称为 <strong>实体化</strong>（instantiation）。需要注意的是，仅仅是对函数模板的使用就可以触发该实体化过程，因此开发者就没有必要要求实体化过程单独进行（request the instantiation separately）。</p>
+<p>另外，只要产生的代码是有效的，<code>void</code> 型也是可用的模板参数，例如：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line"><span class="function">T <span class="title">foo</span><span class="params">(T*)</span></span>&#123;</span><br><span class="line">  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>和</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">void</span>* vp = <span class="literal">nullptr</span>;  <span class="comment">// 引出 void foo(void*)</span></span><br><span class="line"><span class="built_in"><span class="keyword">void</span></span>(vp);</span><br></pre></td></tr></table></figure>
+<h3 id="two-phase-translation">TWO-PHASE TRANSLATION</h3>
+<p><strong>两段式编译</strong>，即Two-phase translation。</p>
+<p>如果试图为一个不支持所有操作的模板进行实例化，将会导致编译时错误。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">std::complex&lt;<span class="keyword">float</span>&gt; c1, c2;  <span class="comment">//doesn&#x27;t provide operator &lt;</span></span><br><span class="line"></span><br><span class="line">::<span class="built_in">max</span>(c1, c2);  <span class="comment">//ERROR at compile time</span></span><br></pre></td></tr></table></figure>
+<p>因此，模板在被编译时会经过如下两个阶段：</p>
+<ol type="1">
+<li>在定义且没有实例化时，忽略模板参数来检查自身代码的正确性：
+<ul>
+<li>标点符号错误被发现，例如缺少分号 <code>;</code> ；</li>
+<li>使用不依赖已知模板参数的未知命名（类型名，函数名等）；</li>
+<li>不依赖于已检查模板参数的 <strong>静态断言</strong>（static assertions）</li>
+</ul></li>
+<li>在实例化时，模板代码会被再次检查以确保可用，特别是依赖于模板参数的都会被二次检查（double-checked），例如：</li>
+</ol>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">foo</span><span class="params">(T t)</span></span>&#123;</span><br><span class="line">  <span class="built_in">undeclared</span>();</span><br><span class="line">  <span class="built_in">undeclared</span>(t);</span><br><span class="line">  <span class="built_in"><span class="keyword">static_assert</span></span>(<span class="built_in"><span class="keyword">sizeof</span></span>(<span class="keyword">int</span>&gt;<span class="number">10</span>, <span class="string">&quot;int too small&quot;</span>);</span><br><span class="line">  <span class="built_in"><span class="keyword">static_assert</span></span>(<span class="built_in"><span class="keyword">sizeof</span></span>(T&gt;<span class="number">10</span>, <span class="string">&quot;T too small&quot;</span>);         </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>注意到某些编译器在第一阶段没有进行全面检查（don’t perform the full checks），所以直到在最后一阶段的模板代码实例化之前都没办法看到问题。</p>
+<div style="background-color: #555; color: #eeeeee; font-weight: 900;">
+COMPILE AND LINK
+</div>
+<p>在实际处理模板时，两段式编译会导致很多重要的问题：当函数模板被用于触发其实例化时，编译器（在某些点）需要查看模板定义。当一个函数的声明足以编译它时，就打破了普通函数通常的编译和连接的区别。</p>
+<h3 id="template-argument-deduction">TEMPLATE ARGUMENT DEDUCTION</h3>
+<p><strong>模板实参推断</strong>，即 Template argument deduction。</p>
+<p>当给函数模板传递实参时，模板参数由我们传递过去的实参决定。如果传递的是两个 <code>int</code> 型实参给 参数类型 <code>T</code> ，则C++编译器就能推断出此时的 <code>T</code> 一定是 <code>int</code> 。</p>
+<p>然而 <code>T</code> 可能只是该参数类型的一部分。例如，声明 <code>max()</code> 可以使用 <strong>常参</strong>（constant references）。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line"><span class="function">T <span class="title">max</span><span class="params">(T <span class="keyword">const</span>&amp; a, T <span class="keyword">const</span>&amp; b)</span></span>&#123;</span><br><span class="line">  <span class="keyword">return</span> b&lt;a?a:b;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如上方代码所示，传递 整型 <code>int</code> 参数，<code>T</code> 又会被推断为 <code>int</code> ，因为函数参数和 <code>int const&amp;</code> 匹配。</p>
+<h4 id="类型推导过程中的类型转换">类型推导过程中的类型转换</h4>
+<p>注意，自动类型转换被限制在类型推导期间：</p>
+<ul>
+<li><strong>引用传递</strong>：当通过引用声明来调用参数（declaring call parameters by reference）时，即使是 微不足道的转换（trivial conersion） 也不适用于类型推导。用同一个模板参数 <code>T</code> 声明的两个参数类型必须完全匹配。</li>
+<li><strong>按值传递</strong>：当按数值声明调用参数时，只支持 <code>decay</code> 的琐碎转换。带有const或volatile的限定被忽略，引用转换为被引用的类型，而原始数组或函数转换为相应的指针类型。对于用同一模板参数T声明的两个参数，<code>decayed</code> 的类型必须匹配。</li>
+</ul>
+<p><strong>错误提示</strong>：对int类型的非恒定值引用不能与int类型的临时值绑定</p>
+<figure>
+<img src="https://pic.islet.space/2021/11/image-20211007035818560.png" alt="image-20211007035818560" /><figcaption aria-hidden="true">image-20211007035818560</figcaption>
+</figure>
+<p>前方已经说了，类型的自动转换相关注意事项，同一模板参数的两个参数类型必须完全匹配。如果在同一个 <code>.cpp</code> 文件中书写下面下面代码，则会出现下方报错提示 “<strong>推导类型冲突</strong>（deduced conflicting types for parameter ’T’）”。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Max</span>(<span class="number">4</span>, <span class="number">7.2</span>);</span><br><span class="line"><span class="built_in">Max</span>(<span class="string">&quot;Hello&quot;</span>,s);</span><br></pre></td></tr></table></figure>
+<p>错误提示如下：</p>
+<figure>
+<img src="https://pic.islet.space/2021/10/image-20211007040416472.png" alt="image-20211007040416472" /><figcaption aria-hidden="true">image-20211007040416472</figcaption>
+</figure>
+<p>但是如果非要使用不一样的数据类型的两个参数来套用同一模板，以下有三种解决方法：</p>
+<ol type="1">
+<li>在 <code>.cpp</code> 文件中进行参数传递时，使用参数类型强制转换。如 <code>Max(static_cast&lt;double&gt;(4), 7.2);</code> 。</li>
+<li>在</li>
+</ol>
+<h1 id="terminology">TERMINOLOGY</h1>
+<ol type="1">
+<li>按值传递 passing by value</li>
+<li>引用传递 passing by reference</li>
+</ol>
+<h1 id="reference">REFERENCE</h1>
+<ol type="1">
+<li>&lt;C++ Templates&gt; David Vandecoorde</li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://islet.space/2021/10/02/Communication/2021-10-02-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%8E%B0%E5%9C%BA%E6%80%BB%E7%BA%BF/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Liewzheng">
+      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coder的孤岛">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/10/02/Communication/2021-10-02-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%8E%B0%E5%9C%BA%E6%80%BB%E7%BA%BF/" class="post-title-link" itemprop="url">计算机网络体系结构与现场总线</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-10-02 13:20:00" itemprop="dateCreated datePublished" datetime="2021-10-02T13:20:00+08:00">2021-10-02</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2021-10-05 14:33:52" itemprop="dateModified" datetime="2021-10-05T14:33:52+08:00">2021-10-05</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Communication/" itemprop="url" rel="index"><span itemprop="name">Communication</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="计算机网络体系结构">计算机网络体系结构</h1>
+<p>计算机网络是计算机技术和通信技术相结合的技术领域。由若干计算机用通信信道连接至一起，互相交换信息共享资源，形成计算机网络。</p>
+<h2 id="osi-五层模型">OSI 五层模型</h2>
+<p>在国际标准化组织（ISO）提出 <strong>开放系统互联</strong>（OSI，Open System Interconnection）参考模型中，网络系统结构划分为7层。</p>
+<p>该OSI模型由上至下分别是 <strong>应用层</strong>、<strong>表示层</strong>、<strong>会话层</strong>、<strong>传输层</strong>、<strong>网络层</strong>、<strong>数据链路层</strong> 和 <strong>物理层</strong>。</p>
+<p><img src="https://pic.islet.space/2021/10/17849411-6cad6d1b0aafdd22.png" alt="img" style="zoom:67%;" /></p>
+<p>在本模型中，<strong>物理层</strong>、<strong>数据链路层</strong> 和 <strong>网络层</strong> 是 <strong>面向网络通信</strong> 的层级；<strong>会话层</strong>、<strong>表示层</strong> 和 <strong>应用层</strong> 是 <strong>面向信息处理</strong> 的层级。</p>
+<h3 id="应用层">应用层</h3>
+<p><strong>应用层</strong>，即Application Layer。OSI参考模型中最靠近用户的一层，是为计算机用户提供应用接口，也为用户直接提供各种网络服务。我们常见应用层的网络服务协议有：HTTP，HTTPS，FTP，POP3、SMTP等。</p>
+<blockquote>
+<p>实际公司A的老板就是我们所述的用户，而他要发送的商业报价单，就是应用层提供的一种网络服务，当然，老板也可以选择其他服务，比如说，发一份商业合同，发一份询价单，等等。</p>
+</blockquote>
+<p>OSI七层模型中，除了应用层以外，其他功能层级都与用户实际应用没有什么直接联系，能够直接为用户提供各种应用服务的是应用层。应用层可以包含各种应用程序，有些由于使用普遍而实行了标准化，进而形成了应用层上的各种应用协议，诸如SMTP、POP3、WWW、TELNET、FTP、HTTP、HTTPS等。</p>
+<h3 id="表示层">表示层</h3>
+<p><strong>表示层</strong>，即 Presentation Layer。其提供各种用于应用层数据的编码和转换功能，确保一个系统的应用层发送的数据能被另一个系统的应用层识别。如果必要，该层可提供一种标准表示形式，用于将计算机内部的多种数据格式转换成通信中采用的标准表示形式。数据压缩和加密也是表示层可提供的转换功能之一。</p>
+<blockquote>
+<p>由于公司A和公司B是不同国家的公司，他们之间的商定统一用英语作为交流的语言，所以此时表示层（公司的文秘），就是将应用层的传递信息转翻译成英语。同时为了防止别的公司看到，公司A的人也会对这份报价单做一些加密的处理。这就是表示的作用，将应用层的数据转换翻译等。</p>
+</blockquote>
+<h3 id="会话层">会话层</h3>
+<p><strong>会话层</strong>，即 Section Layer。负责建立、管理和终止表示层实体之间的通信会话。该层的通信由不同设备中的应用程序之间的服务请求和响应组成。</p>
+<blockquote>
+<p>会话层的同事拿到表示层的同事转换后资料，（会话层的同事类似公司的外联部），会话层的同事那里可能会掌握本公司与其他好多公司的联系方式，这里公司就是实际传递过程中的实体。他们要管理本公司与外界好多公司的联系会话。当接收到表示层的数据后，会话层将会建立并记录本次会话，他首先要找到公司B的地址信息，然后将整份资料放进信封，并写上地址和联系方式。准备将资料寄出。等到确定公司B接收到此份报价单后，此次会话就算结束了，外联部的同事就会终止此次会话。</p>
+</blockquote>
+<h3 id="传输层">传输层</h3>
+<p><strong>传输层</strong>，即 Transport Layer。负责建立了主机端到端的链接，传输层的作用是为上层协议提供端到端的可靠和透明的数据传输服务，包括 <strong>处理差错控制</strong> 和 <strong>流量控制</strong> 等问题。该层向高层屏蔽了下层数据通信的细节，使高层用户看到的只是在两个传输实体间的一条主机到主机的、可由用户控制和设定的、可靠的数据通路。我们通常说的，TCP/UDP就是在这一层。端口号既是这里的“端”。</p>
+<blockquote>
+<p>传输层就相当于公司中的负责快递邮件收发的人，公司自己的投递员，他们负责将上一层的要寄出的资料投递到快递公司或邮局。</p>
+</blockquote>
+<p>传输层位于第三层和高三层之间，也是 <strong>面向网路通信</strong> 和 <strong>面向信息处理</strong> 之间的重要层级，是整个协议层次的核心。</p>
+<p>传输层的任务是为高层从源端机到目的机提供可靠、经济的数据传输服务，而与具体网络无关。</p>
+<p>为了向用户提供经济有效的服务，传输层还提供多路复用和分流的功能。</p>
+<h3 id="网络层">网络层</h3>
+<p><strong>网络层</strong>，即 Network Layer。负责通过IP寻址来建立两个节点之间的连接，为源端的运输层送来的分组，选择合适的路由和交换节点，正确无误地按照地址传送给目的端的运输层。就是通常说的IP层。这一层就是我们经常说的IP协议层。IP协议是Internet的基础。</p>
+<blockquote>
+<p>网络层就相当于快递公司庞大的快递网络，全国不同的集散中心，比如说，从深圳发往北京的顺丰快递（陆运为例啊，空运好像直接就飞到北京了），首先要到顺丰的深圳集散中心，从深圳集散中心再送到武汉集散中心，从武汉集散中心再寄到北京顺义集散中心。这个每个集散中心，就相当于网络中的一个IP节点。</p>
+</blockquote>
+<h3 id="数据链路层">数据链路层</h3>
+<p><strong>数据链路层</strong>，即 Data Linker Layer。负责将比特组合成字节,再将字节组合成帧,使用链路层地址 (以太网使用MAC地址)来访问介质,并进行差错检测。数据链路层又分为2个子层：逻辑链路控制子层（LLC）和媒体访问控制子层（MAC）。MAC子层处理CSMA/CD算法、数据出错校验、成帧等；LLC子层定义了一些字段使上次协议能共享数据链路层。 在实际使用中，LLC子层并非必需的。</p>
+<p>这个没找到合适的例子</p>
+<p>在物理线路上，由于噪声干扰、信号衰减畸变等原因，传输过程中常常出现差错，物理层只负责透明传输无结构的原始比特流，不能进行任何差错控制。</p>
+<p>因此，在一条线路上传输数据时，除了必须有一条物理线路外，还需要必要规程来控制数据传输。把这些规程的软件/硬件加到链路上，就构成了数据链路层（Data Linker Layer）。</p>
+<p><strong>作用</strong>：通过一系列数据链路层协议，在不可靠的物理链路上实现可靠的数据传输。</p>
+<p>为此，通常将原始数据分割成一定长度的数据单元（帧），一帧内包含 <strong>同步信号</strong>、<strong>差错控制</strong>、<strong>流量控制</strong>、<strong>控制信息</strong>、<strong>数据信息</strong>、<strong>寻址</strong> 等。</p>
+<h4 id="差错控制">差错控制</h4>
+<p>差错控制涉及两方面的问题，即 <strong>如何检测错误</strong> 和 <strong>如何纠正错误</strong>。</p>
+<p><strong>检查错误</strong>：要判断一个数据块是否存在错误，发送端必须在数据块中加入冗余信息，使得数据块和冗余信息间存在某种关联，接收端通过验证其关联性来判断数据是否出错。<mark>在数据块中加入冗余信息的过程称为 <strong>差错编码</strong>。</mark></p>
+<p>差错编码有两种策略，即 <strong>仅带有检错能力的检错码</strong> 和 <strong>带有纠错能力的检错码/纠错码</strong>。但任何一种检/纠错码的能力都是有限的，即 <strong>不能检/纠出所有的错误</strong>。一般检错码的能力越强，所需的冗余信息就会越多，编码效率会随之降低。</p>
+<p>常见的差错编码有：</p>
+<ol type="1">
+<li><strong>海明码</strong>，即 Hamming Code。由 Richard Hamming 于1950年提出，可纠正一个 bit 错误的编码。</li>
+<li><strong>循环冗余码</strong>，即 Cyclic Redundancy Code，又名 多项式码。最广泛使用的编码，但 <strong>漏检率很低</strong>，只需要简单电路即可实现。</li>
+<li><strong>奇偶校验码</strong>，即 Parity Check Code。 最常见也最简单的编码，只需要一个比特，但只能检出奇数个错误，<strong>漏检率达50%</strong>。</li>
+<li><strong>校验和码</strong>，即 Checksum Code。也是最常见的检错方式，是传输的数据块中 <strong>各字节累加</strong> 后得到的 一个字节 或 按字“异或”运算 的结果。</li>
+</ol>
+<h3 id="物理层">物理层</h3>
+<p><strong>物理层</strong>，即 Physical Layer。实际最终信号的传输是通过物理层实现的。通过物理介质传输比特流。规定了电平、速度和电缆针脚。常用设备有（各种物理设备）集线器、中继器、调制解调器、网线、双绞线、同轴电缆。这些都是物理层的传输介质。</p>
+<blockquote>
+<p>快递寄送过程中的交通工具，就相当于我们的物理层，例如汽车，火车，飞机，船。</p>
+</blockquote>
+<p>其中物理层有几个概念需要了解和区分，包括 <strong>传输速率</strong>、<strong>信道容量</strong>、<strong>传输媒体</strong>、<strong>调制解调</strong>、<strong>交换技术</strong>、<strong>网络拓扑</strong> 和 <strong>多路复用</strong>。</p>
+<h4 id="传输速率">传输速率</h4>
+<p><strong>比特率</strong>：每秒传输的二进制位数。</p>
+<p><strong>波特率</strong>：每秒传输的码元率。</p>
+<p><strong>码元</strong>：单位携带的比特信息量。</p>
+<blockquote>
+<p>如果码元率为1比特，则波特率和比特率数值上相等。</p>
+</blockquote>
+<h4 id="信道容量">信道容量</h4>
+<p>信道容量，即信道能支持的最大数据传输速率，由信道带宽和信噪比决定。</p>
+<h4 id="传输媒体">传输媒体</h4>
+<p>传输媒体，即传输电信号的物理介质。可以是有线、无线、双绞线、同轴电缆 或 光纤 等。</p>
+<h4 id="调制解调">调制解调</h4>
+<p>调制解调，即一种数据转换成适合在信道上传输的某种电信号形式。</p>
+<p>数字信号转换为模拟信号有 <strong>调幅</strong>、<strong>调频</strong>、<strong>调相</strong> 等方式。</p>
+<p>数字信号的信道编码方式有 <strong>单极型脉冲</strong> 和 <strong>双极性脉冲编码</strong> （有归零码 和 不归零码 之分）及 <strong>曼彻斯特编码</strong> 等（信道编码）。</p>
+<h4 id="交换技术">交换技术</h4>
+<p>物理层的交换技术有三种：<strong>电路交换</strong>、<strong>报文交换</strong> 和 <strong>分组交换</strong>。</p>
+<table>
+<colgroup>
+<col style="width: 4%" />
+<col style="width: 32%" />
+<col style="width: 32%" />
+<col style="width: 30%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>TYPE</th>
+<th>PRINCIPLE</th>
+<th>ADVANTAGES</th>
+<th>DISADVANTAGES</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>电路交换</td>
+<td>要求通信双方之间建立一条实际的物理通道，并在整个通信过程中 <strong>通路独占</strong>。</td>
+<td>数据在中间环节无停留，传输可靠，实时效应好；</td>
+<td>电路不共享，资源浪费大，同时电路的建立和撤出的时间较长。</td>
+</tr>
+<tr class="even">
+<td>报文交换</td>
+<td>一个 <strong>大报文</strong>（长度无限制的数据块）在通过从源站到目的站之间的中间站时采用 <strong>存储-转发</strong> 方式（有缓冲区）。</td>
+<td>提高线路利用率</td>
+<td>大报文延迟时间长，出错率高。</td>
+</tr>
+<tr class="odd">
+<td>分组交换</td>
+<td>将一个大报文分割成一定长度的信息单元（分组），各单元以此编号，以分组为单位进行 <strong>存储-转发</strong>。</td>
+<td>除了线路共享外，要求中间环节的缓存区减少，也减少了分组在网络中的延迟时间。<br/>由于各分组在网络中可以走不同路径，该并行传输降低了报文的传输时间。分组长度变短同时降低了出错率（发现出错时重发数据所需时间也缩短）。</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h4 id="网络拓扑">网络拓扑</h4>
+<p><strong>网络拓扑</strong>（Network Topology）即网络中节点的互联结构形式，主要分为 <strong>星型结构</strong>、<strong>总线型结构</strong>、<strong>树型结构</strong>、<strong>环型结构</strong> 和 <strong>网型结构</strong>。（网络上很多文章都有 <strong>混合型结构</strong> 这一拓扑类型）</p>
+<p><img src="https://pic.islet.space/2021/10/1002_1.jpg" alt="1002_1" style="zoom: 25%;" /></p>
+<table style="width:100%;">
+<colgroup>
+<col style="width: 5%" />
+<col style="width: 30%" />
+<col style="width: 4%" />
+<col style="width: 30%" />
+<col style="width: 30%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>TYPE</th>
+<th>PRINCIPLE</th>
+<th>SWITCHING</th>
+<th>ADVANTAGES</th>
+<th>DISADVANTAGES</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>星型结构</td>
+<td>通过点对点连接至中央节点，任意两点的通信都依赖中央节点。</td>
+<td>电路交换</td>
+<td>任意节点故障都只会影响本站，而不影响全网。</td>
+<td>极大以来中央节点，对中央节点的可靠性和容量要求很高，同时因为需要中央节点连接，耗费大量电缆。</td>
+</tr>
+<tr class="even">
+<td>总线型结构</td>
+<td>采用单一信道作为传输介质，所有站点通过相应硬件结构接到公共信道（总线）上，任意站点发送的信息，所有其他站都能收到。</td>
+<td>分组交换</td>
+<td>所需电缆长度短，布线容易。<br>且总线仅仅是传输信道，无任何处理功能，属于无源器件，可靠性高，增加或减少站点都相对方便。</td>
+<td>由于所有节点共享一条公共信道，当多点同时发送信号时，信号会因相互碰撞而造成传输失败，称之为 <strong>冲突</strong>。<br>系统范围受到限制（传输速率和传输距离相互制约）。<mark>一个站点的故障可能影响整个网络，故障检测需要在各站点上进行。（待考究）</mark></td>
+</tr>
+<tr class="odd">
+<td>树形结构</td>
+<td>由总线型结构演化而来，从树根开始，每一个节点向下都可以由许多分支。</td>
+<td></td>
+<td>故障比较容易隔离和检查。</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>环型结构</td>
+<td>站点和连接站点的点-点链路组成一个闭合环路，每个站点从一条链路上接受数据，然后以相同的速率从另一条链路上发送出去。<br>链路大多数是单方向的，即数据沿一个方向在网上环行。</td>
+<td></td>
+<td>所需介质长度较短，由于链路单方向性，可以用光纤作为传输介质；</td>
+<td>与总线型结构一样存在冲突问题，一个站点故障会引起全网故障。</td>
+</tr>
+<tr class="odd">
+<td>网型结构</td>
+<td>每个站点都有一条或几条链路同其他站点连接。</td>
+<td></td>
+<td>由于站点间存在多条路径，数据传输时可以选择空闲站点或绕开故障点，因而 <strong>网络资源利用较为充分</strong>；<br>但站点或线路故障对网络整体影响较小，<strong>可靠性较高</strong>。</td>
+<td>结构较为复杂，成本较高。</td>
+</tr>
+</tbody>
+</table>
+<h4 id="多路复用技术">多路复用技术</h4>
+<p>传输媒体的能力（频带宽）往往很强，对传输资源能力的应用（复用）是指将多路信号组合在一条物理信道上进行传输，然后接收端再将各路信号分离开。常见的多路复用技术如 <strong>频分多路复用</strong>（FDM）、<strong>时分多路复用</strong>（TDM） 和 <strong>码分多址</strong>（CDMA）等。</p>
+<table>
+<thead>
+<tr class="header">
+<th>TYPE</th>
+<th>PRINCIPLE</th>
+<th>ADVANTAGES</th>
+<th>DISADVANTAGES</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>频分多路复用</td>
+<td>将信道带宽按频率分割为若干子信道，每个子信道用来传输一路信号。</td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td>时分多路复用</td>
+<td>将使用信道的时间分成一个个时间片，按一定规律将时间片分配给各路信号，每路信号只能在自己的时间片内独占信道进行传输。</td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>码分多址</td>
+<td>允许所有站点在同一时间使用整个信道进行数据传输。</td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>以上三类多路复用技术可以形象地比喻为多个人要发言讨论不同问题时，如何使用同一个会议厅（信道）。</p>
+<ul>
+<li><p>可以把会议厅分成几个小厅（好比频分多路复用），各小厅同时进行各自不同的发言，互不干扰；</p></li>
+<li><p>可以在一个厅内让各议题在固定的时间片内轮流发言（好比时分多路复用）；</p></li>
+<li><p>可以在一个厅内让各自议题同时发言，但是要用不同的语言（好比码分多址），对某个议题的人来说只能听懂自己的语言，而其他语言被视为随机噪音，可以排除。</p></li>
+</ul>
+</blockquote>
+<h2 id="tcpip-五层模型">TCP/IP 五层模型</h2>
+<p>实际TCP/IP使用的是5层模型，其中OSI模型中的 应用层、表示层 和 会话层 都用一层 应用层 进行表示，如下图。在每一层都工作着不同的设备，比如我们常用的交换机就工作在数据链路层的，一般的路由器是工作在网络层的。</p>
+<p><img src="https://pic.islet.space/2021/10/202110021438076.webp" alt="img" style="zoom:67%;" /></p>
+<p>在每一层实现的协议也各不同，即每一层的服务也不同，下图列出了每层主要的协议。</p>
+<p><img src="https://pic.islet.space/2021/10/202110021438379.webp" alt="img" style="zoom:67%;" /></p>
+<h1 id="现场总线">现场总线</h1>
+<p>在工业数据通信领域，<strong>总线</strong> 是指由导线组成的传输线束，连接多个传感器和执行器，实现各部件之间传送信息的公共通信干线。</p>
+<p>然后再来看国际电工技术委员会（IEC）在IEC 61158中对现场总线的标准定义：<mark><strong>现场总线</strong> 是安装在制造或过程区域的现场装置与控制室内的自动控制装置之间的数字式、串行、多点通信的数据总线。</mark></p>
+<p>从定义中可以看到，现场总线是一种数据总线技术，是一种通信协议，且该通信是数字式、串行、多节点的。</p>
+<p>目前，在工控领域，车间现场应用最广泛的是 <strong>工业以太网</strong> 技术和 <strong>工业现场总线</strong> 技术，为工厂实现自动化带来有力推动。</p>
+<p>现场总线应当是应用在生产最底层的一种总线型拓扑网络，即该总线是用于现场控制系统，直接与所有受控（设备）节点串行相连的通信网络。</p>
+<p>工业自动化控制的现场一般可以从一台家电设备到一个车间、一个工厂。控制设备和网络所处的环境以及报文结构都有其特殊性，对信号的干扰往往是多方面的，而要求控制必须实时性很强。</p>
+<h2 id="现场总线技术">现场总线技术</h2>
+<p><strong>现场总线</strong>（Fieldbus）是电气工程及其自动化领域发展起来的一种工业数据总线，它主要解决工业现场的智能化仪器仪表、控制器、执行机构等现场设备间的数字通信以及这些现场控制设备和高级控制系统之间的信息传递问题。由于现场总线简单、可靠、经济实用等一系列突出的优点，因而受到了许多标准团体和计算机厂商的高度重视</p>
+<p>传统控制系统难以实现设备之间 以及 系统与外界之间的信息交换，是一个“信息孤岛”。要满足自动化控制技术现代化的要求，同时实现整个企业的信息集成，实施综合自动化，就必须设计出一种能在工业设备之间的多点数字通信，实现底层现场设备之间以及生产现场与外界的信息交换。</p>
+<p>现场总线控制系统（Field Control System，FCS）既是一个开放通信网络，又是一种全分布控制系统。作为智能设备的联系纽带，把挂接在总线上、作为网络节点的智能设备连接为网络系统，并进一步构成合成系统，实现基本控制、补偿计算、参数修改、报警、显示、监控、优化 及 管控一体化的综合自动化功能。</p>
+<p><mark style="font-weight: 900;">现场总线技术是一项集嵌入式系统、控制、计算机、数字通信、网络为一体的综合技术。</mark></p>
+<h3 id="局限性">局限性</h3>
+<p>也可以说现场总线是工业控制和计算机网络两者的边缘产物。从纯理论的角度看，它应属于网络范畴。但是现有的网络技术不能完全适应工业现场控制系统的要求，无论是从网络的结构、协议、实时性，还是从适应性、灵活性、可靠性 乃至 成本 上进行考虑，工业控制的底层都有它的特殊性。</p>
+<p>现场总线其规模应属于局域网、总线型结构，简单但能满足现场使用需求，所传输信息短小且实时性很强、可靠性高（网络结构层次少，信息帧短小有利于提高实时性和降低受干扰的概率）。然而现场的环境干扰因数众多，有些很强烈且带突发性。</p>
+<h2 id="现场总线发展">现场总线发展</h2>
+<p>一般把50年代前的气动信号控制系统PCS称作 <strong>第一代</strong>，把4～20mA等电动模拟信号控制系统称为 <strong>第二代</strong>，把数字计算机集中式控制系统称为 <strong>第三代</strong>，而把70年代中期以来的集散式分布控制系统DCS称作 <strong>第四代</strong>。</p>
+<p>现场总线控制系统FCS作为新一代控制系统，一方面，突破了DCS系统采用通信专用网络的局限，采用了基于公开化、标准化的解决方案，克服了封闭系统所造成的缺陷；另一方面把DCS的集中与分散相结合的集散系统结构，变成了新型全分布式结构，把控制功能彻底下放到现场。可以说，开放性、分散性与数字通讯是现场总线系统最显著的特征。</p>
+<ul>
+<li>1984年美国Intel公司提出一种 <strong>计算机分布式控制系统-位总线</strong>（BITBUS），它主要是将低速的面向过程的 <strong>输入输出通道与高速的计算机多总线</strong>（MULTIBUS）分离，形成了现场总线的最初概念。</li>
+<li>80年代中期，美国Rosemount 公司开发了一种可寻址的远程传感器（HART）通信协议。采用在4～20mA模拟量叠加了一种频率信号，用双绞线实现数字信号传输。HART协议已是现场总线的雏形。</li>
+<li>1985年由Honeywell和Bailey等大公司发起，成立了World FIP制定了FIP协议。</li>
+<li>1987年，以Siemens，Rosemount，横河等几家著名公司为首也成立了一个专门委员会互操作系统协议（ISP）并制定了PROFIBUS协议。后来美国仪器仪表学会也制定了现场总线标准IEC/ISA SP50。</li>
+<li>随着时间的推移，世界逐渐形成了两个针锋相对的互相竞争的现场总线集团：一个是以Siemens、Rosemount，横河为首的ISP集团；另一个是由Honeywell、Bailey等公司牵头的WorldFIP集团。1994年，两大集团宣布合并，融合成现场总线基金会（Fieldbus Foundation）简称FF。对于现场总线的技术发展和制定标准，基金委员会取得以下共识：共同制定遵循IEC/ISA SP50协议标准；商定现场总线技术发展阶段时间表。</li>
+</ul>
+<h2 id="现场总线能力">现场总线能力</h2>
+<p>部分应用场景或产品开发时，会对现场总线的能力提出如下要求：</p>
+<p><strong>本质安全防爆</strong>：<strong>本质安全</strong> 是指通过设计等手段使生产设备或生产系统本身具有安全性，即使在误操作或发生故障的情况下也不会造成事故的功能。具体包括 <strong>失误—安全</strong>（误操作不会导致事故发生或自动阻止误操作）和 <strong>故障—安全</strong> 功能（设备、工艺发生故障时还能暂时正常工作或自动转变安全状态）。</p>
+<blockquote>
+<p>本质安全型电气设备的防爆原理：通过限制电气设备电路的各种参数，或采取保护措施来限制电路的火花放电能量和热能，使其在正常工作和规定的故障状态下产生的电火花和热效应均不能点燃周围环境的爆炸性混合物，从而实现了电气防爆，这种电气设备的电路本身就具有防爆性能，也就是从“本质”上就是安全的。</p>
+</blockquote>
+<h2 id="现场总线分类">现场总线分类</h2>
+<p>国际上有40多种现场总线，但没有任何一种现场总线能覆盖所有的应用面，按其传输数据的大小可分为3类：</p>
+<ol type="1">
+<li><strong>传感器总线</strong>（sensor bus），属于位传输；</li>
+<li><strong>设备总线</strong>（device bus），属于字节传输；</li>
+<li><strong>现场总线</strong>，属于数据流传输。</li>
+</ol>
+<h3 id="ff">FF</h3>
+<p>FF，即 Foundation Field bus，基金会现场总线。</p>
+<p>是以美国Fisher-Rouse mount公司为首的联合了横河、ABB、西门子、英维斯等80家公司制定的ISP协议和以Honeywell公司为首的联合欧洲等地150余家公司制定的World FIP协议于1994年9月合并的。该总线在过程自动化领域得到了广泛的应用，具有良好的发展前景。</p>
+<p>FF 总线采用国际标准化组织ISO的开放化系统互联OSI的简化模型(1，2，7层)，即物理层、数据链路层、应用层，另外增加了用户层。</p>
+<p>FF 分低速H1和高速H2两种通信速率，前者传输速率为31.25Kbit/秒，通信距离可达1900m，可支持总线供电和本质安全防爆环境。后者传输速率为1Mbit/秒和2.5Mbit/秒，通信距离为750m和500m，支持双绞线、光缆和无线发射，协议符号IEC1158-2标准。</p>
+<p>FF 的物理媒介的传输信号采用曼切斯特编码。</p>
+<h3 id="can">CAN</h3>
+<p>CAN，即Controller Area Network，控制器局域网络。</p>
+<p>最早由德国BOSCH公司推出，它广泛用于离散控制领域，其总线规范已被ISO国际标准组织制定为国际标准，得到了Intel、Motorola、NEC等公司的支持。CAN协议分为二层：物理层和数据链路层。CAN的信号传输采用短帧结构，传输时间短，具有自动关闭功能，具有较强的抗干扰能力。CAN支持多主工作方式，并采用了非破坏性总线仲裁技术，通过设置优先级来避免冲突，通讯距离最远可达10KM/5Kbps/s，通讯速率最高可达40M/1Mbp/s，网络节点数实际可达110个。目前已有多家公司开发了符合CAN协议的通信芯片。</p>
+<h3 id="lonworks">LonWorks</h3>
+<p>由美国Echelon公司推出，并由Motorola、Toshiba公司共同倡导。它采用ISO/OSI模型的全部7层通讯协议，采用面向对象的设计方法，通过网络变量把网络通信设计简化为参数设置。支持双绞线、同轴电缆、光缆和红外线等多种通信介质，通讯速率从300bit/s至1.5M/s不等，直接通信距离可达2700m(78Kbit/s)，被誉为通用控制网络。Lonworks技术采用的Lon Talk协议被封装到Neuron(神经元)的芯片中，并得以实现。采用LonWorks技术和神经元芯片的产品，被广泛应用在楼宇自动化、家庭自动化、保安系统、办公设备、交通运输、工业过程控制等行业。</p>
+<h3 id="device-net">Device Net</h3>
+<p>Device Net是一种低成本的通信连接也是一种简单的网络解决方案，有着开放的网络标准。Device Net具有的直接互联性不仅改善了设备间的通信而且提供了相当重要的设备级阵地功能。Device Net基于CAN技术，传输率为125Kbit/s至500Kbit/s，每个网络的最大节点为64个，其通信模式为：生产者/客户(Producer/Consumer)，采用多信道广播信息发送方式。位于Device Net网络上的设备可以自由连接或断开，不影响网上的其他设备，而且其设备的安装布线成本也较低。Device Net总线的组织结构是Open Device Net Vendor Association(开放式设备网络供应商协会，简称“ODVA”)。</p>
+<h3 id="profibus">PROFIBUS</h3>
+<p>PROFIBUS是德国标准(DIN19245)和欧洲标准(EN50170)的现场总线标准。由PROFIBUS--DP、PROFIBUS-FMS、PROFIBUS-PA系列组成。DP用于分散外设间高速数据传输，适用于加工自动化领域。FMS适用于纺织、楼宇自动化、可编程控制器、低压开关等。PA用于过程自动化的总线类型，服从IEC1158-2标准。PROFIBUS支持主-从系统、纯主站系统、多主多从混合系统等几种传输方式。PROFIBUS的传输速率为9.6Kbit/s至12Mbit/s，最大传输距离在9.6Kbit/s下为1200m，在12Mbit/s小为200m，可采用中继器延长至10km，传输介质为双绞线或者光缆，最多可挂接127个站点。</p>
+<h3 id="hart">HART</h3>
+<p>HART，即 Highway Addressable Remote Transducer，高速可寻址远程传感器。</p>
+<p>最早由Rosemount公司开发。其特点是在现有模拟信号传输线上实现数字信号通信，属于模拟系统向数字系统转变的过渡产品。其通信模型采用物理层、数据链路层和应用层三层，支持点对点主从应答方式和多点广播方式。由于它采用模拟数字信号混和，难以开发通用的通信接口芯片。</p>
+<p>HART能利用总线供电，可满足本质安全防爆的要求，并可用于由手持编程器与管理系统主机作为主设备的双主设备系统。</p>
+<h3 id="cc-link">CC-Link</h3>
+<p>CC-Link是Control&amp;Communication Link(控制与通信链路系统)的缩写，在1996年11月，由三菱电机为主导的多家公司推出，其增长势头迅猛，在亚洲占有较大份额。在其系统中，可以将控制和信息数据同是以10Mbit/s高速传送至现场网络，具有性能卓越、使用简单、应用广泛、节省成本等优点。其不仅解决了工业现场配线复杂的问题，同时具有优异的抗噪性能和兼容性。CC-Link是一个以设备层为主的网络，同时也可覆盖较高层次的控制层和较低层次的传感层。2005年7月CC-Link被中国国家标准委员会批准为中国国家标准指导性技术文件。</p>
+<h3 id="world-fip">World FIP</h3>
+<p>World FIP的北美部分与ISP合并为FF以后，World FIP的欧洲部分仍保持独立，总部设在法国。其在欧洲市场占有重要地位，特别是在法国占有率大约为60%。World FIP的特点是具有单一的总线结构来适用不同的应用领域的需求，而且没有任何网关或网桥，用软件的办法来解决高速和低速的衔接。World FIP与FFHSE可以实现“透明联接”，并对FF的H1进行了技术拓展，如速率等。在与IEC61158第一类型的连接方面，World FIP做得最好，走在世界前列。</p>
+<p>此外较有影响的现场总线还有丹麦公司Process-Data A/S提出的P-Net，该总线主要应用于农业、林业、水利、食品等行业；Swift Net现场总线主要使用在航空航天等领域，还有一些其他的现场总线这里就不再赘述了。</p>
+<h3 id="interbus">INTERBUS</h3>
+<p>INTERBUS是德国Phoenix公司推出的较早的现场总线，2000年2月成为国际标准IEC61158。INTERBUS采用国际标准化组织ISO的开放化系统互联OSI的简化模型(1，2，7层)，即物理层、数据链路层、应用层，具有强大的可靠性、可诊断性和易维护性。其采用集总帧型的数据环通信，具有低速度、高效率的特点，并严格保证了数据传输的同步性和周期性;该总线的实时性、抗干扰性和可维护性也非常出色。INTERBUS广泛地应用到汽车、烟草、仓储、造纸、包装、食品等工业，成为国际现场总线的领先者。</p>
+<h2 id="其他">其他</h2>
+<p>RS-485和现场总线同属于总线；ModBus和现场总线同属于通信协议；</p>
+<p>严格来讲，RS-485≠现场总线，ModBus≠现场总线，RS-485+ModBus（还有其他什么的）才构成现场总线，其中RS-485工作在现场总线的物理层，ModBus工作在现场总线的应用层；</p>
+<h1 id="参考">参考</h1>
+<ol type="1">
+<li>《现场总线CAN原理与技术应用》第二版，北京航空航天大学出版社，饶运涛、邹继军、王进宏、郑勇芸 编著</li>
+<li><a target="_blank" rel="noopener" href="https://baike.baidu.com/item/现场总线/304020">现场总线</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/f32cfd6c208b">OSI网络模型</a></li>
+<li><a target="_blank" rel="noopener" href="https://baike.baidu.com/item/本质安全/1078274">本质安全</a></li>
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/87868499">本质安全型电气设备防爆原理</a></li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -2343,818 +3218,6 @@ Resistance \ Tolerance\ @25℃ = α *（±0.5℃） = -4.44\%/℃ * （±0.5℃�
 <li><a target="_blank" rel="noopener" href="http://www.elecfans.com/yuanqijian/ptc/202001031148953.htm">热敏电阻应用与参数详解</a></li>
 <li><a target="_blank" rel="noopener" href="https://baike.baidu.com/item/NTC/16035">NTC</a></li>
 </ol>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://islet.space/2021/08/18/Communication/2021-08-18-SPI%E9%80%9A%E4%BF%A1/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Liewzheng">
-      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Coder的孤岛">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/08/18/Communication/2021-08-18-SPI%E9%80%9A%E4%BF%A1/" class="post-title-link" itemprop="url">SPI通信</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-
-    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
-    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2021-08-18 07:50:00" itemprop="dateCreated datePublished" datetime="2021-08-18T07:50:00+08:00">2021-08-18</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-09-16 00:29:44" itemprop="dateModified" datetime="2021-09-16T00:29:44+08:00">2021-09-16</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Communication/" itemprop="url" rel="index"><span itemprop="name">Communication</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="串行外设接口">串行外设接口</h1>
-<p><strong>串行外设接口</strong>（Serial Peripheral Interface，SPI）是微控制器和外围IC（如传感器、ADC、DAC、移位寄存器、SRAM等）之间使用最广泛的接口之一。</p>
-<p>SPI是一种同步、全双工、主从式接口。来自主机或从机的数据在时钟<mark>上升沿或下降沿同步</mark>。主机和从机可以同时传输数据。SPI接口可以是 <strong>3线式</strong> 或 <strong>4线式</strong>。后述中重点介绍常用的4线SPI接口。</p>
-<p>与I2C的 <strong>多主多从</strong> 模式不同，SPI协议为 <strong>一主多从</strong> 模式。SPI所消耗的接口数也大大提升。</p>
-<h2 id="接口介绍">接口介绍</h2>
-<p><img src="https://pic.islet.space/2021/08/image-20210819075248043.png" alt="image-20210819075248043" style="zoom: 33%;" /></p>
-<div style="font-weight: 900; text-align: center;">
-图1. 含主机和从机的SPI配置
-</div>
-<p>4线SPI器件有四个信号：</p>
-<ul>
-<li>时钟(SPI CLK, SCLK)</li>
-<li>片选(CS)</li>
-<li>主机输出、从机输入(MOSI)</li>
-<li>主机输入、从机输出(MISO)</li>
-</ul>
-<p>产生时钟信号的器件称为主机。主机和从机之间传输的数据与主机产生的时钟同步。同I2C接口相比，SPI器件支持更高的时钟频率。查阅相关产品数据手册以了解SPI接口的时钟频率规格。</p>
-<p><mark style="font-weight: 900;">SPI接口只能有一个主机，但可以有一个或多个从机。</mark>图1显示了主机和从机之间的SPI连接。</p>
-<p>来自主机的片选信号用于选择从机。这 <mark style="font-weight: 900;">通常是一个低电平有效信号，拉高时从机与SPI总线断开连接</mark>。当使用多个从机时，主机需要为每个从机提供单独的片选信号。<u>本文中</u> 的片选信号始终是低电平有效信号。</p>
-<p>MOSI和MISO是数据线。MOSI将数据从主机发送到从机，MISO将数据从从机发送到主机。</p>
-<h2 id="数据传输">数据传输</h2>
-<p>要开始SPI通信，主机必须发送时钟信号，并通过使能CS信号选择从机。片选通常是低电平有效信号。因此，主机必须在该信号上发送逻辑0以选择从机。SPI是全双工接口，主机和从机可以分别通过MOSI和MISO线路同时发送数据。在SPI通信期间，数据的发送（串行移出到MOSI/SDO总线上）和接收（采样或读入总线(MISO/SDI)上的数据）同时进行。串行时钟沿同步数据的移位和采样。SPI接口允许用户灵活选择时钟的上升沿或下降沿来采样和/或移位数据。</p>
-<p><strong>需要注意</strong>：SPI接口传输的 <strong>数据位数</strong> 仍需查阅器件数据手册。</p>
-<h2 id="时钟极性和时钟相位">时钟极性和时钟相位</h2>
-<p>在SPI中，主机可以选择 <strong>时钟极性</strong>（Clock Polarity，<strong>CPOL</strong>）和 <strong>时钟相位</strong>（Clock Phase，<strong>CPHA</strong>）。</p>
-<p>在空闲状态期间，CPOL 控制 时钟极性。空闲状态是指传输开始时CS为高电平且在向低电平转变的期间，以及传输结束时CS为低电平且在向高电平转变的期间。</p>
-<p>CPHA 控制 时钟相位。<mark>根据CPHA位的状态，使用时钟上升沿或下降沿来采样和/或移位数据</mark>。主机必须 <mark>根据从机的要求选择时钟极性和时钟相位</mark>。根据CPOL和CPHA位的选择，有四种SPI模式可用，如下表：</p>
-<table>
-<thead>
-<tr class="header">
-<th>SPI 模式</th>
-<th>CPOL</th>
-<th>CPHA</th>
-<th>空闲状态下的时钟极性</th>
-<th>用于采样和/或移位数据的时钟相应</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>逻辑低电平</td>
-<td>数据在上升沿采样，在下降沿移出</td>
-</tr>
-<tr class="even">
-<td>1</td>
-<td>0</td>
-<td>1</td>
-<td>逻辑低电平</td>
-<td>数据在下降沿采样，在上升沿移出</td>
-</tr>
-<tr class="odd">
-<td>2</td>
-<td>1</td>
-<td>1</td>
-<td>逻辑低电平</td>
-<td>数据在下降沿采样，在上升沿移出</td>
-</tr>
-<tr class="even">
-<td>3</td>
-<td>1</td>
-<td>0</td>
-<td>逻辑低电平</td>
-<td>数据在上升沿采样，在下降沿移出</td>
-</tr>
-</tbody>
-</table>
-<p>下图为TI公司F280049芯片的SPI时钟模式：</p>
-<figure>
-<img src="https://pic.islet.space/2021/08/image-20210819084200284.png" alt="image-20210819084200284" /><figcaption aria-hidden="true">image-20210819084200284</figcaption>
-</figure>
-<p>下图为ADI公司ADSP21479芯片的SPI时钟模式：</p>
-<figure>
-<img src="https://pic.islet.space/2021/08/image-20210819084447672.png" alt="image-20210819084447672" /><figcaption aria-hidden="true">image-20210819084447672</figcaption>
-</figure>
-<p>后述 图2 至 图5 显示了四种SPI模式下的通信示例。</p>
-<p>在这些示例中，数据显示在MOSI和MISO线上。传输的开始和结束用绿色虚线表示，采样边沿用橙色虚线表示，移位边沿用蓝色虚线表示。请注意，这些图形仅供参考。要成功进行SPI通信，用户须参阅产品数据手册并确保满足器件的时序规格。</p>
-<p><img src="https://pic.islet.space/2021/08/205973_fig_02.png" alt="图2. SPI模式0，CPOL = 0，CPHA = 0：CLK空闲状态 = 低电平，数据在上升沿采样，并在下降沿移出" style="zoom: 60%;" /></p>
-<div style="font-weight: 900; text-align: center;">
-图2. SPI模式0，CPOL = 0，CPHA = 0：CLK空闲状态 = 低电平，数据在上升沿采样，并在下降沿移出
-</div>
-<p>图3给出了SPI模式1的时序图。在此模式下，时钟极性为0，表示时钟信号的空闲状态为低电平。此模式下的时钟相位为1，表示数据在下降沿采样（由橙色虚线显示），并且数据在时钟信号的上升沿移出（由蓝色虚线显示）。</p>
-<p><img src="https://www.analog.com/-/media/images/analog-dialogue/en/volume-52/number-3/articles/introduction-to-spi-interface/205973_fig_03.png?la=en&vs=1" alt="图3. SPI模式1，CPOL = 0，CPHA = 1：CLK空闲状态 = 低电平，数据在下降沿采样，并在上升沿移出" style="zoom:50%;" /></p>
-<div style="font-weight: 900; text-align: center;">
-图3. SPI模式1，CPOL = 0，CPHA = 1：CLK空闲状态 = 低电平，数据在下降沿采样，并在上升沿移出
-</div>
-<p>图4给出了SPI模式2的时序图。在此模式下，时钟极性为1，表示时钟信号的空闲状态为高电平。此模式下的时钟相位为1，表示数据在下降沿采样（由橙色虚线显示），并且数据在时钟信号的上升沿移出（由蓝色虚线显示）。</p>
-<p><img src="https://www.analog.com/-/media/images/analog-dialogue/en/volume-52/number-3/articles/introduction-to-spi-interface/205973_fig_04.png?la=en&vs=1" alt="图4. SPI模式2，CPOL = 1，CPHA = 1：CLK空闲状态 = 高电平，数据在下降沿采样，并在上升沿移出" style="zoom:50%;" /></p>
-<div style="font-weight: 900; text-align: center;">
-图4. SPI模式2，CPOL = 1，CPHA = 1：CLK空闲状态 = 高电平，数据在下降沿采样，并在上升沿移出。
-</div>
-<p>图5给出了SPI模式3的时序图。在此模式下，时钟极性为1，表示时钟信号的空闲状态为高电平。此模式下的时钟相位为0，表示数据在上升沿采样（由橙色虚线显示），并且数据在时钟信号的下降沿移出（由蓝色虚线显示）。</p>
-<p><img src="https://www.analog.com/-/media/images/analog-dialogue/en/volume-52/number-3/articles/introduction-to-spi-interface/205973_fig_05.png?la=en&vs=1" alt="图5. SPI模式3，CPOL = 1，CPHA = 0：CLK空闲状态 = 高电平，数据在上升沿采样，并在下降沿移出" style="zoom:50%;" /></p>
-<div style="font-weight: 900; text-align: center;">
-图5. SPI模式3，CPOL = 1，CPHA = 0：CLK空闲状态 = 高电平，数据在上升沿采样，并在下降沿移出
-</div>
-<h2 id="多从机配置">多从机配置</h2>
-<p>多个从机可与单个SPI主机一起使用。从机可以采用常规模式连接，或采用菊花链模式连接。</p>
-<h3 id="常规spi模式">常规SPI模式</h3>
-<figure>
-<img src="https://pic.islet.space/2021/08/image-20210819075431419.png" alt="image-20210819075431419" /><figcaption aria-hidden="true">image-20210819075431419</figcaption>
-</figure>
-<div style="font-weight: 900; text-align: center;">
-图6. 多从机SPI配置
-</div>
-<p>在常规模式下，主机需要为每个从机提供单独的片选信号。一旦主机使能（拉低）片选信号，MOSI/MISO线上的时钟和数据便可用于所选的从机。如果使能多个片选信号，则MISO线上的数据会被破坏，因为主机无法识别哪个从机正在传输数据。</p>
-<p>从图6可以看出，随着从机数量的增加，来自主机的片选线的数量也增加。这会快速增加主机需要提供的输入和输出数量，并限制可以使用的从机数量。可以使用其他技术来增加常规模式下的从机数量，例如使用多路复用器产生片选信号。</p>
-<h3 id="菊花链模式">菊花链模式</h3>
-<p><img src="https://pic.islet.space/2021/08/image-20210819075542602.png" alt="image-20210819075542602" style="zoom:67%;" /></p>
-<div style="font-weight: 900; text-align: center;">
-图7. 多从机SPI菊花链配置
-</div>
-<p>在菊花链模式下，所有从机的片选信号连接在一起，数据从一个从机传播到下一个从机。在此配置中，所有从机同时接收同一SPI时钟。来自主机的数据直接送到第一个从机，该从机将数据提供给下一个从机，依此类推。</p>
-<p><mark style="font-weight: 900;">使用该方法时，由于数据是从一个从机传播到下一个从机，所以传输数据所需的时钟周期数与菊花链中的从机位置成比例（成比例倍增）。</mark></p>
-<p>例如在图7所示的8位系统中，<mark>为使第3个从机能够获得数据，需要24个时钟脉冲，而常规SPI模式下只需8个时钟脉冲</mark>。图8显示了时钟周期和通过菊花链的数据传播。并非所有SPI器件都支持菊花链模式。请参阅产品数据手册以确认菊花链是否可用。</p>
-<p><img src="https://www.analog.com/-/media/images/analog-dialogue/en/volume-52/number-3/articles/introduction-to-spi-interface/205973_fig_08.png?la=en&vs=1" alt="图8. 菊花链配置：数据传播" style="zoom: 50%;" /></p>
-<div style="font-weight: 900; text-align: center;">
-图8. 菊花链配置：数据传播
-</div>
-<h1 id="adi公司支持spi的模拟开关与多路转换器">ADI公司支持SPI的模拟开关与多路转换器</h1>
-<p>ADI公司最新一代支持SPI的开关可在不影响精密开关性能的情况下显著节省空间。本文的这一部分将讨论一个案例研究，说明支持SPI的开关或多路复用器如何能够大大简化系统级设计并减少所需的GPIO数量。</p>
-<p><a target="_blank" rel="noopener" href="https://www.analog.com/cn/products/adg1412.html">ADG1412</a> 是一款四通道、单刀单掷(SPST)开关，需要四个GPIO连接到每个开关的控制输入。图9显示了微控制器和一个ADG1412之间的连接。</p>
-<p><img src="https://pic.islet.space/2021/08/image-20210819075642098.png" alt="image-20210819075642098" style="zoom: 80%;" /></p>
-<div style="font-weight: 900; text-align: center;">
-图9. 微控制器GPIO用作开关的控制信号
-</div>
-<p>随着电路板上开关数量的增加，所需GPIO的数量也会显著增加。例如，当设计一个测试仪器系统时，会使用大量开关来增加系统中的通道数。在4×4交叉点矩阵配置中，使用四个ADG1412。此系统需要16个GPIO，限制了标准微控制器中的可用GPIO。图10显示了使用微控制器的16个GPIO连接四个ADG1412。</p>
-<p><img src="https://www.analog.com/-/media/images/analog-dialogue/en/volume-52/number-3/articles/introduction-to-spi-interface/205973_fig_10.png?la=en&vs=1" alt="图10. 在多从机配置中，所需GPIO的数量大幅增加" style="zoom:50%;" /></p>
-<div style="font-weight: 900; text-align: center;">
-图10. 在多从机配置中，所需GPIO的数量大幅增加
-</div>
-<p>为了减少GPIO数量，一种方法是使用串行转并行转换器，如图11所示。该器件输出的并行信号可连接到开关控制输入，器件可通过串行接口SPI配置。此方法的缺点是外加器件会导致物料清单增加。</p>
-<p><img src="https://pic.islet.space/2021/08/image-20210819075735043.png" alt="image-20210819075735043" style="zoom:67%;" /></p>
-<div style="font-weight: 900; text-align: center;">
-图11. 使用串行转并行转换器的多从机开关
-</div>
-<p>另一种方法是使用SPI控制的开关。此方法的优点是可减少所需GPIO的数量，并且还能消除外加串行转并行转换器的开销。如图12所示，不需要16个微控制器GPIO，只需要7个微控制器GPIO就可以向4个ADGS1412提供SPI信号。</p>
-<p><img src="https://pic.islet.space/2021/08/image-20210819080000988.png" alt="image-20210819080000988" style="zoom: 67%;" /></p>
-<div style="font-weight: 900; text-align: center;">
-图12. 支持SPI的开关节省微控制器GPIO
-</div>
-<p>开关可采用菊花链配置，以进一步优化GPIO数量。在菊花链配置中，无论系统使用多少开关，都只使用主机（微控制器）的四个GPIO。</p>
-<p><img src="https://pic.islet.space/2021/08/image-20210819080021307.png" alt="image-20210819080021307" style="zoom:67%;" /></p>
-<div style="font-weight: 900; text-align: center;">
-图13. 菊花链配置的SPI开关可进一步优化GPIO
-</div>
-<p>图13用于说明目的。ADGS1412数据手册建议在SDO引脚上使用一个上拉电阻。有关菊花链模式的更多信息，请参阅ADGS1412数据手册。为简单起见，此示例使用了四个开关。随着系统中开关数量的增加，电路板简单和节省空间的优点很重要。在6层电路板上放置8个四通道SPST开关，采用4×8交叉点配置时，ADI公司支持SPI的开关可节省20%的总电路板空间。文章《<a target="_blank" rel="noopener" href="https://www.analog.com/cn/analog-dialogue/articles/precision-spi-switch-configuration-increases-channel-density.html">精密SPI开关配置提高通道密度</a>》详细说明了精密SPI开关配置如何提高通道密度。</p>
-<h1 id="术语">术语</h1>
-<p><strong>MISO</strong> / <strong>SOMI</strong> / <strong>SDO</strong>： Master Input and Slaver Output / Slaver Output and Master Input / Slaver Data Output</p>
-<p><strong>MOSI</strong> / <strong>SIMO</strong> / <strong>SDI</strong>： Master Output and Slaver Input / Salver Input and Master Output / Slaver Data Input</p>
-<p><strong>SCLK</strong>： Serial Clock</p>
-<p><strong>CS</strong> / <strong>STE</strong>： Chip Select / Slaver Transmit Enable</p>
-<h1 id="参考">参考</h1>
-<ol type="1">
-<li><a target="_blank" rel="noopener" href="https://www.analog.com/cn/analog-dialogue/articles/introduction-to-spi-interface.html">SPI接口简介</a></li>
-<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/150121520">SPI通信协议详解（spi总线）</a></li>
-<li><a target="_blank" rel="noopener" href="http://www.microchip.com.cn/community/Uploads/Download/Library/39699a_cn.pdf">第23 章 串行外设接口(SPI)</a></li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://islet.space/2021/08/06/Blog/2021-08-06-%E8%A7%A3%E5%86%B3%E6%96%B0%E7%89%88hexo%E6%B2%A1%E6%9C%89%E7%9B%AE%E5%BD%95%E5%92%8C%E6%A0%87%E7%AD%BE%E9%A1%B5%E7%9A%84%E9%97%AE%E9%A2%98/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Liewzheng">
-      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Coder的孤岛">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/08/06/Blog/2021-08-06-%E8%A7%A3%E5%86%B3%E6%96%B0%E7%89%88hexo%E6%B2%A1%E6%9C%89%E7%9B%AE%E5%BD%95%E5%92%8C%E6%A0%87%E7%AD%BE%E9%A1%B5%E7%9A%84%E9%97%AE%E9%A2%98/" class="post-title-link" itemprop="url">解决新版hexo没有目录和标签页的问题</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-
-    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
-    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2021-08-06 23:40:00" itemprop="dateCreated datePublished" datetime="2021-08-06T23:40:00+08:00">2021-08-06</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-08-08 14:26:07" itemprop="dateModified" datetime="2021-08-08T14:26:07+08:00">2021-08-08</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Blog/" itemprop="url" rel="index"><span itemprop="name">Blog</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>新版hexo安装之后没有标签页，解决方法大致三步：</p>
-<ol type="1">
-<li><p>需要自行在 <code>/source/</code> 文件夹下添加一个 <code>categories</code> 和 <code>tags</code> 文件夹，然后往文件夹中分别写入一个 <code>index.md</code> 文件。</p></li>
-<li><p>然后在对应的 <code>index.md</code> 中写入 <em>YAML</em> 信息。</p></li>
-<li><p>在对应的主题配置文件，例如 <code>_config.yml</code> 中填写好配置。</p></li>
-</ol>
-<h1 id="新建目录和页面">新建目录和页面</h1>
-<p>可以通过两句语句来运行：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">hexo new page categories</span><br><span class="line">hexo new page tags</span><br></pre></td></tr></table></figure>
-<h1 id="添加type属性">添加type属性</h1>
-<p>编辑 <code>index.md</code>，修改信息如下，日期随意：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">---</span><br><span class="line">title: 目录</span><br><span class="line"><span class="built_in">type</span>: categories</span><br><span class="line">date: 2020-08-06 23:32:00</span><br><span class="line">---</span><br></pre></td></tr></table></figure>
-<p>注意上面写的一个属性 <code>type</code>，千万不能写错。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">---</span><br><span class="line">title: 标签</span><br><span class="line"><span class="built_in">type</span>: tags</span><br><span class="line">date: 2020-08-06 23:32:00</span><br><span class="line">---</span><br></pre></td></tr></table></figure>
-<h1 id="设置配置文件">设置配置文件</h1>
-<p>如下图所示修改即可：</p>
-<figure>
-<img src="https://pic.islet.space/2021/08/image-20210806235851123.png" alt="image-20210806235851123" /><figcaption aria-hidden="true">image-20210806235851123</figcaption>
-</figure>
-<p>最后重新清空、运行和预览即可。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">hexo clean</span><br><span class="line">hexo generate</span><br><span class="line">hexo site</span><br></pre></td></tr></table></figure>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://islet.space/2021/08/03/Programming/2021-08-03-Debug%E9%97%AE%E9%A2%98%E6%8E%92%E6%9F%A5%E6%80%9D%E8%B7%AF/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Liewzheng">
-      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Coder的孤岛">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/08/03/Programming/2021-08-03-Debug%E9%97%AE%E9%A2%98%E6%8E%92%E6%9F%A5%E6%80%9D%E8%B7%AF/" class="post-title-link" itemprop="url">Debug问题排查思路</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-
-    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
-    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2021-08-03 11:35:00" itemprop="dateCreated datePublished" datetime="2021-08-03T11:35:00+08:00">2021-08-03</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-10-14 23:59:13" itemprop="dateModified" datetime="2021-10-14T23:59:13+08:00">2021-10-14</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Programming/" itemprop="url" rel="index"><span itemprop="name">Programming</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>以下内容适用于嵌入式开发工程师。</p>
-<h1 id="裸机debug">裸机Debug</h1>
-<figure>
-<img src="https://pic.islet.space/2021/09/20210915214751.png" alt="image-20210804172539069" /><figcaption aria-hidden="true">image-20210804172539069</figcaption>
-</figure>
-<p>裸机调试过程中出现问题时，可以从以下几个角度进行考虑，分别是 <strong>电气特性</strong>、<strong>软件设置</strong> 、 <strong>代码设置</strong> 和 <strong>项目设置</strong>。</p>
-<h2 id="电气特性">电气特性</h2>
-<p>排查电气特性的方法，主要是使用 <strong>万用表</strong>、<strong>逻辑分析仪</strong>、<strong>示波器</strong> 等可以捕捉电信号的设备进行直接的观察。</p>
-<p>例如使用万用表、示波器来检查电信号的电压、电流是否在正常工作范围。</p>
-<h2 id="软件设置">软件设置</h2>
-<p>虽然软件设置和代码设置的命名方式相近，但是这里的软件设置更多强调的是系统级、寄存器级、驱动级的基础设置，而非算法级、代码级、逻辑级的更高一级设置。</p>
-<p>软件设置中，直观可见的是所有可能需要检查的问题点，都是可以通过查阅技术参考手册中的相关寄存器设置来检查是否设置正确的，包括中断、内存、时钟、外设等各项涉及到寄存器级别的内容。</p>
-<h2 id="代码设置">代码设置</h2>
-<p>代码设置，强调的是算法级、代码级 或 逻辑级 的软件编写或设置。</p>
-<p>需要检查的更多是对应 芯片 及其 板载环境 、工作系统 之间的关系，例如代码里面有没有导致死循环、或者多线程之间的资源锁死、内存溢出等情况。</p>
-<h2 id="项目设置">项目设置</h2>
-<h3 id="调试文件">调试文件</h3>
-<h4 id="调试协议">调试协议</h4>
-<h4 id="寻址文件">寻址文件</h4>
-<p>但看调试文件，同样是f28004x系列芯片，通用的寻址文件就多达十几种。</p>
-<figure>
-<img src="https://pic.islet.space/2021/09/image-20210804172803808.png" alt="image-20210804172803808" /><figcaption aria-hidden="true">image-20210804172803808</figcaption>
-</figure>
-<p>一般最高型号的芯片还有额外的 <code>.cmd</code> 文件，如：</p>
-<figure>
-<img src="https://pic.islet.space/2021/09/image-20210804172915025.png" alt="image-20210804172915025" /><figcaption aria-hidden="true">image-20210804172915025</figcaption>
-</figure>
-<p>此时就需要仔细挑选对应的寻址文件，避免多个寻址文件载入导致寻址空间重名冲突。</p>
-<h2 id="案例">案例</h2>
-<h3 id="adc中断未进入bug">ADC中断未进入BUG</h3>
-<h4 id="情况1组中断未打开">情况1——组中断未打开</h4>
-<p>ADC模块有检测到信号（下图<code>ADCRESULT0</code>） ，转换电容将电压转换成数值，但是没有触发中断，进而中断函数没有被执行。</p>
-<figure>
-<img src="https://pic.islet.space/2021/08/image-20210810093022182.png" alt="image-20210810093022182" /><figcaption aria-hidden="true">image-20210810093022182</figcaption>
-</figure>
-<p>仔细检查对应的ADC中断标志寄存器，整理思路：SOC可以正常收到EPWM6的触发源进而正常地对电压进行转换，然后将数值存到对应寄存器中。也就是说，EOC也有正常工作，能够生成脉冲中断。</p>
-<figure>
-<img src="https://pic.islet.space/2021/08/image-20210818100405137.png" alt="image-20210818100405137" /><figcaption aria-hidden="true">image-20210818100405137</figcaption>
-</figure>
-<p>对照着《TRM》中的说明文档再阅读一遍：</p>
-<figure>
-<img src="https://pic.islet.space/2021/08/image-20210818100624266.png" alt="image-20210818100624266" /><figcaption aria-hidden="true">image-20210818100624266</figcaption>
-</figure>
-<p>接着再对应检查一下与中断相关的溢出标志寄存器，发现的确有中断溢出了。</p>
-<figure>
-<img src="https://pic.islet.space/2021/08/image-20210818100710508.png" alt="image-20210818100710508" /><figcaption aria-hidden="true">image-20210818100710508</figcaption>
-</figure>
-<p>在ISR中断服务程序中写入一个全局调试变量，用于观察是否进入中断服务程序，可以知道其并未进入中断服务程序。</p>
-<figure>
-<img src="https://pic.islet.space/2021/08/image-20210818101346665.png" alt="image-20210818101346665" /><figcaption aria-hidden="true">image-20210818101346665</figcaption>
-</figure>
-<figure>
-<img src="https://pic.islet.space/2021/08/image-20210818101314520.png" alt="image-20210818101314520" /><figcaption aria-hidden="true">image-20210818101314520</figcaption>
-</figure>
-<p>最后对比检查样例代码中的main函数对ePIE寄存器的控制，发现少了一行对PIE控制寄存器的操作，补上~</p>
-<figure>
-<img src="https://pic.islet.space/2021/08/image-20210818101749256.png" alt="image-20210818101749256" /><figcaption aria-hidden="true">image-20210818101749256</figcaption>
-</figure>
-<p>成功进入中断：</p>
-<figure>
-<img src="https://pic.islet.space/2021/08/image-20210818101822146.png" alt="image-20210818101822146" /><figcaption aria-hidden="true">image-20210818101822146</figcaption>
-</figure>
-<p><strong>总结</strong></p>
-<ul>
-<li>此处很重要的是要仔细研读《TRM》文件，将文档内的中断流程进行一一对照校验检查</li>
-<li>理解玩系统框图后，按照信号进入的顺序对涉及到的寄存器依次进行检查，逐个排查之后，再对其他可能会出现问题的地方进行DEBUG代码编写。</li>
-<li>如果没有参照手册，就得参照样例文件逐行检查代码</li>
-</ul>
-<h3 id="开启adc-c模块之后idle函数就不再执行">开启ADC C模块之后IDLE函数就不再执行</h3>
-<h4 id="情况1中断函数不要处理大量数据计算">情况1——中断函数不要处理大量数据计算</h4>
-<p>IDLE函数是写在 <code>main()</code> 函数中，最后面的位置的，以 <code>while(1)</code> 语句进行包裹着的永远循环的语句。</p>
-<p>在 <code>main()</code> 函数中，一般会对整个系统、外设、内存、中断等进行初始化和配置，一旦所有工作部件跑起来之后，需要CPU进行数据处理时，就会暂停进入IDLE函数，转而去处理更为紧急的事情，例如进行浮点数计算（如果没有开启对应的FPU的话），此时IDLE函数就会过很长一段时间（时间不定，依据实时处理情况而定）才执行一次。</p>
-<p>例如下方所示，一旦开启了对应的中断处理函数中的电压、温度、阻值计算，需要处理器实时且大量的计算的话，就会造成CPU短时/长时荷载较高，无法进入IDLE函数，原本在IDLE函数中设置为1秒闪烁一次的LED灯，过了十几二十秒才关闭/打开。</p>
-<p>一旦将其注释，LED灯的闪烁速度又得到了恢复。</p>
-<p>也可以在中断向量表和处理程序处进行注释以关闭中断处理，也可以看到LED等闪烁正常。</p>
-<figure>
-<img src="https://pic.islet.space/2021/08/image-20210824190557672.png" alt="image-20210824190557672" /><figcaption aria-hidden="true">image-20210824190557672</figcaption>
-</figure>
-<h3 id="adc读值转换失败">ADC读值/转换失败</h3>
-<h4 id="情况1adc触发源更改">情况1——ADC触发源更改</h4>
-<p><strong>新增了功能</strong>：由主循环检测GPIO3上的引脚是否导通，导通则开启ePWM的时钟，否则不开启，开关检测代码如下：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">sw1WrapFunc</span><span class="params">(<span class="keyword">void</span>)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(GpioDataRegs.GPADAT.bit.GPIO3 == HIGH_LEVEL)&#123;  <span class="comment">//是否为高电平</span></span><br><span class="line">        <span class="keyword">if</span>(CpuSysRegs.PCLKCR2.bit.EPWM1 == ON) <span class="keyword">return</span>;</span><br><span class="line">        <span class="keyword">else</span> &#123;</span><br><span class="line">            EALLOW;</span><br><span class="line">            CpuSysRegs.PCLKCR2.bit.EPWM1 = ON;  <span class="comment">//高电平且未开启则开启</span></span><br><span class="line">            EDIS;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span>(GpioDataRegs.GPADAT.bit.GPIO3 == LOW_LEVEL)&#123;  <span class="comment">//是否为低电平</span></span><br><span class="line">        <span class="keyword">if</span>(CpuSysRegs.PCLKCR2.bit.EPWM1 == OFF) <span class="keyword">return</span>;</span><br><span class="line">        <span class="keyword">else</span> &#123;</span><br><span class="line">            EALLOW;</span><br><span class="line">            CpuSysRegs.PCLKCR2.bit.EPWM1 = OFF;  <span class="comment">//低电平且已开启则关闭</span></span><br><span class="line">            EDIS;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>在增加了新功能之后，发现ADC突然不工作了，每次ePWM一关闭，ADC也跟着不工作，一打开ePWM，ADC又开始工作了。</p>
-<figure>
-<img src="https://pic.islet.space/2021/09/image-20210907134639238.png" alt="image-20210907134639238" /><figcaption aria-hidden="true">image-20210907134639238</figcaption>
-</figure>
-<figure>
-<img src="https://pic.islet.space/2021/09/image-20210907134734391.png" alt="image-20210907134734391" /><figcaption aria-hidden="true">image-20210907134734391</figcaption>
-</figure>
-<p>重新整理思路，想起来ADC工作的配置中，唯一一项跟PWM相关的就是其触发源。</p>
-<figure>
-<img src="https://pic.islet.space/2021/09/image-20210907135154333.png" alt="image-20210907135154333" /><figcaption aria-hidden="true">image-20210907135154333</figcaption>
-</figure>
-<figure>
-<img src="https://pic.islet.space/2021/09/image-20210907135359661.png" alt="image-20210907135359661" /><figcaption aria-hidden="true">image-20210907135359661</figcaption>
-</figure>
-<figure>
-<img src="https://pic.islet.space/2021/09/image-20210907135436244.png" alt="image-20210907135436244" /><figcaption aria-hidden="true">image-20210907135436244</figcaption>
-</figure>
-<p>修改其触发源为CPU1 Timer0，正常工作：</p>
-<figure>
-<img src="https://pic.islet.space/2021/09/image-20210907135823329.png" alt="image-20210907135823329" /><figcaption aria-hidden="true">image-20210907135823329</figcaption>
-</figure>
-<h4 id="情况2主函数被测试用的死循环卡住">情况2——主函数被测试用的死循环卡住</h4>
-<p>主循环中一定不能再套一个等待状态（或死循环）的语句，否则整个主循环将有可能永远被卡死。</p>
-<p>写完SCI部分函数后，发现ADC温度转换的不工作了，但ADC的中断程序（中断程序对全局变量的写入成功）和中断溢出标志是可以正常处理的，同时写了一个Debug变量放在主循环下的ADC包装函数中，发现数据并未被处理，因此可以判断主程序被卡死。</p>
-<p>解决方法是，将SCI通信发送和接收的功能写到中断程序中，让中断程序来处理。</p>
-<h3 id="ecap外设没有正常工作">ECAP外设没有正常工作</h3>
-<p>首先是注意到该外设对应的GPIO没有正常工作，查看 <code>GpioDataRegs</code> 下的 <code>GPADAT</code> 寄存器，发现GPIO10在其他外设都能正常工作的情况下，该引脚无法动弹（表现为：使用3.3V电源连接GPIO10，没有反映）。</p>
-<figure>
-<img src="https://pic.islet.space/2021/09/image-20210906172346311.png" alt="image-20210906172346311" /><figcaption aria-hidden="true">image-20210906172346311</figcaption>
-</figure>
-<p>然后查看eCAP引脚源代码，初步推断可能是引脚方向设置出错，更改以下源代码中的最后一句以更改引脚信号导通方向。</p>
-<p>源代码如下：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Init_eCAP_GPIO</span><span class="params">(<span class="keyword">void</span>)</span></span>&#123;</span><br><span class="line">    <span class="comment">//配置输入XBAR10</span></span><br><span class="line">    InputXbarRegs.INPUT10SELECT = <span class="number">0xA</span>; <span class="comment">// 将GPIO10(0xA)与输入XBAR 10进行连接</span></span><br><span class="line"></span><br><span class="line">    GpioCtrlRegs.GPAGMUX1.bit.GPIO10 = <span class="number">0</span>;  <span class="comment">//外设组多路配置</span></span><br><span class="line">    GpioCtrlRegs.GPAMUX1.bit.GPIO10 = <span class="number">3</span>;  <span class="comment">//外设多路配置</span></span><br><span class="line">    GpioCtrlRegs.GPADIR.bit.GPIO10 = <span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>再次测试发现结果正常。</p>
-<figure>
-<img src="https://pic.islet.space/2021/09/image-20210907094432301.png" alt="image-20210907094432301" /><figcaption aria-hidden="true">image-20210907094432301</figcaption>
-</figure>
-<p>修改后代码如下：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Init_eCAP_GPIO</span><span class="params">(<span class="keyword">void</span>)</span></span>&#123;</span><br><span class="line">    <span class="comment">//配置输入XBAR10</span></span><br><span class="line">    EALLOW;</span><br><span class="line">    InputXbarRegs.INPUT10SELECT = <span class="number">0xA</span>; <span class="comment">// 将GPIO10(0xA)与输入XBAR 10进行连接</span></span><br><span class="line"></span><br><span class="line">    GpioCtrlRegs.GPAGMUX1.bit.GPIO10 = <span class="number">0</span>;  <span class="comment">//外设组多路配置</span></span><br><span class="line">    GpioCtrlRegs.GPAMUX1.bit.GPIO10 = <span class="number">3</span>;  <span class="comment">//外设多路配置</span></span><br><span class="line">    GpioCtrlRegs.GPADIR.bit.GPIO10 = GPIO_SIGNAL_INPUT;  <span class="comment">// INPUT 输入</span></span><br><span class="line">    GpioCtrlRegs.GPAPUD.bit.GPIO10 = GPIO_PULLUP_DISABLE;</span><br><span class="line">    GpioCtrlRegs.GPAQSEL1.bit.GPIO10 = GPIO_SYNCHRONIZE;</span><br><span class="line">    EDIS;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><strong>注意</strong>：因为GPIO9和GPIO10临近，默认情况下GPIO10还是会受到附近（结构上）其他GPIO电平的影响而拉高，此时即使设置了 <code>GPIO_PULLUP_DISABLE</code> 都没办法置低。同时，GPIO9也会因为GPIO10的电平拉低而拉低。</p>
-<h3 id="ecap引脚配置">ECAP引脚配置</h3>
-<p>从GPIO部分的图8-1、 引脚部分的 表4-6 、X-BAR部分的 图9-1 和 eCAP部分的表19-1 四份内容可以看出，GPIO10 没办法被通过INPUT X-BAR 复用到ECAP上。</p>
-<p>因为表4-6决定了，GPIO10不能复用到INPUT X-BAR 或 OUT-BAR，但可以复用为自己（GPIO10），只需要设置 <code>GPAGMUX.bit.GPIO10 = 0x0; GPAMUX.bit.GPIO10 = 0x0;</code> 即可。</p>
-<figure>
-<img src="https://pic.islet.space/2021/09/image-20210913105909558.png" alt="image-20210913105909558" /><figcaption aria-hidden="true">image-20210913105909558</figcaption>
-</figure>
-<figure>
-<img src="https://pic.islet.space/2021/09/image-20210913110038846.png" alt="image-20210913110038846" /><figcaption aria-hidden="true">image-20210913110038846</figcaption>
-</figure>
-<p><img src="https://pic.islet.space/2021/09/image-20210913110545272.png" alt="image-20210913110545272" style="zoom:67%;" /></p>
-<p><img src="https://pic.islet.space/2021/09/image-20210913110506997.png" alt="image-20210913110506997" style="zoom: 67%;" /></p>
-<h3 id="sci引脚导致复位">SCI引脚导致复位</h3>
-<p>SCI配置完毕后，与对应的GPIO引脚无法通信（即无高低电平变化），将逻辑分析仪插入对应的引脚，会导致芯片复位重启。</p>
-<p>原GPIO引脚配置为：一个GPIO为拉高和异步，另一个为拉高和同步。</p>
-<p>将两个GPIO修改为异步配置之后，并未出现复位情况。</p>
-<h3 id="sci-rx数据错误">SCI RX数据错误</h3>
-<p>使用RS485进行发送时，不仅接收会存在错误，发送也会存在错误。</p>
-<figure>
-<img src="https://pic.islet.space/2021/09/image-20210914155055154.png" alt="image-20210914155055154" /><figcaption aria-hidden="true">image-20210914155055154</figcaption>
-</figure>
-<div style="font-weight: 900; font-size: 0.8rem; text-align: center;">
-图 使用XCOM串口助手和GREE DATACONVERTER进行发送和CCS中数组值有异
-</div>
-<figure>
-<img src="https://pic.islet.space/2021/09/image-20210914155215669.png" alt="image-20210914155215669" /><figcaption aria-hidden="true">image-20210914155215669</figcaption>
-</figure>
-<div style="font-weight: 900; font-size: 0.8rem; text-align: center;">
-图 使用GREE DATACONVERTER接收数据时也存在错误-1
-</div>
-<p>在数据量较低且手动点击鼠标进行发送时，仍然会有数据处理错误：</p>
-<figure>
-<img src="https://pic.islet.space/2021/09/image-20210914170117568.png" alt="image-20210914170117568" /><figcaption aria-hidden="true">image-20210914170117568</figcaption>
-</figure>
-<div style="font-weight: 900; font-size: 0.8rem; text-align: center;">
-图 使用GREE DATACONVERTER接收数据时也存在错误-2
-</div>
-<p>同样的代码（中途未复位重启芯片）对比使用CH340芯片进行发送和接收：</p>
-<figure>
-<img src="https://pic.islet.space/2021/09/image-20210914155521881.png" alt="image-20210914155521881" /><figcaption aria-hidden="true">image-20210914155521881</figcaption>
-</figure>
-<div style="font-weight: 900; font-size: 0.8rem; text-align: center;">
-图 使用CH340进行发送和接收时数据无误
-</div>
-<p>SCI未触发中断</p>
-<h1 id="系统debug">系统Debug</h1>
-<h1 id="windowslinuxmac">Windows/Linux/Mac</h1>
-<h2 id="分离式代码的联合编译">分离式代码的联合编译</h2>
-<figure>
-<img src="https://pic.islet.space/2021/10/20211009172229.png" alt="image-20211009172014699" /><figcaption aria-hidden="true">image-20211009172014699</figcaption>
-</figure>
-<p>上图为使用VS Code进行项目编译时报错的情况，在使用 MinGW 的g++ 作为编译器时，一开始使用 <code>main.cpp</code> 作为被编译的文件进行编译运行，成功可用。</p>
-<figure>
-<img src="https://pic.islet.space/2021/10/20211011173023.png" alt="image-20211011150027217" /><figcaption aria-hidden="true">image-20211011150027217</figcaption>
-</figure>
-<p>后期新增了 <code>SerialPort.h</code> 和 <code>SerialPort.cpp</code> ，再次点击编译发现失败。说是查找不到 <code>SerialPort</code> 类下的函数定义相关的报错，并不是因为没有给 <code>SerialPort::SerialPort()</code> 等这些类里的函数进行定义，只是因为定义和声明并不在同一个 <code>.h</code> 文件里面。因为将类定义写在了 <code>.h</code> 文件中，而定义写在了另一个 <code>.cpp</code> 文件中，因此该编程方式称为 <strong>分离式代码</strong>。如果将其书写到同一个 <code>.hpp</code> 文件里，就称为 <strong>非分离式代码</strong>。</p>
-<p>采用的 <strong>分离式</strong> 的代码书写方法，造成了 <code>g++</code> 编译器在只编译 <code>main.cpp</code> 的情况下会报错 <strong>函数未定义</strong> 。</p>
-<h3 id="解决办法">解决办法</h3>
-<p>对分离式的 C++ 代码，需要联合多个 <code>.cpp</code> 文件进行编译，在Linux系统上使用命令行进行编译即可提现 如下：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">g++ main.cpp SerialPort.cpp -o main --std=c++17</span><br></pre></td></tr></table></figure>
-<p>上面就把 <code>main.cpp</code> 和 <code>SerialPort.cpp</code> 两个代码文件联合在一起进行编译，只生成一个 <code>main</code> 二进制可运行文件。</p>
-<p>类似，只要在Windows上能用同一句编译命令实现多个 <code>.cpp</code> 文件的编译即可，但自己没有找到如何在 VS Code中进行该操作方法。另辟蹊径找到了用Terminal进行搞定，方法如下：</p>
-<ol type="1">
-<li>将 <code>D:\mingw64\bin</code> 加入到 <strong>系统环境变量</strong> 的 <code>Path</code> 变量下：</li>
-</ol>
-<figure>
-<img src="https://pic.islet.space/2021/10/20211011173019.png" alt="image-20211011150836483" /><figcaption aria-hidden="true">image-20211011150836483</figcaption>
-</figure>
-<ol start="2" type="1">
-<li>打开 Terminal 进行跳转到工作目录，或者在工作目录按 <code>shift</code> 同时点击右键菜单里的 <code>在Windows终端中打开</code> 即可。</li>
-</ol>
-<figure>
-<img src="https://pic.islet.space/2021/10/20211011173017.png" alt="image-20211011150800473" /><figcaption aria-hidden="true">image-20211011150800473</figcaption>
-</figure>
-<ol start="3" type="1">
-<li>尝试进行编译，发现就不报这个 <code>undefined reference</code> 的错了。</li>
-</ol>
-<h3 id="总结">总结</h3>
-<p>分离式代码就需要联合多个 <code>.cpp</code> 文件进行编译，不能只编译一个 <code>main.cpp</code>，Windows Terminal 也可以直接操作 <code>g++</code> （只要加了系统变量）进行多文件编译。</p>
-<h2 id="cannot-convert">CANNOT CONVERT</h2>
-<p>以下为 VS Code中的报错：</p>
-<figure>
-<img src="https://pic.islet.space/2021/10/20211009172849.png" alt="image-20211009172830768" /><figcaption aria-hidden="true">image-20211009172830768</figcaption>
-</figure>
-<p>以下为 Terminal g++ 中的报错：</p>
-<figure>
-<img src="https://pic.islet.space/2021/10/20211011173012.png" alt="image-20211011151525322" /><figcaption aria-hidden="true">image-20211011151525322</figcaption>
-</figure>
-<p>cannot convert <code>const wchar_t*</code> to <code>LPCSTR</code> ，即是说，无法将<code>const wchar_t*</code> 类型转换为 <code>LPCSTR</code> 类型。</p>
-<p>LPCSTR，即 <em>long pointer const string</em> , 是Win32和VC++所使用的一种字符串数据类型。定义如下：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> _Null_terminated_ CONST CHAR *LPCSTR, *PCSTR; </span><br></pre></td></tr></table></figure>
-<p><code>LPCSTR</code> 代表了 <code>const char *</code> 类型，它是一个指向以 <code>\0</code> 结尾的 8 bit（单字节）<strong>ANSI字符数组</strong> 的常量指针。</p>
-<p>而 <code>const wchar_t *</code> 类型是一个指向 <code>\0</code> 结尾的 16 bit（双字节）<strong>Unicode字符数组</strong> 的常量指针。</p>
-<p>在VS2013编译器中直接输入的字符串常量（如 <code>“abc”</code> ）默认是以 <code>const char *</code> 的格式（即ANSI编码）储存的，因此会导致类型不匹配的编译错误。</p>
-<h3 id="解决办法-1">解决办法</h3>
-<p>以下办法查询自网络，未实践：</p>
-<ol type="1">
-<li>Visual Studio: 右击“解决方案资源管理器”中的项目，“属性→配置属性→常规→项目默认值→字符集”，默认的选项是“使用多字节字符集”，将它改为“使用Unicode字符集”即可。这样，输入的字符串会默认以 <code>const wchar_t *</code> 格式储存。</li>
-<li>使用 <code>_T</code> 宏，它在 &lt;tchar.h&gt; 中定义，它能够自动识别当前编译器字符串的储存格式并做出相应转换，避免这种类型的编译错误。具体使用方法为：将 <code>“abc”</code> 改为 <code>_T("abc")</code> 。</li>
-</ol>
-<p>以下办法亲自实验可用：</p>
-<ol type="1">
-<li>删除该实参 <code>L"xxxxxx"</code> 前的 <code>L</code> 字符即可，在使用 MinGW 编译器的情况下，如果有该 <code>L</code> 字符，就会一直报错，就算将文本字符集改成 <code>UTF-16 LE/BE</code> ，虽然不会报该 <code>L</code> 字符的错了，但仍会出现其他问题，也是因为字符集搞的鬼。在Linux或Mac下就不会报该错误。</li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://islet.space/2021/07/17/Hardware/Circuit/2021-07-17-%E7%94%B5%E9%9A%94%E7%A6%BB%E5%92%8C%E9%9D%9E%E7%94%B5%E9%9A%94%E7%A6%BB/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Liewzheng">
-      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Coder的孤岛">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/07/17/Hardware/Circuit/2021-07-17-%E7%94%B5%E9%9A%94%E7%A6%BB%E5%92%8C%E9%9D%9E%E7%94%B5%E9%9A%94%E7%A6%BB/" class="post-title-link" itemprop="url">电隔离和非电隔离</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-
-    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
-    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-      
-
-      <time title="Created: 2021-07-17 10:40:00 / Modified: 11:42:40" itemprop="dateCreated datePublished" datetime="2021-07-17T10:40:00+08:00">2021-07-17</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Hardware/" itemprop="url" rel="index"><span itemprop="name">Hardware</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>在产品设计时，倘若没有考虑应用环境对电源隔离的要求，产品到了应用时就会出现因设计方案的不当导致的系统不稳定，甚至出现高压损坏后级负载的情况，以及出现危害人身财产安全的情况。因此产品设计是否需要隔离至关重要。</p>
-<h1 id="定义">定义</h1>
-<p><strong>隔离电源</strong>：电源的输入回路和输出回路之间没有直接的电气连接，输入和输出之间是绝缘的高阻态，没有电流回路。</p>
-<p><img src="https://pic.islet.space/2021/07/60935d50373e5-thumb.png" alt="img" style="zoom:67%;" /></p>
-<div style="text-align: center; font-weight: 900;">
-图1 采用变压器的隔离电源
-</div>
-<p><strong>非隔离电源</strong>：输入和输出之间有直接的电流回路，例如，输入和输出之间是共地的。以隔离的反激电路和非隔离的BUCK电路为例。</p>
-<p><img src="https://pic.islet.space/2021/07/60935d4fef66f-thumb.png" alt="img" style="zoom:67%;" /></p>
-<div style="text-align: center; font-weight: 900;">
-图2 非隔离电源
-</div>
-<p><img src="https://pic.islet.space/2021/07/60935d5048313-thumb.png" alt="img" style="zoom:50%;" /></p>
-<h1 id="优缺点对比">优缺点对比</h1>
-<p>由上述概念可知，对于常用的电源拓扑而言，非隔离电源主要有：<strong><em>Buck</em></strong>、<strong><em>Boost</em></strong>、<strong><em>Buck-Boost</em></strong>等。而隔离电源主要有各种带隔离变压器的 <strong><em>反激</em></strong>、<strong><em>正激</em></strong>、<strong><em>半桥</em></strong>、<strong><em>LLC</em></strong> 等拓扑。</p>
-<p>结合常用的隔离与非隔离电源，我们从直观上就可得出它们的一些优缺点，两者的优缺点几乎是相反的。使用隔离或非隔离的电源，需了解实际项目对电源的需求是怎样的。</p>
-<p>隔离和非隔离电源的主要差别在于 隔离模块的可靠性高，但成本高，效率差点。非隔离模块的结构很简单，成本低，效率高，安全性能差。因此，在如下几个场合，建议用隔离电源：</p>
-<ol type="1">
-<li></li>
-</ol>
-<p>总结的表如表1所示，两者的优缺点几乎是相反的。</p>
-<div style="text-align: center; font-weight: 900;">
-表1 隔离电源和非隔离电源的优缺点
-</div>
-<p><img src="https://pic.islet.space/2021/07/60935d504e874-thumb.png" alt="img" style="zoom:80%;" /></p>
-<h1 id="适用场景">适用场景</h1>
-<p>一般场合使用对模块电源隔离电压要求不是很高，但是 <mark> 更高的隔离电压可以保证模块电源具有更小的漏电流，更高的安全性和可靠性，并且 <strong><em>EMC特性</em></strong> 也更好一些</mark>，因此目前业界普遍的隔离电压水平为1500VDC以上。</p>
-<p>了解了隔离与非隔离电源的优缺点，对于一些常用的嵌入式供电，其对应的场景及推荐隔离方案如下：</p>
-<ol type="1">
-<li>系统前级的电源，为提高抗干扰性能，保证可靠性，一般用隔离电源。</li>
-<li>对安全有要求的场合，如需接市电的AC-DC，或医疗用的电源和白色家电，为保证人身的安全，必须用隔离电源，有些场合还必须用加强隔离的电源。</li>
-<li>对于远程工业通信的供电，为有效降低地电势差和导线耦合干扰的影响，为每个通信节点单独供电一般都用隔离电源。</li>
-<li>内部IC或部分电路供电，从性价比和体积出发，优先选用非隔离电源。</li>
-<li>对于采用电池供电，<mark>对续航力要求严苛的场合，采用非隔离供电</mark>。</li>
-</ol>
-<h3 id="隔离电源">隔离电源</h3>
-<ol type="1">
-<li><p>涉及可能触电的场合，如从电网取电，转成低压直流的场合，需用隔离的AC-DC电源；</p></li>
-<li><p>串行通信总线通过RS-232、RS-485和控制器局域网(CAN)等物理网络传送数据，这些相互连接的系统每个都配备有自己的电源，而且各系统之间往往间隔较远，因此，我们通常需要隔离电源进行电气隔离来确保系统的物理安全，且通过隔离 <mark style="font-style: Italic; font-weight: 900;">切断接地回路</mark>，来保护系统免受瞬态高电压冲击，同时减少信号失真；</p></li>
-<li><p>对外的I/O端口，为保证系统的可靠运行，也建议对I/O端口做电源隔离。</p></li>
-</ol>
-<h3 id="非隔离电源">非隔离电源</h3>
-<p>电路板内的IC或部分电路供电，从性价比和体积出发，优先选用非隔离的方案；如MPS的MP150/157/MP174系列buck型非隔离AC-DC，适合于1~5W应用；</p>
-<p>对于工作电压低于36V，采用电池供电，对续航力要求严苛的场合，优先采用非隔离供电，如MPS的MP2451/MPQ2451。</p>
-<h1 id="隔离电源模块选型的注意事项">隔离电源模块选型的注意事项</h1>
-<p>电源的隔离耐压在GB-4943国标中又叫抗电强度，这个GB-4943标准就是我们常说的信息类设备的安全标准，就是为了防止人员受到物理和电气伤害的国家标准，其中包括避免人受到电击伤害、物理伤害、爆炸等伤害。如下图为隔离电源结构图。</p>
-<p><img src="https://pic.islet.space/2021/07/60935d4fe8f0d-thumb.png" alt="img" style="zoom:120%;" /></p>
-<div style="text-align: center; font-weight: 900;">
-图 隔离电源结构
-</div>
-<p>作为模块电源的重要指标，标准中也规定了隔离耐压相关测试方法，简单的测试时一般采用等电位连接测试，连接示意图如下：</p>
-<figure>
-<img src="https://pic.islet.space/2021/07/60935d4fc9c96-thumb.png" alt="img" /><figcaption aria-hidden="true">img</figcaption>
-</figure>
-<div style="text-align: center; font-weight: 900;">
-图 隔离耐压测试示意
-</div>
-<h2 id="测试方法">测试方法</h2>
-<ol type="1">
-<li><p>将耐压计的电压设为规定的耐压值，电流设为规定的漏电流值，时间设为规定的测试时间值；</p></li>
-<li><p>操作耐压计开始测试，开始加压，在规定的测试时间内，模块应无击穿，无飞弧现象。</p></li>
-<li><p>注意在测试时焊接电源模块要选取合适的温度，避免反复焊接，损坏电源模块。</p></li>
-<li><p>除此之外还要注意：</p>
-<ol type="1">
-<li>要注意是AC-DC还是DC-DC。</li>
-<li>隔离电源模块的隔离耐压。例如隔离1000V DC 是否满足绝缘要求。</li>
-<li>隔离电源模块是否有进行全面的可靠性测试。电源模块要经过性能测试、容差测试、瞬态条件测试、可靠性测试、EMC电磁兼容测试、高低温测试、极限测试、寿命测试、安规测试等。</li>
-<li>隔离电源模块的生产工厂产线是否规范。电源模块生产线需要通过ISO9001, ISO14001，OHSAS18001等多项国际认证，如下图3所示。</li>
-<li>隔离电源模块是否有应用在工业、汽车等恶劣环境。电源模块不仅仅大量应用与恶劣的工业环境，同时在新能源汽车的BMS管理系统中也游刃有余。</li>
-</ol></li>
-</ol>
-<figure>
-<img src="https://pic.islet.space/2021/07/60935d503580c-thumb.png" alt="img" /><figcaption aria-hidden="true">img</figcaption>
-</figure>
-<div style="text-align: center; font-weight: 900;">
-图 ISO认证
-</div>
-<h1 id="总结">总结</h1>
-<p>很多人认为非隔离电源不如隔离电源好，因为隔离电源贵，所以肯定贵的就好。前几年非隔离的稳定性确实没有隔离稳定，但随着研发技术的更新，现如今非隔离已经非常成熟，日渐稳定。说到安全性，其实现在非隔离电源也是很安全的，只要在结构稍微做下改动，对人体还是很安全的，同样的道理，非隔离电源也是可以过很多安规标准，例如:ULTUVSAACE等。</p>
-<p>实际上非隔离电源损坏的根源就是电源AC线两端的浪涌电压所致，也可以这么说，雷击浪涌吧，这种电压是加在电压AC线两端的瞬间高压，有时高达三千伏，但时间很短，能量却极强，在打雷时会发生，或是在同一条AC线上，当一个大的负载断开瞬间，因为电流惯性的原因也会发生，这个电压进入电源，对于非隔离BUCK电路，会瞬间传达到输出，击坏恒流检测环，或是进一步击坏芯片，造成300v直通，而烧掉整条灯管。对于隔离反激电源，会击坏MOS,现象就是保管，芯片，MOS管全烧坏。现在LED驱动电源，在使用过程中坏的，80%以上都是这两种类似现象。而且，小型开关电源，就算是电源适配器，也经常损坏的是这个现象，均是浪涌电压所致，而在LED电源里，表现的更加普遍，这是因为LED的负载特性是特别的怕浪涌电压的。</p>
-<p>如果按照一般的理论来讲，电子电路里，元器件越少，可靠性越高，相应越多的元件的电路板可靠性则越低。实际上非隔离电路的元件是比隔离电路要少的，为什么隔离电路可靠性高。其实说白了，不是什么可靠性，而是 <mark>非隔离电路对于浪涌太敏感，抑制能力差</mark>，隔离电路，因为能量是先进入变压器，然后从变压器再输送到LED负载的。BUCK电路是输入电源一部分直接加在了LED负载上，故前者对浪涌抑制和衰减能力强，所以浪涌来时损坏的机率小而已。实际上，非隔离电源的问题主要是在于浪涌问题，目前这个问题，因为只有LED灯具在大批量应用时，从概率上才能看出其解决的程度，所以很多人没有提出好的防治办法，更多的人则是不知道浪涌电压为何物。LED灯具坏了，很多人也找不到原因，最后只能一句，什么此电源不稳定就了结了，具体哪里不稳定，他不知道。</p>
-<p>非隔离电源的优势一是效率，二是成本。</p>
-<p>非隔离电源适合的场合：首先，是室内的灯具，这种室内用电环境较好，浪涌影响小。第二，使用的场合是高压小电流，低压大电流用非隔离没有意义，因为低压大电流非隔离的效率并不比隔离的高，成本也低不到多少去。第三，电压相对较稳定的环境中使用非隔离电源。当然，如果有办法解决掉抑制浪涌的问题，那么非隔离电源的应用范围将大大拓宽！</p>
-<p>隔离电源因为浪涌的问题，损坏率也不可小觑，一般那种返修回来，击坏保险，芯片，MOS的第一个应该想到是浪涌问题。为了减少损坏率，在设计时就行要考虑到浪涌的因素进去，或是在使用时要告戒用户，尽量避免浪涌发生。（如室内灯具，打雷时暂时先关掉）</p>
-<p>综合所述，使用隔离与非隔离很多时候都是因为浪涌这个问题，而浪涌问题和用电环境是息息相关的，所以很多时候使用隔离电源和非隔离电源不能一刀切，非隔离电源在节能，成本上都是很有优势的，所以要科学的选用非隔离还是隔离作为LED驱动电源。</p>
 
       
     </div>
