@@ -162,7 +162,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">105</span>
+          <span class="site-state-item-count">104</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -173,7 +173,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">193</span>
+        <span class="site-state-item-count">192</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -207,111 +207,6 @@
 
 
     <div class="main-inner index posts-expand">
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://islet.space/2019/01/07/Networking/%E7%BD%91%E7%BB%9C%20-%20TCP-IP%E4%B8%93%E6%9C%89%E5%90%8D%E8%AF%8D/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Liewzheng">
-      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Coder的孤岛">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2019/01/07/Networking/%E7%BD%91%E7%BB%9C%20-%20TCP-IP%E4%B8%93%E6%9C%89%E5%90%8D%E8%AF%8D/" class="post-title-link" itemprop="url">TCP/IP专有名词</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-
-    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
-    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2019-01-07 19:38:13" itemprop="dateCreated datePublished" datetime="2019-01-07T19:38:13+08:00">2019-01-07</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2019-01-09 16:12:38" itemprop="dateModified" datetime="2019-01-09T16:12:38+08:00">2019-01-09</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Communication/" itemprop="url" rel="index"><span itemprop="name">Communication</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="dhcp">DHCP</h1>
-<p>Dynamic Host Configuration Protocol, 动态主机设置协议, 是一个局域网的网络协议，使用UDP协议工作，主要有两个用途： 1. 用于内部网或网络服务供应商自动分配IP地址给用户 2. 用于内部网管理员作为对所有计算机作中央管理的手段</p>
-<h1 id="tcpip-stack-library-lwip">TCP/IP Stack Library (LwIP)</h1>
-<p>LwIP是瑞典计算机科学院的一个开源的TCP/IP协议栈实现。</p>
-<p>LwIP协议栈主要关注的是怎么样减少内存的使用和代码的大小，这样就可以让lwIP适用于资源有限的小型平台例如嵌入式系统。为了简化处理过程和内存要求，lwIP对API进行了裁减，可以不需要复制一些数据。</p>
-<p>lwIP是TCP / IP协议套件的一个小型独立实现，最初由Adam Dunkels开发，现在继续在这里。</p>
-<p>lwIP TCP / IP实现的重点是减少资源使用，同时仍然具有全面的TCP。这使得lwIP适用于具有数十千字节空闲RAM的嵌入式系统，并且可以容纳大约40千字节的代码ROM。</p>
-<h2 id="lwip主要功能">lwIP主要功能</h2>
-<h3 id="协议">协议</h3>
-<p>IP，IPv6，ICMP，ND，MLD，UDP，TCP，IGMP，ARP，PPPoS，PPPoE</p>
-<h3 id="客户端">客户端</h3>
-<p>DHCP客户端 DNS客户端（包括mDNS主机名解析器），AutoIP / APIPA（Zeroconf），SNMP agent（v1，v2c，v3，私有MIB支持和MIB编译器）</p>
-<h3 id="api">API</h3>
-<p>用于增强性能的专用API，可选的Berkeley-socket套接字API</p>
-<h3 id="扩展功能">扩展功能</h3>
-<p>通过多个网络接口进行IP转发，TCP拥塞控制，RTT估计和快速恢复/ fast retransmit</p>
-<h3 id="addon应用程序">Addon应用程序</h3>
-<p>HTTP(S)服务器，SNTP客户端，SMTP(S)客户端，ping，NetBIOS名称服务器，mDNS响应器，MQTT客户端，TFTP服务器</p>
-<p>lwIP根据BSD风格许可证授权：<a target="_blank" rel="noopener" href="http://lwip.wikia.com/wiki/License" class="uri">http://lwip.wikia.com/wiki/License</a></p>
-<h1 id="ttl">TTL</h1>
-<p>TTL(Time- To-Live)，简单的说它表示一条域名解析记录在DNS服务器上缓存时间.当各地的DNS服务器接受到解析请求时，就会向域名指定的DNS服务器发出解析请求从而获得解析记录；在获得这个记录之后，记录会在DNS服务器中保存一段时间，这段时间内如果再接到这个域名的解析请求，DNS服务器将不再向DNS服务器发出请求，而是直接返回刚才获得的记录；而这个记录在DNS服务器上保留的时间，就是TTL值。</p>
-<h1 id="参考链接">参考链接</h1>
-<p>1.《<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/LwIP">lwIP</a>》 2.《<a target="_blank" rel="noopener" href="https://savannah.nongnu.org/projects/lwip/">lwIP - A Lightweight TCP/IP stack - Summary</a>》 3.《<a target="_blank" rel="noopener" href="https://blog.csdn.net/ysdaniel/article/details/6922097">TTL值的含义以及与域名DNS TTL值的区别</a>》</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
 
     
 

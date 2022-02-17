@@ -162,7 +162,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">105</span>
+          <span class="site-state-item-count">104</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -173,7 +173,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">193</span>
+        <span class="site-state-item-count">192</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -207,6 +207,105 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://islet.space/2022/01/28/Linux/System/2022-01-28-Kali-%E4%B8%8E-MBA-2015/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Liewzheng">
+      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coder的孤岛">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/01/28/Linux/System/2022-01-28-Kali-%E4%B8%8E-MBA-2015/" class="post-title-link" itemprop="url">Kali 与 MBA-2015</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2022-01-28 12:00:00" itemprop="dateCreated datePublished" datetime="2022-01-28T12:00:00+08:00">2022-01-28</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2022-01-31 00:34:35" itemprop="dateModified" datetime="2022-01-31T00:34:35+08:00">2022-01-31</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="网卡驱动安装">网卡驱动安装</h1>
+<p>Macbook Air 2015年 13英寸版所使用的的网卡是 博通的 <code>BCM94360CS2</code> 。</p>
+<p>可以从 <code>关于本机</code> --&gt; <code>系统报告</code> --&gt; <code>Wi-Fi</code> 中查看到硬件固件版本。</p>
+<figure>
+<img src="/Users/liewzheng/Library/Application%20Support/typora-user-images/image-20220128154108052.png" alt="image-20220128154108052" /><figcaption aria-hidden="true">image-20220128154108052</figcaption>
+</figure>
+<p>安装完Linux之后，暂时无法联网，需要使用有线网络进行上网，可以使用 iPhone 接 <code>lighting-USBA</code> 的转接线进行上网，然后下载安装 <code>bcmwl-kernel-source</code> 。</p>
+<p>如果使用 <code>pkgs.org</code> 官网上下载的 <code>bcmwl-kernel-source.dpkg</code> 则会提示缺少很多依赖，无法直接一步安装到位。</p>
+<figure>
+<img src="/Users/liewzheng/Library/Application%20Support/typora-user-images/image-20220128154312606.png" alt="image-20220128154312606" /><figcaption aria-hidden="true">image-20220128154312606</figcaption>
+</figure>
+<h1 id="apfs-硬盘内容读取">APFS 硬盘内容读取</h1>
+<p><code>https://github.com/sgan81/apfs-fuse/</code></p>
+<h1 id="reference">REFERENCE</h1>
+<ol type="1">
+<li><a target="_blank" rel="noopener" href="https://www.cnblogs.com/lovesKey/p/10791914.html">在linux访问macos下的分区</a></li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -2359,111 +2458,6 @@ wirespeek = 8e5
 <li><a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/cpp/cpp/cpp-type-system-modern-cpp?view=msvc-160">C++ 类型系统</a></li>
 <li><a target="_blank" rel="noopener" href="https://www.cnblogs.com/noble/p/4144120.html">IEEE二进制浮点数算术标准（IEEE 754）</a></li>
 </ol>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://islet.space/2021/10/27/Linux/2021-10-27-WSL-and-Baidu-Netdisk/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Liewzheng">
-      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Coder的孤岛">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/10/27/Linux/2021-10-27-WSL-and-Baidu-Netdisk/" class="post-title-link" itemprop="url">WSL and Baidu Netdisk</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-
-    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
-    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2021-10-27 10:25:00" itemprop="dateCreated datePublished" datetime="2021-10-27T10:25:00+08:00">2021-10-27</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-12-10 22:29:32" itemprop="dateModified" datetime="2021-12-10T22:29:32+08:00">2021-12-10</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="wsl">WSL</h1>
-<p>在windows的 linux子系统下安装的具有图形界面的软件都可以在windows上打开，但是如果直接在MS商店安装的 kali linux 子系统是最精简版本，很多开发者需要用的软件（如 gcc / make / vim 等）都不存在，需要使用官方提供的完整安装命令去安装一些必须程序。</p>
-<p>按照官方指示安装完必要程序后，可以在文件管理器里看到 linux 子系统的根目录，一定程度上很方便windows的用户使用linux系统并用图形化界面管理其文件。</p>
-<figure>
-<img src="https://pic.islet.space/2021/10/20211027104148.png" alt="image-20211027103100831" /><figcaption aria-hidden="true">image-20211027103100831</figcaption>
-</figure>
-<h1 id="百度云盘安装">百度云盘安装</h1>
-<p>百度云盘是个人经常使用到的工具，在linux系统上也会安装，但wsl系统的话，多少可能会因为某些依赖文件缺失导致安装失败。</p>
-<p>缺失的文件可以通过先更新源库（<code>sudo apt update</code>）再进行安装的方式解决，但有些时候可能是源库的问题，导致该依赖的包不存在（如下）。</p>
-<figure>
-<img src="https://pic.islet.space/2021/10/20211027104146.png" alt="image-20211027104129827" /><figcaption aria-hidden="true">image-20211027104129827</figcaption>
-</figure>
-<p>因此需要通过手动下载（利用 <code>wget</code> ）该依赖包，然后自行安装（利用 <code>sudo dpkg -i</code> ）的方式来解决，其中百度云盘缺失的依赖文件及其包连接如下：</p>
-<ul>
-<li><code>libappindicator3-1</code>：http://mirrors.ustc.edu.cn/debian/pool/main/liba/libappindicator/libappindicator3-1_0.4.92-3.1_amd64.deb</li>
-<li><code>libindicator3-7</code>：http://mirrors.ustc.edu.cn/debian/pool/main/libi/libindicator/libindicator3-7_0.5.0-2_amd64.deb</li>
-<li><code>libdbusmenu-glib4</code>：http://ftp.br.debian.org/debian/pool/main/libd/libdbusmenu/libdbusmenu-glib4_18.10.20180917~bzr490+repack1-1_amd64.deb</li>
-<li><code>libdbusmenu-gtk3-4</code>：http://ftp.br.debian.org/debian/pool/main/libd/libdbusmenu/libdbusmenu-gtk3-4_18.10.20180917~bzr490+repack1-1_amd64.deb</li>
-</ul>
-<p>安装完毕之后即可正常进行软件使用了，虽然 wsl 的界面还是差强人意了些，哈哈。</p>
-<figure>
-<img src="https://pic.islet.space/2021/10/20211027104142.png" alt="image-20211027104032244" /><figcaption aria-hidden="true">image-20211027104032244</figcaption>
-</figure>
 
       
     </div>
