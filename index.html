@@ -162,18 +162,18 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">104</span>
+          <span class="site-state-item-count">106</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
           <a href="/categories/">
-        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-count">12</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">192</span>
+        <span class="site-state-item-count">195</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -207,6 +207,245 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://islet.space/2022/02/24/Hardware/STM32/2022-02-22-%E5%9C%A8mac%E4%B8%8A%E5%AE%89%E8%A3%85stm32CubeMX/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Liewzheng">
+      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coder的孤岛">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/02/24/Hardware/STM32/2022-02-22-%E5%9C%A8mac%E4%B8%8A%E5%AE%89%E8%A3%85stm32CubeMX/" class="post-title-link" itemprop="url">在mac上安装stm32CubeMX</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2022-02-24 02:00:00" itemprop="dateCreated datePublished" datetime="2022-02-24T02:00:00+08:00">2022-02-24</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2022-02-23 00:06:22" itemprop="dateModified" datetime="2022-02-23T00:06:22+08:00">2022-02-23</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Programming/" itemprop="url" rel="index"><span itemprop="name">Programming</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="tools-download-and-setup">TOOLS DOWNLOAD AND SETUP</h1>
+<p>在 ST 官网下载了 CubeMX 的 Mac 版软件，然后会发现关闭安全相关的限制也没办法打开该软件包。</p>
+<figure>
+<img src="https://pic.islet.space/2022/02/image-20220222205346872.png" alt="image-20220222205346872" /><figcaption aria-hidden="true">image-20220222205346872</figcaption>
+</figure>
+<p>通过 <code>tree</code> 命令查看目录可以找到一个叫 <code>SetupSTM32CubeMX-6_3_0</code> 的应用程序，运行该文件即可进行安装。</p>
+<figure>
+<img src="https://pic.islet.space/2022/02/image-20220222205452868.png" alt="image-20220222205452868" /><figcaption aria-hidden="true">image-20220222205452868</figcaption>
+</figure>
+<p>Mac 系统上可运行的程序都是 <code>.App</code> 结尾的文件夹，直接点击右键的 <code>显示包内容</code> 即可进入查看。</p>
+<figure>
+<img src="https://pic.islet.space/2022/02/image-20220222205524560.png" alt="image-20220222205524560" /><figcaption aria-hidden="true">image-20220222205524560</figcaption>
+</figure>
+<p>双击 <code>SetupSTM32CubeMX-6_3_0</code> 即可运行安装程序。</p>
+<figure>
+<img src="https://pic.islet.space/2022/02/image-20220222205545346.png" alt="image-20220222205545346" /><figcaption aria-hidden="true">image-20220222205545346</figcaption>
+</figure>
+<h1 id="new-project">NEW PROJECT</h1>
+<p>在 CubeMX 的 Home 界面，可以 <strong>根据芯片型号新建项目</strong>，也可以 <strong>根据ST板子型号新建项目</strong>。</p>
+<figure>
+<img src="https://pic.islet.space/2022/02/image-20220222213510204.png" alt="image-20220222213510204" /><figcaption aria-hidden="true">image-20220222213510204</figcaption>
+</figure>
+<p>只需要在对应需要的 MCU 或者 板子上双击即可。</p>
+<figure>
+<img src="https://pic.islet.space/2022/02/image-20220222213140557.png" alt="image-20220222213140557" /><figcaption aria-hidden="true">image-20220222213140557</figcaption>
+</figure>
+<p>如果使用ST自家的评估板，新建项目时建议直接选择 <code>ACCESS TO BOARD SELECTOR</code> 。</p>
+<figure>
+<img src="https://pic.islet.space/2022/02/image-20220222212802407.png" alt="image-20220222212802407" /><figcaption aria-hidden="true">image-20220222212802407</figcaption>
+</figure>
+<p>它会帮助默认设置一些板子上的外设（它会提示 <code>Initialize all peripherals with their default Mode?</code> ），就不用用户自己去设置，否则选择 <code>ACCESS TO MCU SELECTOR</code> 就会在某些地方上产生默认配置差异，如 GPIO。</p>
+<figure>
+<img src="https://pic.islet.space/2022/02/image-20220222213201459.png" alt="image-20220222213201459" /><figcaption aria-hidden="true">image-20220222213201459</figcaption>
+</figure>
+<p>下图为根据 ST 板子型号生成项目时默认配置的一些外设引脚。当然，还需要自行设置各个需要使用到的引脚的具体配置，如输入/输出、拉高/拉低等等。</p>
+<p><img src="https://pic.islet.space/2022/02/image-20220222213417943.png" alt="image-20220222213417943" style="zoom:33%;" /></p>
+<p>下图为根据 ST 芯片信号生成项目时默认不配置任何引脚：</p>
+<p><img src="https://pic.islet.space/2022/02/image-20220222213744404.png" alt="image-20220222213744404" style="zoom:33%;" /></p>
+<h1 id="debug-records">DEBUG RECORDS</h1>
+<h2 id="attempt-to-rename-spec-link-to-already-defined-spec-nano_link">ATTEMPT TO RENAME SPEC 'LINK' TO ALREADY DEFINED SPEC 'NANO_LINK'</h2>
+<p><code>cmake .. ; make</code> 时发现 <code>cmake</code> 无误，而 <code>make</code> 报错，提示 <code>attempt to rename sepc 'link' to already defined spec 'nano_link'</code>。</p>
+<figure>
+<img src="https://pic.islet.space/2022/02/image-20220222224906371.png" alt="image-20220222224906371" /><figcaption aria-hidden="true">image-20220222224906371</figcaption>
+</figure>
+<p>具体报错信息如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">fatal error: &#x2F;Users&#x2F;liewzheng&#x2F;bin&#x2F;gcc-arm-none-eabi-5_4-2016q3&#x2F;bin&#x2F;..&#x2F;lib&#x2F;gcc&#x2F;arm-none-eabi&#x2F;5.4.1&#x2F;..&#x2F;..&#x2F;..&#x2F;..&#x2F;arm-none-eabi&#x2F;lib&#x2F;nano.specs: attempt to rename spec &#39;link&#39; to already defined spec &#39;nano_link&#39;</span><br><span class="line">compilation terminated.</span><br><span class="line">make[2]: *** [led_blink.elf] Error 1</span><br><span class="line">make[1]: *** [CMakeFiles&#x2F;led_blink.elf.dir&#x2F;all] Error 2</span><br><span class="line">make: *** [all] Error 2</span><br></pre></td></tr></table></figure>
+<p>而 <code>CMakeLists.txt</code> 文件中只有以下此句设计 <code>spec</code> 和 <code>nano</code> 关键字（下方注释是后来加上去的），此配置在 linux 平台上是运行正常的。</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 如果提示 linker 相关的错误，请删除  `-specs=nosys.specs` 和 `-specs=nano.specs` 这两个标志及所在临时文件夹并再次 `cmake .. ; make` 进行尝试</span></span><br><span class="line"><span class="keyword">SET</span>(CPU <span class="string">&quot;-mcpu=cortex-m4&quot;</span>)</span><br><span class="line"><span class="keyword">SET</span>(FPU <span class="string">&quot;-mfpu=fpv4-sp-d16&quot;</span>)</span><br><span class="line"><span class="keyword">SET</span>(FLOAT_ABI <span class="string">&quot;-mfloat-abi=hard&quot;</span>)</span><br><span class="line"><span class="keyword">SET</span>(MCU <span class="string">&quot;$&#123;CPU&#125; -mthumb $&#123;FPU&#125; $&#123;FLOAT_ABI&#125;&quot;</span> --specs=nosys.specs -specs=nano.specs)</span><br></pre></td></tr></table></figure>
+<h3 id="解决方法">解决方法</h3>
+<p>根据 <a target="_blank" rel="noopener" href="https://community.st.com/s/question/0D50X00009XkWJiSAN/building-error-from-imported-stm32cubemx-project">Building Error from imported STM32CubeMX project</a> 的解决方法，删除 <code>-specs=nosys.specs</code> 和 <code>-specs=nano.specs</code> 这两个连接器的标志即可编译通过。</p>
+<figure>
+<img src="https://pic.islet.space/2022/02/image-20220222230947465.png" alt="image-20220222230947465" /><figcaption aria-hidden="true">image-20220222230947465</figcaption>
+</figure>
+<p>删除该两个标志后，<code>MCU</code> 变量为 <code>SET(MCU "$&#123;CPU&#125; -mthumb $&#123;FPU&#125; $&#123;FLOAT_ABI&#125;"</code>。</p>
+<h2 id="warning-cannot-find-entry-symbol-arch_paths_first">WARNING: CANNOT FIND ENTRY SYMBOL ARCH_PATHS_FIRST</h2>
+<figure>
+<img src="https://pic.islet.space/2022/02/image-20220222235232398.png" alt="image-20220222235232398" /><figcaption aria-hidden="true">image-20220222235232398</figcaption>
+</figure>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://islet.space/2022/02/22/Macintosh/2022-02-22-%E6%9B%B4%E6%94%B9mac%E7%9A%84%E9%BB%98%E8%AE%A4shell%E4%B8%BAfish/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Liewzheng">
+      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coder的孤岛">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/02/22/Macintosh/2022-02-22-%E6%9B%B4%E6%94%B9mac%E7%9A%84%E9%BB%98%E8%AE%A4shell%E4%B8%BAfish/" class="post-title-link" itemprop="url">更改Mac的默认shell为fish</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2022-02-22 20:50:00" itemprop="dateCreated datePublished" datetime="2022-02-22T20:50:00+08:00">2022-02-22</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2022-02-23 00:17:11" itemprop="dateModified" datetime="2022-02-23T00:17:11+08:00">2022-02-23</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Macintosh/" itemprop="url" rel="index"><span itemprop="name">Macintosh</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>Mac 平台自带的 zsh 真的极不好用，同样是 unix-like 平台，跟 kali 平台上的 zsh 体验相差甚远。 一直都是黑白配色，而且修改中断和配置的动手能力确实没有那么强。偶然适用了一下 <code>fish</code> ，发现在 Mac 平台使用效果挺好的，就决定进行更换。切换成黑色背景后更为舒适了，之前一直使用瞎眼的白色。</p>
+<figure>
+<img src="https://pic.islet.space/2022/02/image-20220223001619177.png" alt="image-20220223001619177" /><figcaption aria-hidden="true">image-20220223001619177</figcaption>
+</figure>
+<h1 id="fish-setup">FISH SETUP</h1>
+<p>我安装了 MacPorts 包管理工具，直接用 <code>port</code> 命令即可安装 <code>fish</code> 。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo port install fish</span><br></pre></td></tr></table></figure>
+<h1 id="add-fish-to-etcshells">ADD FISH TO /etc/shells</h1>
+<p>使用 <code>which fish</code> 可以调出 <code>fish</code> 的安装路径（用 <code>port</code> 安装的话默认路径是 <code>/opt/local/bin/fish</code> ），复制该路径，然后粘贴到 <code>/etc/shells</code> 文件末尾。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/shells</span><br></pre></td></tr></table></figure>
+<p><strong>NOTE</strong>：千万不要用 <code>sudo vim /etc/shells</code> 这样会修改到 <code>root</code> 管理员角色的 shell （如果出问题就会很麻烦），用户自己折腾自己的 shell 就好了。</p>
+<p>通过 <code>cat /etc/shells</code> 可以查看所有可供使用的 shell 。</p>
+<h1 id="change-default-shell">CHANGE DEFAULT SHELL</h1>
+<p>使用 <code>chsh</code> 语句即可将 <code>fish</code> 设置为默认 shell 。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chsh -s /opt/<span class="built_in">local</span>/bin/fish</span><br></pre></td></tr></table></figure>
+<h1 id="note">NOTE</h1>
+<p><code>fish</code> 所使用的配置文件并非 <code>~/.fish</code> 而是 <code>~/.bash_profile</code> ，在里面修改完内容可以 <code>source</code> 该文件进行立即更新。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -250,7 +489,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2022-01-31 00:34:35" itemprop="dateModified" datetime="2022-01-31T00:34:35+08:00">2022-01-31</time>
+        <time title="Modified: 2022-02-23 00:20:06" itemprop="dateModified" datetime="2022-02-23T00:20:06+08:00">2022-02-23</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -276,12 +515,12 @@
 <p>Macbook Air 2015年 13英寸版所使用的的网卡是 博通的 <code>BCM94360CS2</code> 。</p>
 <p>可以从 <code>关于本机</code> --&gt; <code>系统报告</code> --&gt; <code>Wi-Fi</code> 中查看到硬件固件版本。</p>
 <figure>
-<img src="/Users/liewzheng/Library/Application%20Support/typora-user-images/image-20220128154108052.png" alt="image-20220128154108052" /><figcaption aria-hidden="true">image-20220128154108052</figcaption>
+<img src="https://pic.islet.space/2022/02/image-20220128154108052.png" alt="image-20220128154108052" /><figcaption aria-hidden="true">image-20220128154108052</figcaption>
 </figure>
-<p>安装完Linux之后，暂时无法联网，需要使用有线网络进行上网，可以使用 iPhone 接 <code>lighting-USBA</code> 的转接线进行上网，然后下载安装 <code>bcmwl-kernel-source</code> 。</p>
+<p>安装完Linux之后，暂时无法联网，需要使用有线网络进行上网，可以使用 iPhone 接 <code>lighting-USBA</code> 的转接线进行上网，然后使用 <code>apt</code> 命令下载安装 <code>bcmwl-kernel-source</code> 。</p>
 <p>如果使用 <code>pkgs.org</code> 官网上下载的 <code>bcmwl-kernel-source.dpkg</code> 则会提示缺少很多依赖，无法直接一步安装到位。</p>
 <figure>
-<img src="/Users/liewzheng/Library/Application%20Support/typora-user-images/image-20220128154312606.png" alt="image-20220128154312606" /><figcaption aria-hidden="true">image-20220128154312606</figcaption>
+<img src="https://pic.islet.space/2022/02/image-20220128154312606.png" alt="image-20220128154312606" /><figcaption aria-hidden="true">image-20220128154312606</figcaption>
 </figure>
 <h1 id="apfs-硬盘内容读取">APFS 硬盘内容读取</h1>
 <p><code>https://github.com/sgan81/apfs-fuse/</code></p>
@@ -1861,602 +2100,6 @@ wirespeek = 8e5
 <li>期望入职时间（自己期望什么时候入职，对方期望最晚什么时候入职，可否协调程度）</li>
 <li>涨薪计划（入职后会有哪些涨薪激励计划，或之前其他股权发放啊、年终奖增长等等）</li>
 <li>绩效计划（可能这时候不太愿意说，但是入职后可以去了解）</li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://islet.space/2021/11/12/Networking/2021-11-12-%E7%BE%A4%E6%99%96%E3%80%81%E8%85%BE%E8%AE%AF%E4%BA%91%E5%92%8C%E5%85%AC%E7%BD%91IP%E8%AE%BE%E7%BD%AE/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Liewzheng">
-      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Coder的孤岛">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/11/12/Networking/2021-11-12-%E7%BE%A4%E6%99%96%E3%80%81%E8%85%BE%E8%AE%AF%E4%BA%91%E5%92%8C%E5%85%AC%E7%BD%91IP%E8%AE%BE%E7%BD%AE/" class="post-title-link" itemprop="url">群晖、腾讯云和公网IP设置</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-
-    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
-    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2021-11-12 17:30:00" itemprop="dateCreated datePublished" datetime="2021-11-12T17:30:00+08:00">2021-11-12</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-11-21 16:35:30" itemprop="dateModified" datetime="2021-11-21T16:35:30+08:00">2021-11-21</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Networking/" itemprop="url" rel="index"><span itemprop="name">Networking</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>双十一豪豪酱买了群晖DS220j家用NAS服务器，为了方便工作文件的备份传输，让电脑（PC、Mac）能用上远程网络驱动，就需要让服务器穿透内网，并申请一个独立域名，想着就用腾讯云和家里的小米路由器AX3600来干吧。下方是对硬件上需要的一些要求：</p>
-<p><strong>光猫</strong>：使用 <strong>桥接模式</strong>，具有 <strong>独立公网IP</strong></p>
-<p><strong>路由器</strong>：使用 <strong>PPPoE模式</strong> 进行拨号、支持 <strong>端口映射</strong>、 <strong>端口转发</strong> 和 <strong>DMZ</strong></p>
-<p><strong>群晖NAS</strong>：支持 <strong>DDNS</strong>、<strong>UPnP</strong> 协议、支持 <strong>证书使用范围管理</strong></p>
-<h1 id="前期准备工作">前期准备工作</h1>
-<h2 id="更改工作模式">更改工作模式</h2>
-<p><strong>光猫</strong> 和 <strong>路由器</strong> 都支持 <strong>路由模式</strong> 和 <strong>桥接模式</strong>，都支持多个无线接入和有线接入，但因为自己购买的路由器具有更多不一样的功能，例如支持UPnP等，而且光猫是连接物理光纤进行上网的，而自己购买的路由器不能直接连接光纤上网，还得依赖于光猫，所以可以认为是两种不一样的工作硬件。</p>
-<p>如果光猫已经工作在桥接模式（通过查看路由器后台的 <strong>上网方式</strong> 是否为PPPoE，如果是则说明自己购买的路由器工作在路由模式，电信光猫工作在桥接模式）。一般没有此类服务器需求的家庭网络，都是让光猫工作在路由拨号模式（即路由模式）的，而路由器则工作在桥接模式，此情况则需要将两个硬件设备的工作模式进行互换，参考以下步骤：</p>
-<ol type="1">
-<li>打电话给电信营业厅 <code>(0000)10000</code> （前方的 <code>(0000)</code> 是自己的市区号），确认一下光猫是路由模式还是桥接模式，如果是路由模式，则将其改成桥接模式。</li>
-<li>确认改成桥接模式后，询问宽带的账户和密码，在路由器后台输入账户密码并连接测试，确保路由器工作在拨号模式，而光猫工作在桥接模式。</li>
-</ol>
-<blockquote>
-<p>目前国内家庭宽带都是默认内网IP，想要公网IP就只能向运营商申请了，这并不需要额外的收费。电信手上的IP资源最多，也最大方。我也是照着别人的说法，打电话给电信客服，说装监控需要公网IP，客服登记之后，过几个小时就打电话说已经换好了，干净利落，服务好。目前好像还没见到过电信要不到公网IP的情况。</p>
-<p>——《<a target="_blank" rel="noopener" href="https://post.smzdm.com/p/awxqqwkg/">BT下载教程 篇一：BT下载大提速！ 获取公网IP和端口映射转发简单教程</a> 》</p>
-</blockquote>
-<figure>
-<img src="https://pic.islet.space/2021/11/202111130020050.png" alt="image-20211113000614809" /><figcaption aria-hidden="true">image-20211113000614809</figcaption>
-</figure>
-<h2 id="多重nat改成公网ip">多重NAT改成公网IP</h2>
-<p>同样是打给电信，然后申请公网IP，电信客服专员一般会在一个小时内处理完毕，然后就可以得到公网IP了。</p>
-<p>“谁拨号，谁就有公网IP” ——即此时如果路由器已经成功设置了路由模式（使用PPPoE拨号上网），则可以在路由器后台查看到其公网IP地址，如：</p>
-<figure>
-<img src="https://pic.islet.space/2021/11/202111130020200.png" alt="image-20211113001927548" /><figcaption aria-hidden="true">image-20211113001927548</figcaption>
-</figure>
-<h2 id="ddns域名绑定">DDNS域名绑定</h2>
-<p>虽然已经获得公网IP，但是该IP还是会随机变动，还会需要使用DDNS服务将公网IP映射到对应域名上，而群辉服务器则提供此功能，此处需要自己申请一个域名（此步骤省略）。进入群辉服务器后台，开启DDNS功能，将域名和随机公网IP绑定和更新。</p>
-<p>另外，需要自己上所用的服务器上开启API Token，并提供给群辉DDNS服务（类似于授权，可以由DDNS服务自己检测家庭网络的公网IP，并自动绑定最新的公网IP）。</p>
-<h3 id="api-token申请">API Token申请</h3>
-<p>下方以腾讯云的DNSPOD为例，点击DNSPOD中的 <strong>API密钥</strong>，进行 <strong>新建密钥</strong> 即可，将对应的 <strong>SecretId</strong> 和 <strong>SecretKey</strong> 复制下来。</p>
-<figure>
-<img src="https://pic.islet.space/2021/11/202111130022335.png" alt="image-20211113002208036" /><figcaption aria-hidden="true">image-20211113002208036</figcaption>
-</figure>
-<figure>
-<img src="https://pic.islet.space/2021/11/202111130022186.png" alt="image-20211113001142315" /><figcaption aria-hidden="true">image-20211113001142315</figcaption>
-</figure>
-<h3 id="ddns添加">DDNS添加</h3>
-<p>将获取到的 <strong>SecretId</strong> 填写到 <strong>用户名/电子邮件</strong> 中， 将 <strong>SecretKey</strong> 填写到 <strong>密码/密钥</strong> 中。</p>
-<figure>
-<img src="https://pic.islet.space/2021/11/202111130022727.png" alt="image-20211113001623814" /><figcaption aria-hidden="true">image-20211113001623814</figcaption>
-</figure>
-<p>经过前面的步骤，可以看到群晖NAS服务器自动测试的 <strong>DDNS状态</strong> 为 <strong>正常</strong> 即可。</p>
-<figure>
-<img src="https://pic.islet.space/2021/11/202111130022986.png" alt="image-20211112175853513" /><figcaption aria-hidden="true">image-20211112175853513</figcaption>
-</figure>
-<h2 id="端口映射和转发">端口映射和转发</h2>
-<p><strong>端口映射</strong>：Port Mapping， 即将内网中的主机的一个端口映射到外网主机的一个端口，以提供相应的服务。当用户访问外网IP的这个端口时，服务器自动将请求映射到对应局域网内部的机器上。</p>
-<p><strong>端口转发</strong>：Port Forwarding， 即将外网对应 EA 端口上收到的数据转发到内网某个主机对应的某个 IA 端口上，或者反过来将内网某个主机 IB 端口的数据转发到对应外网的 EB端口 上。</p>
-<p><strong>UPnP协议</strong>：Universal Plug and Play，即 即插即用。主要是微软在推行的一个标准，适用于家庭网络，用于设备间的发现和连接。UPnP 最大的愿景就是希望实现任何设备只要一接入网络就能被网络中的所有其它设备发现，做到完全的即插即用。UPnP是一个多层协议构成的框架体系，每一层都以相邻的下层为基础，同时又是相邻上层的基础。直至达到应用层为止。</p>
-<h3 id="手动端口转发或自动端口转发">手动端口转发或自动端口转发</h3>
-<p>手动端口转发：</p>
-<p>自动端口转发：</p>
-<figure>
-<img src="https://pic.islet.space/2021/11/202111130022401.png" alt="image-20211112180357037" /><figcaption aria-hidden="true">image-20211112180357037</figcaption>
-</figure>
-<figure>
-<img src="https://pic.islet.space/2021/11/202111211632483.png" alt="image-20211112175632036" /><figcaption aria-hidden="true">image-20211112175632036</figcaption>
-</figure>
-<figure>
-<img src="https://pic.islet.space/2021/11/202111130022536.png" alt="image-20211112180450097" /><figcaption aria-hidden="true">image-20211112180450097</figcaption>
-</figure>
-<h2 id="配置dmz">配置DMZ</h2>
-<blockquote>
-<p>通过配置DMZ，我们可以将需要保护的Web应用程序服务器和数据库系统放在内网中，把没有包含敏感数据、担当代理数据访问职责的主机放置于DMZ中，这样就为应用系统安全提供了保障。</p>
-<p>DMZ使包含重要数据的内部系统免于直接暴露给外部网络而受到攻击，攻击者即使初步入侵成功，还要面临DMZ设置的新的障碍。</p>
-</blockquote>
-<figure>
-<img src="https://pic.islet.space/2021/11/202111130022178.png" alt="image-20211112172411026" /><figcaption aria-hidden="true">image-20211112172411026</figcaption>
-</figure>
-<h3 id="dmz开启前">DMZ开启前</h3>
-<figure>
-<img src="https://pic.islet.space/2021/11/202111130022255.png" alt="image-20211112172343953" /><figcaption aria-hidden="true">image-20211112172343953</figcaption>
-</figure>
-<h3 id="dmz开启后">DMZ开启后</h3>
-<p>虽然也是随机公网IP，但是可以使用DMZ将连接到路由器的设备映射到外网上。</p>
-<figure>
-<img src="https://pic.islet.space/2021/11/202111130022517.png" alt="image-20211112175925384" /><figcaption aria-hidden="true">image-20211112175925384</figcaption>
-</figure>
-<h2 id="安全证书设置">安全证书设置</h2>
-<p>设置安全证书及其使用范围，<mark style="font-weight: 900;">不要使用自我签名的证书，所有浏览器都会识别和阻止你访问的</mark>。</p>
-<p>经过前面DDNS的 API token 配置之后，群晖NAS能够获取到对应域名的免费证书，并提供页面进行管理，将所有使用到的应用安全验证证书都设置为对应云服务提供商提供的证书即可。</p>
-<figure>
-<img src="https://pic.islet.space/2021/11/202111130022177.png" alt="image-20211112180133874" /><figcaption aria-hidden="true">image-20211112180133874</figcaption>
-</figure>
-<h1 id="后台服务器访问">后台服务器访问</h1>
-<p>经过上面复杂的折腾之后，就可以使用自定义的域名进行后台登录和管理了。</p>
-<p>输入 <code>https://nax.xxx.xxx:5000</code> 即可进行后台服务器的访问，也可以使用 ping 进行测试，如下：</p>
-<figure>
-<img src="https://pic.islet.space/2021/11/202111130029734.png" alt="image-20211113002928045" /><figcaption aria-hidden="true">image-20211113002928045</figcaption>
-</figure>
-<h1 id="远程驱动器设置">远程驱动器设置</h1>
-<ol type="1">
-<li>在文件管理器中右键点击 <strong>此电脑</strong> 的属性</li>
-<li>然后点击 <strong>映射网络驱动器</strong></li>
-</ol>
-<figure>
-<img src="https://pic.islet.space/2021/11/202111130022518.png" alt="image-20211112174837538" /><figcaption aria-hidden="true">image-20211112174837538</figcaption>
-</figure>
-<ol start="3" type="1">
-<li>选择本地的 <strong>虚拟驱动号</strong> 进行设置</li>
-<li>输入 <strong>网络地址</strong> 和 <strong>端口号</strong>，格式如 <code>https://nas.xxx.xxx:5006</code></li>
-</ol>
-<figure>
-<img src="https://pic.islet.space/2021/11/202111130022793.png" alt="image-20211112175022321" /><figcaption aria-hidden="true">image-20211112175022321</figcaption>
-</figure>
-<ol start="5" type="1">
-<li>按照提示输入群晖提供的账户名和密码即可进行连接</li>
-</ol>
-<figure>
-<img src="https://pic.islet.space/2021/11/202111130022607.png" alt="image-20211112174513370" /><figcaption aria-hidden="true">image-20211112174513370</figcaption>
-</figure>
-<ol start="6" type="1">
-<li>连接完毕即可查看到对应的网络驱动器</li>
-</ol>
-<figure>
-<img src="https://pic.islet.space/2021/11/202111130022504.png" alt="image-20211112174559989" /><figcaption aria-hidden="true">image-20211112174559989</figcaption>
-</figure>
-<h1 id="参考">参考</h1>
-<ol type="1">
-<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/75648110">【干货】什么是端口转发？什么是端口映射？如何设置端口映射？</a></li>
-<li><a target="_blank" rel="noopener" href="https://baike.baidu.com/item/DMZ/631225#6">DMZ</a></li>
-<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/braddoris/article/details/41646789">upnp协议简介（一）</a></li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://islet.space/2021/10/27/Programming/C++/2021-10-27-C++-Primer-Plus-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Liewzheng">
-      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Coder的孤岛">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/10/27/Programming/C++/2021-10-27-C++-Primer-Plus-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="post-title-link" itemprop="url">C++ Primer Plus 学习笔记</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-
-    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
-    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2021-10-27 11:00:00" itemprop="dateCreated datePublished" datetime="2021-10-27T11:00:00+08:00">2021-10-27</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-10-31 10:40:41" itemprop="dateModified" datetime="2021-10-31T10:40:41+08:00">2021-10-31</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Programming/" itemprop="url" rel="index"><span itemprop="name">Programming</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>本笔记不是全面的C++学习笔记，而是基于个人在原有的C语言基础和浅薄的C++的开发经验上的补足笔记。</p>
-<p>本笔记仅供个人学习记录，不提供完整学习指导，如有需要请自行阅读《<a target="_blank" rel="noopener" href="https://storage.islet.space/01_Learning/02_CPP/C%2B%2B_Primer_Plus.pdf">C++ Primer Plus</a>》。</p>
-<p>本文会参考 GNU C++ 进行代码调试，部分文档内容会参考 MS C++ 进行理解。</p>
-<h1 id="简介">简介</h1>
-<p>C++融合了三种不同的编程方式：</p>
-<ul>
-<li>面向过程编程（继承于C）</li>
-<li>面向对象编程</li>
-<li>泛型编程（Generic Programming），即C++模板（Template）</li>
-</ul>
-<h2 id="过程-vs-对象">过程 VS 对象</h2>
-<p><strong>面向过程编程</strong>（Process Oriented Programming），即 <strong>结构化编程</strong> 或 <strong>过程结构化编程</strong>，是指根据执行的操作来构思一个程序。程序任务需要解决的问题按照 “1、2、3、4” 这样的顺序一一编写，如果程序任务过大，则将较大的任务拆解成较小的可以理清结构逻辑的小任务去完成。C语言的编程开发思路就是使用程序模块（函数）来表示各个任务模块。</p>
-<p><strong>面向对象编程</strong>（Object Oriented Programming），简称 OOP。</p>
-<p>结构化编程在程序逻辑的清晰度和可靠性上占据优势，但是在代码量上和面向对象相比不占优势</p>
-<blockquote>
-<p>为了应付代码量的挑战，与强调算法的过程性编程不同，OOP强调数据。过程性编程试图使问题满足语言要求，OOP则是使语言满足问题的要求。</p>
-</blockquote>
-<p><strong>类</strong>（Class） 是规定了 <strong>数据</strong> 和 <strong>操作</strong> 的 <strong>数据类型</strong>（Data Type）。类所创建的实体称为对象。</p>
-<blockquote>
-<p>OOP 强调的是编程的数据方面，GP编程强调的是 <mark style="font-weight: 900;">独立于特定数据类型</mark>，即强调 <strong>通用</strong> 和 <strong>非特定</strong> 类型。</p>
-</blockquote>
-<figure>
-<img src="https://pic.islet.space/2021/10/20211030171646.png" alt="image-20211027135117490" /><figcaption aria-hidden="true">image-20211027135117490</figcaption>
-</figure>
-<h2 id="系统的位数">系统的位数</h2>
-<ul>
-<li>系统的位数是由什么决定的？包括嵌入式系统的8位、16位、32位和通用系统的32位和64位？</li>
-</ul>
-<p>位数 是由CPU的最大寻址空间决定的。</p>
-<h1 id="new-features-in-c">New Features in C++</h1>
-<p>以下主要从C++和C的区别点进行记录，是个人之前从未掌握过的知识，另外也会记录C++的一些高级用法。</p>
-<h2 id="statement">Statement</h2>
-<ul>
-<li>C与C++的语句申明位置有哪些差异？</li>
-</ul>
-<p>C语言的变量声明通常都应位于函数或过程开始位置（Pascal也是），而C++并没有该限制，因此这点可以说是C++的优点也可以是缺点。</p>
-<h3 id="range-based-for">Range-based for</h3>
-<p>C++11 引入了一种崭新的 <code>for()</code> 循环形式，可以逐一迭代某个给定的 <strong>区间</strong>、<strong>数组</strong> 或 <strong>集合</strong>（range, array or collection） 内的每一个元素。而其他语言可能称之为 <code>foreach</code> 循环，其一般性用法如下：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span>(decl:coll)&#123;</span><br><span class="line">    statement</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>其中：</p>
-<ul>
-<li><em>decl</em> 是给定之 <em>coll</em> 集合中的每个元素的声明。</li>
-<li><em>statement</em> 会针对给定之 <em>decl</em> 进行执行</li>
-</ul>
-</blockquote>
-<p>使用样例（下左）及其输出结果（下右）如：</p>
-<figure>
-<img src="https://pic.islet.space/2021/10/20211030171650.png" alt="image-20211030084723644" /><figcaption aria-hidden="true">image-20211030084723644</figcaption>
-</figure>
-<p>而且上面这种是基于 C-style array 的新旧语法搭配的 C++，实际上如果 <em>coll</em> 集合提供成员函数 <code>begin()</code> 和 <code>end()</code> ，那么使用 <code>for(decl:coll)</code> 时便等同于使用 <code>for(auto _pos=coll.begin(), _end=coll.end(); _pos!=_end;++_pos)</code></p>
-<h2 id="data-type">Data Type</h2>
-<ul>
-<li>数据类型的大小由什么决定？数据类型大小（即占空内存空间）与系统位数、编译器的关联性？</li>
-<li>嵌入式系统与通用系统的数据类型大小差异在哪？</li>
-<li>double 和 float 在内存上的差异？</li>
-</ul>
-<p>在 C++ 中， <strong>变量</strong>（Variable） 一词通常用于 引用 <strong>标量数据类型</strong> 的 实例，而 <strong>其他类型</strong>（class / struct）的实例通常称为 <strong>对象</strong>（Object）。</p>
-<p>C++ 是 <strong>强类型语言</strong> ，也是 <strong>静态类型</strong>。</p>
-<p>在代码中声明变量时，必须 <mark>显式指定其类型</mark>，或使用 关键字指示编译器从初始值表达式 <strong><code>auto</code></strong> 推断类型。 在代码中声明函数时，必须指定每个参数的类型及其返回值；如果函数未返回任何 <strong><code>void</code></strong> 值，则必须指定 。当使用允许任意类型参数的函数模板时例外。</p>
-<h3 id="基本内置类型">基本（内置）类型</h3>
-<p><strong>基本数据类型</strong>，简称 <strong>基本类型</strong> 或 <strong>基类型</strong>。</p>
-<p>下图显示了 Microsoft C++ 实现中的内置类型的相对大小：</p>
-<figure>
-<img src="https://pic.islet.space/2021/10/20211030171653.png" alt="多个内置类型的相对大小（以字节为单位）的关系图。" /><figcaption aria-hidden="true">多个内置类型的相对大小（以字节为单位）的关系图。</figcaption>
-</figure>
-<p>下表列出了最常用的基本类型及其在 Microsoft C++ 实现中的大小：</p>
-<table>
-<colgroup>
-<col style="width: 21%" />
-<col style="width: 9%" />
-<col style="width: 68%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th>类型</th>
-<th>大小</th>
-<th>评论</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><strong><code>int</code></strong></td>
-<td>4 个字节</td>
-<td>整数值的默认选择。</td>
-</tr>
-<tr class="even">
-<td><strong><code>double</code></strong></td>
-<td>8 个字节</td>
-<td>浮点值的默认选择。</td>
-</tr>
-<tr class="odd">
-<td><strong><code>bool</code></strong></td>
-<td>1 个字节</td>
-<td>表示可为 true 或 false 的值。</td>
-</tr>
-<tr class="even">
-<td><strong><code>char</code></strong></td>
-<td>1 个字节</td>
-<td>用于早期 C 样式字符串或 std:: 字符串对象中无需转换为 UNICODE 的 ASCII 字符。</td>
-</tr>
-<tr class="odd">
-<td><strong><code>wchar_t</code></strong></td>
-<td>2 个字节</td>
-<td>表示可能以 UNICODE 格式进行编码的“宽”字符值（Windows 上为 UTF-16，其他操作系统上可能不同）。 这是用于 <code>std::wstring</code> 类型字符串的字符类型。</td>
-</tr>
-<tr class="even">
-<td><strong><code>unsigned char</code></strong></td>
-<td>1 个字节</td>
-<td>C++ 没有内置字节类型。 使用 <strong><code>unsigned char</code></strong> 表示字节值。</td>
-</tr>
-<tr class="odd">
-<td><strong><code>unsigned int</code></strong></td>
-<td>4 个字节</td>
-<td>位标志的默认选项。</td>
-</tr>
-<tr class="even">
-<td><strong><code>long long</code></strong></td>
-<td>8 个字节</td>
-<td>表示非常大的整数值。</td>
-</tr>
-</tbody>
-</table>
-<p>类型数据的宽度（Width），即占用内存大小是由 <strong>计算机字长</strong> 和 <strong>编译程序</strong> 决定的。计算机字长提供了硬件计算精度的支持，编译程序则提供了源程序到机器码的转换。</p>
-<p>下方为C/C++ 在通用系统或嵌入式系统中的常见数据类型的大小，所有值的单位均为 <em>bit</em> 。</p>
-<table>
-<colgroup>
-<col style="width: 9%" />
-<col style="width: 5%" />
-<col style="width: 8%" />
-<col style="width: 6%" />
-<col style="width: 17%" />
-<col style="width: 18%" />
-<col style="width: 17%" />
-<col style="width: 15%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th>BASIC DATA TYPE</th>
-<th>8 bit MCU</th>
-<th>16bit MCU (51)</th>
-<th>32bit (x86)</th>
-<th>32bit (TI F28004x)<br>CLA ON</th>
-<th>32bit (TI F28004x)<br>CLA OFF</th>
-<th>64bit (x86)<br>in C++ (g++)</th>
-<th>64bit (x86)<br>in C (gcc)</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>char</td>
-<td></td>
-<td>8</td>
-<td>8</td>
-<td>8</td>
-<td>8</td>
-<td>8</td>
-<td>8</td>
-</tr>
-<tr class="even">
-<td>short</td>
-<td></td>
-<td>16</td>
-<td>16</td>
-<td>16</td>
-<td>8</td>
-<td>16</td>
-<td>16</td>
-</tr>
-<tr class="odd">
-<td>int</td>
-<td></td>
-<td>16</td>
-<td>32</td>
-<td>32</td>
-<td><mark>16</mark></td>
-<td>32</td>
-<td>32</td>
-</tr>
-<tr class="even">
-<td>long</td>
-<td></td>
-<td>32</td>
-<td>32</td>
-<td>32</td>
-<td><mark>16</mark></td>
-<td>64</td>
-<td>64</td>
-</tr>
-<tr class="odd">
-<td>long long</td>
-<td></td>
-<td>/</td>
-<td>64</td>
-<td>64</td>
-<td>32</td>
-<td>64</td>
-<td>64</td>
-</tr>
-<tr class="even">
-<td>float</td>
-<td></td>
-<td>32</td>
-<td>32</td>
-<td>32</td>
-<td>32</td>
-<td>32</td>
-<td>32</td>
-</tr>
-<tr class="odd">
-<td>double</td>
-<td></td>
-<td>32</td>
-<td>64</td>
-<td></td>
-<td>16</td>
-<td>64</td>
-<td>64</td>
-</tr>
-<tr class="even">
-<td>long double</td>
-<td></td>
-<td>/</td>
-<td></td>
-<td></td>
-<td>32</td>
-<td>128</td>
-<td>128</td>
-</tr>
-</tbody>
-</table>
-<p>下方内容转自网络，待验证。</p>
-<blockquote>
-<p>（x86平台下）<code>long int</code> 即 <code>long</code>，给人的感觉好像是长整型，但实际上，它和 <code>int</code> 一样，只有32位。cppreference 给出的定义如下，但在实际的使用中，<code>long</code> 与 <code>int</code> 几乎没有区别。</p>
-<blockquote>
-<p><strong><em>int</em></strong> - basic integer type. The keyword int may be omitted if any of the modifiers listed below are used. If no length modifiers are present, it’s guaranteed to have a width of at least 16 bits. However, on 32/64 bit systems it is almost exclusively guaranteed to have width of at least 32 bits. <strong><em>long</em></strong> - target type will have width of at least 32 bits.</p>
-</blockquote>
-</blockquote>
-<p><strong>实际上经过测试</strong>：在 x86_64 平台下，C 和 C++ 中的 <code>long</code> 长度都是要比 <code>int</code> 更长的，即 <code>int</code> 默认为 <code>32bit</code> 宽度，<code>long</code> 为 <code>64bit</code> 宽度。</p>
-<figure>
-<img src="https://pic.islet.space/2021/10/20211030171657.png" alt="image-20211028101248341" /><figcaption aria-hidden="true">image-20211028101248341</figcaption>
-</figure>
-<h3 id="embedded-system">Embedded System</h3>
-<p>嵌入式C语言中常用的数据类型如下图所示，而不同的</p>
-<p><img src="https://pic.islet.space/2021/10/20211030171712.png" alt="image-20211027155153218" style="zoom: 67%;" /></p>
-<h3 id="double-float">double / float</h3>
-<p><strong>IEEE二进制浮点数算术标准</strong>（<strong>IEEE 754</strong>）是20世纪80年代以来最广泛使用的浮点数运算标准，为许多CPU与浮点运算器所采用。这个标准定义了表示浮点数的格式（包括负零-0）与反常值（denormal number）），一些特殊数值（无穷（Inf）与非数值（NaN）），以及这些数值的“浮点数运算符”；它也指明了四种数值舍入规则和五种例外状况（包括例外发生的时机与处理方式）。</p>
-<p>IEEE 754规定了四种表示浮点数值的方式：单精确度（32位）、双精确度（64位）、延伸单精确度（43比特以上，很少使用）与延伸双精确度（79比特以上，通常以80比特实做）。只有32位模式有强制要求，其他都是选择性的。大部分编程语言都有提供IEEE浮点数格式与算术，但有些将其列为非必需的。例如，IEEE 754问世之前就有的C语言，现在有包括IEEE算术，但不算作强制要求（C语言的<code>float</code>通常是指IEEE单精确度，而<code>double</code>是指双精确度）。</p>
-<p>该标准的全称为<strong>IEEE二进制浮点数算术标准（ANSI/IEEE Std 754-1985）</strong>，又称<strong>IEC 60559:1989，微处理器系统的二进制浮点数算术</strong>（本来的编号是IEC 559:1989）。后来还有“与基数无关的浮点数”的“IEEE 854-1987标准”，有规定基数为2跟10的状况。现在最新标准是“IEEE 854-2008标准”。</p>
-<h2 id="variable">Variable</h2>
-<p>C++ 与 ANSI C（C99标准）不同之处，在于后者只保证名称中的前63个字符有意义，即使第64个字符不同，但是只要前63个字符相同的变量则被认为是相同的。</p>
-<p>在某些情况下，其他程序员会使用的变量命名风格及其意义：</p>
-<ul>
-<li><code>str</code> 或 <code>sz</code> 前缀：表示以空字符结束的字符串</li>
-<li><code>b</code> 前缀：表示布尔值</li>
-<li><code>p</code> 前缀：表示指针</li>
-<li><code>c</code> 前缀：表示单个字符</li>
-</ul>
-<h2 id="class">Class</h2>
-<p><strong>类</strong>：（用户定义/标准的）数据类型规范，详细描述了如何表示信息以及对数据执行的操作。</p>
-<p><strong>对象</strong>：是根据类规范创建的实体（好似之于变量和基本数据类型）。</p>
-<p>就像函数可以来自函数库一样，类也可以来自 <strong>类库</strong>。从技术上说，大部分类库都没有被内置到C++语言中，而是语言标准指定的类。<strong>类定义</strong> 位于类库文件中，并没有被内置到编译器里（有需要可以修改，虽然不建议）。</p>
-<p>C++之所以如此有吸引力，很大程度上是由于存在大量支持UNIX、Macintosh 和 Windows 编程的类库。</p>
-<p><strong>类描述</strong> 指定了可以对类对象执行的所有操作。要对特定对象执行这些允许的操作有两种方法，一是直接使用类方法（本质即函数调用），二是重定义运算符（如 <code>cin</code> 和 <code>cout</code> 使用的 <code>&gt;&gt;</code> 和 <code>&lt;&lt;</code> ）</p>
-<h2 id="function">Function</h2>
-<p>被调用的函数称为 <strong>被调用函数</strong>（called function），包含函数调用的函数称为 <strong>调用函数</strong>（calling function）。</p>
-<p><strong>函数原型</strong>：即 <strong>函数声明</strong>，函数原型或声明只描述函数接口，指仅有函数头和分号 <code>;</code> 而没有函数体的语句。函数原型定义了需要传递给函数的参数以及函数本身需要返回的值的类型。</p>
-<p><strong>库文件</strong>：存放了函数编译代码的文件。</p>
-<p><strong>头文件</strong>：包含了函数原型的文件。</p>
-<figure>
-<img src="https://pic.islet.space/2021/10/20211030171703.png" alt="image-20211028085847535" /><figcaption aria-hidden="true">image-20211028085847535</figcaption>
-</figure>
-<blockquote>
-<p>在有些语言中，有返回值的函数被称为 <strong>函数</strong>（function），无返回值的函数被称为 <strong>过程</strong>（procedure） 或 子程序（subroutine）。</p>
-<p>但在C/C++中，都被称为 <strong>函数</strong>。</p>
-</blockquote>
-<h3 id="main-function">Main Function</h3>
-<ul>
-<li>有什么有些IDE中的main函数的括号里是带参数的？</li>
-</ul>
-<p>是否在 主函数<code>main()</code> 参数括号 <code>()</code> 中使用关键字 <code>void</code> ，在C++和C中有明显的区别：</p>
-<ul>
-<li>在C++中，让括号空着和在括号中写 <code>void</code> 等效。</li>
-<li>而在C中，让括号空着意味着对是否接受参数保持沉默。</li>
-</ul>
-<blockquote>
-<p><code>int main(int argc, const char * argv[])</code> 是UNIX和linux中的标准写法。<code>int main()</code> 只是默许的用法。</p>
-<p>使用main函数时经常都是不带参数的，因此main 后的括号都是空括号。实际上，main函数可以带参数，这个参数可以认为是 main函数的 <strong>形式参数</strong>。</p>
-<p>Ｃ语言规定</p>
-<ol type="1">
-<li>main函数的参数只能有两个，习惯上这两个参数写为 <code>argc</code> 和 <code>argv</code>。因此，main函数的函数头可写为：<code>main (argc,argv)</code> 。</li>
-<li><code>argc</code> （第一个形参）必须是 <strong>整型变量</strong> ，<code>argv</code> （第二个形参）必须是指向字符串的 <strong>指针数组</strong>。</li>
-</ol>
-<p>由于main函数不能被其它函数调用，因此不可能在程序内部取得实际值。那么，在何处把实参值赋予main函数的形参呢?</p>
-<p>实际上，main函数的参数值是从 <strong>操作系统命令行</strong>/Terminal 上获得的。当我们要运行一个可执行文件时，输入空格，输入文件名，再输入实际参数即可把这些实参传送到main的形参中去。</p>
-</blockquote>
-<p><code>argc</code> 的数值会随着通过命令行传递给可执行文件的参数的增加而增加，即 <code>argc</code> 其实是代表着 <strong>参数的数量</strong>。</p>
-<figure>
-<img src="https://pic.islet.space/2021/10/20211030171706.png" alt="image-20211027144512641" /><figcaption aria-hidden="true">image-20211027144512641</figcaption>
-</figure>
-<h2 id="编译指令">编译指令</h2>
-<p><code>using</code> 是编译指令的关键字，</p>
-<h1 id="参考">参考</h1>
-<ol type="1">
-<li>《<a target="_blank" rel="noopener" href="https://storage.islet.space/01_Learning/02_CPP/C%2B%2B_Primer_Plus.pdf">C++ Primer Plus</a>》</li>
-<li><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/ab21bfe6a5b2">int main(int argc, const char * argv[])</a></li>
-<li><a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/cpp/cpp/cpp-type-system-modern-cpp?view=msvc-160">C++ 类型系统</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.cnblogs.com/noble/p/4144120.html">IEEE二进制浮点数算术标准（IEEE 754）</a></li>
 </ol>
 
       

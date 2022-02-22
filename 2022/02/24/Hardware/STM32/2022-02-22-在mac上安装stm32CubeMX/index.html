@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://code.islet.space/font//css?family=/CascadiaCode/CascadiaCode:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/themes/blue/pace-theme-minimal.css">
+  <script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"islet.space","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.7.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/db.json","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":true}}</script><script src="/js/config.js"></script>
+<meta name="description" content="TOOLS DOWNLOAD AND SETUP 在 ST 官网下载了 CubeMX 的 Mac 版软件，然后会发现关闭安全相关的限制也没办法打开该软件包。  image-20220222205346872  通过 tree 命令查看目录可以找到一个叫 SetupSTM32CubeMX-6_3_0 的应用程序，运行该文件即可进行安装。  image-20220222205452868  Mac 系">
+<meta property="og:type" content="article">
+<meta property="og:title" content="在mac上安装stm32CubeMX">
+<meta property="og:url" content="http://islet.space/2022/02/24/Hardware/STM32/2022-02-22-%E5%9C%A8mac%E4%B8%8A%E5%AE%89%E8%A3%85stm32CubeMX/index.html">
+<meta property="og:site_name" content="Coder的孤岛">
+<meta property="og:description" content="TOOLS DOWNLOAD AND SETUP 在 ST 官网下载了 CubeMX 的 Mac 版软件，然后会发现关闭安全相关的限制也没办法打开该软件包。  image-20220222205346872  通过 tree 命令查看目录可以找到一个叫 SetupSTM32CubeMX-6_3_0 的应用程序，运行该文件即可进行安装。  image-20220222205452868  Mac 系">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://pic.islet.space/2022/02/image-20220222205346872.png">
+<meta property="og:image" content="https://pic.islet.space/2022/02/image-20220222205452868.png">
+<meta property="og:image" content="https://pic.islet.space/2022/02/image-20220222205524560.png">
+<meta property="og:image" content="https://pic.islet.space/2022/02/image-20220222205545346.png">
+<meta property="og:image" content="https://pic.islet.space/2022/02/image-20220222213510204.png">
+<meta property="og:image" content="https://pic.islet.space/2022/02/image-20220222213140557.png">
+<meta property="og:image" content="https://pic.islet.space/2022/02/image-20220222212802407.png">
+<meta property="og:image" content="https://pic.islet.space/2022/02/image-20220222213201459.png">
+<meta property="og:image" content="https://pic.islet.space/2022/02/image-20220222213417943.png">
+<meta property="og:image" content="https://pic.islet.space/2022/02/image-20220222213744404.png">
+<meta property="og:image" content="https://pic.islet.space/2022/02/image-20220222224906371.png">
+<meta property="og:image" content="https://pic.islet.space/2022/02/image-20220222230947465.png">
+<meta property="og:image" content="https://pic.islet.space/2022/02/image-20220222235232398.png">
+<meta property="article:published_time" content="2022-02-23T18:00:00.000Z">
+<meta property="article:modified_time" content="2022-02-22T16:06:22.014Z">
+<meta property="article:author" content="Liewzheng">
+<meta property="article:tag" content="mac">
+<meta property="article:tag" content="stm32">
+<meta property="article:tag" content="cubemx">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://pic.islet.space/2022/02/image-20220222205346872.png">
+
+
+<link rel="canonical" href="http://islet.space/2022/02/24/Hardware/STM32/2022-02-22-%E5%9C%A8mac%E4%B8%8A%E5%AE%89%E8%A3%85stm32CubeMX/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://islet.space/2022/02/24/Hardware/STM32/2022-02-22-%E5%9C%A8mac%E4%B8%8A%E5%AE%89%E8%A3%85stm32CubeMX/","path":"2022/02/24/Hardware/STM32/2022-02-22-在mac上安装stm32CubeMX/","title":"在mac上安装stm32CubeMX"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>在mac上安装stm32CubeMX | Coder的孤岛</title>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<!-- hexo injector head_end end --></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Coder的孤岛</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">islet of the coder</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-首页"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-文章"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>文章</a></li>
+        <li class="menu-item menu-item-目录"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>目录</a></li>
+        <li class="menu-item menu-item-标签"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-简历"><a href="/resume/" rel="section"><i class="fa fa-address-card fa-fw"></i>简历</a></li>
+        <li class="menu-item menu-item-友链"><a href="/friends/" rel="section"><i class="fa fa-heartbeat fa-fw"></i>友链</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#tools-download-and-setup"><span class="nav-number">1.</span> <span class="nav-text">TOOLS DOWNLOAD AND SETUP</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#new-project"><span class="nav-number">2.</span> <span class="nav-text">NEW PROJECT</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#debug-records"><span class="nav-number">3.</span> <span class="nav-text">DEBUG RECORDS</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#attempt-to-rename-spec-link-to-already-defined-spec-nano_link"><span class="nav-number">3.1.</span> <span class="nav-text">ATTEMPT TO RENAME SPEC &#39;LINK&#39; TO ALREADY DEFINED SPEC &#39;NANO_LINK&#39;</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95"><span class="nav-number">3.1.1.</span> <span class="nav-text">解决方法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#warning-cannot-find-entry-symbol-arch_paths_first"><span class="nav-number">3.2.</span> <span class="nav-text">WARNING: CANNOT FIND ENTRY SYMBOL ARCH_PATHS_FIRST</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Liewzheng</p>
+  <div class="site-description" itemprop="description">笔记分享的旮旯孤岛而已</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">106</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">195</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="mailto:liewzheng@foxmail.com" title="E-Mail → mailto:liewzheng@foxmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://islet.space/2022/02/24/Hardware/STM32/2022-02-22-%E5%9C%A8mac%E4%B8%8A%E5%AE%89%E8%A3%85stm32CubeMX/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Liewzheng">
+      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coder的孤岛">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          在mac上安装stm32CubeMX
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2022-02-24 02:00:00" itemprop="dateCreated datePublished" datetime="2022-02-24T02:00:00+08:00">2022-02-24</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2022-02-23 00:06:22" itemprop="dateModified" datetime="2022-02-23T00:06:22+08:00">2022-02-23</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Programming/" itemprop="url" rel="index"><span itemprop="name">Programming</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="tools-download-and-setup">TOOLS DOWNLOAD AND SETUP</h1>
+<p>在 ST 官网下载了 CubeMX 的 Mac 版软件，然后会发现关闭安全相关的限制也没办法打开该软件包。</p>
+<figure>
+<img src="https://pic.islet.space/2022/02/image-20220222205346872.png" alt="image-20220222205346872" /><figcaption aria-hidden="true">image-20220222205346872</figcaption>
+</figure>
+<p>通过 <code>tree</code> 命令查看目录可以找到一个叫 <code>SetupSTM32CubeMX-6_3_0</code> 的应用程序，运行该文件即可进行安装。</p>
+<figure>
+<img src="https://pic.islet.space/2022/02/image-20220222205452868.png" alt="image-20220222205452868" /><figcaption aria-hidden="true">image-20220222205452868</figcaption>
+</figure>
+<p>Mac 系统上可运行的程序都是 <code>.App</code> 结尾的文件夹，直接点击右键的 <code>显示包内容</code> 即可进入查看。</p>
+<figure>
+<img src="https://pic.islet.space/2022/02/image-20220222205524560.png" alt="image-20220222205524560" /><figcaption aria-hidden="true">image-20220222205524560</figcaption>
+</figure>
+<p>双击 <code>SetupSTM32CubeMX-6_3_0</code> 即可运行安装程序。</p>
+<figure>
+<img src="https://pic.islet.space/2022/02/image-20220222205545346.png" alt="image-20220222205545346" /><figcaption aria-hidden="true">image-20220222205545346</figcaption>
+</figure>
+<h1 id="new-project">NEW PROJECT</h1>
+<p>在 CubeMX 的 Home 界面，可以 <strong>根据芯片型号新建项目</strong>，也可以 <strong>根据ST板子型号新建项目</strong>。</p>
+<figure>
+<img src="https://pic.islet.space/2022/02/image-20220222213510204.png" alt="image-20220222213510204" /><figcaption aria-hidden="true">image-20220222213510204</figcaption>
+</figure>
+<p>只需要在对应需要的 MCU 或者 板子上双击即可。</p>
+<figure>
+<img src="https://pic.islet.space/2022/02/image-20220222213140557.png" alt="image-20220222213140557" /><figcaption aria-hidden="true">image-20220222213140557</figcaption>
+</figure>
+<p>如果使用ST自家的评估板，新建项目时建议直接选择 <code>ACCESS TO BOARD SELECTOR</code> 。</p>
+<figure>
+<img src="https://pic.islet.space/2022/02/image-20220222212802407.png" alt="image-20220222212802407" /><figcaption aria-hidden="true">image-20220222212802407</figcaption>
+</figure>
+<p>它会帮助默认设置一些板子上的外设（它会提示 <code>Initialize all peripherals with their default Mode?</code> ），就不用用户自己去设置，否则选择 <code>ACCESS TO MCU SELECTOR</code> 就会在某些地方上产生默认配置差异，如 GPIO。</p>
+<figure>
+<img src="https://pic.islet.space/2022/02/image-20220222213201459.png" alt="image-20220222213201459" /><figcaption aria-hidden="true">image-20220222213201459</figcaption>
+</figure>
+<p>下图为根据 ST 板子型号生成项目时默认配置的一些外设引脚。当然，还需要自行设置各个需要使用到的引脚的具体配置，如输入/输出、拉高/拉低等等。</p>
+<p><img src="https://pic.islet.space/2022/02/image-20220222213417943.png" alt="image-20220222213417943" style="zoom:33%;" /></p>
+<p>下图为根据 ST 芯片信号生成项目时默认不配置任何引脚：</p>
+<p><img src="https://pic.islet.space/2022/02/image-20220222213744404.png" alt="image-20220222213744404" style="zoom:33%;" /></p>
+<h1 id="debug-records">DEBUG RECORDS</h1>
+<h2 id="attempt-to-rename-spec-link-to-already-defined-spec-nano_link">ATTEMPT TO RENAME SPEC 'LINK' TO ALREADY DEFINED SPEC 'NANO_LINK'</h2>
+<p><code>cmake .. ; make</code> 时发现 <code>cmake</code> 无误，而 <code>make</code> 报错，提示 <code>attempt to rename sepc 'link' to already defined spec 'nano_link'</code>。</p>
+<figure>
+<img src="https://pic.islet.space/2022/02/image-20220222224906371.png" alt="image-20220222224906371" /><figcaption aria-hidden="true">image-20220222224906371</figcaption>
+</figure>
+<p>具体报错信息如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">fatal error: &#x2F;Users&#x2F;liewzheng&#x2F;bin&#x2F;gcc-arm-none-eabi-5_4-2016q3&#x2F;bin&#x2F;..&#x2F;lib&#x2F;gcc&#x2F;arm-none-eabi&#x2F;5.4.1&#x2F;..&#x2F;..&#x2F;..&#x2F;..&#x2F;arm-none-eabi&#x2F;lib&#x2F;nano.specs: attempt to rename spec &#39;link&#39; to already defined spec &#39;nano_link&#39;</span><br><span class="line">compilation terminated.</span><br><span class="line">make[2]: *** [led_blink.elf] Error 1</span><br><span class="line">make[1]: *** [CMakeFiles&#x2F;led_blink.elf.dir&#x2F;all] Error 2</span><br><span class="line">make: *** [all] Error 2</span><br></pre></td></tr></table></figure>
+<p>而 <code>CMakeLists.txt</code> 文件中只有以下此句设计 <code>spec</code> 和 <code>nano</code> 关键字（下方注释是后来加上去的），此配置在 linux 平台上是运行正常的。</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 如果提示 linker 相关的错误，请删除  `-specs=nosys.specs` 和 `-specs=nano.specs` 这两个标志及所在临时文件夹并再次 `cmake .. ; make` 进行尝试</span></span><br><span class="line"><span class="keyword">SET</span>(CPU <span class="string">&quot;-mcpu=cortex-m4&quot;</span>)</span><br><span class="line"><span class="keyword">SET</span>(FPU <span class="string">&quot;-mfpu=fpv4-sp-d16&quot;</span>)</span><br><span class="line"><span class="keyword">SET</span>(FLOAT_ABI <span class="string">&quot;-mfloat-abi=hard&quot;</span>)</span><br><span class="line"><span class="keyword">SET</span>(MCU <span class="string">&quot;$&#123;CPU&#125; -mthumb $&#123;FPU&#125; $&#123;FLOAT_ABI&#125;&quot;</span> --specs=nosys.specs -specs=nano.specs)</span><br></pre></td></tr></table></figure>
+<h3 id="解决方法">解决方法</h3>
+<p>根据 <a target="_blank" rel="noopener" href="https://community.st.com/s/question/0D50X00009XkWJiSAN/building-error-from-imported-stm32cubemx-project">Building Error from imported STM32CubeMX project</a> 的解决方法，删除 <code>-specs=nosys.specs</code> 和 <code>-specs=nano.specs</code> 这两个连接器的标志即可编译通过。</p>
+<figure>
+<img src="https://pic.islet.space/2022/02/image-20220222230947465.png" alt="image-20220222230947465" /><figcaption aria-hidden="true">image-20220222230947465</figcaption>
+</figure>
+<p>删除该两个标志后，<code>MCU</code> 变量为 <code>SET(MCU "$&#123;CPU&#125; -mthumb $&#123;FPU&#125; $&#123;FLOAT_ABI&#125;"</code>。</p>
+<h2 id="warning-cannot-find-entry-symbol-arch_paths_first">WARNING: CANNOT FIND ENTRY SYMBOL ARCH_PATHS_FIRST</h2>
+<figure>
+<img src="https://pic.islet.space/2022/02/image-20220222235232398.png" alt="image-20220222235232398" /><figcaption aria-hidden="true">image-20220222235232398</figcaption>
+</figure>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>感谢您的支持和鼓励</div>
+  <button>
+    Donate
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="https://photo.islet.space/2021/00/IMG_4588.JPG" alt="Liewzheng WeChat Pay">
+        <span>WeChat Pay</span>
+      </div>
+      <div>
+        <img src="https://photo.islet.space/2021/00/IMG_4590.JPG" alt="Liewzheng Alipay">
+        <span>Alipay</span>
+      </div>
+
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/mac/" rel="tag"># mac</a>
+              <a href="/tags/stm32/" rel="tag"># stm32</a>
+              <a href="/tags/cubemx/" rel="tag"># cubemx</a>
+          </div>
+
+        
+
+  <div id="vcomments" style="margin: 1rem 0 0 0;"></div>
+  <script>
+    new Valine({
+      el: '#vcomments',
+      appId: 'vRGM12EcYxDSM2lat5qjjSeY-gzGzoHsz',
+      appKey: 'WBgAb6NTAFQ7DYtgH0uOPNNh'
+    })
+  </script>
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/02/22/Macintosh/2022-02-22-%E6%9B%B4%E6%94%B9mac%E7%9A%84%E9%BB%98%E8%AE%A4shell%E4%B8%BAfish/" rel="prev" title="更改Mac的默认shell为fish">
+                  <i class="fa fa-chevron-left"></i> 更改Mac的默认shell为fish
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">粤ICP备19004822号 </a>
+  </div>
+
+<div class="copyright">
+  &copy; 2019 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">liewzheng</span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdn.jsdelivr.net/npm/mermaid@8.12.0/dist/mermaid.min.js","integrity":"sha256-0dD7vUjUCTGJjeLnPotQQJIcSzug5fO6WDMYYyNIX4c="}}</script>
+  <script src="/js/third-party/tags/mermaid.js"></script>
+
+
+  <script src="/js/third-party/pace.js"></script>
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":"enable","tags":"all","js":{"url":"https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js","integrity":"sha256-r+3itOMtGGjap0x+10hu6jW/gZCzxHsoKrOd7gyRSGY="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>

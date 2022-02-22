@@ -162,18 +162,18 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">104</span>
+          <span class="site-state-item-count">106</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
           <a href="/categories/">
-        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-count">12</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">192</span>
+        <span class="site-state-item-count">195</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -207,6 +207,303 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://islet.space/2021/05/23/Programming/C++/2021-05-23-Difference-between-GCC,-gcc-and-g++/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Liewzheng">
+      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coder的孤岛">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/05/23/Programming/C++/2021-05-23-Difference-between-GCC,-gcc-and-g++/" class="post-title-link" itemprop="url">Difference between GCC, gcc and g++</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2021-05-23 17:00:00 / Modified: 20:07:33" itemprop="dateCreated datePublished" datetime="2021-05-23T17:00:00+08:00">2021-05-23</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Programming/" itemprop="url" rel="index"><span itemprop="name">Programming</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>gcc 和 GCC 是两个不同的东西。</p>
+<blockquote>
+<p><strong>GCC</strong>：GNU Compiler Collection(GUN 编译器集合)，它可以编译C、C++、JAV、Fortran、Pascal、Object-C、Ada等语言。</p>
+<p><strong>gcc</strong>：GCC中的GUN C Compiler（C 编译器）</p>
+<p><strong>g++</strong>：GCC中的GUN C++ Compiler（C++编译器）</p>
+</blockquote>
+<p>一个有趣的事实就是，就本质而言，gcc和g++并不是编译器，也不是编译器的集合，它们只是一种驱动器，根据参数中要编译的文件的类型，调用对应的GUN编译器而已，比如，用gcc编译一个c文件的话，会有以下几个步骤：</p>
+<blockquote>
+<p>Step1：Call a preprocessor, like cpp.</p>
+<p>Step2：Call an actual compiler, like cc or cc1.</p>
+<p>Step3：Call an assembler, like as.</p>
+<p>Step4：Call a linker, like ld</p>
+</blockquote>
+<p>由于编译器是可以更换的，所以gcc不仅仅可以编译C文件</p>
+<p>所以，更准确的说法是：gcc调用了C compiler，而g++调用了C++ compiler</p>
+<h1 id="gcc和g的主要区别">gcc和g++的主要区别</h1>
+<ol type="1">
+<li><p>对于 <em>.c和</em>.cpp文件，gcc分别当做c和cpp文件编译（c和cpp的语法强度是不一样的）</p></li>
+<li><p>对于 <em>.c和</em>.cpp文件，g++则统一当做cpp文件编译</p></li>
+<li><p>使用g++编译文件时，<strong>g++会自动链接标准库STL，而gcc不会自动链接STL</strong></p></li>
+<li><p>gcc在编译C文件时，可使用的预定义宏是比较少的</p></li>
+<li><p>gcc在编译cpp文件时/g++在编译c文件和cpp文件时（这时候gcc和g++调用的都是cpp文件的编译器），会加入一些额外的宏，这些宏如下：</p></li>
+</ol>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> __GXX_WEAK__ 1</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> __cplusplus 1</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> __DEPRECATED 1</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> __GNUG__ 4</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> __EXCEPTIONS 1</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> __private_extern__ extern</span></span><br></pre></td></tr></table></figure>
+<ol start="6" type="1">
+<li>在用gcc编译c++文件时，为了能够使用STL，需要加参数 –lstdc++ ，但这并不代表 gcc –lstdc++ 和 g++等价，它们的区别不仅仅是这个</li>
+</ol>
+<p>其主要参数：</p>
+<blockquote>
+<p>-g - turn on debugging (so GDB gives morefriendly output)</p>
+<p>-Wall - turns on most warnings</p>
+<p>-O or -O2 - turn on optimizations</p>
+<p>-o - name of the output file</p>
+<p>-c - output an object file (.o)</p>
+<p>-I - specify an includedirectory</p>
+<p>-L - specify a libdirectory</p>
+<p>-l - link with librarylib.a</p>
+</blockquote>
+<p>使用示例：<code>g++ -ohelloworld -I/homes/me/randomplace/include helloworld.C</code></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://islet.space/2021/05/22/Linux/2021-05-21-Equipments_in_debian_linux/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Liewzheng">
+      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coder的孤岛">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/05/22/Linux/2021-05-21-Equipments_in_debian_linux/" class="post-title-link" itemprop="url">Equipments in Debian Linux(KALI)</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-05-22 20:30:00" itemprop="dateCreated datePublished" datetime="2021-05-22T20:30:00+08:00">2021-05-22</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2021-05-23 23:51:40" itemprop="dateModified" datetime="2021-05-23T23:51:40+08:00">2021-05-23</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="介绍">介绍</h1>
+<p>作为一个日常开发的程序员，三大平台都在日常使用的软件（生产力工具及娱乐工具）如下：</p>
+<ul>
+<li>utools</li>
+<li>typora</li>
+<li>visual studio code</li>
+<li>picgo</li>
+<li>sogou pinyin</li>
+<li>snipaste(win) / flameshot(linux) / ishot(mac)</li>
+<li>cosbrowser</li>
+<li>nodejs 及 npm</li>
+<li>hexo</li>
+<li>qqmusic</li>
+</ul>
+<p>win和mac安装软件都相对简单，linux安装需要使用者自身具有一定的耐心和排除困难的经验，为了更好地体验linux的方便，这里对linux装机后的生产力工具安装做个简单记录，以下安装均在 <strong>KALI</strong> （Kali也属于Debian系Linux）上进行。</p>
+<p>使用Linux系统的最大好处是 “一个终端即可解决即可开启大部分软件和解决日常事务，最多再开启一个utools”。</p>
+<p>Linux上的软件安装方式通常分为四种方式：</p>
+<ul>
+<li>通过 <code>dpkg</code> 命令安装 <code>.deb</code> 文件</li>
+<li>通过 <code>apt</code> 或其他软件的软件安装命令（如，<code>npm</code> 和 <code>pip</code>）来安装</li>
+<li>通过 <code>ln</code> 链接将程序绑定至全局变量来 “安装” 和使用</li>
+<li>通过直接调用 <code>AppImage</code> 的方式直接使用软件，此类方式需要一般需要手动双击执行</li>
+</ul>
+<p>其中前三种方式的困难因系统而异，所说的困难是可能出现所安装的软件依赖不存在，需要使用者自行去定位（包括下载和添加源）和安装，或者链接方式错误等。而Linux源众多，每个节点的速度及其更新情况都不太一样，需要使用者判断。</p>
+<h1 id="utools-flameshot">uTools &amp; Flameshot</h1>
+<p><a target="_blank" rel="noopener" href="https://res.u-tools.cn/currentversion/utools_1.3.5_amd64.deb">uTools</a> 使用的是 <code>.deb</code> 安装包安装，flameshot 使用 <code>apt</code> 命令进行安装。</p>
+<p><strong>依赖文件</strong>：</p>
+<ol type="1">
+<li><code>libspdlog1-fmt7</code> 是 flameshot所需文件</li>
+<li><code>libappindicator3-1</code> 是 utools所需文件</li>
+</ol>
+<h2 id="libspdlog1">libspdlog1</h2>
+<p>尝试安装utools和flameshot后，apt会提示缺少文件。使用 <code>sudo apt-get install libspdlog1-fmt7</code> 来安装 <code>libspdlog1-fmt7</code> 。</p>
+<p>如果触发安装破损修复，使用<code>apt --fix-broken install</code> 可以让apt自动修复安装错误，自动补全依赖文件。</p>
+<h2 id="libappindicator3">libappindicator3</h2>
+<p><code>libappindicator3-1</code> 文件需要使用者往 <code>/etc/apt/source.list</code> 中添加debian源，需要使用者掌握基本的 <code>vim</code> 软件使用方法（包括插入、保存和退出）。</p>
+<ul>
+<li><p>使用 <code>sudo vim /etc/apt/sources.list</code> 命令打开 <code>source.list</code> 。</p></li>
+<li><p>按 <code>i</code> 进入 <strong>插入模式</strong>，复制粘贴 <code>deb http://ftp.de.debian.org/debian sid main</code> 至空白处，按 <code>ESC</code> 键，再依次输入 <code>:wq</code> 进行保存和退出。</p></li>
+<li><p>在终端输入 <code>sudo apt-get update</code> 进行源库软件列表更新，再次尝试 <code>sudo apt-get install libappindicator3</code> 来安装</p>
+<p><code>libappindicator3-1</code> and <code>libappindicator3-7</code> 。</p></li>
+</ul>
+<p>最后再次尝试以下两条语句即可成功安装 utools 和 flameshot 。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo dpkg -i utools_1.3.5_amd64.deb</span><br><span class="line">sudo apt-get install flameshot</span><br></pre></td></tr></table></figure>
+<h1 id="typora">Typora</h1>
+<p><a target="_blank" rel="noopener" href="https://tyopra.io">TYPORA.IO</a> 官方提供的安装代码如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys BA300B7755AFCFAE</span><br><span class="line">sudo add-apt-repository <span class="string">&#x27;deb https://typora.io/linux ./&#x27;</span></span><br><span class="line">sudo apt-get update</span><br><span class="line">sudo apt-get install typora</span><br></pre></td></tr></table></figure>
+<p>其中，向apt中添加源的第二条语句 <code>add-apt-repository</code> 会因缺乏 <code>PPA</code> 而无法执行，可以参考 <a target="_blank" rel="noopener" href="https://ywnz.com/linuxjc/7953.html#:~:text=%E6%9C%89%E4%BA%9B%E7%94%A8%E6%88%B7%E5%9C%A8UOS%E3%80%81Deepin%E7%AD%89%E6%9F%90%E4%BA%9BLinux%E5%8F%91%E8%A1%8C%E7%89%88%E7%BB%88%E7%AB%AF%E4%B8%AD%E8%BE%93%E5%85%A5PPA%E5%91%BD%E4%BB%A4%E6%97%B6%E4%BC%9A%E6%8F%90%E7%A4%BA%E2%80%9Csudo%3A%20add-apt-repository%EF%BC%9A%E6%89%BE%E4%B8%8D%E5%88%B0%E5%91%BD%E4%BB%A4%EF%BC%88command,not%20found%EF%BC%89%E2%80%9D%EF%BC%8C%E8%BF%99%E6%98%AF%E5%9B%A0%E4%B8%BA%E6%B2%A1%E6%9C%89%E5%AE%89%E8%A3%85PPA%E6%89%80%E8%87%B4%EF%BC%8C%E6%8A%8A%E5%AE%83%E5%AE%89%E8%A3%85%E4%B8%8A%E5%B0%B1%E5%8F%AF%E4%BB%A5%E4%BA%86%EF%BC%8C%E5%8F%AA%E9%9C%80%E8%A6%81%E5%9C%A8%E7%BB%88%E7%AB%AF%E4%B8%AD%E8%BF%90%E8%A1%8C%E4%B8%89%E6%9D%A1%E5%91%BD%E4%BB%A4%E3%80%82">sudo: add-apt-repository：找不到命令的解决方法</a> 进行安装。</p>
+<p>也可以参考 <code>libappindicator3</code> 的源添加方法，往 <code>source.list</code> 文件中添加 <code>deb https://typora.io/linux ./</code> 来添加源。</p>
+<p>添加成功后即可成功安装tyopra。</p>
+<h1 id="sogou-pinyin">Sogou Pinyin</h1>
+<p>从搜狗官方下载的 <a target="_blank" rel="noopener" href="https://ime.sogoucdn.com/dl/index/1612260778/sogoupinyin_2.4.0.3469_amd64.deb?st=USANnSZV6afzzi2u6c8J-g&amp;e=1621603885&amp;fn=sogoupinyin_2.4.0.3469_amd64.deb">Sogou</a> 安装包，需要用 <code>sudo dpkg -i sogoupinyin_2.4.0.3469_amd64.deb</code> 命令进行安装，会遇到以下缺乏库的提示，主要是因为缺少 <code>fcitx</code> 的提示。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">dpkg: 依赖关系问题使得 sogoupinyin 的配置工作不能继续：</span><br><span class="line"> sogoupinyin 依赖于 fcitx (&gt;= 1:4.2.8)；然而：</span><br><span class="line">  未安装软件包 fcitx</span><br><span class="line"> sogoupinyin 依赖于 fcitx-frontend-gtk2；然而：</span><br><span class="line">  未安装软件包 fcitx-frontend-gtk2。</span><br><span class="line"> sogoupinyin 依赖于 fcitx-frontend-gtk3；然而：</span><br><span class="line">  未安装软件包 fcitx-frontend-gtk3。</span><br><span class="line"> sogoupinyin 依赖于 fcitx-frontend-qt5；然而：</span><br><span class="line">  未安装软件包 fcitx-frontend-qt5。</span><br><span class="line"> sogoupinyin 依赖于 fcitx-module-kimpanel；然而：</span><br><span class="line">  未安装软件包 fcitx-module-kimpanel。</span><br><span class="line"> sogoupinyin 依赖于 fcitx-module-x11；然而：</span><br><span class="line">  未安装软件包 fcitx-module-x11。</span><br><span class="line"> sogoupinyin 依赖于 im-config；然而：</span><br><span class="line">  未安装软件包 im-config。</span><br><span class="line"> sogoupinyin 依赖于 fcitx-libs | libfcitx-config4；然而：</span><br><span class="line">  未安装软件包 fcitx-libs。</span><br><span class="line">  未安装软件包 libfcitx-config4。</span><br><span class="line"> sogoupinyin 依赖于 fcitx-libs | libfcitx-qt0；然而：</span><br><span class="line">  未安装软件包 fcitx-libs。</span><br><span class="line">  未安装软件包 libfcitx-qt0。</span><br><span class="line"> sogoupinyin 依赖于 fcitx-libs | libfcitx-utils0；然而：</span><br><span class="line">  未安装软件包 fcitx-libs。</span><br><span class="line">  未安装软件包 libfcitx-utils0。</span><br><span class="line"> sogoupinyin 依赖于 fcitx-ui-classic；然而：</span><br><span class="line">  未安装软件包 fcitx-ui-classic。</span><br><span class="line"> sogoupinyin 依赖于 libqt5quickwidgets5；然而：</span><br><span class="line">  未安装软件包 libqt5quickwidgets5。</span><br><span class="line"> sogoupinyin 依赖于 qml-module-qtquick2；然而：</span><br><span class="line">  未安装软件包 qml-module-qtquick2。</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>Fcitx[ˈfaɪtɪks]是 (Free Chinese Input Toy for X) 的英文缩写，中文名为小企鹅输入法，是一个以 GPL 方式发布的输入法框架， 编写它的目是为桌面环境提供一个灵活的输入方案，彻底解决在GNU/Linux下没有一个好的中文输入法的问题。</p>
+</blockquote>
+<h2 id="fcitx">FCITX</h2>
+<p>通过输入 <code>sudo apt-get install fcitx</code> 来尝试安装，会触发 apt fix broken install， 此时只要再次输入 <code>sudo apt --fix-broken install</code> 来修复。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">下列软件包有未满足的依赖关系：</span><br><span class="line"> fcitx : 依赖: fcitx-bin 但是它将不会被安装</span><br><span class="line">         依赖: fcitx-data 但是它将不会被安装</span><br><span class="line">         依赖: fcitx-modules 但是它将不会被安装</span><br><span class="line">         推荐: fcitx-config-gtk 但是它将不会被安装 或</span><br><span class="line">                 kde-config-fcitx 但是它将不会被安装</span><br><span class="line">         推荐: fcitx-frontend-all 但是它将不会被安装 或</span><br><span class="line">                 fcitx-frontend-fbterm 但是它将不会被安装</span><br><span class="line">         推荐: fcitx-ui-classic 但是它将不会被安装 或</span><br><span class="line">                 fcitx-ui-light 但是它将不会被安装</span><br><span class="line">         推荐: im-config (&gt;= 0.5) 但是它将不会被安装</span><br><span class="line"> sogoupinyin : 依赖: fcitx-frontend-gtk2 但是它将不会被安装</span><br><span class="line">               依赖: fcitx-frontend-gtk3 但是它将不会被安装</span><br><span class="line">               依赖: fcitx-frontend-qt5 但是它将不会被安装</span><br><span class="line">               依赖: fcitx-module-kimpanel 但是它将不会被安装</span><br><span class="line">               依赖: fcitx-module-x11 但是它将不会被安装</span><br><span class="line">               依赖: im-config 但是它将不会被安装</span><br><span class="line">               依赖: fcitx-libs 但是它将不会被安装 或</span><br><span class="line">                       libfcitx-config4 但是它将不会被安装</span><br><span class="line">               依赖: fcitx-libs 但是它将不会被安装 或</span><br><span class="line">                       libfcitx-qt0 但无法安装它</span><br><span class="line">               依赖: fcitx-libs 但是它将不会被安装 或</span><br><span class="line">                       libfcitx-utils0 但是它将不会被安装</span><br><span class="line">               依赖: fcitx-ui-classic 但是它将不会被安装</span><br><span class="line">               依赖: libqt5quickwidgets5 但是它将不会被安装</span><br><span class="line">               依赖: qml-module-qtquick2 但是它将不会被安装</span><br><span class="line">E: 有未能满足的依赖关系。请尝试不指明软件包的名字来运行“apt --fix-broken install”(也可以指定一个解决办法)。</span><br></pre></td></tr></table></figure>
+<h2 id="安装成功">安装成功</h2>
+<p>FIX-BROKEN 成功后，再次尝试安装 FCITX 就可以提示成功；接着安装sogou即可。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt-get install fcitx                   </span><br><span class="line">正在读取软件包列表... 完成</span><br><span class="line">正在分析软件包的依赖关系树... 完成</span><br><span class="line">正在读取状态信息... 完成                 </span><br><span class="line">fcitx 已经是最新版 (1:4.2.9.8-3)。</span><br><span class="line">fcitx 已设置为手动安装。</span><br><span class="line">升级了 0 个软件包，新安装了 0 个软件包，要卸载 0 个软件包，有 136 个软件包未被升级。</span><br><span class="line"></span><br><span class="line">$ sudo dpkg -i sogoupinyin_2.4.0.3469_amd64.deb</span><br><span class="line">(正在读取数据库 ... 系统当前共安装有 270000 个文件和目录。)</span><br><span class="line">准备解压 sogoupinyin_2.4.0.3469_amd64.deb  ...</span><br><span class="line">正在解压 sogoupinyin (2.4.0.3469) 并覆盖 (2.4.0.3469) ...</span><br><span class="line">正在设置 sogoupinyin (2.4.0.3469) ...</span><br><span class="line">正在处理用于 mailcap (3.69) 的触发器 ...</span><br><span class="line">正在处理用于 desktop-file-utils (0.26-1) 的触发器 ...</span><br><span class="line">正在处理用于 hicolor-icon-theme (0.17-2) 的触发器 ...</span><br></pre></td></tr></table></figure>
+<h2 id="依赖库">依赖库</h2>
+<p>sogou输入法依赖库具体如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">下列【新】软件包将被安装：</span><br><span class="line">  dbus-x11 fcitx fcitx-bin fcitx-config-common fcitx-config-gtk fcitx-data</span><br><span class="line">  fcitx-frontend-all fcitx-frontend-gtk2 fcitx-frontend-gtk3</span><br><span class="line">  fcitx-frontend-qt5 fcitx-libs fcitx-module-dbus fcitx-module-kimpanel</span><br><span class="line">  fcitx-module-lua fcitx-module-x11 fcitx-modules fcitx-ui-classic</span><br><span class="line">  fcitx5-module-quickphrase-editor im-config libfcitx-config4</span><br><span class="line">  libfcitx-core0 libfcitx-gclient1 libfcitx-qt5-1 libfcitx-qt5-data</span><br><span class="line">  libfcitx-utils0 libgettextpo0 libpresage-data libpresage1v5</span><br><span class="line">  libqt5qmlworkerscript5 libqt5quickwidgets5 libtinyxml2.6.2v5 presage</span><br><span class="line">  qml-module-qtquick2</span><br></pre></td></tr></table></figure>
+<h1 id="nodejs-hexo">NodeJS &amp; Hexo</h1>
+<p>使用 <code>sudo apt-get install nodejs</code> 或 <code>sudo apt-get install node.js</code> 均可以实现node.js 的安装，但是只能安装V12版。</p>
+<p>可以在官方下载 <a target="_blank" rel="noopener" href="https://nodejs.org/dist/v16.2.0/node-v16.2.0-linux-x64.tar.xz">node-v16.2.0-linux-x64.tar.xz</a> ，并使用以下命令进行解压：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">xz -d node-v16.2.0-linux-x64.tar.xz</span><br><span class="line">tar -xvf node-v16.2.0-linux-x64.tar</span><br></pre></td></tr></table></figure>
+<p>解压完毕之后，以管理员身份将该文件移动至 <code>/usr/local/node</code> ，以下命令将 <code>node-v16.2.0-linux-x64</code> 拷贝的同时进行了 <strong>重命名</strong> 操作。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo mv /home/XXX/downloads/node-v16.2.0-linux-x64 /usr/<span class="built_in">local</span>/node</span><br></pre></td></tr></table></figure>
+<p style="color: gray; font-style: italic;">
+注：XXX是用户名
+</p>
+<p>然后进行软连接：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo ln -s /usr/<span class="built_in">local</span>/node/bin/node /usr/<span class="built_in">local</span>/bin</span><br><span class="line">sudo ln -s /usr/<span class="built_in">local</span>/node/bin/npm /usr/<span class="built_in">local</span>/bin</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>Linux ln（英文全拼：link files）命令是一个非常重要命令，它的功能是为某一个文件在另外一个位置建立一个同步的链接。</p>
+<p>当我们需要在不同的目录，用到相同的文件时，我们不需要在每一个需要的目录下都放一个必须相同的文件，我们只要在某个固定的目录，放上该文件，然后在 其它的目录下用ln命令链接（link）它就可以，不必重复的占用磁盘空间。</p>
+</blockquote>
+<p>以上是 <code>ln</code> 链接命令的解释，实际最重要的作用是将某个已下载的软件及其命令定义至全局，在终端的任意一个目录位置都可以使用该软件。</p>
+<h2 id="安装-成功">“安装” 成功</h2>
+<p>实际上新版的nodejs并不涉及 前述 <code>dpkg</code> 或 <code>apt</code> 命令的安装，但软连接该文件目录至 <code>/usr/local/bin</code> 后，能实现安装效果，使用 <code>node -v</code> 及 <code>npm -v</code> 命令即可进行测试。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ node -v</span><br><span class="line">v16.2.0</span><br><span class="line"></span><br><span class="line">$ npm -v                   </span><br><span class="line">7.14.0</span><br></pre></td></tr></table></figure>
+<h2 id="其他">其他</h2>
+<p>对于使用此类安装方式进行安装的 依赖于nodejs的应用如果需要在全局进行使用可能也需要进行软连接，如 hexo。</p>
+<p>使用 <code>npm install hexo-cli -g</code> 成功安装hexo后提示如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ whereis hexo</span><br><span class="line">hexo:</span><br></pre></td></tr></table></figure>
+<p>此时需要将 <code>/usr/local/node/bin</code> 文件夹下安装的程序也拉到全局变量中 <code>/usr/local/bin</code> 中。再次使用 <code>whereis</code> 命令检测时即可成功。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ sudo ln -s /usr/<span class="built_in">local</span>/node/bin/hexo /usr/<span class="built_in">local</span>/bin/hexo</span><br><span class="line">                                                                             </span><br><span class="line">$ whereis hexo</span><br><span class="line">hexo: /usr/<span class="built_in">local</span>/bin/hexo</span><br></pre></td></tr></table></figure>
+<h1 id="visual-studio-code">Visual Studio Code</h1>
+<p>VS code安装使用 <code>dpkg</code> 命令，最大的问题是微软的源下载太慢，以下提供个人下载点，安装过程不再记录。</p>
+<p>个人下载点： <a target="_blank" rel="noopener" href="https://storage.islet.space/02_Softwares/02_Microsoft/VisualStudioCode/Linux/code_1.55.2-1618307277_amd64.deb">Visual Studio Code Linux (deb)</a></p>
+<h1 id="picgo">PicGo</h1>
+<p><a target="_blank" rel="noopener" href="https://support.typora.io/Upload-Image/#picgo-core-command-line-opensource">Typora_Picgo</a> 有 command-line 版 和 app 版，参考 <a target="_blank" rel="noopener" href="https://picgo.github.io/PicGo-Doc/zh/">PicGo官方文档</a> （GFW封锁了<strong><em>github.io</em></strong>域名后缀，需要梯子）进行安装吧。</p>
+<h1 id="qqmusic-cosbrowser">QQmusic &amp; cosbrowser</h1>
+<p>这两个软件都是腾讯家产品，下载、安装和使用都很方便。</p>
+<p>其中，QQMusic使用 <code>dpkg</code> 命令进行安装即可， <code>cosbrowser</code> 是 <code>AppImage</code> 格式文件，直接打开即可使用，无需安装。</p>
+<p><strong>彩蛋</strong>：<code>sudo apt-get install cmatrix</code></p>
+<p>---EOF---</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -2216,322 +2513,6 @@
 <p>配置完成后，在连接非默认账号的仓库时，远端地址要修改为</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git remote add test git@github-second:second&#x2F;test.git</span><br></pre></td></tr></table></figure>
 <p>​</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://islet.space/2021/05/11/Computer/2021-05-11-%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Liewzheng">
-      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Coder的孤岛">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/05/11/Computer/2021-05-11-%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="post-title-link" itemprop="url">数据库学习笔记</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-
-    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
-    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2021-05-11 19:11:00" itemprop="dateCreated datePublished" datetime="2021-05-11T19:11:00+08:00">2021-05-11</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-09-16 01:06:14" itemprop="dateModified" datetime="2021-09-16T01:06:14+08:00">2021-09-16</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Computer/" itemprop="url" rel="index"><span itemprop="name">Computer</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="数据库入门">数据库入门</h1>
-<h4 id="数据库相关从业">数据库相关从业</h4>
-<p><strong>前面五种</strong>：重点是设计和应用，侧重于软件和数据逻辑层面。</p>
-<p>数据库应用开发 (application development) &gt; 除了基本的SQL方面的知识，还要对开发流程，软件工程，各种框架和开发工具等等 &gt; 数据库应用开发这个方向上的机会最多，职位最多</p>
-<p>数据建模专家 (data modeler) &gt; 除了基本的SQL方面的知识，非常熟悉数据库原理，数据建模 &gt; 负责将用户对数据的需求转化为数据库物理设计和物理设计 &gt; 这个方向上在大公司（金融，保险，研究，软件开发商等）有专门职位， &gt; 在中小公司则可能由程序员承担。</p>
-<p>商业智能专家 (business intelligence - BI) &gt; 主要从商业应用，最终用户的角度去从数据中获得有用的信息， &gt; 涉及OLAP (online analytical processing) &gt; 需要使用SSRS, cognos, crystal report等报表工具，或者其他一些数据挖掘，统计方面的软件工具</p>
-<p>ETL开发 (ETL Developer) &gt; 使用ETL工具或者自己编写程序在不同的数据源之间对数据进行导入，导出，转换， &gt; 所接触的数据库一般数据量非常大，要求进行的数据转换也比较复杂。 &gt; 和数据仓库和商业智能的关系比较密切。</p>
-<blockquote>
-<p>在一些数据库应用规模很大的公司里面有专门的职位， 中小公司里面则可能由程序员或者DBA负责这方面的工作。</p>
-</blockquote>
-<p>数据构架师 (Data Architect) &gt; 主要从全局上制定和控制关于数据库在逻辑这一层的大方向， &gt; 也包括数据可用性，扩展性等长期性战略， &gt; 协调数据库的应用开发，建模，DBA之间的工作。 &gt; 这个方向上在大公司（金融，保险，研究，软件开发商等）有专门职位， &gt; 在中小公司或者没有这个职位，或者由开发人员，DBA负责。</p>
-<p><strong>后面五种</strong>：重点是运营和维护，侧重与硬件和数据物理层面。</p>
-<p>数据库管理员 (database administrator - DBA) &gt; 数据库的安装，配置，调优，备份/恢复，监控，自动化等， &gt; 协助应用开发（有些职位还要求优化SQL，写存储过程和函数等） &gt; 这个方向上的职位相对少一些，但一般有点规模的公司还是会有这样的职位</p>
-<p>数据仓库专家 (data warehouse - DW) &gt; 应付超大规模的数据，历史数据的存储，管理和使用， &gt; 和商业智能关系密切，很多时候BI和DW是放在一个大类里面的， &gt; 但是我觉得DW更侧重于硬件和物理层上的管理和优化。</p>
-<p>存储工程师 (storage engineer) &gt; 专门负责提供数据存储方案，使用各种存储技术满足数据访问和存储需求， &gt; 和DBA的工作关系比较密切。 &gt; 对高可用性有严格要求（比如通信，金融，数据中心等）的公司通常有这种职位， &gt; 这种职位也非常少。</p>
-<p>性能优化工程师 (performance engineer) &gt; 专长数据库的性能调试和优化，为用户提供解决性能瓶颈方面的问题。 &gt; 我知道至少IBM, 微软和Oracle都有专门的数据库性能实验室(database performance lab）, &gt; 也有专门的性能优化工程师，负责为其数据库产品和关键应用提供这方面的技术支持。 &gt; 对数据库性能有严格要求的公司（比如金融行业）可能会有这种职位。 &gt; 因为针对性很强，甚至要求对多种数据库非常熟悉，所以职位极少。</p>
-<p>高级数据库管理员 (senior DBA) &gt; 在DBA的基础上，还涉及上面3种职位的部分工作，具体包括下面这些： &gt; 对应用系统的数据（布局，访问模式，增长模式，存储要求等）比较熟悉。 &gt; 对性能优化非常熟悉，可以发现并优化从SQL到硬件I/O，网络等各个层面上的瓶颈 &gt; 对于存储技术相对熟悉，可能代替存储工程师的一些工作， &gt; 对数据库的高可用性技术非常熟悉（比如MSSQL的集群，ORACLE RAC/FailSafe, IBM的DPF, HADR等） &gt; 对大规模数据库有效进行物理扩展（比如表分区）或者逻辑扩展（比如数据库分区，联合数据库等） &gt; 熟悉各种数据复制技术，比如单向，双向，点对点复制技术，以满足应用要求。 &gt; 灾难数据恢复过程的建立，测试和执行 &gt; 这种职位一般只在对数据库要求非常高并且规模非常大（比如金融，电信，数据中心等）的公司需要， &gt; 而且这种公司一般有一个专门独立负责数据库的部门或组。</p>
-<h1 id="关系型数据库">关系型数据库</h1>
-<p>说到关系型数据库，不仅仅是涉及计算机概念，也涉及一些数学概念，例如表格的概念、包含关系、关系运算及关系代数等。</p>
-<h2 id="关系模型术语">关系模型术语</h2>
-<p><img src="https://pic.islet.space/2021/05/image-20210512085059008.png" alt="image-20210512085059008" style="zoom:67%;" /></p>
-<ol type="1">
-<li><strong>表</strong>：关系型数据库由表集合而成，<strong>表是关系型数据库的一个基本组成</strong>，每个表具有唯一的名字。</li>
-<li><strong>关系</strong>：在关系型数据库中，<strong>关系</strong> 指代 <strong>表</strong> 的概念，即一般可认为 <strong>关系 = 表</strong>。</li>
-<li><strong>元组</strong>：在关系型数据库中，<strong>元组</strong> 指代 <strong>行</strong> 的概念，即一般可认为 <strong>元组 = 行</strong>。</li>
-<li><strong>属性</strong>：在关系型数据库中，<strong>属性</strong> 指代 <strong>列</strong> 的概念，即一般可认为 <strong>属性 = 列</strong>。</li>
-<li><strong>域</strong>：属性下所有元素的可取值范围或取值类型。</li>
-<li><strong>原子域</strong>：域中的元素不可再分，则称为原子域。</li>
-<li><strong>空值</strong>：属性下元素为空(NULL)。</li>
-<li><strong>关系实例</strong>：即表实例，严谨说法是 “表示一个关系的特定实例，也就是所包含的一组特定的行”，就是不仅仅只有属性这一行，还具有特定的某些具体数据的表格。</li>
-<li><strong>关系模式</strong>：即表模式，严谨说法是“关系模式由属性序列及各属性对应域组成”，通俗地说就是，没有具体数据，而仅定义了属性和域的表格。</li>
-<li><strong>数据库模式</strong>：对数据库的逻辑设计。</li>
-<li><strong>数据库实例</strong>：对数据库中数据的快照。</li>
-<li><strong>超码</strong>：是一个或多个属性的集合，超码内的一个或多个属性组合可以唯一区分和标识一个元组。</li>
-<li><strong>候选码</strong>：最小超码。</li>
-<li><strong>主码</strong>：主码是候选码的一种，最重要的是，<strong>主码由设计者选中，具有人为性</strong>。</li>
-<li><strong>外码</strong>：用于表示关系之间的引用和被引用关系。即关系A中的某项属性来自于关系B中的某项属性，则称该引用过来的属性为外码。<strong>但据课本，是被引用的主码称为外码。</strong></li>
-<li><img src="https://pic.islet.space/2021/05/image-20210512134116409.png" title="fig:" alt="image-20210512134116409" /></li>
-</ol>
-<h2 id="结构化查询语言sql">结构化查询语言SQL</h2>
-<h3 id="发展历史">发展历史</h3>
-<p><img src="https://pic.islet.space/2021/05/image-20210512192241572.png" alt="image-20210512192241572" style="zoom:67%;" /></p>
-<blockquote>
-<p><a target="_blank" rel="noopener" href="https://developer.aliyun.com/article/745815#:~:text=SQL%E6%A0%87%E5%87%86%E6%98%AF%E7%94%B1%E5%9B%BD%E9%99%85%E6%A0%87%E5%87%86%E5%8C%96%E7%BB%84%E7%BB%87%EF%BC%88ISO%EF%BC%89%E3%80%81%E7%BE%8E%E5%9B%BD%E5%9B%BD%E5%AE%B6%E6%A0%87%E5%87%86%E5%A7%94%E5%91%98%E4%BC%9AANSI%E7%AD%89%E5%88%B6%E5%AE%9A%E7%9A%84%EF%BC%8C%E5%AF%B9%E6%95%B0%E6%8D%AE%E5%BA%93%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E7%9A%84%E7%BB%9F%E4%B8%80%E6%93%8D%E4%BD%9C%E6%96%B9%E5%BC%8F%E3%80%82%20SQL%20%E6%98%AF%20Structured%20Query%20Language%20%E7%9A%84%E7%BC%A9%E5%86%99%EF%BC%8C%E8%A7%84%E8%8C%83%E7%9A%84%E5%8F%91%E9%9F%B3%E6%98%AF%20%E2%80%9C%CB%8C%C9%9Bs%CB%8Ckju%CB%90%CB%88%C9%9Bl%E2%80%9D%E3%80%82,%E6%98%AF%20SQL%20Query%20Language%20%E7%9A%84%E7%BC%A9%E5%86%99%E3%80%82%20IBM%E5%AF%B9%E5%85%B3%E7%B3%BB%E6%95%B0%E6%8D%AE%E5%BA%93%E4%BB%A5%E5%8F%8ASQL%E8%AF%AD%E8%A8%80%E7%9A%84%E5%BD%A2%E6%88%90%E5%92%8C%E8%A7%84%E8%8C%83%E5%8C%96%E4%BA%A7%E7%94%9F%E4%BA%86%E9%87%8D%E5%A4%A7%E7%9A%84%E5%BD%B1%E5%93%8D%EF%BC%8C%E7%AC%AC%E4%B8%80%E4%B8%AA%E7%89%88%E6%9C%AC%E7%9A%84SQL%E6%A0%87%E5%87%86SQL86%E5%B0%B1%E6%98%AF%E5%9F%BA%E4%BA%8ESystem%20R%E7%9A%84%E6%89%8B%E5%86%8C%E8%80%8C%E6%9D%A5%E7%9A%84%E3%80%82%20Oracle%E5%9C%A81979%E5%B9%B4%E7%8E%87%E5%85%88%E6%8E%A8%E5%87%BA%E4%BA%86%E6%94%AF%E6%8C%81SQL%E7%9A%84%E5%95%86%E7%94%A8%E4%BA%A7%E5%93%81%E3%80%82">数据库必知词汇：SQL标准</a></p>
-<p>SQL标准是由国际标准化组织（ISO）、美国国家标准委员会ANSI等制定的，对数据库管理系统的统一操作方式。</p>
-<p>SQL 是 Structured Query Language 的缩写，规范的发音是 “ˌɛsˌkjuːˈɛl”。但是它的前身是著名的关系数据库原型系统 System R 所采用的 SEQUEL 语言，这也是为什么有很多人将其读作 “ˈsiːkwəl” 的来源。也有人类比 GNU 这个词的定义（GNU’s Not UNIX），认为 SQL 是 SQL Query Language 的缩写。</p>
-<p>IBM对关系数据库以及SQL语言的形成和规范化产生了重大的影响，第一个版本的SQL标准SQL86就是基于System R的手册而来的。Oracle在1979年率先推出了支持SQL的商用产品。随着数据库技术和应用的发展，为不同RDBMS提供一致的语言成了一种现实需要。</p>
-<p>对SQL标准影响最大的机构自然是那些著名的数据库产商，而具体的制订者则是一些非营利机构，例如国际标准化组织ISO、美国国家标准委员会ANSI等。各国通常会按照ISO标准和ANSI标准制定自己的国家标准。</p>
-<p>“美国国家标准化组织(ANSI)”是一个核准多种行业标准的组织。SQL作为关系型数据库所使用的标准语言，最初是基于IBM的实现在1986年被批准的。1987年，“国际标准化组织(ISO)”把ANSI SQL作为国际标准。</p>
-<p>SQL发展的简要历史： 1986年，ANSI X3.135-1986，ISO/IEC 9075:1986，SQL-86 1989年，ANSI X3.135-1989，ISO/IEC 9075:1989，SQL-89 1992年，ANSI X3.135-1992，ISO/IEC 9075:1992，SQL-92（SQL2） 1999年，ISO/IEC 9075:1999，SQL:1999（SQL3） 2003年，ISO/IEC 9075:2003，SQL:2003 2008年，ISO/IEC 9075:2008，SQL:2008 2011年，ISO/IEC 9075:2011，SQL:2011 补充 1986 年，ANSI X3.135-1986，ISO/IEC 9075:1986，SQL-86。这是 ANSI 首次将 SQL 语言标准化的版本。 1989 年，ANSI X3.135-1989，ISO/IEC 9075:1989，SQL-89。增加了完整性约束。 1992 年，ANSI X3.135-1992，ISO/IEC 9075:1992，SQL-92（SQL2）。最重要的一个版本。 引入了标准的分级概念。 1999 年，ISO/IEC 9075:1999，SQL:1999（SQL3）。变动最大的一个版本。改变了标准符合程度的定义；增加了面向对象特性、正则表达式、存储过程、Java 等支持。 2003 年，ISO/IEC 9075:2003，SQL:2003。引入了 XML、Window 函数等。 2008 年，ISO/IEC 9075:2008，SQL:2008。引入了 TRUNCATE 等。 2011 年，ISO/IEC 9075:2011，SQL:2011。引入了时序数据等。 2016 年，ISO/IEC 9075:2016，SQL:2016。引入了 JSON 等。</p>
-<p>绝大多数人提起SQL标准，涉及的内容其实是SQL92里头最基本或者说最核心的一部分。SQL92本身是分级的，包括入门级、过度级、中间级和完全级，推荐泛读SQL92，增量式式阅读其他标准。而随着SQL标准的发展，其包含的内容实在太多了，而且有很多特性对新的SQL产品而言也越来越不重要了。从SQL99之后，标准中符合程度的定义就不再分级，而是改成了核心兼容性和特性兼容性；也没有机构来推出权威的SQL标准符合程度的测试认证了。</p>
-</blockquote>
-<h3 id="作用">作用</h3>
-<ol type="1">
-<li>数据库查询</li>
-<li>定义数据结构</li>
-<li>修改数据</li>
-<li>说明安全性约束条件</li>
-</ol>
-<h3 id="基本数据类型">基本数据类型</h3>
-<p><img src="https://pic.islet.space/2021/05/image-20210512192708528.png" alt="image-20210512192708528" style="zoom:67%;" /></p>
-<p><strong><em>以上所有类型都可能包含一个被称作空值的特殊值。NULL表示一个缺失的值，即表示该值可能存在但并不为人所知，或者可能根本不存在。</em></strong></p>
-<h4 id="关于char-varchar-nvarchar的比较">关于char / varchar / nvarchar的比较</h4>
-<p><img src="https://pic.islet.space/2021/05/image-20210512193208247.png" alt="image-20210512193208247" style="zoom:67%;" /></p>
-<h3 id="sql完整性约束">SQL完整性约束</h3>
-<p><img src="https://pic.islet.space/2021/05/image-20210512201050138.png" alt="image-20210512201050138" style="zoom:67%;" /></p>
-<p>例如，上方教员的名称为 “张三”， 我想删除后保存，会破坏 <code>instructor</code> 关系下 <code>name</code> 的非空约束，SQL不通过这种操作。</p>
-<h3 id="数据库操作">数据库操作</h3>
-<h4 id="新建表格">新建表格</h4>
-<p>数据表格新建格式及样例如下：</p>
-<figure>
-<img src="https://pic.islet.space/2021/05/image-20210512193506987.png" alt="image-20210512193506987" /><figcaption aria-hidden="true">image-20210512193506987</figcaption>
-</figure>
-<blockquote>
-<p>其中r是关系名，即表名；A<sub>x</sub>是属性名，即列名；D<sub>x</sub>是属性的域，即指定了A的类型及可选约束，用于限制所允许的A<sub>x</sub>取值的集合。</p>
-</blockquote>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*部门关系*/</span></span><br><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> department(</span><br><span class="line">    dept_name <span class="type">varchar</span>(<span class="number">20</span>),</span><br><span class="line">    building <span class="type">varchar</span>(<span class="number">15</span>),</span><br><span class="line">    budget <span class="type">numeric</span>(<span class="number">12</span>,<span class="number">2</span>),</span><br><span class="line">    <span class="keyword">primary</span> key(dept_name)</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line"><span class="comment">/*课程关系*/</span></span><br><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> course(</span><br><span class="line">    coourse_id <span class="type">varchar</span>(<span class="number">7</span>),</span><br><span class="line">    title <span class="type">varchar</span>(<span class="number">50</span>),</span><br><span class="line">    dept_name <span class="type">varchar</span>(<span class="number">20</span>),</span><br><span class="line">    credits <span class="type">numeric</span>(<span class="number">2</span>,<span class="number">0</span>),</span><br><span class="line">    <span class="keyword">primary</span> key(course_id),</span><br><span class="line">    <span class="keyword">foreign</span> key (dept_name) <span class="keyword">references</span> department</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line"><span class="comment">/*教员关系*/</span></span><br><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> instructor(</span><br><span class="line">	ID <span class="type">varchar</span>(<span class="number">5</span>),</span><br><span class="line">    name <span class="type">varchar</span>(<span class="number">20</span>) <span class="keyword">not</span> <span class="keyword">null</span>,</span><br><span class="line">    dept_name <span class="type">varchar</span>(<span class="number">20</span>),</span><br><span class="line">    salary <span class="type">numeric</span>(<span class="number">8</span>,<span class="number">2</span>),</span><br><span class="line">    <span class="keyword">primary</span> key(ID),</span><br><span class="line">    <span class="keyword">foreign</span> key(dept_name) <span class="keyword">references</span> department</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line"><span class="comment">/*（课程）章节关系*/</span></span><br><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> section(</span><br><span class="line">	course_id <span class="type">varchar</span>(<span class="number">8</span>),</span><br><span class="line">    sec_id <span class="type">varchar</span>(<span class="number">8</span>),</span><br><span class="line">    semester <span class="type">varchar</span>(<span class="number">6</span>),</span><br><span class="line">    <span class="keyword">year</span> <span class="type">numeric</span>(<span class="number">4</span>,<span class="number">0</span>),</span><br><span class="line">    building <span class="type">varchar</span>(<span class="number">7</span>),</span><br><span class="line">    time_slot_id <span class="type">varchar</span>(<span class="number">4</span>),</span><br><span class="line">    <span class="keyword">primary</span> key(course_id, sec_id, semester, <span class="keyword">year</span>),</span><br><span class="line">    <span class="keyword">foreign</span> key(course_id) <span class="keyword">references</span> course</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line"><span class="comment">/*教师关系*/</span></span><br><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> teachers(</span><br><span class="line">	ID <span class="type">varchar</span>(<span class="number">5</span>),</span><br><span class="line">    course_id <span class="type">varchar</span>(<span class="number">8</span>),</span><br><span class="line">    sec_id <span class="type">varchar</span>(<span class="number">8</span>),</span><br><span class="line">    semester <span class="type">varchar</span>(<span class="number">6</span>),</span><br><span class="line">    <span class="keyword">year</span> <span class="type">numeric</span>(<span class="number">4</span>,<span class="number">0</span>),</span><br><span class="line">    <span class="keyword">primary</span> key(ID, course_id, sec_id, semester, <span class="keyword">year</span>),</span><br><span class="line">    <span class="keyword">foreign</span> key(course_id, sec_id, semester, <span class="keyword">year</span>) <span class="keyword">references</span> section,</span><br><span class="line">    <span class="keyword">foreign</span> key(ID) <span class="keyword">references</span> instructor</span><br><span class="line">);</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>foreign key 可以拿来当 primary key，如章节关系中所示。</p>
-<p><code>not null</code> 关键字约束表明 “在该属性上不允许空值” 。</p>
-</blockquote>
-<h4 id="插入">插入</h4>
-<figure>
-<img src="https://pic.islet.space/2021/05/image-20210512201338050.png" alt="image-20210512201338050" /><figcaption aria-hidden="true">image-20210512201338050</figcaption>
-</figure>
-<p>插入值过程中，所给出的值的顺序应与关系模式中的属性顺序一致。</p>
-<h4 id="删除">删除</h4>
-<p><code>delete</code> 命令可以用于删除元组。</p>
-<ul>
-<li>如果直接使用命令 <code>delete from student</code> ， 则将从 <em>student</em> 关系中删除所有元组。</li>
-<li>使用其他语句可以执行特定删除，如：
-<ul>
-<li>使用命令 <code>delete from instructor where salary between 13000 and 150000;</code> ，删除所有工资在13000到15000美元之间的教师</li>
-<li>其他操作……</li>
-</ul></li>
-</ul>
-<h4 id="丢弃表格">丢弃表格</h4>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://islet.space/2021/05/11/Signal/2021-05-11-TRS%E7%AB%AF%E5%AD%90%E5%8F%8A%E5%85%B6%E4%BB%96%E9%9F%B3%E9%A2%91%E6%8E%A5%E5%8F%A3/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Liewzheng">
-      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Coder的孤岛">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/05/11/Signal/2021-05-11-TRS%E7%AB%AF%E5%AD%90%E5%8F%8A%E5%85%B6%E4%BB%96%E9%9F%B3%E9%A2%91%E6%8E%A5%E5%8F%A3/" class="post-title-link" itemprop="url">TRS端子及其他音频接口</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-
-    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
-    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2021-05-11 16:00:00" itemprop="dateCreated datePublished" datetime="2021-05-11T16:00:00+08:00">2021-05-11</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-05-14 19:47:43" itemprop="dateModified" datetime="2021-05-14T19:47:43+08:00">2021-05-14</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Signal/" itemprop="url" rel="index"><span itemprop="name">Signal</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>接口其实包括对 “<strong>接口</strong>” （interface）和 “<strong>连接器</strong>” （connector）这两个方面的讨论，“连接器”我们通常也称之为“接头”或“插头”。 “接口”定义了电子设备之间连接的物理特性，包括传输的<strong>信号频率</strong>、<strong>强度</strong>，以及相应<strong>连线的类型</strong>、<strong>数量</strong>，还包括<strong>插头</strong>、<strong>插座</strong>的结构设计；而“连接器”则是在物理上实现设备之间连接的装置。</p>
-<h1 id="trs">TRS</h1>
-<p>TRS端子（TRS connector）是一种常用于连接音响设备，用以传递音频信号的连接器。该词是其三个组成部件的首字母缩写：<strong>Tip</strong>（尖）、<strong>Ring</strong>（环）、<strong>Sleeve</strong>（套）。</p>
-<p>由于该种接头一般用于接插耳机和麦克风，因此也称 Phone Jack。虽然统称TRS，但也可依据具体的插头/插座的<strong>环（R）数</strong> 不同而分别称为<strong>TS</strong>（无环，即尖和套各提供一个接触点）、<strong>TRS</strong>（一环，三个接触点）、<strong>TRRS</strong>（两环，四个接触点）等等。</p>
-<p>日常生活中我们见得最多的就是<strong>TRS</strong>接口，它的接头外观是圆柱体形状，通常有三种尺寸<strong>1/4"</strong>（6.3mm）、<strong>1/8"</strong>（3.5mm）、<strong>3/32"</strong>（2.5mm），最常见的是3.5mm尺寸的接头。</p>
-<p><img src="https://pic.islet.space/2021/05/72f082025aafa40fc0dca129a764034f78f0192f" alt="img" style="zoom:50%;" /></p>
-<p><strong>TRS</strong> 的含义是Tip（signal）、Ring（signal）、Sleeve（ground），分别代表了这种接头的3个触点，我们看到的就是被两段绝缘材料隔离开的三段金属柱。因此，3.5mm接头和6.3mm接头也被人称为“小三芯”和“大三芯”。</p>
-<p><img src="https://pic.islet.space/2021/05/Cg-4WlUQA2qIVD1QAAEWTBx9jskAAAGGAKz658AARZk513.jpg" alt=" " style="zoom: 150%;" /></p>
-<p>TRS接口就是一个圆孔，其内部与接头对应，也有三个触点，彼此之间也被绝缘材料隔开。</p>
-<h2 id="常见设备">常见设备</h2>
-<p>通常，手机上的耳机插口都是TRRS，而电脑上通常是两个TRS，一个传声音的左右声道，一个传话筒的左右声道。</p>
-<p>而为了使得双TRS的耳麦可以插到手机上，产生了转接头，也就是图中的第二个设备。不过我们考虑一下会发现，两个TRS都是3个信号，合并到一个TRRS接口上，信号变成了4个，减少了两个。除去一个共地的GND，还少了一个信号，去哪了呢？其实这是因为它会把LMIC和RMIC合并成一个MIC，而且TRRS本身就是只能传输一个MIC信号的，不存在左右声道。</p>
-<p>当然了，也有反过来将TRRS转接成两个TRS接口的转接头。</p>
-<p>此外，还有TS麦克风，如图中的第四个设备。如果话筒采用的这种接口，就默认了MIC只有一个声道，这种一般是用在小蜜蜂扩音器上。</p>
-<figure>
-<img src="https://pic.islet.space/2021/05/41_2.jpg" alt="img" /><figcaption aria-hidden="true">img</figcaption>
-</figure>
-<p>当然，既然能加芯，那也可以减芯。二芯的TRS接头可以用来传送非平衡的单声道音频信号，比如电吉他用的线就是二芯的TRS线。所以，单从TRS接口外观来看，我们不会知道它是否支持平衡传输；单从芯数来看，我们也不能确定四芯及以上的TRS接头是否支持平衡传输，具体情况需要看设备。</p>
-<p>尖和套是一定要有的，但环可以根据需要加，常见的有0-2个环的，也就是TS、TRS和TRRS。环越多，可以传输的信号数量越多。</p>
-<p>因此，普通双声道耳机需要3个信号，即TRS；而如果是带麦克风的耳机，就需要4个信号了，即TRRS。注意，这里除了左声道(L)、右声道(R)以及带麦耳机所需的麦克风(MIC)信号，必须还要有地线(GND)，因为没有绝对电压而只有相对电压。</p>
-<p>在3.5mm接口上传输的是模拟信号，使用电压模拟声波。</p>
-<p>此外，还有一种用于耳机的四芯3.5mm插头则是用来传输平衡信号的。6.3mm的“大三芯”插头可用来传输平衡信号或非平衡立体声信号，也就是说它可以和XLR平衡接口一样，能够传输平衡信号，但因制作这样的平衡线成本比较高，所以一般只用在高档专业音频设备上。</p>
-<p><img src="https://article-fd.zol-img.com.cn/t_s640x2000/g2/M00/01/08/Cg-4WlUQBM2IO7yBAAPH1zKABagAAAGHwBFP9AAA8fv952.jpg" alt="拒绝做小白 你应该知道的常见音频接口 " style="zoom:67%;" /></p>
-<div style="text-align: center; font-weight: 900;">
-二芯6.3mm TRS电吉他线
-</div>
-<h2 id="trs母头">TRS母头</h2>
-<p>ADI公司旗下的 ADAU1772 评估板采用的就是CUI公司旗下型号为 SJ-3523-SMT-TR 的TRS母头</p>
-<p><img src="https://pic.islet.space/2021/05/2021-05-11_16-39.png" /></p>
-<p>说明书如：<a target="_blank" rel="noopener" href="https://www.cuidevices.com/product/resource/digikeypdf/sj-352x-smt.pdf">sj-352x-smt.pdf</a> ，其规格如下：</p>
-<figure>
-<img src="https://pic.islet.space/2021/05/image-20210511164353982.png" alt="image-20210511164353982" /><figcaption aria-hidden="true">image-20210511164353982</figcaption>
-</figure>
-<h1 id="rca">RCA</h1>
-<p>RCA接口在我们日常生活中也非常常见，音箱、电视、功放、DVD机等设备上基本都有。它得名于美国无线电公司的英文缩写（Radio Corporation of America），上世纪40年代的时候，该公司将这种接口引入市场，用它来连接留声机和扬声器，也因此，它在欧州又称为PHONO接口。我们对它更熟悉的接头称呼则是“莲花头”。</p>
-<p><img src="https://article-fd.zol-img.com.cn/t_s640x2000/g2/M00/01/08/Cg-4WlUQCFeITgCFAAaVRivfdawAAAGKwBI8wMABpVe851.jpg" alt="拒绝做小白 你应该知道的常见音频接口 " style="zoom:67%;" /></p>
-<div style="text-align: center; font-weight: 900;">
-RCA接口在我们日常生活中非常常见
-</div>
-<p><img src="https://article-fd.zol-img.com.cn/t_s640x2000/g2/M00/01/08/Cg-4WVUQCFyIRm-6AAMW5z_mkQ8AAAGKwB5ZmQAAxb_659.jpg" alt="拒绝做小白 你应该知道的常见音频接口 " style="zoom:67%;" /></p>
-<div style="text-align: center; font-weight: 900;">
-被称为“莲花头”的RCA接头
-</div>
-<p>RCA接口采用同轴传输信号的方式，中轴用来传输信号，外沿一圈的接触层用来接地。每一根RCA线缆负责传输一个声道的音频信号，因此，可以根据对声道的实际需要，使用与之数量相匹配的RCA线缆。比如要组双声道立体声就需要两根RCA线缆。</p>
-<h1 id="xlr">XLR</h1>
-<p>XLR接口又被称为“卡农口”，这是因为James H. Cannon创立的Cannon Electric公司是它最初的生产商。它们最早的产品是“cannon X”系列，后来改进产品增加了一个锁定装置（Latch），于是在“X”后面增加了一个“L”；再后来又围绕着接头的金属触点增加了橡胶封口（Rubber compound），于是又在“L”后面增加了一个“R”。人们就把三个大写字母组合在一起，称这种接头为“XLR connector”。</p>
-<p><img src="https://article-fd.zol-img.com.cn/t_s640x2000/g2/M00/01/08/Cg-4WVUQChyIbKeoAALaNHpTfMUAAAGMAMweHgAAtpM096.jpg" /></p>
-<div style="text-align: center; font-weight: 900;">
-比较常见的三芯XLR接口
-</div>
-<p><img src="https://article-fd.zol-img.com.cn/t_s640x2000/g2/M00/01/08/Cg-4WlUQDLCIUqT0AAHcPS_ygasAAAGOQEvIJQAAdxV227.jpg" /></p>
-<div style="text-align: center; font-weight: 900;">
-有的耳放上面会提供四芯平衡XLR接口
-</div>
-<p>我们通常见到的XLR插头是3脚的，当然也有2脚、4脚、5脚、6脚的，比如在一些高档耳机线上，我们也会看到四芯XLR平衡接头。XLR接口与“大三芯”TRS接口一样，可以用来传输音频平衡信号。这里我们简单说一下平衡信号与非平衡信号。声波转换成电信号后，如果直接传送就是非平衡信号，如果把原始信号反相180度，然后同时传送原始信号和反相信号，这就是平衡信号。平衡传输就是利用相位抵消原理，将音频信号传输过程中受到的其他干扰降至最低。 当然，XLR接口也跟“大三芯”TRS接口一样，可以传输非平衡信号，因此光从接口看，我们是看不出来它到底传输的是哪种信号。</p>
 
       
     </div>

@@ -162,18 +162,18 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">104</span>
+          <span class="site-state-item-count">106</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
           <a href="/categories/">
-        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-count">12</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">192</span>
+        <span class="site-state-item-count">195</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -207,6 +207,322 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://islet.space/2021/05/11/Computer/2021-05-11-%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Liewzheng">
+      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coder的孤岛">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/05/11/Computer/2021-05-11-%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="post-title-link" itemprop="url">数据库学习笔记</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-05-11 19:11:00" itemprop="dateCreated datePublished" datetime="2021-05-11T19:11:00+08:00">2021-05-11</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2021-09-16 01:06:14" itemprop="dateModified" datetime="2021-09-16T01:06:14+08:00">2021-09-16</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Computer/" itemprop="url" rel="index"><span itemprop="name">Computer</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="数据库入门">数据库入门</h1>
+<h4 id="数据库相关从业">数据库相关从业</h4>
+<p><strong>前面五种</strong>：重点是设计和应用，侧重于软件和数据逻辑层面。</p>
+<p>数据库应用开发 (application development) &gt; 除了基本的SQL方面的知识，还要对开发流程，软件工程，各种框架和开发工具等等 &gt; 数据库应用开发这个方向上的机会最多，职位最多</p>
+<p>数据建模专家 (data modeler) &gt; 除了基本的SQL方面的知识，非常熟悉数据库原理，数据建模 &gt; 负责将用户对数据的需求转化为数据库物理设计和物理设计 &gt; 这个方向上在大公司（金融，保险，研究，软件开发商等）有专门职位， &gt; 在中小公司则可能由程序员承担。</p>
+<p>商业智能专家 (business intelligence - BI) &gt; 主要从商业应用，最终用户的角度去从数据中获得有用的信息， &gt; 涉及OLAP (online analytical processing) &gt; 需要使用SSRS, cognos, crystal report等报表工具，或者其他一些数据挖掘，统计方面的软件工具</p>
+<p>ETL开发 (ETL Developer) &gt; 使用ETL工具或者自己编写程序在不同的数据源之间对数据进行导入，导出，转换， &gt; 所接触的数据库一般数据量非常大，要求进行的数据转换也比较复杂。 &gt; 和数据仓库和商业智能的关系比较密切。</p>
+<blockquote>
+<p>在一些数据库应用规模很大的公司里面有专门的职位， 中小公司里面则可能由程序员或者DBA负责这方面的工作。</p>
+</blockquote>
+<p>数据构架师 (Data Architect) &gt; 主要从全局上制定和控制关于数据库在逻辑这一层的大方向， &gt; 也包括数据可用性，扩展性等长期性战略， &gt; 协调数据库的应用开发，建模，DBA之间的工作。 &gt; 这个方向上在大公司（金融，保险，研究，软件开发商等）有专门职位， &gt; 在中小公司或者没有这个职位，或者由开发人员，DBA负责。</p>
+<p><strong>后面五种</strong>：重点是运营和维护，侧重与硬件和数据物理层面。</p>
+<p>数据库管理员 (database administrator - DBA) &gt; 数据库的安装，配置，调优，备份/恢复，监控，自动化等， &gt; 协助应用开发（有些职位还要求优化SQL，写存储过程和函数等） &gt; 这个方向上的职位相对少一些，但一般有点规模的公司还是会有这样的职位</p>
+<p>数据仓库专家 (data warehouse - DW) &gt; 应付超大规模的数据，历史数据的存储，管理和使用， &gt; 和商业智能关系密切，很多时候BI和DW是放在一个大类里面的， &gt; 但是我觉得DW更侧重于硬件和物理层上的管理和优化。</p>
+<p>存储工程师 (storage engineer) &gt; 专门负责提供数据存储方案，使用各种存储技术满足数据访问和存储需求， &gt; 和DBA的工作关系比较密切。 &gt; 对高可用性有严格要求（比如通信，金融，数据中心等）的公司通常有这种职位， &gt; 这种职位也非常少。</p>
+<p>性能优化工程师 (performance engineer) &gt; 专长数据库的性能调试和优化，为用户提供解决性能瓶颈方面的问题。 &gt; 我知道至少IBM, 微软和Oracle都有专门的数据库性能实验室(database performance lab）, &gt; 也有专门的性能优化工程师，负责为其数据库产品和关键应用提供这方面的技术支持。 &gt; 对数据库性能有严格要求的公司（比如金融行业）可能会有这种职位。 &gt; 因为针对性很强，甚至要求对多种数据库非常熟悉，所以职位极少。</p>
+<p>高级数据库管理员 (senior DBA) &gt; 在DBA的基础上，还涉及上面3种职位的部分工作，具体包括下面这些： &gt; 对应用系统的数据（布局，访问模式，增长模式，存储要求等）比较熟悉。 &gt; 对性能优化非常熟悉，可以发现并优化从SQL到硬件I/O，网络等各个层面上的瓶颈 &gt; 对于存储技术相对熟悉，可能代替存储工程师的一些工作， &gt; 对数据库的高可用性技术非常熟悉（比如MSSQL的集群，ORACLE RAC/FailSafe, IBM的DPF, HADR等） &gt; 对大规模数据库有效进行物理扩展（比如表分区）或者逻辑扩展（比如数据库分区，联合数据库等） &gt; 熟悉各种数据复制技术，比如单向，双向，点对点复制技术，以满足应用要求。 &gt; 灾难数据恢复过程的建立，测试和执行 &gt; 这种职位一般只在对数据库要求非常高并且规模非常大（比如金融，电信，数据中心等）的公司需要， &gt; 而且这种公司一般有一个专门独立负责数据库的部门或组。</p>
+<h1 id="关系型数据库">关系型数据库</h1>
+<p>说到关系型数据库，不仅仅是涉及计算机概念，也涉及一些数学概念，例如表格的概念、包含关系、关系运算及关系代数等。</p>
+<h2 id="关系模型术语">关系模型术语</h2>
+<p><img src="https://pic.islet.space/2021/05/image-20210512085059008.png" alt="image-20210512085059008" style="zoom:67%;" /></p>
+<ol type="1">
+<li><strong>表</strong>：关系型数据库由表集合而成，<strong>表是关系型数据库的一个基本组成</strong>，每个表具有唯一的名字。</li>
+<li><strong>关系</strong>：在关系型数据库中，<strong>关系</strong> 指代 <strong>表</strong> 的概念，即一般可认为 <strong>关系 = 表</strong>。</li>
+<li><strong>元组</strong>：在关系型数据库中，<strong>元组</strong> 指代 <strong>行</strong> 的概念，即一般可认为 <strong>元组 = 行</strong>。</li>
+<li><strong>属性</strong>：在关系型数据库中，<strong>属性</strong> 指代 <strong>列</strong> 的概念，即一般可认为 <strong>属性 = 列</strong>。</li>
+<li><strong>域</strong>：属性下所有元素的可取值范围或取值类型。</li>
+<li><strong>原子域</strong>：域中的元素不可再分，则称为原子域。</li>
+<li><strong>空值</strong>：属性下元素为空(NULL)。</li>
+<li><strong>关系实例</strong>：即表实例，严谨说法是 “表示一个关系的特定实例，也就是所包含的一组特定的行”，就是不仅仅只有属性这一行，还具有特定的某些具体数据的表格。</li>
+<li><strong>关系模式</strong>：即表模式，严谨说法是“关系模式由属性序列及各属性对应域组成”，通俗地说就是，没有具体数据，而仅定义了属性和域的表格。</li>
+<li><strong>数据库模式</strong>：对数据库的逻辑设计。</li>
+<li><strong>数据库实例</strong>：对数据库中数据的快照。</li>
+<li><strong>超码</strong>：是一个或多个属性的集合，超码内的一个或多个属性组合可以唯一区分和标识一个元组。</li>
+<li><strong>候选码</strong>：最小超码。</li>
+<li><strong>主码</strong>：主码是候选码的一种，最重要的是，<strong>主码由设计者选中，具有人为性</strong>。</li>
+<li><strong>外码</strong>：用于表示关系之间的引用和被引用关系。即关系A中的某项属性来自于关系B中的某项属性，则称该引用过来的属性为外码。<strong>但据课本，是被引用的主码称为外码。</strong></li>
+<li><img src="https://pic.islet.space/2021/05/image-20210512134116409.png" title="fig:" alt="image-20210512134116409" /></li>
+</ol>
+<h2 id="结构化查询语言sql">结构化查询语言SQL</h2>
+<h3 id="发展历史">发展历史</h3>
+<p><img src="https://pic.islet.space/2021/05/image-20210512192241572.png" alt="image-20210512192241572" style="zoom:67%;" /></p>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://developer.aliyun.com/article/745815#:~:text=SQL%E6%A0%87%E5%87%86%E6%98%AF%E7%94%B1%E5%9B%BD%E9%99%85%E6%A0%87%E5%87%86%E5%8C%96%E7%BB%84%E7%BB%87%EF%BC%88ISO%EF%BC%89%E3%80%81%E7%BE%8E%E5%9B%BD%E5%9B%BD%E5%AE%B6%E6%A0%87%E5%87%86%E5%A7%94%E5%91%98%E4%BC%9AANSI%E7%AD%89%E5%88%B6%E5%AE%9A%E7%9A%84%EF%BC%8C%E5%AF%B9%E6%95%B0%E6%8D%AE%E5%BA%93%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E7%9A%84%E7%BB%9F%E4%B8%80%E6%93%8D%E4%BD%9C%E6%96%B9%E5%BC%8F%E3%80%82%20SQL%20%E6%98%AF%20Structured%20Query%20Language%20%E7%9A%84%E7%BC%A9%E5%86%99%EF%BC%8C%E8%A7%84%E8%8C%83%E7%9A%84%E5%8F%91%E9%9F%B3%E6%98%AF%20%E2%80%9C%CB%8C%C9%9Bs%CB%8Ckju%CB%90%CB%88%C9%9Bl%E2%80%9D%E3%80%82,%E6%98%AF%20SQL%20Query%20Language%20%E7%9A%84%E7%BC%A9%E5%86%99%E3%80%82%20IBM%E5%AF%B9%E5%85%B3%E7%B3%BB%E6%95%B0%E6%8D%AE%E5%BA%93%E4%BB%A5%E5%8F%8ASQL%E8%AF%AD%E8%A8%80%E7%9A%84%E5%BD%A2%E6%88%90%E5%92%8C%E8%A7%84%E8%8C%83%E5%8C%96%E4%BA%A7%E7%94%9F%E4%BA%86%E9%87%8D%E5%A4%A7%E7%9A%84%E5%BD%B1%E5%93%8D%EF%BC%8C%E7%AC%AC%E4%B8%80%E4%B8%AA%E7%89%88%E6%9C%AC%E7%9A%84SQL%E6%A0%87%E5%87%86SQL86%E5%B0%B1%E6%98%AF%E5%9F%BA%E4%BA%8ESystem%20R%E7%9A%84%E6%89%8B%E5%86%8C%E8%80%8C%E6%9D%A5%E7%9A%84%E3%80%82%20Oracle%E5%9C%A81979%E5%B9%B4%E7%8E%87%E5%85%88%E6%8E%A8%E5%87%BA%E4%BA%86%E6%94%AF%E6%8C%81SQL%E7%9A%84%E5%95%86%E7%94%A8%E4%BA%A7%E5%93%81%E3%80%82">数据库必知词汇：SQL标准</a></p>
+<p>SQL标准是由国际标准化组织（ISO）、美国国家标准委员会ANSI等制定的，对数据库管理系统的统一操作方式。</p>
+<p>SQL 是 Structured Query Language 的缩写，规范的发音是 “ˌɛsˌkjuːˈɛl”。但是它的前身是著名的关系数据库原型系统 System R 所采用的 SEQUEL 语言，这也是为什么有很多人将其读作 “ˈsiːkwəl” 的来源。也有人类比 GNU 这个词的定义（GNU’s Not UNIX），认为 SQL 是 SQL Query Language 的缩写。</p>
+<p>IBM对关系数据库以及SQL语言的形成和规范化产生了重大的影响，第一个版本的SQL标准SQL86就是基于System R的手册而来的。Oracle在1979年率先推出了支持SQL的商用产品。随着数据库技术和应用的发展，为不同RDBMS提供一致的语言成了一种现实需要。</p>
+<p>对SQL标准影响最大的机构自然是那些著名的数据库产商，而具体的制订者则是一些非营利机构，例如国际标准化组织ISO、美国国家标准委员会ANSI等。各国通常会按照ISO标准和ANSI标准制定自己的国家标准。</p>
+<p>“美国国家标准化组织(ANSI)”是一个核准多种行业标准的组织。SQL作为关系型数据库所使用的标准语言，最初是基于IBM的实现在1986年被批准的。1987年，“国际标准化组织(ISO)”把ANSI SQL作为国际标准。</p>
+<p>SQL发展的简要历史： 1986年，ANSI X3.135-1986，ISO/IEC 9075:1986，SQL-86 1989年，ANSI X3.135-1989，ISO/IEC 9075:1989，SQL-89 1992年，ANSI X3.135-1992，ISO/IEC 9075:1992，SQL-92（SQL2） 1999年，ISO/IEC 9075:1999，SQL:1999（SQL3） 2003年，ISO/IEC 9075:2003，SQL:2003 2008年，ISO/IEC 9075:2008，SQL:2008 2011年，ISO/IEC 9075:2011，SQL:2011 补充 1986 年，ANSI X3.135-1986，ISO/IEC 9075:1986，SQL-86。这是 ANSI 首次将 SQL 语言标准化的版本。 1989 年，ANSI X3.135-1989，ISO/IEC 9075:1989，SQL-89。增加了完整性约束。 1992 年，ANSI X3.135-1992，ISO/IEC 9075:1992，SQL-92（SQL2）。最重要的一个版本。 引入了标准的分级概念。 1999 年，ISO/IEC 9075:1999，SQL:1999（SQL3）。变动最大的一个版本。改变了标准符合程度的定义；增加了面向对象特性、正则表达式、存储过程、Java 等支持。 2003 年，ISO/IEC 9075:2003，SQL:2003。引入了 XML、Window 函数等。 2008 年，ISO/IEC 9075:2008，SQL:2008。引入了 TRUNCATE 等。 2011 年，ISO/IEC 9075:2011，SQL:2011。引入了时序数据等。 2016 年，ISO/IEC 9075:2016，SQL:2016。引入了 JSON 等。</p>
+<p>绝大多数人提起SQL标准，涉及的内容其实是SQL92里头最基本或者说最核心的一部分。SQL92本身是分级的，包括入门级、过度级、中间级和完全级，推荐泛读SQL92，增量式式阅读其他标准。而随着SQL标准的发展，其包含的内容实在太多了，而且有很多特性对新的SQL产品而言也越来越不重要了。从SQL99之后，标准中符合程度的定义就不再分级，而是改成了核心兼容性和特性兼容性；也没有机构来推出权威的SQL标准符合程度的测试认证了。</p>
+</blockquote>
+<h3 id="作用">作用</h3>
+<ol type="1">
+<li>数据库查询</li>
+<li>定义数据结构</li>
+<li>修改数据</li>
+<li>说明安全性约束条件</li>
+</ol>
+<h3 id="基本数据类型">基本数据类型</h3>
+<p><img src="https://pic.islet.space/2021/05/image-20210512192708528.png" alt="image-20210512192708528" style="zoom:67%;" /></p>
+<p><strong><em>以上所有类型都可能包含一个被称作空值的特殊值。NULL表示一个缺失的值，即表示该值可能存在但并不为人所知，或者可能根本不存在。</em></strong></p>
+<h4 id="关于char-varchar-nvarchar的比较">关于char / varchar / nvarchar的比较</h4>
+<p><img src="https://pic.islet.space/2021/05/image-20210512193208247.png" alt="image-20210512193208247" style="zoom:67%;" /></p>
+<h3 id="sql完整性约束">SQL完整性约束</h3>
+<p><img src="https://pic.islet.space/2021/05/image-20210512201050138.png" alt="image-20210512201050138" style="zoom:67%;" /></p>
+<p>例如，上方教员的名称为 “张三”， 我想删除后保存，会破坏 <code>instructor</code> 关系下 <code>name</code> 的非空约束，SQL不通过这种操作。</p>
+<h3 id="数据库操作">数据库操作</h3>
+<h4 id="新建表格">新建表格</h4>
+<p>数据表格新建格式及样例如下：</p>
+<figure>
+<img src="https://pic.islet.space/2021/05/image-20210512193506987.png" alt="image-20210512193506987" /><figcaption aria-hidden="true">image-20210512193506987</figcaption>
+</figure>
+<blockquote>
+<p>其中r是关系名，即表名；A<sub>x</sub>是属性名，即列名；D<sub>x</sub>是属性的域，即指定了A的类型及可选约束，用于限制所允许的A<sub>x</sub>取值的集合。</p>
+</blockquote>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*部门关系*/</span></span><br><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> department(</span><br><span class="line">    dept_name <span class="type">varchar</span>(<span class="number">20</span>),</span><br><span class="line">    building <span class="type">varchar</span>(<span class="number">15</span>),</span><br><span class="line">    budget <span class="type">numeric</span>(<span class="number">12</span>,<span class="number">2</span>),</span><br><span class="line">    <span class="keyword">primary</span> key(dept_name)</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line"><span class="comment">/*课程关系*/</span></span><br><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> course(</span><br><span class="line">    coourse_id <span class="type">varchar</span>(<span class="number">7</span>),</span><br><span class="line">    title <span class="type">varchar</span>(<span class="number">50</span>),</span><br><span class="line">    dept_name <span class="type">varchar</span>(<span class="number">20</span>),</span><br><span class="line">    credits <span class="type">numeric</span>(<span class="number">2</span>,<span class="number">0</span>),</span><br><span class="line">    <span class="keyword">primary</span> key(course_id),</span><br><span class="line">    <span class="keyword">foreign</span> key (dept_name) <span class="keyword">references</span> department</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line"><span class="comment">/*教员关系*/</span></span><br><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> instructor(</span><br><span class="line">	ID <span class="type">varchar</span>(<span class="number">5</span>),</span><br><span class="line">    name <span class="type">varchar</span>(<span class="number">20</span>) <span class="keyword">not</span> <span class="keyword">null</span>,</span><br><span class="line">    dept_name <span class="type">varchar</span>(<span class="number">20</span>),</span><br><span class="line">    salary <span class="type">numeric</span>(<span class="number">8</span>,<span class="number">2</span>),</span><br><span class="line">    <span class="keyword">primary</span> key(ID),</span><br><span class="line">    <span class="keyword">foreign</span> key(dept_name) <span class="keyword">references</span> department</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line"><span class="comment">/*（课程）章节关系*/</span></span><br><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> section(</span><br><span class="line">	course_id <span class="type">varchar</span>(<span class="number">8</span>),</span><br><span class="line">    sec_id <span class="type">varchar</span>(<span class="number">8</span>),</span><br><span class="line">    semester <span class="type">varchar</span>(<span class="number">6</span>),</span><br><span class="line">    <span class="keyword">year</span> <span class="type">numeric</span>(<span class="number">4</span>,<span class="number">0</span>),</span><br><span class="line">    building <span class="type">varchar</span>(<span class="number">7</span>),</span><br><span class="line">    time_slot_id <span class="type">varchar</span>(<span class="number">4</span>),</span><br><span class="line">    <span class="keyword">primary</span> key(course_id, sec_id, semester, <span class="keyword">year</span>),</span><br><span class="line">    <span class="keyword">foreign</span> key(course_id) <span class="keyword">references</span> course</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line"><span class="comment">/*教师关系*/</span></span><br><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> teachers(</span><br><span class="line">	ID <span class="type">varchar</span>(<span class="number">5</span>),</span><br><span class="line">    course_id <span class="type">varchar</span>(<span class="number">8</span>),</span><br><span class="line">    sec_id <span class="type">varchar</span>(<span class="number">8</span>),</span><br><span class="line">    semester <span class="type">varchar</span>(<span class="number">6</span>),</span><br><span class="line">    <span class="keyword">year</span> <span class="type">numeric</span>(<span class="number">4</span>,<span class="number">0</span>),</span><br><span class="line">    <span class="keyword">primary</span> key(ID, course_id, sec_id, semester, <span class="keyword">year</span>),</span><br><span class="line">    <span class="keyword">foreign</span> key(course_id, sec_id, semester, <span class="keyword">year</span>) <span class="keyword">references</span> section,</span><br><span class="line">    <span class="keyword">foreign</span> key(ID) <span class="keyword">references</span> instructor</span><br><span class="line">);</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>foreign key 可以拿来当 primary key，如章节关系中所示。</p>
+<p><code>not null</code> 关键字约束表明 “在该属性上不允许空值” 。</p>
+</blockquote>
+<h4 id="插入">插入</h4>
+<figure>
+<img src="https://pic.islet.space/2021/05/image-20210512201338050.png" alt="image-20210512201338050" /><figcaption aria-hidden="true">image-20210512201338050</figcaption>
+</figure>
+<p>插入值过程中，所给出的值的顺序应与关系模式中的属性顺序一致。</p>
+<h4 id="删除">删除</h4>
+<p><code>delete</code> 命令可以用于删除元组。</p>
+<ul>
+<li>如果直接使用命令 <code>delete from student</code> ， 则将从 <em>student</em> 关系中删除所有元组。</li>
+<li>使用其他语句可以执行特定删除，如：
+<ul>
+<li>使用命令 <code>delete from instructor where salary between 13000 and 150000;</code> ，删除所有工资在13000到15000美元之间的教师</li>
+<li>其他操作……</li>
+</ul></li>
+</ul>
+<h4 id="丢弃表格">丢弃表格</h4>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://islet.space/2021/05/11/Signal/2021-05-11-TRS%E7%AB%AF%E5%AD%90%E5%8F%8A%E5%85%B6%E4%BB%96%E9%9F%B3%E9%A2%91%E6%8E%A5%E5%8F%A3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Liewzheng">
+      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coder的孤岛">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/05/11/Signal/2021-05-11-TRS%E7%AB%AF%E5%AD%90%E5%8F%8A%E5%85%B6%E4%BB%96%E9%9F%B3%E9%A2%91%E6%8E%A5%E5%8F%A3/" class="post-title-link" itemprop="url">TRS端子及其他音频接口</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-05-11 16:00:00" itemprop="dateCreated datePublished" datetime="2021-05-11T16:00:00+08:00">2021-05-11</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2021-05-14 19:47:43" itemprop="dateModified" datetime="2021-05-14T19:47:43+08:00">2021-05-14</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Signal/" itemprop="url" rel="index"><span itemprop="name">Signal</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>接口其实包括对 “<strong>接口</strong>” （interface）和 “<strong>连接器</strong>” （connector）这两个方面的讨论，“连接器”我们通常也称之为“接头”或“插头”。 “接口”定义了电子设备之间连接的物理特性，包括传输的<strong>信号频率</strong>、<strong>强度</strong>，以及相应<strong>连线的类型</strong>、<strong>数量</strong>，还包括<strong>插头</strong>、<strong>插座</strong>的结构设计；而“连接器”则是在物理上实现设备之间连接的装置。</p>
+<h1 id="trs">TRS</h1>
+<p>TRS端子（TRS connector）是一种常用于连接音响设备，用以传递音频信号的连接器。该词是其三个组成部件的首字母缩写：<strong>Tip</strong>（尖）、<strong>Ring</strong>（环）、<strong>Sleeve</strong>（套）。</p>
+<p>由于该种接头一般用于接插耳机和麦克风，因此也称 Phone Jack。虽然统称TRS，但也可依据具体的插头/插座的<strong>环（R）数</strong> 不同而分别称为<strong>TS</strong>（无环，即尖和套各提供一个接触点）、<strong>TRS</strong>（一环，三个接触点）、<strong>TRRS</strong>（两环，四个接触点）等等。</p>
+<p>日常生活中我们见得最多的就是<strong>TRS</strong>接口，它的接头外观是圆柱体形状，通常有三种尺寸<strong>1/4"</strong>（6.3mm）、<strong>1/8"</strong>（3.5mm）、<strong>3/32"</strong>（2.5mm），最常见的是3.5mm尺寸的接头。</p>
+<p><img src="https://pic.islet.space/2021/05/72f082025aafa40fc0dca129a764034f78f0192f" alt="img" style="zoom:50%;" /></p>
+<p><strong>TRS</strong> 的含义是Tip（signal）、Ring（signal）、Sleeve（ground），分别代表了这种接头的3个触点，我们看到的就是被两段绝缘材料隔离开的三段金属柱。因此，3.5mm接头和6.3mm接头也被人称为“小三芯”和“大三芯”。</p>
+<p><img src="https://pic.islet.space/2021/05/Cg-4WlUQA2qIVD1QAAEWTBx9jskAAAGGAKz658AARZk513.jpg" alt=" " style="zoom: 150%;" /></p>
+<p>TRS接口就是一个圆孔，其内部与接头对应，也有三个触点，彼此之间也被绝缘材料隔开。</p>
+<h2 id="常见设备">常见设备</h2>
+<p>通常，手机上的耳机插口都是TRRS，而电脑上通常是两个TRS，一个传声音的左右声道，一个传话筒的左右声道。</p>
+<p>而为了使得双TRS的耳麦可以插到手机上，产生了转接头，也就是图中的第二个设备。不过我们考虑一下会发现，两个TRS都是3个信号，合并到一个TRRS接口上，信号变成了4个，减少了两个。除去一个共地的GND，还少了一个信号，去哪了呢？其实这是因为它会把LMIC和RMIC合并成一个MIC，而且TRRS本身就是只能传输一个MIC信号的，不存在左右声道。</p>
+<p>当然了，也有反过来将TRRS转接成两个TRS接口的转接头。</p>
+<p>此外，还有TS麦克风，如图中的第四个设备。如果话筒采用的这种接口，就默认了MIC只有一个声道，这种一般是用在小蜜蜂扩音器上。</p>
+<figure>
+<img src="https://pic.islet.space/2021/05/41_2.jpg" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>当然，既然能加芯，那也可以减芯。二芯的TRS接头可以用来传送非平衡的单声道音频信号，比如电吉他用的线就是二芯的TRS线。所以，单从TRS接口外观来看，我们不会知道它是否支持平衡传输；单从芯数来看，我们也不能确定四芯及以上的TRS接头是否支持平衡传输，具体情况需要看设备。</p>
+<p>尖和套是一定要有的，但环可以根据需要加，常见的有0-2个环的，也就是TS、TRS和TRRS。环越多，可以传输的信号数量越多。</p>
+<p>因此，普通双声道耳机需要3个信号，即TRS；而如果是带麦克风的耳机，就需要4个信号了，即TRRS。注意，这里除了左声道(L)、右声道(R)以及带麦耳机所需的麦克风(MIC)信号，必须还要有地线(GND)，因为没有绝对电压而只有相对电压。</p>
+<p>在3.5mm接口上传输的是模拟信号，使用电压模拟声波。</p>
+<p>此外，还有一种用于耳机的四芯3.5mm插头则是用来传输平衡信号的。6.3mm的“大三芯”插头可用来传输平衡信号或非平衡立体声信号，也就是说它可以和XLR平衡接口一样，能够传输平衡信号，但因制作这样的平衡线成本比较高，所以一般只用在高档专业音频设备上。</p>
+<p><img src="https://article-fd.zol-img.com.cn/t_s640x2000/g2/M00/01/08/Cg-4WlUQBM2IO7yBAAPH1zKABagAAAGHwBFP9AAA8fv952.jpg" alt="拒绝做小白 你应该知道的常见音频接口 " style="zoom:67%;" /></p>
+<div style="text-align: center; font-weight: 900;">
+二芯6.3mm TRS电吉他线
+</div>
+<h2 id="trs母头">TRS母头</h2>
+<p>ADI公司旗下的 ADAU1772 评估板采用的就是CUI公司旗下型号为 SJ-3523-SMT-TR 的TRS母头</p>
+<p><img src="https://pic.islet.space/2021/05/2021-05-11_16-39.png" /></p>
+<p>说明书如：<a target="_blank" rel="noopener" href="https://www.cuidevices.com/product/resource/digikeypdf/sj-352x-smt.pdf">sj-352x-smt.pdf</a> ，其规格如下：</p>
+<figure>
+<img src="https://pic.islet.space/2021/05/image-20210511164353982.png" alt="image-20210511164353982" /><figcaption aria-hidden="true">image-20210511164353982</figcaption>
+</figure>
+<h1 id="rca">RCA</h1>
+<p>RCA接口在我们日常生活中也非常常见，音箱、电视、功放、DVD机等设备上基本都有。它得名于美国无线电公司的英文缩写（Radio Corporation of America），上世纪40年代的时候，该公司将这种接口引入市场，用它来连接留声机和扬声器，也因此，它在欧州又称为PHONO接口。我们对它更熟悉的接头称呼则是“莲花头”。</p>
+<p><img src="https://article-fd.zol-img.com.cn/t_s640x2000/g2/M00/01/08/Cg-4WlUQCFeITgCFAAaVRivfdawAAAGKwBI8wMABpVe851.jpg" alt="拒绝做小白 你应该知道的常见音频接口 " style="zoom:67%;" /></p>
+<div style="text-align: center; font-weight: 900;">
+RCA接口在我们日常生活中非常常见
+</div>
+<p><img src="https://article-fd.zol-img.com.cn/t_s640x2000/g2/M00/01/08/Cg-4WVUQCFyIRm-6AAMW5z_mkQ8AAAGKwB5ZmQAAxb_659.jpg" alt="拒绝做小白 你应该知道的常见音频接口 " style="zoom:67%;" /></p>
+<div style="text-align: center; font-weight: 900;">
+被称为“莲花头”的RCA接头
+</div>
+<p>RCA接口采用同轴传输信号的方式，中轴用来传输信号，外沿一圈的接触层用来接地。每一根RCA线缆负责传输一个声道的音频信号，因此，可以根据对声道的实际需要，使用与之数量相匹配的RCA线缆。比如要组双声道立体声就需要两根RCA线缆。</p>
+<h1 id="xlr">XLR</h1>
+<p>XLR接口又被称为“卡农口”，这是因为James H. Cannon创立的Cannon Electric公司是它最初的生产商。它们最早的产品是“cannon X”系列，后来改进产品增加了一个锁定装置（Latch），于是在“X”后面增加了一个“L”；再后来又围绕着接头的金属触点增加了橡胶封口（Rubber compound），于是又在“L”后面增加了一个“R”。人们就把三个大写字母组合在一起，称这种接头为“XLR connector”。</p>
+<p><img src="https://article-fd.zol-img.com.cn/t_s640x2000/g2/M00/01/08/Cg-4WVUQChyIbKeoAALaNHpTfMUAAAGMAMweHgAAtpM096.jpg" /></p>
+<div style="text-align: center; font-weight: 900;">
+比较常见的三芯XLR接口
+</div>
+<p><img src="https://article-fd.zol-img.com.cn/t_s640x2000/g2/M00/01/08/Cg-4WlUQDLCIUqT0AAHcPS_ygasAAAGOQEvIJQAAdxV227.jpg" /></p>
+<div style="text-align: center; font-weight: 900;">
+有的耳放上面会提供四芯平衡XLR接口
+</div>
+<p>我们通常见到的XLR插头是3脚的，当然也有2脚、4脚、5脚、6脚的，比如在一些高档耳机线上，我们也会看到四芯XLR平衡接头。XLR接口与“大三芯”TRS接口一样，可以用来传输音频平衡信号。这里我们简单说一下平衡信号与非平衡信号。声波转换成电信号后，如果直接传送就是非平衡信号，如果把原始信号反相180度，然后同时传送原始信号和反相信号，这就是平衡信号。平衡传输就是利用相位抵消原理，将音频信号传输过程中受到的其他干扰降至最低。 当然，XLR接口也跟“大三芯”TRS接口一样，可以传输非平衡信号，因此光从接口看，我们是看不出来它到底传输的是哪种信号。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -2195,582 +2511,6 @@ Shop Arrow.com选择了数字RF步进衰减器，数字音频衰减器等。 <a 
 <h1 id="conclusion">Conclusion</h1>
 <p>We’ve shown you how to installed GCC on Ubuntu 20.04. You can now visit the official <a target="_blank" rel="noopener" href="https://gcc.gnu.org/onlinedocs/">GCC Documentation</a> page and learn how to use GCC and G++ to compile your C and C++ programs.</p>
 <p>If you hit a problem or have feedback, leave a comment below.</p>
-<p>​</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://islet.space/2021/04/22/Linux/System/2021-04-22-Linux%E5%88%86%E5%8C%BA%E5%8F%8A%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Liewzheng">
-      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Coder的孤岛">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/04/22/Linux/System/2021-04-22-Linux%E5%88%86%E5%8C%BA%E5%8F%8A%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F/" class="post-title-link" itemprop="url">Linux分区及文件系统</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-
-    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
-    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2021-04-22 23:58:32" itemprop="dateCreated datePublished" datetime="2021-04-22T23:58:32+08:00">2021-04-22</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-04-26 00:14:16" itemprop="dateModified" datetime="2021-04-26T00:14:16+08:00">2021-04-26</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="linux分区与挂载">Linux分区与挂载</h1>
-<h2 id="分区表">分区表</h2>
-<p><strong>分区表</strong>(partition table)是将大表的数据分成称为分区的许多小的子集，类型有FAT16, FAT32, NTFS, exFAT, Ext2/3/4, HFS+, VMFS。另外，分区表的种类划分主要有：range（范围）、list（列表）和hash（散列）分区。划分依据主要是根据其表内部属性。同时，分区表可以创建其独特的分区索引。倘若硬盘丢失了分区表，数据就无法按顺序读取和写入，导致无法操作。</p>
-<p>Kali Linux支持的分区表类型：aix、amiga、bsd、dvh、gpt、mac、msdos、pc98、sun、atari 及 loop。</p>
-<h2 id="磁盘结构">磁盘结构</h2>
-<p><img src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/04/kzq6k9g8x7.png" /></p>
-<p>磁盘结构</p>
-<p>磁盘主要分为以下结构：</p>
-<ul>
-<li>磁头（head）：对磁盘的数据进行读写</li>
-<li>磁道（track）：当磁盘旋转时，磁头若保持在一个位置上，则每个磁头都会在磁盘表面划出一个圆形轨迹，这些圆形轨迹就叫做磁道。 磁盘上的磁道是一组记录密度不同的同心圆</li>
-<li>扇区（sector）：磁盘上的每个磁道被等分为若干个弧段，这些弧段便是硬盘的扇区。硬盘的第一个扇区，叫做引导扇区。 一个扇区的大小为512个字节。</li>
-<li>柱面（cylinder）：在有多个盘片构成的盘组中，由不同盘片的面，但处于同一半径圆的多个磁道组成的一个圆柱面。</li>
-</ul>
-<p>整个磁盘的存储大小为： <strong>存储容量 ＝ 磁头数 × 磁道(柱面)数 × 每道扇区数 × 每扇区字节数</strong></p>
-<h2 id="磁盘的使用">磁盘的使用</h2>
-<p>一块新的硬盘或者U盘等外部设备在插入PC后，需要完成以下事情：</p>
-<ul>
-<li>在/dev/下创建一个新的目录，用来代表该磁盘。如/dev/hda，/dev/hdb等。</li>
-<li>磁盘最开始需要进行格式化，使用<code>mkfs</code>命令为磁盘进行格式化，确定文件系统类型。</li>
-<li>对硬盘进行分区后才可以使用。</li>
-<li>在Linux中挂载到一个已经存在的目录下才可以访问该磁盘，否则无法访问。使用<code>mount</code>与<code>unmount</code>来进行挂载和卸载。</li>
-</ul>
-<blockquote>
-<p>一般挂在点都在/mnt/xxx目录下，并且该目录必须是已经存在的，否则无法挂载</p>
-</blockquote>
-<h2 id="fdisk的使用">fdisk的使用</h2>
-<p>在Linux中，使用fdisk来查看当前的硬盘以及硬盘的分区、文件系统等信息。并且使用fdisk命令可以为磁盘进行分区。 fdisk的命令有以下这些： Fdisk命令详解：</p>
-<table>
-<thead>
-<tr class="header">
-<th style="text-align: left;">命令</th>
-<th style="text-align: left;">备注</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">m</td>
-<td style="text-align: left;">获取帮助</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">n</td>
-<td style="text-align: left;">新建分区</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">p</td>
-<td style="text-align: left;">显示分区表</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">d</td>
-<td style="text-align: left;">删除分区</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">b</td>
-<td style="text-align: left;">设置卷标</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">w</td>
-<td style="text-align: left;">写入分区表</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">t</td>
-<td style="text-align: left;">改变分区文件系统类型</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">v</td>
-<td style="text-align: left;">检验分区</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">l</td>
-<td style="text-align: left;">显示fdisk所支持的文件系统代码</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">q</td>
-<td style="text-align: left;">退出</td>
-</tr>
-</tbody>
-</table>
-<h5 id="fdisk示例">fdisk示例</h5>
-<ol type="1">
-<li>使用<code>fdisk -l</code>查看当前所有硬盘以及分区的状态。</li>
-</ol>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"># fdisk -l</span><br><span class="line"></span><br><span class="line">Disk /dev/sda: <span class="number">10.7</span> GB, <span class="number">10737418240</span> bytes</span><br><span class="line"><span class="number">255</span> heads, <span class="number">63</span> sectors/track, <span class="number">1305</span> cylinders</span><br><span class="line">Units = cylinders <span class="keyword">of</span> <span class="number">16065</span> * <span class="number">512</span> = <span class="number">8225280</span> bytes</span><br><span class="line"></span><br><span class="line">Device Boot   Start     End   Blocks  Id System</span><br><span class="line">/dev/sda1  *      <span class="number">1</span>     <span class="number">13</span>   <span class="number">104391</span>  <span class="number">83</span> Linux</span><br><span class="line">/dev/sda2       <span class="number">14</span>    <span class="number">1305</span>  <span class="number">10377990</span>  8e Linux LVM</span><br><span class="line"></span><br><span class="line">Disk /dev/sdb: <span class="number">5368</span> MB, <span class="number">5368709120</span> bytes</span><br><span class="line"><span class="number">255</span> heads, <span class="number">63</span> sectors/track, <span class="number">652</span> cylinders</span><br><span class="line">Units = cylinders <span class="keyword">of</span> <span class="number">16065</span> * <span class="number">512</span> = <span class="number">8225280</span> bytes</span><br><span class="line"></span><br><span class="line">Disk /dev/sdb doesn<span class="string">&#x27;t contain a valid partition table</span></span><br></pre></td></tr></table></figure>
-<p>可以看到目前有两个磁盘：</p>
-<ul>
-<li>sda：10.7G，255个磁头，63个磁道，1305个扇区
-<ul>
-<li>主分区1：/dev/sda1</li>
-<li>主分区2：/dev/sda2</li>
-</ul></li>
-<li>sdb：5G，255个磁头，63个磁道，652个扇区
-<ul>
-<li>无分区</li>
-</ul></li>
-</ul>
-<h2 id="分区的概念">分区的概念</h2>
-<p>Linux中，磁盘只有被分区完后，才可以被挂载到目录下。</p>
-<p>分区有三种：主分区，扩展分区，逻辑分区，每个磁盘最多只能有四个主分区，而可以有多个扩展分区，在扩展分区中，还可以创建多个逻辑分区。</p>
-<ul>
-<li>主分区：创建完后即可挂载</li>
-<li>扩展分区：扩展分区创建完后，还需要创建逻辑分区才可以被挂载</li>
-</ul>
-<h2 id="示例">示例</h2>
-<p>格式化一块硬盘(hdb)，并且对其进行分区，分区后进行挂载</p>
-<h5 id="创建主分区">创建主分区</h5>
-<ol type="1">
-<li>通过<code>fdisk /dev/hdb</code>进入磁盘的命令模式</li>
-</ol>
-<figure>
-<img src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/04/s22aqd4o24.png" alt="s22aqd4o24" /><figcaption aria-hidden="true">s22aqd4o24</figcaption>
-</figure>
-<p>进入格式化命令模式</p>
-<ol type="1">
-<li>输入<code>n</code>代表创建分区，<code>e</code>代表扩展分区，<code>p</code>代表主分区</li>
-</ol>
-<figure>
-<img src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/04/0u6woej2nq.png" alt="0u6woej2nq" /><figcaption aria-hidden="true">0u6woej2nq</figcaption>
-</figure>
-<p>新建主分区</p>
-<ol type="1">
-<li>输入<code>First Cylinder</code>的值代表分区初始的柱面值，以及分区的大小<code>+3G</code>代表为该分区分3G</li>
-</ol>
-<figure>
-<img src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/04/vopy3iwz2v.png" alt="vopy3iwz2v" /><figcaption aria-hidden="true">vopy3iwz2v</figcaption>
-</figure>
-<p>输入初始柱面的值以及分区大小</p>
-<ol type="1">
-<li>输入<code>p</code>查看创建的分区<code>/dev/hdb1</code></li>
-</ol>
-<figure>
-<img src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/04/rflbc73wpf.png" alt="rflbc73wpf" /><figcaption aria-hidden="true">rflbc73wpf</figcaption>
-</figure>
-<p>新建分区</p>
-<h5 id="创建扩展分区">创建扩展分区</h5>
-<ol type="1">
-<li>与创建主分区步骤相同，只是在选择<code>command action</code>的时候，选择<code>e</code>，表示创建扩展分区</li>
-</ol>
-<figure>
-<img src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/04/ymjwni22fr.png" alt="ymjwni22fr" /><figcaption aria-hidden="true">ymjwni22fr</figcaption>
-</figure>
-<p>创建后的扩展分区</p>
-<ol type="1">
-<li>在创建完扩展分区后，来创建逻辑分区，输入<code>l</code>代表创建逻辑分区</li>
-</ol>
-<figure>
-<img src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/04/ra4wa3017d.png" alt="ra4wa3017d" /><figcaption aria-hidden="true">ra4wa3017d</figcaption>
-</figure>
-<p>创建逻辑分区</p>
-<ol type="1">
-<li>与创建主分区、扩展分区一样，为逻辑分区选择起始的柱面，以及分配的大小</li>
-</ol>
-<figure>
-<img src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/04/y0kb4p9z23.png" alt="y0kb4p9z23" /><figcaption aria-hidden="true">y0kb4p9z23</figcaption>
-</figure>
-<p>分配分区大小</p>
-<ol type="1">
-<li>查看扩展分区</li>
-</ol>
-<figure>
-<img src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/04/c78q2lt7wi.png" alt="c78q2lt7wi" /><figcaption aria-hidden="true">c78q2lt7wi</figcaption>
-</figure>
-<p>查看分区信息</p>
-<h5 id="分区格式化">分区格式化</h5>
-<p>在磁盘分区创建完毕后，需要为分区通过<code>mkfs</code>进行格式化，赋予它文件系统： 如<code>ext2</code>,<code>ext3</code>,<code>vfat</code>等</p>
-<p>使用命令 <code>mkfs -t ext3 /dev/hdb1</code>分别对分区<code>hdb1</code>进行格式化处理，格式化为ext3文件类型</p>
-<p>其中<code>mkfs –t ext3</code>命令等价于<code>mkfs.ext3</code>，<code>mkfs -t ext2</code>命令等价于<code>mkfs.ext2</code></p>
-<figure>
-<img src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/04/513p7ponts.png" alt="513p7ponts" /><figcaption aria-hidden="true">513p7ponts</figcaption>
-</figure>
-<p>mkfs命令</p>
-<h5 id="分区挂载">分区挂载</h5>
-<p>当分区格式化完成文件系统后，就可以通过<code>mount</code>与<code>unmount</code>进行挂载与卸载了，当分区挂载到具体目录后，即可进行创建文件、删除文件等文件操作了。</p>
-<p>如<code>mount /dev/hdb1 /mnt/hdb1</code>就会将<code>/dev/hdb1</code>分区挂载到<code>/mnt/hdb1</code>目录下，也就是该目录下的文件都会被写到<code>/dev/hdb1</code>的磁盘分区中保存。</p>
-<p>本文参与<a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer/support-plan">腾讯云自媒体分享计划</a>，欢迎正在阅读的你也加入，一起分享。</p>
-<h1 id="linux-文件系统">Linux 文件系统</h1>
-<h2 id="文件系统类型">文件系统类型</h2>
-<p>Kali Linux支持：btrfs、exfat、ext2\3\4、f2fs、fat16、fat32、hfs、hfs+、jfs、linux-swap、lvm2 pv、minix、nilfs2、ntfs、reiser4、reiserfs、udf、xfs;</p>
-<h3 id="linux-swap">LINUX-SWAP</h3>
-<p>Swap分区在系统的物理内存不够用的时候，把硬盘空间中的一部分空间释放出来，以供当前运行的程序使用。那些被释放的空间可能来自一些很长时间没有什么操作的程序，这些被释放的空间被临时保存到Swap分区中，等到那些程序要运行时，再从Swap分区中恢复保存的数据到内存中。 本文将从分区开始讲解如何开启SWAP交换空间</p>
-<h4 id="分区">分区</h4>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># 查看块设备</span><br><span class="line"># 如图可以看出硬盘sda和vdb还有剩余</span><br><span class="line">[root@rainss ~]# lsblk</span><br></pre></td></tr></table></figure>
-<h2 id="分区类型">分区类型</h2>
-<p>主分区、扩展分区、逻辑分区</p>
-<h2 id="对齐类型">对齐类型</h2>
-<p>对齐到MiB、对齐到柱面</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://islet.space/2021/04/22/Programming/C++/2021-04-22-Get%20Started%20with%20C++%20and%20Windows%20Subsystem%20for%20Linux%20in%20Visual%20Studio%20Code/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Liewzheng">
-      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Coder的孤岛">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/04/22/Programming/C++/2021-04-22-Get%20Started%20with%20C++%20and%20Windows%20Subsystem%20for%20Linux%20in%20Visual%20Studio%20Code/" class="post-title-link" itemprop="url">Get Started with C++ and Windows Subsystem for Linux in Visual Studio Code</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-
-    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
-    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2021-04-22 23:58:32" itemprop="dateCreated datePublished" datetime="2021-04-22T23:58:32+08:00">2021-04-22</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-05-23 20:06:39" itemprop="dateModified" datetime="2021-05-23T20:06:39+08:00">2021-05-23</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Programming/" itemprop="url" rel="index"><span itemprop="name">Programming</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p><a target="_blank" rel="noopener" href="https://code.visualstudio.com/docs/cpp/config-wsl">code.visualstudio.com</a></p>
-<h2 id="using-c-and-wsl-in-vs-code">Using C++ and WSL in VS Code</h2>
-<p>In this tutorial, you will configure Visual Studio Code to use the GCC C++ compiler (g++) and GDB debugger on Ubuntu in the <a target="_blank" rel="noopener" href="https://docs.microsoft.com/windows/wsl/install-win10">Windows Subsystem for Linux</a> (WSL). GCC stands for GNU Compiler Collection; GDB is the GNU debugger. WSL is a Linux environment within Windows that runs directly on the machine hardware, not in a virtual machine.</p>
-<blockquote>
-<p><strong>Note</strong>: Much of this tutorial is applicable to working with C++ and VS Code directly on a Linux machine.</p>
-</blockquote>
-<p>Visual Studio Code has support for working directly in WSL with the <a target="_blank" rel="noopener" href="https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-wsl">Remote - WSL extension</a>. We recommend this mode of <a target="_blank" rel="noopener" href="https://code.visualstudio.com/docs/remote/wsl">WSL development</a>, where all your source code files, in addition to the compiler, are hosted on the Linux distro. For more background, see <a target="_blank" rel="noopener" href="https://code.visualstudio.com/docs/remote/remote-overview">VS Code Remote Development</a>.</p>
-<p>After completing this tutorial, you will be ready to create and configure your own C++ project, and to explore the VS Code documentation for further information about its many features. This tutorial does not teach you about GCC or Linux or the C++ language. For those subjects, there are many good resources available on the Web.</p>
-<p>If you have any problems, feel free to file an issue for this tutorial in the <a target="_blank" rel="noopener" href="https://github.com/microsoft/vscode-docs/issues">VS Code documentation repository</a>.</p>
-<h2 id="prerequisites">Prerequisites<a href="about:reader?url=https%3A%2F%2Fcode.visualstudio.com%2Fdocs%2Fcpp%2Fconfig-wsl#_prerequisites">#</a></h2>
-<p>To successfully complete this tutorial, you must do the following steps:</p>
-<ol type="1">
-<li>Install <a target="_blank" rel="noopener" href="https://code.visualstudio.com/download">Visual Studio Code</a>.</li>
-<li>Install the <a target="_blank" rel="noopener" href="https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-wsl">Remote - WSL extension</a>.</li>
-<li>Install <a target="_blank" rel="noopener" href="https://docs.microsoft.com/windows/wsl/install-win10">Windows Subsystem for Linux</a> and then use the links on that same page to install your Linux distribution of choice. This tutorial uses Ubuntu. During installation, remember your Linux user password because you'll need it to install additional software.</li>
-</ol>
-<h2 id="set-up-your-linux-environment">Set up your Linux environment<a href="about:reader?url=https%3A%2F%2Fcode.visualstudio.com%2Fdocs%2Fcpp%2Fconfig-wsl#_set-up-your-linux-environment">#</a></h2>
-<ol type="1">
-<li><p>Open the Bash shell for WSL. If you installed an Ubuntu distro, type "Ubuntu" in the Windows search box and then click on it in the result list. For Debian, type "Debian", and so on.</p>
-<figure>
-<img src="https://code.visualstudio.com/assets/docs/cpp/wsl/start-ubuntu.png" alt="Ubuntu in Start Menu" /><figcaption aria-hidden="true">Ubuntu in Start Menu</figcaption>
-</figure>
-<p>The shell appears with a command prompt that by default consists of your user name and computer name, and puts you in your home directory. For Ubuntu it looks like this:</p>
-<figure>
-<img src="https://code.visualstudio.com/assets/docs/cpp/wsl/bash-ubuntu.png" alt="Bash Shell" /><figcaption aria-hidden="true">Bash Shell</figcaption>
-</figure></li>
-<li><p>Make a directory called <code>projects</code> and then subdirectory under that called <code>helloworld</code>:</p>
-<p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mkdir projects</span><br><span class="line">cd projects</span><br><span class="line">mkdir helloworld</span><br></pre></td></tr></table></figure></p></li>
-<li><p>Although you will be using VS Code to edit your source code, you'll be <strong>compiling the source code on Linux using the g++ compiler</strong>. You'll also <strong>debug on Linux using GDB</strong>. These tools are not installed by default on Ubuntu, so you have to install them. Fortunately, that task is quite easy!</p></li>
-<li><p>From the WSL command prompt, first run <code>apt-get update</code> to update the Ubuntu package lists. An out-of-date distro can sometimes interfere with attempts to install new packages.</p>
-<p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get update</span><br></pre></td></tr></table></figure></p>
-<p>If you like, you can run <code>sudo apt-get update &amp;&amp; sudo apt-get dist-upgrade</code> to also download the latest versions of the system packages, but this can take significantly longer depending on your connection speed.</p></li>
-<li><p>From the command prompt, install the GNU compiler tools and the GDB debugger by typing:</p>
-<p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install build-essential gdb</span><br></pre></td></tr></table></figure></p></li>
-</ol>
-<figure>
-<img src="C:\Users\431240\AppData\Roaming\Typora\typora-user-images\image-20210419161354074.png" alt="image-20210419161354074" /><figcaption aria-hidden="true">image-20210419161354074</figcaption>
-</figure>
-<ol start="6" type="1">
-<li>Verify that the install succeeded by locating g++ and gdb. If the filenames are not returned from the <code>whereis</code> command, try running the update command again.</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">whereis g++</span><br><span class="line">whereis gdb</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p><strong>Note</strong>: The setup steps for installing the g++ compiler and GDB debugger apply if you are working directly on a Linux machine rather than in WSL. Running VS Code in your helloworld project, as well as the editing, building, and debugging steps are the same.</p>
-</blockquote>
-<h2 id="run-vs-code-in-wsl">Run VS Code in WSL<a href="about:reader?url=https%3A%2F%2Fcode.visualstudio.com%2Fdocs%2Fcpp%2Fconfig-wsl#_run-vs-code-in-wsl">#</a></h2>
-<p>Navigate to your helloworld project folder and launch VS Code from the WSL terminal with <code>code .</code>:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd $HOME&#x2F;projects&#x2F;helloworld</span><br><span class="line">code .</span><br></pre></td></tr></table></figure>
-<p>You'll see a message about "Installing VS Code Server". <strong>VS Code is downloading and installing a small server on the Linux side that the desktop VS Code will then talk to.</strong></p>
-<figure>
-<img src="C:\Users\431240\AppData\Roaming\Typora\typora-user-images\image-20210419155740210.png" alt="image-20210419155740210" /><figcaption aria-hidden="true">image-20210419155740210</figcaption>
-</figure>
-<p>VS Code will then start and open the <code>helloWorld</code> folder. The File Explorer shows that VS Code is now running in the context of WSL with the title bar <strong>[WSL: Ubuntu]</strong>.</p>
-<figure>
-<img src="https://code.visualstudio.com/assets/docs/cpp/wsl/file-explorer-wsl.png" alt="File Explorer in WSL" /><figcaption aria-hidden="true">File Explorer in WSL</figcaption>
-</figure>
-<p>You can also tell the remote context from the Status bar.</p>
-<figure>
-<img src="https://code.visualstudio.com/assets/docs/cpp/wsl/wsl-status-bar.png" alt="Remote context in the Status bar" /><figcaption aria-hidden="true">Remote context in the Status bar</figcaption>
-</figure>
-<p>If you click on the Remote Status bar item, you will see a dropdown of Remote commands appropriate for the session.</p>
-<figure>
-<img src="C:\Users\431240\AppData\Roaming\Typora\typora-user-images\image-20210419155444952.png" alt="image-20210419155444952" /><figcaption aria-hidden="true">image-20210419155444952</figcaption>
-</figure>
-<p>For example, if you want to end your session running in WSL, you can select the <strong>Close Remote Connection</strong> command from the dropdown.</p>
-<p>Running <code>code .</code> from your <em>WSL command prompt</em> will restart VS Code running in WSL.</p>
-<p>The <strong>code .</strong> command opened VS Code in the current working folder, which becomes your "workspace". As you go through the tutorial, you will see three files created in a <code>.vscode</code> folder in the workspace:</p>
-<ul>
-<li><code>c_cpp_properties.json</code> (compiler path and IntelliSense settings)</li>
-<li><code>tasks.json</code> (build instructions)</li>
-<li><code>launch.json</code> (debugger settings)</li>
-</ul>
-<h2 id="add-a-source-code-file">Add a source code file<a href="about:reader?url=https%3A%2F%2Fcode.visualstudio.com%2Fdocs%2Fcpp%2Fconfig-wsl#_add-a-source-code-file">#</a></h2>
-<p>In the File Explorer title bar, select the <strong>New File</strong> button and name the file <code>helloworld.cpp</code>.</p>
-<figure>
-<img src="https://code.visualstudio.com/assets/docs/cpp/wsl/new-file-button.png" alt="New File title bar button" /><figcaption aria-hidden="true">New File title bar button</figcaption>
-</figure>
-<h3 id="install-the-cc-extension">Install the C/C++ extension<a href="about:reader?url=https%3A%2F%2Fcode.visualstudio.com%2Fdocs%2Fcpp%2Fconfig-wsl#_install-the-cc-extension">#</a></h3>
-<p>Once you create the file and VS Code detects it is a C++ language file, you may be prompted to install the <a target="_blank" rel="noopener" href="https://marketplace.visualstudio.com/items?itemName=ms-vscode.cpptools">Microsoft C/C++ extension</a> if you don't already have it installed.</p>
-<figure>
-<img src="https://code.visualstudio.com/assets/docs/cpp/wsl/cpp-extension-notification.png" alt="C++ extension notification" /><figcaption aria-hidden="true">C++ extension notification</figcaption>
-</figure>
-<p>Choose <strong>Install</strong> and then <strong>Reload Required</strong> when the button is displayed in the Extensions view to complete installing the C/C++ extension.</p>
-<p>If you already have C/C++ language extensions installed locally in VS Code, you'll need to go to the Extensions view (Ctrl+Shift+X) and install those extensions into WSL. Locally installed extensions can be installed into WSL by selecting the <strong>Install in WSL</strong> button and then <strong>Reload Required</strong>.</p>
-<figure>
-<img src="https://code.visualstudio.com/assets/docs/cpp/wsl/install-in-wsl.png" alt="Install in WSL button" /><figcaption aria-hidden="true">Install in WSL button</figcaption>
-</figure>
-<h3 id="add-hello-world-source-code">Add hello world source code<a href="about:reader?url=https%3A%2F%2Fcode.visualstudio.com%2Fdocs%2Fcpp%2Fconfig-wsl#_add-hello-world-source-code">#</a></h3>
-<p>Now paste in this source code:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line">#include &lt;vector&gt;</span><br><span class="line">#include &lt;string&gt;</span><br><span class="line"></span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">   vector&lt;string&gt; msg &#123;&quot;Hello&quot;, &quot;C++&quot;, &quot;World&quot;, &quot;from&quot;, &quot;VS Code&quot;, &quot;and the C++ extension!&quot;&#125;;</span><br><span class="line"></span><br><span class="line">   for (const string&amp; word : msg)</span><br><span class="line">   &#123;</span><br><span class="line">      cout &lt;&lt; word &lt;&lt; &quot; &quot;;</span><br><span class="line">   &#125;</span><br><span class="line">   cout &lt;&lt; endl;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>Now press Ctrl+S to save the file. Notice how the file you just added appears in the <strong>File Explorer</strong> view (Ctrl+Shift+E) in the side bar of VS Code:</p>
-<figure>
-<img src="https://code.visualstudio.com/assets/docs/cpp/wsl/file-explorer-helloworld.png" alt="File Explorer" /><figcaption aria-hidden="true">File Explorer</figcaption>
-</figure>
-<p>You can also enable <a target="_blank" rel="noopener" href="https://code.visualstudio.com/docs/editor/codebasics#_saveauto-save">Auto Save</a> to automatically save your file changes, by checking <strong>Auto Save</strong> in the main <strong>File</strong> menu.</p>
-<p>The Activity Bar on the far left lets you open different views such as <strong>Search</strong>, <strong>Source Control</strong>, and <strong>Run</strong>. You'll look at the <strong>Run</strong> view later in this tutorial. You can find out more about the other views in the VS Code <a target="_blank" rel="noopener" href="https://code.visualstudio.com/docs/getstarted/userinterface">User Interface documentation</a>.</p>
-<p>若在此处遇到未找到头文件的问题，请参照一下方法。</p>
-<p><img src="C:\Users\431240\AppData\Roaming\Typora\typora-user-images\image-20210419160838596.png" alt="image-20210419160838596"  /></p>
-<h2 id="explore-intellisense">Explore IntelliSense<a href="about:reader?url=https%3A%2F%2Fcode.visualstudio.com%2Fdocs%2Fcpp%2Fconfig-wsl#_explore-intellisense">#</a></h2>
-<p>In your new <code>helloworld.cpp</code> file, hover over <code>vector</code> or <code>string</code> to see type information. After the declaration of the <code>msg</code> variable, start typing <code>msg.</code> as you would when calling a member function. You should immediately see a completion list that shows all the member functions, and a window that shows the type information for the <code>msg</code> object:</p>
-<figure>
-<img src="https://code.visualstudio.com/assets/docs/cpp/wsl/msg-intellisense.png" alt="Statement completion IntelliSense" /><figcaption aria-hidden="true">Statement completion IntelliSense</figcaption>
-</figure>
-<p>You can press the Tab key to insert the selected member; then, when you add the opening parenthesis, you will see information about any arguments that the function requires.您可以按Tab键插入所选的成员;然后，当添加左括号时，您将看到关于函数所需的任何参数的信息。</p>
-<h2 id="build-helloworld.cpp">Build helloworld.cpp<a href="about:reader?url=https%3A%2F%2Fcode.visualstudio.com%2Fdocs%2Fcpp%2Fconfig-wsl#_build-helloworldcpp">#</a></h2>
-<p>Next, you will create a <code>tasks.json</code> file to tell VS Code how to build (compile) the program. This task will invoke the g++ compiler on WSL to create an executable file based on the source code.</p>
-<p>From the main menu, choose <strong>Terminal</strong> &gt; <strong>Configure Default Build Task</strong>. In the dropdown, which will display a tasks dropdown listing various predefined build tasks for C++ compilers. Choose <strong>g++ build active file</strong>, which will build the file that is currently displayed (active) in the editor.</p>
-<figure>
-<img src="https://code.visualstudio.com/assets/docs/cpp/wsl/build-active-file.png" alt="Tasks C++ build dropdown" /><figcaption aria-hidden="true">Tasks C++ build dropdown</figcaption>
-</figure>
-<p>This will create a <code>tasks.json</code> file in a <code>.vscode</code> folder and open it in the editor.</p>
-<p>Your new <code>tasks.json</code> file should look similar to the JSON below:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;version&quot;: &quot;2.0.0&quot;,</span><br><span class="line">  &quot;tasks&quot;: [</span><br><span class="line">    &#123;</span><br><span class="line">      &quot;type&quot;: &quot;shell&quot;,</span><br><span class="line">      &quot;label&quot;: &quot;g++ build active file&quot;,</span><br><span class="line">      &quot;command&quot;: &quot;&#x2F;usr&#x2F;bin&#x2F;g++&quot;,</span><br><span class="line">      &quot;args&quot;: [&quot;-g&quot;, &quot;$&#123;file&#125;&quot;, &quot;-o&quot;, &quot;$&#123;fileDirname&#125;&#x2F;$&#123;fileBasenameNoExtension&#125;&quot;],</span><br><span class="line">      &quot;options&quot;: &#123;</span><br><span class="line">        &quot;cwd&quot;: &quot;&#x2F;usr&#x2F;bin&quot;</span><br><span class="line">      &#125;,</span><br><span class="line">      &quot;problemMatcher&quot;: [&quot;$gcc&quot;],</span><br><span class="line">      &quot;group&quot;: &#123;</span><br><span class="line">        &quot;kind&quot;: &quot;build&quot;,</span><br><span class="line">        &quot;isDefault&quot;: true</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>The <code>command</code> setting specifies the program to run; in this case that is g++. The <code>args</code> array specifies the command-line arguments that will be passed to g++. These arguments must be specified in the order expected by the compiler. This task tells g++ to take the active file (<code>$&#123;file&#125;</code>), compile it, and create an executable file in the current directory (<code>$&#123;fileDirname&#125;</code>) with the same name as the active file but without an extension (<code>$&#123;fileBasenameNoExtension&#125;</code>), resulting in <code>helloworld</code> for our example.</p>
-<blockquote>
-<p><strong>Note</strong>: You can learn more about <code>tasks.json</code> variables in the <a target="_blank" rel="noopener" href="https://code.visualstudio.com/docs/editor/variables-reference">variables reference</a>.</p>
-</blockquote>
-<p>The <code>label</code> value is what you will see in the tasks list; you can name this whatever you like.</p>
-<p>The <code>"isDefault": true</code> value in the <code>group</code> object specifies that this task will be run when you press Ctrl+Shift+B. This property is for convenience only; if you set it to false, you can still run it from the Terminal menu with <strong>Tasks: Run Build Task</strong>.</p>
-<h3 id="running-the-build">Running the build<a href="about:reader?url=https%3A%2F%2Fcode.visualstudio.com%2Fdocs%2Fcpp%2Fconfig-wsl#_running-the-build">#</a></h3>
-<ol type="1">
-<li><p>Go back to <code>helloworld.cpp</code>. Your task builds the active file and you want to build <code>helloworld.cpp</code>.</p></li>
-<li><p>To run the build task defined in <code>tasks.json</code>, press Ctrl+Shift+B or from the <strong>Terminal</strong> main menu choose <strong>Tasks: Run Build Task</strong>.</p></li>
-<li><p>When the task starts, you should see the Integrated Terminal panel appear below the source code editor. After the task completes, the terminal shows output from the compiler that indicates whether the build succeeded or failed. For a successful g++ build, the output looks something like this:</p>
-<figure>
-<img src="https://code.visualstudio.com/assets/docs/cpp/wsl/wsl-task-in-terminal.png" alt="G++ build output in terminal" /><figcaption aria-hidden="true">G++ build output in terminal</figcaption>
-</figure></li>
-<li><p>Create a new terminal using the <strong>+</strong> button and you'll have a bash terminal running in the context of WSL with the <code>helloworld</code> folder as the working directory. Run <code>ls</code> and you should now see the executable <code>helloworld</code> (no file extension).</p>
-<figure>
-<img src="https://code.visualstudio.com/assets/docs/cpp/wsl/wsl-bash-terminal.png" alt="WSL bash terminal" /><figcaption aria-hidden="true">WSL bash terminal</figcaption>
-</figure></li>
-<li><p>You can run <code>helloworld</code> in the terminal by typing <code>./helloworld</code>.</p></li>
-</ol>
-<h3 id="modifying-tasks.json">Modifying tasks.json<a href="about:reader?url=https%3A%2F%2Fcode.visualstudio.com%2Fdocs%2Fcpp%2Fconfig-wsl#_modifying-tasksjson">#</a></h3>
-<p>You can modify your <code>tasks.json</code> to build multiple C++ files by using an argument like <code>"$&#123;workspaceFolder&#125;/*.cpp"</code> instead of <code>$&#123;file&#125;</code>. You can also modify the output filename by replacing <code>"$&#123;fileDirname&#125;/$&#123;fileBasenameNoExtension&#125;"</code> with a hard-coded filename (for example 'helloworld.out').</p>
-<h2 id="debug-helloworld.cpp">Debug helloworld.cpp<a href="about:reader?url=https%3A%2F%2Fcode.visualstudio.com%2Fdocs%2Fcpp%2Fconfig-wsl#_debug-helloworldcpp">#</a></h2>
-<p>Next, you'll create a <code>launch.json</code> file to configure VS Code to launch the GDB debugger when you press F5 to debug the program. From the main menu, choose <strong>Run</strong> &gt; <strong>Add Configuration...</strong> and then choose <strong>C++ (GDB/LLDB)</strong>.</p>
-<p>You'll then see a dropdown for various predefined debugging configurations. Choose <strong>g++ build and debug active file</strong>.</p>
-<figure>
-<img src="https://code.visualstudio.com/assets/docs/cpp/wsl/build-and-debug-active-file.png" alt="C++ debug configuration dropdown" /><figcaption aria-hidden="true">C++ debug configuration dropdown</figcaption>
-</figure>
-<p>VS Code creates a <code>launch.json</code> file, opens it in the editor, and builds and runs 'helloworld'.</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;version&quot;: &quot;0.2.0&quot;,</span><br><span class="line">  &quot;configurations&quot;: [</span><br><span class="line">    &#123;</span><br><span class="line">      &quot;name&quot;: &quot;g++ build and debug active file&quot;,</span><br><span class="line">      &quot;type&quot;: &quot;cppdbg&quot;,</span><br><span class="line">      &quot;request&quot;: &quot;launch&quot;,</span><br><span class="line">      &quot;program&quot;: &quot;$&#123;fileDirname&#125;&#x2F;$&#123;fileBasenameNoExtension&#125;&quot;,</span><br><span class="line">      &quot;args&quot;: [],</span><br><span class="line">      &quot;stopAtEntry&quot;: false,</span><br><span class="line">      &quot;cwd&quot;: &quot;$&#123;workspaceFolder&#125;&quot;,</span><br><span class="line">      &quot;environment&quot;: [],</span><br><span class="line">      &quot;externalConsole&quot;: false,</span><br><span class="line">      &quot;MIMode&quot;: &quot;gdb&quot;,</span><br><span class="line">      &quot;setupCommands&quot;: [</span><br><span class="line">        &#123;</span><br><span class="line">          &quot;description&quot;: &quot;Enable pretty-printing for gdb&quot;,</span><br><span class="line">          &quot;text&quot;: &quot;-enable-pretty-printing&quot;,</span><br><span class="line">          &quot;ignoreFailures&quot;: true</span><br><span class="line">        &#125;</span><br><span class="line">      ],</span><br><span class="line">      &quot;preLaunchTask&quot;: &quot;g++ build active file&quot;,</span><br><span class="line">      &quot;miDebuggerPath&quot;: &quot;&#x2F;usr&#x2F;bin&#x2F;gdb&quot;</span><br><span class="line">    &#125;</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>The <code>program</code> setting specifies the program you want to debug. Here it is set to the active file folder <code>$&#123;fileDirname&#125;</code> and active filename without an extension <code>$&#123;fileBasenameNoExtension&#125;</code>, which if <code>helloworld.cpp</code> is the active file will be <code>helloworld</code>.</p>
-<p>By default, the C++ extension won't add any breakpoints to your source code and the <code>stopAtEntry</code> value is set to <code>false</code>. Change the <code>stopAtEntry</code> value to <code>true</code> to cause the debugger to stop on the <code>main</code> method when you start debugging.</p>
-<p>The remaining steps are provided as an optional exercise to help you get familiar with the editing and debugging experience.</p>
-<h3 id="start-a-debugging-session">Start a debugging session<a href="about:reader?url=https%3A%2F%2Fcode.visualstudio.com%2Fdocs%2Fcpp%2Fconfig-wsl#_start-a-debugging-session">#</a></h3>
-<ol type="1">
-<li>Go back to <code>helloworld.cpp</code> so that it is the active file.</li>
-<li>Press F5 or from the main menu choose <strong>Run &gt; Start Debugging</strong>. Before you start stepping through the code, let's take a moment to notice several changes in the user interface:</li>
-</ol>
-<ul>
-<li><p>The Integrated Terminal appears at the bottom of the source code editor. In the <strong>Debug Output</strong> tab, you see output that indicates the debugger is up and running.</p></li>
-<li><p>The editor highlights the first statement in the <code>main</code> method. This is a breakpoint that the C++ extension automatically sets for you:</p>
-<figure>
-<img src="https://code.visualstudio.com/assets/docs/cpp/wsl/wsl-breakpoint-default.png" alt="Initial breakpoint" /><figcaption aria-hidden="true">Initial breakpoint</figcaption>
-</figure></li>
-<li><p>The Run view on the left shows debugging information. You'll see an example later in the tutorial.</p></li>
-<li><p>At the top of the code editor, a debugging control panel appears. You can move this around the screen by grabbing the dots on the left side.</p>
-<figure>
-<img src="https://code.visualstudio.com/assets/docs/cpp/cpp/debug-controls.png" alt="Debugging controls" /><figcaption aria-hidden="true">Debugging controls</figcaption>
-</figure></li>
-</ul>
-<h2 id="step-through-the-code">Step through the code<a href="about:reader?url=https%3A%2F%2Fcode.visualstudio.com%2Fdocs%2Fcpp%2Fconfig-wsl#_step-through-the-code">#</a></h2>
-<p>Now you're ready to start stepping through the code.</p>
-<ol type="1">
-<li><p>Click or press the <strong>Step over</strong> icon in the debugging control panel.</p>
-<figure>
-<img src="https://code.visualstudio.com/assets/docs/cpp/cpp/step-over-button.png" alt="Step over button" /><figcaption aria-hidden="true">Step over button</figcaption>
-</figure>
-<p>This will advance program execution to the first line of the for loop, and skip over all the internal function calls within the <code>vector</code> and <code>string</code> classes that are invoked when the <code>msg</code> variable is created and initialized. Notice the change in the <strong>Variables</strong> window on the left.</p>
-<figure>
-<img src="https://code.visualstudio.com/assets/docs/cpp/wsl/debug-view-variables.png" alt="Debugging windows" /><figcaption aria-hidden="true">Debugging windows</figcaption>
-</figure>
-<p>In this case, the errors are expected because, although the variable names for the loop are now visible to the debugger, the statement has not executed yet, so there is nothing to read at this point. The contents of <code>msg</code> are visible, however, because that statement has completed.</p></li>
-<li><p>Press <strong>Step over</strong> again to advance to the next statement in this program (skipping over all the internal code that is executed to initialize the loop). Now, the <strong>Variables</strong> window shows information about the loop variables.</p></li>
-<li><p>Press <strong>Step over</strong> again to execute the <code>cout</code> statement. (Note that as of the March 2019 release, the C++ extension does not print any output to the <strong>Debug Console</strong> until the loop exits.)</p></li>
-<li><p>If you like, you can keep pressing <strong>Step over</strong> until all the words in the vector have been printed to the console. But if you are curious, try pressing the <strong>Step Into</strong> button to step through source code in the C++ standard library!</p>
-<figure>
-<img src="https://code.visualstudio.com/assets/docs/cpp/cpp/gcc-system-header-stepping.png" alt="Breakpoint in gcc standard library header" /><figcaption aria-hidden="true">Breakpoint in gcc standard library header</figcaption>
-</figure>
-<p>To return to your own code, one way is to keep pressing <strong>Step over</strong>. Another way is to set a breakpoint in your code by switching to the <code>helloworld.cpp</code> tab in the code editor, putting the insertion point somewhere on the <code>cout</code> statement inside the loop, and pressing F9. A red dot appears in the gutter on the left to indicate that a breakpoint has been set on this line.</p>
-<figure>
-<img src="https://code.visualstudio.com/assets/docs/cpp/cpp/breakpoint-in-main.png" alt="Breakpoint in main" /><figcaption aria-hidden="true">Breakpoint in main</figcaption>
-</figure>
-<p>Then press F5 to start execution from the current line in the standard library header. Execution will break on <code>cout</code>. If you like, you can press F9 again to toggle off the breakpoint.</p>
-<p>When the loop has completed, you can see the output in the <strong>Debug Console</strong> tab of the integrated terminal, along with some other diagnostic information that is output by GDB.</p>
-<figure>
-<img src="https://code.visualstudio.com/assets/docs/cpp/wsl/debug-console-output-wsl.png" alt="Debug console display" /><figcaption aria-hidden="true">Debug console display</figcaption>
-</figure></li>
-</ol>
-<h2 id="set-a-watch">Set a watch<a href="about:reader?url=https%3A%2F%2Fcode.visualstudio.com%2Fdocs%2Fcpp%2Fconfig-wsl#_set-a-watch">#</a></h2>
-<p>Sometimes you might want to keep track of the value of a variable as your program executes. You can do this by setting a <strong>watch</strong> on the variable.</p>
-<ol type="1">
-<li><p>Place the insertion point inside the loop. In the <strong>Watch</strong> window, click the plus sign and in the text box, type <code>word</code>, which is the name of the loop variable. Now view the Watch window as you step through the loop.</p>
-<figure>
-<img src="https://code.visualstudio.com/assets/docs/cpp/cpp/watch-window.png" alt="Watch window" /><figcaption aria-hidden="true">Watch window</figcaption>
-</figure></li>
-<li><p>Add another watch by adding this statement before the loop: <code>int i = 0;</code>. Then, inside the loop, add this statement: <code>++i;</code>. Now add a watch for <code>i</code> as you did in the previous step.</p></li>
-<li><p>To quickly view the value of any variable while execution is paused on a breakpoint, you can hover over it with the mouse pointer.</p>
-<figure>
-<img src="https://code.visualstudio.com/assets/docs/cpp/cpp/mouse-hover.png" alt="Mouse hover" /><figcaption aria-hidden="true">Mouse hover</figcaption>
-</figure></li>
-</ol>
-<h2 id="cc-configurations">C/C++ configurations<a href="about:reader?url=https%3A%2F%2Fcode.visualstudio.com%2Fdocs%2Fcpp%2Fconfig-wsl#_cc-configurations">#</a></h2>
-<p>If you want more control over the C/C++ extension, you can create a <code>c_cpp_properties.json</code> file, which will allow you to change settings such as the path to the compiler, include paths, C++ standard (default is C++17), and more.</p>
-<p>You can view the C/C++ configuration UI by running the command <strong>C/C++: Edit Configurations (UI)</strong> from the Command Palette (Ctrl+Shift+P).</p>
-<figure>
-<img src="https://code.visualstudio.com/assets/docs/cpp/cpp/command-palette.png" alt="Command Palette" /><figcaption aria-hidden="true">Command Palette</figcaption>
-</figure>
-<p>This opens the <strong>C/C++ Configurations</strong> page. When you make changes here, VS Code writes them to a file called <code>c_cpp_properties.json</code> in the <code>.vscode</code> folder.</p>
-<figure>
-<img src="https://code.visualstudio.com/assets/docs/cpp/wsl/intellisense-configurations-wsl.png" alt="Command Palette" /><figcaption aria-hidden="true">Command Palette</figcaption>
-</figure>
-<p>You only need to modify the <strong>Include path</strong> setting if your program includes header files that are not in your workspace or in the standard library path.</p>
-<p>Visual Studio Code places these settings in <code>.vscode/c_cpp_properties.json</code>. If you open that file directly, it should look something like this:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;configurations&quot;: [</span><br><span class="line">    &#123;</span><br><span class="line">      &quot;name&quot;: &quot;Linux&quot;,</span><br><span class="line">      &quot;includePath&quot;: [&quot;$&#123;workspaceFolder&#125;&#x2F;**&quot;],</span><br><span class="line">      &quot;defines&quot;: [],</span><br><span class="line">      &quot;compilerPath&quot;: &quot;&#x2F;usr&#x2F;bin&#x2F;gcc&quot;,</span><br><span class="line">      &quot;cStandard&quot;: &quot;c11&quot;,</span><br><span class="line">      &quot;cppStandard&quot;: &quot;c++17&quot;,</span><br><span class="line">      &quot;intelliSenseMode&quot;: &quot;clang-x64&quot;</span><br><span class="line">    &#125;</span><br><span class="line">  ],</span><br><span class="line">  &quot;version&quot;: 4</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="closing-the-wsl-session">Closing the WSL session<a href="about:reader?url=https%3A%2F%2Fcode.visualstudio.com%2Fdocs%2Fcpp%2Fconfig-wsl#_closing-the-wsl-session">#</a></h2>
-<p>When you are done working in WSL, you can close your remote session with the <strong>Close Remote Connection</strong> command available in the main <strong>File</strong> menu and the Command Palette (Ctrl+Shift+P). This will restart VS Code running locally. You can easily reopen your WSL session from the <strong>File</strong> &gt; <strong>Open Recent</strong> list by selecting folders with the <strong>[WSL]</strong> suffix.</p>
-<h2 id="next-steps">Next steps<a href="about:reader?url=https%3A%2F%2Fcode.visualstudio.com%2Fdocs%2Fcpp%2Fconfig-wsl#_next-steps">#</a></h2>
-<ul>
-<li>Explore the <a target="_blank" rel="noopener" href="https://code.visualstudio.com/docs/editor/codebasics">VS Code User Guide</a>.</li>
-<li>Review the <a target="_blank" rel="noopener" href="https://code.visualstudio.com/docs/languages/cpp">Overview of the C++ extension</a>.</li>
-<li>Create a new workspace, copy your .json files to it, adjust the necessary settings for the new workspace path, program name, and so on, and start coding!</li>
-</ul>
-<p>11/22/2019</p>
 <p>​</p>
 
       
