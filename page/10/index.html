@@ -162,7 +162,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">106</span>
+          <span class="site-state-item-count">108</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -173,7 +173,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">195</span>
+        <span class="site-state-item-count">200</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -207,6 +207,218 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://islet.space/2019/03/03/Linux/SSH/%E4%BD%BF%E7%94%A8SELinux%E5%BC%80%E6%94%BESSH%E7%AB%AF%E5%8F%A3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Liewzheng">
+      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coder的孤岛">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2019/03/03/Linux/SSH/%E4%BD%BF%E7%94%A8SELinux%E5%BC%80%E6%94%BESSH%E7%AB%AF%E5%8F%A3/" class="post-title-link" itemprop="url">使用SELinux开放SSH端口</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2019-03-03 12:00:00" itemprop="dateCreated datePublished" datetime="2019-03-03T12:00:00+08:00">2019-03-03</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2019-03-05 13:59:48" itemprop="dateModified" datetime="2019-03-05T13:59:48+08:00">2019-03-05</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="什么是selinux">什么是SELinux</h1>
+<p>SELinux(Security-Enhanced Linux) 是美国国家安全局（NSA）对于强制访问控制的实现，是 Linux历史上最杰出的新安全子系统。</p>
+<p>NSA是在Linux社区的帮助下开发了一种访问控制体系，在这种访问控制体系的限制下，进程只能访问那些在他的任务中所需要文件。SELinux 默认安装在 Fedora 和 Red Hat Enterprise Linux 上，也可以作为其他发行版上容易安装的包得到。</p>
+<h1 id="使用selinux开放ssh端口">使用SELinux开放SSH端口</h1>
+<ol type="1">
+<li>查看SELinux开放给ssh使用的端口</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">semanage port -l|grep ssh</span><br></pre></td></tr></table></figure>
+<p>如果系统打印如下，则说明没有开放新添加端口。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh_port_t                    tcp      22</span><br></pre></td></tr></table></figure>
+<ol start="2" type="1">
+<li>添加新端口</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">semanage port -a -t ssh_port_t -p tcp 22222</span><br></pre></td></tr></table></figure>
+<p>正确添加后再次查看，会显示如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh_port_t                    tcp      22，22222</span><br></pre></td></tr></table></figure>
+<h1 id="参考链接">参考链接</h1>
+<ol type="1">
+<li>《<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/SElinux">SELinux</a>》</li>
+<li>《<a target="_blank" rel="noopener" href="https://blog.csdn.net/ausboyue/article/details/53691953">CentOS7增加或修改SSH端口号</a>》</li>
+<li>《<a target="_blank" rel="noopener" href="http://cn.linux.vbird.org/linux_basic/0440processcontrol.php">第十七章、程序管理与 SELinux 初探</a>》</li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://islet.space/2019/03/03/Linux/SSH/%E4%BF%9D%E6%8A%A4%E6%9C%8D%E5%8A%A1%E5%99%A8%EF%BC%8C%E4%B8%BASSH%E6%9C%8D%E5%8A%A1%E4%BF%AE%E6%94%B9%E7%AB%AF%E5%8F%A3%E5%8F%B7/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Liewzheng">
+      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coder的孤岛">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2019/03/03/Linux/SSH/%E4%BF%9D%E6%8A%A4%E6%9C%8D%E5%8A%A1%E5%99%A8%EF%BC%8C%E4%B8%BASSH%E6%9C%8D%E5%8A%A1%E4%BF%AE%E6%94%B9%E7%AB%AF%E5%8F%A3%E5%8F%B7/" class="post-title-link" itemprop="url">保护服务器，为SSH服务修改端口号</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2019-03-03 12:00:00" itemprop="dateCreated datePublished" datetime="2019-03-03T12:00:00+08:00">2019-03-03</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2019-03-06 12:09:28" itemprop="dateModified" datetime="2019-03-06T12:09:28+08:00">2019-03-06</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>修改SSH的端口号是为了防止有人恶意使用暴力破解的方法登录你的服务器，其他保护服务器的方法有禁用Root登录、SSH-Key登录等，但更为简单的操作就是修改你的SSH端口号。下文中将添加一个新端口号，待测试新端口号能够正常使用之后就可以关闭旧的端口号了。</p>
+<h1 id="一-修改ssh配置文件">一、 修改SSH配置文件</h1>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vi &#x2F;etc&#x2F;ssh&#x2F;sshd_config</span><br></pre></td></tr></table></figure>
+<p>找到<code>#Port 22</code>，去掉<code>#</code>并在下一行添加<code>Port 22222</code>。</p>
+<ul>
+<li>注意是<code>sshd_config</code>而不是<code>ssh_config</code>，多了个<code>d</code>。</li>
+<li>SSH服务的默认监听端口是22，如果不强制说明别的端口，”Port 22”注不注释都是开放22访问端口的。保留了22端口，是防止之后因为各种权限和配置问题，避免连22端口都不能访问的尴尬。</li>
+<li>如果设置10000以下的端口号，容易被系统或一些特殊软件占用，或是以后新应用准备占用该端口的时候，却被你先占用了，导致软件无法运行。因此，请选择10000~65535之间的任意端口号。</li>
+<li>到时候需要禁用22号端口的时候，重新修改此文件，给 <code>Port22</code> 前面加上 <code>#</code>，并重新启动服务即可。</li>
+</ul>
+<h1 id="二查看selinux开放情况">二、查看SELinux开放情况</h1>
+<p>见文章《<a target="_blank" rel="noopener" href="https://blog.liewzheng.cn/2019/03/03/Linux/SSH/%E4%BD%BF%E7%94%A8SELinux%E5%BC%80%E6%94%BESSH%E7%AB%AF%E5%8F%A3/">使用SELinux开放SSH端口</a>》</p>
+<p>如果没有安装SELinux或已关闭则略过。</p>
+<h1 id="三开启防火墙对应的端口">三、开启防火墙对应的端口</h1>
+<p>见文章《<a target="_blank" rel="noopener" href="https://blog.liewzheng.cn/2019/03/05/Linux/SSH/CentOS7%E5%AE%89%E8%A3%85iptables%E9%98%B2%E7%81%AB%E5%A2%99/">CentOS7安装iptables防火墙</a>》</p>
+<p>直接下载里面的脚本（或者复制粘贴），然后提升权限并运行。</p>
+<h1 id="四-重启服务">四、 重启服务</h1>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">service sshd restart</span><br><span class="line">service iptables restart</span><br><span class="line">reboot</span><br></pre></td></tr></table></figure>
+<p>此步骤如果使用了第三步骤的脚本之后，便可忽略，而 <code>reboot</code> 则可以看情况使用。</p>
+<h1 id="五-尝试用新端口登陆ssh服务">五、 尝试用新端口登陆SSH服务</h1>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh -P 22222 root@******</span><br></pre></td></tr></table></figure>
+<p>更多防护技术请看参考链接里的文章。</p>
+<h1 id="参考链接">参考链接</h1>
+<ol type="1">
+<li>《<a target="_blank" rel="noopener" href="https://blog.phpgao.com/vps_ssh.html">VPS安全之SSH设置</a>》</li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -477,10 +689,16 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">Posted on</span>
-      
 
-      <time title="Created: 2019-01-25 12:00:00 / Modified: 13:54:48" itemprop="dateCreated datePublished" datetime="2019-01-25T12:00:00+08:00">2019-01-25</time>
+      <time title="Created: 2019-01-25 12:00:00" itemprop="dateCreated datePublished" datetime="2019-01-25T12:00:00+08:00">2019-01-25</time>
     </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2022-02-24 19:05:15" itemprop="dateModified" datetime="2022-02-24T19:05:15+08:00">2022-02-24</time>
+      </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
         <i class="far fa-folder"></i>
@@ -502,28 +720,31 @@
     
     <div class="post-body" itemprop="articleBody">
           <p>为了让大家能在博文下评论两句也是费了老大劲儿了，各种搜评论系统和倒腾。 本篇博文在Hexo静态博客系统的基础上添加评论系统。</p>
-<h1 id="博客评论系统">1. 博客评论系统</h1>
+<h1 id="博客评论系统">博客评论系统</h1>
 <p>现在知道的博客评论系统也不多，有所了解的是：<a target="_blank" rel="noopener" href="https://disqus.com/">Disqus</a>和Valine。目前也就只掌握了Disqus系统，下次有空学了其他评论系统的部署之后再来编辑吧。</p>
-<h1 id="disqus">2. Disqus</h1>
-<p>Disqus因为是国外的评论系统，因此最好是常在墙外的人使用，好像支持匿名评论。跟我国互联网的相关法规相违背，因此在国内使用的话，会加载不出来，因为被屏蔽了。当然，如果都是墙外的人，那就无所谓了。 <strong>注意</strong> 首先确认一下你的<strong>博客主题</strong>本身已经默认支持Disqus评论系统了，否则你可能会因为不懂js语言而被折腾得半死。至于怎么确认是否支持呢？主题文件夹中的<code>readme.md</code>文件或者<code>_config.yml</code>，看看里面是否有disqus支持字样及相关说明，确认完支持之后请继续下列步骤。 对了，如果你翻了墙也打不开Disqus官网，记得在你的SS软件中的PAC配置文件里，讲disqus.com代理相关语句添加进去。同理，如果你点进来看见没有评论系统，那说明你没有科学上网成功啊。</p>
-<h2 id="注册账号">2.1 注册账号</h2>
+<h1 id="disqus">Disqus</h1>
+<p>Disqus因为是国外的评论系统，因此最好是常在国外的人使用，好像支持匿名评论。跟我国互联网的相关法规相违背，因此在国内使用的话，会加载不出来，因为被屏蔽了。当然，如果都是墙外的人，那就无所谓了。</p>
+<p><strong>注意</strong></p>
+<p>首先确认一下你的<strong>博客主题</strong>本身已经默认支持Disqus评论系统了，否则你可能会因为不懂js语言而被折腾得半死。至于怎么确认是否支持呢？主题文件夹中的<code>readme.md</code>文件或者<code>_config.yml</code>，看看里面是否有disqus支持字样及相关说明，确认完支持之后请继续下列步骤。</p>
+<p>对了，如果打不开Disqus官网可以考虑换valine评论系统。</p>
+<h2 id="注册账号">注册账号</h2>
 <ol type="1">
 <li>打开Disqus主页， 并点选<code>GET STARTED</code>。 <img src="http://uk-liewzheng-blog-pic.oss-eu-west-1.aliyuncs.com/2019/01/25/Hexo和博客评论系统/WX20190125-111541.png" alt="Disqus主页" /></li>
 <li>根据提示注册。 <img src="http://uk-liewzheng-blog-pic.oss-eu-west-1.aliyuncs.com/2019/01/25/Hexo和博客评论系统/031851.png" alt="Disqus账号注册" /></li>
 </ol>
-<h2 id="shortname获取">2.2 Shortname获取</h2>
+<h2 id="shortname获取">Shortname获取</h2>
 <ol type="1">
-<li>注册完之后，点选<code>I want to install Disqus on my site</code>网站会提示你输入Website Name。 后续我们会用到一个<strong>Shortname</strong>，区别于<strong>Website Name</strong>，Shortname是用来确保后续hexo部署的时候能够准确跟你的账户连接上的。（我当时好像没填Shortname，应该是自动生成的吧~） <img src="http://uk-liewzheng-blog-pic.oss-eu-west-1.aliyuncs.com/2019/01/25/Hexo和博客评论系统/032303.png" /> <img src="http://uk-liewzheng-blog-pic.oss-eu-west-1.aliyuncs.com/2019/01/25/Hexo和博客评论系统/032455.png" /></li>
-<li>找到Disqus右上角头像处，<code>Install on Site</code>选项。然后在左侧<code>SITE</code>栏目中找到<code>General</code>选项。从这里可以看到要找到Shortname。（下图中被圈中的马赛克部分就是你的Shortname） <img src="http://uk-liewzheng-blog-pic.oss-eu-west-1.aliyuncs.com/2019/01/25/Hexo和博客评论系统/032751.png" /> <img src="http://uk-liewzheng-blog-pic.oss-eu-west-1.aliyuncs.com/2019/01/25/Hexo和博客评论系统/034605.png" /></li>
+<li><p>注册完之后，点选<code>I want to install Disqus on my site</code>网站会提示你输入Website Name。 后续我们会用到一个<strong>Shortname</strong>，区别于<strong>Website Name</strong>，Shortname是用来确保后续hexo部署的时候能够准确跟你的账户连接上的。（我当时好像没填Shortname，应该是自动生成的吧~） <img src="http://uk-liewzheng-blog-pic.oss-eu-west-1.aliyuncs.com/2019/01/25/Hexo和博客评论系统/032303.png" /></p></li>
+<li><p>找到Disqus右上角头像处，<code>Install on Site</code>选项。然后在左侧<code>SITE</code>栏目中找到<code>General</code>选项。从这里可以看到要找到Shortname。（下图中被圈中的马赛克部分就是你的Shortname） <img src="http://uk-liewzheng-blog-pic.oss-eu-west-1.aliyuncs.com/2019/01/25/Hexo和博客评论系统/032751.png" /></p></li>
 </ol>
-<h2 id="config.yml设置">2.3 _config.yml设置</h2>
+<h2 id="config.yml设置">_config.yml设置</h2>
 <p>找到你的博客主题<code>/themes/hexo-theme-XXXXX-master/</code>下的<code>_config.yml</code>文件，然后修改或添加如下语句：（下列语句中，XXXXX为你的Shortname） <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">disqus_shortname: XXXXX</span><br></pre></td></tr></table></figure></p>
-<h2 id="commont.ejs编辑">2.4 commont.ejs编辑</h2>
+<h2 id="commont.ejs编辑">commont.ejs编辑</h2>
 <ol type="1">
 <li>找到与<code>_config.yml</code>文件同级目录底下的<code>layout/_partial/post/</code>中的<code>comment.ejs</code>文件。先复制一份到别处，做备份之用，修改坏了也不着急。然后讲源文件下的所有语句删除，复制以下语句并粘贴（没错，要复制粘贴的这段代码只有两行，因为等下要复制粘贴另外一段代码到这两行代码中间，表示”在非主页的时候执行评论系统“）： <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;% if(!index)&#123; %&gt;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&lt;% &#125; %&gt;</span><br></pre></td></tr></table></figure></li>
-<li>找到步骤2.2中的第2步骤里的页面，同为左侧<code>SITE</code>栏目中的<code>Installation</code>，下图所示： <img src="http://uk-liewzheng-blog-pic.oss-eu-west-1.aliyuncs.com/2019/01/25/Hexo和博客评论系统/040155.png" /> 然后滑动到底下，点选<code>Universal Code</code>，Disqus会自动生成连接到你账户的代码，复制中间部分的代码。（该区域的代码是有滑动条的，记得<strong>全选复制</strong>！） <img src="http://uk-liewzheng-blog-pic.oss-eu-west-1.aliyuncs.com/2019/01/25/Hexo和博客评论系统/040248.png" /> <img src="http://uk-liewzheng-blog-pic.oss-eu-west-1.aliyuncs.com/2019/01/25/Hexo和博客评论系统/040459.png" /> 接着在刚刚的文件中，粘贴到那两行代码中间，完成后如下所示： <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">&lt;% if(!index)&#123; %&gt;</span><br><span class="line">&lt;div id&#x3D;&quot;disqus_thread&quot;&gt;&lt;&#x2F;div&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line"></span><br><span class="line">&#x2F;**</span><br><span class="line">*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.</span><br><span class="line">*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https:&#x2F;&#x2F;disqus.com&#x2F;admin&#x2F;universalcode&#x2F;#configuration-variables*&#x2F;</span><br><span class="line">&#x2F;*</span><br><span class="line">var disqus_config &#x3D; function () &#123;</span><br><span class="line">this.page.url &#x3D; PAGE_URL;  &#x2F;&#x2F; Replace PAGE_URL with your page&#39;s canonical URL variable</span><br><span class="line">this.page.identifier &#x3D; PAGE_IDENTIFIER; &#x2F;&#x2F; Replace PAGE_IDENTIFIER with your page&#39;s unique identifier variable</span><br><span class="line">&#125;;</span><br><span class="line">*&#x2F;</span><br><span class="line">(function() &#123; &#x2F;&#x2F; DON&#39;T EDIT BELOW THIS LINE</span><br><span class="line">var d &#x3D; document, s &#x3D; d.createElement(&#39;script&#39;);</span><br><span class="line">s.src &#x3D; &#39;https:&#x2F;&#x2F;blog-liewzheng-cn.disqus.com&#x2F;embed.js&#39;;</span><br><span class="line">s.setAttribute(&#39;data-timestamp&#39;, +new Date());</span><br><span class="line">(d.head || d.body).appendChild(s);</span><br><span class="line">&#125;)();</span><br><span class="line">&lt;&#x2F;script&gt;</span><br><span class="line">&lt;noscript&gt;Please enable JavaScript to view the &lt;a href&#x3D;&quot;https:&#x2F;&#x2F;disqus.com&#x2F;?ref_noscript&quot;&gt;comments powered by Disqus.&lt;&#x2F;a&gt;&lt;&#x2F;noscript&gt;</span><br><span class="line"></span><br><span class="line">&lt;script id&#x3D;&quot;dsq-count-scr&quot; src&#x3D;&quot;&#x2F;&#x2F;blog-liewzheng-cn.disqus.com&#x2F;count.js&quot; async&gt;&lt;&#x2F;script&gt;</span><br><span class="line">&lt;% &#125; %&gt;</span><br></pre></td></tr></table></figure></li>
+<li>找到步骤2.2中的第2步骤里的页面，同为左侧<code>SITE</code>栏目中的<code>Installation</code>，下图所示： <img src="http://uk-liewzheng-blog-pic.oss-eu-west-1.aliyuncs.com/2019/01/25/Hexo和博客评论系统/040155.png" /> 接着在刚刚的文件中，粘贴到那两行代码中间，完成后如下所示： <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">&lt;% if(!index)&#123; %&gt;</span><br><span class="line">&lt;div id&#x3D;&quot;disqus_thread&quot;&gt;&lt;&#x2F;div&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line"></span><br><span class="line">&#x2F;**</span><br><span class="line">*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.</span><br><span class="line">*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https:&#x2F;&#x2F;disqus.com&#x2F;admin&#x2F;universalcode&#x2F;#configuration-variables*&#x2F;</span><br><span class="line">&#x2F;*</span><br><span class="line">var disqus_config &#x3D; function () &#123;</span><br><span class="line">this.page.url &#x3D; PAGE_URL;  &#x2F;&#x2F; Replace PAGE_URL with your page&#39;s canonical URL variable</span><br><span class="line">this.page.identifier &#x3D; PAGE_IDENTIFIER; &#x2F;&#x2F; Replace PAGE_IDENTIFIER with your page&#39;s unique identifier variable</span><br><span class="line">&#125;;</span><br><span class="line">*&#x2F;</span><br><span class="line">(function() &#123; &#x2F;&#x2F; DON&#39;T EDIT BELOW THIS LINE</span><br><span class="line">var d &#x3D; document, s &#x3D; d.createElement(&#39;script&#39;);</span><br><span class="line">s.src &#x3D; &#39;https:&#x2F;&#x2F;blog-liewzheng-cn.disqus.com&#x2F;embed.js&#39;;</span><br><span class="line">s.setAttribute(&#39;data-timestamp&#39;, +new Date());</span><br><span class="line">(d.head || d.body).appendChild(s);</span><br><span class="line">&#125;)();</span><br><span class="line">&lt;&#x2F;script&gt;</span><br><span class="line">&lt;noscript&gt;Please enable JavaScript to view the &lt;a href&#x3D;&quot;https:&#x2F;&#x2F;disqus.com&#x2F;?ref_noscript&quot;&gt;comments powered by Disqus.&lt;&#x2F;a&gt;&lt;&#x2F;noscript&gt;</span><br><span class="line"></span><br><span class="line">&lt;script id&#x3D;&quot;dsq-count-scr&quot; src&#x3D;&quot;&#x2F;&#x2F;blog-liewzheng-cn.disqus.com&#x2F;count.js&quot; async&gt;&lt;&#x2F;script&gt;</span><br><span class="line">&lt;% &#125; %&gt;</span><br></pre></td></tr></table></figure></li>
 </ol>
-<h2 id="执行">2.5 执行</h2>
+<h2 id="执行">执行</h2>
 <p>全部保存，重新运行以下语句便可进行网页预览啦！ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">hexo clean</span><br><span class="line">hexo g</span><br><span class="line">hexo s</span><br></pre></td></tr></table></figure> <img src="http://uk-liewzheng-blog-pic.oss-eu-west-1.aliyuncs.com/2019/01/25/Hexo和博客评论系统/041910.png" /></p>
 <h1 id="参考资料">参考资料</h1>
 <ol type="1">
@@ -1151,364 +1372,6 @@
 <li>《<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/Bash">bash</a>》</li>
 <li>《<a target="_blank" rel="noopener" href="https://wido.me/sunteya/understand-bashrc-and-profile">理解 bashrc 和 profile</a>》</li>
 </ol>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://islet.space/2019/01/10/Hardware/ESP32/2019-01-10-ESP32%20SDK%E7%9A%84%E9%85%8D%E7%BD%AE/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Liewzheng">
-      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Coder的孤岛">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2019/01/10/Hardware/ESP32/2019-01-10-ESP32%20SDK%E7%9A%84%E9%85%8D%E7%BD%AE/" class="post-title-link" itemprop="url">ESP32 SDK的配置</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-
-    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
-    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2019-01-10 09:00:00" itemprop="dateCreated datePublished" datetime="2019-01-10T09:00:00+08:00">2019-01-10</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2019-01-11 13:43:18" itemprop="dateModified" datetime="2019-01-11T13:43:18+08:00">2019-01-11</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/InternetOfThings/" itemprop="url" rel="index"><span itemprop="name">InternetOfThings</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>本文将直接摘抄和引用<a target="_blank" rel="noopener" href="https://docs.espressif.com/projects/esp-idf/zh_CN/latest/get-started/index.html">ESPRESSIF官网文档</a>对ESP32 SDK配置的描述，并对具体执行步骤加一些自己的备注和注意事项。</p>
-<p>本文中以Ubuntu为Linux系统的代表，在所有安装步骤<code>apt-get install</code>及涉及到其他读写<code>cp</code>、<code>mkdir</code>或<code>rm</code>的操作中，如遇到<code>Permission denied</code>等权限不够的问题，请在命令开头添加<code>sudo</code>或直接另起一行输入<code>sudo -s</code>，然后输入密码(有些命令不需要输入密码)获取 <strong>root</strong> 权限。</p>
-<p>Eclipse的使用可以在三大平台上进行，但是用<code>.bin</code>文件烧录到开发板的过程目前仅在Windows平台找得到烧录工具，望悉知。</p>
-<p>为方便描述，本文定义<code>终端</code>为MSYS2及Terminal的统称，<code>XXXXX</code>为你电脑的用户名，<code>*</code>为你的端口号数字。</p>
-<p>本文分为三部分： - 工具及SDK的下载及配置 - 使用终端运行工程 - 使用Eclipse运行工程</p>
-<h1 id="一工具及sdk的下载及配置">一、工具及SDK的下载及配置</h1>
-<p>本节共有五部分： - 工具(MSYS2和Git) - ESP-IDF - Xtensa - 环境变量设置 - python依赖包</p>
-<h2 id="工具">1. 工具</h2>
-<p>此部分在官方文档里面称为“设置工具链”。</p>
-<h3 id="msys2for-windows-only">1.1 MSYS2(for Windows only)</h3>
-<p>跟Git Bash Shell同理，直接从<a target="_blank" rel="noopener" href="http://www.msys2.org/">MSYS2官网</a>下载和安装到C盘根目录<code>C:/</code>下即可。或者直接下载ESPRESSIF提供的<a target="_blank" rel="noopener" href="https://dl.espressif.com/dl/esp32_win32_msys2_environment_and_toolchain-20181001.zip">.zip文件</a>，解压到<code>C:/</code>。</p>
-<p>能不能放到其他盘，暂时没有试验过，对于使用MSYS2的开发者而言，最好是到<code>C:\msys32\mingw32.exe</code>文件属性中设置好管理员权限。</p>
-<p>本下载仅用于windows平台，对于Mac及Linux平台而言，可以直接调用Terminal进行后续步骤。</p>
-<h3 id="gitfor-mac-linux">1.2 Git(for Mac &amp; Linux)</h3>
-<p>此步骤要在Terminal中进行，便于将ESPRESSIF保存在Github的ESP-IDF下载到本地。</p>
-<p>运行以下命令安装（Debian/Ubuntu）： <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt-get install git</span><br></pre></td></tr></table></figure> 以及（Mac）：<a target="_blank" rel="noopener" href="https://git-scm.com/download/mac">Git下载</a></p>
-<p><strong>ESP-IDF</strong> 是ESP32设备的SDK，另外，MSYS2自带Git工具。如果已经安装过Git工具了，可以使用<code>git</code>或<code>git version</code>语句进行查看。</p>
-<h2 id="esp-idf">2. ESP-IDF</h2>
-<p>在创建文件夹<code>esp</code>的过程中，确保自己没有使用到root权限来创建文件夹，查看的方法是打开<code>Files</code>应用，看看<code>esp</code>文件夹上面是否有个锁的图表。因为后续添加的环境变量局限于 <strong>XXXXX</strong> 用户，而执行文件因为在创建的过程中就属于 <strong>root</strong> 用户了，就不能够识别个人用户创建的环境变量<code>IDF_PATH</code>。为ESP-IDF的获取创建好文件夹，运行以下命令： <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cd ~&#x2F;</span><br><span class="line">mkdir -p esp</span><br><span class="line">cd esp</span><br></pre></td></tr></table></figure> 如果使用了 <strong>root</strong> 权限来创建esp文件夹，请使用命令<code>rm -d -f ~/esp</code>来删除 空的esp文件夹 或 使用命令<code>rm -r -f ~/esp</code>非空的esp文件夹。然后重启终端，使用普通用户权限再次创建。</p>
-<p><img src="https://docs.espressif.com/projects/esp-idf/zh_CN/latest/_images/msys2-terminal-window.png" alt="msys2-terminal-window" /> 然后运行下面语句，ESP-IDF 将会被下载到 <code>~/esp/esp-idf</code> 目录下。 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone --recursive https:&#x2F;&#x2F;github.com&#x2F;espressif&#x2F;esp-idf.git</span><br></pre></td></tr></table></figure></p>
-<p><strong>注意：</strong> 上面克隆仓库的语句中有个 <code>--recursive</code> 选项。如果你克隆 ESP-IDF 时 <strong><em>没有带这个选项</em></strong> ，你还需要运行额外的命令（如下）来获取子模块： <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd esp-idf</span><br><span class="line">git submodule update --init</span><br></pre></td></tr></table></figure></p>
-<h2 id="xtensafor-mac-linux-only">3. Xtensa(for MAC &amp; Linux only)</h2>
-<p><strong>Windows平台因为使用MSYS2的原因，自带了Xtensa，因此可以忽略此步骤。</strong></p>
-<p><strong>Linux平台</strong> <a target="_blank" rel="noopener" href="https://dl.espressif.com/dl/xtensa-esp32-elf-linux64-1.22.0-80-g6c4433a-5.2.0.tar.gz">Xtensa-Linux-64bit</a>下载解压。 执行如下命令： <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd ~&#x2F;esp</span><br><span class="line">tar -xzf ~&#x2F;Downloads&#x2F;xtensa-esp32-elf-linux64-1.22.0-80-g6c4433a-5.2.0.tar.gz</span><br></pre></td></tr></table></figure></p>
-<p><strong>MAC平台</strong> <a target="_blank" rel="noopener" href="https://dl.espressif.com/dl/xtensa-esp32-elf-osx-1.22.0-80-g6c4433a-5.2.0.tar.gz">Xtensa-MAC</a> <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd ~&#x2F;esp</span><br><span class="line">tar -xzf ~&#x2F;Downloads&#x2F;xtensa-esp32-elf-osx-1.22.0-80-g6c4433a-5.2.0.tar.gz</span><br></pre></td></tr></table></figure></p>
-<h2 id="环境变量设置">4. 环境变量设置</h2>
-<p><strong>Windows平台：</strong> 寻找到路径<code>C:/msys32/etc/profile.d/</code>，然后使用记事本或其他文本工具新建一个名为<code>export_idf_path.sh</code>的文件，然后将你的<code>esp-idf</code>路径写入文件中，如： <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">export IDF_PATH&#x3D;&quot;C:&#x2F;msys32&#x2F;home&#x2F;XXXXX&#x2F;esp&#x2F;esp-idf&quot;</span><br></pre></td></tr></table></figure></p>
-<p>安装vim工具或使用其他文本工具，打开<code>~/.profile</code>文件。使用vim工具的话，单击<code>i</code>健进行插入，鼠标点击粘贴以下代码后，按<code>ESC</code>键，然后输入<code>:w</code>进行保存，再次输入<code>:q</code>推出vim工具，ubuntu平台的vim工具安装命令： <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt-get install vim</span><br></pre></td></tr></table></figure></p>
-<p><strong>Linux平台</strong> <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">export PATH&#x3D;&quot;$HOME&#x2F;esp&#x2F;xtensa-esp32-elf&#x2F;bin:$PATH&quot;</span><br><span class="line">export IDF_PATH&#x3D;~&#x2F;esp&#x2F;esp-idf</span><br></pre></td></tr></table></figure></p>
-<p><strong>MAC平台</strong> <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">export PATH&#x3D;$HOME&#x2F;esp&#x2F;xtensa-esp32-elf&#x2F;bin:$PATH</span><br><span class="line">export IDF_PATH&#x3D;~&#x2F;esp&#x2F;esp-idf</span><br></pre></td></tr></table></figure></p>
-<p>完成修改后重启终端，并在终端中输入以下命令可以查看是否设置成功，如果不成功或者后续步骤中出现<code>No such file or directory</code>的错误提示，请尝试重启系统。 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">printenv IDF_PATH</span><br><span class="line">printenv PATH</span><br></pre></td></tr></table></figure></p>
-<figure>
-<img src="http://uk-liewzheng-blog-pic.oss-eu-west-1.aliyuncs.com/2019/01/10/ESP32_SDK%E7%9A%84%E9%85%8D%E7%BD%AE/Environment_Setting_PATH.png" alt="Environment_Setting_PATH" /><figcaption aria-hidden="true">Environment_Setting_PATH</figcaption>
-</figure>
-<h2 id="python依赖包安装">5. python依赖包安装</h2>
-<p>直接输入以下命令，安装依赖于Python的软件包： <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python -m pip install --user -r $IDF_PATH&#x2F;requirements.txt</span><br></pre></td></tr></table></figure></p>
-<p><strong>注意</strong> 在终端输入<code>python</code>可查看版本，如果你的电脑安装的是不同版本的Python，则调用不同的语句进行安装，如<code>python2</code> <code>python2.7</code>。 <img src="http://uk-liewzheng-blog-pic.oss-eu-west-1.aliyuncs.com/2019/01/10/ESP32_SDK%E7%9A%84%E9%85%8D%E7%BD%AE/Tools_Downloads_Python.png" alt="Tools_Downloads_Python" /> <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python2.7 -m pip install --user -r $IDF_PATH&#x2F;requirements.txt</span><br></pre></td></tr></table></figure></p>
-<p>如果在此步骤出现<code>/usr/bin/python2.7: No module named pip</code>的问题，则输入以下命令进行pip module安装： <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt-get install python-pip</span><br></pre></td></tr></table></figure></p>
-<h1 id="二使用终端运行工程">二、使用终端运行工程</h1>
-<p>本节共有四部分： - 工程样例复制 - 开发板连接 - 工程参数设置 - 命令行烧录</p>
-<h2 id="工程样例复制">1. 工程样例复制</h2>
-<p>在<code>C:/msys32/home/XXXXX/esp/esp-idf/examples/</code>下面会有很多ESP-IDF自带的工程样例，按照用途分类。本节将使用<code>/get-started/hello_world</code>作为示范。</p>
-<p>拷贝样例： <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd ~&#x2F;esp</span><br><span class="line">cp -r $IDF_PATH&#x2F;examples&#x2F;get-started&#x2F;hello_world .</span><br></pre></td></tr></table></figure></p>
-<p>要注意的是，拷贝样例的语句中，那个点<code>.</code>必不可少，且和前面的路径中有个空格<code></code>。</p>
-<h2 id="开发板连接">2. 开发板连接</h2>
-<p>将 ESP32 开发板连接到 PC，然后检查串口号，看看它能否正常通信。 ### 2.1 驱动 以下是乐鑫 ESP32 开发板驱动程序的链接：</p>
-<p>ESP32-PICO-KIT 和 ESP32-DevKitC - <a target="_blank" rel="noopener" href="https://www.silabs.com/products/development-tools/software/usb-to-uart-bridge-vcp-drivers">CP210x USB to UART Bridge VCP Drivers</a> ESP32-WROVER-KIT 和 ESP32 Demo Board - <a target="_blank" rel="noopener" href="https://www.ftdichip.com/Drivers/VCP.htm">FTDI Virtual COM Port Drivers</a></p>
-<p>装完驱动之后，Windows平台的设备管理器中是如下显示的： <img src="https://docs.espressif.com/projects/esp-idf/zh_CN/latest/_images/esp32-devkitc-in-device-manager1.png" alt="esp32-devkitc-in-device-manager1" /></p>
-<h3 id="端口号">2.2 端口号</h3>
-<p><strong>Windows平台：</strong> 在<code>设备管理器</code>中查看<code>端口</code>并记录下其设备尾部标注的端口号<code>COM*</code>。 <img src="https://docs.espressif.com/projects/esp-idf/zh_CN/latest/_images/esp32-devkitc-in-device-manager1.png" alt="esp32-devkitc-in-device-manager1" /></p>
-<p><strong>Linux和Mac的平台：</strong> 在终端里面，分别运行查看端口命令两次，一次是在插入开发板前，一次是在插入开发板后。 <strong>Linux:</strong> <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ls &#x2F;dev&#x2F;tty*</span><br></pre></td></tr></table></figure> <strong>Mac:</strong> <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ls &#x2F;dev&#x2F;cu.*</span><br></pre></td></tr></table></figure> 另外，Linux平台还需要为登录用户添加串口读写权限： <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo usermod -a -G dialout $XXXXX</span><br></pre></td></tr></table></figure></p>
-<p><strong>Putty工具</strong> 下载和使用<a target="_blank" rel="noopener" href="https://www.putty.org/">Putty工具</a>对开发板进行串口连接确认。</p>
-<p>运行终端，设置串口：波特率 = 115200，数据位 = 8，停止位 = 1，奇偶校验 = N。</p>
-<p>以下是设置串口和在 Windows 和 Linux 上传输参数（如 115200-8-1-N）的一些截屏示例。注意选择上述步骤中确认的串口进行设置。</p>
-<p><img src="https://docs.espressif.com/projects/esp-idf/zh_CN/latest/_images/putty-settings-windows1.png" alt="putty-settings-windows1" /> <img src="https://docs.espressif.com/projects/esp-idf/zh_CN/latest/_images/putty-settings-linux1.png" alt="putty-settings-linux1" /></p>
-<h2 id="工程参数设置">3. 工程参数设置</h2>
-<p>在终端窗口中，输入<code>cd ~/esp/hello_world</code>进入<code>hello_world</code>所在目录，然后启动工程配置工具: <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">make menuconfig</span><br></pre></td></tr></table></figure> <img src="https://docs.espressif.com/projects/esp-idf/zh_CN/latest/_images/project-configuration1.png" alt="project-configuration1" /></p>
-<p>在菜单中，进入<code>Serial flasher config</code>&gt;<code>Default serial port</code>输入之前记录下来的串口号(<code>/dev/tty*</code>，<code>/dev/cu.*</code>或<code>/COM*</code>)，工程会加载到该串口上。输入回车确认选择，选择<code>&lt; Save &gt;</code>保存配置，然后选择<code>&lt; Exit &gt;</code>退出应用程序。</p>
-<p>以下是<code>menuconfig</code>的使用小技巧： 1. 使用 <strong>up &amp; down</strong> 组合键在菜单中上下移动 2. 使用 <strong>Enter</strong> 键进入一个子菜单，<strong>Escape</strong> 键退出子菜单或退出整个菜单 3. 输入 <code>?</code> 查看帮助信息，<strong>Enter</strong> 键退出帮助屏幕 4. 使用空格键或 <code>Y</code> 和 <code>N</code> 键来使能 (Yes) 和禁止 (No) 带有复选框 “<code>[*]</code>” 的配置项 5. 当光标在某个配置项上面高亮时，输入 <code>?</code> 可以直接查看该项的帮助信息 6. 输入 <code>/</code> 搜索配置项</p>
-<p><strong>注意</strong> 如果再此步骤出现<code>&lt;command-line&gt;:0:12: fatal error: curses.h: No such file or directory</code>的错误提示，则</p>
-<h2 id="命令行烧录">4. 命令行烧录</h2>
-<h3 id="烧录">4.1 烧录</h3>
-<p>这条命令会编译应用程序和所有的 ESP-IDF 组件，生成 bootloader、分区表和应用程序 bin 文件，并将这些 bin 文件烧写到 ESP32 板子上。 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">make flash</span><br></pre></td></tr></table></figure> 烧写成功的话，板子将会复位，应用程序 “hello_world” 开始启动，在终端显示如下： <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">esptool.py v2.0-beta2</span><br><span class="line">Flashing binaries to serial port &#x2F;dev&#x2F;ttyUSB0 (app at offset 0x10000)...</span><br><span class="line">esptool.py v2.0-beta2</span><br><span class="line">Connecting........___</span><br><span class="line">Uploading stub...</span><br><span class="line">Running stub...</span><br><span class="line">Stub running...</span><br><span class="line">Changing baud rate to 921600</span><br><span class="line">Changed.</span><br><span class="line">Attaching SPI flash...</span><br><span class="line">Configuring flash size...</span><br><span class="line">Auto-detected Flash size: 4MB</span><br><span class="line">Flash params set to 0x0220</span><br><span class="line">Compressed 11616 bytes to 6695...</span><br><span class="line">Wrote 11616 bytes (6695 compressed) at 0x00001000 in 0.1 seconds (effective 920.5 kbit&#x2F;s)...</span><br><span class="line">Hash of data verified.</span><br><span class="line">Compressed 408096 bytes to 171625...</span><br><span class="line">Wrote 408096 bytes (171625 compressed) at 0x00010000 in 3.9 seconds (effective 847.3 kbit&#x2F;s)...</span><br><span class="line">Hash of data verified.</span><br><span class="line">Compressed 3072 bytes to 82...</span><br><span class="line">Wrote 3072 bytes (82 compressed) at 0x00008000 in 0.0 seconds (effective 8297.4 kbit&#x2F;s)...</span><br><span class="line">Hash of data verified.</span><br><span class="line"></span><br><span class="line">Leaving...</span><br><span class="line">Hard resetting...</span><br></pre></td></tr></table></figure></p>
-<h3 id="端口监控">4.2 端口监控</h3>
-<p>如果要查看 “hello_world” 程序是否真的在运行，输入命令 make monitor。这个命令会启动 IDF Monitor 程序（ESP-IDF自带工具），也可以使用其他串口助手进行查看。 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">make monitor</span><br></pre></td></tr></table></figure> 串口启动时，在终端显示如下： <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">$ make monitor</span><br><span class="line">MONITOR</span><br><span class="line">--- idf_monitor on &#x2F;dev&#x2F;ttyUSB0 115200 ---</span><br><span class="line">--- Quit: Ctrl+] | Menu: Ctrl+T | Help: Ctrl+T followed by Ctrl+H ---</span><br><span class="line">ets Jun  8 2016 00:22:57</span><br><span class="line"></span><br><span class="line">rst:0x1 (POWERON_RESET),boot:0x13 (SPI_FAST_FLASH_BOOT)</span><br><span class="line">ets Jun  8 2016 00:22:57</span><br><span class="line">...</span><br></pre></td></tr></table></figure> 开发板输出到串口的信息，在终端显示如下： <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line">Hello world!</span><br><span class="line">Restarting in 10 seconds...</span><br><span class="line">I (211) cpu_start: Starting scheduler on APP CPU.</span><br><span class="line">Restarting in 9 seconds...</span><br><span class="line">Restarting in 8 seconds...</span><br><span class="line">Restarting in 7 seconds...</span><br></pre></td></tr></table></figure></p>
-<h1 id="三-使用eclipse运行工程">三、 使用Eclipse运行工程</h1>
-<p>本节共有四部分： - JRE &amp; Eclipse - Eclipse项目运行 - Build Project - Flash tools烧录</p>
-<h2 id="jre-eclipse">1. JRE &amp; Eclipse</h2>
-<h3 id="jre安装">1.1 JRE安装</h3>
-<p><a target="_blank" rel="noopener" href="https://www.oracle.com/technetwork/java/javase/downloads/jre8-downloads-2133155.html">JRE(Java Runtime Environment)</a>要在Eclipse之前安装，并在终端使用如下命令验证是否安装成功并查看版本： <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java -version</span><br></pre></td></tr></table></figure></p>
-<h3 id="eclipse安装">1.2 Eclipse安装</h3>
-<p>Eclipse IDE 是一个可视化的集成开发环境，可用于编写、编译和调试 ESP-IDF 项目。</p>
-<p>下载相应的Eclipse并安装到电脑：<a target="_blank" rel="noopener" href="https://www.eclipse.org/">eclipse.org</a>,在安装的过程中记得要选择<code>Eclipse for C/C++ Development</code>(有的版本也可能显示为 CDT)。</p>
-<h2 id="eclipse项目运行">2. Eclipse项目运行</h2>
-<h3 id="导入工程样例">2.1 导入工程样例</h3>
-<ol type="1">
-<li><p>运行 Eclipse，选择 <strong>File</strong> -&gt; <strong>Import…</strong>。</p></li>
-<li><p>弹出的对话框中选择 <strong>C/C++</strong> -&gt; <strong>Existing Code as Makefile Project</strong>，然后点击 <strong>Next</strong>。</p></li>
-<li><p>在下个界面中 <strong>Existing Code Location</strong> 位置输入您的 IDF 项目的路径（如：<strong>C:/msys32/home/XXXXX/esp/hello_world</strong>）。 <em>注意：这里应输入 ESP-IDF 项目的路径，而非 ESP-IDF 本身的路径。</em></p></li>
-<li><p>在本界面，找到 <strong>Toolchain for Indexer Settings</strong>，选择 <strong>Cross GCC</strong>，最后点击 <strong>Finish</strong>。</p></li>
-</ol>
-<h3 id="设置工程项目属性">2.2 设置工程项目属性</h3>
-<figure>
-<img src="http://uk-liewzheng-blog-pic.oss-eu-west-1.aliyuncs.com/2019/01/10/ESP32_SDK%E7%9A%84%E9%85%8D%E7%BD%AE/Eclipse_Project_Properties.png" alt="Eclipse_Project_Properties" /><figcaption aria-hidden="true">Eclipse_Project_Properties</figcaption>
-</figure>
-<p>在本小节中，会 <strong>添加或修改三个主要的环境变量</strong> ：<code>BTACH_BUILD</code>、<code>IDF_PATH</code>和<code>PATH</code>。这些变量可以只在 <strong>项目属性</strong> 中修改，也可以直接到 <strong>系统环境变量</strong> 中修改。（添加到系统环境变量中的方法本文无讲解）</p>
-<figure>
-<img src="http://uk-liewzheng-blog-pic.oss-eu-west-1.aliyuncs.com/2019/01/10/ESP32_SDK%E7%9A%84%E9%85%8D%E7%BD%AE/Eclipse_Project_Properties_Environment_Value.png" alt="Eclipse_Project_Properties_Environment_Value" /><figcaption aria-hidden="true">Eclipse_Project_Properties_Environment_Value</figcaption>
-</figure>
-<ol type="1">
-<li><p>新项目将出现在Eclipse左侧的 <strong>Project Explorer</strong> 选项卡中。选择导入的项目，在右键菜单中选择 <strong>Properties</strong>。</p></li>
-<li><p>点击 <strong>C/C++ Build</strong> 下的 <strong>Environment</strong> 属性页，点击 <strong>Add…</strong> 按钮，输入 <code>BATCH_BUILD</code> 和 <code>1</code>。</p></li>
-<li><p>点击 <strong>Add…</strong>，输入 <strong>IDF_PATH</strong> 中输入 ESP-IDF 所在的完整安装路径 <code>C:/msys32/home/XXXXX/esp/esp-idf</code> 。Linux及MAC平台的安装路径 <code>/home/XXXXX/esp/esp-idf</code> .</p></li>
-<li><p>选择 <code>PATH</code> 环境变量，不要改变默认值。</p></li>
-</ol>
-<p><strong>Windows 用户：</strong> 将 <code>C:\msys32\mingw32\bin;C:\msys32\opt\xtensa-esp32-elf\bin;C:\msys32\usr\bi</code> 添加到 <code>PATH</code> 环境变量的靠前位置（如果您将 msys32 安装到了其它目录，则需要更改对应的路径以匹配您的本地环境）。</p>
-<ol start="5" type="1">
-<li>在 macOS 平台上，增加一个 <code>PYTHONPATH</code> 环境变量，并将其设置为 <code>/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages</code>， 保证系统中预先安装的 Python （需安装 pyserial 模块）可以覆盖 Eclipse 内置的任何 Python。</li>
-</ol>
-<figure>
-<img src="http://uk-liewzheng-blog-pic.oss-eu-west-1.aliyuncs.com/2019/01/10/ESP32_SDK%E7%9A%84%E9%85%8D%E7%BD%AE/Eclipse_Project_Properties_Preprocessor_Include.png" alt="Eclipse_Project_Properties_Preprocessor_Include" /><figcaption aria-hidden="true">Eclipse_Project_Properties_Preprocessor_Include</figcaption>
-</figure>
-<ol start="6" type="1">
-<li>前往 <strong>C/C++ General</strong> -&gt; <strong>Preprocessor Include Paths</strong> 属性页面，点击 <strong>Providers</strong> 选项卡:</li>
-</ol>
-<p>选择 <strong>CDT Cross GCC Built-in Compiler Settings</strong>，将 <strong>Command to get compiler specs</strong> 修改为 <code>xtensa-esp32-elf-gcc $&#123;FLAGS&#125; -std=c++11 -E -P -v -dD "$&#123;INPUTS&#125;"</code>。</p>
-<p>选择 <strong>“CDT GCC Build Output Parser</strong>，将 <strong>Compiler command pattern</strong> 修改为 <code>xtensa-esp32-elf-(gcc|g\+\+|c\+\+|cc|cpp|clang)</code>。</p>
-<figure>
-<img src="http://uk-liewzheng-blog-pic.oss-eu-west-1.aliyuncs.com/2019/01/10/ESP32_SDK%E7%9A%84%E9%85%8D%E7%BD%AE/Eclipse_Project_Properties_Indexer.png" alt="Eclipse_Project_Properties_Indexer" /><figcaption aria-hidden="true">Eclipse_Project_Properties_Indexer</figcaption>
-</figure>
-<ol start="7" type="1">
-<li>前往 <strong>C/C++ General</strong> -&gt; <strong>Indexer</strong> 属性页面，选择 <strong>Enable project specific settings</strong> 以启用本页上的其他设置。然后去除 <strong>Allow heuristic resolution of includes</strong> 勾选，因为启用此选项时，Eclipse 有时无法找到正确的头文件目录。</li>
-</ol>
-<figure>
-<img src="http://uk-liewzheng-blog-pic.oss-eu-west-1.aliyuncs.com/2019/01/10/ESP32_SDK%E7%9A%84%E9%85%8D%E7%BD%AE/Eclipse_Project_Properties_Build_Behavior.png" alt="Eclipse_Project_Properties_Build_Behavior" /><figcaption aria-hidden="true">Eclipse_Project_Properties_Build_Behavior</figcaption>
-</figure>
-<ol start="8" type="1">
-<li><p>点击 <strong>C/C++ Build</strong> -&gt; <strong>Behavior</strong> 属性页，选中 <strong>Enable parallel build</strong> 以启用多任务并行构建。</p></li>
-<li><p>保存项目属性并退出属性设置界面。</p></li>
-</ol>
-<h2 id="build-project">3. Build Project</h2>
-<p>选择菜单栏中的 <strong>Project</strong> -&gt; <strong>Build Project</strong>。在此步骤中，将会调用ESP-IDF生成三个文件：<code>bootloader.bin</code>、<code>partition_singleapp.bin</code>和<code>hello_world.bin</code>。分别对应的是启动程序、分区程序和应用主程序。</p>
-<p>成功构建工程项目之后，Eclipse下方的 <strong>Console</strong> 选项卡将会显示如下： <img src="http://uk-liewzheng-blog-pic.oss-eu-west-1.aliyuncs.com/2019/01/10/ESP32_SDK%E7%9A%84%E9%85%8D%E7%BD%AE/build_successfully.png" alt="build_successfully" /></p>
-<h2 id="flash-tools烧录">4. Flash tools烧录</h2>
-<p><a target="_blank" rel="noopener" href="https://www.espressif.com/sites/default/files/tools/flash_download_tools_v3.6.5.zip">Flash tools</a>（仅在<a target="_blank" rel="noopener" href="https://www.espressif.com/zh-hans/products/hardware/esp32/resources">ESPRESSIF官网</a>上找到Windows版本）下载并解压到相应位置，打开后进行如下配置。 正确配置后便可成功烧录，要注意的是，<code>bootloader.bin</code>对应放在地址<code>0x1000</code>的位置,<code>partition_singleapp.bin</code>对应放在地址<code>0x8000</code>的位置,<code>helloworld.bin</code>对应放在地址<code>0x10000</code>的位置。 <img src="http://uk-liewzheng-blog-pic.oss-eu-west-1.aliyuncs.com/2019/01/10/ESP32_SDK%E7%9A%84%E9%85%8D%E7%BD%AE/flash_download.png" alt="flash_download" /></p>
-<h1 id="参考链接">参考链接</h1>
-<ol type="1">
-<li>《<a target="_blank" rel="noopener" href="https://blog.csdn.net/sergeycao/article/details/8210849">ubuntu下文件拷贝命令cp命令</a>》</li>
-<li>《<a target="_blank" rel="noopener" href="https://blog.csdn.net/hotmocha/article/details/7354630">ubuntu rm命令</a>》</li>
-<li>《<a target="_blank" rel="noopener" href="http://www.cnblogs.com/peida/archive/2012/10/25/2738271.html">mkdir命令</a>》</li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://islet.space/2019/01/09/Communication/2019-01-09-%E4%BA%86%E8%A7%A3%E4%B8%8D%E5%90%8C%E7%B1%BB%E5%9E%8B%E7%9A%84BLE_Beacon/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Liewzheng">
-      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Coder的孤岛">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2019/01/09/Communication/2019-01-09-%E4%BA%86%E8%A7%A3%E4%B8%8D%E5%90%8C%E7%B1%BB%E5%9E%8B%E7%9A%84BLE_Beacon/" class="post-title-link" itemprop="url">了解不同类型的BLE Beacon</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-
-    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
-    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2019-01-09 15:00:00" itemprop="dateCreated datePublished" datetime="2019-01-09T15:00:00+08:00">2019-01-09</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-05-20 22:37:03" itemprop="dateModified" datetime="2021-05-20T22:37:03+08:00">2021-05-20</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Communication/" itemprop="url" rel="index"><span itemprop="name">Communication</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p><a target="_blank" rel="noopener" href="https://os.mbed.com/blog/entry/BLE-Beacons-URIBeacon-AltBeacons-iBeacon/">原文</a>中的URIBeacon已被Google Eddystone替代，因此本文并非完全由原文转载，有小幅度更改。</p>
-<h1 id="蓝牙低功耗ble信标">蓝牙低功耗（BLE）信标</h1>
-<p>有几种类型（Eddystone，AltBeacon，iBeacon），每种类型都有自己的标准和优势。有些是开放和免费的，有些是封闭的，需要花钱。本文将介绍可用信标的三种主要类型，它们的优点，缺点，衍生物以及有关信标如何工作的一些低级实现细节。确保查看所有可用作BLE信标的已启用mbed的BLE平台。</p>
-<h1 id="概观">概观</h1>
-<p>蓝牙低功耗（BLE）能够以两种状态之一交换数据：连接和广告模式。连接模式使用通用属性（GATT）层以一对一的方式传输数据。广告模式使用通用访问配置文件（GAP）层向正在收听的任何人广播数据。广告模式是一对多转移，无法保证数据的一致性。</p>
-<p>BLE Beacons利用GAP广告模式以定期的，特殊格式的广告包广播数据。每种类型的信标都使用自定义规范来对广告数据进行分区，从而赋予其意义。我将看看三种现有类型的信标，URI Beacons，iBeacons和AltBeacons。mbed BLE团队页面支持所有信标类型，如果您想尝试它们，请提供包含文档的示例项目。</p>
-<h1 id="ibeacon">iBeacon</h1>
-<p>Apple的iBeacon是第一款出现的BLE Beacon技术，因此大多数信标都从iBeacon数据格式中获取灵感。iBeacons在几个Apple SDK中启用，可以从任何支持BLE的iDevice读取和广播。iBeacon是一种专有的封闭式标准。iBeacons有一个庞大的生态系统，并为开发人员提供了大量资源，但您必须成为Apple开发人员社区的一员。</p>
-<h2 id="数据规格">数据规格</h2>
-<p>iBeacons播放了四条信息： 1. 标识信标的UUID。 2. 标识大组中信标子集的主要编号。 3. 标识特定信标的次要编号。 4. TX功率电平为2的补码，表示距设备一米的信号强度。必须由用户或制造商为每个设备校准此编号。</p>
-<p>扫描应用程序读取UUID，主要编号和次要编号，并针对数据库引用它们以获取有关信标的信息; 信标本身不包含描述性信息 - 它要求此外部数据库有用。TX功率字段与测量的信号强度一起使用以确定信标距智能电话的距离。请注意，用户必须在信标的基础上校准TxPower才能准确。</p>
-<figure>
-<img src="http://uk-liewzheng-blog-pic.oss-eu-west-1.aliyuncs.com/2019/01/09/%E4%BA%86%E8%A7%A3%E4%B8%8D%E5%90%8C%E7%B1%BB%E5%9E%8B%E7%9A%84BLE_Beacon/diagramredo.png" alt="iBeacon-Diagramredo" /><figcaption aria-hidden="true">iBeacon-Diagramredo</figcaption>
-</figure>
-<p>iBeacon前缀包含十六进制数据：0x02 01 06 1A FF 00 4C 02 15。这分解如下：</p>
-<ul>
-<li>0x020106将广告包定义为BLE General Discoverable和BR / EDR高速不兼容。实际上它说它只是广播，而不是连接。</li>
-<li>0x1AFF表示以下数据长度为26个字节，并且是制造商特定数据。</li>
-<li>0x004C是Apple的蓝牙Sig ID，是该规范的一部分，使其依赖于Apple。</li>
-<li>0x02是表示邻近信标的辅助ID，由所有iBeacons使用。</li>
-<li>0x15将剩余长度定义为21个字节（16 + 2 + 2 + 1）。</li>
-</ul>
-<p>其余的字段相当自我解释。邻近UUID是标准的16byte / 128bit BLE UUID，通常是公司独有的。主要和次要数字用于表示UUID内的资产; 常见用途是主要数字是商店（因此可能有65,536个商店），其中次要数字是商店内的单个标签（每个商店还有65,536个可能的标签）。</p>
-<h2 id="例子">例子</h2>
-<ol type="1">
-<li>一家咖啡店在一个咖啡架和一个寄存器上放置了iBeacons。当顾客走进咖啡店足够近时，智能手机应用程序会看到iBeacon，搜索咖啡店的iBeacon数据库，将iBeacon识别为属于coffeeShop X，然后看到咖啡有效的优惠券，并通知优惠券的用户。</li>
-<li>iDevices可以广播iBeacon。这可用于在活动中自动登记并跟踪整个场地的移动。</li>
-<li>请参阅mbed iBeacon设备页面上的嵌入式设备代码。</li>
-</ol>
-<p>这是如何设置iBeacon设备以使用mbed BLE_API广播具有主要和次要号码的UUID的示例。请注意，tx功率水平应根据设备的1米测量用户校准。 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">#include &quot;mbed.h&quot;</span><br><span class="line">#include &quot;iBeaconService.h&quot;</span><br><span class="line">...</span><br><span class="line">BLEDevice ble;</span><br><span class="line">const uint8_t uuid[] &#x3D; &#123;0xE2, 0x0A, 0x39, 0xF4, 0x73, 0xF5, 0x4B, 0xC4,     &#x2F;&#x2F; 16Byte UUID</span><br><span class="line">                        0xA1, 0x2F, 0x17, 0xD1, 0xAD, 0x07, 0xA9, 0x61</span><br><span class="line">                       &#125;;</span><br><span class="line">uint16_t majorNumber &#x3D; 1122;  &#x2F;&#x2F; 2 byte major number</span><br><span class="line">uint16_t minorNumber &#x3D; 3344;  &#x2F;&#x2F; 2 byte minor number</span><br><span class="line">uint16_t txPower &#x3D; 0xC8;      &#x2F;&#x2F; 1 byte tx power level</span><br><span class="line">...</span><br><span class="line">int main(void)&#123;</span><br><span class="line">    ...</span><br><span class="line">    iBeaconService ibeacon(ble, uuid, majorNumber, minorNumber, txPower);</span><br><span class="line">    ....</span><br><span class="line">    while(1)&#123;</span><br><span class="line">        ble.waitForEvent();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<h2 id="思考">思考</h2>
-<p>iBeacons非常酷，得到广泛支持，因为它们是Apple产品，所以每个人都在与它们合作，生态系统尽可能健壮。唯一的限制是需要数据库来为iBeacon数据赋予意义。没有数据库，UUID就毫无意义。你可以在这里找到mbed iBeacon的例子。</p>
-<h2 id="衍生品">衍生品</h2>
-<p>一个流行的衍生产品是用不同的公司代码替换0x004C代码，例如分配给Nordic Semiconductor的0x0059。该NRF烽火台应用和nrf51822蓝牙智能灯塔套件就是这样的例子。 一些公司提供的示例未明确使用iBeacon规范。</p>
-<h1 id="altbeacon">AltBeacon</h1>
-<p>AltBeacons是Radius Networks提供的开放式免费信标设计。它似乎正在获得一些动力。AltBeacon规范似乎是对Apple正在使用的闭源iBeacon规范的直接反应; 它涵盖了与iBeacon相同的功能，但不是公司特定的。也就是说，它尚未获得广泛支持。</p>
-<p>值得注意的是，虽然iBeacons有20个27字节可用于用户数据（UUID + Major + Minor），但AltBeacons有28个28字节可用（MFG ID，BeaconCode，BeaconID，MFG RSVD）。这意味着每条消息可以传送更多数据。</p>
-<h2 id="数据规格-1">数据规格</h2>
-<p>所述AltBeacon规格是28bytes（26B是用户可修改的）。AltBeacon的前两个字节不是用户可修改的，而是由BLE堆栈设置的。ADV长度为0x1B，ADV类型为0xFF; 这些将分别指定广告数据包的长度和类型作为制造数据。之后，一切都由用户决定，可以推送到广告制造商数据字段。请注意，在大多数情况下，MFG ID将与Bluetooth Sig分配的号码文档相关联。</p>
-<figure>
-<img src="http://uk-liewzheng-blog-pic.oss-eu-west-1.aliyuncs.com/2019/01/09/%E4%BA%86%E8%A7%A3%E4%B8%8D%E5%90%8C%E7%B1%BB%E5%9E%8B%E7%9A%84BLE_Beacon/altbeacon-spec-exploded-view.png" alt="altbeacon-spec-exploded-view" /><figcaption aria-hidden="true">altbeacon-spec-exploded-view</figcaption>
-</figure>
-<h2 id="例子-1">例子</h2>
-<p>用于iBeacons的相同示例适用于AltBeacons，具有以下修改：</p>
-<ol type="1">
-<li>具有不同制造商ID的能力。</li>
-<li>具有不同信标码的能力。</li>
-<li>最后保留数据的一个字节，用于保存特定的制造商信息。</li>
-</ol>
-<p>使用AltBeacon，可以使用特定于应用程序的UUID而不是特定于公司的UUID，从而可以更改公司ID。虽然目前没有任何东西正在利用这一点，但我可以想象信标广播UUID用于信标服务，比如温度服务，然后提供制造公司的信息和温度，这样提供任何人的温度值。步行可以查看。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">#include &quot;mbed.h&quot;</span><br><span class="line">#include &quot;AltBeaconService.h&quot;</span><br><span class="line">...</span><br><span class="line">BLEDevice ble;</span><br><span class="line">uint8_t beaconID[] &#x3D; &#123;  0x00,0x01,0x02,0x03,0x04,0x05,0x06,0x07,0x08,0x09,     &#x2F;&#x2F; 16B of UUID + 4B subdivided as needed.</span><br><span class="line">                        0x10,0x11,0x12,0x13,0x14,0x15,0x00,0x01,0x00,0x02 &#125;;</span><br><span class="line">uint16_t manufacturerID &#x3D; 0x5900; &#x2F;&#x2F;Nordic SIG ID</span><br><span class="line">int8_t rssi &#x3D; -122;</span><br><span class="line">...</span><br><span class="line">int main(void)&#123;</span><br><span class="line">    ...</span><br><span class="line">    AltBeaconService altbeacon(ble, manufacturerID, beaconID, rssi); &#x2F;&#x2F; Add AltBeacon service to BLE object</span><br><span class="line">    ...</span><br><span class="line">    while(1)&#123;</span><br><span class="line">        ble.waitForEvent();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="思考-1">思考</h2>
-<p>AltBeacons有很大的可能性。它们充分利用了它们所拥有的空间，或多或少地向后兼容iBeacons，并且是开源的。这说它是一个非常新的规范，几乎没有人使用它，并且它与iBeacons的市场渗透作斗争是一场艰苦的战斗。我认为，越来越多的人会使用AltBeacons，因为他们可以携带更多的数据并拥有更广泛的用例 - 这是开放式蛋糕上的一个樱桃。您可以在此处找到mbed AltBeacon示例代码。</p>
-<h1 id="eddystone">Eddystone</h1>
-<p><a target="_blank" rel="noopener" href="https://github.com/google/eddystone">Eddystone</a>前身为<a target="_blank" rel="noopener" href="https://github.com/google/uribeacon">URIBeacon</a>（发音为YUR-ee-BEE-kun）</p>
-<p>Eddystone是由Google开发的开放式信标格式，其设计考虑了透明度和稳健性。Android和iOS设备都可以检测到Eddystone。Eddystone格式建立在现有部署中与行业合作伙伴合作的经验教训的基础上，以及更广泛的灯塔社区。帧格式中可以包含几种不同类型的有效载荷，包括：</p>
-<ul>
-<li>Eddystone-UID：一个唯一的静态ID，带有一个10字节的命名空间组件和一个6字节的实例组件。</li>
-<li>Eddystone-URL：经过解析和解压缩后，可由客户端直接使用的压缩URL。</li>
-<li>Eddystone-TLM：信标状态数据，可用于信标队维护，并为Google Proximity Beacon API的诊断端点提供支持。-TLM应与识别帧交错，例如Eddystone-UID或Eddystone-EID（加密的eTLM版本保留安全性）。</li>
-<li>Eddystone-EID：时变信标帧，可通过链接解析器（例如Proximity Beacon API）解析为稳定标识符。</li>
-</ul>
-<p>此外，Eddystone还包括配置服务和品牌材料。为确保您的部署完全支持Google信标平台，您应该使用Eddystone-UID或-EID设置信标，并可选择添加-URL和-TLM。</p>
 
       
     </div>

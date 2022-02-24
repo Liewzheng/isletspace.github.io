@@ -162,7 +162,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">106</span>
+          <span class="site-state-item-count">108</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -173,7 +173,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">195</span>
+        <span class="site-state-item-count">200</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -207,6 +207,491 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://islet.space/2021/09/10/Communication/2021-09-10-UART%E9%80%9A%E4%BF%A1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Liewzheng">
+      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coder的孤岛">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/09/10/Communication/2021-09-10-UART%E9%80%9A%E4%BF%A1/" class="post-title-link" itemprop="url">UART通信</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-09-10 09:30:00" itemprop="dateCreated datePublished" datetime="2021-09-10T09:30:00+08:00">2021-09-10</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2021-09-16 00:30:01" itemprop="dateModified" datetime="2021-09-16T00:30:01+08:00">2021-09-16</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Communication/" itemprop="url" rel="index"><span itemprop="name">Communication</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="rs-serial-port">RS Serial Port</h1>
+<p>RS系列（RS-232/RS-422/RS-485）标准（RS，即Recommend Standard，<strong>推荐标准</strong> 之意 ）是常用的（异步）串行通信接口标准，该系列标准由美国电子工业协会（EIA）牵头开发。</p>
+<p>RS系列标准只对 <strong>接口</strong> 的 <strong>电气特性</strong>（Electric Specification of Interface）进行规定，并不涉及插件、电缆或协议，再次基础上，用户可以建立自己的接头、插座形状 以及 高层通信协议 。</p>
+<h2 id="rs-232">RS-232</h2>
+<p>RS-232标准接口（又称EIA RS-232）是由美国电子工业协会(EIA)联合贝尔系统公司、调制解调器厂家及计算机终端生产厂家于1970年共同制定，其全名是“数据终端设备( DTE)和数据通信设备(DCE)之间串行二进制数据交换接口技术标准”。</p>
+<p>RS232协议 和 TTL协议更多是电气特性（如电平标准和电压），二者在软件协议层面是一样的，如对于同样传输 <code>0b01010101</code> 来说，RS232 和 TTL的时序对比如下图所示：</p>
+<p><img src="https://pic.islet.space/2021/09/20210915110402.png" alt="img" style="zoom:67%;" /></p>
+<div style="font-size: 0.8rem; text-align: center; font-weight: 900;">
+图 RS232标准和TTL标准的时序对比
+</div>
+<p>当然，RS232和TTL/CMOS之间的转换，不仅仅是简单的电平转换，还要考虑到其他一些因素，比如 <strong>调节</strong> 和 <strong>矫正</strong> 一些电平（提高或降低对应的电平），确保可能的有害的RS232电压不会破坏微控制器的串口针脚。较为成熟的方案是通过MAX3232之类的芯片，把TTL电平转为RS232电平，或者在淘宝购买TTL转RS232电缆即可。</p>
+<p>由于RS-232采取 <strong>不平衡传输</strong> 方式，即所谓 <strong>单端通讯</strong>。收（RX）、发（TX） 端的数据信号是相对于信号地（GND）。典型的RS-232信号在正负电平之间摆动，</p>
+<ul>
+<li>在发送数据时，发送端驱动器输出正电平在+5<sub>+15V，负电平在-5</sub>-15V电平。</li>
+<li>当无数据传输时，线上为TTL，从开始传送数据到结束，线上电平从TTL电平到RS-232电平再返回TTL电平。</li>
+</ul>
+<p>接收器典型的工作电平在 <code>+3~+12V</code> 与 <code>-3~-12V</code> 。<mark>由于发送电平与接收电平的差仅为2V至3V左右，所以其共模抑制能力差</mark>，再加上双绞线上的分布电容，其传送距离最大为约15米，最高速率为20Kbps。RS-232是为 <strong>单节点通讯</strong>（即点对点，用一对收、发设备）而设计的，其驱动器负载为3kΩ~7kΩ。所以RS-232适合本地设备之间的通信。</p>
+<h2 id="rs-422">RS-422</h2>
+<p>RS-422、RS-485与RS-232不一样，数据信号采用差分传输方式，也称作 <strong>平衡传输</strong>，它使用一对双绞线，将其中一线定义为A，另一线定义为B。通常情况下，发送驱动器A、B之间的正电平在+2<sub>+6V，是一个逻辑状态，负电平在-2V</sub>6V，是另一个逻辑状态。另有一个信号地C，在RS-485中还有一“使能”端，而在RS-422中这是可用可不用的。“使能”端是用于控制发送驱动器与传输线的切断与连接。当“使能”端起作用时，发送驱动器处于高阻状态，称作“第三态”，即它是有别于逻辑“1”与“0”的第三态。</p>
+<p>由于接收器采用高输入阻抗和发送驱动器比RS232更强的驱动能力，故允许在相同传输线上连接多个接收节点，<strong>最多可接10个节点</strong>。即一个主设备（Master），其余为从设备（Salve），从设备之间不能通信，所以RS-422支持点对多的双向通信。RS-422四线接口由于采用单独的发送和接收通道，因此不必控制数据方向，各装置之间任何必须的信号交换均可以按软件方式（XON/XOFF握手）或硬件方式（一对单独的双绞线）实现。RS-422的最大传输距离为4000英尺（约1219米），最大传输速率为10Mbps。其平衡双绞线的长度与传输速率成反比，在100Kbps速率以下，才可能达到最大传输距离。只有在很短的距离下才能获得最高速率传输。一般100米长的双绞线上所能获得的最大传输速率仅为1Mbps。RS-422需要一终接电阻，要求其阻值约等于传输电缆的特性阻抗。在矩距离传输时可不需终接电阻，即一般在300米以下不需终接电阻。终接电阻接在传输电缆的最远端。</p>
+<h2 id="rs-485">RS-485</h2>
+<p>RS-485 标准只对 <strong>接口</strong> 的 <strong>电气特性</strong>（Electric Specification of Interface）进行规定，并不涉及插件、电缆或协议，再次基础上，用户可以建立自己的接头、插座形状 以及 高层通信协议 。</p>
+<p>RS-485 的 <strong>通信距离</strong> 和 <strong>通信速率</strong> 是负相关的，</p>
+<p>RS485有 <strong>两线制</strong> 和 <strong>四线制</strong>，四线制只能实现点对点的通信方式，现很少采用。</p>
+<h2 id="接口标准对比">接口（标准）对比</h2>
+<p>以下仅从RS的硬件要求进行横向对比：</p>
+<div style="font-size: 0.8rem; text-align: center; font-weight: 900;">
+表 RS系列标准对比
+</div>
+<table>
+<thead>
+<tr class="header">
+<th></th>
+<th>RS-232</th>
+<th>RS-422</th>
+<th>RS-485</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>半双工/全双工</td>
+<td>全双工</td>
+<td>全双工</td>
+<td>半双工</td>
+</tr>
+<tr class="even">
+<td>波特率</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>传输速率范围</td>
+<td>300bps~100Kbps</td>
+<td>10Mbps</td>
+<td>10Mbps</td>
+</tr>
+<tr class="even">
+<td>联网支持（多设备连接）</td>
+<td>不支持</td>
+<td>支持</td>
+<td>支持</td>
+</tr>
+<tr class="odd">
+<td>电压范围</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td>差模/共模</td>
+<td>共模</td>
+<td>差模</td>
+<td>差模</td>
+</tr>
+<tr class="odd">
+<td>最少信号线数量</td>
+<td>3根</td>
+<td>5根</td>
+<td>2根</td>
+</tr>
+<tr class="even">
+<td>最大传输距离</td>
+<td>15m（波特率=9600时）</td>
+<td></td>
+<td>3900m</td>
+</tr>
+<tr class="odd">
+<td>控制信号（DE，Drive Enable）</td>
+<td>无</td>
+<td>可选</td>
+<td>有</td>
+</tr>
+<tr class="even">
+<td>输入阻抗</td>
+<td>3～7kΩ</td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>使用RS422协议的设备间的引脚互相连接示意图：</p>
+<figure>
+<img src="https://pic.islet.space/2021/09/20210915110408.png" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<h1 id="uart-protocol">UART Protocol</h1>
+<p><strong>UART</strong>，即Universal Asynchronous Receiver/Transmitter，<strong>通用异步收发</strong>。</p>
+<p>在通信和计算机科学中，Serial communication是一个通用概念，泛指所有的串行的通信协议，如RS232、USB、I2C、SPI、1-Wire、Ethernet等。这里的串行（serial），是相对并行通信（parallel communication）来说的，如下图：</p>
+<figure>
+<img src="https://pic.islet.space/2021/09/20210915110411.jpeg" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>广义上讲，UART是指 支持RS系列（物理接口）标准和TLL电平 的 <strong>通信协议</strong>。</p>
+<p>因为UART更多关注规定编码格式的标准，如 <strong>波特率</strong>（baud rate）、<strong>帧格式</strong> 和 <strong>波特率误差</strong> 等等，所以了解UART时，不可避免需要先在电气特性上区分几个常用的概念，如 <strong>TLL电平</strong> 和 <strong>CMOS电平</strong>。</p>
+<blockquote>
+<p>TTL集成电路的主要型式为晶体管-晶体管逻辑门(transistor-transistor logic gate)，TTL大部分都采用5V电源。</p>
+<table>
+<thead>
+<tr class="header">
+<th></th>
+<th>TTL电平（参考值）</th>
+<th>CMOS电平（参考值）</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>输入高电平</td>
+<td>≥ 2.4V</td>
+<td>≈ 0.7*VCC</td>
+</tr>
+<tr class="even">
+<td>输入低电平</td>
+<td>≤ 0.4V</td>
+<td>≈ 0.3*VCC</td>
+</tr>
+<tr class="odd">
+<td>输出高电平</td>
+<td>≥ 2.0V</td>
+<td>≈ VCC 或 ＜0.9*VCC</td>
+</tr>
+<tr class="even">
+<td>输出低电平</td>
+<td>≤ 0.8V</td>
+<td>≈ GND 或 &lt; 0.1*VCC</td>
+</tr>
+</tbody>
+</table>
+<p><strong>注</strong>：VCC的概念可以参考文章《<a href="https://islet.space/2021/07/10/Hardware/Circuit/2021-07-10-VCC%E3%80%81VDD%E3%80%81VEE%E3%80%81VSS%E7%9A%84%E5%8C%BA%E5%88%AB/">VCC、VDD、VEE、VSS的区别</a>》，具体输入输出的高低电平范围需要参考芯片及电路的手册。</p>
+</blockquote>
+<h1 id="接口">接口</h1>
+<p>以下介绍均为UART常用的物理接口。</p>
+<p><strong>D型数据接口连接器</strong>，用于连接电子设备（比如：计算机与外设）的接口标准。因形状类似于英文字母D，故得名D型接口。</p>
+<p>按照接口数量细分为A型（15针），B型（25针），C型（37针），D型（50针），E型（9针）。因此常见的计算机并口即为DB25针的连接器。而串口则应为DE9针连接器。</p>
+<p>由于早期的计算机的串口与并口都是使用DB25针连接器，而人们则习惯把字母B与D合在一起记了下来，当作D型接口的共同名字，以至于后来计算机串口改用9针接口以后，人们更多的使用DB9而不是DE9来称呼9针的接口。这一习惯进一步推广的结果就是如今人们使用DBxx来代表D型接口，数字xx则为接口的针数。</p>
+<h2 id="db9">DB9</h2>
+<p>COM口是指针对串行通信协议的一种端口，是PC上异步串行通信口的简写，大部分为9针孔D型。</p>
+<p>因此 <strong>DB9</strong> 就和 <strong>COM口</strong> 混用了，但是COM口里又进一步区分RS232，RS422和RS485，传输功能依次递增。</p>
+<figure>
+<img src="https://pic.islet.space/2021/09/20210915110415.png" alt="image-20210915103057209" /><figcaption aria-hidden="true">image-20210915103057209</figcaption>
+</figure>
+<div style="font-size: 0.8rem; text-align: center; font-weight: 900;">
+图 DB9/COM口在各RS标准下的引脚使用和定义
+</div>
+<p>但由于历史原因，IBM的PC外部接口配置为RS232，成为实际上的PC界默认标准。所以，<strong>现在PC机的COM口的物理标准均为RS232</strong>。DB9/COM口的公头和母头实际外观如下：</p>
+<div style="text-align: center;">
+<img src="https://pic.islet.space/2021/09/image-20210915093214837.png" alt="image-20210915093214837" style="zoom:80%;" /><img src="https://pic.islet.space/2021/09/image-20210915104612002.png" alt="image-20210915104612002" style="zoom:70%;" />
+</div>
+<div style="font-size: 0.8rem; text-align: center; font-weight: 900;">
+图 DB9/COM口的公头（左）和母头（右）外观
+</div>
+<h2 id="端子">端子</h2>
+<p>端子，Terminal，也称为 <strong>接线终端</strong> / <strong>接线端子</strong>。</p>
+<p>种类分单孔，双孔，插口，挂钩等，从材料分，铜镀银，铜镀锌，铜，铝，铁等。它们的作用主要传递电信号或导电用。</p>
+<figure>
+<img src="https://pic.islet.space/2021/09/20210915212912.jpeg" alt="端子排型号" /><figcaption aria-hidden="true">端子排型号</figcaption>
+</figure>
+<h1 id="转换器">转换器</h1>
+<h2 id="usb转ttl">USB转TTL</h2>
+<p>常见的USB转TTL的芯片，如CP2101 / CP2102 / CH340 / CH341 / FT232BM / FT232RL / PL2303 / PV8651等，尤其CH340和CP2102 的转换器最为常见。</p>
+<p><img src="https://pic.islet.space/2021/09/20210915113927.png" alt="image-20210915113729086" style="zoom:50%;" /></p>
+<div style="font-size: 0.8rem; text-align: center; font-weight: 900;">
+图 USB转TTL（CH340G芯片）转换器
+</div>
+<p><img src="https://pic.islet.space/2021/09/20210915210459.png" alt="image-20210915114016213" style="zoom:67%;" /></p>
+<div style="font-size: 0.8rem; text-align: center; font-weight: 900;">
+图 USB转TTL（FT232芯片）转换器
+</div>
+<h2 id="usb转db9rs232">USB转DB9(RS232)</h2>
+<p><img src="https://pic.islet.space/2021/09/20210915110421.png" alt="image-20210915095451523" style="zoom:67%;" /></p>
+<div style="font-size: 0.8rem; text-align: center; font-weight: 900;">
+图 USB转DB9数据线
+</div>
+<h2 id="rj45和db9">RJ45和DB9</h2>
+<p>这种转换器通常用在交换器和路由器的调试工作上，</p>
+<figure>
+<img src="https://pic.islet.space/2021/09/20210915110424.png" alt="image-20210915105657103" /><figcaption aria-hidden="true">image-20210915105657103</figcaption>
+</figure>
+<div style="font-size: 0.8rem; text-align: center; font-weight: 900;">
+图 RJ45母 转 DB9公
+</div>
+<p><img src="https://pic.islet.space/2021/09/20210915110427.png" alt="image-20210915105821577" style="zoom:67%;" /></p>
+<div style="font-size: 0.8rem; text-align: center; font-weight: 900;">
+图 RJ45公 转 DB9母
+</div>
+<h2 id="rj45转端子">RJ45转端子</h2>
+<div style="text-align: center;">
+<img src="https://pic.islet.space/2021/09/20210915112733.jpeg" alt="img" style="zoom:100%;" /><img src="https://pic.islet.space/2021/09/20210915112736.jpeg" alt="img" style="zoom:100%;" /><img src="https://pic.islet.space/2021/09/20210915112738.jpeg" alt="img" style="zoom:100%;" />
+</div>
+<div style="font-size: 0.8rem; text-align: center; font-weight: 900;">
+图 RJ45公 转 2/3/4引脚端子
+</div>
+<h2 id="rs-232转rs-485">RS-232转RS-485</h2>
+<p>目前主流的家用台式机上已经逐渐取消DB9接口，在某些旧台式电脑主机或者商用台式电脑主机上可能仍有DB9端口可以适配 RS-232（DB9公/母）/RS-485（端子） 转换器，然后再利用一根双绞线（可以用网线制作）连接转换器的 <code>A+</code> / <code>B-</code> 端子 和 通信设备。如下图所示：</p>
+<figure>
+<img src="https://pic.islet.space/2021/09/20210915210514.png" alt="image-20210915091142748" /><figcaption aria-hidden="true">image-20210915091142748</figcaption>
+</figure>
+<div style="font-size: 0.8rem; text-align: center; font-weight: 900;">
+图 DB9公（RS232）转3引脚端子(RS485)
+</div>
+<p>由于该转换器为电气隔离设计，<mark>需要使用独立的VCC/GND/T/R来进行供电，因此不能只连接两根信号线。</mark></p>
+<p>该类转换器同样按照DB9接口的公/母来区分引脚/信号定义，下表为深圳市宇泰科技出品的UT-2201转换器说明书中的内容：</p>
+<p><img src="https://pic.islet.space/2021/09/20210915210523.png" alt="image-20210915142023932" style="zoom:67%;" /></p>
+<p>下图为RS485和转换器之间的连接示意，转换器和单点之间的连接：</p>
+<p><img src="https://pic.islet.space/2021/09/20210915210526.png" alt="image-20210915141402305" style="zoom:50%;" /></p>
+<p>转换器和多点的连接：</p>
+<p><img src="https://pic.islet.space/2021/09/20210915210528.png" alt="image-20210915141728889" style="zoom:50%;" /></p>
+<h1 id="参考">参考</h1>
+<ol type="1">
+<li>《串行通信技术 面向嵌入式系统开发》 周云波 著 中国工信出版集团 电子工业出版社</li>
+<li><a target="_blank" rel="noopener" href="http://www.farnell.com/datasheets/2254540.pdf">《ANALOG DEVICE-5 V Low PowerEIA RS-485 Transceiver》</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.ti.com/lit/an/slla036d/slla036d.pdf">《InterfaceCircuitsforTIA/EIA-485(RS-485)》</a></li>
+<li><a target="_blank" rel="noopener" href="https://item.taobao.com/item.htm?id=546418892634">聚英JY-CON503 RS232转RS485/RS422 宽压DC7-30V供电 全隔离设计</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.cnblogs.com/yeshenmeng/p/10729070.html">DB9针和DB25针串口的引脚定义</a></li>
+<li><a target="_blank" rel="noopener" href="http://www.360doc.com/content/20/0803/20/44130189_928354146.shtml">为什么越来越多人使用RS232接口，却还分不清DB9、DB25的引脚定义？</a></li>
+<li><a target="_blank" rel="noopener" href="https://baike.baidu.com/item/RS-232/2022036?fromtitle=rs232&amp;fromid=3555506&amp;fr=aladdin">RS-232</a></li>
+<li><a target="_blank" rel="noopener" href="https://baike.baidu.com/item/DB9/1360191?fr=aladdin">DB9</a></li>
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/89240672">串口、COM口、UART口, TTL、RS-232、RS-485区别详解</a></li>
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/25893717">UART、RS232、TTL关系浅析</a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/shuziluoji1988/article/details/22413497">RS232、RS422、RS485、TTL电平</a></li>
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/66241216">一文搞懂Modbus与RS485通信协议</a></li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://islet.space/2021/09/02/Programming/2021-09-02-%E4%BD%BF%E7%94%A8VS-Code%E5%90%8C%E6%AD%A5Gitee%E9%A1%B9%E7%9B%AE/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Liewzheng">
+      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coder的孤岛">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/09/02/Programming/2021-09-02-%E4%BD%BF%E7%94%A8VS-Code%E5%90%8C%E6%AD%A5Gitee%E9%A1%B9%E7%9B%AE/" class="post-title-link" itemprop="url">使用VS Code同步Gitee项目</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-09-02 21:50:00" itemprop="dateCreated datePublished" datetime="2021-09-02T21:50:00+08:00">2021-09-02</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2021-09-16 00:33:06" itemprop="dateModified" datetime="2021-09-16T00:33:06+08:00">2021-09-16</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Programming/" itemprop="url" rel="index"><span itemprop="name">Programming</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>自从Github被微软收购，除了Copilot这个AI代码写作助手，大家开源贡献的代码都被拿来用了之后，就不想在Github上贡献代码了。</p>
+<p>转而使用Gitee，感觉也挺好。</p>
+<h1 id="生成并绑定公钥">生成并绑定公钥</h1>
+<p>使用terminal生成公钥：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen</span><br></pre></td></tr></table></figure>
+<p>遇到选择就按回车，不用管就好。然后使用以下命令进行查看：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat ~/.ssh/id_rsa.pub</span><br></pre></td></tr></table></figure>
+<p>公钥样例（千万不要复制下面的模板）如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh-rsa BBBBA3NzaC1yc2EBBBBDAQBABBBABQCoLmvwKsFETfy0Lj8VN0QwDj/fu2J1msoM+kWCLTj64zXXXXXXXXXSKQxj30zjVO4tZ9PsO/jaItdev1uV7a9lk9MiemLLAxc1LSYsBdki81tx+7941rl9y/XXXXXXXXXXDjNpPCMq6xH8ZSRoRLcgCz+gRaDfnQALWBcavEO0uVqYGn4I4KRFPup7gm+3j5gRpdm1uKtkrqHxqykErCwXXXXXXXXXX6+okRt/TN5jjq6zV44D6tRYAK6oCOFpwO/RTqTIUU//w/XXXXXXXXXXXXXXXXXXXXdPCqs8Zax9cH/31FJqltQzsRbGDLTFFXqyICK7QKVgFXGhrzM3AVvD xxxx@xxxx.local</span><br></pre></td></tr></table></figure>
+<h1 id="绑定到gitee配置">绑定到Gitee配置</h1>
+<p>这里就不延时注册Gitee账户了。</p>
+<p>在Gitee头像下点击 <strong>设置</strong> ，然后在左侧选择 <strong>SSH公钥</strong>，将生成的公钥粘贴进去，标题会自动识别和生成，使用默认标题即可，最后点击 <strong>确定</strong> 进行保存。</p>
+<figure>
+<img src="https://pic.islet.space/2021/09/image-20210902220637986.png" alt="image-20210902220637986" /><figcaption aria-hidden="true">image-20210902220637986</figcaption>
+</figure>
+<h1 id="在gitee上生成项目">在Gitee上生成项目</h1>
+<p>在gitee页面右上角选择那个 <code>+</code> 号，选择里面的 <strong>新建仓库</strong>。</p>
+<figure>
+<img src="https://pic.islet.space/2021/09/image-20210902222312335.png" alt="image-20210902222312335" /><figcaption aria-hidden="true">image-20210902222312335</figcaption>
+</figure>
+<p>跳转到 <strong>新建仓库</strong> 仓库页面，填写相关信息即可。</p>
+<figure>
+<img src="https://pic.islet.space/2021/09/image-20210902222413221.png" alt="image-20210902222413221" /><figcaption aria-hidden="true">image-20210902222413221</figcaption>
+</figure>
+<p>然后在仓库页面的 <strong>克隆/下载</strong> 处选择 <strong>HTTPS</strong> 源 并 <strong>复制</strong>。</p>
+<figure>
+<img src="https://pic.islet.space/2021/09/image-20210902222531450.png" alt="image-20210902222531450" /><figcaption aria-hidden="true">image-20210902222531450</figcaption>
+</figure>
+<h1 id="绑定vscode">绑定VSCode</h1>
+<p>在本地新建文件夹，命名和存储路径随意。</p>
+<figure>
+<img src="https://pic.islet.space/2021/09/image-20210902222116108.png" alt="image-20210902222116108" /><figcaption aria-hidden="true">image-20210902222116108</figcaption>
+</figure>
+<p>然后使用VSCode打开该文件夹，如下：</p>
+<figure>
+<img src="https://pic.islet.space/2021/09/image-20210902222631177.png" alt="image-20210902222631177" /><figcaption aria-hidden="true">image-20210902222631177</figcaption>
+</figure>
+<p>点选左侧树杈型图标，选择 <strong>初始化存储库</strong>。</p>
+<figure>
+<img src="https://pic.islet.space/2021/09/image-20210902222655162.png" alt="image-20210902222655162" /><figcaption aria-hidden="true">image-20210902222655162</figcaption>
+</figure>
+<p>在上方 <code>...</code> 处选择 <strong>远程</strong>，<strong>添加远程仓库</strong>。</p>
+<figure>
+<img src="https://pic.islet.space/2021/09/image-20210902223026835.png" alt="image-20210902223026835" /><figcaption aria-hidden="true">image-20210902223026835</figcaption>
+</figure>
+<p>粘贴刚刚复制过来的仓库地址。</p>
+<figure>
+<img src="https://pic.islet.space/2021/09/image-20210902223107646.png" alt="image-20210902223107646" /><figcaption aria-hidden="true">image-20210902223107646</figcaption>
+</figure>
+<p>填写远程存储库名称，就是仓库名称。</p>
+<figure>
+<img src="https://pic.islet.space/2021/09/image-20210902223222009.png" alt="image-20210902223222009" /><figcaption aria-hidden="true">image-20210902223222009</figcaption>
+</figure>
+<p>VSCode右下角会出现如下提示，选择 <strong>是</strong>。</p>
+<figure>
+<img src="https://pic.islet.space/2021/09/image-20210902223253826.png" alt="image-20210902223253826" /><figcaption aria-hidden="true">image-20210902223253826</figcaption>
+</figure>
+<p>正常来说点选 <strong>拉取</strong> 也是直接可以拉取到远程数据的，但是也可能因为配置错误导致拉取失败，出现如下提示。</p>
+<figure>
+<img src="https://pic.islet.space/2021/09/image-20210902223319460.png" alt="image-20210902223319460" /><figcaption aria-hidden="true">image-20210902223319460</figcaption>
+</figure>
+<figure>
+<img src="https://pic.islet.space/2021/09/image-20210902224720818.png" alt="image-20210902224720818" /><figcaption aria-hidden="true">image-20210902224720818</figcaption>
+</figure>
+<h1 id="配置本地git参数">配置本地git参数</h1>
+<p>如果拉取不成功，仍需要配置以下信息：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git config --global user.name <span class="string">&quot;xxxx&quot;</span></span><br><span class="line">git config --global user.email xxxx@xxx.com</span><br></pre></td></tr></table></figure>
+<p>其中xxxx需要替换成个人在gitee网站的用户名和对应的邮箱，如下：</p>
+<figure>
+<img src="https://pic.islet.space/2021/09/image-20210902224904264.png" alt="image-20210902224904264" /><figcaption aria-hidden="true">image-20210902224904264</figcaption>
+</figure>
+<h1 id="拉取仓库文件">拉取仓库文件</h1>
+<p>如果仍然无法拉取仓库文件，可以在VSCode下按 <code>CTRL</code> + <code>J</code> 或 <code>COMMAND</code> + <code>J</code> 来打开，然后输入如下命令进行 拉取，命令中对应的源需要替换。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git pull https://gitee.com/xxxx/xxxx.git master</span><br></pre></td></tr></table></figure>
+<p>拉取完后如下所示：</p>
+<figure>
+<img src="https://pic.islet.space/2021/09/image-20210902225228260.png" alt="image-20210902225228260" /><figcaption aria-hidden="true">image-20210902225228260</figcaption>
+</figure>
+<figure>
+<img src="https://pic.islet.space/2021/09/image-20210902225338842.png" alt="image-20210902225338842" /><figcaption aria-hidden="true">image-20210902225338842</figcaption>
+</figure>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -2710,634 +3195,6 @@ Resistance \ Tolerance\ @25℃ = α *（±0.5℃） = -4.44\%/℃ * （±0.5℃�
 <li><a target="_blank" rel="noopener" href="https://toshiba.semicon-storage.com/content/dam/toshiba-ss/shared/docs/design-support/document/Reference-design/application-note/MOSFET-Gate-Drive-Circuit-Application-Notes_EN_36267-CN.pdf">《MOSFET 栅极驱动电路》</a></li>
 <li><a target="_blank" rel="noopener" href="https://www.infineon.com/dgdl/Infineon-Power_and_Sensing-ProductSelectionGuide-v00_01-EN.pdf?fileId=5546d4625607bd13015621522aa012cb&amp;da=t">《Infineon-Power_and_Sensing-ProductSelectionGuide-v00_01-EN》</a></li>
 <li><a target="_blank" rel="noopener" href="https://www.infineon.com/dgdl/Infineon-EiceDRIVER_Gate_Driver_ICs-ProductSelectionGuide-v01_01-CN.pdf?fileId=5546d46269e1c019016ab0ec653015cc">《Infineon-EiceDRIVER_Gate_Driver_ICs-ProductSelectionGuide-v01_01-CN》</a></li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://islet.space/2021/07/14/Hardware/2021-07-14-Semiconductor/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Liewzheng">
-      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Coder的孤岛">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/07/14/Hardware/2021-07-14-Semiconductor/" class="post-title-link" itemprop="url">Semiconductor</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-
-    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
-    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2021-07-14 20:30:00" itemprop="dateCreated datePublished" datetime="2021-07-14T20:30:00+08:00">2021-07-14</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-07-17 12:13:36" itemprop="dateModified" datetime="2021-07-17T12:13:36+08:00">2021-07-17</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Semiconductor/" itemprop="url" rel="index"><span itemprop="name">Semiconductor</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>本文章用于记录半导体（晶体管的工作原理等blablabla的知识）。</p>
-<h1 id="半导体的定义">半导体的定义</h1>
-<p><strong>半导体</strong> 是指常温下导电性能介于导体与绝缘体之间的材料。 按照国际通行的半导体产品标准方式进行分类，半导体可以分为四类：<strong>集成电路</strong>（Integer Circuit），<strong>分立器件</strong>（Discrete Device），<strong>传感器</strong>（Sensor） 和 <strong>光电子器件</strong>（Optoelectronic Devices） ，统称为半导体元件。</p>
-<p>分立器件按照功率转换进行分类，可以分为 <strong>功率器件</strong> 和 <strong>非功率器件</strong>，其中，<strong>传感器</strong> 和 <strong>光电器件</strong> 属于 分立器件下的 <strong>非功率器件</strong>，剩下的均是 <strong>功率器件</strong>，包含大部分晶体管，如 Zener Diode、BJT、IGFET、IGBT、Thyristor等。</p>
-<p><strong>注意</strong>：功率器件的概念很大，不仅在分立器件中存在功率半导体，在IC中也存在功率半导体的产品。</p>
-<h2 id="本征半导体">本征半导体</h2>
-<p><mark>导电性介于导体与绝缘体之间的物质</mark>称为 <strong>半导体</strong>。</p>
-<p><strong>导体</strong>：如铁、铝、铜等金属元素等低价元素，其最外层电子在外电场作用下很容易产生定向移动，形成电流。</p>
-<p><strong>绝缘体</strong>：如惰性气体、橡胶等，其原子的最外层电子受原子核的束缚力很强，只有在外电场强到一定程度时才可能导电。</p>
-<p><strong>半导体</strong>：如硅（Si）、锗（Ge），均为四价元素，它们原子的最外层电子受原子核的束缚力介于导体与绝缘体之间。</p>
-<p><strong>本征半导体</strong>：intrinsic semiconductor， 是 <strong>纯净</strong>（Purity）的 <strong>晶体结构</strong>（Crystal Texture）的 半导体；intrinsic 具有 “本质，固有” 之意。<strong>纯净</strong>，即无杂质之意；<strong>晶体结构</strong>，即稳定的结构。</p>
-<h2 id="pn型半导体">P/N型半导体</h2>
-<p>纯净的硅晶体不带电荷，不显示出任何导电特性。</p>
-<p><strong>自由电子</strong>（Electron）：由于热运动，具有足够能量的价电子挣脱共价键的束缚而成为自由电子</p>
-<p><strong>空穴</strong>（Hole）：自由电子的产生使共价键中留有一个空位置</p>
-<p><strong>复合</strong>：自由电子与空穴相碰同时消失</p>
-<p><strong>电荷</strong>：电子和空穴都是电荷，电子呈现负电荷，空穴呈现正电荷</p>
-<p><strong>载流子</strong>（Carrier）：运载电荷的粒子称为载流子</p>
-<p><strong>导电性</strong>：物体呈现出的传导电流的能力</p>
-<p><strong>多数载流子</strong>：在纯净硅晶体中掺杂数量较多的电荷称为多数载流子。</p>
-<p><strong>少数载流子</strong>：在纯净硅晶体中掺杂数量较少的电荷称为少数载流子。</p>
-<p>外加电场时，带负电的自由电子和带正电的空穴均参与导电，且运动方向相反。由于载流子数目很少，故导电性很差。温度升高，热运动加剧，载流子浓度增大，导电性增强。热力学温度0K时不导电。</p>
-<p><img src="https://pic.islet.space/2021/07/image-20210714204623205.png" alt="image-20210714204623205" style="zoom: 33%;" /></p>
-<div style="text-align: center; font-weight:900;">
-图 N型半导体结构
-</div>
-<p><img src="https://pic.islet.space/2021/07/image-20210714204653816.png" alt="image-20210714204653816" style="zoom: 33%;" /></p>
-<div style="text-align: center; font-weight:900;">
-图 P型半导体结构
-</div>
-<p>往纯净的硅晶体中掺杂一定浓度的 <strong>磷</strong>（P）或 <strong>硼</strong>（B）即可获得 使得硅晶半导体带上电子或空穴，即获得了 <strong>N型半导体</strong> 和 <strong>P型半导体</strong>。</p>
-<p><strong>杂质半导体</strong>：在本征的基础上掺杂其他元素。</p>
-<p><strong>P型半导体</strong>：掺杂了硼元素的硅晶体，空穴为多数载流子。</p>
-<p><strong>N型半导体</strong>：掺杂了磷元素的硅晶体。自由电子为多数载流子。</p>
-<h2 id="pn结">PN结</h2>
-<p><strong>结</strong>：即 Junction，在纯净硅晶体中掺杂两种不同电荷所形成的杂质接触截面。</p>
-<p><strong>扩散运动</strong>：物质 <mark>因浓度差而产生</mark> 的运动。气体、液体、固体均有之。扩散运动使靠近接触面P区的空穴浓度降低、靠近接触面N区的自由电子浓度降低，产生内电场。</p>
-<p><strong>漂移运动</strong>：因 <mark>电场作用</mark> 所产生的运动。</p>
-<p><strong>动态平衡</strong>：结处因空穴和电子一刻不停地复合和分离（官方：参与扩散运动和漂移运动的载流子数目相同）而形成 “无多数载流子” 的状态。</p>
-<blockquote>
-<p><strong>注意</strong>：扩散运动和漂移运动是相反的，</p>
-</blockquote>
-<p><img src="https://pic.islet.space/2021/07/image-20210714210922380.png" alt="image-20210714210922380" style="zoom:50%;" /></p>
-<div style="text-align: center; font-weight:900;">
-图 扩散运动
-</div>
-<p><img src="https://pic.islet.space/2021/07/image-20210714210942004.png" alt="image-20210714210942004" style="zoom:67%;" /></p>
-<div style="text-align: center; font-weight:900;">
-图 漂移运动
-</div>
-<p><strong>耗尽层</strong>：PN结处，因动态平衡而达到的“无多数载流子”的状态，该结的大小称为耗尽层。</p>
-<p>如果此时让P区的多数载流子，即空穴尽量往N区移动，让N区的多数载流子，即自由电子尽量往P区移动，则两种电荷进行复合，形成更宽的耗尽层，此时因为耗尽层因为没有多数载流子而呈现不导电特性。</p>
-<p>反之，让P区的多数载流子尽量往P区靠拢，让N区的多数载流子尽量往N区靠拢（注意，这里用的是“靠拢”，因为中间已经有耗尽层的形成，此时的“靠拢”是让耗尽层中已经复合消失的电子和空穴重新拆开，分别往各自原来的反向回归。），耗尽层的宽度会逐渐缩小，显现出导电特性。</p>
-<p><strong>正向</strong>：电源的正、负极分别对准半导体的P、N极进行连接。</p>
-<p><strong>反向</strong>：电源的正、负极分别对准半导体的N、P极进行连接。</p>
-<p><strong>正向导通</strong>：耗尽层变窄，扩散运动加剧，由于外电源的作用，形成扩散电流，PN结处于导通状态。</p>
-<p><strong>反向截止</strong>：耗尽层变宽，阻止扩散运动，有利于漂移运动，形成漂移电流。由于电流很小，故可近似认为其截止。</p>
-<p><img src="https://pic.islet.space/2021/07/image-20210714212136379.png" alt="image-20210714212136379" style="zoom:33%;" /></p>
-<div style="text-align: center; font-weight:900;">
-图 正向导通
-</div>
-<p><img src="https://pic.islet.space/2021/07/image-20210714212143706.png" alt="image-20210714212143706" style="zoom:33%;" /></p>
-<div style="text-align: center; font-weight:900;">
-图 反向截止
-</div>
-<h3 id="电容效应">电容效应</h3>
-<p><strong>势垒电容</strong>：PN结外加电压变化时，空间电荷区的宽度将发生变化，有电荷的积累和释放的过程，与电容的充放电相同，其等效电容称为势垒电容Cb。</p>
-<p><strong>扩散电容</strong>：PN结外加的正向电压变化时，在扩散路程中载流子的浓度及其梯度均有变化，也有电荷的积累和释放的过程，其等效电容称为扩散电容Cd。</p>
-<p><strong>结电容</strong>：等于 势垒电容 与 扩散电容 之和。但 <mark>结电容不是常量！</mark> 若PN结外加电压频率高到一定程度，则失去单向导电性！</p>
-<h1 id="二极管">二极管</h1>
-<p>The diode is the most used semiconductor device in electronics circuits. <strong><em>It is a two-terminal electrical check valve that allows the flow of current in one direction.</em></strong> They are mostly made up of <strong><em>silicon</em></strong> but <strong><em>germanium</em></strong> is also used. Usually, they are used for <strong><em>rectification</em></strong>. But there are different properties &amp; characteristics of diodes which can be used for different application. These characteristics are modified to form different types of diodes.</p>
-<figure>
-<img src="https://pic.islet.space/2021/07/image-20210713102126884.png" alt="image-20210713102126884" /><figcaption aria-hidden="true">image-20210713102126884</figcaption>
-</figure>
-<p><img src="https://pic.islet.space/2021/07/Types-of-Diodes-and-Their-Applications.jpg" alt="Types of Diodes and Their Applications" style="zoom:67%;" /></p>
-<div style="text-align: center; font-weight: 900;">
-图 二极管的几种外形
-</div>
-<figure>
-<img src="https://pic.islet.space/2021/07/image-20210713102141393.png" alt="image-20210713102141393" /><figcaption aria-hidden="true">image-20210713102141393</figcaption>
-</figure>
-<div style="text-align: center; font-weight: 900;">
-图 二极管的几种常见结构和符号
-</div>
-<h2 id="主要特征参数">主要特征参数</h2>
-<ol type="1">
-<li>最大整流电流（Maximum Rectification Current）</li>
-<li>最高反向工作电压（Maximum Reverse Voltage）</li>
-<li>反向电流（Reverse Current）</li>
-<li>最高工作频率（Maximum Frequency）</li>
-</ol>
-<h2 id="自举二极管">自举二极管</h2>
-<h1 id="晶体管">晶体管</h1>
-<p>晶体管主要分为两种类型，BJT 和 FET。</p>
-<p><strong>工作区域</strong>：晶体管的导通状态，分为三种，分别是饱和、截止和放大，分别是指</p>
-<h2 id="bjt">BJT</h2>
-<p>BJT，即 Bioplar Junction Transistor，双极性结型晶体管。</p>
-<figure>
-<img src="https://pic.islet.space/2021/07/image-20210714213248733.png" alt="image-20210714213248733" /><figcaption aria-hidden="true">image-20210714213248733</figcaption>
-</figure>
-<div style="text-align: center; font-weight:900;">
-图 晶体管内部结构和符号示意
-</div>
-<p><strong>注意</strong>：晶体管的符号示意中，箭头的方向永远是从P指向N的，此时先不用管c、b、e是怎么接，确定好。</p>
-<blockquote>
-<p>BJT结构特点：三极三区两PN结，发射区多子浓度高，基区多子浓度低且薄，集电区 面积大。</p>
-</blockquote>
-<p><strong>发射区</strong>：多数载流子较高的区域，自由电子流出的方向。</p>
-<p><strong>基区</strong>：多数载流子浓度较低且薄的区域。</p>
-<p><strong>集电区</strong>：面积大的区域，空穴流出的反向。</p>
-<blockquote>
-<p>某极 是根导线，与BJT中的物理区不同。</p>
-</blockquote>
-<p><strong>发射结</strong>：发射区和基区之间的PN结。</p>
-<p><strong>集电结</strong>：集电区和基区之间的PN结。</p>
-<blockquote>
-<p><strong>注意</strong>：以上多数载流子可以是 空穴 或 自由电子，因此 BJT 可以有 NPN 和 PNP 两种类型的BJT。</p>
-</blockquote>
-<p>联系到实际电路连接中，一般情况下，<strong>集电区</strong> 都是接 <strong>供电电源</strong> ， <strong>基区</strong> 都是接 <strong>控制电源</strong>， <strong>发射区</strong> 都是接 <strong>负端/地</strong>。控制电源的电压会低于供电电源的电压，但会大于发射区的电压。</p>
-<p>基区所连接的控制电源 为BJT提供 高电平或低电平 予以控制半导体的导通或截止，<mark>半导体所控制的负载的最大电压取决于发射极的供电电源电压 和 基区的控制电源电压</mark>。</p>
-<p><img src="https://pic.islet.space/2021/07/image-20210713104805683.png" alt="image-20210713104805683" style="zoom:67%;" /></p>
-<div style="text-align: center; font-weight: 900;">
-图 BJT的几种常见外形
-</div>
-<p><img src="https://pic.islet.space/2021/07/image-20210713105054978.png" alt="image-20210713105054978" style="zoom:67%;" /></p>
-<div style="text-align: center; font-weight: 900;">
-图 BJT的结构和符号
-</div>
-<h3 id="工作原理">工作原理</h3>
-<p>从下图可以看出，下图 BJT 为 NPN 型半导体，集电区接正电，发射区接地，基区接地。集电区与基区为反向截止状态，集电结的耗尽层增大，进一步阻止集电区和发射区之间的电流导通。</p>
-<p>若此时向基区施加正向电流，基区电压高于发射区电压，发射结正偏导通，发射区多子（电子）往基区流动，。发射区的电子能够顺利往集电区流动，集电区的电流往发射区流动，从而导通 该BJT。</p>
-<p><img src="https://pic.islet.space/2021/07/image-20210714215347959.png" alt="image-20210714215347959" style="zoom:33%;" /></p>
-<div style="text-align: center; font-weight:900;">
-图 BJT导通时的内部电荷流向示意
-</div>
-<p>集电极电流是漂移形成的，发射极电流是扩散形成的。</p>
-<p><strong>发射区电流</strong> I<span style="font-size: 0.8rem;">E</span> 是由 扩散运动形成的。</p>
-<p><strong>基区电流</strong> I<span style="font-size: 0.8rem;">B</span> 是由 复合运动形成的。</p>
-<p><strong>集电区电流</strong> I<span style="font-size: 0.8rem;">C</span> 是由 漂移运动形成的。</p>
-<p><img src="https://pic.islet.space/2021/07/image-20210714222731446.png" alt="image-20210714222731446" style="zoom:33%;" /></p>
-<div style="text-align: center; font-weight:900;">
-图 BJT输入特性曲线
-</div>
-<p><img src="https://pic.islet.space/2021/07/image-20210714222645318.png" alt="image-20210714222645318" style="zoom: 33%;" /></p>
-<div style="text-align: center; font-weight:900;">
-图 BJT输出特性曲线
-</div>
-<h3 id="工作区域">工作区域</h3>
-<p><img src="https://pic.islet.space/2021/07/image-20210714223024773.png" alt="image-20210714223024773" style="zoom:67%;" /></p>
-<div style="text-align: center; font-weight:900;">
-图 BJT工作区域
-</div>
-<h2 id="fet">FET</h2>
-<p><strong>场效应晶体管</strong> 简称 <strong>场效应管</strong>。主要有 <strong>结型场效应管</strong>（JFET）和 <strong>金属氧化物半导体场效应管</strong>（MOSFET）两种类型。</p>
-<h3 id="jfet">JFET</h3>
-<p><img src="https://pic.islet.space/2021/07/image-20210713105852012.png" alt="image-20210713105852012" style="zoom:67%;" /></p>
-<div style="text-align: center; font-weight: 900;">
-图 JFET的结构和符号
-</div>
-<h3 id="mosfet">MOSFET</h3>
-<p>在MOS管工作原理图上可以看到，漏极和源极之间有一个寄生二极管。这个叫体二极管，在驱动感性负载(如马达)，这个二极管很重要。顺便说一句，体二极管只在单个的MOS管中存在，在集成电路芯片内部通常是没有的。</p>
-<p>下图a中，为增强型P衬底N沟道MOS，其栅极接 <u>高电平</u> 即导通。</p>
-<p><img src="https://pic.islet.space/2021/07/image-20210713110023509.png" alt="image-20210713110023509" style="zoom:67%;" /></p>
-<div style="text-align: center; font-weight: 900;">
-图 N沟道增强型MOS管结构示意图 及 增强型MOS管的符号
-</div>
-<p><img src="https://pic.islet.space/2021/07/image-20210713110146838.png" alt="image-20210713110146838" style="zoom:67%;" /></p>
-<div style="text-align: center; font-weight: 900;">
-图 N沟道耗尽型MOS管结构示意图 及 耗尽型MOS管的符号
-</div>
-<h4 id="nmos工作原理">NMOS工作原理</h4>
-<iframe src="//player.bilibili.com/player.html?aid=931455726&amp;bvid=BV1DM4y1T7Yx&amp;cid=363622918&amp;page=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true">
-</iframe>
-<p>MOS管有4个端子，其符号也是四个端子组成的，以下用NMOS举例：</p>
-<p>NMOS底部端子连接到基板/主体（Substrate/Body），称为基板、衬底端子 或 <strong><em>主体端子</em></strong>。上方各有两个N沟道，各自连接 <strong><em>源极端子</em></strong> 和 <strong><em>漏极端子</em></strong>。两个端子中间添加了一层 薄绝缘体或电介质，在此层绝缘体上加了一个 <strong><em>栅极端子</em></strong>。</p>
-<p><img src="https://pic.islet.space/2021/07/image-20210716001316182.png" alt="image-20210716001316182" style="zoom:50%;" /></p>
-<p>在NMOS内部构造中，源极端子 和 衬底端子 在内部连接，因此外露出来的端子只有三个。此时因 源极 和 衬底 的电位相同，阻止了任何电流从衬底流向源极。</p>
-<p><img src="https://pic.islet.space/2021/07/image-20210716001716986.png" alt="image-20210716001716986" style="zoom:50%;" /></p>
-<p>在MOS中，希望电子从漏极流向源极，在两个极连接一个电源，其电压称为 V<span style="font-size: 0.6rem;">DS</span> ，此时加大电压，电流却不会增大，因为漏极沟道附近的耗尽层不断增大。</p>
-<p><img src="https://pic.islet.space/2021/07/image-20210716002453710.png" alt="image-20210716002453710" style="zoom:50%;" /></p>
-<p>栅极端子 和 主体端子 都有绝缘材料，当给栅极端子接电压较小的电压 V<span style="font-size: 0.6rem;">GS</span> 时，两个绝缘材料形成电容效应，栅极处的多子不断吸引自由电子往栅极移动，暂时形成带自由电子较多的N区，从而导通了 源极 和 漏极，暂时形成了回路。因为 栅极处的N区是暂时连接 源极和漏极的通道，因此也被称为 N沟道。随着电压的增大或减小，沟道的大小也会随着变化。足以形成沟道的最低栅极电压被称为 <strong>阈值电压</strong>。</p>
-<p><img src="https://pic.islet.space/2021/07/image-20210716002900372.png" alt="image-20210716002900372" style="zoom:50%;" /></p>
-<p>当不断增加栅极电压，漏极 和 衬底之间的耗尽层将因为 反向偏置 而不断增加。靠近漏极一侧的N沟道宽度将不断减小，直到某个电压点时，称为夹断效应。夹断下映实际上是说，沟道并未完全关闭，许多电子将保留通道，并不是停止了电流流动，而是出现了恒定的饱和电流，其电压被称为 饱和电压。</p>
-<p><img src="https://pic.islet.space/2021/07/image-20210716004255087.png" alt="image-20210716004255087" style="zoom:50%;" /></p>
-<div style="text-align: center; font-weight: 900;">
-表 FET的符号和特性
-</div>
-<figure>
-<img src="https://pic.islet.space/2021/07/image-20210713105437061.png" alt="image-20210713105437061" /><figcaption aria-hidden="true">image-20210713105437061</figcaption>
-</figure>
-<figure>
-<img src="https://pic.islet.space/2021/07/image-20210713105533255.png" alt="image-20210713105533255" /><figcaption aria-hidden="true">image-20210713105533255</figcaption>
-</figure>
-<h2 id="fet-and-bjt">FET and BJT</h2>
-<p>FET 的 <strong>栅极</strong>、<strong>源极</strong> 和 <strong>漏极</strong> 对应 BJT的 <strong>基极</strong>、<strong>发射极</strong> 和 <strong>集电极</strong>，其作用类似。</p>
-<table>
-<thead>
-<tr class="header">
-<th></th>
-<th>FET</th>
-<th>BJT</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>电流索取</td>
-<td>用“栅-源”电压控制漏极电流，栅极基本不取电流<br>【输入电阻高的电路选用】</td>
-<td>工作时基极总要索取一定的电流<br>【信号源若提供电流的选用】</td>
-</tr>
-<tr class="even">
-<td>导电情况</td>
-<td>仅多子参与导电</td>
-<td>多子少子均参与导电</td>
-</tr>
-<tr class="odd">
-<td>稳定性</td>
-<td>较好</td>
-<td>较差<br>【因少子数目受温度、辐射等因素影响较大，温度稳定性和抗辐射的能力较差些。】</td>
-</tr>
-<tr class="even">
-<td>噪声系数</td>
-<td>小<br>【低噪声放大器的输入级和信噪比要求高的电路选用】</td>
-<td>大</td>
-</tr>
-<tr class="odd">
-<td>源-漏互换</td>
-<td>可以互换，互换后特性变化不大</td>
-<td>互换后特性差异很大，特殊需求时互换</td>
-</tr>
-<tr class="even">
-<td>电压范围</td>
-<td>宽</td>
-<td>窄</td>
-</tr>
-<tr class="odd">
-<td>工艺</td>
-<td>简单</td>
-<td>复杂</td>
-</tr>
-<tr class="even">
-<td>耗电</td>
-<td>低</td>
-<td>高</td>
-</tr>
-</tbody>
-</table>
-<blockquote>
-<p>IGFET / MOS / MOSFET 是同一个东西，还有个词叫 MISFET（Metal-Insulated-Semiconductor Field Effect Transistor，金属绝缘半导体场效应管）</p>
-</blockquote>
-<h1 id="功率半导体">功率半导体</h1>
-<p><strong>功率半导体</strong> 器件大致分为两类： <strong>可控功率半导体</strong> 和 <strong>不可控功率半导体</strong>。<strong>可控功率半导体</strong> 如 Thyristor（晶闸管）、BJT（双极型晶体管）、功率MOSFET 和 IGBT 。不可控功率半导体 包括各种类型的功率二极管。</p>
-<p><img src="https://pic.islet.space/2021/07/image-20210713112224602.png" alt="image-20210713112224602" style="zoom:67%;" /></p>
-<div style="text-align: center; font-weight: 900;">
-图 常见功率半导体器件及其典型的功率范围、阻断电压和开关频率
-</div>
-<h1 id="igbt">IGBT</h1>
-<p><strong>绝缘栅型双极晶体管</strong>，即 <strong>IGBT</strong>（Insulated Gate Bipolar Transistor），是由 <strong><em>BJT</em></strong>（双极型三极管)）和 <strong><em>MOS</em></strong>（绝缘栅型场效应管）组成的 <strong>复合全控型电压驱动式功率半导体</strong> 器件, 兼有 <strong>MOSFET</strong>的 <u>高输入阻抗</u> 和 <strong>GTR</strong>的 <u>低导通压降</u> 两方面的优点。IGBT综合了以上两种器件的优点，驱动功率小而饱和压降低。非常适合应用于直流电压为600V及以上的变流系统如交流电机、变频器、开关电源、照明电路、牵引传动等领域。</p>
-<blockquote>
-<p>GTR 具有饱和压降低，载流密度大，但驱动电流较大的优点；</p>
-<p>MOSFET 具有驱动功率很小，开关速度快，但导通压降大，载流密度小的优点。</p>
-</blockquote>
-<p><strong>IGBT模块</strong> 是由 IGBT（绝缘栅双极型晶体管芯片）与FWD（续流二极管芯片）通过特定的电路桥接封装而成的模块化半导体产品；封装后的IGBT模块直接应用于变频器、UPS不间断电源等设备上；IGBT模块 具有节能、安装维修方便、散热稳定等特点；当前市场上销售的多为此类模块化产品，一般所说的IGBT也指IGBT模块；随着节能环保等理念的推进，此类产品在市场上将越来越多见；</p>
-<p><img src="https://pic.islet.space/2021/07/image-20210713142410853.png" alt="image-20210713142410853" style="zoom: 80%;" /></p>
-<div style="text-align: center; font-weight: 900;">
-图 IGBT内部结构和等效电路
-</div>
-<p>因为IGBT的构造所致，最好还是不要让IGBT长期工作在放大区，会让其降低使用寿命，因开关开断时而进入放大区无可避免，仅工作在 饱和区 和 截止区 即可。</p>
-<p><img src="https://pic.islet.space/2021/07/image-20210715221251088.png" alt="image-20210715221251088" style="zoom:80%;" /></p>
-<p>三个英文符号分别表示为 <strong>栅极</strong>（Gate）、<strong>集电极</strong>（Collector）、<strong>发射极</strong>（Emitter）。</p>
-<p>在漏极侧增加了高掺杂的P+层，称之为 <strong>集电极</strong>。</p>
-<ul>
-<li><p>当栅极接近 <u>负电压</u> 或 <u>零电压</u> 时，PN结 J2 阻断，发射极电压远低于集电极电压，IGBT 关断 （正向阻断）；但是此刻 结J1 和 结J3 <strong>正偏导通</strong>。</p></li>
-<li><p>当栅极接到 <u>正电压</u>（通常是15V）时，氧化层下方的 P区 建立 <strong>反型导电沟道</strong>，为 N-区 提供导电通路，电子从发射极到 N-区 降低了 N-区 的电位，PN结 J1导通，IGBT导通。</p></li>
-</ul>
-<p>如果栅极电压不够大，形成的反型层较弱，流入漂移区的电子数相对较少，IGBT压降增大，即进入特性曲线的 <strong>线性放大区</strong>。工作在线性放大区会加剧损耗或损坏 IGBT，因而除了开关瞬间，应避免进入线性放大区。</p>
-<p><img src="https://pic.islet.space/2021/07/image-20210713144038325.png" alt="image-20210713144038325" style="zoom:67%;" /></p>
-<div style="text-align: center; font-weight: 900;">
-图 IGBT的输出特性
-</div>
-<p>IGBT 的关断电流分为 <strong>MOSFET关断阶段</strong> 和 <strong>BJT关断阶段</strong>。第一个阶段时，关断反型沟道，电流迅速下降；第二个阶段时，会产生持续时间较长的拖尾电流。</p>
-<p>拖尾电流使得 IGBT 的关断损耗 高于 MOSFET 的关断损耗。</p>
-<p><img src="https://pic.islet.space/2021/07/image-20210713144838981.png" alt="image-20210713144838981" style="zoom: 67%;" /></p>
-<div style="text-align: center; font-weight: 900;">
-图 MOSFET和IGBT的主要开通和关断特性比较
-</div>
-<p>截止电压：</p>
-<p>饱和电压：</p>
-<p>击穿电压：</p>
-<p><strong>阈值电压</strong>：描述的是 <strong>栅极</strong> 和 <strong>发射极</strong> 之间刚好足以打开导流通道的电压。</p>
-<p><strong>漏电流</strong>：泄露电流，leakage current。主要是指栅极和发射极的在反向偏置状态的泄露电流，此处特性与二极管相近。</p>
-<h2 id="分类">分类</h2>
-<p>IGBT可以分为 <strong>穿通型</strong>（PT）IGBT、<strong>非穿通型</strong>（NPT）IGBT、<strong>场终止型</strong>（FS）IGBT、<strong>沟槽栅</strong>（Trench）IGBT、<strong>载流子存储沟槽栅双极晶体管</strong>（CSTBT）、<strong>注入增强晶体管</strong>（IEGT）、<strong>沟槽栅终止</strong>（Trench-FS）IGBT、<strong>逆导型</strong>（RC）IGBT。</p>
-<p><strong>平面栅极结构</strong> 的IGBT设计，形成了JFET结构，以及发射极区软弱的电导调制效应，载流子的浓度从集电极到发射极之间逐步降低。</p>
-<p><strong>沟槽型栅极结构</strong> 的IGBT设计，在平面型的基础上保持载流子浓度平均分布或逐步增加载流子浓度，进一步降低通态损耗，而不影响拖尾电流和关断损耗。</p>
-<p>载流子越少越有助于降低关断损耗。</p>
-<table>
-<colgroup>
-<col style="width: 16%" />
-<col style="width: 30%" />
-<col style="width: 12%" />
-<col style="width: 11%" />
-<col style="width: 30%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th>TYPE</th>
-<th>内部构造（原理）</th>
-<th>温度系数</th>
-<th>优点</th>
-<th>缺点</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>PT-IGBT<BR>穿通型IGBT</td>
-<td><img src="https://pic.islet.space/2021/07/image-20210713112637086.png" alt="image-20210713112637086" style="zoom:67%;" /></td>
-<td>正温度系数<br>负温度系数</td>
-<td></td>
-<td></td>
-</tr>
-<tr class="even">
-<td>NPT-IGBT<BR>非穿通型IGBT</td>
-<td><img src="https://pic.islet.space/2021/07/image-20210713112654444.png" alt="image-20210713112654444" style="zoom:67%;" /></td>
-<td>正温度系数</td>
-<td>1. 有利于IGBT并联</td>
-<td>1. 随着温度上升，损耗增大</td>
-</tr>
-<tr class="odd">
-<td>FS-IGBT<BR>场终止型IGBT</td>
-<td><img src="https://pic.islet.space/2021/07/image-20210713112712678.png" alt="image-20210713112712678" style="zoom:67%;" /></td>
-<td>正温度系数</td>
-<td></td>
-<td></td>
-</tr>
-<tr class="even">
-<td>Trench-IGBT<br>沟槽栅IGBT</td>
-<td><img src="https://pic.islet.space/2021/07/image-20210713112728045.png" alt="image-20210713112728045" style="zoom:67%;" /></td>
-<td></td>
-<td></td>
-<td>1. 更宽的导电沟道会增加IGBT短路时的电流</td>
-</tr>
-<tr class="odd">
-<td>CSTBT<br>载流子存储沟槽双极晶体管</td>
-<td><img src="https://pic.islet.space/2021/07/image-20210713122039519.png" alt="image-20210713122039519" style="zoom:67%;" /></td>
-<td></td>
-<td>1. 降低了IGBT的饱和压降</td>
-<td></td>
-</tr>
-<tr class="even">
-<td>IEGT<BR>注入增强栅晶体管</td>
-<td><img src="https://pic.islet.space/2021/07/image-20210713112841613.png" alt="image-20210713112841613" style="zoom:67%;" /></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr class="odd">
-<td>Trench-FS IGBT<br>沟槽栅终止IGBT</td>
-<td><img src="https://pic.islet.space/2021/07/image-20210713112933604.png" alt="image-20210713112933604" style="zoom:67%;" /></td>
-<td></td>
-<td></td>
-<td>1. 保持鲁棒性，通态损耗和开关损耗降低<br>2. 功率密度提升，即电流密度增大<br>3. 单位IGBT所需硅材料降低</td>
-</tr>
-<tr class="even">
-<td>RC-IGBT<BR>逆导型IGBT</td>
-<td><img src="https://pic.islet.space/2021/07/image-20210713122011473.png" alt="image-20210713122011473" style="zoom:67%;" /></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-</tbody>
-</table>
-<h1 id="术语总结">术语总结</h1>
-<p><strong>FET</strong>： Filed Effect Transistor，即 <strong>场效应管</strong>，是 <mark>利用输入回路的电场效应来控制输出回路电流</mark> 的一种半导体器件，故此得名。由于其仅靠半导体中的多数载流子导电，因此也称为 <strong>单极型晶体管</strong>。</p>
-<p><strong>JFET</strong>： Junction Filed Effect Transistor，即 <strong>结型场效应管</strong>，有 P沟道 和 N沟道 两种类型。</p>
-<p><strong>IGFET</strong>： Insulated Gate Field Effect Transistor，即 <strong>绝缘栅型场效应管</strong>。因栅极与源极、栅极与漏极之间均采用二氧化硅绝缘层进行阻隔而得名如此。又因栅极为金属铝，故又称为MOS管。具有 高输入阻抗、高开关频率 和 低驱动功率 的优点。</p>
-<p><strong>MOS</strong>： Metal-Oxide-Semiconductor，即 <strong>金属氧化物半导体</strong>。同上。</p>
-<p><strong>MOSFET</strong>： Metal-Oxide-Semiconductor Field Effect Transistor，即 <strong>金属氧化物半导体场效应管</strong>。同上。</p>
-<p><strong>BJT</strong>： Bipolar Junction Transistor， 即 <strong>双极结型晶体管</strong>。因带有两种不同极性电荷的载流子参与导电，故得名如此，或称 <strong>半导体三极管</strong>，简称 <strong>双极晶体管</strong> 或 <strong>晶体管</strong>。</p>
-<p><strong>UJT</strong>： Unijunction Transistor，即 <strong>单结晶体管</strong>。因有两个基极，也称为 <strong>双基极晶体管</strong>。</p>
-<p><strong>GTR</strong>： Giant Transistor，即 <strong>巨型晶体管</strong>。BJT的一种，亦称为 Power BJT（<strong>电力晶体管</strong>）。具有自关断、无须辅助关断电路、 高电流密度、低保和电压 和 耐高压 的优点。</p>
-<p><strong>IGBT</strong>： Insulated Gate Bipolar Transistor，即 <strong>绝缘栅双极型晶体管</strong>。</p>
-<p><strong>Thyristor</strong>：即 <strong>半导体闸流管</strong> 、<strong>晶闸管</strong>，又称为 <strong>硅可控元件</strong>（Silicon Controlled Rectifier）， 由按顺序排列的PNPN四层半导体组成。最外层的P区和N区构成了正负极，中间的P区构成了控制极（栅极），可以控制导通。具有耐压高、电流大、耐浪涌能力强 且 价格便宜 等优点。</p>
-<p><strong>GTO</strong>： Gate Turn-Off Thyristor，即 <strong>可关断晶闸管</strong>。是一种通过门极来控制器件导通和关断的电力半导体器件。具有 普通晶闸管 和 GTR的优点，是应用于高压大容量场合中的一种大功率开关器件。</p>
-<p><strong>PT</strong>： Power Transistor， 即 <strong>功率晶体管</strong> / <strong>功率管</strong>。</p>
-<p><strong>IPM</strong>： Intelligent Power Module，即 <strong>智能功率模块</strong>。具有GTR 和 MOSFET 的优点。而且IPM内部集成了逻辑、控制、检测和保护电路，使用起来方便,不仅减小了系统的体积以及开发时间，也大大增强了系统的可靠性。</p>
-<p><img src="https://pic.islet.space/2021/07/d4628535e5dde711c5d042b5a7efce1b9d166176" alt="img" style="zoom: 25%;" /></p>
-<div style="text-align: center; font-weight: 900;">
-图 IPM器件示意
-</div>
-<h1 id="参考">参考</h1>
-<ol type="1">
-<li>《模拟电子技术基础》高等教育出版社，童师白</li>
-<li>《IGBT模块：技术、驱动和应用》机械工业出版社，Andreas Volke and Michael Hornkamp</li>
-<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/366981878">逆变器的分类方式有哪些</a></li>
-<li><a target="_blank" rel="noopener" href="https://baike.baidu.com/item/IGBT/2078902?fromtitle=%E7%BB%9D%E7%BC%98%E6%A0%85%E5%8F%8C%E6%9E%81%E5%9E%8B%E6%99%B6%E4%BD%93%E7%AE%A1&amp;fromid=12731336">IGBT</a></li>
-<li><a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E5%9C%BA%E6%95%88%E5%BA%94%E7%AE%A1">场效应管</a></li>
-<li><a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E6%99%B6%E4%BD%93%E4%BA%8C%E6%9E%81%E7%AE%A1">晶体二极管</a></li>
-<li><a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E6%99%B6%E4%BD%93%E7%AE%A1/569042#:~:text=%E6%99%B6%E4%BD%93%E7%AE%A1%E6%9C%89%E6%97%B6%E5%A4%9A%E6%8C%87%E6%99%B6%E4%BD%93%E4%B8%89%E6%9E%81%E7%AE%A1%E3%80%82%20%E4%B8%89%E7%AB%AF%E5%AD%90%E6%99%B6%E4%BD%93%E7%AE%A1%E4%B8%BB%E8%A6%81%E5%88%86%E4%B8%BA%E4%B8%A4%E5%A4%A7%E7%B1%BB%EF%BC%9A%20%E5%8F%8C%E6%9E%81%E6%80%A7%E6%99%B6%E4%BD%93%E7%AE%A1,%EF%BC%88BJT%EF%BC%89%E5%92%8C%20%E5%9C%BA%E6%95%88%E5%BA%94%E6%99%B6%E4%BD%93%E7%AE%A1%20%EF%BC%88FET%EF%BC%8C%E5%8D%95%E6%9E%81%E6%80%A7%EF%BC%89%E3%80%82">晶体管</a></li>
-<li><a target="_blank" rel="noopener" href="https://circuitglobe.com/difference-between-diode-and-transistor.html">Difference Between Diode &amp; Transistor</a></li>
-<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/150177944">半导体分类知识大全</a></li>
-<li><a target="_blank" rel="noopener" href="https://xueqiu.com/3593206238/153075165">IGBT—功率半导体皇冠上的明珠</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.electricaltechnology.org/2018/12/types-of-diodes-their-applications.html">Types of Diodes and Their Applications - 24 Types of Diodes</a></li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://islet.space/2021/07/11/Hardware/DSP/2021-07-11-%E5%B5%8C%E5%85%A5%E5%BC%8F%E8%8A%AF%E7%89%87%E5%A4%96%E8%AE%BE/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Liewzheng">
-      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Coder的孤岛">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/07/11/Hardware/DSP/2021-07-11-%E5%B5%8C%E5%85%A5%E5%BC%8F%E8%8A%AF%E7%89%87%E5%A4%96%E8%AE%BE/" class="post-title-link" itemprop="url">嵌入式芯片外设</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-
-    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
-    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2021-07-11 13:50:00" itemprop="dateCreated datePublished" datetime="2021-07-11T13:50:00+08:00">2021-07-11</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-07-15 21:11:03" itemprop="dateModified" datetime="2021-07-15T21:11:03+08:00">2021-07-15</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Hardware/" itemprop="url" rel="index"><span itemprop="name">Hardware</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>嵌入式芯片（如MCU、DSP等）内部包含众多的模块化外设，如 串口控制模块，SPI模块，I2C模块，A/D模块，PWM模块，CAN模块，EEPROM，比较器模块，等等，它们都集成在芯片内部，有相对应的内部控制寄存器，可通过指令直接控制。</p>
-<p>按照控制信号类别对外设进行分类，可以分为 <strong>模拟外设</strong>（Analog Peripherals）、<strong>控制外设</strong>（Control Peripherals） 和 <strong>通信外设</strong>（Communication Peripherals）。</p>
-<p><strong>模拟外设</strong> 的常见外设如 <strong>模数转换器</strong>（Analog-to-Digital Convertor, ADC）、<strong>可编程增益放大器</strong>（Programmable Gain Amplifier, PGA）、<strong>温度传感器</strong>（Temperature Sensor）、<strong>缓冲数模转换器</strong>（Buffered Digital-to-Analog Convertor, DAC）和 <strong>比较器</strong>（Comparator Subsystem）。</p>
-<p><strong>控制外设</strong> 的常见设备如 <strong>捕获器</strong>（Capture, CAP）、<strong>脉冲幅频调制器</strong>（Pulse Width Modulator, PWM）、<strong>正交编码器脉冲</strong>（ Quadrature Encoder Pulse, QEP）和 <strong>西格玛-德尔塔滤波器模块 </strong>（Sigma-Delta Filter Module, SDFM）。</p>
-<p><strong>通信外设</strong> 的常见设备如 （Controller Area Network, CAN）、<strong>双线通信</strong>（Inter-Integrated Circuit, I2C）、<strong>电源管理总线接口</strong>（Power Management Bus Interface, PMBus）、<strong>串行通信接口</strong>（Serial Communications Interface, SCI）、<strong>串行外设接口</strong>（Serial Peripheral Interface, SPI）、<strong>局域互联网络</strong>（Local Interconnect Network, LIN） 和 <strong>高速串行接口</strong>（Fast Serial Interface, FSI）。</p>
-<h1 id="cla">CLA</h1>
-<p>为了解决DSP在对实时控制要求比较高的场合中CPU计算速度不足以及计算负担过重，TI很早之前就已经推出了具有CLA功能的DSP。</p>
-<p>CLA，即Control Law Accelerator，是一个32位浮点数计算加速器，可以理解为一个专门为浮点数运算而优化的CPU。其可以 <strong>独立</strong> 于CPU进行运算操作，并 <mark>可以同时访问</mark> 到ePWM，eCAP，eQEP，ADC result以及Comparator <mark>寄存器</mark>。相当于两个CPU并行工作，从而减少了主CPU的运算负担。</p>
-<p>也就是说 CLA可以同时访问所有模拟外设的寄存器。</p>
-<p>可以将CLA看作是辅助CPU进行计算的浮点运算协处理器（co-processor）。</p>
-<p>一个典型的应用场景如下：</p>
-<p><img src="https://pic.islet.space/2021/07/v2-9fdd0b85b26f7ff8074a8c58b1aba945_720w.jpg" alt="img" />闭环控制电路</p>
-<p>CPU通过ADC采集主电路的电压、电流信息，计算得到控制逻辑（包括频率以及占空比等），从而控制电路工作。因此如果CPU的计算负担很大，比如说需要计算傅里叶分解，比如说需要计算反三角函数等，那么就造成了极大的控制时延。而CLA应运而生，专门为计算浮点数进行优化，且不会造成CPU阻塞于计算而对异常情况无法响应的情况。</p>
-<figure>
-<img src="https://pic.islet.space/2021/07/v2-2d0d2214e132b1a9982d3ab50db429ff_720w.jpg" alt="img" /><figcaption aria-hidden="true">img</figcaption>
-</figure>
-<div style="text-align: center; font-weight: 900;">
-图 28069和28027对比
-</div>
-<p>上图则对比了具有CLA功能的28069和不具有CLA功能的28027的控制延时。对于没有CLA功能的28027，其CPU在ADC采样结束之后触发SOC中断，随后进行闭环计算，最后再结束一个周期的控制，开始下一个周期。而具有<mark>CLA</mark>功能的28069则<mark>可以在采样结束之后立即自主触发CLA计算</mark>（由于没有菊花链，所以触发迅速），并且由于<mark>CLA针对浮点数计算进行优化，因此计算时间更短</mark>。更重要的是，<mark>CPU不需要进行任何操作，因此CPU可以有空闲完成其他任务，比如异常检测，比如故障上报等等</mark>。</p>
-<p>简单来说，采用CLA的系统具有<strong>更小的计算时延</strong>，<strong>CPU负担更小，</strong>因此其系统更加迅速稳定。</p>
-<h1 id="clb">CLB</h1>
-<p>The C2000 configurable logic block (CLB) is a collection of configurable blocks that interconnect through software to implement custom digital logic functions.</p>
-<p>The CLB subsystem contains a number of identical tiles.</p>
-<h1 id="gpio">GPIO</h1>
-<p>GPIO，即General-purpose input/output，通用型之输入输出（接口）。功能类似8051的P0—P3，其接脚可以供使用者由程控自由使用，PIN脚依现实考量可作为通用输入（GPI）或通用输出（GPO）或通用输入与输出（GPIO），如当clk generator, chip select等。 既然一个引脚可以用于输入、输出或其他特殊功能，那么一定有寄存器用来选择这些功能。对于输入，一定可以通过读取某个寄存器来确定引脚电位的高低；对于输出，一定可以通过写入某个寄存器来让这个引脚输出高电位或者低电位；对于其他特殊功能，则有另外的寄存器来控制它们。</p>
-<h1 id="cmpss">CMPSS</h1>
-<p>CMPSS，即Comparator Subsystem，比较器子系统。由模拟比较器和支持电路组成，可用于峰值电流模式控制、开关电源、功率因数校正、电压跳闸监测等应用。</p>
-<p>每个CMPSS包含两个比较器、两个12位DAC参考、两个数字滤波器和一个斜坡发生器。比较器在每个模块中表示为“H”或“L”，其中“H”和“L”分别表示高和低。每个比较器产生一个数字输出，指示正输入端的电压是否大于负输入端的电压。比较器的正输入由外部引脚或PGA驱动，负输入可由外部引脚或可编程参考12位DAC驱动。每个比较器输出通过一个可编程的数字滤波器，可以消除假跳闸信号。如果不需要滤波，也可以使用未滤波的输出。一个可选的斜坡发生器电路可用于控制高比较器的12位参考DAC值。</p>
-<p><img src="https://pic.islet.space/2021/07/20200416154658460.png" /></p>
-<h1 id="can">CAN</h1>
-<p>A controller area network(CAN) is ideally suited to the many high-level industrial protocols embracing CAN and <strong><em>ISO-11898:2003</em></strong> as their physical layer.</p>
-<h2 id="introduction">Introduction</h2>
-<ul>
-<li><p>The CAN bus was developed by BOSCH as a <strong><em>multi-master</em></strong>, <strong><em>message broadcast</em></strong> system that specifies a maximum signaling rate of <strong><em>1 megabit per second</em></strong>(bps).</p></li>
-<li><p>CAN is an International Standardization Organization (ISO) defined serial communications bus originally developed for the automotive industry to replace the complex wiring harness with a two-wire bus.</p></li>
-<li><p>CAN <em>does not</em> send large blocks of data point-to-point from node A to Node B under the supervision of the central bus master.</p></li>
-<li><p>In a CAN network, <mark>many short messages</mark> like temperature or RPM <mark>are broadcast to the entire network</mark>, which provides for <mark>data consistency in every node of the system</mark>. 保证系统中各节点的数据一致性。</p></li>
-<li><p>CAN's specification calls for high immunity to electrical interface and the ability to self-diagnose and repair data errors.</p></li>
-</ul>
-<p>以下为ISO 11898 对 CAN 标准架构层级解释框图：</p>
-<figure>
-<img src="C:\Users\431240.IT2004\AppData\Roaming\Typora\typora-user-images\image-20210711162150611.png" alt="image-20210711162150611" /><figcaption aria-hidden="true">image-20210711162150611</figcaption>
-</figure>
-<p>The CAN communication protocol is a <strong><em>carrier-sense</em></strong>, <strong><em>multiple-access</em></strong> protocol with <strong><em>collision detection</em></strong> and <strong><em>arbitration on message priority</em></strong> (<strong><em>CSMA</em></strong> / <strong><em>CD+AMP</em></strong>). <strong><em>CSMA</em></strong> means that each node on a bus must wait for a prescribed period of inactivity before attempting to send a message. <strong><em>CD+AMP</em></strong> means that collisions are resolved through a bit-wise arbitration, based on a preprogrammed priority of each message in the identifier field of a message. The higher priority identifier always wins bus access.</p>
-<p>CAN 包含 standard CAN 和 Extended CAN。</p>
-<figure>
-<img src="C:\Users\431240.IT2004\AppData\Roaming\Typora\typora-user-images\image-20210711163535822.png" alt="image-20210711163535822" /><figcaption aria-hidden="true">image-20210711163535822</figcaption>
-</figure>
-<figure>
-<img src="C:\Users\431240.IT2004\AppData\Roaming\Typora\typora-user-images\image-20210711163548817.png" alt="image-20210711163548817" /><figcaption aria-hidden="true">image-20210711163548817</figcaption>
-</figure>
-<h1 id="术语">术语</h1>
-<p><strong>菊花链</strong>：在电子电气工程中菊花链代表一种配线方案，例如设备A和设备B用电缆相连，设备B再用电缆和设备C相连，设备C用电缆和设备D相连，在这种连接方法中不会形成网状的拓扑结构，只有相邻的设备之间才能直接通信，例如在上例中设备A是不能和设备C直接通信的，它们必须通过设备B来中转，这种方法同样不会形成环路。因为最后一个设备不会连向第一个设备。这种连线方法能够用来传输电力，数字信号和模拟信号。</p>
-<h1 id="参考">参考</h1>
-<ol type="1">
-<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/72232829">CLA介绍及使用指南</a></li>
-<li><a target="_blank" rel="noopener" href="https://baike.baidu.com/item/gpio">GPIO</a></li>
-<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/whyorwhnt/article/details/105547472">TMS320F280049C 学习笔记16 比较器子系统(CMPSS)</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.ti.com/lit/an/sloa101b/sloa101b.pdf">《Introduction to the Controller Area Network(CAN)》</a></li>
 </ol>
 
       

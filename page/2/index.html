@@ -162,7 +162,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">106</span>
+          <span class="site-state-item-count">108</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -173,7 +173,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">195</span>
+        <span class="site-state-item-count">200</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -207,6 +207,315 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://islet.space/2021/12/27/Blog/2021-12-27-hexo%E5%BF%85%E8%A3%85%E6%8F%92%E4%BB%B6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Liewzheng">
+      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coder的孤岛">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/12/27/Blog/2021-12-27-hexo%E5%BF%85%E8%A3%85%E6%8F%92%E4%BB%B6/" class="post-title-link" itemprop="url">hexo必装插件及安装脚本</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2021-12-27 10:30:00 / Modified: 11:05:03" itemprop="dateCreated datePublished" datetime="2021-12-27T10:30:00+08:00">2021-12-27</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Blog/" itemprop="url" rel="index"><span itemprop="name">Blog</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>请先确保电脑上已经安装了必须的软件，如 <code>node.js</code> 和 <code>git</code> ，因为日常需要使用 <strong>代码</strong>、<strong>数学公式</strong>、<strong>流程图</strong>、<strong>搜索</strong> 等工具，所以下方的插件安装也主要是与此相关的。</p>
+<p><strong>注意</strong>：以下仅适用于 <code>hexo-next</code> 主题。</p>
+<h1 id="插件安装">插件安装</h1>
+<p>先放一个博客 islet.space 需要使用到的插件，都需要使用 <code>npm</code> 进行安装。</p>
+<figure>
+<img src="https://pic.islet.space/2021/12/image-20211227103125833.png" alt="本博客使用到的一些插件" /><figcaption aria-hidden="true">本博客使用到的一些插件</figcaption>
+</figure>
+<p>将下方这段脚本保存至 <code>hexo_install.sh</code> 文件中，并使用 <code>chmod +x hexo_install.sh</code> 命令为其添加执行权限，并使用 <code>./hexo_install.sh</code> 进行执行即可。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> uninstall the unnecessary renderer,like marked and kramed</span></span><br><span class="line">sudo npm uninstall hexo-renderer-marked --save</span><br><span class="line">sudo npm uninstall hexo-renderer-kramed --save</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> install the necessary plugins <span class="keyword">for</span> hexo</span></span><br><span class="line">sudo npm install @fancyapps/fancybox --save</span><br><span class="line">sudo npm install @fortawesome/fontawesome-free --save</span><br><span class="line">sudo npm install @next-theme/pjax --save</span><br><span class="line">sudo npm install @next-theme/plugins --save</span><br><span class="line">sudo npm install hexo-deployer-git --save</span><br><span class="line">sudo npm install hexo-filter-mermaid-diagrams --save</span><br><span class="line">sudo npm install hexo-generator-searchdb --save</span><br><span class="line">sudo npm install hexo-math --save</span><br><span class="line">sudo npm install hexo-renderer-ejs --save</span><br><span class="line">sudo npm install hexo-renderer-pandoc --save</span><br><span class="line">sudo npm install hexo-renderer-stylus --save</span><br></pre></td></tr></table></figure>
+<h1 id="插件启用">插件启用</h1>
+<h2 id="pandoc">pandoc</h2>
+<p>若要启用pandoc进行渲染，除了之前必须要卸载旧的渲染器（如 <code>marked</code> 和 <code>kramed</code> 外），还需要去github页面下载一个pandoc的渲染器软件并进行安装。</p>
+<p><strong>pandoc下载链接</strong>：https://github.com/jgm/pandoc/releases</p>
+<h2 id="mermaid">mermaid</h2>
+<p>mermaid需要显示的话也需要安装插件，需要在hexo-next主题文件夹下的 <code>_config.yml</code> 文件中进行启用，如下：</p>
+<figure>
+<img src="https://pic.islet.space/2021/12/image-20211227105005422.png" alt="mermaid在主题配置文件中的启用" /><figcaption aria-hidden="true">mermaid在主题配置文件中的启用</figcaption>
+</figure>
+<h2 id="latex">latex</h2>
+<p>latex数学公式可以由 <code>pandoc</code> 渲染器进行渲染，只需要在hexo-next主题文件夹下的 <code>_config.yml</code> 文件中启用 <code>mathjax</code> ，如下：</p>
+<figure>
+<img src="https://pic.islet.space/2021/12/image-20211227104717614.png" alt="数学公式在主题配置文件中的启用" /><figcaption aria-hidden="true">数学公式在主题配置文件中的启用</figcaption>
+</figure>
+<h2 id="search">search</h2>
+<p>搜索功能功能不仅需要安装插件，还需要分别在博客文件夹根目录中的 <code>_config.yml</code> 和 hexo-next主题文件夹下的 <code>_config.yml</code> 文件中进行启用，如下：</p>
+<figure>
+<img src="https://pic.islet.space/2021/12/image-20211227105545754.png" alt="博客根目录配置文件下的启用" /><figcaption aria-hidden="true">博客根目录配置文件下的启用</figcaption>
+</figure>
+<p><strong>注意</strong>：此处的 <code>db.json</code> 需要在 <code>public</code> 文件夹中也有一份的时候启用；如果 <code>db.json</code> 无法使用，则更换为 <code>search.xml</code> 。因为 <code>db.json</code> 或 <code>search.xml</code> 是由插件生成的搜索数据库（可以这么看）。</p>
+<figure>
+<img src="https://pic.islet.space/2021/12/image-20211227105510478.png" alt="hexo主题配置文件下的启用" /><figcaption aria-hidden="true">hexo主题配置文件下的启用</figcaption>
+</figure>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://islet.space/2021/12/10/Others/2021-12-10-%E9%9D%A2%E8%AF%95%E7%BB%8F%E9%AA%8C/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Liewzheng">
+      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coder的孤岛">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/12/10/Others/2021-12-10-%E9%9D%A2%E8%AF%95%E7%BB%8F%E9%AA%8C/" class="post-title-link" itemprop="url">面试经验</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2021-12-10 08:30:00 / Modified: 22:35:27" itemprop="dateCreated datePublished" datetime="2021-12-10T08:30:00+08:00">2021-12-10</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Others/" itemprop="url" rel="index"><span itemprop="name">Others</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>因为也是人力资源管理专业出身，所以基于面试者（员工）角度来写这篇文章的时候，其实是左右手互博的感觉。</p>
+<p>特殊性说明，本文所描述的岗位背景其实是 <strong>嵌入式DSP裸机软件（驱动）开发</strong> 。</p>
+<p><strong>注意</strong>：下面标灰色的部分都是跟HR工作相关的概念，如果看不太懂可以跳过。</p>
+<h1 id="面试流程">面试流程</h1>
+<p>技术类岗位招聘通常会遇到 <strong>2~3轮面试</strong> 和一次 <strong>HR提供Offer</strong> 的环节，最经典的流程如下：</p>
+<pre class="mermaid">graph LR
+简历投送 --> ID1((HR面)) --> ID2((项目面)) --> ID3((技术面)) --> 拿Offer</pre>
+<h2 id="面试原则">面试原则</h2>
+<p>面试者需要在面试过程中适当包装和美化一下自己的工作经历，但是还是需要秉承着相对诚实的原则。</p>
+<h3 id="为什么说是相对诚实的原则">为什么说是相对诚实的原则</h3>
+<p>你可以说“自己的工作很难但按时完成”，“自己独立完成”，“自主编写代码” 等等他人较难去鉴别的工作，这些都是一个人工作能力不错的表现。但假如把自己没做过的项目放进去，一旦被问技术面的时候问到细节就会露馅。即使面试时没有露馅，工作时露馅了，大概率也会被面试官知道的。</p>
+<blockquote>
+<p>一个HR有可能是在一家公司专门从事招聘的专员，也有可能是为多家公司做招聘的猎头（专门从事招聘工作的人员，通常是成立一个猎头公司，专门帮其他公司找人才）。一旦技术面的时候夸大自己的工作经验，技术面也会跟HR反馈你的夸大情况，然后你就再也不能通过该猎头或者专员找到其他的工作了，相当于自己白白损失了一个资源口。</p>
+</blockquote>
+<p>而，嵌入式开发之类的技术岗位（目前）是绝对的版本答案之一，企业通过猎头找人才已经是常态，因此绝对不能有这种作死行为。</p>
+<h1 id="hr面">HR面</h1>
+<p>由专门/兼职做人力资源的工作人员负责，主要有以下流程：</p>
+<ol type="1">
+<li><strong>说明招聘信息</strong>（包括所招聘的岗位的基本要求和职责、企业背景、团队情况和项目情况）</li>
+<li><strong>在职情况</strong>（千万不能说自己已经离职，否则你就会很掉价，因为HR会觉得你急于找到新工作而压低你的价格——对，就是你的薪酬，你的卖身一个月的价格，当然也有其他方法可以来试着压低你的薪酬，后面再谈）</li>
+<li><strong>询问面试者的离职原因</strong>（以判断该员工是否足够稳定，因为薪酬给的更高的员工其离职后给企业造成的离职成本会更高，因此需要该员工足够稳定，后面详谈如何回答离职原因）</li>
+<li><strong>询问面试者当前的工作内容</strong>（以确定该员工与所招聘岗位的匹配度，就是说，面试者目前的工作内容如果和他招聘的岗位的工作内容差异太大，他就不会想要再继续去问了，这点应该比较容易懂吧。当然，面试者也不能明明不匹配就瞎说自己会该工作技能，不然就是坑自己也坑别人，这里尽量坦白一些比较好）</li>
+<li><strong>询问面试者的求职意向及工作意愿</strong>（就是会问面试者是否愿意从事本岗，一般到这里如果没有回答“愿意”，都没得聊了）</li>
+<li><strong>询问面试者期待的薪资及目前薪资</strong>（这一点在招聘网站看可以看到该企业所招聘的岗位能提供的薪资范围，通常也就是个薪酬区间，后面详谈如何回答这部分内容。询问目前薪资就是来确定你的人力成本，进而探寻能够压缩你人力成本空间的可能性的。）</li>
+<li><strong>约定下一步面试时间</strong>（这一点应该没什么好说，通常都是电话技术面或视频技术面，确认好双方有空闲的时间）</li>
+<li><strong>其他</strong>（会问是不是符合一些硬性条件，比如统招本科（就是学信网能够查到本科学历信息），毕业时间等等）</li>
+</ol>
+<h2 id="如何回答离职原因">如何回答离职原因</h2>
+<p>这一部分看似回答很简单，其实会藏着很多坑。</p>
+<blockquote>
+<p>首先，要明白为什么需要HR面，为什么面试第一个打来的都是HR，而不是技术员工直接打过来。</p>
+<p>从企业运行的角度考虑，每一时刻的企业运作都是需要运行成本的，包括场地成本、设备成本（采购、折旧、损耗等等）、物料成本、人力成本（招聘成本、培训成本、薪酬成本等）等等，就特别多，专人专事这个大家都能理解。</p>
+<p>如果一个员工匆忙从一家企业离职，该员工入职前的招聘成本、入职时的培训成本和所需要支付的薪酬成本就会拜拜支出，不能给企业带来盈利，但企业在招聘一个员工前后所支出的成本又是实实在在支出了的，就会造成巨大损失（绿厂就不是，就完全不担心这一点，因为给的太少了（通俗点就是成本不高），打着500强名号，韭菜一茬一茬就随便割，又不会特地挽留员工离职，而且全公司现状都是培训工作做得差，成本就不高）。</p>
+<p>（个人觉得）企业当然不能实现所有人终身雇佣，没有新鲜血液是不行的，一定比例的人员流动可以给企业带来活力（这个原因我就不必讲了吧）。HR是学过这些东西的，需要站在企业角度去帮企业考虑招聘什么样子的人会让企业更加稳定，人员稳定（流失减少，并控制在一定范围内）就能帮助企业降低运行成本。</p>
+</blockquote>
+<p>因此，<mark style="font-weight: 900;">面试者需要体现出自己的稳定性，证明自己是一个不太会轻易离职的人，并说明是一些客观的因素（并不是自己的原因）造成了面试者的离职</mark>。当然，面试者自己在一家企业就业时，也不应该轻易离职，如果是高校毕业者，最好在第一家企业从事1年及以上再离职（建议！）。以下列举了几个较为客观（不能说绝对客观）的原因：</p>
+<ul>
+<li>办公室氛围太过压抑，缺少团队活动</li>
+<li>团队协作性太差</li>
+<li>领导风格太过压迫和强势</li>
+</ul>
+<p>一些员工的主观原因（或者说是令HR反感的原因），这些话是绝对不能说的，绝对禁区！</p>
+<ul>
+<li>自己不喜欢目前的工作</li>
+<li>工作太难了</li>
+</ul>
+<p>一些员工可以说的话：</p>
+<ul>
+<li>自己不太挑工作，比较看重团队氛围和工作环境（一般有自信点的HR都会觉得这点没问题，“不太挑工作”的前提是，也得是自己觉得对口的才行，别不对口你不挑个啥。比如，做MCU/ARM/SOC/DSP的相通性较高，说自己不挑可以，但是跨行业太大也敢说自己不挑那就是找事儿）（另，不太挑工作其实对HR来说是个好品质，但自己也得好好掂量掂量自己）</li>
+</ul>
+<h2 id="如何回答目前薪资及期望薪资">如何回答目前薪资及期望薪资</h2>
+<blockquote>
+<p>HR之所以需要问你的目前薪资，不仅是了解本行业或者某个岗位在某个地区的大致薪酬情况（以对比公司招聘员工的薪酬竞争优势），也是在探寻面试者的薪酬上涨或可以压缩的空间。</p>
+</blockquote>
+<p>面试者首先需要了解（或者说准备好）几点信息：</p>
+<ol type="1">
+<li>该行业该岗位在某个地区的 <strong>普遍薪资范围</strong> 是如何（当然不能拿最高薪资来当做普遍薪资，得看自己的能力和对应岗位的工作难度）</li>
+<li>所面试的公司提供的薪酬范围</li>
+<li>自己所期待的薪资底线</li>
+<li>自己目前薪资</li>
+</ol>
+<p>首先是，如果HR问目前薪资。面试者可以适当夸大自己目前的薪资，税后薪资可能都很低，可以说税前，多说几千没关系，不要与对方公司提供的薪酬底线相差太大即可。如果HR说自己公司有30%或者40%的涨薪幅度限制，那么可以放心，该HR觉得你岗位匹配度较高，只是想通过这个来压一压你的成本而已。</p>
+<p>此时，你可以说自己期待在某个地区某个岗位的薪酬底线，低于这个就不行。HR态度一般都会更为委婉些。</p>
+<p>如果你通过面试，到了拿offer的环节，HR还是会再跟你谈一遍。豪气的公司（一种薪酬策略，用高于行业平均水平的薪资招聘员工，但也要求更高）一般开价都会比你要求的更高，但这是后面的事情了。</p>
+<h2 id="hr面结束之后">HR面结束之后</h2>
+<p>（如果你对HR提供的岗位较为满意，接收了技术面/项目面的预约）需要记住一些最基础、关键、有用的信息。这些HR面时都已经说明了，最好是拿个小本本记好，这是对面试企业的一个尊重，也是为了防止后面出现的一些莫名其妙的（跟你面试岗位无关的）问题把你问倒。</p>
+<ol type="1">
+<li><strong>岗位工作地点</strong>（很多大企业全国都有研究中心和技术中心，可以选择的，看对方给你提供的是哪个城市的就业岗位）</li>
+<li><strong>对方面试官的名字</strong>（至少记住姓啥）</li>
+<li><strong>对方的公司名称及背景</strong>（比如是帮别人做外包的还是做自研的，有没有上市或者有没有股权激励，成立多久了之类的）</li>
+<li><strong>岗位基本信息</strong> （任职要求和工作职责等）</li>
+</ol>
+<h1 id="项目面和技术面">项目面和技术面</h1>
+<p>普遍情况下，二轮/三轮面试都会问你一些技术和项目上的东西，根据所闻内容的不同，将其分别称呼为 <strong>技术面</strong> 和 <strong>项目面</strong>。</p>
+<p>有些公司会将这两轮分开，面试的先后顺序不一，总得占比是项目经历会问得更多一些，技术面的占比较少。</p>
+<p>有些公司也会将项目面和技术面合在一起（就是同一次面试里就有技术面和项目面），夹杂交替着问。</p>
+<h2 id="项目面">项目面</h2>
+<p>主要是问你从事（主要负责或者协助负责）过的一些项目/经历，了解你对研发的产品、芯片、硬件、软件、工具、设备的认知。项目面会有三种类型的提问：</p>
+<ol type="1">
+<li>工具认知提问。了解面试者对工具使用的经验。</li>
+<li>问题解决提问。了解面试者对一些解决问题的方法和经历。</li>
+<li>情景假设提问。考验面试者解决问题的思路。</li>
+</ol>
+<p><strong>项目面的面试形式：</strong>一般都是电话提问和视频提问。</p>
+<p><strong>面试时长</strong>：单轮面试时间都是在15分钟以上，最长30分钟左右。</p>
+<h3 id="工具认知提问">工具认知提问</h3>
+<p>就是会问你开发过程中遇到的一些工具模块是如何使用的，一些算法或者逻辑的原理。这部分比较简单，都是经验而已。</p>
+<p>例如，面试官问我ADC的使用，我就如实回答我是如何用ADC的，以及我对ADC模块的认知。</p>
+<h3 id="问题解决提问">问题解决提问</h3>
+<blockquote>
+<p>有很大概率（不一定是所有公司都会问的），会问你一些“发现问题解决问题”的经验。这里面试官主要是想知道以下几点情况：</p>
+<ol type="1">
+<li><strong>面试者对工作问题的解决思路</strong>。是否足够清晰，有什么角度可以去考虑，需要面试者自己去总结，然后可以清晰地向他人阐述。</li>
+<li><strong>面试者在解决问题时的耐心</strong>。面试者需要介绍一个以上的案例，向面试官说明问题现象，自己的思考方式、检查方法、解决方法、过程 和 结果 等等。</li>
+<li><strong>面试者的经验</strong>。你能说出自己在遇到一些问题（比如调试问题）时的解决思路，或者看待问题（较为全面）的角度时，就说明了你已经具有足够经验了。</li>
+</ol>
+</blockquote>
+<p>如果面试官问你“发现问题解决问题”的经验，你回答自己不知道，不太记得，忘记了这些话，就妥妥失败了。</p>
+<p>因为这些工作问题的发现、解决和记录工作，在日常工作过程中其实都是可以稍微花点时间去完成的（这并不难，只是你有没有耐心而已），如果面试者自己没有做这部分 <strong>经验积累工作</strong>，那就很吃亏，大部分人都有相关的工作经验，自己不会去 <strong>总结</strong> 而已。</p>
+<h3 id="情景假设提问">情景假设提问</h3>
+<p>面试官可能会抛出情景题，例如问你给你一个芯片，2周之内完成开发，你需要怎么准备，有什么计划。其实就是一个经验问题，或者思路问题。回答方法我就不详细说了。</p>
+<h2 id="技术面">技术面</h2>
+<p>技术面，就是会问一些项目之下的一些底层技术问题，一般来说都不会太难，也偶尔会有一些面试官问的问题比较偏门（开发过程中较难出现的问题）。例如，我经历过的偏门提问，会问C语言的野指针出现和排查，C++的继承概念等等（这些是我项目上比较难涉及到的）。</p>
+<p>但大部分情况下，这些技术提问，都是提问一些你做过的东西，比如你做过某种通信协议的开发，请你表述以下该协议的相关内容（例如，时序、通信格式（通信起始和结束的变化）、电气特性（电平、电压范围）等）。这些其实也是经验的一部分，真的做过的话就应该自己做做笔记，一定会有点印象的，不应该去抱佛脚。</p>
+<p><strong>面试原则</strong>：问到你会的，你就自信回答。问到偏门的，开发过程中较少出现/遇到和使用的，你就如实回答就好了，不要不懂装懂。</p>
+<p><strong>技术面的面试形式：</strong>可能是让你线上答卷，现场答卷，也可以是电话提问、视频提问。</p>
+<p><strong>面试时长</strong>：同项目面，也可能夹杂着在项目面中间进行提问。</p>
+<h1 id="拿offer">拿Offer</h1>
+<p>拿到Offer后，你可能需要向HR详细确认的信息：</p>
+<ol type="1">
+<li>每天上班时间，从几点到几点</li>
+<li>每个月的薪资计算时间是从几号到几号</li>
+<li>每个月的薪资发放日期、时间</li>
+<li>是否双休、年假情况</li>
+<li>每天的加班强度、每个月的加班强度、加班薪资等</li>
+<li>每年发放多少个月的薪资（就是年终奖发放情况，好一点的是15薪以上，最基本的13薪）</li>
+<li><strong>每个（税前）月薪资是多少</strong>（可能需要关心一下社保和公积金的缴纳情况等）</li>
+</ol>
+<p>基本信息了解完毕之后，需要自己有意识地去提问的一些问题：</p>
+<ol type="1">
+<li>近期可以签订合同的最晚时间（合同期限一般都是3年，这个就比较不用担心）</li>
+<li>期望入职时间（自己期望什么时候入职，对方期望最晚什么时候入职，可否协调程度）</li>
+<li>涨薪计划（入职后会有哪些涨薪激励计划，或之前其他股权发放啊、年终奖增长等等）</li>
+<li>绩效计划（可能这时候不太愿意说，但是入职后可以去了解）</li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1971,491 +2280,6 @@ COMPILE AND LINK
 <li><a target="_blank" rel="noopener" href="https://www.sciencedirect.com/topics/engineering/link-budget">Link Budget - an overview | ScienceDirect Topics</a></li>
 <li><a target="_blank" rel="noopener" href="https://cloud.tencent.com/product/lpwa">LPWA 物联网络</a></li>
 </ol>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://islet.space/2021/09/10/Communication/2021-09-10-UART%E9%80%9A%E4%BF%A1/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Liewzheng">
-      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Coder的孤岛">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/09/10/Communication/2021-09-10-UART%E9%80%9A%E4%BF%A1/" class="post-title-link" itemprop="url">UART通信</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-
-    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
-    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2021-09-10 09:30:00" itemprop="dateCreated datePublished" datetime="2021-09-10T09:30:00+08:00">2021-09-10</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-09-16 00:30:01" itemprop="dateModified" datetime="2021-09-16T00:30:01+08:00">2021-09-16</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Communication/" itemprop="url" rel="index"><span itemprop="name">Communication</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="rs-serial-port">RS Serial Port</h1>
-<p>RS系列（RS-232/RS-422/RS-485）标准（RS，即Recommend Standard，<strong>推荐标准</strong> 之意 ）是常用的（异步）串行通信接口标准，该系列标准由美国电子工业协会（EIA）牵头开发。</p>
-<p>RS系列标准只对 <strong>接口</strong> 的 <strong>电气特性</strong>（Electric Specification of Interface）进行规定，并不涉及插件、电缆或协议，再次基础上，用户可以建立自己的接头、插座形状 以及 高层通信协议 。</p>
-<h2 id="rs-232">RS-232</h2>
-<p>RS-232标准接口（又称EIA RS-232）是由美国电子工业协会(EIA)联合贝尔系统公司、调制解调器厂家及计算机终端生产厂家于1970年共同制定，其全名是“数据终端设备( DTE)和数据通信设备(DCE)之间串行二进制数据交换接口技术标准”。</p>
-<p>RS232协议 和 TTL协议更多是电气特性（如电平标准和电压），二者在软件协议层面是一样的，如对于同样传输 <code>0b01010101</code> 来说，RS232 和 TTL的时序对比如下图所示：</p>
-<p><img src="https://pic.islet.space/2021/09/20210915110402.png" alt="img" style="zoom:67%;" /></p>
-<div style="font-size: 0.8rem; text-align: center; font-weight: 900;">
-图 RS232标准和TTL标准的时序对比
-</div>
-<p>当然，RS232和TTL/CMOS之间的转换，不仅仅是简单的电平转换，还要考虑到其他一些因素，比如 <strong>调节</strong> 和 <strong>矫正</strong> 一些电平（提高或降低对应的电平），确保可能的有害的RS232电压不会破坏微控制器的串口针脚。较为成熟的方案是通过MAX3232之类的芯片，把TTL电平转为RS232电平，或者在淘宝购买TTL转RS232电缆即可。</p>
-<p>由于RS-232采取 <strong>不平衡传输</strong> 方式，即所谓 <strong>单端通讯</strong>。收（RX）、发（TX） 端的数据信号是相对于信号地（GND）。典型的RS-232信号在正负电平之间摆动，</p>
-<ul>
-<li>在发送数据时，发送端驱动器输出正电平在+5<sub>+15V，负电平在-5</sub>-15V电平。</li>
-<li>当无数据传输时，线上为TTL，从开始传送数据到结束，线上电平从TTL电平到RS-232电平再返回TTL电平。</li>
-</ul>
-<p>接收器典型的工作电平在 <code>+3~+12V</code> 与 <code>-3~-12V</code> 。<mark>由于发送电平与接收电平的差仅为2V至3V左右，所以其共模抑制能力差</mark>，再加上双绞线上的分布电容，其传送距离最大为约15米，最高速率为20Kbps。RS-232是为 <strong>单节点通讯</strong>（即点对点，用一对收、发设备）而设计的，其驱动器负载为3kΩ~7kΩ。所以RS-232适合本地设备之间的通信。</p>
-<h2 id="rs-422">RS-422</h2>
-<p>RS-422、RS-485与RS-232不一样，数据信号采用差分传输方式，也称作 <strong>平衡传输</strong>，它使用一对双绞线，将其中一线定义为A，另一线定义为B。通常情况下，发送驱动器A、B之间的正电平在+2<sub>+6V，是一个逻辑状态，负电平在-2V</sub>6V，是另一个逻辑状态。另有一个信号地C，在RS-485中还有一“使能”端，而在RS-422中这是可用可不用的。“使能”端是用于控制发送驱动器与传输线的切断与连接。当“使能”端起作用时，发送驱动器处于高阻状态，称作“第三态”，即它是有别于逻辑“1”与“0”的第三态。</p>
-<p>由于接收器采用高输入阻抗和发送驱动器比RS232更强的驱动能力，故允许在相同传输线上连接多个接收节点，<strong>最多可接10个节点</strong>。即一个主设备（Master），其余为从设备（Salve），从设备之间不能通信，所以RS-422支持点对多的双向通信。RS-422四线接口由于采用单独的发送和接收通道，因此不必控制数据方向，各装置之间任何必须的信号交换均可以按软件方式（XON/XOFF握手）或硬件方式（一对单独的双绞线）实现。RS-422的最大传输距离为4000英尺（约1219米），最大传输速率为10Mbps。其平衡双绞线的长度与传输速率成反比，在100Kbps速率以下，才可能达到最大传输距离。只有在很短的距离下才能获得最高速率传输。一般100米长的双绞线上所能获得的最大传输速率仅为1Mbps。RS-422需要一终接电阻，要求其阻值约等于传输电缆的特性阻抗。在矩距离传输时可不需终接电阻，即一般在300米以下不需终接电阻。终接电阻接在传输电缆的最远端。</p>
-<h2 id="rs-485">RS-485</h2>
-<p>RS-485 标准只对 <strong>接口</strong> 的 <strong>电气特性</strong>（Electric Specification of Interface）进行规定，并不涉及插件、电缆或协议，再次基础上，用户可以建立自己的接头、插座形状 以及 高层通信协议 。</p>
-<p>RS-485 的 <strong>通信距离</strong> 和 <strong>通信速率</strong> 是负相关的，</p>
-<p>RS485有 <strong>两线制</strong> 和 <strong>四线制</strong>，四线制只能实现点对点的通信方式，现很少采用。</p>
-<h2 id="接口标准对比">接口（标准）对比</h2>
-<p>以下仅从RS的硬件要求进行横向对比：</p>
-<div style="font-size: 0.8rem; text-align: center; font-weight: 900;">
-表 RS系列标准对比
-</div>
-<table>
-<thead>
-<tr class="header">
-<th></th>
-<th>RS-232</th>
-<th>RS-422</th>
-<th>RS-485</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>半双工/全双工</td>
-<td>全双工</td>
-<td>全双工</td>
-<td>半双工</td>
-</tr>
-<tr class="even">
-<td>波特率</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr class="odd">
-<td>传输速率范围</td>
-<td>300bps~100Kbps</td>
-<td>10Mbps</td>
-<td>10Mbps</td>
-</tr>
-<tr class="even">
-<td>联网支持（多设备连接）</td>
-<td>不支持</td>
-<td>支持</td>
-<td>支持</td>
-</tr>
-<tr class="odd">
-<td>电压范围</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr class="even">
-<td>差模/共模</td>
-<td>共模</td>
-<td>差模</td>
-<td>差模</td>
-</tr>
-<tr class="odd">
-<td>最少信号线数量</td>
-<td>3根</td>
-<td>5根</td>
-<td>2根</td>
-</tr>
-<tr class="even">
-<td>最大传输距离</td>
-<td>15m（波特率=9600时）</td>
-<td></td>
-<td>3900m</td>
-</tr>
-<tr class="odd">
-<td>控制信号（DE，Drive Enable）</td>
-<td>无</td>
-<td>可选</td>
-<td>有</td>
-</tr>
-<tr class="even">
-<td>输入阻抗</td>
-<td>3～7kΩ</td>
-<td></td>
-<td></td>
-</tr>
-</tbody>
-</table>
-<p>使用RS422协议的设备间的引脚互相连接示意图：</p>
-<figure>
-<img src="https://pic.islet.space/2021/09/20210915110408.png" alt="img" /><figcaption aria-hidden="true">img</figcaption>
-</figure>
-<h1 id="uart-protocol">UART Protocol</h1>
-<p><strong>UART</strong>，即Universal Asynchronous Receiver/Transmitter，<strong>通用异步收发</strong>。</p>
-<p>在通信和计算机科学中，Serial communication是一个通用概念，泛指所有的串行的通信协议，如RS232、USB、I2C、SPI、1-Wire、Ethernet等。这里的串行（serial），是相对并行通信（parallel communication）来说的，如下图：</p>
-<figure>
-<img src="https://pic.islet.space/2021/09/20210915110411.jpeg" alt="img" /><figcaption aria-hidden="true">img</figcaption>
-</figure>
-<p>广义上讲，UART是指 支持RS系列（物理接口）标准和TLL电平 的 <strong>通信协议</strong>。</p>
-<p>因为UART更多关注规定编码格式的标准，如 <strong>波特率</strong>（baud rate）、<strong>帧格式</strong> 和 <strong>波特率误差</strong> 等等，所以了解UART时，不可避免需要先在电气特性上区分几个常用的概念，如 <strong>TLL电平</strong> 和 <strong>CMOS电平</strong>。</p>
-<blockquote>
-<p>TTL集成电路的主要型式为晶体管-晶体管逻辑门(transistor-transistor logic gate)，TTL大部分都采用5V电源。</p>
-<table>
-<thead>
-<tr class="header">
-<th></th>
-<th>TTL电平（参考值）</th>
-<th>CMOS电平（参考值）</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>输入高电平</td>
-<td>≥ 2.4V</td>
-<td>≈ 0.7*VCC</td>
-</tr>
-<tr class="even">
-<td>输入低电平</td>
-<td>≤ 0.4V</td>
-<td>≈ 0.3*VCC</td>
-</tr>
-<tr class="odd">
-<td>输出高电平</td>
-<td>≥ 2.0V</td>
-<td>≈ VCC 或 ＜0.9*VCC</td>
-</tr>
-<tr class="even">
-<td>输出低电平</td>
-<td>≤ 0.8V</td>
-<td>≈ GND 或 &lt; 0.1*VCC</td>
-</tr>
-</tbody>
-</table>
-<p><strong>注</strong>：VCC的概念可以参考文章《<a href="https://islet.space/2021/07/10/Hardware/Circuit/2021-07-10-VCC%E3%80%81VDD%E3%80%81VEE%E3%80%81VSS%E7%9A%84%E5%8C%BA%E5%88%AB/">VCC、VDD、VEE、VSS的区别</a>》，具体输入输出的高低电平范围需要参考芯片及电路的手册。</p>
-</blockquote>
-<h1 id="接口">接口</h1>
-<p>以下介绍均为UART常用的物理接口。</p>
-<p><strong>D型数据接口连接器</strong>，用于连接电子设备（比如：计算机与外设）的接口标准。因形状类似于英文字母D，故得名D型接口。</p>
-<p>按照接口数量细分为A型（15针），B型（25针），C型（37针），D型（50针），E型（9针）。因此常见的计算机并口即为DB25针的连接器。而串口则应为DE9针连接器。</p>
-<p>由于早期的计算机的串口与并口都是使用DB25针连接器，而人们则习惯把字母B与D合在一起记了下来，当作D型接口的共同名字，以至于后来计算机串口改用9针接口以后，人们更多的使用DB9而不是DE9来称呼9针的接口。这一习惯进一步推广的结果就是如今人们使用DBxx来代表D型接口，数字xx则为接口的针数。</p>
-<h2 id="db9">DB9</h2>
-<p>COM口是指针对串行通信协议的一种端口，是PC上异步串行通信口的简写，大部分为9针孔D型。</p>
-<p>因此 <strong>DB9</strong> 就和 <strong>COM口</strong> 混用了，但是COM口里又进一步区分RS232，RS422和RS485，传输功能依次递增。</p>
-<figure>
-<img src="https://pic.islet.space/2021/09/20210915110415.png" alt="image-20210915103057209" /><figcaption aria-hidden="true">image-20210915103057209</figcaption>
-</figure>
-<div style="font-size: 0.8rem; text-align: center; font-weight: 900;">
-图 DB9/COM口在各RS标准下的引脚使用和定义
-</div>
-<p>但由于历史原因，IBM的PC外部接口配置为RS232，成为实际上的PC界默认标准。所以，<strong>现在PC机的COM口的物理标准均为RS232</strong>。DB9/COM口的公头和母头实际外观如下：</p>
-<div style="text-align: center;">
-<img src="https://pic.islet.space/2021/09/image-20210915093214837.png" alt="image-20210915093214837" style="zoom:80%;" /><img src="https://pic.islet.space/2021/09/image-20210915104612002.png" alt="image-20210915104612002" style="zoom:70%;" />
-</div>
-<div style="font-size: 0.8rem; text-align: center; font-weight: 900;">
-图 DB9/COM口的公头（左）和母头（右）外观
-</div>
-<h2 id="端子">端子</h2>
-<p>端子，Terminal，也称为 <strong>接线终端</strong> / <strong>接线端子</strong>。</p>
-<p>种类分单孔，双孔，插口，挂钩等，从材料分，铜镀银，铜镀锌，铜，铝，铁等。它们的作用主要传递电信号或导电用。</p>
-<figure>
-<img src="https://pic.islet.space/2021/09/20210915212912.jpeg" alt="端子排型号" /><figcaption aria-hidden="true">端子排型号</figcaption>
-</figure>
-<h1 id="转换器">转换器</h1>
-<h2 id="usb转ttl">USB转TTL</h2>
-<p>常见的USB转TTL的芯片，如CP2101 / CP2102 / CH340 / CH341 / FT232BM / FT232RL / PL2303 / PV8651等，尤其CH340和CP2102 的转换器最为常见。</p>
-<p><img src="https://pic.islet.space/2021/09/20210915113927.png" alt="image-20210915113729086" style="zoom:50%;" /></p>
-<div style="font-size: 0.8rem; text-align: center; font-weight: 900;">
-图 USB转TTL（CH340G芯片）转换器
-</div>
-<p><img src="https://pic.islet.space/2021/09/20210915210459.png" alt="image-20210915114016213" style="zoom:67%;" /></p>
-<div style="font-size: 0.8rem; text-align: center; font-weight: 900;">
-图 USB转TTL（FT232芯片）转换器
-</div>
-<h2 id="usb转db9rs232">USB转DB9(RS232)</h2>
-<p><img src="https://pic.islet.space/2021/09/20210915110421.png" alt="image-20210915095451523" style="zoom:67%;" /></p>
-<div style="font-size: 0.8rem; text-align: center; font-weight: 900;">
-图 USB转DB9数据线
-</div>
-<h2 id="rj45和db9">RJ45和DB9</h2>
-<p>这种转换器通常用在交换器和路由器的调试工作上，</p>
-<figure>
-<img src="https://pic.islet.space/2021/09/20210915110424.png" alt="image-20210915105657103" /><figcaption aria-hidden="true">image-20210915105657103</figcaption>
-</figure>
-<div style="font-size: 0.8rem; text-align: center; font-weight: 900;">
-图 RJ45母 转 DB9公
-</div>
-<p><img src="https://pic.islet.space/2021/09/20210915110427.png" alt="image-20210915105821577" style="zoom:67%;" /></p>
-<div style="font-size: 0.8rem; text-align: center; font-weight: 900;">
-图 RJ45公 转 DB9母
-</div>
-<h2 id="rj45转端子">RJ45转端子</h2>
-<div style="text-align: center;">
-<img src="https://pic.islet.space/2021/09/20210915112733.jpeg" alt="img" style="zoom:100%;" /><img src="https://pic.islet.space/2021/09/20210915112736.jpeg" alt="img" style="zoom:100%;" /><img src="https://pic.islet.space/2021/09/20210915112738.jpeg" alt="img" style="zoom:100%;" />
-</div>
-<div style="font-size: 0.8rem; text-align: center; font-weight: 900;">
-图 RJ45公 转 2/3/4引脚端子
-</div>
-<h2 id="rs-232转rs-485">RS-232转RS-485</h2>
-<p>目前主流的家用台式机上已经逐渐取消DB9接口，在某些旧台式电脑主机或者商用台式电脑主机上可能仍有DB9端口可以适配 RS-232（DB9公/母）/RS-485（端子） 转换器，然后再利用一根双绞线（可以用网线制作）连接转换器的 <code>A+</code> / <code>B-</code> 端子 和 通信设备。如下图所示：</p>
-<figure>
-<img src="https://pic.islet.space/2021/09/20210915210514.png" alt="image-20210915091142748" /><figcaption aria-hidden="true">image-20210915091142748</figcaption>
-</figure>
-<div style="font-size: 0.8rem; text-align: center; font-weight: 900;">
-图 DB9公（RS232）转3引脚端子(RS485)
-</div>
-<p>由于该转换器为电气隔离设计，<mark>需要使用独立的VCC/GND/T/R来进行供电，因此不能只连接两根信号线。</mark></p>
-<p>该类转换器同样按照DB9接口的公/母来区分引脚/信号定义，下表为深圳市宇泰科技出品的UT-2201转换器说明书中的内容：</p>
-<p><img src="https://pic.islet.space/2021/09/20210915210523.png" alt="image-20210915142023932" style="zoom:67%;" /></p>
-<p>下图为RS485和转换器之间的连接示意，转换器和单点之间的连接：</p>
-<p><img src="https://pic.islet.space/2021/09/20210915210526.png" alt="image-20210915141402305" style="zoom:50%;" /></p>
-<p>转换器和多点的连接：</p>
-<p><img src="https://pic.islet.space/2021/09/20210915210528.png" alt="image-20210915141728889" style="zoom:50%;" /></p>
-<h1 id="参考">参考</h1>
-<ol type="1">
-<li>《串行通信技术 面向嵌入式系统开发》 周云波 著 中国工信出版集团 电子工业出版社</li>
-<li><a target="_blank" rel="noopener" href="http://www.farnell.com/datasheets/2254540.pdf">《ANALOG DEVICE-5 V Low PowerEIA RS-485 Transceiver》</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.ti.com/lit/an/slla036d/slla036d.pdf">《InterfaceCircuitsforTIA/EIA-485(RS-485)》</a></li>
-<li><a target="_blank" rel="noopener" href="https://item.taobao.com/item.htm?id=546418892634">聚英JY-CON503 RS232转RS485/RS422 宽压DC7-30V供电 全隔离设计</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.cnblogs.com/yeshenmeng/p/10729070.html">DB9针和DB25针串口的引脚定义</a></li>
-<li><a target="_blank" rel="noopener" href="http://www.360doc.com/content/20/0803/20/44130189_928354146.shtml">为什么越来越多人使用RS232接口，却还分不清DB9、DB25的引脚定义？</a></li>
-<li><a target="_blank" rel="noopener" href="https://baike.baidu.com/item/RS-232/2022036?fromtitle=rs232&amp;fromid=3555506&amp;fr=aladdin">RS-232</a></li>
-<li><a target="_blank" rel="noopener" href="https://baike.baidu.com/item/DB9/1360191?fr=aladdin">DB9</a></li>
-<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/89240672">串口、COM口、UART口, TTL、RS-232、RS-485区别详解</a></li>
-<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/25893717">UART、RS232、TTL关系浅析</a></li>
-<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/shuziluoji1988/article/details/22413497">RS232、RS422、RS485、TTL电平</a></li>
-<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/66241216">一文搞懂Modbus与RS485通信协议</a></li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://islet.space/2021/09/02/Programming/2021-09-02-%E4%BD%BF%E7%94%A8VS-Code%E5%90%8C%E6%AD%A5Gitee%E9%A1%B9%E7%9B%AE/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Liewzheng">
-      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Coder的孤岛">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/09/02/Programming/2021-09-02-%E4%BD%BF%E7%94%A8VS-Code%E5%90%8C%E6%AD%A5Gitee%E9%A1%B9%E7%9B%AE/" class="post-title-link" itemprop="url">使用VS Code同步Gitee项目</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-
-    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
-    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2021-09-02 21:50:00" itemprop="dateCreated datePublished" datetime="2021-09-02T21:50:00+08:00">2021-09-02</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-09-16 00:33:06" itemprop="dateModified" datetime="2021-09-16T00:33:06+08:00">2021-09-16</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Programming/" itemprop="url" rel="index"><span itemprop="name">Programming</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>自从Github被微软收购，除了Copilot这个AI代码写作助手，大家开源贡献的代码都被拿来用了之后，就不想在Github上贡献代码了。</p>
-<p>转而使用Gitee，感觉也挺好。</p>
-<h1 id="生成并绑定公钥">生成并绑定公钥</h1>
-<p>使用terminal生成公钥：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen</span><br></pre></td></tr></table></figure>
-<p>遇到选择就按回车，不用管就好。然后使用以下命令进行查看：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat ~/.ssh/id_rsa.pub</span><br></pre></td></tr></table></figure>
-<p>公钥样例（千万不要复制下面的模板）如下：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh-rsa BBBBA3NzaC1yc2EBBBBDAQBABBBABQCoLmvwKsFETfy0Lj8VN0QwDj/fu2J1msoM+kWCLTj64zXXXXXXXXXSKQxj30zjVO4tZ9PsO/jaItdev1uV7a9lk9MiemLLAxc1LSYsBdki81tx+7941rl9y/XXXXXXXXXXDjNpPCMq6xH8ZSRoRLcgCz+gRaDfnQALWBcavEO0uVqYGn4I4KRFPup7gm+3j5gRpdm1uKtkrqHxqykErCwXXXXXXXXXX6+okRt/TN5jjq6zV44D6tRYAK6oCOFpwO/RTqTIUU//w/XXXXXXXXXXXXXXXXXXXXdPCqs8Zax9cH/31FJqltQzsRbGDLTFFXqyICK7QKVgFXGhrzM3AVvD xxxx@xxxx.local</span><br></pre></td></tr></table></figure>
-<h1 id="绑定到gitee配置">绑定到Gitee配置</h1>
-<p>这里就不延时注册Gitee账户了。</p>
-<p>在Gitee头像下点击 <strong>设置</strong> ，然后在左侧选择 <strong>SSH公钥</strong>，将生成的公钥粘贴进去，标题会自动识别和生成，使用默认标题即可，最后点击 <strong>确定</strong> 进行保存。</p>
-<figure>
-<img src="https://pic.islet.space/2021/09/image-20210902220637986.png" alt="image-20210902220637986" /><figcaption aria-hidden="true">image-20210902220637986</figcaption>
-</figure>
-<h1 id="在gitee上生成项目">在Gitee上生成项目</h1>
-<p>在gitee页面右上角选择那个 <code>+</code> 号，选择里面的 <strong>新建仓库</strong>。</p>
-<figure>
-<img src="https://pic.islet.space/2021/09/image-20210902222312335.png" alt="image-20210902222312335" /><figcaption aria-hidden="true">image-20210902222312335</figcaption>
-</figure>
-<p>跳转到 <strong>新建仓库</strong> 仓库页面，填写相关信息即可。</p>
-<figure>
-<img src="https://pic.islet.space/2021/09/image-20210902222413221.png" alt="image-20210902222413221" /><figcaption aria-hidden="true">image-20210902222413221</figcaption>
-</figure>
-<p>然后在仓库页面的 <strong>克隆/下载</strong> 处选择 <strong>HTTPS</strong> 源 并 <strong>复制</strong>。</p>
-<figure>
-<img src="https://pic.islet.space/2021/09/image-20210902222531450.png" alt="image-20210902222531450" /><figcaption aria-hidden="true">image-20210902222531450</figcaption>
-</figure>
-<h1 id="绑定vscode">绑定VSCode</h1>
-<p>在本地新建文件夹，命名和存储路径随意。</p>
-<figure>
-<img src="https://pic.islet.space/2021/09/image-20210902222116108.png" alt="image-20210902222116108" /><figcaption aria-hidden="true">image-20210902222116108</figcaption>
-</figure>
-<p>然后使用VSCode打开该文件夹，如下：</p>
-<figure>
-<img src="https://pic.islet.space/2021/09/image-20210902222631177.png" alt="image-20210902222631177" /><figcaption aria-hidden="true">image-20210902222631177</figcaption>
-</figure>
-<p>点选左侧树杈型图标，选择 <strong>初始化存储库</strong>。</p>
-<figure>
-<img src="https://pic.islet.space/2021/09/image-20210902222655162.png" alt="image-20210902222655162" /><figcaption aria-hidden="true">image-20210902222655162</figcaption>
-</figure>
-<p>在上方 <code>...</code> 处选择 <strong>远程</strong>，<strong>添加远程仓库</strong>。</p>
-<figure>
-<img src="https://pic.islet.space/2021/09/image-20210902223026835.png" alt="image-20210902223026835" /><figcaption aria-hidden="true">image-20210902223026835</figcaption>
-</figure>
-<p>粘贴刚刚复制过来的仓库地址。</p>
-<figure>
-<img src="https://pic.islet.space/2021/09/image-20210902223107646.png" alt="image-20210902223107646" /><figcaption aria-hidden="true">image-20210902223107646</figcaption>
-</figure>
-<p>填写远程存储库名称，就是仓库名称。</p>
-<figure>
-<img src="https://pic.islet.space/2021/09/image-20210902223222009.png" alt="image-20210902223222009" /><figcaption aria-hidden="true">image-20210902223222009</figcaption>
-</figure>
-<p>VSCode右下角会出现如下提示，选择 <strong>是</strong>。</p>
-<figure>
-<img src="https://pic.islet.space/2021/09/image-20210902223253826.png" alt="image-20210902223253826" /><figcaption aria-hidden="true">image-20210902223253826</figcaption>
-</figure>
-<p>正常来说点选 <strong>拉取</strong> 也是直接可以拉取到远程数据的，但是也可能因为配置错误导致拉取失败，出现如下提示。</p>
-<figure>
-<img src="https://pic.islet.space/2021/09/image-20210902223319460.png" alt="image-20210902223319460" /><figcaption aria-hidden="true">image-20210902223319460</figcaption>
-</figure>
-<figure>
-<img src="https://pic.islet.space/2021/09/image-20210902224720818.png" alt="image-20210902224720818" /><figcaption aria-hidden="true">image-20210902224720818</figcaption>
-</figure>
-<h1 id="配置本地git参数">配置本地git参数</h1>
-<p>如果拉取不成功，仍需要配置以下信息：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git config --global user.name <span class="string">&quot;xxxx&quot;</span></span><br><span class="line">git config --global user.email xxxx@xxx.com</span><br></pre></td></tr></table></figure>
-<p>其中xxxx需要替换成个人在gitee网站的用户名和对应的邮箱，如下：</p>
-<figure>
-<img src="https://pic.islet.space/2021/09/image-20210902224904264.png" alt="image-20210902224904264" /><figcaption aria-hidden="true">image-20210902224904264</figcaption>
-</figure>
-<h1 id="拉取仓库文件">拉取仓库文件</h1>
-<p>如果仍然无法拉取仓库文件，可以在VSCode下按 <code>CTRL</code> + <code>J</code> 或 <code>COMMAND</code> + <code>J</code> 来打开，然后输入如下命令进行 拉取，命令中对应的源需要替换。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git pull https://gitee.com/xxxx/xxxx.git master</span><br></pre></td></tr></table></figure>
-<p>拉取完后如下所示：</p>
-<figure>
-<img src="https://pic.islet.space/2021/09/image-20210902225228260.png" alt="image-20210902225228260" /><figcaption aria-hidden="true">image-20210902225228260</figcaption>
-</figure>
-<figure>
-<img src="https://pic.islet.space/2021/09/image-20210902225338842.png" alt="image-20210902225338842" /><figcaption aria-hidden="true">image-20210902225338842</figcaption>
-</figure>
 
       
     </div>
