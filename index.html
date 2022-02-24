@@ -384,7 +384,7 @@
       <span class="post-meta-item-text">Posted on</span>
       
 
-      <time title="Created: 2022-02-24 00:30:00 / Modified: 00:41:47" itemprop="dateCreated datePublished" datetime="2022-02-24T00:30:00+08:00">2022-02-24</time>
+      <time title="Created: 2022-02-24 00:30:00 / Modified: 19:32:16" itemprop="dateCreated datePublished" datetime="2022-02-24T00:30:00+08:00">2022-02-24</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -406,18 +406,47 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <figure>
-<img src="/Users/liewzheng/Library/Application%20Support/typora-user-images/image-20220224003818560.png" alt="image-20220224003818560" /><figcaption aria-hidden="true">image-20220224003818560</figcaption>
-</figure>
+          <p>本文只涉及 Jenkins 在 Debian Linux (Kali) 下的相关安装，不涉及使用教程，关于Jenkins的相关科普请自行搜。</p>
+<h1 id="jenkins安装">Jenkins安装</h1>
+<p>Jenkins 可以通过两种方式运行：</p>
+<ul>
+<li>通过官网下载 <code>http://mirrors.jenkins.io/war-stable/latest/jenkins.war</code> 程序，并确保安装了 <code>openjdk-8</code> 即可。此种方式是直接运行 <code>.war</code> 的软件的，免安装，但基于 <code>ssh</code> 远程连接的用户断开连接之后可能会导致无法运行。即，如果不知道如何正确操作shell以便在后台运行该免安装程序，就不推荐使用。</li>
+<li>另一种是安装版本，仍然需要用户提前先安装好 <code>openjdk-8</code> ，然后通过 <a target="_blank" rel="noopener" href="https://pkg.jenkins.io/debian/">官网教程</a> 来添加源和使用 <code>apt</code> 命令进行安装。这种方式可以使用 <code>systemctl</code> 命令确保 Jenkins 开机自启动并在后台运行。</li>
+</ul>
+<h2 id="java-setup">JAVA SETUP</h2>
+<p>需要注意的是，jre有 oracle 版本和 openjdk 版本，需要安装后者。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt update ; sudo apt upgrade ; sudo apt install openjdk-8-jre</span><br></pre></td></tr></table></figure>
+<p>将 <code>JAVA_HOME</code> 写到你对应的 shell 配置文件中。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">export JAVA_HOME&#x3D;&#x2F;usr&#x2F;lib&#x2F;jvm&#x2F;java-1.8.0-openjdk-amd64</span><br><span class="line">export CLASSPATH&#x3D;$JAVA_HOME&#x2F;jre&#x2F;lib&#x2F;rt.jar:$JAVA_HOME&#x2F;lib&#x2F;dt.jar:$JAVA_HOME&#x2F;lib&#x2F;tools.jar</span><br><span class="line">export PATH&#x3D;$JAVA_HOME&#x2F;bin:$PATH</span><br></pre></td></tr></table></figure>
+<h2 id="免安装运行">免安装运行</h2>
+<p>下面就是使用 <code>java -jar jenkins.war --httpPort=8080</code> 命令来免安装运行的。</p>
 <figure>
-<img src="/Users/liewzheng/Library/Application%20Support/typora-user-images/image-20220224003852043.png" alt="image-20220224003852043" /><figcaption aria-hidden="true">image-20220224003852043</figcaption>
+<img src="https://pic.islet.space/2022/02/image-20220224003818560.png" alt="image-20220224003818560" /><figcaption aria-hidden="true">image-20220224003818560</figcaption>
 </figure>
+<h2 id="安装运行">安装运行</h2>
+<p>实际上，直接运行下面的 <code>sudo apt install openjdk-11-jre</code> 可能会导致无法运行，原因不明，还是推荐自行使用 <code>sudo apt install openjdk-8-jre</code> 进行安装。</p>
 <figure>
-<img src="/Users/liewzheng/Library/Application%20Support/typora-user-images/image-20220224003716199.png" alt="image-20220224003716199" /><figcaption aria-hidden="true">image-20220224003716199</figcaption>
+<img src="https://pic.islet.space/2022/02/image-20220224191828341.png" alt="image-20220224191828341" /><figcaption aria-hidden="true">image-20220224191828341</figcaption>
+</figure>
+<h2 id="防火墙配置">防火墙配置</h2>
+<p>这一点就不再赘述了。</p>
+<ol type="1">
+<li><strong>开启系统内端口</strong>：用 <code>iptables</code> 参考 《<a href="https://islet.space/2019/03/05/Linux/SSH/CentOS7%E5%AE%89%E8%A3%85iptables%E9%98%B2%E7%81%AB%E5%A2%99/">CentOS7安装iptables防火墙</a>》，注意看后面评论内容。</li>
+<li><strong>开启控制台端口</strong>：配置为云服务器的要去网页界面的控制台将对应端口打开。</li>
+</ol>
+<h1 id="jenkins配置">Jenkins配置</h1>
+<p>安装完毕之后，在浏览器中输入 对应网址的 <code>8080</code> 端口，进入页面后输入管理员密码。</p>
+<figure>
+<img src="https://pic.islet.space/2022/02/image-20220224003852043.png" alt="image-20220224003852043" /><figcaption aria-hidden="true">image-20220224003852043</figcaption>
+</figure>
+<p>选择新手入门配置安装插件。</p>
+<figure>
+<img src="https://pic.islet.space/2022/02/image-20220224003716199.png" alt="image-20220224003716199" /><figcaption aria-hidden="true">image-20220224003716199</figcaption>
 </figure>
 <p>安装完毕之后就会让你设置管理员账户。</p>
+<p>虽然，java11是推荐安装，可我就是运行失败。</p>
 <figure>
-<img src="/Users/liewzheng/Library/Application%20Support/typora-user-images/image-20220224004120934.png" alt="image-20220224004120934" /><figcaption aria-hidden="true">image-20220224004120934</figcaption>
+<img src="https://pic.islet.space/2022/02/image-20220224004120934.png" alt="image-20220224004120934" /><figcaption aria-hidden="true">image-20220224004120934</figcaption>
 </figure>
 
       

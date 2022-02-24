@@ -22,23 +22,24 @@
   <script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"islet.space","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.7.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/db.json","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":true}}</script><script src="/js/config.js"></script>
-<meta name="description" content="image-20220224003818560   image-20220224003852043   image-20220224003716199  安装完毕之后就会让你设置管理员账户。  image-20220224004120934">
+<meta name="description" content="本文只涉及 Jenkins 在 Debian Linux (Kali) 下的相关安装，不涉及使用教程，关于Jenkins的相关科普请自行搜。 Jenkins安装 Jenkins 可以通过两种方式运行：  通过官网下载 http:&#x2F;&#x2F;mirrors.jenkins.io&#x2F;war-stable&#x2F;latest&#x2F;jenkins.war 程序，并确保安装了 openjdk-8 即可。此种方式是直接运行 .w">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Jenkins服务器部署">
 <meta property="og:url" content="http://islet.space/2022/02/24/Linux/Server/2022-02-24-Jenkins%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%83%A8%E7%BD%B2/index.html">
 <meta property="og:site_name" content="Coder的孤岛">
-<meta property="og:description" content="image-20220224003818560   image-20220224003852043   image-20220224003716199  安装完毕之后就会让你设置管理员账户。  image-20220224004120934">
+<meta property="og:description" content="本文只涉及 Jenkins 在 Debian Linux (Kali) 下的相关安装，不涉及使用教程，关于Jenkins的相关科普请自行搜。 Jenkins安装 Jenkins 可以通过两种方式运行：  通过官网下载 http:&#x2F;&#x2F;mirrors.jenkins.io&#x2F;war-stable&#x2F;latest&#x2F;jenkins.war 程序，并确保安装了 openjdk-8 即可。此种方式是直接运行 .w">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://islet.space/Users/liewzheng/Library/Application%20Support/typora-user-images/image-20220224003818560.png">
-<meta property="og:image" content="http://islet.space/Users/liewzheng/Library/Application%20Support/typora-user-images/image-20220224003852043.png">
-<meta property="og:image" content="http://islet.space/Users/liewzheng/Library/Application%20Support/typora-user-images/image-20220224003716199.png">
-<meta property="og:image" content="http://islet.space/Users/liewzheng/Library/Application%20Support/typora-user-images/image-20220224004120934.png">
+<meta property="og:image" content="https://pic.islet.space/2022/02/image-20220224003818560.png">
+<meta property="og:image" content="https://pic.islet.space/2022/02/image-20220224191828341.png">
+<meta property="og:image" content="https://pic.islet.space/2022/02/image-20220224003852043.png">
+<meta property="og:image" content="https://pic.islet.space/2022/02/image-20220224003716199.png">
+<meta property="og:image" content="https://pic.islet.space/2022/02/image-20220224004120934.png">
 <meta property="article:published_time" content="2022-02-23T16:30:00.000Z">
-<meta property="article:modified_time" content="2022-02-23T16:41:47.562Z">
+<meta property="article:modified_time" content="2022-02-24T11:32:16.208Z">
 <meta property="article:author" content="Liewzheng">
 <meta property="article:tag" content="Jenkins">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://islet.space/Users/liewzheng/Library/Application%20Support/typora-user-images/image-20220224003818560.png">
+<meta name="twitter:image" content="https://pic.islet.space/2022/02/image-20220224003818560.png">
 
 
 <link rel="canonical" href="http://islet.space/2022/02/24/Linux/Server/2022-02-24-Jenkins%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%83%A8%E7%BD%B2/">
@@ -145,7 +146,7 @@
 
   <aside class="sidebar">
 
-    <div class="sidebar-inner sidebar-overview-active">
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
       <ul class="sidebar-nav">
         <li class="sidebar-nav-toc">
           Table of Contents
@@ -158,6 +159,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#jenkins%E5%AE%89%E8%A3%85"><span class="nav-number">1.</span> <span class="nav-text">Jenkins安装</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#java-setup"><span class="nav-number">1.1.</span> <span class="nav-text">JAVA SETUP</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%8D%E5%AE%89%E8%A3%85%E8%BF%90%E8%A1%8C"><span class="nav-number">1.2.</span> <span class="nav-text">免安装运行</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85%E8%BF%90%E8%A1%8C"><span class="nav-number">1.3.</span> <span class="nav-text">安装运行</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%98%B2%E7%81%AB%E5%A2%99%E9%85%8D%E7%BD%AE"><span class="nav-number">1.4.</span> <span class="nav-text">防火墙配置</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#jenkins%E9%85%8D%E7%BD%AE"><span class="nav-number">2.</span> <span class="nav-text">Jenkins配置</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -253,7 +255,7 @@
       <span class="post-meta-item-text">Posted on</span>
       
 
-      <time title="Created: 2022-02-24 00:30:00 / Modified: 00:41:47" itemprop="dateCreated datePublished" datetime="2022-02-24T00:30:00+08:00">2022-02-24</time>
+      <time title="Created: 2022-02-24 00:30:00 / Modified: 19:32:16" itemprop="dateCreated datePublished" datetime="2022-02-24T00:30:00+08:00">2022-02-24</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -275,18 +277,47 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <figure>
-<img src="/Users/liewzheng/Library/Application%20Support/typora-user-images/image-20220224003818560.png" alt="image-20220224003818560" /><figcaption aria-hidden="true">image-20220224003818560</figcaption>
-</figure>
+        <p>本文只涉及 Jenkins 在 Debian Linux (Kali) 下的相关安装，不涉及使用教程，关于Jenkins的相关科普请自行搜。</p>
+<h1 id="jenkins安装">Jenkins安装</h1>
+<p>Jenkins 可以通过两种方式运行：</p>
+<ul>
+<li>通过官网下载 <code>http://mirrors.jenkins.io/war-stable/latest/jenkins.war</code> 程序，并确保安装了 <code>openjdk-8</code> 即可。此种方式是直接运行 <code>.war</code> 的软件的，免安装，但基于 <code>ssh</code> 远程连接的用户断开连接之后可能会导致无法运行。即，如果不知道如何正确操作shell以便在后台运行该免安装程序，就不推荐使用。</li>
+<li>另一种是安装版本，仍然需要用户提前先安装好 <code>openjdk-8</code> ，然后通过 <a target="_blank" rel="noopener" href="https://pkg.jenkins.io/debian/">官网教程</a> 来添加源和使用 <code>apt</code> 命令进行安装。这种方式可以使用 <code>systemctl</code> 命令确保 Jenkins 开机自启动并在后台运行。</li>
+</ul>
+<h2 id="java-setup">JAVA SETUP</h2>
+<p>需要注意的是，jre有 oracle 版本和 openjdk 版本，需要安装后者。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt update ; sudo apt upgrade ; sudo apt install openjdk-8-jre</span><br></pre></td></tr></table></figure>
+<p>将 <code>JAVA_HOME</code> 写到你对应的 shell 配置文件中。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">export JAVA_HOME&#x3D;&#x2F;usr&#x2F;lib&#x2F;jvm&#x2F;java-1.8.0-openjdk-amd64</span><br><span class="line">export CLASSPATH&#x3D;$JAVA_HOME&#x2F;jre&#x2F;lib&#x2F;rt.jar:$JAVA_HOME&#x2F;lib&#x2F;dt.jar:$JAVA_HOME&#x2F;lib&#x2F;tools.jar</span><br><span class="line">export PATH&#x3D;$JAVA_HOME&#x2F;bin:$PATH</span><br></pre></td></tr></table></figure>
+<h2 id="免安装运行">免安装运行</h2>
+<p>下面就是使用 <code>java -jar jenkins.war --httpPort=8080</code> 命令来免安装运行的。</p>
 <figure>
-<img src="/Users/liewzheng/Library/Application%20Support/typora-user-images/image-20220224003852043.png" alt="image-20220224003852043" /><figcaption aria-hidden="true">image-20220224003852043</figcaption>
+<img src="https://pic.islet.space/2022/02/image-20220224003818560.png" alt="image-20220224003818560" /><figcaption aria-hidden="true">image-20220224003818560</figcaption>
 </figure>
+<h2 id="安装运行">安装运行</h2>
+<p>实际上，直接运行下面的 <code>sudo apt install openjdk-11-jre</code> 可能会导致无法运行，原因不明，还是推荐自行使用 <code>sudo apt install openjdk-8-jre</code> 进行安装。</p>
 <figure>
-<img src="/Users/liewzheng/Library/Application%20Support/typora-user-images/image-20220224003716199.png" alt="image-20220224003716199" /><figcaption aria-hidden="true">image-20220224003716199</figcaption>
+<img src="https://pic.islet.space/2022/02/image-20220224191828341.png" alt="image-20220224191828341" /><figcaption aria-hidden="true">image-20220224191828341</figcaption>
+</figure>
+<h2 id="防火墙配置">防火墙配置</h2>
+<p>这一点就不再赘述了。</p>
+<ol type="1">
+<li><strong>开启系统内端口</strong>：用 <code>iptables</code> 参考 《<a href="https://islet.space/2019/03/05/Linux/SSH/CentOS7%E5%AE%89%E8%A3%85iptables%E9%98%B2%E7%81%AB%E5%A2%99/">CentOS7安装iptables防火墙</a>》，注意看后面评论内容。</li>
+<li><strong>开启控制台端口</strong>：配置为云服务器的要去网页界面的控制台将对应端口打开。</li>
+</ol>
+<h1 id="jenkins配置">Jenkins配置</h1>
+<p>安装完毕之后，在浏览器中输入 对应网址的 <code>8080</code> 端口，进入页面后输入管理员密码。</p>
+<figure>
+<img src="https://pic.islet.space/2022/02/image-20220224003852043.png" alt="image-20220224003852043" /><figcaption aria-hidden="true">image-20220224003852043</figcaption>
+</figure>
+<p>选择新手入门配置安装插件。</p>
+<figure>
+<img src="https://pic.islet.space/2022/02/image-20220224003716199.png" alt="image-20220224003716199" /><figcaption aria-hidden="true">image-20220224003716199</figcaption>
 </figure>
 <p>安装完毕之后就会让你设置管理员账户。</p>
+<p>虽然，java11是推荐安装，可我就是运行失败。</p>
 <figure>
-<img src="/Users/liewzheng/Library/Application%20Support/typora-user-images/image-20220224004120934.png" alt="image-20220224004120934" /><figcaption aria-hidden="true">image-20220224004120934</figcaption>
+<img src="https://pic.islet.space/2022/02/image-20220224004120934.png" alt="image-20220224004120934" /><figcaption aria-hidden="true">image-20220224004120934</figcaption>
 </figure>
 
     </div>
