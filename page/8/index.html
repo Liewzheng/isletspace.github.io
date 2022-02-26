@@ -162,7 +162,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">108</span>
+          <span class="site-state-item-count">109</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -173,7 +173,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">200</span>
+        <span class="site-state-item-count">202</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -207,6 +207,171 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://islet.space/2021/05/01/Computer/2021-05-01-Fixed-Point-and-Floating-Point-Number-Representations/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Liewzheng">
+      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coder的孤岛">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/05/01/Computer/2021-05-01-Fixed-Point-and-Floating-Point-Number-Representations/" class="post-title-link" itemprop="url">Fixed Point and Floating Point Number Representations</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-05-01 10:05:00" itemprop="dateCreated datePublished" datetime="2021-05-01T10:05:00+08:00">2021-05-01</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2021-05-09 13:12:08" itemprop="dateModified" datetime="2021-05-09T13:12:08+08:00">2021-05-09</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Computer/" itemprop="url" rel="index"><span itemprop="name">Computer</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>​</p>
+<p><a target="_blank" rel="noopener" href="https://www.tutorialspoint.com/fixed-point-and-floating-point-number-representations#:~:text=In%20fixed%20point%20notation%2C%20there%20are%20a%20fixed,varying%20number%20of%20digits%20after%20the%20decimal%20point.">tutorialspoint.com</a></p>
+<p><em>Arjun Thakur</em></p>
+<p>Digital Computers use Binary number system to represent all types of information inside the computers. Alphanumeric characters are represented using binary bits (i.e., 0 and 1). Digital representations are easier to design, storage is easy, accuracy and precision are greater.</p>
+<p>There are various types of number representation techniques for digital number representation, for example: Binary number system, octal number system, decimal number system, and hexadecimal number system etc. But Binary number system is most relevant and popular for representing numbers in digital computer system.</p>
+<h1 id="storing-real-number">Storing Real Number</h1>
+<p>These are structures as following below −</p>
+<figure>
+<img src="https://pic.islet.space/2021/05/36_1.jpg" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>There are two major approaches to store real numbers (i.e., numbers with fractional component) in modern computing. These are (i) Fixed Point Notation and (ii) Floating Point Notation.</p>
+<p><mark>In fixed point notation, there are a fixed number of digits after the decimal point, whereas floating point number allows for a varying number of digits after the decimal point.</mark> 在定点表示法中，小数点后有固定位数，而浮点数允许小数点后有不同位数。</p>
+<h1 id="fixed-point-representation">Fixed-Point Representation</h1>
+<p>This representation has fixed number of bits for integer part and for fractional part. For example, if given fixed-point representation is <code>IIII.FFFF</code>, then you can store minimum value is <code>0000.0001</code> and maximum value is <code>9999.9999</code>. There are three parts of a fixed-point number representation: <strong><em>the sign field</em></strong>, <strong><em>integer field</em></strong>, and <strong><em>fractional field</em></strong>.</p>
+<figure>
+<img src="https://pic.islet.space/2021/05/36_2.jpg" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>We can represent these numbers using:</p>
+<ul>
+<li>Signed representation: range from -(2<sup>(k-1)</sup>-1) to (2<sup>(k-1)</sup>-1), for k bits.</li>
+<li>1’s complement representation: range from -(2<sup>(k-1)</sup>-1) to (2<sup>(k-1)</sup>-1), for k bits.</li>
+<li>2’s complementation representation: range from -(2<sup>(k-1)</sup>) to (2<sup>(k-1)</sup>-1), for k bits.</li>
+</ul>
+<p>2’s complementation representation is preferred in computer system because of unambiguous property and easier for arithmetic operations.</p>
+<h3 id="example">Example</h3>
+<p>Assume number is using 32-bit format which reserve 1 bit for the sign, 15 bits for the integer part and 16 bits for the fractional part.</p>
+<p>Then, <code>-43.625</code> is represented as following:</p>
+<figure>
+<img src="https://pic.islet.space/2021/05/36_3.jpg" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>Where, <mark>0 is used to represent plus(+) and 1 is used to represent minus(-) </mark>. 000000000101011 is 15 bit binary value for decimal 43 and 1010000000000000 is 16 bit binary value for fractional 0.625.</p>
+<p>The advantage of using a fixed-point representation is performance and disadvantage is relatively limited range of values that they can represent. So, <mark>it is usually inadequate for numerical analysis as it does not allow enough numbers and accuracy</mark>. A number whose representation exceeds 32 bits would have to be stored inexactly.</p>
+<figure>
+<img src="https://pic.islet.space/2021/05/36_4.jpg" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>These are above smallest positive number and largest positive number which can be store in 32-bit representation as given above format. Therefore, the smallest positive number is 2<sup>-16</sup> ≈ 0.000015 approximate and the largest positive number is (2<sup>15</sup>-1)+(1-2<sup>-16</sup>)=2<sup>15</sup>(1-2<sup>-16</sup>) =32768, and gap between these numbers is 2<sup>-16</sup>.</p>
+<p>We can move the radix point either left or right with the help of only integer field is 1.</p>
+<h1 id="floating-point-representation">Floating-Point Representation</h1>
+<p>This representation does not reserve a specific number of bits for the integer part or the fractional part. Instead it reserves a certain number of bits for the number (called the mantissa or significand) and a certain number of bits to say where within that number the decimal place sits (called the exponent).</p>
+<p>The floating number representation of a number has two part: the first part represents a signed fixed point number called mantissa. The second part of designates the position of the decimal (or binary) point and is called the exponent. The fixed point mantissa（定点尾数） may be fraction or an integer. Floating -point is always interpreted to represent a number in the following form: Mxr<sup>e</sup>.</p>
+<p>Only the mantissa m and the exponent e are physically represented in the register (including their sign). A floating-point binary number is represented in a similar manner except that is uses base 2 for the exponent. A floating-point number is said to be normalized if the most significant digit of the mantissa is <code>1</code>.</p>
+<figure>
+<img src="https://pic.islet.space/2021/05/36_5.jpg" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>So, actual number is (-1)<sup>s</sup> (1+m) x2<sup>(e-Bias)</sup>, where <em>s</em> is the sign bit, <em>m</em> is the mantissa, <em>e</em> is the exponent value, and <em>Bias</em> is the bias number.</p>
+<p>Note that signed integers and exponent are represented by either sign representation, or one’s complement representation, or two’s complement representation.</p>
+<p>The floating point representation is more flexible. Any non-zero number can be represented in the normalized form of ±(1.b<sub>1</sub>b<sub>2</sub>b<sub>3</sub> ...)<sub>2</sub> x2<sup>n</sup> This is normalized form of a number <code>x</code>.</p>
+<h3 id="example-1">Example</h3>
+<p>Suppose number is using 32-bit format: the 1 bit sign bit（符号位）, 8 bits for signed exponent（符号数）, and 23 bits for the fractional part（小数）. The leading bit 1 is not stored (as it is always 1 for a normalized number) and is referred to as a <em>“hidden bit</em>”.</p>
+<p>Then −53.5 is normalized as -53.5=(-110101.1)<sub>2</sub>=(-1.101011) x2<sup>5</sup> , which is represented as following below,</p>
+<figure>
+<img src="https://pic.islet.space/2021/05/36_6.jpg" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>Where <code>00000101</code> is the 8-bit binary value of exponent value <code>+5</code>.</p>
+<p>Note that 8-bit exponent ﬁeld is used to store integer exponents <code>-126 ≤  n ≤ 127</code>.</p>
+<p>The smallest normalized positive number that ﬁts into 32 bits is (1.000,000,000,000,000,000,000,00)2x26<sup>-126</sup>=2<sup>-126</sup>≈1.18x10<sup>-38</sup> , and largest normalized positive number that ﬁts into 32 bits is (1.111,111,111,111,111,111,111,11)2x2<sup>127</sup>=(224-1)x2<sup>104</sup> ≈ 3.40x10<sup>38</sup>. These numbers are represented as following below,</p>
+<figure>
+<img src="https://pic.islet.space/2021/05/36_7.jpg" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>The precision of a ﬂoating-point format is the number of positions reserved for binary digits plus one (for the hidden bit). In the examples considered here the precision is <code>23+1=24</code>.</p>
+<p>The gap between 1 and the next normalized ﬂoating-point number is known as machine epsilon. the gap is (1+2<sup>-23</sup>)-1=2<sup>-23</sup> for above example, but this is same as the smallest positive ﬂoating-point number because of non-uniform spacing unlike in the ﬁxed-point scenario.</p>
+<p>Note that non-terminating binary numbers can be represented in floating point representation, e.g., 1/3 = (0.010101 ...)<sup>2</sup> cannot be a ﬂoating-point number as its binary representation is non-terminating.</p>
+<h1 id="ieee-floating-point-number-representation">IEEE Floating point Number Representation</h1>
+<p>IEEE (Institute of Electrical and Electronics Engineers) has standardized Floating-Point Representation as following diagram.</p>
+<figure>
+<img src="https://pic.islet.space/2021/05/36_8.jpg" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>So, actual number is (-1)<sup>s</sup>(1+m)x2<sup>(e-Bias)</sup>, where <em>s</em> is the sign bit, <em>m</em> is the mantissa, <em>e</em> is the exponent value, and <em>Bias</em> is the bias number. The sign bit is 0 for positive number and 1 for negative number. Exponents are represented by or two’s complement representation.</p>
+<p><strong>According to IEEE 754 standard, the floating-point number is represented in following ways:</strong></p>
+<ul>
+<li>Half Precision (16 bit): 1 sign bit, 5 bit exponent, and 10 bit mantissa</li>
+<li>Single Precision (32 bit): 1 sign bit, 8 bit exponent, and 23 bit mantissa</li>
+<li>Double Precision (64 bit): 1 sign bit, 11 bit exponent, and 52 bit mantissa</li>
+<li>Quadruple Precision (128 bit): 1 sign bit, 15 bit exponent, and 112 bit mantissa</li>
+</ul>
+<h1 id="special-value-representation"><strong>Special Value Representation</strong></h1>
+<p>There are some special values depended upon different values of the exponent and mantissa in the IEEE 754 standard.</p>
+<ul>
+<li>All the exponent bits 0 with all mantissa bits 0 represents 0. If sign bit is 0, then +0, else -0.</li>
+<li>All the exponent bits 1 with all mantissa bits 0 represents infinity. If sign bit is 0, then +∞, else -∞.</li>
+<li>All the exponent bits 0 and mantissa bits non-zero represents <strong>denormalized number</strong>.</li>
+<li>All the exponent bits 1 and mantissa bits non-zero represents <strong>error</strong>.</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1707,6 +1872,129 @@ Shop Arrow.com选择了数字RF步进衰减器，数字音频衰减器等。 <a 
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://islet.space/2021/04/20/Networking/2021-04-20-Unix%20domain%20socket%20%E7%AE%80%E4%BB%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Liewzheng">
+      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coder的孤岛">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/04/20/Networking/2021-04-20-Unix%20domain%20socket%20%E7%AE%80%E4%BB%8B/" class="post-title-link" itemprop="url">Unix domain socket 简介</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-04-20 23:58:32" itemprop="dateCreated datePublished" datetime="2021-04-20T23:58:32+08:00">2021-04-20</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2021-04-29 00:52:30" itemprop="dateModified" datetime="2021-04-29T00:52:30+08:00">2021-04-29</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Networking/" itemprop="url" rel="index"><span itemprop="name">Networking</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/sparkdev/p/8359028.html">cnblogs.com</a></p>
+<p><strong>Unix domain socket 又叫 IPC(inter-process communication 进程间通信) socket，用于实现同一主机上的进程间通信。</strong>socket 原本是为网络通讯设计的，但后来在 socket 的框架上发展出一种 IPC 机制，就是 UNIX domain socket。虽然网络 socket 也可用于同一台主机的进程间通讯(通过 loopback 地址 127.0.0.1)，但是 UNIX domain socket 用于 IPC 更有效率：不需要经过网络协议栈，不需要打包拆包、计算校验和、维护序号和应答等，只是将应用层数据从一个进程拷贝到另一个进程。这是因为，IPC 机制本质上是可靠的通讯，而网络协议是为不可靠的通讯设计的。 UNIX domain socket 是全双工的，API 接口语义丰富，相比其它 IPC 机制有明显的优越性，目前已成为使用最广泛的 IPC 机制，比如 X Window 服务器和 GUI 程序之间就是通过 UNIX domain socket 通讯的。 Unix domain socket 是 POSIX 标准中的一个组件，所以不要被名字迷惑，linux 系统也是支持它的。</p>
+<p>下面通过一个简单的 demo 来理解相关概念。程序分为服务器端和客户端两部分，它们之间通过 unix domain socket 进行通信。</p>
+<h1 id="服务器端程序">服务器端程序</h1>
+<p>下面是一个非常简单的服务器端程序，它从客户端读字符，然后将每个字符转换为大写并回送给客户端：</p>
+<figure>
+<img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码" /><figcaption aria-hidden="true">复制代码</figcaption>
+</figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;stdlib.h&gt;  </span><br><span class="line">#include &lt;stdio.h&gt;  </span><br><span class="line">#include &lt;stddef.h&gt;  </span><br><span class="line">#include &lt;sys&#x2F;socket.h&gt;  </span><br><span class="line">#include &lt;sys&#x2F;un.h&gt;  </span><br><span class="line">#include &lt;errno.h&gt;  </span><br><span class="line">#include &lt;string.h&gt;  </span><br><span class="line">#include &lt;unistd.h&gt;  </span><br><span class="line">#include &lt;ctype.h&gt;   </span><br><span class="line"> </span><br><span class="line">#define MAXLINE 80  </span><br><span class="line"> </span><br><span class="line">char *socket_path &#x3D; &quot;server.socket&quot;;  </span><br><span class="line"> </span><br><span class="line">int main(void)  </span><br><span class="line">&#123;  </span><br><span class="line">    struct sockaddr_un serun, cliun;  </span><br><span class="line">    socklen_t cliun_len;  </span><br><span class="line">    int listenfd, connfd, size;  </span><br><span class="line">    char buf[MAXLINE];  </span><br><span class="line">    int i, n;  </span><br><span class="line"> </span><br><span class="line">    if ((listenfd &#x3D; socket(AF_UNIX, SOCK_STREAM, 0)) &lt; 0) &#123;  </span><br><span class="line">        perror(&quot;socket error&quot;);  </span><br><span class="line">        exit(1);  </span><br><span class="line">    &#125;  </span><br><span class="line"> </span><br><span class="line">    memset(&amp;serun, 0, sizeof(serun));  </span><br><span class="line">    serun.sun_family &#x3D; AF_UNIX;  </span><br><span class="line">    strcpy(serun.sun_path, socket_path);  </span><br><span class="line">    size &#x3D; offsetof(struct sockaddr_un, sun_path) + strlen(serun.sun_path);  </span><br><span class="line">    unlink(socket_path);  </span><br><span class="line">    if (bind(listenfd, (struct sockaddr *)&amp;serun, size) &lt; 0) &#123;  </span><br><span class="line">        perror(&quot;bind error&quot;);  </span><br><span class="line">        exit(1);  </span><br><span class="line">    &#125;  </span><br><span class="line">    printf(&quot;UNIX domain socket bound\n&quot;);  </span><br><span class="line">      </span><br><span class="line">    if (listen(listenfd, 20) &lt; 0) &#123;  </span><br><span class="line">        perror(&quot;listen error&quot;);  </span><br><span class="line">        exit(1);          </span><br><span class="line">    &#125;  </span><br><span class="line">    printf(&quot;Accepting connections ...\n&quot;);  </span><br><span class="line"> </span><br><span class="line">    while(1) &#123;  </span><br><span class="line">        cliun_len &#x3D; sizeof(cliun);         </span><br><span class="line">        if ((connfd &#x3D; accept(listenfd, (struct sockaddr *)&amp;cliun, &amp;cliun_len)) &lt; 0)&#123;  </span><br><span class="line">            perror(&quot;accept error&quot;);  </span><br><span class="line">            continue;  </span><br><span class="line">        &#125;  </span><br><span class="line">          </span><br><span class="line">        while(1) &#123;  </span><br><span class="line">            n &#x3D; read(connfd, buf, sizeof(buf));  </span><br><span class="line">            if (n &lt; 0) &#123;  </span><br><span class="line">                perror(&quot;read error&quot;);  </span><br><span class="line">                break;  </span><br><span class="line">            &#125; else if(n &#x3D;&#x3D; 0) &#123;  </span><br><span class="line">                printf(&quot;EOF\n&quot;);  </span><br><span class="line">                break;  </span><br><span class="line">            &#125;  </span><br><span class="line">              </span><br><span class="line">            printf(&quot;received: %s&quot;, buf);  </span><br><span class="line"> </span><br><span class="line">            for(i &#x3D; 0; i &lt; n; i++) &#123;  </span><br><span class="line">                buf[i] &#x3D; toupper(buf[i]);  </span><br><span class="line">            &#125;  </span><br><span class="line">            write(connfd, buf, n);  </span><br><span class="line">        &#125;  </span><br><span class="line">        close(connfd);  </span><br><span class="line">    &#125;  </span><br><span class="line">    close(listenfd);  </span><br><span class="line">    return 0;  </span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
+<figure>
+<img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码" /><figcaption aria-hidden="true">复制代码</figcaption>
+</figure>
+<p>简单介绍一下这段代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">int socket(int family, int type, int protocol);</span><br></pre></td></tr></table></figure>
+<p>使用 UNIX domain socket 的过程和网络 socket 十分相似，也要先调用 socket() 创建一个 socket 文件描述符. <strong>family</strong> 指定为 AF_UNIX，使用 AF_UNIX 会在系统上创建一个 socket 文件，不同进程通过读写这个文件来实现通信。 <strong>type</strong> 可以选择 SOCK_DGRAM 或 SOCK_STREAM。SOCK_STREAM 意味着会提供按顺序的、可靠、双向、面向连接的比特流。SOCK_DGRAM 意味着会提供定长的、不可靠、无连接的通信。 <strong>protocol</strong> 参数指定为 0 即可。 UNIX domain socket 与网络 socket 编程最明显的不同在于地址格式不同，用结构体 sockaddr_un 表示，网络编程的 socket 地址是 IP 地址加端口号，而 UNIX domain socket 的地址是一个 socket 类型的文件在文件系统中的路径，这个 socket 文件由 bind() 调用创建，如果调用 bind() 时该文件已存在，则 bind() 错误返回。因此，一般在调用 bind() 前会检查 socket 文件是否存在，如果存在就删除掉。 网络 socket 编程类似，在 bind 之后要 listen，表示通过 bind 的地址（也就是 socket 文件）提供服务。 接下来必须用 accept() 函数初始化连接。accept() 为每个连接创立新的套接字并从监听队列中移除这个连接。</p>
+<h1 id="客户端程序">客户端程序</h1>
+<p>下面是客户端程序，它接受用户的输入，并把字符串发送给服务器，然后接收服务器返回的字符串并打印：</p>
+<figure>
+<img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码" /><figcaption aria-hidden="true">复制代码</figcaption>
+</figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;stdlib.h&gt;  </span><br><span class="line">#include &lt;stdio.h&gt;  </span><br><span class="line">#include &lt;stddef.h&gt;  </span><br><span class="line">#include &lt;sys&#x2F;socket.h&gt;  </span><br><span class="line">#include &lt;sys&#x2F;un.h&gt;  </span><br><span class="line">#include &lt;errno.h&gt;  </span><br><span class="line">#include &lt;string.h&gt;  </span><br><span class="line">#include &lt;unistd.h&gt;  </span><br><span class="line"> </span><br><span class="line">#define MAXLINE 80  </span><br><span class="line"> </span><br><span class="line">char *client_path &#x3D; &quot;client.socket&quot;;  </span><br><span class="line">char *server_path &#x3D; &quot;server.socket&quot;;  </span><br><span class="line"> </span><br><span class="line">int main() &#123;  </span><br><span class="line">    struct  sockaddr_un cliun, serun;  </span><br><span class="line">    int len;  </span><br><span class="line">    char buf[100];  </span><br><span class="line">    int sockfd, n;  </span><br><span class="line"> </span><br><span class="line">    if ((sockfd &#x3D; socket(AF_UNIX, SOCK_STREAM, 0)) &lt; 0)&#123;  </span><br><span class="line">        perror(&quot;client socket error&quot;);  </span><br><span class="line">        exit(1);  </span><br><span class="line">    &#125;  </span><br><span class="line">      </span><br><span class="line">    &#x2F;&#x2F; 一般显式调用bind函数，以便服务器区分不同客户端  </span><br><span class="line">    memset(&amp;cliun, 0, sizeof(cliun));  </span><br><span class="line">    cliun.sun_family &#x3D; AF_UNIX;  </span><br><span class="line">    strcpy(cliun.sun_path, client_path);  </span><br><span class="line">    len &#x3D; offsetof(struct sockaddr_un, sun_path) + strlen(cliun.sun_path);  </span><br><span class="line">    unlink(cliun.sun_path);  </span><br><span class="line">    if (bind(sockfd, (struct sockaddr *)&amp;cliun, len) &lt; 0) &#123;  </span><br><span class="line">        perror(&quot;bind error&quot;);  </span><br><span class="line">        exit(1);  </span><br><span class="line">    &#125;  </span><br><span class="line"> </span><br><span class="line">    memset(&amp;serun, 0, sizeof(serun));  </span><br><span class="line">    serun.sun_family &#x3D; AF_UNIX;  </span><br><span class="line">    strcpy(serun.sun_path, server_path);  </span><br><span class="line">    len &#x3D; offsetof(struct sockaddr_un, sun_path) + strlen(serun.sun_path);  </span><br><span class="line">    if (connect(sockfd, (struct sockaddr *)&amp;serun, len) &lt; 0)&#123;  </span><br><span class="line">        perror(&quot;connect error&quot;);  </span><br><span class="line">        exit(1);  </span><br><span class="line">    &#125;  </span><br><span class="line"> </span><br><span class="line">    while(fgets(buf, MAXLINE, stdin) !&#x3D; NULL) &#123;    </span><br><span class="line">         write(sockfd, buf, strlen(buf));    </span><br><span class="line">         n &#x3D; read(sockfd, buf, MAXLINE);    </span><br><span class="line">         if ( n &lt; 0 ) &#123;    </span><br><span class="line">            printf(&quot;the other side has been closed.\n&quot;);    </span><br><span class="line">         &#125;else &#123;    </span><br><span class="line">            write(STDOUT_FILENO, buf, n);    </span><br><span class="line">         &#125;    </span><br><span class="line">    &#125;   </span><br><span class="line">    close(sockfd);  </span><br><span class="line">    return 0;  </span><br><span class="line">&#125;  </span><br></pre></td></tr></table></figure>
+<figure>
+<img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码" /><figcaption aria-hidden="true">复制代码</figcaption>
+</figure>
+<p>与网络 socket 编程不同的是，UNIX domain socket 客户端一般要显式调用 bind 函数，而不依赖系统自动分配的地址。客户端 bind 一个自己指定的 socket 文件名的好处是，该文件名可以包含客户端的 pid 等信息以便服务器区分不同的客户端。</p>
+<h1 id="运行上面的程序">运行上面的程序</h1>
+<p>分别把服务器端程序和客户端程序保存为 server.c 和 client.c 文件，并编译：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ gcc server.c -o server</span><br><span class="line">$ gcc client.c -o client</span><br></pre></td></tr></table></figure>
+<p>先启动服务器端程序，然后启动客户端程序输入字符串并回车：</p>
+<figure>
+<img src="https://images2017.cnblogs.com/blog/952033/201801/952033-20180126125928506-239880118.png" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>还不错，客户端得到了服务器端返回的大写字符串。接下来看看当前目录下的文件：</p>
+<figure>
+<img src="https://images2017.cnblogs.com/blog/952033/201801/952033-20180126125951834-1641586991.png" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>哈哈，多了两个 socket 文件。</p>
+<h1 id="总结">总结</h1>
+<p>Unix domain socket 主要用于同一主机上的进程间通信。与主机间的进程通信不同，它不是通过 "IP地址 + TCP或UDP端口号" 的方式进程通信，而是使用 socket 类型的文件来完成通信，因此在稳定性、可靠性以及效率方面的表现都很不错。</p>
+<p><strong>参考：</strong> <a target="_blank" rel="noopener" href="http://docs.linuxtone.org/ebooks/C&amp;CPP/c/ch37s04.html">UNIX Domain Socket IPC</a> [<a target="_blank" rel="noopener" href="http://blog.csdn.net/tzshlyt/article/details/53391655">linux] unix domain socket 例子</a></p>
+<p>​</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
     <link itemprop="mainEntityOfPage" href="http://islet.space/2021/04/20/Networking/2021-04-20-Networking/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2003,129 +2291,6 @@ Shop Arrow.com选择了数字RF步进衰减器，数字音频衰减器等。 <a 
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://islet.space/2021/04/20/Networking/2021-04-20-Unix%20domain%20socket%20%E7%AE%80%E4%BB%8B/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Liewzheng">
-      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Coder的孤岛">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/04/20/Networking/2021-04-20-Unix%20domain%20socket%20%E7%AE%80%E4%BB%8B/" class="post-title-link" itemprop="url">Unix domain socket 简介</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-
-    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
-    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2021-04-20 23:58:32" itemprop="dateCreated datePublished" datetime="2021-04-20T23:58:32+08:00">2021-04-20</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-04-29 00:52:30" itemprop="dateModified" datetime="2021-04-29T00:52:30+08:00">2021-04-29</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Networking/" itemprop="url" rel="index"><span itemprop="name">Networking</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/sparkdev/p/8359028.html">cnblogs.com</a></p>
-<p><strong>Unix domain socket 又叫 IPC(inter-process communication 进程间通信) socket，用于实现同一主机上的进程间通信。</strong>socket 原本是为网络通讯设计的，但后来在 socket 的框架上发展出一种 IPC 机制，就是 UNIX domain socket。虽然网络 socket 也可用于同一台主机的进程间通讯(通过 loopback 地址 127.0.0.1)，但是 UNIX domain socket 用于 IPC 更有效率：不需要经过网络协议栈，不需要打包拆包、计算校验和、维护序号和应答等，只是将应用层数据从一个进程拷贝到另一个进程。这是因为，IPC 机制本质上是可靠的通讯，而网络协议是为不可靠的通讯设计的。 UNIX domain socket 是全双工的，API 接口语义丰富，相比其它 IPC 机制有明显的优越性，目前已成为使用最广泛的 IPC 机制，比如 X Window 服务器和 GUI 程序之间就是通过 UNIX domain socket 通讯的。 Unix domain socket 是 POSIX 标准中的一个组件，所以不要被名字迷惑，linux 系统也是支持它的。</p>
-<p>下面通过一个简单的 demo 来理解相关概念。程序分为服务器端和客户端两部分，它们之间通过 unix domain socket 进行通信。</p>
-<h1 id="服务器端程序">服务器端程序</h1>
-<p>下面是一个非常简单的服务器端程序，它从客户端读字符，然后将每个字符转换为大写并回送给客户端：</p>
-<figure>
-<img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码" /><figcaption aria-hidden="true">复制代码</figcaption>
-</figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;stdlib.h&gt;  </span><br><span class="line">#include &lt;stdio.h&gt;  </span><br><span class="line">#include &lt;stddef.h&gt;  </span><br><span class="line">#include &lt;sys&#x2F;socket.h&gt;  </span><br><span class="line">#include &lt;sys&#x2F;un.h&gt;  </span><br><span class="line">#include &lt;errno.h&gt;  </span><br><span class="line">#include &lt;string.h&gt;  </span><br><span class="line">#include &lt;unistd.h&gt;  </span><br><span class="line">#include &lt;ctype.h&gt;   </span><br><span class="line"> </span><br><span class="line">#define MAXLINE 80  </span><br><span class="line"> </span><br><span class="line">char *socket_path &#x3D; &quot;server.socket&quot;;  </span><br><span class="line"> </span><br><span class="line">int main(void)  </span><br><span class="line">&#123;  </span><br><span class="line">    struct sockaddr_un serun, cliun;  </span><br><span class="line">    socklen_t cliun_len;  </span><br><span class="line">    int listenfd, connfd, size;  </span><br><span class="line">    char buf[MAXLINE];  </span><br><span class="line">    int i, n;  </span><br><span class="line"> </span><br><span class="line">    if ((listenfd &#x3D; socket(AF_UNIX, SOCK_STREAM, 0)) &lt; 0) &#123;  </span><br><span class="line">        perror(&quot;socket error&quot;);  </span><br><span class="line">        exit(1);  </span><br><span class="line">    &#125;  </span><br><span class="line"> </span><br><span class="line">    memset(&amp;serun, 0, sizeof(serun));  </span><br><span class="line">    serun.sun_family &#x3D; AF_UNIX;  </span><br><span class="line">    strcpy(serun.sun_path, socket_path);  </span><br><span class="line">    size &#x3D; offsetof(struct sockaddr_un, sun_path) + strlen(serun.sun_path);  </span><br><span class="line">    unlink(socket_path);  </span><br><span class="line">    if (bind(listenfd, (struct sockaddr *)&amp;serun, size) &lt; 0) &#123;  </span><br><span class="line">        perror(&quot;bind error&quot;);  </span><br><span class="line">        exit(1);  </span><br><span class="line">    &#125;  </span><br><span class="line">    printf(&quot;UNIX domain socket bound\n&quot;);  </span><br><span class="line">      </span><br><span class="line">    if (listen(listenfd, 20) &lt; 0) &#123;  </span><br><span class="line">        perror(&quot;listen error&quot;);  </span><br><span class="line">        exit(1);          </span><br><span class="line">    &#125;  </span><br><span class="line">    printf(&quot;Accepting connections ...\n&quot;);  </span><br><span class="line"> </span><br><span class="line">    while(1) &#123;  </span><br><span class="line">        cliun_len &#x3D; sizeof(cliun);         </span><br><span class="line">        if ((connfd &#x3D; accept(listenfd, (struct sockaddr *)&amp;cliun, &amp;cliun_len)) &lt; 0)&#123;  </span><br><span class="line">            perror(&quot;accept error&quot;);  </span><br><span class="line">            continue;  </span><br><span class="line">        &#125;  </span><br><span class="line">          </span><br><span class="line">        while(1) &#123;  </span><br><span class="line">            n &#x3D; read(connfd, buf, sizeof(buf));  </span><br><span class="line">            if (n &lt; 0) &#123;  </span><br><span class="line">                perror(&quot;read error&quot;);  </span><br><span class="line">                break;  </span><br><span class="line">            &#125; else if(n &#x3D;&#x3D; 0) &#123;  </span><br><span class="line">                printf(&quot;EOF\n&quot;);  </span><br><span class="line">                break;  </span><br><span class="line">            &#125;  </span><br><span class="line">              </span><br><span class="line">            printf(&quot;received: %s&quot;, buf);  </span><br><span class="line"> </span><br><span class="line">            for(i &#x3D; 0; i &lt; n; i++) &#123;  </span><br><span class="line">                buf[i] &#x3D; toupper(buf[i]);  </span><br><span class="line">            &#125;  </span><br><span class="line">            write(connfd, buf, n);  </span><br><span class="line">        &#125;  </span><br><span class="line">        close(connfd);  </span><br><span class="line">    &#125;  </span><br><span class="line">    close(listenfd);  </span><br><span class="line">    return 0;  </span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
-<figure>
-<img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码" /><figcaption aria-hidden="true">复制代码</figcaption>
-</figure>
-<p>简单介绍一下这段代码：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">int socket(int family, int type, int protocol);</span><br></pre></td></tr></table></figure>
-<p>使用 UNIX domain socket 的过程和网络 socket 十分相似，也要先调用 socket() 创建一个 socket 文件描述符. <strong>family</strong> 指定为 AF_UNIX，使用 AF_UNIX 会在系统上创建一个 socket 文件，不同进程通过读写这个文件来实现通信。 <strong>type</strong> 可以选择 SOCK_DGRAM 或 SOCK_STREAM。SOCK_STREAM 意味着会提供按顺序的、可靠、双向、面向连接的比特流。SOCK_DGRAM 意味着会提供定长的、不可靠、无连接的通信。 <strong>protocol</strong> 参数指定为 0 即可。 UNIX domain socket 与网络 socket 编程最明显的不同在于地址格式不同，用结构体 sockaddr_un 表示，网络编程的 socket 地址是 IP 地址加端口号，而 UNIX domain socket 的地址是一个 socket 类型的文件在文件系统中的路径，这个 socket 文件由 bind() 调用创建，如果调用 bind() 时该文件已存在，则 bind() 错误返回。因此，一般在调用 bind() 前会检查 socket 文件是否存在，如果存在就删除掉。 网络 socket 编程类似，在 bind 之后要 listen，表示通过 bind 的地址（也就是 socket 文件）提供服务。 接下来必须用 accept() 函数初始化连接。accept() 为每个连接创立新的套接字并从监听队列中移除这个连接。</p>
-<h1 id="客户端程序">客户端程序</h1>
-<p>下面是客户端程序，它接受用户的输入，并把字符串发送给服务器，然后接收服务器返回的字符串并打印：</p>
-<figure>
-<img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码" /><figcaption aria-hidden="true">复制代码</figcaption>
-</figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;stdlib.h&gt;  </span><br><span class="line">#include &lt;stdio.h&gt;  </span><br><span class="line">#include &lt;stddef.h&gt;  </span><br><span class="line">#include &lt;sys&#x2F;socket.h&gt;  </span><br><span class="line">#include &lt;sys&#x2F;un.h&gt;  </span><br><span class="line">#include &lt;errno.h&gt;  </span><br><span class="line">#include &lt;string.h&gt;  </span><br><span class="line">#include &lt;unistd.h&gt;  </span><br><span class="line"> </span><br><span class="line">#define MAXLINE 80  </span><br><span class="line"> </span><br><span class="line">char *client_path &#x3D; &quot;client.socket&quot;;  </span><br><span class="line">char *server_path &#x3D; &quot;server.socket&quot;;  </span><br><span class="line"> </span><br><span class="line">int main() &#123;  </span><br><span class="line">    struct  sockaddr_un cliun, serun;  </span><br><span class="line">    int len;  </span><br><span class="line">    char buf[100];  </span><br><span class="line">    int sockfd, n;  </span><br><span class="line"> </span><br><span class="line">    if ((sockfd &#x3D; socket(AF_UNIX, SOCK_STREAM, 0)) &lt; 0)&#123;  </span><br><span class="line">        perror(&quot;client socket error&quot;);  </span><br><span class="line">        exit(1);  </span><br><span class="line">    &#125;  </span><br><span class="line">      </span><br><span class="line">    &#x2F;&#x2F; 一般显式调用bind函数，以便服务器区分不同客户端  </span><br><span class="line">    memset(&amp;cliun, 0, sizeof(cliun));  </span><br><span class="line">    cliun.sun_family &#x3D; AF_UNIX;  </span><br><span class="line">    strcpy(cliun.sun_path, client_path);  </span><br><span class="line">    len &#x3D; offsetof(struct sockaddr_un, sun_path) + strlen(cliun.sun_path);  </span><br><span class="line">    unlink(cliun.sun_path);  </span><br><span class="line">    if (bind(sockfd, (struct sockaddr *)&amp;cliun, len) &lt; 0) &#123;  </span><br><span class="line">        perror(&quot;bind error&quot;);  </span><br><span class="line">        exit(1);  </span><br><span class="line">    &#125;  </span><br><span class="line"> </span><br><span class="line">    memset(&amp;serun, 0, sizeof(serun));  </span><br><span class="line">    serun.sun_family &#x3D; AF_UNIX;  </span><br><span class="line">    strcpy(serun.sun_path, server_path);  </span><br><span class="line">    len &#x3D; offsetof(struct sockaddr_un, sun_path) + strlen(serun.sun_path);  </span><br><span class="line">    if (connect(sockfd, (struct sockaddr *)&amp;serun, len) &lt; 0)&#123;  </span><br><span class="line">        perror(&quot;connect error&quot;);  </span><br><span class="line">        exit(1);  </span><br><span class="line">    &#125;  </span><br><span class="line"> </span><br><span class="line">    while(fgets(buf, MAXLINE, stdin) !&#x3D; NULL) &#123;    </span><br><span class="line">         write(sockfd, buf, strlen(buf));    </span><br><span class="line">         n &#x3D; read(sockfd, buf, MAXLINE);    </span><br><span class="line">         if ( n &lt; 0 ) &#123;    </span><br><span class="line">            printf(&quot;the other side has been closed.\n&quot;);    </span><br><span class="line">         &#125;else &#123;    </span><br><span class="line">            write(STDOUT_FILENO, buf, n);    </span><br><span class="line">         &#125;    </span><br><span class="line">    &#125;   </span><br><span class="line">    close(sockfd);  </span><br><span class="line">    return 0;  </span><br><span class="line">&#125;  </span><br></pre></td></tr></table></figure>
-<figure>
-<img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码" /><figcaption aria-hidden="true">复制代码</figcaption>
-</figure>
-<p>与网络 socket 编程不同的是，UNIX domain socket 客户端一般要显式调用 bind 函数，而不依赖系统自动分配的地址。客户端 bind 一个自己指定的 socket 文件名的好处是，该文件名可以包含客户端的 pid 等信息以便服务器区分不同的客户端。</p>
-<h1 id="运行上面的程序">运行上面的程序</h1>
-<p>分别把服务器端程序和客户端程序保存为 server.c 和 client.c 文件，并编译：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ gcc server.c -o server</span><br><span class="line">$ gcc client.c -o client</span><br></pre></td></tr></table></figure>
-<p>先启动服务器端程序，然后启动客户端程序输入字符串并回车：</p>
-<figure>
-<img src="https://images2017.cnblogs.com/blog/952033/201801/952033-20180126125928506-239880118.png" alt="img" /><figcaption aria-hidden="true">img</figcaption>
-</figure>
-<p>还不错，客户端得到了服务器端返回的大写字符串。接下来看看当前目录下的文件：</p>
-<figure>
-<img src="https://images2017.cnblogs.com/blog/952033/201801/952033-20180126125951834-1641586991.png" alt="img" /><figcaption aria-hidden="true">img</figcaption>
-</figure>
-<p>哈哈，多了两个 socket 文件。</p>
-<h1 id="总结">总结</h1>
-<p>Unix domain socket 主要用于同一主机上的进程间通信。与主机间的进程通信不同，它不是通过 "IP地址 + TCP或UDP端口号" 的方式进程通信，而是使用 socket 类型的文件来完成通信，因此在稳定性、可靠性以及效率方面的表现都很不错。</p>
-<p><strong>参考：</strong> <a target="_blank" rel="noopener" href="http://docs.linuxtone.org/ebooks/C&amp;CPP/c/ch37s04.html">UNIX Domain Socket IPC</a> [<a target="_blank" rel="noopener" href="http://blog.csdn.net/tzshlyt/article/details/53391655">linux] unix domain socket 例子</a></p>
-<p>​</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
     <link itemprop="mainEntityOfPage" href="http://islet.space/2021/04/19/Signal/MIC%20LEVEL%20vs%20LINE%20LEVEL%20Audio%20Levels%20Explained/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2321,706 +2486,6 @@ Shop Arrow.com选择了数字RF步进衰减器，数字音频衰减器等。 <a 
 <li>如果没有显式指定构造方法，则会添加默认的 constructor 方法。</li>
 </ol>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Polygon</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="title">constructor</span>(<span class="params">arg0, arg1</span>)</span> &#123;</span><br><span class="line">    <span class="built_in">this</span>.name = <span class="string">&#x27;Polygon&#x27;</span>;</span><br><span class="line">    <span class="built_in">this</span>.body = arg0 + arg1;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> poly1 = <span class="keyword">new</span> Polygon(<span class="number">10</span>,<span class="number">20</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(poly1.name, poly1.body);</span><br><span class="line"><span class="comment">// expected output: &quot;Polygon&quot; 30</span></span><br></pre></td></tr></table></figure>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://islet.space/2021/04/02/Hardware/DSP/2021-04-02-TI%E5%A4%9A%E6%A0%B8%E5%BC%80%E5%8F%91/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Liewzheng">
-      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Coder的孤岛">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/04/02/Hardware/DSP/2021-04-02-TI%E5%A4%9A%E6%A0%B8%E5%BC%80%E5%8F%91/" class="post-title-link" itemprop="url">TI多核开发</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-
-    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
-    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2021-04-02 08:30:00" itemprop="dateCreated datePublished" datetime="2021-04-02T08:30:00+08:00">2021-04-02</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-07-08 22:41:03" itemprop="dateModified" datetime="2021-07-08T22:41:03+08:00">2021-07-08</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Communication/" itemprop="url" rel="index"><span itemprop="name">Communication</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>多核开发涉及多核通信及任务分配管理的问题，任何多核通信都需要针对具体芯片的型号及系统特性去设计。多核通信包括资源共享、竞争、同步、异步等问题；多核任务分配则关系着各核心任务均衡和RTOS系统能否及时响应的问题。</p>
-<h1 id="基础知识">1. 基础知识</h1>
-<h2 id="并发并行异步同步共享互斥进程线程">并发、并行、异步、同步、共享、互斥、进程、线程</h2>
-<h3 id="concurrency-并发">Concurrency 并发</h3>
-<p>仅表示计算机可以同时执行多项任务，以至于如何实现“同时”执行，则有许多不同形式。</p>
-<p>如，单核处理器可以通过分配时间片，轮询任务来达到多任务并发。系统让一个任务运行一段时间，在切换到另一个任务运行，如此循环往复，此过程也被称为 线程的<strong>上下文切换（Context Switching）</strong>。</p>
-<h3 id="parallelism-并行">Parallelism 并行</h3>
-<p>多个任务于同一时刻在不同的和核心上进行处理，称为并行</p>
-<h3 id="synchronization-同步">Synchronization 同步</h3>
-<p>指程序任务间的先后关系，后面一个程序必须等前一个任务执行完毕方可启动。因此，在同步中，并无并发或并行概念</p>
-<h3 id="asynchronization-异步">Asynchronization 异步</h3>
-<p>指不同的任务之间不会相互等待</p>
-<p>对于I/O资源访问频繁的系统，宜使用异步编程，</p>
-<h3 id="mutual-exclusion-互斥">Mutual Exclusion 互斥</h3>
-<p>程序内存开销 及 线程切换开销</p>
-<h2 id="堆栈">堆、栈</h2>
-<p>题目所指的 heap 和 stack 在 C++ 标准中相对的术语分别是<strong>自由存储</strong>（free store，即用<code>new</code>创建对象时所分配的空间）和<strong>自动变量</strong>（automatic variable，或称为局部变量，不要与 C++11 的<code>auto</code>混淆）。</p>
-<p>编程角度，要分开两者，是因为两者的生命周期不一样。</p>
-<p>如果只需要在作用域内维持变量的生命周期，最好就用自动变量，这样是最简单方便高效的。其他情况可考虑用自由存储、静态局部／全局变量，或类的（静态）成员变量。它们各有不同特点，不在此答案详述。另外，由于 C++ 不支持可变长数组（VLA），不可以定义动态长度的自动变量（成员变量也不行），这个情况下也需要用 new[] 来创建动态长度的数组。</p>
-<p>自动变量会在作用域（如函数作用域、块作用域等）结束后析构、释放内存。因为分配和释放的次序是刚好完全相反的，所以可用到堆栈先进后出（first-in-last-out, FILO）的特性，而 C++ 语言的实现一般也会使用到调用堆栈（call stack）来分配自动变量（但非标准的要求）。 自由存储可以在函数结束后继续生存，所以也需要配合 delete 来手动析构、释放内存（也可使用智能指针避免手动 delete）。由于分配和释放次序没有限制，不能使用堆栈这种数据结构做分配，实现上可能采用自由链表（free list）或其他动态内存分配机制。</p>
-<p><strong>堆</strong>，英文是 heap，在内存管理的语境下，指的是动态分配内存的区域。这个堆跟数据结构里的堆不是一回事。这里的内存，被分配之后需要手工释放，否则，就会造成内存泄漏。</p>
-<p>C++ 标准里一个相关概念是自由存储区(free store)，特指使用 <code>new</code> 和 <code>delete</code> 来分配和释放内存的区域。一般而言，free store是堆(heap)的一个子集，原因如下：</p>
-<ul>
-<li><code>new</code> 和 <code>delete</code> 操作的区域是 free store；<code>malloc</code> 和 <code>free</code> 操作的区域是 heap</li>
-<li><code>new</code> 和 <code>delete</code> 通常底层使用 <code>malloc</code> 和 <code>free</code> 来实现</li>
-</ul>
-<p><strong>栈</strong>，英文是 stack，在内存管理的语境下，指的是函数调用过程中产生的本地变量和调用数据的区域。这个栈和数据结构里的栈高度相似，都满足“后进先出”（last-in-first-out 或 LIFO）。</p>
-<p><strong>RAII</strong>，完整的英文是 Resource Acquisition Is Initialization，是 C++ 所特有的资源管理方式。有少量其他语言，如 D、Ada 和 Rust 也采纳了 RAII，但主流的编程语言中， C++ 是唯一一个依赖 RAII 来做资源管理的。</p>
-<p>RAII 依托栈和析构函数，来对所有的资源——包括堆内存在内——进行管理。对 RAII 的使用，使得 C++ 不需要类似于 Java 那样的垃圾收集方法，也能有效地对内存进行管理。RAII 的存在，也是垃圾收集虽然理论上可以在 C++ 使用，但从来没有真正流行过的主要原因。</p>
-<p>嵌入式的设备如DSP上的栈空间是Kb级别，在函数内定义数组或申请空间都不能像linux下那样直接定义和申请，要么定义成全局的，要么指向一块划分好的空间，否则就会造成覆盖代码段等的问题。</p>
-<p>DSP的所有变量，函数，以及程序员定义的地址都保存在这三片空间上，程序员在定义变量时，若没有特殊规定，则编译器自动把变量分配到可读写空间上的任意位置，所以当程序员使用 <code>int *p = 0x00810000</code> ；这种语法的时候，很有可能会覆盖掉程序保存变量和函数的空间，导致程序运行异常，因此需要一个 <code>.cmd</code> 文件来约束，哪些地方用来给程序员自己定义变量地址用，哪些地方用来给程序为变量和函数申请内存来用。</p>
-<h1 id="多核通信模块">2. 多核通信模块</h1>
-<blockquote>
-<p><em>IPC Modules can be used in a variety of combinations.</em></p>
-</blockquote>
-<p>以上即是说，各类IPC模块可以根据需要进行组合混用。</p>
-<p>IPC以独立插件的形式进行安装与使用，使用时可能需要手动挂载至项目属性中。</p>
-<p>Here are some introductions about heap in the &lt;SPRUEX3K.pdf&gt; as follows:</p>
-<blockquote>
-<p>SYS/BIOS provides the following Heap implementations: - <strong>HeapMem.</strong> Allocate variable-size blocks. Section 6.8.1 - <strong>HeapBuf.</strong> Allocate fixed-size blocks. Section 6.8.2 - <strong>HeapMultiBuf.</strong> Specify variable-size allocation, but internally allocate from a variety of fixed-size blocks. Section 6.8.3</p>
-</blockquote>
-<table>
-<colgroup>
-<col style="width: 22%" />
-<col style="width: 32%" />
-<col style="width: 45%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th>Module</th>
-<th>Module Path</th>
-<th></th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>GateMP（门）</td>
-<td><code>GateMP</code></td>
-<td>Manages gates for mutual exclusion of shared resources by multiple processors and threads. <br/><em>See Section 2.6.</em></td>
-</tr>
-<tr class="even">
-<td>HeapBufMP（堆缓存）</td>
-<td><code>ti.sdo.ipc.heaps.HeapBufMP</code></td>
-<td>Fixed-sized shared memory Heaps. Similar to SYS/BIOS’s <code>ti.sysbios.heaps.HeapBuf</code> module, but with some configuration differences. <br/><em>See Section 2.5.</em></td>
-</tr>
-<tr class="odd">
-<td>HeapMemMP（堆储存）</td>
-<td><code>ti.sdo.ipc.heaps.HeapMemMP</code></td>
-<td>Variable-sized shared memory Heaps. <br/><em>See Section 2.5.</em></td>
-</tr>
-<tr class="even">
-<td>HeapMultiBufMP（堆混合缓存）</td>
-<td><code>ti.sdo.ipc.heaps.HeapMultiBufMP</code></td>
-<td>Multiple fixed-sized shared memory Heaps. <br/><em>See Section 2.5.</em></td>
-</tr>
-<tr class="odd">
-<td>Ipc（核间通信）</td>
-<td><code>ti.sdo.ipc.Ipc</code></td>
-<td>Provides <code>Ipc_start()</code> function and allows startup sequence configuration. <br/><em>See Section 2.2.</em></td>
-</tr>
-<tr class="even">
-<td>ListMP（列表）</td>
-<td><code>ti.sdo.ipc.ListMP</code></td>
-<td>Doubly-linked list for shared-memory, multi-processor applications. Very similar to the ti.sdo.utils.List module. <br/><em>See Section 2.4.</em></td>
-</tr>
-<tr class="odd">
-<td>MessageQ （Q报文）</td>
-<td><code>ti.sdo.ipc.MessageQ</code></td>
-<td>Variable size messaging module. 可拥有不同大小的信息模块。<br/><em>See Section 2.3.</em></td>
-</tr>
-<tr class="even">
-<td>TransportShm（运输表）</td>
-<td><code>ti.sdo.ipc.transports.TransportShm</code></td>
-<td>Transport used by MessageQ for remote communication with other processors via shared memory. <br/><em>See Section 2.3.11.</em></td>
-</tr>
-<tr class="odd">
-<td>Notify （通知）</td>
-<td><code>ti.sdo.ipc.Notify</code></td>
-<td>Low-level interrupt mux/demuxer module. <br/><em>See Section 2.7.</em></td>
-</tr>
-<tr class="even">
-<td>NotifyDriverShm（通知驱动表）</td>
-<td><code>ti.sdo.ipc.notifyDrivers.NotifyDriverShm</code></td>
-<td>Shared memory notification driver used by the Notify module to communicate between a pair of processors. <br/><em>See Section 2.7.</em></td>
-</tr>
-<tr class="odd">
-<td>SharedRegion （共享区域）</td>
-<td><code>ti.sdo.ipc.SharedRegion</code></td>
-<td>Maintains shared memory for multiple shared regions. <br/><em>See Section 2.8.</em></td>
-</tr>
-</tbody>
-</table>
-<h2 id="header-files-included">Header Files included</h2>
-<p>除了<code>&lt;ipc_install_dir&gt;/packages/ti/ipc/</code> 路径下可以找到IPC必须的头文件外， <code>&lt;ipc_install_dir&gt;/packages/ti/sdo/ipc/</code> 路径下同样有IPC的头文件，但是请勿直接引用至 <code>.c</code>文件中。</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;xdc/std.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="comment">/* ---- XDC.RUNTIME module Headers */</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;xdc/runtime/Memory.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;xdc/runtime/System.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;xdc/runtime/IHeap.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;xdc/runtime/Timestamp.h&gt;</span>    <span class="comment">//not officially included</span></span></span><br><span class="line"><span class="comment">/* ----- IPC module Headers */</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;ti/ipc/GateMP.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;ti/ipc/Ipc.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;ti/ipc/MessageQ.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;ti/ipc/HeapBufMP.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;ti/ipc/MultiProc.h&gt;</span></span></span><br><span class="line"><span class="comment">/* ---- BIOS6 module Headers */</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;ti/sysbios/BIOS.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;ti/sysbios/knl/Task.h&gt;</span></span></span><br><span class="line"><span class="comment">/* ---- Get globals from .cfg Header */</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;xdc/cfg/global.h&gt;</span></span></span><br></pre></td></tr></table></figure>
-<h2 id="standard-ipc-function-call-sequence">Standard IPC Function Call Sequence</h2>
-<p>Standard IPC Function Call Sequence，即标准IPC函数的调用顺序。</p>
-<blockquote>
-<p><strong><em>MODULE</em></strong> 在本处指任一类型的IPC调用（如，GateMP、IPC、MessageQ等），如 <code>MODULE_Open()</code> 即可替换成 <code>MessageQ_Open()</code> ，具体实参见对应的头文件。</p>
-</blockquote>
-<p>An application that uses IPC APIs—such as <code>MessageQ</code>, <code>GateMP</code>, and <code>ListMP</code>—<strong>must include the Ipc module header file and call <code>Ipc_start()</code> in the <code>main()</code> function. </strong> <code>Ipc_start()</code> does the following:</p>
-<ul>
-<li>初始化：Initializes a number of objects and modules used by IPC.</li>
-<li>同步：Synchronizes multiple processors so they can boot in any order.</li>
-</ul>
-<p><strong>NOTES:</strong> If the <code>main()</code> function calls any IPC APIs, the call to <code>Ipc_start()</code> must be placed before any calls to IPC modules.</p>
-<h3 id="调用顺序">调用顺序</h3>
-<ul>
-<li>Firstly, initialize a <code>MODULE_Params</code> structure to its default values via a <code>MODULE_Params_init()</code> function. The creator thread can then set individual parameter fields in this structure as needed.</li>
-<li>Secondly, calls the <code>MODULE_create()</code> function to creates the instance and initializes any shared memory used by the instance. <em>If the instance is to be opened remotely, a unique name must be supplied in the parameters.</em></li>
-<li>Other threads can access this instance via the <code>MODULE_open()</code> function, which <strong>returns a handle with access to the instance.</strong> The name that was used for instance creation must be used in the <code>MODULE_open()</code> function.</li>
-<li>Finally, the thread that called <code>MODULE_create()</code> can call <code>MODULE_delete()</code> to free the memory used by the instance.</li>
-</ul>
-<blockquote>
-<ul>
-<li>首先，使用 <code>MODULE_Params_init()</code> 来初始化 <code>MODULE_Params</code> 结构。（创建它的线程）可以根据需要单独调整结构体内的个别参数。</li>
-<li>然后，调用 <code>MODULE_create()</code> 函数来创建对象实例，并初始化其内存。如果该对象在别处被打开，需要给被调用的参数取好名字防止重复。</li>
-<li>接着， 其他线程可以通过 <code>MODULE_open()</code> 函数接入该对象，并返回一个对应的句柄。该对象的创建名称必须与打开名称保持一致。</li>
-<li>最后，调用 <code>MODULE_create()</code> 来创建对象实例的线程就可以调用 <code>MODULE_delete()</code> 来释放被对象占用的内存。</li>
-</ul>
-</blockquote>
-<p><strong>注意：</strong></p>
-<blockquote>
-<p><em>All threads that opened an instance must close that instance before the thread that created it can delete it.</em> <em>Also, a thread that calls <code>MODULE_create()</code> cannot call <code>MODULE_close()</code>.</em> <em>Likewise, a thread that calls <code>MODULE_open()</code> cannot call <code>MODULE_delete()</code>.</em></p>
-<p>在由创建者删除（delete）某IPC对象时，由谁使用（open）就由谁关闭（close）。且决不能由创建者来调用关闭函数，否则创建者无法删除该对象。（顺序如下图所示）</p>
-</blockquote>
-<pre class="mermaid">stateDiagram-v2
-    [*] --> Core0
-    [*] --> Core1
-    Core0 --> IPC_Start()
-    IPC_Start() --> Module_Create()
-    IPC_Start() --> Core1 : Wait for Sychronization
-    Core1 --> UsersProgram()
-    UsersProgram() --> Module_Open()
-    Module_Open() --> Module_Close()
-    Module_Create() --> Module_Delete()
-    Module_Close() --> Module_Delete() : Closed by who opens</pre>
-<h3 id="代码示例">代码示例</h3>
-<h4 id="ipc_start-使用示例">Ipc_Start() 使用示例</h4>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;ti/ipc/Ipc.h&gt;</span></span></span><br><span class="line">...</span><br><span class="line"><span class="function">Int <span class="title">main</span><span class="params">(Int argc, Char* argv[])</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">     Int status;</span><br><span class="line">     <span class="comment">/* Call Ipc_start() */</span></span><br><span class="line">     status = Ipc_start();</span><br><span class="line">     <span class="keyword">if</span> (status &lt; <span class="number">0</span>) &#123;</span><br><span class="line">         System_abort(<span class="string">&quot;Ipc_start failed\n&quot;</span>);</span><br><span class="line">     &#125;</span><br><span class="line">     BIOS_start();</span><br><span class="line">     <span class="keyword">return</span> (<span class="number">0</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h4 id="messageq_create-使用示例">MessageQ_Create() 使用示例</h4>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">messageQ = MessageQ_create(DSP_MESSAGEQNAME, <span class="literal">NULL</span>);</span><br><span class="line"><span class="keyword">if</span> (messageQ == <span class="literal">NULL</span>) &#123;   <span class="comment">//an error occurred when creating the object</span></span><br><span class="line">	System_abort(<span class="string">&quot;MessageQ_create failed\n&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="error-handling-in-ipc">Error Handling in IPC</h2>
-<p>Success codes always have values greater or equal to zero. The Failure codes are always negative.</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">MessageQ_Msg msg; </span><br><span class="line">MessageQ_Handle messageQ;</span><br><span class="line">Int status;</span><br><span class="line">...</span><br><span class="line">status = MessageQ_get(messageQ, &amp;msg, MessageQ_FOREVER);</span><br><span class="line"><span class="keyword">if</span> (status &lt; <span class="number">0</span>) &#123;</span><br><span class="line">	System_abort(<span class="string">&quot;Should not happen\n&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="ipc-module-configuration">IPC Module Configuration</h2>
-<p>Configure how the IPC module synchronizes processors by configuring the <code>Ipc.procSync</code> property. For example:</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* CONFIGURATION ABOUT INTER-PROCESS COMMUNICATION */</span></span><br><span class="line">var Ipc = xdc.useModule(&#x27;ti.sdo.ipc.Ipc&#x27;);</span><br><span class="line">Ipc.procSync = Ipc.ProcSync_ALL;</span><br></pre></td></tr></table></figure>
-<p>Here are three options: <code>Ipc.ProcSync_ALL</code> | <code>Ipc.ProcSync_PAIR</code> | <code>Ipc.ProcSync_NONE</code></p>
-<table>
-<colgroup>
-<col style="width: 24%" />
-<col style="width: 37%" />
-<col style="width: 37%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th>Options</th>
-<th>Conditions</th>
-<th>Specialties</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><strong>Ipc.ProcSync_ALL</strong></td>
-<td>- IPC processors on a device start up at the same time<br/>- Connections should be established between every possible pair of processors</td>
-<td>- <code>Ipc_start() API</code> automatically attaches to and synchronizes all remote processors. <br/>- Application <strong><em>should never call</em></strong> <code>Ipc_attach()</code>.</td>
-</tr>
-<tr class="even">
-<td><strong>Ipc.ProcSync_PAIR</strong> <em>(Default Mode)</em></td>
-<td><em>One of the following is true:</em><br>- You need to control when synchronization with each remote processor occurs.<br/>- Useful work can be done while trying to synchronize with a remote processor by yielding a thread after each attempt to Ipc_attach() to the processor. <br/> - Connections to some remote processors are unnecessary and should be made selectively to save memory.</td>
-<td>- Must explicitly call <code>Ipc_attach()</code> to attach to a specific remote processor. <br/>- <code>Ipc_start()</code> performs system-wide IPC initialization, but does not <strong>make connections to remote processors</strong>.</td>
-</tr>
-<tr class="odd">
-<td><strong>Ipc.ProcSync_NONE</strong></td>
-<td><em>Use this option with caution.</em> <br/>It is intended for use in cases where the application performs its own synchronization and you want to avoid a potential deadlock situation with the IPC synchronization.</td>
-<td><code>Ipc_start()</code> doesn’t synchronize any processors before setting up the objects needed by other modules.</td>
-</tr>
-</tbody>
-</table>
-<h4 id="attach-and-detach-依附与分离">Attach and Detach （依附与分离）</h4>
-<p>In addition to the default actions performed when attaching to or detaching from a remote processor, You can configure a function to perform custom actions.</p>
-<p>Attach and Detach are provided for the processor synchronization:</p>
-<ul>
-<li><p><code>Ipc_attach()</code> Creates a connection to the specified remote processor.</p></li>
-<li><p><code>Ipc_detach()</code> Deletes the connection to the specified remote processor.</p></li>
-</ul>
-<p>在 <code>.cfg</code> 文件中以下为两个互相依赖和两个互相分离的函数配置，每一组函数都会传递一个不同的参数：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">var Ipc = xdc.useModule(&#x27;ti.sdo.ipc.Ipc&#x27;);</span><br><span class="line"></span><br><span class="line">var fxn = <span class="keyword">new</span> Ipc.UserFxn;</span><br><span class="line">fxn.attach = &#x27;&amp;userAttachFxn1&#x27;;</span><br><span class="line">fxn.detach = &#x27;&amp;userDetachFxn1&#x27;;</span><br><span class="line">Ipc.addUserFxn(fxn, <span class="number">0x1</span>);</span><br><span class="line"></span><br><span class="line">fxn.attach = &#x27;&amp;userAttachFxn2&#x27;;</span><br><span class="line">fxn.detach = &#x27;&amp;userDetachFxn2&#x27;;</span><br><span class="line">Ipc.addUserFxn(fxn, <span class="number">0x2</span>);</span><br></pre></td></tr></table></figure>
-<p><strong><em>These functions run near the end of <code>Ipc_attach()</code> and near the beginning of <code>Ipc_detach()</code> , respectively.</em></strong></p>
-<p><strong><em>Such functions must be non-blocking and must run to completion. 这些被定义的函数必须为非阻塞且（一旦开始就）运行到底。</em></strong></p>
-<p><strong>注意：</strong> Call <code>Ipc_attach()</code> to the processor that owns shared memory region 0 (usually the processor with id = 0) before making a connection to any other remote processor. For example, if there are three processors configured with <strong><em>MultiProc</em></strong>, #1 should attach to #0 before it can attach to #2.</p>
-<h1 id="多核任务分配">3. 多核任务分配</h1>
-<blockquote>
-<p>如果多个核共享一个工程及相同的bios 配置文件，是不能指定某一个任务到特定的core上，如果某个任务只有某个core才会运行，可以在任务中区分core运行。如果多个core分别有不同的工程，则没有“多核任务分配”的问题，每个工程可以根据各自core的应用创建各自的任务，不需要软件区分core。</p>
-</blockquote>
-<blockquote>
-<p>单核可以是一个out生成最终的bin文件烧写在flash，多核如果存在多个out文件，可以把out文件合并成一个bin烧写，或者多个bin分开烧写均可。bin文件中都有程序的地址及长度信息，在多个bin时，也是一样可以由core0负责对flash的程序文件解析，将程序搬移到相应的地址上，最后core0再向其他core magic address写入入口地址，并发送ipc触发即可。</p>
-</blockquote>
-<blockquote>
-<p>这个并非由SYS/BIOS分配，需要开发者指定。</p>
-<p>可以根据core number来做判断，然后确认该任务是否运行在该核上。</p>
-</blockquote>
-<h1 id="chip-support-library">4. Chip Support Library</h1>
-<p>CSL，即芯片支持库( Chip Support Library)。在程序设计过程中利用CSL库函数可以方便地访问 <strong>DSP的寄存器和硬件资源</strong>，提高DSP软件的开发效率和速度。</p>
-<p>CSL库包含了对INTC、Boot Configuration、BWMNGMT、CACHE、CHIP、CPINTC、EDMA3、EMAC、EMIF4F、GPIO、IDMA、IPC、MDIO、MEMPROT、MPU、MSMC、PLLC、PSC、Semaphore、SGMII、SRIO、TIMER、TSC、VCP2、XMC、CGEM、CPPI、QMSS、CPPI_LLD_SYMBOL 及 CPPI_LLD_ENUM共30种模块的支持。</p>
-<h2 id="cache-module">Cache Module</h2>
-<p>位于 <code>ti\pdk_C6657_1_1_2_6\packages\ti\csl\</code> 下的头文件 <code>&lt;csl_cacheAux.h&gt;</code> 提供了缓存（Cache）配置相关的CSL功能层API。</p>
-<blockquote>
-<p>This is the CACHE Auxilary Header File which exposes the <strong><em>various CSL Functional Layer API</em></strong>'s to <strong><em>configure the CACHE Module</em></strong>.</p>
-</blockquote>
-<blockquote>
-<p>Cache API包含了对L1D（L1 Data Cache）、L1P 及 L2的各种操作。关于L1D、L1P及L2 的详细文件参考《SPRS814D》第193页。</p>
-</blockquote>
-<p>该头文件中对三种缓存的可操作方式如下示：</p>
-<table>
-<colgroup>
-<col style="width: 83%" />
-<col style="width: 5%" />
-<col style="width: 5%" />
-<col style="width: 5%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th>OPERATION</th>
-<th>L1D</th>
-<th>L1P</th>
-<th>L2</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>setSize</td>
-<td>√</td>
-<td>√</td>
-<td>√</td>
-</tr>
-<tr class="even">
-<td>getSize</td>
-<td>√</td>
-<td>√</td>
-<td>√</td>
-</tr>
-<tr class="odd">
-<td>freeze</td>
-<td>√</td>
-<td>√</td>
-<td>√</td>
-</tr>
-<tr class="even">
-<td>unfreeze</td>
-<td>√</td>
-<td>√</td>
-<td>√</td>
-</tr>
-<tr class="odd">
-<td>getPrevMode<br/><em>-- get the previous operating state</em></td>
-<td>√</td>
-<td>√</td>
-<td></td>
-</tr>
-<tr class="even">
-<td>invAllWait<br/><em>-- wait for the cache global invalidate operation to complete</em></td>
-<td>√</td>
-<td>√</td>
-<td></td>
-</tr>
-<tr class="odd">
-<td>invAll<br/><em>-- globally invalidate cache</em></td>
-<td>√</td>
-<td>√</td>
-<td></td>
-</tr>
-<tr class="even">
-<td>wbAllWait<br/><em>-- wait for the cache writeback operation to complete</em></td>
-<td>√</td>
-<td></td>
-<td></td>
-</tr>
-<tr class="odd">
-<td>wbAll<br/><em>-- writeback the dirty lines of the cache</em></td>
-<td>√</td>
-<td></td>
-<td></td>
-</tr>
-<tr class="even">
-<td>wbInvAllWait<br/><em>-- wait for the cache writeback invalidate operation to complete</em></td>
-<td>√</td>
-<td></td>
-<td></td>
-</tr>
-<tr class="odd">
-<td>wbInvAll<br/><em>-- invalidate and writeback the dirty lines of the cache</em></td>
-<td>√</td>
-<td></td>
-<td></td>
-</tr>
-<tr class="even">
-<td>invWait<br/><em>-- wait for the cache invalidate block operation to complete</em></td>
-<td>√</td>
-<td>√</td>
-<td></td>
-</tr>
-<tr class="odd">
-<td>inv<br/><em>-- to invalidate a block in cache</em></td>
-<td>√</td>
-<td>√</td>
-<td></td>
-</tr>
-<tr class="even">
-<td>wbWait<br/><em>-- wait for the cache writeback block operation to complete</em></td>
-<td>√</td>
-<td></td>
-<td></td>
-</tr>
-<tr class="odd">
-<td>wb<br/><em>-- writeback the dirty lines of the block address</em></td>
-<td>√</td>
-<td></td>
-<td></td>
-</tr>
-<tr class="even">
-<td>wbInvWait<br/><em>-- wait for the cache invalidate/writeback block operation to complete</em></td>
-<td>√</td>
-<td></td>
-<td></td>
-</tr>
-<tr class="odd">
-<td>wbInv<br/><em>-- invalidate and writeback the dirty lines of the block address</em></td>
-<td>√</td>
-<td></td>
-<td></td>
-</tr>
-</tbody>
-</table>
-<h2 id="ipc-module">IPC Module</h2>
-<p>IPC，即进程间通信（Inter-process communication）。</p>
-<p>位于 <code>ti\pdk_C6657_1_1_2_6\packages\ti\csl\</code> 下的头文件 <code>&lt;csl_ipcAux.h&gt;</code> 提供了<strong>查询定义</strong> 和 <strong>控制函数</strong>。IPC API包含了对 NMI、GEM、Host的各种操作。其中 <strong>GEM</strong> 对 IPCGRx 及 IPCARx 进行操作；而 <strong>Host</strong> 对 IPCGRH 及 IPCARH 进行操作。</p>
-<p><strong>注意：</strong> 下文中， <code>index</code> 和 <code>srcId</code> 均是函数形参，如在<code>CSL_IPC_isGEMInterruptAckSet（uint32 index, uint32 srcId)</code>中：<code>index</code> 指需要检查IPCARx寄存器的GEM编号。<code>srcId</code> 指示在指定的索引对应的IPCARx寄存器中需要读取0-27 SRCCx位中的哪一个。</p>
-<blockquote>
-<p><strong>NMI</strong>，即 <strong>不可屏蔽中断</strong>（Non Maskable Interrupt）。<strong>NMIG</strong>，即 <strong>不可屏蔽中断产生寄存器</strong>（NMI Generation Register <em>(NMIGRx)</em>）。NMIGRx registers are used for generating NMI events to the corresponding CorePac. The C6657 has two NMIGRx registers (NMIGR0 and NMIGR1). The NMIGR0 register generates an NMI event to CorePac0, and the NMIGR1 register generates an NMI event to CorePac1.Writing 1 to the NMIG field generates an NMI pulse. Writing 0 has no effect and reads return 0 and have no other effect.</p>
-<p><img src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/04/Snipaste_2021-04-08_09-00-03.png" style="zoom:50%;" /></p>
-<p><strong>IPCGRx</strong>，即 <strong>进程间通信产生寄存器</strong>（IPC interrupt generation register）。IPCGRx are to facilitate inter CorePac interrupts. The C6657 has two IPCGRx registers (IPCGR0 and IPCGR1). These registers can be used by external hosts or CorePacs to generate interrupts to other CorePacs. A write of 1to the IPCG field of the IPCGRx register will generate an interrupt pulse to CorePacx (0 &lt;= x &lt;= 1).</p>
-<p><img src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/04/Snipaste_2021-04-08_08-54-09.png" style="zoom:50%;" /></p>
-<p><strong>IPCARx</strong>，即 <strong>IPC中断确认寄存器</strong>（IPC interrupt-acknowledgement registers）。IPCARx are to facilitate inter-CorePac core interrupts. The C6657 has two IPCARx registers (IPCAR0 and IPCAR1). These registers also provide a <em>Source ID facility</em> by which up to 28 different sources of interrupts can be identified. Allocation of source bits to source processor and meaning is entirely based on software convention. The register field descriptions are shown in the following tables. Virtually anything can be a source for these registers as this is completely controlled by software. Any master that has access to BOOTCFG module space can write to these registers.</p>
-<p><img src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/04/Snipaste_2021-04-08_08-57-22.png" style="zoom:50%;" /></p>
-<p><strong>IPCGRH</strong>，即 <strong>主机IPC产生寄存器</strong>（IPC Generation Host）。The IPCGRH register facilitates interrupts to external hosts. Operation and use of the IPCGRH register is the same as for other IPCGR registers. The interrupt output pulse created by the IPCGRH register appears on device pin HOUT. <mark><i>The host interrupt output pulse should be stretched. It should be asserted for 4 bootcfg clock cycles (CPU/6) followed by a deassertion of 4 bootcfg clock cycles. Generating the pulse will result in 8 CPU/6 cycle pulse blocking window. </i></mark>Write to IPCGRH with IPCG bit (bit 0) set will only generate a pulse if they are beyond 8 CPU/6 cycle period.</p>
-<p><img src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/04/Snipaste_2021-04-08_09-33-14.png" style="zoom:50%;" /></p>
-<p><strong>IPCARH</strong>，即 <strong>主机IPC确认寄存器</strong>（Host IPC Acknowledgment Register）。</p>
-<p><img src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/04/Snipaste_2021-04-08_14-57-07.png" style="zoom: 67%;" /></p>
-</blockquote>
-<p>该头文件中的可操作方式如下示：</p>
-<table>
-<colgroup>
-<col style="width: 27%" />
-<col style="width: 2%" />
-<col style="width: 34%" />
-<col style="width: 34%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th></th>
-<th>NMI</th>
-<th>GEM</th>
-<th>Host</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>genEvent</td>
-<td>√</td>
-<td></td>
-<td></td>
-</tr>
-<tr class="even">
-<td>genInterrupt<br><em>-- generate an interrupt pulse</em></td>
-<td></td>
-<td>√</td>
-<td>√</td>
-</tr>
-<tr class="odd">
-<td>isInterruptSourceSet</td>
-<td></td>
-<td>√<br><em>-- checks if the SRCSx bit of the <strong>IPCGRx</strong> register is set</em></td>
-<td>√<br><em>-- checks if the SRCSx bit of the <strong>IPCGRH</strong> register is set</em></td>
-</tr>
-<tr class="even">
-<td>isInterruptAckSet</td>
-<td></td>
-<td>√<br><em>-- checks if the SRCCx bit of the <strong>IPCARx</strong> register is set.</em></td>
-<td>√<br><em>-- checks if the SRCCx bit of the <strong>IPCARH</strong> register is set.</em></td>
-</tr>
-<tr class="odd">
-<td>clearInterruptSource</td>
-<td></td>
-<td>√</td>
-<td>√</td>
-</tr>
-</tbody>
-</table>
-<p><code>isGEMInterruptSourceSet()</code> returns 1 if the <u>SRCCx bit corresponding to the <strong>srcId</strong> is set</u> in the IPCARx register corresponding to the index specified. 如果与srcId对应的SRCCx位在与指定索引对应的IPCARx寄存器中被设置，则返回1。</p>
-<blockquote>
-<p><code>CSL_IPC_clearGEMInterruptSource()</code> clears the interrupt source IDs by setting the <strong>SRCCx bit of IPCARx</strong> and <strong>SRCSx bit of IPCGRx</strong> corresponding to the GEM index and Source ID specified.</p>
-<p><code>CSL_IPC_clearGEMInterruptSource()</code> 通过设置 <strong><em>GEM 索引</em></strong> 和 <strong><em>指定源 ID</em></strong> 对应的 <strong>IPCARx寄存器上的SRCCx位</strong> 和 <strong>IPCGRx寄存器上的SRCSx位</strong> 来清除 中断源ID 。</p>
-</blockquote>
-<blockquote>
-<p><code>CSL_IPC_clearHostInterruptSource()</code> function clears the interrupt source IDs by setting the <strong>SRCCx bit of IPCARH</strong> and <strong>SRCSx bit of IPCGRH</strong> corresponding to the Source ID specified.</p>
-<p><code>CSL_IPC_clearHostInterruptSource()</code> 通过设置 <strong><em>指定源ID</em></strong> 对应的 <strong>IPCARH上的SRCCx位</strong> 和 <strong>IPCGRH上的SRCSx位</strong> 来清楚中断源ID。</p>
-</blockquote>
-<h3 id="cache_wbinvl1d">CACHE_wbInvL1d()</h3>
-<p>This function is used to <mark><strong>invalidate and writeback</strong> the <em>dirty lines</em> of the block address</mark>.</p>
-<p>Although the block size can be specified in the number of bytes, the cache controller operates on whole cache lines.</p>
-<p>To prevent unintended behavior "blockPtr" should be aligned on the cache line size and "byteCnt" should be a multiple of the cache line size.</p>
-<h3 id="cache_invl1d">CACHE_invL1d ()</h3>
-<p>This function is used to <mark><strong>invalidate</strong> a <em>block</em> in the L1D Cache</mark>.</p>
-<p>Although the block size can be specified in the number of bytes, the cache controller operates on whole cache lines.</p>
-<p>To prevent unintended behavior "blockPtr" should be aligned on the cache line size and "byteCnt" should be a multiple of the cache line size.</p>
-<h2 id="chip-module">Chip Module</h2>
-<p><code>#include &lt;csl_chipAux.h&gt;</code></p>
-<p>本头文件是以C( <code>extern "C"</code> )的方式来书写的，包含芯片读取与写入相关操作的API，名称以 <code>CSL_chipRead</code> 或 <code>CSL_chipWrite</code> 开头，所有函数均以静态内联（static inline，重定义成 <code>CSL_IDEF_INLINE</code> ）32位非负整数（Uint32）的方式定义，如 <code>CSL_IDEF_INLINE Uint32 CSL_chipRead***();</code> 。</p>
-<p><code>&lt;csl_chipAux.h&gt;</code> 提供了26个读取寄存器相关的函数，函数定义均是对寄存器的读取并返回数值，某些读取函数需要注意 <em>前置条件</em>（Pre-condition）。</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">CSL_chipReadAMR();    <span class="comment">//Addressing Mode control register 寻址模式控制寄存器</span></span><br><span class="line">CSL_chipReadCSR();    <span class="comment">//Control Status register 控制状态寄存器</span></span><br><span class="line">CSL_chipReadIFR();    <span class="comment">//Interrupt Flag register 中断标志寄存器</span></span><br><span class="line">CSL_chipReadIER();    <span class="comment">//Interrupt Enable register 中断使能寄存器</span></span><br><span class="line">CSL_chipReadISTP();    <span class="comment">//Interrupt Service Table Pointer register 中断服务表指针寄存器</span></span><br><span class="line">CSL_chipReadIRP();    <span class="comment">//Interrupt Return Pointer register 中断返回指针寄存器</span></span><br><span class="line">CSL_chipReadNRP();    <span class="comment">//Nonmaskable Interrupt Return Pointer register </span></span><br><span class="line">CSL_chipReadERP();    <span class="comment">//Exception Return Pointer register 异常返回指针寄存器</span></span><br><span class="line">CSL_chipReadTSCL();    <span class="comment">//Time Stamp Counter Lower Order 32-bits register 时间戳计数器低32位</span></span><br><span class="line">CSL_chipReadTSCH();    <span class="comment">//Time Stamp Counter Higer Order 32-bits register 时间戳计数器高32位</span></span><br><span class="line">CSL_chipReadARP();    <span class="comment">//Analysis Return Pointer register </span></span><br><span class="line">CSL_chipReadILC();    <span class="comment">//Inner Loop SPL buffer Counter(ILC) register</span></span><br><span class="line">CSL_chipReadRILC();    <span class="comment">//Reload Inner Loop SPL buffer Counter(RILC) register</span></span><br><span class="line">CSL_chipReadREP();    <span class="comment">//Restricted Entry Point Address register</span></span><br><span class="line">CSL_chipReadPCE1();    <span class="comment">//Program Counter, E1 Phase register E1字段程序计数器</span></span><br><span class="line">CSL_chipReadDNUM();    <span class="comment">//DSP Core Number register 核心数寄存器</span></span><br><span class="line">CSL_chipReadSSR();    <span class="comment">//Saturation Status Register 饱和状态寄存器</span></span><br><span class="line">CSL_chipReadGPLYA();    <span class="comment">//GMPY A-side polynomial register </span></span><br><span class="line">CSL_chipReadGPLYB();    <span class="comment">//GMPY B-side polynomial register</span></span><br><span class="line">CSL_chipReadGFPGFR();    <span class="comment">//Golios Field Multiply Control Register</span></span><br><span class="line">CSL_chipReadDIER();    <span class="comment">//Debug Interrupt Enable Register 调试中断使能寄存器</span></span><br><span class="line">CSL_chipReadTSR();    <span class="comment">//Task State Register 任务状态寄存器</span></span><br><span class="line">CSL_chipReadITSR();    <span class="comment">//Interrupt Task State Register 中断任务状态寄存器</span></span><br><span class="line">CSL_chipReadNTSR();    <span class="comment">//NMI/Exception Task State Register 异常任务状态寄存器</span></span><br><span class="line">CSL_chipReadEFR();    <span class="comment">//Exception Flag Register 异常标志寄存器</span></span><br><span class="line">CSL_chipReadIERR();    <span class="comment">//Internal Exception Report Register 内部异常报告寄存器</span></span><br></pre></td></tr></table></figure>
-<p><code>&lt;csl_chipAux.h&gt;</code> 提供了24个写入寄存器相关的函数，且与读取寄存器相关函数并不呈现一一对应关系。函数定义均是将一个Uint32类型（重定义为 <code>CSL_Reg32</code> ）的新值赋值给寄存器，并将旧值返回，写入寄存器均不需要注意 前置条件，部分需要注意后置条件（Post-condition）。</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">CSL_chipWriteAMR(CSL_Reg32  val);</span><br><span class="line">CSL_chipWriteCSR(CSL_Reg32  val);</span><br><span class="line">CSL_chipWriteISR(CSL_Reg32  val);    <span class="comment">//Interrupt Set Register 中断设置寄存器</span></span><br><span class="line">CSL_chipWriteICR(CSL_Reg32  val);    <span class="comment">//Interrupt Clear Register 中断清除寄存器</span></span><br><span class="line">CSL_chipWriteIER(CSL_Reg32  val);</span><br><span class="line">CSL_chipWriteISTP(CSL_Reg32  val);</span><br><span class="line">CSL_chipWriteIRP(CSL_Reg32  val);</span><br><span class="line">CSL_chipWriteNRP(CSL_Reg32  val);</span><br><span class="line">CSL_chipWriteERP(CSL_Reg32  val);</span><br><span class="line">CSL_chipWriteTSCL(CSL_Reg32  val);</span><br><span class="line">CSL_chipWriteARP(CSL_Reg32  val);</span><br><span class="line">CSL_chipWriteILC(CSL_Reg32  val);</span><br><span class="line">CSL_chipWriteRILC(CSL_Reg32  val);</span><br><span class="line">CSL_chipWriteREP(CSL_Reg32  val);</span><br><span class="line">CSL_chipWriteSSR(CSL_Reg32  val);</span><br><span class="line">CSL_chipWriteGPLYA(CSL_Reg32  val);</span><br><span class="line">CSL_chipWriteGPLYB(CSL_Reg32  val);</span><br><span class="line">CSL_chipWriteGFPGFR(CSL_Reg32  val);</span><br><span class="line">CSL_chipWriteDIER(CSL_Reg32  val);</span><br><span class="line">CSL_chipWriteTSR(CSL_Reg32  val);</span><br><span class="line">CSL_chipWriteITSR(CSL_Reg32  val);</span><br><span class="line">CSL_chipWriteNTSR(CSL_Reg32  val);</span><br><span class="line">CSL_chipWriteECR(CSL_Reg32  val);    <span class="comment">//Exception Clear Register 异常清除寄存器</span></span><br><span class="line">CSL_chipWriteIERR(CSL_Reg32  val);</span><br></pre></td></tr></table></figure>
-<p>共30个寄存器涉及是否可读写：</p>
-<table>
-<thead>
-<tr class="header">
-<th>Register</th>
-<th>Read</th>
-<th>Write</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>AMR</td>
-<td>√</td>
-<td>√</td>
-</tr>
-<tr class="even">
-<td>CSR</td>
-<td>√</td>
-<td>√</td>
-</tr>
-<tr class="odd">
-<td>IFR</td>
-<td>√</td>
-<td>×</td>
-</tr>
-<tr class="even">
-<td>ISR</td>
-<td>×</td>
-<td>√</td>
-</tr>
-<tr class="odd">
-<td>ICR</td>
-<td>×</td>
-<td>√</td>
-</tr>
-<tr class="even">
-<td>IER</td>
-<td>√</td>
-<td>√</td>
-</tr>
-<tr class="odd">
-<td>ISTP</td>
-<td>√</td>
-<td>√</td>
-</tr>
-<tr class="even">
-<td>IRP</td>
-<td>√</td>
-<td>√</td>
-</tr>
-<tr class="odd">
-<td>NRP</td>
-<td>√</td>
-<td>√</td>
-</tr>
-<tr class="even">
-<td>ERP</td>
-<td>√</td>
-<td>√</td>
-</tr>
-<tr class="odd">
-<td>TSCL</td>
-<td>√</td>
-<td>√</td>
-</tr>
-<tr class="even">
-<td>TSCH</td>
-<td>√</td>
-<td>×</td>
-</tr>
-<tr class="odd">
-<td>ARP</td>
-<td>√</td>
-<td>√</td>
-</tr>
-<tr class="even">
-<td>ILC</td>
-<td>√</td>
-<td>√</td>
-</tr>
-<tr class="odd">
-<td>RILC</td>
-<td>√</td>
-<td>√</td>
-</tr>
-<tr class="even">
-<td>REP</td>
-<td>√</td>
-<td>√</td>
-</tr>
-<tr class="odd">
-<td>PCE1</td>
-<td>√</td>
-<td>×</td>
-</tr>
-<tr class="even">
-<td>DNUM</td>
-<td>√</td>
-<td>×</td>
-</tr>
-<tr class="odd">
-<td>SSR</td>
-<td>√</td>
-<td>√</td>
-</tr>
-<tr class="even">
-<td>GPLYA</td>
-<td>√</td>
-<td>√</td>
-</tr>
-<tr class="odd">
-<td>GPLYB</td>
-<td>√</td>
-<td>√</td>
-</tr>
-<tr class="even">
-<td>GFPGFR</td>
-<td>√</td>
-<td>√</td>
-</tr>
-<tr class="odd">
-<td>DIER</td>
-<td>√</td>
-<td>√</td>
-</tr>
-<tr class="even">
-<td>TSR</td>
-<td>√</td>
-<td>√</td>
-</tr>
-<tr class="odd">
-<td>ITSR</td>
-<td>√</td>
-<td>√</td>
-</tr>
-<tr class="even">
-<td>NTSR</td>
-<td>√</td>
-<td>√</td>
-</tr>
-<tr class="odd">
-<td>ECR</td>
-<td>×</td>
-<td>√</td>
-</tr>
-<tr class="even">
-<td>EFR</td>
-<td>√</td>
-<td>×</td>
-</tr>
-<tr class="odd">
-<td>IERR</td>
-<td>√</td>
-<td>√</td>
-</tr>
-</tbody>
-</table>
-<h2 id="ipc_hw-example-in-anc">IPC_HW Example in ANC</h2>
-<p><strong>硬件（中断）层核间通信</strong>（不需要修改）</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Ipc_Init</span><span class="params">(<span class="keyword">void</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	Hwi_Params params;    <span class="comment">//创建HWI对象</span></span><br><span class="line">	Error_Block eb;    <span class="comment">//创建错误块处理对象</span></span><br><span class="line"></span><br><span class="line">	Error_init(&amp;eb);    <span class="comment">//初始化错误块</span></span><br><span class="line">	Hwi_Params_init(&amp;params);    <span class="comment">//初始化HWI对象</span></span><br><span class="line">	params.eventId = <span class="number">90</span>;    <span class="comment">//IPC INT	/* Set the event ID of the associated host interrupt */</span></span><br><span class="line">	params.enableInt = TRUE;    <span class="comment">//打开中断</span></span><br><span class="line"></span><br><span class="line">	Hwi_create(<span class="number">5</span>, &amp;IpcIsr, &amp;params, &amp;eb);    <span class="comment">//INT5	/* Create Hwi thread Hwi function is CpIntc_dispatch */</span></span><br><span class="line">	Hwi_enable();    <span class="comment">//打开中断</span></span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span>(CSL_chipReadDNUM() == <span class="number">0</span>)&#123;     <span class="comment">//core0	//检测运行前触发的ipc，因为运行前写入的ipc无法触发中断</span></span><br><span class="line">		<span class="keyword">if</span>(CSL_IPC_isGEMInterruptAckSet(<span class="number">0</span>,<span class="number">2</span>))&#123;    <span class="comment">//判断索引为0对应的IPCARx中的第2位是否为中断确认位</span></span><br><span class="line">			CSL_IPC_clearGEMInterruptSource(<span class="number">0</span>,<span class="number">2</span>);    <span class="comment">//是则清除</span></span><br><span class="line">		&#125;</span><br><span class="line">	&#125;<span class="keyword">else</span>&#123;    <span class="comment">//core1</span></span><br><span class="line">		<span class="keyword">if</span>(CSL_IPC_isGEMInterruptAckSet(<span class="number">1</span>,<span class="number">2</span>))&#123;    <span class="comment">//判断索引为1对应的IPCARx中的第2位是否为中断确认位</span></span><br><span class="line">			CSL_IPC_clearGEMInterruptSource(<span class="number">1</span>,<span class="number">2</span>);   <span class="comment">//是则清除</span></span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><strong>核心同步</strong>（不需要修改）</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Ipc_CoreSync</span><span class="params">(<span class="keyword">void</span>)</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(CSL_chipReadDNUM() == <span class="number">0</span>)&#123;    <span class="comment">//core0</span></span><br><span class="line">                CSL_IPC_genGEMInterrupt(<span class="number">1</span>,<span class="number">1</span>);    <span class="comment">//IPC_IPCGR_SRCS1 = 1;</span></span><br><span class="line">                <span class="keyword">while</span>(!CSL_IPC_isGEMInterruptAckSet(<span class="number">0</span>,<span class="number">1</span>));    <span class="comment">//等待core1启动</span></span><br><span class="line">                CSL_IPC_clearGEMInterruptSource(<span class="number">0</span>,<span class="number">1</span>);    <span class="comment">//core1启动成功，清除标志</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">else</span> &#123;    <span class="comment">//core1</span></span><br><span class="line">		CSL_IPC_genGEMInterrupt(<span class="number">0</span>,<span class="number">1</span>);    <span class="comment">//IPC_IPCGR_SRCS1 = 1;</span></span><br><span class="line">		<span class="keyword">while</span>(!CSL_IPC_isGEMInterruptAckSet(<span class="number">1</span>,<span class="number">1</span>));    <span class="comment">//等待core0启动</span></span><br><span class="line">		CSL_IPC_clearGEMInterruptSource(<span class="number">1</span>,<span class="number">1</span>);    <span class="comment">//core0启动成功，清除标志</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><strong>核间IPC信号发送</strong>（可根据需要进行修改）</p>
-<p>可定义多个IPC核间通信函数，但是要区分得清各函数在何时何处被调用到，否则将会引起混乱。</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Ipc_Core0ToCore1</span><span class="params">(<span class="keyword">void</span>)</span></span>&#123;</span><br><span class="line"><span class="comment">/* 可自定义区域 */</span></span><br><span class="line">	<span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;<span class="number">16</span>;i++)&#123;</span><br><span class="line">		ptr0[i] = adData[i];</span><br><span class="line">	&#125;</span><br><span class="line"><span class="comment">/* 可自定义区域 */</span></span><br><span class="line">	CACHE_wbInvL1d(ptr0,<span class="number">64</span>,CACHE_WAIT);<span class="comment">//L1D line size 64bytes</span></span><br><span class="line">	CSL_IPC_genGEMInterrupt(<span class="number">1</span>,<span class="number">2</span>);<span class="comment">////ipcgr1</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Ipc_Core1ToCore0</span><span class="params">(<span class="keyword">void</span>)</span></span>&#123;</span><br><span class="line"><span class="comment">/* 可自定义区域 */</span></span><br><span class="line">	<span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;<span class="number">4</span>;i++)&#123;</span><br><span class="line">		ptr1[i] = daData[i];</span><br><span class="line">	&#125;</span><br><span class="line"><span class="comment">/* 可自定义区域 */</span></span><br><span class="line">	CACHE_wbInvL1d(ptr1,<span class="number">64</span>,CACHE_WAIT);                 <span class="comment">//L1D line size 64bytes</span></span><br><span class="line">	CSL_IPC_genGEMInterrupt(<span class="number">0</span>,<span class="number">2</span>);                               <span class="comment">//ipcgr0</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><strong>核间通信中断函数</strong>（可根据需要进行修改）</p>
-<p><strong>注意：</strong>实际使用时，并不需要在某处调用 <code>IpcIsr()</code> 函数，即实际上是被硬件中断进行控制的，在 <code>HWI_Create()</code> 函数中被使用到。</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">IpcIsr</span><span class="params">(UArg arg)</span></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(CSL_chipReadDNUM() == <span class="number">0</span>) &#123;                      <span class="comment">// core0</span></span><br><span class="line">		<span class="keyword">if</span>(CSL_IPC_isGEMInterruptAckSet(<span class="number">0</span>,<span class="number">2</span>))&#123;                      <span class="comment">//ipcgr0</span></span><br><span class="line">			CSL_IPC_clearGEMInterruptSource(<span class="number">0</span>,<span class="number">2</span>);</span><br><span class="line">			CACHE_invL1d(ptr1,<span class="number">64</span>,CACHE_WAIT);</span><br><span class="line">			<span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;<span class="number">4</span>;i++)&#123;</span><br><span class="line">				daData[i] = ptr1[i];</span><br><span class="line">			&#125;</span><br><span class="line">			Semaphore_post(sem0_da);    <span class="comment">//执行发送程序，将数据通过SPI发送到DA：通过semaphore切换task</span></span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">else</span>&#123;	<span class="comment">// core1</span></span><br><span class="line">		<span class="keyword">if</span>(CSL_IPC_isGEMInterruptAckSet(<span class="number">1</span>,<span class="number">2</span>))&#123;                          <span class="comment">//ipcgr1</span></span><br><span class="line">			CSL_IPC_clearGEMInterruptSource(<span class="number">1</span>,<span class="number">2</span>);</span><br><span class="line">			CACHE_invL1d(ptr0,<span class="number">64</span>,CACHE_WAIT);</span><br><span class="line">			<span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;<span class="number">16</span>;i++)&#123;</span><br><span class="line">				adData[i] = ptr0[i];</span><br><span class="line">			&#125;</span><br><span class="line">			Semaphore_post(sem1_anc);    <span class="comment">//执行core1的计算步骤，计算完后应该通知core0的ipc启动结果发送程序：通过semaphore切换task</span></span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h1 id="c6657特性">5. C6657特性</h1>
-<h2 id="l2缓存">L2缓存</h2>
-<p>Debug模式下，程序文件都写在L2缓存中。而C6657总共有 <code>2048KB</code> 大小的L2 缓存，其中每个核心分配到 <code>1024KB</code> ，缓存起始地址为 <code>0x00800000</code> 。</p>
-<p>在仿真器中分配内存大小一致，如下：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">MEMORY</span><br><span class="line">&#123;</span><br><span class="line">    L2SRAM (RWX) : org = <span class="number">0x800000</span>, len = <span class="number">0x100000</span></span><br><span class="line">    MSMCSRAM (RWX) : org = <span class="number">0xc000000</span>, len = <span class="number">0x100000</span></span><br><span class="line">    DDR3 (RWX) : org = <span class="number">0x80000000</span>, len = <span class="number">0x20000000</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>Written in &lt;<em>TMS320C6655/57 DataManual</em>&gt;:</p>
 
       
     </div>

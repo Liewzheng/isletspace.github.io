@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://code.islet.space/font//css?family=/CascadiaCode/CascadiaCode:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/themes/blue/pace-theme-minimal.css">
+  <script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"islet.space","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.7.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/db.json","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":true}}</script><script src="/js/config.js"></script>
+<meta name="description" content="本博文并不提供全面的教学指导，详细手册请查阅 Git-Reference 和 开发 。 Git 是一个开放源代码的版本控制系统，专用于处理分布在多个代码库上的大型项目。 Repo 是 google android 以 Git 为基础构建的代码库管理工具，依赖于 python2 脚本调用 Git，主要用来下载、管理android项目的软件仓库。 Repo 简化了跨多个代码库运行的流程，与 Git 相">
+<meta property="og:type" content="article">
+<meta property="og:title" content="repo and git">
+<meta property="og:url" content="http://islet.space/2022/01/25/Computer/2022-01-25-repo-and-git/index.html">
+<meta property="og:site_name" content="Coder的孤岛">
+<meta property="og:description" content="本博文并不提供全面的教学指导，详细手册请查阅 Git-Reference 和 开发 。 Git 是一个开放源代码的版本控制系统，专用于处理分布在多个代码库上的大型项目。 Repo 是 google android 以 Git 为基础构建的代码库管理工具，依赖于 python2 脚本调用 Git，主要用来下载、管理android项目的软件仓库。 Repo 简化了跨多个代码库运行的流程，与 Git 相">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://pic.islet.space/2022/02/image-20220226205719300.png">
+<meta property="og:image" content="https://pic.islet.space/2022/02/image-20220226211442066.png">
+<meta property="og:image" content="https://pic.islet.space/2022/02/image-20220226203128964.png">
+<meta property="og:image" content="https://pic.islet.space/2022/02/image-20220226203838866.png">
+<meta property="og:image" content="https://pic.islet.space/2022/02/image-20220226202721363.png">
+<meta property="og:image" content="https://pic.islet.space/2022/02/image-20220226213748945.png">
+<meta property="og:image" content="https://pic.islet.space/2022/02/image-20220226200020105.png">
+<meta property="og:image" content="https://pic.islet.space/2022/02/image-20220226211322680.png">
+<meta property="og:image" content="https://pic.islet.space/2022/02/image-20220226214736094.png">
+<meta property="og:image" content="https://pic.islet.space/2022/02/image-20220226214912676.png">
+<meta property="og:image" content="https://pic.islet.space/2022/02/image-20220226213843563.png">
+<meta property="og:image" content="https://pic.islet.space/2022/02/image-20220226202625977.png">
+<meta property="og:image" content="https://pic.islet.space/2022/02/image-20220226202114879.png">
+<meta property="og:image" content="https://pic.islet.space/2022/02/image-20220226223239807.png">
+<meta property="og:image" content="https://pic.islet.space/2022/02/image-20220226223823738.png">
+<meta property="og:image" content="https://pic.islet.space/2022/02/image-20220226223119337.png">
+<meta property="og:image" content="https://pic.islet.space/2022/02/image-20220225214016189.png">
+<meta property="og:image" content="https://pic.islet.space/2022/02/image-20220225211850394.png">
+<meta property="og:image" content="https://pic.islet.space/2022/02/image-20220225212102034.png">
+<meta property="og:image" content="https://pic.islet.space/2022/02/image-20220226193048479.png">
+<meta property="og:image" content="https://pic.islet.space/2022/01/image-20220125143434000.png">
+<meta property="og:image" content="https://pic.islet.space/2022/02/image-20220226220906805.png">
+<meta property="og:image" content="https://pic.islet.space/2022/02/image-20220226220753429.png">
+<meta property="og:image" content="https://pic.islet.space/2022/02/image-20220225211308567.png">
+<meta property="og:image" content="https://pic.islet.space/2022/02/image-20220225214801501.png">
+<meta property="article:published_time" content="2022-01-25T03:15:00.000Z">
+<meta property="article:modified_time" content="2022-02-26T14:53:24.067Z">
+<meta property="article:author" content="Liewzheng">
+<meta property="article:tag" content="repo">
+<meta property="article:tag" content="git">
+<meta property="article:tag" content="version control">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://pic.islet.space/2022/02/image-20220226205719300.png">
+
+
+<link rel="canonical" href="http://islet.space/2022/01/25/Computer/2022-01-25-repo-and-git/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://islet.space/2022/01/25/Computer/2022-01-25-repo-and-git/","path":"2022/01/25/Computer/2022-01-25-repo-and-git/","title":"repo and git"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>repo and git | Coder的孤岛</title>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<!-- hexo injector head_end end --></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Coder的孤岛</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">islet of the coder</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-首页"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-文章"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>文章</a></li>
+        <li class="menu-item menu-item-目录"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>目录</a></li>
+        <li class="menu-item menu-item-标签"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-简历"><a href="/resume/" rel="section"><i class="fa fa-address-card fa-fw"></i>简历</a></li>
+        <li class="menu-item menu-item-友链"><a href="/friends/" rel="section"><i class="fa fa-heartbeat fa-fw"></i>友链</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#git"><span class="nav-number">1.</span> <span class="nav-text">GIT</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#introduction"><span class="nav-number">1.1.</span> <span class="nav-text">INTRODUCTION</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#dvcs"><span class="nav-number">1.1.1.</span> <span class="nav-text">DVCS</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#branch-tag-refs-hash-code"><span class="nav-number">1.1.2.</span> <span class="nav-text">BRANCH &#x2F; TAG &#x2F; REFS &#x2F; HASH-CODE</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#configuration"><span class="nav-number">1.1.3.</span> <span class="nav-text">Configuration</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#branch-name"><span class="nav-number">1.1.4.</span> <span class="nav-text">Branch Name</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#master"><span class="nav-number">1.1.5.</span> <span class="nav-text">Master</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#head"><span class="nav-number">1.1.6.</span> <span class="nav-text">HEAD</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#git-command-grammer"><span class="nav-number">1.2.</span> <span class="nav-text">GIT COMMAND GRAMMER</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#git-add"><span class="nav-number">1.2.1.</span> <span class="nav-text">git add</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#file-name"><span class="nav-number">1.2.1.1.</span> <span class="nav-text">&lt;file name&gt;</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#git-blame"><span class="nav-number">1.2.2.</span> <span class="nav-text">git blame</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#file-name-1"><span class="nav-number">1.2.2.1.</span> <span class="nav-text">&lt;file name&gt;</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#git-branch"><span class="nav-number">1.2.3.</span> <span class="nav-text">git branch</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#a"><span class="nav-number">1.2.3.1.</span> <span class="nav-text">-a</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#d-branch-name"><span class="nav-number">1.2.3.2.</span> <span class="nav-text">-d &lt;branch name&gt;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#v"><span class="nav-number">1.2.3.3.</span> <span class="nav-text">-v</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#git-checkout"><span class="nav-number">1.2.4.</span> <span class="nav-text">git checkout</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#branch"><span class="nav-number">1.2.4.1.</span> <span class="nav-text">&lt;branch&gt;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#b"><span class="nav-number">1.2.4.2.</span> <span class="nav-text">-b</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#orphan-branch-name"><span class="nav-number">1.2.4.3.</span> <span class="nav-text">--orphan &lt;branch name&gt;</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#git-commit"><span class="nav-number">1.2.5.</span> <span class="nav-text">git commit</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#a-all"><span class="nav-number">1.2.5.1.</span> <span class="nav-text">-a&#x2F;-all</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#m"><span class="nav-number">1.2.5.2.</span> <span class="nav-text">-m &quot;&quot;</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#git-clone"><span class="nav-number">1.2.6.</span> <span class="nav-text">git clone</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#git-diff"><span class="nav-number">1.2.7.</span> <span class="nav-text">git diff</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#git-log"><span class="nav-number">1.2.8.</span> <span class="nav-text">git log</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#num"><span class="nav-number">1.2.8.1.</span> <span class="nav-text">-&lt;num&gt;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#author-%E6%88%96---committer"><span class="nav-number">1.2.8.2.</span> <span class="nav-text">--author 或 --committer</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#merges-%E6%88%96---no-merges"><span class="nav-number">1.2.8.3.</span> <span class="nav-text">--merges 或 --no-merges</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#path-file-name"><span class="nav-number">1.2.8.4.</span> <span class="nav-text">&lt;path &#x2F; file name&gt;</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#git-merge"><span class="nav-number">1.2.9.</span> <span class="nav-text">git merge</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#git-pull"><span class="nav-number">1.2.10.</span> <span class="nav-text">git pull</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#git-push"><span class="nav-number">1.2.11.</span> <span class="nav-text">git push</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#set-upstream"><span class="nav-number">1.2.11.1.</span> <span class="nav-text">--set-upstream</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#git-rebase"><span class="nav-number">1.2.12.</span> <span class="nav-text">git rebase</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#git-reset"><span class="nav-number">1.2.13.</span> <span class="nav-text">git reset</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#git-remote"><span class="nav-number">1.2.14.</span> <span class="nav-text">git remote</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#git-status"><span class="nav-number">1.2.15.</span> <span class="nav-text">git status</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#git-situation"><span class="nav-number">1.3.</span> <span class="nav-text">GIT SITUATION</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%9C%E7%A8%8Bgit-clone%E4%B8%80%E4%B8%AAmaster%E5%88%86%E6%94%AF%E4%B8%BA%E7%A9%BA%E7%9A%84%E4%BB%93%E5%BA%93%E6%97%B6"><span class="nav-number">1.3.1.</span> <span class="nav-text">远程git clone一个master分支为空的仓库时</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#conflict"><span class="nav-number">1.3.2.</span> <span class="nav-text">conflict</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#repo"><span class="nav-number">2.</span> <span class="nav-text">REPO</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#install-repo"><span class="nav-number">2.1.</span> <span class="nav-text">INSTALL REPO</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#setup-automatically"><span class="nav-number">2.1.1.</span> <span class="nav-text">SETUP AUTOMATICALLY</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#setup-manually"><span class="nav-number">2.1.2.</span> <span class="nav-text">SETUP MANUALLY</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#verification"><span class="nav-number">2.1.2.1.</span> <span class="nav-text">VERIFICATION</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#python-not-found"><span class="nav-number">2.1.3.</span> <span class="nav-text">PYTHON NOT FOUND</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95"><span class="nav-number">2.1.3.1.</span> <span class="nav-text">解决方法</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#repo-command-grammer"><span class="nav-number">2.2.</span> <span class="nav-text">REPO COMMAND GRAMMER</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#repo-init"><span class="nav-number">2.2.1.</span> <span class="nav-text">repo init</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#repo-branch"><span class="nav-number">2.2.2.</span> <span class="nav-text">repo branch</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#repo-sync"><span class="nav-number">2.2.3.</span> <span class="nav-text">repo sync</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#repo-help"><span class="nav-number">2.2.4.</span> <span class="nav-text">repo help</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#repo-situation"><span class="nav-number">2.3.</span> <span class="nav-text">REPO SITUATION</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#repo-switch-branch"><span class="nav-number">2.3.1.</span> <span class="nav-text">REPO SWITCH BRANCH</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#reference"><span class="nav-number">3.</span> <span class="nav-text">REFERENCE</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Liewzheng</p>
+  <div class="site-description" itemprop="description">笔记分享的旮旯孤岛而已</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">109</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">202</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="mailto:liewzheng@foxmail.com" title="E-Mail → mailto:liewzheng@foxmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://islet.space/2022/01/25/Computer/2022-01-25-repo-and-git/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Liewzheng">
+      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coder的孤岛">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          repo and git
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2022-01-25 11:15:00" itemprop="dateCreated datePublished" datetime="2022-01-25T11:15:00+08:00">2022-01-25</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2022-02-26 22:53:24" itemprop="dateModified" datetime="2022-02-26T22:53:24+08:00">2022-02-26</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Computer/" itemprop="url" rel="index"><span itemprop="name">Computer</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>本博文并不提供全面的教学指导，详细手册请查阅 <a target="_blank" rel="noopener" href="https://git-scm.com/docs/">Git-Reference</a> 和 <a target="_blank" rel="noopener" href="https://source.android.google.cn/source/developing?hl=zh-cn#staging-files">开发</a> 。</p>
+<p><code>Git</code> 是一个开放源代码的版本控制系统，专用于处理分布在多个代码库上的大型项目。</p>
+<p><code>Repo</code> 是 google android 以 <code>Git</code> 为基础构建的代码库管理工具，依赖于 <code>python2</code> 脚本调用 Git，主要用来下载、管理android项目的软件仓库。</p>
+<p><code>Repo</code> 简化了跨多个代码库运行的流程，与 <code>Git</code> 相辅相成。Repo 可以在必要时 <mark style="font-weight: 900;">整合多个 Git 代码库，将相关内容上传到我们的修订版本控制系统</mark>，借助单个 Repo 命令，<mark style="font-weight: 900;">可以将文件从多个代码库下载到本地工作目录</mark>。使用 Repo 执行基本的跨网络操作可大大简化文件管理工作。</p>
+<h1 id="git">GIT</h1>
+<p>对git的使用会分为 <a href="##INTROCUCTION"><strong>基础概念部分</strong></a>（即相关概念介绍）、<a href="##GIT%20COMMAND%20GRAMMER"><strong>指令语法</strong></a>、<a href="GIT%20SITUATION"><strong>使用场景</strong></a> 三部分。</p>
+<h2 id="introduction">INTRODUCTION</h2>
+<p><strong>DAG</strong>： Directed Acyclic Graph，有向无环图。</p>
+<p><strong>DVCS</strong>： Distributed Version Control System，分布式版本控制系统。</p>
+<h3 id="dvcs">DVCS</h3>
+<p><strong>节点</strong>：在DVCS中，每个节点代表项目的一个修订（一个版本），这些对象通常被称为提交。</p>
+<p><strong>有向边</strong>： 在DVCS中，每条边是基于两个修订之间的关系生成的。<mark style="font-weight: 900;">箭头是从父修订指向子修订的，代表他们之间的从属关系。</mark> 修订DAG中的箭头并不一定会形成闭环。通常修订的DAG是从左向右的结构（根节点在左，叶节点在右）或者自上而下结构（最新的版本在上面）。</p>
+<h3 id="branch-tag-refs-hash-code">BRANCH / TAG / REFS / HASH-CODE</h3>
+<p><strong>分支</strong>（branch）和 <strong>标签</strong> （tag）有时候也统称为 <strong>引用</strong>（refs），它们在修订 DAG 中的含义是样的，都是修订结构图表中的外部引用（指针）。</p>
+<figure>
+<img src="https://pic.islet.space/2022/02/image-20220226205719300.png" alt="image-20220226205719300" /><figcaption aria-hidden="true">image-20220226205719300</figcaption>
+</figure>
+<blockquote>
+<p>上图中，包含两个分支，当前的分支 Master 和另一分支 maint 。其中 <code>34ac2</code> 分支有一个 <code>v0.9</code> 的标签，另一个 <code>3fb00</code> 标签是合并提交的。</p>
+</blockquote>
+<p><strong>标签</strong>（tag），即 <strong>给定版本的符号名称</strong>，如 <code>v1.3-rc3</code> ，<mark style="font-weight: 900;">其永远指向相同对象，且不会变更</mark>。</p>
+<blockquote>
+<p>这就是一个允许开发人员快速查询和浏览的信息，且该信息必须对所有人来说都是具有相同意义的。</p>
+</blockquote>
+<p><strong>分支</strong>（branch），即 <strong>一系列开发工作的符号名称</strong>。</p>
+<p>本地分支的引用信息都存放在 <code>.git/refs/heads/</code> 路径下，如 <code>master</code> 分支信息存放于 <code>.git/refs/heads/master</code> 中，而 <code>refs/heads/</code> 为该 <code>master</code> 的命名空间。</p>
+<figure>
+<img src="https://pic.islet.space/2022/02/image-20220226211442066.png" alt="image-20220226211442066" /><figcaption aria-hidden="true">image-20220226211442066</figcaption>
+</figure>
+<blockquote>
+<p>目前Git在硬盘中采用了两种截然不同的方式来表示分支：<strong>松散格式</strong> 和 <strong>压缩格式</strong>。</p>
+<p>例如master分支（该分支是Git采用的默认分支名，用户在创建新的版本库时默认的分支名就是它）。</p>
+<ul>
+<li>采用 <strong>松散格式</strong> 时，它是 <code>.git/refs/heads/master</code> 中的一行文本，其中指代分支的 <strong>内容是十六进制的SHA-1码</strong>。</li>
+<li>采用 <strong>压缩格式</strong> 时，它是 <code>.git/packed-refs</code> 中的一行文本，使用 <strong>最顶部修订的SHA-1码</strong> 和 <strong>分支全名一起</strong> 表示该分支。</li>
+</ul>
+</blockquote>
+<h3 id="configuration">Configuration</h3>
+<p>可以通过 <code>git config --global user.email ""</code> 和 <code>git config --global user.name ""</code> 进行配置，相关信息存储在 <code>~/.gitconfig</code> 文件中。</p>
+<figure>
+<img src="https://pic.islet.space/2022/02/image-20220226203128964.png" alt="image-20220226203128964" /><figcaption aria-hidden="true">image-20220226203128964</figcaption>
+</figure>
+<h3 id="branch-name">Branch Name</h3>
+<table>
+<thead>
+<tr class="header">
+<th>分支</th>
+<th>命名</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>主分支</td>
+<td>master</td>
+<td>主分支，所有提供给用户使用的正式版本</td>
+</tr>
+<tr class="even">
+<td>开发分支</td>
+<td>dev</td>
+<td>开发分支，永远是功能最新最全的版本</td>
+</tr>
+<tr class="odd">
+<td>功能分支</td>
+<td>feature-*</td>
+<td>新功能分支，某个功能点正在开发的分支</td>
+</tr>
+<tr class="even">
+<td>发布分支</td>
+<td>release-*</td>
+<td>发布定期要上线的功能</td>
+</tr>
+<tr class="odd">
+<td>修复分支</td>
+<td>bug-*</td>
+<td>修复代码bug的分支</td>
+</tr>
+</tbody>
+</table>
+<h3 id="master">Master</h3>
+<p>代码库应该有且仅有一个主分支。所有提供给用户使用的正式版本，都在这个主分支上发布。Git主分支的名字，默认称为 <code>Master</code> 。<code>Master</code> 主分支是自动建立的，版本库初始化以后，默认就是在主分支在进行开发。</p>
+<p>主分支只用来分布重大版本，日常开发应该在另一条分支上完成。我们把开发用的分支，叫做 Dev 这个分支可以用来生成代码的最新隔夜版本（nightly）。如果想正式对外发布，就在 Master 分支上，对 Dev 分支进行”合并”（merge）。</p>
+<h3 id="head">HEAD</h3>
+<p><strong>git 中的分支</strong> 本质上是个指向 commit 对象的可变指针。</p>
+<p>而在每一个使用 git 的 <code>.git/</code> 路径下，还保存着一个名为 <code>HEAD</code> 的特别指针，一般来说，它是指向正在工作中的本地分支的指针。</p>
+<p><code>HEAD</code> 的指向是可以改变的，比如在 commit / checkout / branch / tag / retest / restore 等操作之后。</p>
+<p>有的时候 <code>HEAD</code> 会指向一个没有分支名字的修订版本，这种情况叫 <strong><em>detached HEAD</em></strong>。</p>
+<figure>
+<img src="https://pic.islet.space/2022/02/image-20220226203838866.png" alt="image-20220226203838866" /><figcaption aria-hidden="true">image-20220226203838866</figcaption>
+</figure>
+<p>在最底层实现中，Git 历史版本识别是通过一个 SHA-1 哈希码实现的，例如 <code>2b953b4380</code> 。</p>
+<p>Git 支持多种形式的版本查询，其中就包括使用哈希码的精确匹配（最少提供4个字符）。</p>
+<h2 id="git-command-grammer">GIT COMMAND GRAMMER</h2>
+<ol type="1">
+<li>使用 <code>git &lt;command&gt; -h</code> 可以获得该命令的所有参数用法帮助（简略的）。然后可以针对性地去搜索该指令和参数的用法。</li>
+<li>下方会列出一些较为常见的（自己会使用得到的）命令及其参数。个别较常见的命令会贴上一张官方的参数用法图片。</li>
+</ol>
+<h3 id="git-add">git add</h3>
+<h4 id="file-name">&lt;file name&gt;</h4>
+<p>使用本命令参数可以直接确认某个文件的变动记录。</p>
+<blockquote>
+<p>如 <code>git add readme.md</code> 确认了 <code>readme.md</code> 文件的修改，<code>git add .</code> 确认了当前路径下包含的所有子路径和子文件的修改。</p>
+</blockquote>
+<h3 id="git-blame">git blame</h3>
+<h4 id="file-name-1">&lt;file name&gt;</h4>
+<p>本参数可以查看文件内部每一行内容的变动，例如新增一行，文件的编辑者等。</p>
+<figure>
+<img src="https://pic.islet.space/2022/02/image-20220226202721363.png" alt="image-20220226202721363" /><figcaption aria-hidden="true">image-20220226202721363</figcaption>
+</figure>
+<blockquote>
+<p>跟 <code>git diff</code> 不同的是，本命令是真的打开文件然后一行一行地给你修改和提示信息，包括每一行是谁写的</p>
+</blockquote>
+<h3 id="git-branch">git branch</h3>
+<figure>
+<img src="https://pic.islet.space/2022/02/image-20220226213748945.png" alt="image-20220226213748945" /><figcaption aria-hidden="true">image-20220226213748945</figcaption>
+</figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git branch -D origin/xxxxxx</span><br><span class="line">git branch -D xxxxxx</span><br></pre></td></tr></table></figure>
+<h4 id="a">-a</h4>
+<p>使用本命令标志可以显示 <strong>本地 (local) 所有分支</strong> 和 <strong>远程 (remote) 所有分支</strong>。 其中，带 <code>*</code> 的为当前所在分支。</p>
+<figure>
+<img src="https://pic.islet.space/2022/02/image-20220226200020105.png" alt="image-20220226200020105" /><figcaption aria-hidden="true">image-20220226200020105</figcaption>
+</figure>
+<h4 id="d-branch-name">-d &lt;branch name&gt;</h4>
+<p>使用本命令标志可以删除 某个分支。</p>
+<figure>
+<img src="https://pic.islet.space/2022/02/image-20220226211322680.png" alt="image-20220226211322680" /><figcaption aria-hidden="true">image-20220226211322680</figcaption>
+</figure>
+<h4 id="v">-v</h4>
+<p>使用命令标志可以展示分支的哈希函数和commit信息，<code>-v</code> 即 <code>--verbose</code> ，表示 "冗长的"。</p>
+<blockquote>
+<p>例如: 下方，从 <code>master</code> 主分支刚创建出新分支 <code>SWV</code> 时，两者的哈希函数和commit信息是一样的。</p>
+<figure>
+<img src="https://pic.islet.space/2022/02/image-20220226214736094.png" alt="image-20220226214736094" /><figcaption aria-hidden="true">image-20220226214736094</figcaption>
+</figure>
+<p>但修改了 <code>SWV</code> 分支的内容并确认提交之后，其哈希函数和commit信息就发生了改变。</p>
+<figure>
+<img src="https://pic.islet.space/2022/02/image-20220226214912676.png" alt="image-20220226214912676" /><figcaption aria-hidden="true">image-20220226214912676</figcaption>
+</figure>
+</blockquote>
+<h3 id="git-checkout">git checkout</h3>
+<figure>
+<img src="https://pic.islet.space/2022/02/image-20220226213843563.png" alt="image-20220226213843563" /><figcaption aria-hidden="true">image-20220226213843563</figcaption>
+</figure>
+<h4 id="branch">&lt;branch&gt;</h4>
+<p>单独使用此参数可以用于切换分支（也有新的实验性语句 <code>switch</code> 可以使用，但是 <code>checkout</code> 更稳定）或恢复工作树文件。使用方式如：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git checkout dev</span><br><span class="line">git checkout origin/dev</span><br><span class="line">git checkout xxxxxx</span><br></pre></td></tr></table></figure>
+<h4 id="b">-b</h4>
+<p>使用本标志 + <code>&lt;new branch name&gt;</code> 可以创建一个新分支并切换至该分支，等同于 先使用 <code>git branch &lt;new branch name&gt;</code> 和 <code>git checkout &lt;new branch name&gt;</code> 。</p>
+<h4 id="orphan-branch-name">--orphan &lt;branch name&gt;</h4>
+<p>使用本命令标志可以创建一个与主分支没有联系的孤儿分支。</p>
+<h3 id="git-commit">git commit</h3>
+<h4 id="a-all">-a/-all</h4>
+<p>使用本标志指 <strong>接受被追踪文件的所有变更</strong>，可以在暂存区创建一个注释来实现操作隔离。</p>
+<h4 id="m">-m ""</h4>
+<p>本标志和参数可以支持在 <code>""</code> 内实现对合并的快速注释。</p>
+<h3 id="git-clone">git clone</h3>
+<p>使用本命令可以直接从某个库中拷贝某个路径下的 repository，如：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> git@git.islet.space:srv/led_blink.git</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>当然，拷贝不公开的repository时，需要确保已经将自己的 SSH-key 加入到该网站的 <code>/home/git/.ssh/authorized_keys</code> 文件中。公开的 repository 可以随便拷贝。</p>
+</blockquote>
+<h3 id="git-diff">git diff</h3>
+<p>本命令可以简要地查看距离上次 <code>commit</code> 操作到底修改什么信息。</p>
+<figure>
+<img src="https://pic.islet.space/2022/02/image-20220226202625977.png" alt="image-20220226202625977" /><figcaption aria-hidden="true">image-20220226202625977</figcaption>
+</figure>
+<h3 id="git-log">git log</h3>
+<p><strong>注意</strong>：所有的 <code>git log</code> 命令只会显示如下格式的 log 记录。</p>
+<figure>
+<img src="https://pic.islet.space/2022/02/image-20220226202114879.png" alt="image-20220226202114879" /><figcaption aria-hidden="true">image-20220226202114879</figcaption>
+</figure>
+<h4 id="num">-&lt;num&gt;</h4>
+<p>如输入 <code>git log -2</code>，可以查看当前项目最近两条的提交记录。</p>
+<h4 id="author-或---committer">--author 或 --committer</h4>
+<p>本标志支持查看提交者信息，使用方法如：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">log</span> --author=Linus</span><br></pre></td></tr></table></figure>
+<h4 id="merges-或---no-merges">--merges 或 --no-merges</h4>
+<p>本标志支持查看已合并和提交或非合并提交的信息。</p>
+<h4 id="path-file-name">&lt;path / file name&gt;</h4>
+<p>本参数可以</p>
+<h3 id="git-merge">git merge</h3>
+<p>默认情况下，Git执行 <strong>快进式合并</strong>（fast-forward merge），会直接将 Master 分支指向 Dev 分支。 使用 <code>–no–ff</code> 参数后，会执行正常合并，在 Master 分支上生成一个新节点。为了保证版本演进的清晰，我们希望采用这种做法。即：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git merge -no-ff dev</span><br></pre></td></tr></table></figure>
+<h3 id="git-pull">git pull</h3>
+<p>执行本命令后，Git系统会将服务器版本库中的变更下载到本机。自动将 remote 版本和 local 版本进行合并，然后把合并后的变更提交到<strong>本机</strong> 版本库中。</p>
+<h3 id="git-push">git push</h3>
+<h4 id="set-upstream">--set-upstream</h4>
+<p>设置本地（新）分支的远程上游分支，一些在网上可以查找到的信息如下：</p>
+<ul>
+<li>set upstream branches to work properly</li>
+<li>closely associated with remote branches</li>
+<li>define the branch tracked on the remote branches (also called as remote tracking branch)</li>
+<li><code>--set-upstream</code> is the same as <code>-u</code></li>
+</ul>
+<p>在本地创建的新分支如果希望在远程版本库中添加对应的上游分支，使用此命令和标志可以使得此分支推送至远程分支的目标更加明确。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git push --set-upstream origin better-random</span><br></pre></td></tr></table></figure>
+<h3 id="git-rebase">git rebase</h3>
+<p>rebase是将自己的分支重新基于别人的分支之上，即，在别人的基础上再添加什么东西。</p>
+<h3 id="git-reset">git reset</h3>
+<figure>
+<img src="https://pic.islet.space/2022/02/image-20220226223239807.png" alt="image-20220226223239807" /><figcaption aria-hidden="true">image-20220226223239807</figcaption>
+</figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git reset --hard HEAD^</span><br></pre></td></tr></table></figure>
+<h3 id="git-remote">git remote</h3>
+<p>本命令可以进行如下操作：</p>
+<ol type="1">
+<li>对远程repository进行 <strong>添加</strong>（add）、<strong>删除</strong>（remove）、<strong>重命名</strong>（rename）等操作。</li>
+</ol>
+<figure>
+<img src="https://pic.islet.space/2022/02/image-20220226223823738.png" alt="image-20220226223823738" /><figcaption aria-hidden="true">image-20220226223823738</figcaption>
+</figure>
+<h3 id="git-status">git status</h3>
+<p>直接使用本命令可以查看当前路径下所有文件的修改记录。</p>
+<figure>
+<img src="https://pic.islet.space/2022/02/image-20220226223119337.png" alt="image-20220226223119337" /><figcaption aria-hidden="true">image-20220226223119337</figcaption>
+</figure>
+<h2 id="git-situation">GIT SITUATION</h2>
+<h3 id="远程git-clone一个master分支为空的仓库时">远程git clone一个master分支为空的仓库时</h3>
+<p>要么整个仓库都为空，要么肯定还有分支，使用 <code>git branch -a</code> 查看远程仓库分支，一般如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">* dev</span><br><span class="line">  remotes/origin/xxxxxxxxxx</span><br><span class="line">  remotes/origin/HEAD -&gt; origin/dev</span><br><span class="line">  remotes/origin/dev</span><br><span class="line">  remotes/origin/master</span><br></pre></td></tr></table></figure>
+<p>而正好 <code>xxxxxxxxxx</code> 可能就是真正存放现有文件的分支，使用 <code>git checkout origin/xxxxxxxxxx</code> 进行分支切换。</p>
+<h3 id="conflict">conflict</h3>
+<p>当文件冲突时，Git系统无法自动合并它们，因为可能这些代码块不是独立的。</p>
+<figure>
+<img src="https://pic.islet.space/2022/02/image-20220225214016189.png" alt="image-20220225214016189" /><figcaption aria-hidden="true">image-20220225214016189</figcaption>
+</figure>
+<figure>
+<img src="https://pic.islet.space/2022/02/image-20220225211850394.png" alt="image-20220225211850394" /><figcaption aria-hidden="true">image-20220225211850394</figcaption>
+</figure>
+<p><code>git pull</code> 也 pull 不下来。</p>
+<figure>
+<img src="https://pic.islet.space/2022/02/image-20220225212102034.png" alt="image-20220225212102034" /><figcaption aria-hidden="true">image-20220225212102034</figcaption>
+</figure>
+<h1 id="repo">REPO</h1>
+<p>repo 部分将分为 <a href="##INSTALL%20REPO"><strong>安装repo</strong></a> 、<a href="##REPO%20COMMAND%20GRAMMER"><strong>命令语法</strong></a> 和 <a href="##REPO%20SITUATION"><strong>使用场景</strong></a> 三部分。</p>
+<h2 id="install-repo">INSTALL REPO</h2>
+<p><code>repo</code> 的安装有 <a href="###SETUP%20AUTOMATICALLY"><strong>自动</strong></a> 和 <a href="###SETUP%20MANUALLY"><strong>手动</strong></a> 两种，类 UNIX 系统都可以通过对应的包管理工具进行安装，但如果没有手动修改源，使用效果可能也不尽如人意。</p>
+<p>安装完毕之后还需要进行 <a href="####VERIFICATION"><strong>版本验证</strong></a>，可能还需要 <a href="PYTHON%20NOT%20FOUND"><strong>对python版本进行更改</strong></a> 。</p>
+<h3 id="setup-automatically">SETUP AUTOMATICALLY</h3>
+<p>根据 google android <a target="_blank" rel="noopener" href="https://source.android.google.cn/setup/develop?hl=zh-cn#installing-repo">installing repo</a> 指示，可以从 apt 包管理库中下载和安装 repo，也可以使用 google源、清华源或其他源进行手动下载。</p>
+<p>Debian 系 Linux 的安装：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get update</span><br><span class="line">sudo apt-get install repo</span><br></pre></td></tr></table></figure>
+<p>Mac 安装：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo port install repo</span><br></pre></td></tr></table></figure>
+<p>或</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo brew install repo</span><br></pre></td></tr></table></figure>
+<h3 id="setup-manually">SETUP MANUALLY</h3>
+<p>手动安装 <code>repo</code> 的大概思路如下：</p>
+<ol type="1">
+<li>在用户根目录 <code>~</code> 下新建 <code>bin</code> 文件夹，即把 <code>$HOME/bin</code> 或 <code>~/bin</code> 当做 <code>repo</code> 的执行文件路径。</li>
+<li>将该路径加入系统变量 <code>PATH</code> 中，可以通过写入 <code>~/.profile</code> 或对应的 shell 配置文件（如zsh的 <code>~/.zshrc</code> ）中并更新该配置文件来实现。</li>
+<li>然后在该路径下载 repo的执行程序，主要是将某个 url 中（如下方所示为清华源的repo）的信息写入 <code>~/bin/repo</code> 中。</li>
+<li>为所有用户 <code>a</code> 附加 <code>~/bin/repo</code> 的可执行 <code>x</code> 权限。</li>
+<li>把 <code>export REPO_URL='https://mirrors.tuna.tsinghua.edu.cn/git/git-repo'</code> 加入到配置文件中，使其一直生效（也可以在 terminal 中临时输入此命令，使其在设备重启前生效）。如果未写入 shell 的配置文件，则重启后该变量就会消失。</li>
+</ol>
+<p>下方代码以安装了 <code>zsh</code> shell 的 linux 或 debian 系系统为例，可以拷贝粘贴保存至脚本以运行。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 手动安装repo</span></span><br><span class="line">mkdir ~/bin</span><br><span class="line">PATH=~/bin:<span class="variable">$PATH</span></span><br><span class="line">curl https://mirrors.tuna.tsinghua.edu.cn/git/git-repo &gt; ~/bin/repo</span><br><span class="line">chmod a+x ~/bin/repo</span><br><span class="line"></span><br><span class="line"><span class="comment"># 将源添加到shell配置文件并使其生效</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;export REPO_URL=&#x27;https://mirrors.tuna.tsinghua.edu.cn/git/git-repo&#x27;&quot;</span> &gt;&gt; ~/.zshrc</span><br><span class="line"><span class="built_in">source</span> ~/.zshrc</span><br><span class="line"></span><br><span class="line"><span class="comment"># 验证信息</span></span><br><span class="line">repo version</span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$REPO</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p><strong>注意</strong>：google android用的是 <code>https://storage.googleapis.com/git-repo-downloads/repo</code> 的链接，但不是很方便下载，所以就更换成了清华源的。</p>
+</blockquote>
+<h4 id="verification">VERIFICATION</h4>
+<p>安装完毕之后，可以对手动安装的 <code>repo</code> 进行版本验证，输入 <code>repo version</code> 和 <code>echo $REPO_URL</code> 即可，结果如下：</p>
+<p>此处提示的 <code>&lt;repo not installed&gt;</code> 是正常的，因为在 <code>~</code> 目录下的确没有安装 <code>repo</code> .</p>
+<figure>
+<img src="https://pic.islet.space/2022/02/image-20220226193048479.png" alt="image-20220226193048479" /><figcaption aria-hidden="true">image-20220226193048479</figcaption>
+</figure>
+<h3 id="python-not-found">PYTHON NOT FOUND</h3>
+<p>如果出现以下提示，则说明你的系统中没有为 <code>python</code> 添加 <strong>软连接</strong>。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/usr/bin/env: ‘python’: No such file or directory</span><br></pre></td></tr></table></figure>
+<h4 id="解决方法">解决方法</h4>
+<ol type="1">
+<li>验证是否已经安装了 <code>python2</code> ：输入命令 <code>python2 --version</code>，如果提示对应的版本信息则跳到 第3步，否则进行 第2步。</li>
+<li>下载 <code>python2</code>：debian 系用户输入命令 <code>sudo apt install python2</code> 进行安装。mac系用户输入 <code>sudo port install python2</code> 进行安装。</li>
+<li>在 <code>/usr/bin/</code> 目录下为 <code>python2</code> 创建软链：<code>sudo ln -s /usr/bin/python2 /usr/bin/python</code></li>
+<li>再次运行 <code>repo init</code> 即可正常。</li>
+</ol>
+<p>如，在 Kali Linux 绑定 <code>python2</code> 为 <code>python</code> 之后，可以输入 <code>whereis python</code> 或 <code>python --version</code> 进行验证：</p>
+<figure>
+<img src="https://pic.islet.space/2022/01/image-20220125143434000.png" alt="image-20220125143434000" /><figcaption aria-hidden="true">image-20220125143434000</figcaption>
+</figure>
+<h2 id="repo-command-grammer">REPO COMMAND GRAMMER</h2>
+<ol type="1">
+<li>参考 <a target="_blank" rel="noopener" href="https://source.android.google.cn/setup/develop/repo?hl=zh-cn#upload">Repo 命令参考资料</a></li>
+<li>使用 <code>repo &lt;command&gt; -h</code> 可以获取相应命令的帮助。</li>
+<li>在初始化过 repo 的路径下使用 <code>repo help</code> 可以获得以下信息：</li>
+</ol>
+<figure>
+<img src="https://pic.islet.space/2022/02/image-20220226220906805.png" alt="image-20220226220906805" /><figcaption aria-hidden="true">image-20220226220906805</figcaption>
+</figure>
+<h3 id="repo-init">repo init</h3>
+<p>执行下方的命令会在当前目录中创建一个 <code>.repo/</code> 目录并初始化 Repo 的版本控制，其中包含存放 Repo 源代码，以及从 URL（对应下方 <code>-u</code> 参数） 中同步下来的 Git 代码库 的某个分支 （对应下方 <code>-b</code> 参数）。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">repo init -u &lt;git@xxxx.com:xxxx/manifest&gt; -b &lt;oneOfTheBranch&gt;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>-u</code>：即URL，指定从中检索清单代码库的网址。</li>
+<li><code>-m</code>：选择代码库中的清单文件。如果未选择清单名称，则默认为 <code>default.xml</code>。</li>
+<li><code>-b</code>：指定修订版本，即特定的 manifest-branch，可以是 <code>dev</code> 分支，也可以是特定分支，拉下来之后参照 <a href="##REPO%20SWITCH%20BRANCH">REPO SWITCH BRANCH</a> 进行分支切换。</li>
+</ul>
+<p><strong>注意</strong>：对于所有剩余的 Repo 命令，当前的工作目录必须是 <code>.repo/</code> 的父目录或该父目录的子目录。</p>
+<h3 id="repo-branch">repo branch</h3>
+<p>使用本命令可以查看所有的 <strong>目前可用的主题分支</strong>（currently available topic branches）。</p>
+<h3 id="repo-sync">repo sync</h3>
+<p>从 <code>manifest</code> 源中往外拉取分支。下方的 <code>-j&lt;number&gt;</code> 是指创建多线程进行数据资源获取，如 <code>-j4</code> 是指创建四线程进行数据资源获取。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">repo sync</span><br><span class="line">repo sync -j4</span><br><span class="line">repo sync -j8</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>但，bitbucket的网络资源极差，很多情况下都拉不下来代码。</p>
+</blockquote>
+<h3 id="repo-help">repo help</h3>
+<p>在其他地方如果没有运行过 <code>repo init</code> 而直接输入 <code>repo help</code> ，则会出现以下信息，详见 <a href="##REPO%20INIT">REPO INIT</a> 。</p>
+<figure>
+<img src="https://pic.islet.space/2022/02/image-20220226220753429.png" alt="image-20220226220753429" /><figcaption aria-hidden="true">image-20220226220753429</figcaption>
+</figure>
+<h2 id="repo-situation">REPO SITUATION</h2>
+<h3 id="repo-switch-branch">REPO SWITCH BRANCH</h3>
+<p>前文有说过 “借助单个 Repo 命令，<mark style="font-weight: 900;">可以将文件从多个代码库下载到本地工作目录</mark>”，即使用repo拉下来的是多个 git repository，且这个repo是通过 <code>.xml</code> 文件进行管理的，也就是它自身包含了一些版本和分支切换相关的信息。</p>
+<p>如果要对repo拉下来的东西进行分支切换，就要参考一下步骤：</p>
+<ol type="1">
+<li>到 <code>.repo/manifest</code> 路径中。</li>
+<li>使用 <code>git branch -a</code> 查看分支信息。</li>
+<li>使用 <code>git checkout &lt;branch name&gt;</code> 进行分支切换。</li>
+<li>再次使用 <code>repo sync</code> 命令进行同步。</li>
+</ol>
+<figure>
+<img src="https://pic.islet.space/2022/02/image-20220225211308567.png" alt="image-20220225211308567" /><figcaption aria-hidden="true">image-20220225211308567</figcaption>
+</figure>
+<p>下图是通过 <code>repo</code> 拉下来的多个git repository 之一中的隐藏文件，可以看到这个 <code>.git</code> 文件被使用指向上级 <code>.repo/</code> 路径下的某个 <code>.git</code> 文件，也就是说，需要先通过 <code>repo</code> 去拉取信息，再使用 <code>git</code> 来切换分支。</p>
+<figure>
+<img src="https://pic.islet.space/2022/02/image-20220225214801501.png" alt="image-20220225214801501" /><figcaption aria-hidden="true">image-20220225214801501</figcaption>
+</figure>
+<h1 id="reference">REFERENCE</h1>
+<ol type="1">
+<li><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/06e1f67c8939">Git与Repo简单入门</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.yiibai.com/git/git_rebase.html">git rebase 命令</a></li>
+<li><a target="_blank" rel="noopener" href="https://git-scm.com/docs">git reference</a></li>
+<li>《Git高手之路》，Jakub Narebski，人民邮电出版社</li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>感谢您的支持和鼓励</div>
+  <button>
+    Donate
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="https://photo.islet.space/2021/00/IMG_4588.JPG" alt="Liewzheng WeChat Pay">
+        <span>WeChat Pay</span>
+      </div>
+      <div>
+        <img src="https://photo.islet.space/2021/00/IMG_4590.JPG" alt="Liewzheng Alipay">
+        <span>Alipay</span>
+      </div>
+
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/repo/" rel="tag"># repo</a>
+              <a href="/tags/git/" rel="tag"># git</a>
+              <a href="/tags/version-control/" rel="tag"># version control</a>
+          </div>
+
+        
+
+  <div id="vcomments" style="margin: 1rem 0 0 0;"></div>
+  <script>
+    new Valine({
+      el: '#vcomments',
+      appId: 'vRGM12EcYxDSM2lat5qjjSeY-gzGzoHsz',
+      appKey: 'WBgAb6NTAFQ7DYtgH0uOPNNh'
+    })
+  </script>
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/01/23/Computer/2022-01-23-%E7%BB%99Mac-Big-Sur%E4%BF%AE%E6%94%B9%E5%A4%96%E6%8E%A5%E6%98%BE%E7%A4%BA%E5%99%A8%E7%9A%84%E5%88%86%E8%BE%A8%E7%8E%87/" rel="prev" title="给Mac Big Sur修改外接显示器的分辨率">
+                  <i class="fa fa-chevron-left"></i> 给Mac Big Sur修改外接显示器的分辨率
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2022/01/28/Linux/System/2022-01-28-Kali-%E4%B8%8E-MBA-2015/" rel="next" title="Kali 与 MBA-2015">
+                  Kali 与 MBA-2015 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">粤ICP备19004822号 </a>
+  </div>
+
+<div class="copyright">
+  &copy; 2019 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">liewzheng</span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdn.jsdelivr.net/npm/mermaid@8.12.0/dist/mermaid.min.js","integrity":"sha256-0dD7vUjUCTGJjeLnPotQQJIcSzug5fO6WDMYYyNIX4c="}}</script>
+  <script src="/js/third-party/tags/mermaid.js"></script>
+
+
+  <script src="/js/third-party/pace.js"></script>
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":"enable","tags":"all","js":{"url":"https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js","integrity":"sha256-r+3itOMtGGjap0x+10hu6jW/gZCzxHsoKrOd7gyRSGY="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>

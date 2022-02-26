@@ -162,7 +162,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">108</span>
+          <span class="site-state-item-count">109</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -173,7 +173,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">200</span>
+        <span class="site-state-item-count">202</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -207,6 +207,432 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://islet.space/2021/12/27/Hardware/ESP32/2021-12-27-islet%E5%AE%B6%E5%BA%AD%E7%89%A9%E8%81%94%E7%BD%91/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Liewzheng">
+      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coder的孤岛">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/12/27/Hardware/ESP32/2021-12-27-islet%E5%AE%B6%E5%BA%AD%E7%89%A9%E8%81%94%E7%BD%91/" class="post-title-link" itemprop="url">islet家庭物联网</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-12-27 19:40:00" itemprop="dateCreated datePublished" datetime="2021-12-27T19:40:00+08:00">2021-12-27</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2022-02-24 19:41:26" itemprop="dateModified" datetime="2022-02-24T19:41:26+08:00">2022-02-24</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/InternetOfThings/" itemprop="url" rel="index"><span itemprop="name">InternetOfThings</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p><strong>GITEE</strong>: https://gitee.com/isletspace/esp32iot</p>
+<p>本项目是使用 <strong>微信小程序</strong>+<strong>腾讯云</strong>+<strong>乐鑫开发板</strong>+<strong>5V-多路-继电器</strong>+<strong>220V-AC-电器</strong> 的模式对家庭中的硬件进行检测和控制，本项目涉及到 <strong>网络前端</strong>、<strong>服务器后端</strong>、<strong>网络通信</strong> 和 <strong>物联网硬件控制</strong> 方面的相关知识。</p>
+<p><strong>需要实现的功能</strong>：</p>
+<ol type="1">
+<li>开发板能够自动连接家庭WiFi</li>
+<li>开发板能够通过MQTT协议与后台服务器取得联系</li>
+<li>开发板能够定时自动获取时钟并校准</li>
+<li>开发板能够根据MQTT协议控制外围电路</li>
+<li>开发板能够根据已经设置的参数与实时的传感器参数比对，并在一定环境条件内开启/关闭相关电路</li>
+<li>手机可以通过微信小程序发送MQTT数据至服务器</li>
+</ol>
+<p><strong>软件开发平台</strong>：Mac</p>
+<p><strong>硬件开发IDE</strong>：Arduino</p>
+<h1 id="硬件准备">硬件准备</h1>
+<ol type="1">
+<li>4路5V红板（光耦/高低电平）继电器 *1</li>
+<li>DHT11温度模块 *2</li>
+<li>加热器 *1</li>
+<li>ESP32-WROOM-32开发板 *1</li>
+</ol>
+<p>其他：</p>
+<ol type="1">
+<li>杜邦线</li>
+<li>电烙铁</li>
+<li>锡丝</li>
+<li>松香</li>
+<li>面包板</li>
+</ol>
+<h2 id="芯片模组比对选型">芯片模组比对选型</h2>
+<p>ESP32-WROOM-32X（此处 <code>X</code> 代表不确定） 和 ESP32-WROVER-X（此处 <code>X</code> 代表不确定） 在性能上基本一模一样，包括核心数、最大时钟频率、Flash大小、支持的接口类型 和 特殊传感器等等。除了在 PSRAM、工作温度范围、天线、WiFi最高频率 和 模组尺寸上有所区别外。 ESP32-WROVER-X 则具有PSRAM 和 最大的面积（18mm × 31.4mm × 3.3mm）。</p>
+<figure>
+<img src="https://pic.islet.space/2021/12/image-20211228014701607.png" alt="官方展示的ESP32模组性能参数对比" /><figcaption aria-hidden="true">官方展示的ESP32模组性能参数对比</figcaption>
+</figure>
+<h2 id="芯片选型">芯片选型</h2>
+<p>无脑选了ESP32-WROOM-32SE，反正自己用，而且便宜（￥21.5包邮）。</p>
+<h2 id="芯片基本信息">芯片基本信息</h2>
+<figure>
+<img src="https://pic.islet.space/2021/12/image-20211228012555509.png" alt="Arduino所展示的开发板可调参数" /><figcaption aria-hidden="true">Arduino所展示的开发板可调参数</figcaption>
+</figure>
+<h1 id="arduino-ide准备">Arduino IDE准备</h1>
+<p>使用 Arduino IDE 进行开发，但开发配置相关的 <code>.json</code> 文件 及其安装包都在 <code>github.com</code> 上，但因为加速器的加速层级可能和IDE拉取资源包所用的数据层级不在同一个上面，无法代理，就白天基本上无法下载，凌晨（正经程序员谁tm熬夜）才有机会下载东西。</p>
+<blockquote>
+<p>英文版下的 <code>首选项</code> 是 <code>Preferences</code> 。</p>
+</blockquote>
+<figure>
+<img src="https://pic.islet.space/2021/12/image-20211228011905234.png" alt="修改附加开发板管理网址" /><figcaption aria-hidden="true">修改附加开发板管理网址</figcaption>
+</figure>
+<p>然后去 <code>开发板管理器</code> 中搜索 <code>esp32</code> 进行安装。</p>
+<figure>
+<img src="https://pic.islet.space/2021/12/image-20211228012156101.png" alt="目录-开发板-开发板管理器" /><figcaption aria-hidden="true">目录-开发板-开发板管理器</figcaption>
+</figure>
+<figure>
+<img src="https://pic.islet.space/2021/12/image-20211228012244049.png" alt="搜索关键词“esp32”" /><figcaption aria-hidden="true">搜索关键词“esp32”</figcaption>
+</figure>
+<h2 id="解决github问题">解决github问题</h2>
+<h3 id="方法一">方法一</h3>
+<p>本来应该用如下链接进行配置的：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://dl.espressif.com/dl/package_esp32_index.json </span><br></pre></td></tr></table></figure>
+<p>自己扒拉了一遍该文件中可能包含的所有资源包（主要是 <code>github.com</code> 上的），然后修改了 <code>.json</code> 文件，放到自己的桶里，然后放出来使用，还好这个文件里有明确提到要哪些资源不然也没法扒拉。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://code.islet.space/espressif/dl/package_esp32_index.json</span><br></pre></td></tr></table></figure>
+<p><strong>注意</strong>：Mac系统下可能会因为曾经下载过的缓存文件无法生效（如果自行修改了网站上的 <code>.json</code> 文件的话），需要自行清除缓存，打开 <code>~/Library/ArduinoXX/cache/</code> 并对应删除该网站的文件夹即可，如 <code>code.islet.space</code> 。（这里的 <code>ArduinoXX</code> 中的 <code>XX</code> 需要自己去看自己的文件夹，应该是受版本控制的）</p>
+<figure>
+<img src="https://pic.islet.space/2021/12/image-20211228005455101.png" alt="修改链接后可以正常下载" /><figcaption aria-hidden="true">修改链接后可以正常下载</figcaption>
+</figure>
+<h3 id="方法二">方法二</h3>
+<p>自己去github，用浏览器或者下载器下好了以后放到 <code>用户目录--资源库--程序缓存--指定位置</code>（如下）。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">~&#x2F;Library&#x2F;ArduinoXX&#x2F;staging&#x2F;packages&#x2F;</span><br></pre></td></tr></table></figure>
+<p>这个文件夹也就需要放这么多文件吧。</p>
+<figure>
+<img src="https://pic.islet.space/2021/12/image-20211228012028024.png" alt="资源库缓存指定位置下的文件" /><figcaption aria-hidden="true">资源库缓存指定位置下的文件</figcaption>
+</figure>
+<p>亲测，第二种方法更好用。</p>
+<figure>
+<img src="https://pic.islet.space/2021/12/image-20211228011814461.png" alt="提示安装成功" /><figcaption aria-hidden="true">提示安装成功</figcaption>
+</figure>
+<h1 id="visual-studio-code-ide准备">Visual Studio Code IDE准备</h1>
+<p>总的来说，VS Code的IDE配置会比Arduino更为复杂，VS Code下载毫无压力，且VS Code使用习惯之后更加方便。</p>
+<p>至少前期配置工作来说，VS Code更为友好。</p>
+<h2 id="espressif-idf插件安装">Espressif IDF插件安装</h2>
+<p>首先去插件市场搜索 <code>Espressif IDF</code> 插件进行安装，然后点击 <code>查看</code> -&gt; <code>命令面板</code>。</p>
+<figure>
+<img src="https://pic.islet.space/2021/12/image-20211228182209737.png" alt="image-20211228182209737" /><figcaption aria-hidden="true">image-20211228182209737</figcaption>
+</figure>
+<p>到这里需要输入 <code>configure esp-idf extension</code> 以进入该插件的配置页面。</p>
+<figure>
+<img src="https://pic.islet.space/2021/12/image-20211228182314161.png" alt="image-20211228182314161" /><figcaption aria-hidden="true">image-20211228182314161</figcaption>
+</figure>
+<h2 id="必要工具安装">必要工具安装</h2>
+<p>然后它就会提示你需要安装几个必要插件，有 Git / Python / CMake 和 Ninja。这些都可以从Espressif的 <a target="_blank" rel="noopener" href="https://docs.espressif.com/projects/esp-idf/zh_CN/latest/esp32/get-started/index.html">官方文档</a> 中获取到安装步骤。</p>
+<figure>
+<img src="https://pic.islet.space/2021/12/image-20211228182508965.png" alt="image-20211228182508965" /><figcaption aria-hidden="true">image-20211228182508965</figcaption>
+</figure>
+<p>下方为四个工具的官方下载链接，前三个都可以通过官方下载软件包进行安装，第四个 Ninja 我安装不成功，是通过 Mac Ports 进行安装的。</p>
+<p>GIT : https://git-scm.com/</p>
+<p>PYTHON : https://www.python.org/downloads/</p>
+<p>CMAKE : https://cmake.org/download/</p>
+<p>NINJA : https://github.com/ninja-build/ninja/releases</p>
+<p>需要注意的是，CMAKE 和 Ninja 安装完还需要加入到系统环境变量 <code>PATH</code> 中去，Windows系统下的系统环境变量添加比较方便，下方为 Mac 系统下 CMake 的系统环境变量添加方法。</p>
+<h3 id="cmake命令行">CMAKE命令行</h3>
+<p>打开Mac系统下的 CMake GUI，点击 <code>Tools</code> --&gt; <code>How to Install For Command Line Use</code> ，可以查看到三种将 CMake 添加到命令行中去运行的方法。</p>
+<figure>
+<img src="https://pic.islet.space/2021/12/image-20211228183126458.png" alt="点击“工具”菜单中的“如何为命令行使用进行安装”" /><figcaption aria-hidden="true">点击“工具”菜单中的“如何为命令行使用进行安装”</figcaption>
+</figure>
+<figure>
+<img src="https://pic.islet.space/2021/12/image-20211228183411724.png" alt="可以查看到三种安装方法" /><figcaption aria-hidden="true">可以查看到三种安装方法</figcaption>
+</figure>
+<p>使用的是第二种方法，向命令行输入 <code>sudo "/Applications/CMake.app/Contents/bin/cmake-gui" --install</code> 并输入管理员密码即可。</p>
+<p>然后通过 <code>cmake --version</code> 可以查看到版本号说明安装成功，但需要注意的是 <code>whereis cmake</code> 还是没有用。</p>
+<figure>
+<img src="https://pic.islet.space/2021/12/image-20211228183403876.png" alt="操作结果" /><figcaption aria-hidden="true">操作结果</figcaption>
+</figure>
+<h3 id="工具安装验证">工具安装验证</h3>
+<p>四个必须要安装的软件都已经安装完毕，通过 <code>--version</code> 可以查看版本号。</p>
+<figure>
+<img src="https://pic.islet.space/2021/12/image-20211228184801497.png" alt="安装验证" /><figcaption aria-hidden="true">安装验证</figcaption>
+</figure>
+<h2 id="配置继续">配置继续</h2>
+<p>四个必要工具安装完毕之后，关闭 <code>ESP-IDF Setup</code> 页面，然后重新在 <strong>命令面板</strong> 输入 <code>configure esp-idf extension</code> 以进入该插件的配置页面。</p>
+<figure>
+<img src="https://pic.islet.space/2021/12/image-20211228184938407.png" alt="再次进入配置页面" /><figcaption aria-hidden="true">再次进入配置页面</figcaption>
+</figure>
+<p>此处选择 <code>EXPRESS</code> 即可，里面会要求选择从哪个服务器下载（自己看情况选择<code>Github</code> / <code>Espressif</code>）、IDF版本（默认选最新）、IDF放置路径、工具路径、使用的Python3路径 等几个信息，选完了就进入下一界面，会自动下载安装 ESP-IDF。</p>
+<figure>
+<img src="https://pic.islet.space/2021/12/image-20211228185458736.png" alt="详细配置页面" /><figcaption aria-hidden="true">详细配置页面</figcaption>
+</figure>
+<p>耐心等待下载完毕即可，我用 <code>Espressif</code> 服务器下载不下来，然后改用 <code>Github</code> 进行下载的。</p>
+<figure>
+<img src="https://pic.islet.space/2021/12/image-20211228185748221.png" alt="image-20211228185748221" /><figcaption aria-hidden="true">image-20211228185748221</figcaption>
+</figure>
+<p>下载过程页面如下：</p>
+<figure>
+<img src="https://pic.islet.space/2021/12/image-20211228190058612.png" alt="image-20211228190058612" /><figcaption aria-hidden="true">image-20211228190058612</figcaption>
+</figure>
+<figure>
+<img src="https://pic.islet.space/2021/12/image-20211228190027057.png" alt="image-20211228190027057" /><figcaption aria-hidden="true">image-20211228190027057</figcaption>
+</figure>
+<p>最后提示的安装成功：</p>
+<figure>
+<img src="https://pic.islet.space/2021/12/image-20211228190438498.png" alt="image-20211228190438498" /><figcaption aria-hidden="true">image-20211228190438498</figcaption>
+</figure>
+<h1 id="示例项目载入">示例项目载入</h1>
+<p>在 <strong>命令面板</strong> 中输入 <code>show examples projects</code> 。</p>
+<figure>
+<img src="https://pic.islet.space/2021/12/image-20211228190651117.png" alt="image-20211228190651117" /><figcaption aria-hidden="true">image-20211228190651117</figcaption>
+</figure>
+<p>即可调出 ESP-IDF的示例代码项目列表。</p>
+<figure>
+<img src="https://pic.islet.space/2021/12/image-20211228190738993.png" alt="image-20211228190738993" /><figcaption aria-hidden="true">image-20211228190738993</figcaption>
+</figure>
+<p>选择 <code>blink</code> 作为测试代码。</p>
+<figure>
+<img src="https://pic.islet.space/2021/12/image-20211228190839371.png" alt="image-20211228190839371" /><figcaption aria-hidden="true">image-20211228190839371</figcaption>
+</figure>
+<h2 id="项目构建">项目构建</h2>
+<p>这里可以用命令面板输入 <code>esp build your project</code> ，也可以点击GUI下方的 <img src="https://pic.islet.space/2021/12/image-20211231124940242.png" alt="image-20211231124940242" />进行构建。</p>
+<figure>
+<img src="https://pic.islet.space/2021/12/image-20211228191057987.png" alt="命令面板构建" /><figcaption aria-hidden="true">命令面板构建</figcaption>
+</figure>
+<p>构建完成后，会生成 <code>build</code> 文件夹，下次构建时CMake会查看变动的文件然后只编译变动过的代码。</p>
+<p>也可以删除该 <code>build</code> 文件夹，使其全部重新构建，会比较费时。</p>
+<figure>
+<img src="https://pic.islet.space/2021/12/image-20211228191156613.png" alt="build过程" /><figcaption aria-hidden="true">build过程</figcaption>
+</figure>
+<p>点击下方的闪电按钮<img src="https://pic.islet.space/2021/12/image-20211231125445685.png" alt="烧录按钮" />即可烧录，烧录成功提示如下：</p>
+<figure>
+<img src="https://pic.islet.space/2021/12/image-20211228221323556.png" alt="烧录过程" /><figcaption aria-hidden="true">烧录过程</figcaption>
+</figure>
+<h1 id="连接wifi">连接WiFi</h1>
+<p>下图为使用示例代码更改的项目代码文件内容：</p>
+<figure>
+<img src="https://pic.islet.space/2021/12/image-20211228222302314.png" alt="项目文件内容示例" /><figcaption aria-hidden="true">项目文件内容示例</figcaption>
+</figure>
+<p>利用ESP自带的示例代码<code>station</code> 进行调试和更改，需要注意以下几点：</p>
+<ol type="1">
+<li><p>不用去更改 <code>isletSpaceIotMain.c</code> 中的 <code>SSID</code> 和 <code>PASS</code> ，只需要在 <code>sdkconfig</code> 文件中进行更改即可（如下图）。</p></li>
+<li><p>所有的 WiFi设置参数 都可以在 <code>sdkconfig</code> 文件中进行修改，如需要连接 AP 的 名称和密码，还有自身设备所显示的名称。</p></li>
+<li><p>修改文件名之后，需要对两个 <code>CMakeList.txt</code>文件 和 一个<code>Makefile</code> 文件中的项目和文件名进行修改（如下图）。</p></li>
+</ol>
+<figure>
+<img src="https://pic.islet.space/2021/12/image-20211228222645861.png" alt="如果修改代码名称需要修改main文件夹下的CMakeList文件" /><figcaption aria-hidden="true">如果修改代码名称需要修改main文件夹下的CMakeList文件</figcaption>
+</figure>
+<figure>
+<img src="https://pic.islet.space/2021/12/image-20211228222717269.png" alt="如果修改项目名称需要修改根目录下的CMakeList" /><figcaption aria-hidden="true">如果修改项目名称需要修改根目录下的CMakeList</figcaption>
+</figure>
+<figure>
+<img src="https://pic.islet.space/2021/12/image-20211228222733903.png" alt="如果修改项目名称需要修改根目录下的Makefile" /><figcaption aria-hidden="true">如果修改项目名称需要修改根目录下的Makefile</figcaption>
+</figure>
+<h2 id="menuconfig">MENUCONFIG</h2>
+<p>MENUCONFIG 或者说 <code>sdkconfig</code> ，一个是图形界面的，一个是纯文本形式的。</p>
+<p>用menuconfig的话只需要找到下方的齿轮按钮即可。</p>
+<figure>
+<img src="https://pic.islet.space/2021/12/image-20211231130402110.png" alt="image-20211231130402110" /><figcaption aria-hidden="true">image-20211231130402110</figcaption>
+</figure>
+<p>可以找到WiFi相关的配置位置：</p>
+<figure>
+<img src="https://pic.islet.space/2021/12/image-20211231130507316.png" alt="image-20211231130507316" /><figcaption aria-hidden="true">image-20211231130507316</figcaption>
+</figure>
+<p>对 <code>sdkconfig</code> 文件中的设备名称进行修改。</p>
+<figure>
+<img src="https://pic.islet.space/2021/12/image-20211228223040901.png" alt="image-20211228223040901" /><figcaption aria-hidden="true">image-20211228223040901</figcaption>
+</figure>
+<p>修改完毕后可以在路由器 AP 的后台查看到已经连接的设备的名称，如下。</p>
+<figure>
+<img src="https://pic.islet.space/2021/12/image-20211228223134009.png" alt="image-20211228223134009" /><figcaption aria-hidden="true">image-20211228223134009</figcaption>
+</figure>
+<h1 id="mqtt协议">MQTT协议</h1>
+<p>根据 Espressif 官网的 <a target="_blank" rel="noopener" href="https://docs.espressif.com/projects/esp-idf/zh_CN/latest/esp32/api-reference/protocols/mqtt.html">ESP-MQTT</a> 开发文档可知，MQTT 协议支持以下几种形式：</p>
+<ul>
+<li><p>MQTT over TCP</p></li>
+<li><p>MQTT over SSL with mbedtls</p></li>
+<li><p>MQTT over Websocket</p></li>
+<li><p>MQTT over Websocket Secure.</p></li>
+</ul>
+<p>各MQTT协议形式（与对应SDK里的 <a href="##MQTT相关示例代码">MQTT示例代码</a>）及其所使用的端口号不同：</p>
+<ul>
+<li><code>protocols/mqtt/tcp</code>: MQTT over tcp, default port 1883</li>
+<li><code>protocols/mqtt/ssl</code>: MQTT over tcp, default port 8883</li>
+<li><code>protocols/mqtt/ssl_psk</code>: MQTT over tcp using pre-shared keys for authentication, default port 8883</li>
+<li><code>protocols/mqtt/ws</code>: MQTT over Websocket, default port 80</li>
+<li><code>protocols/mqtt/wss</code>: MQTT over Websocket Secure, default port 443</li>
+</ul>
+<h2 id="mqtt事件结构体">MQTT事件结构体</h2>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * MQTT event configuration structure</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> &#123;</span></span><br><span class="line">    <span class="keyword">esp_mqtt_event_id_t</span> event_id;       <span class="comment">/*!&lt; MQTT event type */</span></span><br><span class="line">    <span class="keyword">esp_mqtt_client_handle_t</span> client;    <span class="comment">/*!&lt; MQTT client handle for this event */</span></span><br><span class="line">    <span class="keyword">void</span> *user_context;                 <span class="comment">/*!&lt; User context passed from MQTT client config */</span></span><br><span class="line">    <span class="keyword">char</span> *data;                         <span class="comment">/*!&lt; Data associated with this event */</span></span><br><span class="line">    <span class="keyword">int</span> data_len;                       <span class="comment">/*!&lt; Length of the data for this event */</span></span><br><span class="line">    <span class="keyword">int</span> total_data_len;                 <span class="comment">/*!&lt; Total length of the data (longer data are supplied with multiple events) */</span></span><br><span class="line">    <span class="keyword">int</span> current_data_offset;            <span class="comment">/*!&lt; Actual offset for the data associated with this event */</span></span><br><span class="line">    <span class="keyword">char</span> *topic;                        <span class="comment">/*!&lt; Topic associated with this event */</span></span><br><span class="line">    <span class="keyword">int</span> topic_len;                      <span class="comment">/*!&lt; Length of the topic for this event associated with this event */</span></span><br><span class="line">    <span class="keyword">int</span> msg_id;                         <span class="comment">/*!&lt; MQTT messaged id of message */</span></span><br><span class="line">    <span class="keyword">int</span> session_present;                <span class="comment">/*!&lt; MQTT session_present flag for connection event */</span></span><br><span class="line">    <span class="keyword">esp_mqtt_error_codes_t</span> *error_handle; <span class="comment">/*!&lt; esp-mqtt error handle including esp-tls errors as well as internal mqtt errors */</span></span><br><span class="line">    <span class="keyword">bool</span> retain;                        <span class="comment">/*!&lt; Retained flag of the message associated with this event */</span></span><br><span class="line">&#125; <span class="keyword">esp_mqtt_event_t</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">esp_mqtt_event_t</span> *<span class="keyword">esp_mqtt_event_handle_t</span>;</span><br></pre></td></tr></table></figure>
+<h2 id="mqtt相关示例代码">MQTT相关示例代码</h2>
+<p>了解完官方开发文档中的信息，就可以知道MQTT示例代码里的这些文件夹命名含义，以及自己需要打开哪个示例代码了。</p>
+<figure>
+<img src="https://pic.islet.space/2021/12/image-20211228223617579.png" alt="image-20211228223617579" /><figcaption aria-hidden="true">image-20211228223617579</figcaption>
+</figure>
+<h2 id="menuconfig-1">MENUCONFIG</h2>
+<p>MENUCONFIG 页面可以看到MQTT的相关配置信息。</p>
+<figure>
+<img src="https://pic.islet.space/2021/12/image-20211229011902429.png" alt="image-20211229011902429" /><figcaption aria-hidden="true">image-20211229011902429</figcaption>
+</figure>
+<h1 id="mqtt服务器开发">MQTT服务器开发</h1>
+<p>自行购买了腾讯云的服务器，然后完成了配置（步骤略），发现自测“主题订阅”不成功。</p>
+<figure>
+<img src="https://pic.islet.space/2021/12/image-20211229033019004.png" alt="image-20211229033019004" /><figcaption aria-hidden="true">image-20211229033019004</figcaption>
+</figure>
+<p>然后刚好发现服务器的 Ubuntu 20 系统使用的防火墙是 <code>iptables</code> ，顺利打开 <code>1883</code> 端口。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo iptables -A INPUT -p tcp --dport 1883 -j ACCEPT</span><br></pre></td></tr></table></figure>
+<p>然后查看打开情况。</p>
+<figure>
+<img src="https://pic.islet.space/2021/12/image-20211229032825212.png" alt="image-20211229032825212" /><figcaption aria-hidden="true">image-20211229032825212</figcaption>
+</figure>
+<p>顺便在服务器页面也打开相关配置。</p>
+<figure>
+<img src="https://pic.islet.space/2021/12/image-20211229032753559.png" alt="image-20211229032753559" /><figcaption aria-hidden="true">image-20211229032753559</figcaption>
+</figure>
+<p>最后自测成功：</p>
+<figure>
+<img src="https://pic.islet.space/2021/12/image-20211229032920902.png" alt="image-20211229032920902" /><figcaption aria-hidden="true">image-20211229032920902</figcaption>
+</figure>
+<figure>
+<img src="https://pic.islet.space/2021/12/image-20211229032953396.png" alt="image-20211229032953396" /><figcaption aria-hidden="true">image-20211229032953396</figcaption>
+</figure>
+<h1 id="小程序开发未完">小程序开发（未完）</h1>
+<p>因为个人使用腾讯云注册了自己的域名 islet.space，且小程序也属于腾讯自家产品，为了后续开发的兼容性和便利性，就同步参阅了腾讯云的 <a target="_blank" rel="noopener" href="https://cloud.tencent.com/document/product/1081/47684">物联网自主品牌小程序开发文档</a> 。</p>
+<figure>
+<img src="https://pic.islet.space/2021/12/image-20211227202550338.png" alt="image-20211227202550338" /><figcaption aria-hidden="true">image-20211227202550338</figcaption>
+</figure>
+<h2 id="微信开发者工具">微信开发者工具</h2>
+<p>微信开发者工具下载页面：https://cloud.tencent.com/document/product/1081/47685</p>
+<figure>
+<img src="https://pic.islet.space/2021/12/image-20211227202759080.png" alt="image-20211227202759080" /><figcaption aria-hidden="true">image-20211227202759080</figcaption>
+</figure>
+<figure>
+<img src="https://pic.islet.space/2021/12/image-20211227203058077.png" alt="image-20211227203058077" /><figcaption aria-hidden="true">image-20211227203058077</figcaption>
+</figure>
+<h2 id="后台设置">后台设置</h2>
+<p><a target="_blank" rel="noopener" href="https://cloud.tencent.com/document/product/1081/34738">物联网开发平台</a></p>
+<h1 id="debug">DEBUG</h1>
+<h2 id="烧录和调试过程报错">烧录和调试过程报错</h2>
+<p>出现这种情况，可能是所选芯片不正确导致。</p>
+<figure>
+<img src="https://pic.islet.space/2021/12/image-20211228214645589.png" alt="烧录错误提示" /><figcaption aria-hidden="true">烧录错误提示</figcaption>
+</figure>
+<h3 id="解决过程">解决过程</h3>
+<p>重新选择了芯片，然后将烧录方法改为 <code>UART</code> ，重新烧录即可成功。</p>
+<figure>
+<img src="https://pic.islet.space/2021/12/image-20211228215715687.png" alt="在插件中选择”扩展设置“" /><figcaption aria-hidden="true">在插件中选择”扩展设置“</figcaption>
+</figure>
+<figure>
+<img src="https://pic.islet.space/2021/12/image-20211228215826153.png" alt="选择需要调试的设备类型" /><figcaption aria-hidden="true">选择需要调试的设备类型</figcaption>
+</figure>
+<figure>
+<img src="https://pic.islet.space/2021/12/image-20211228215747432.png" alt="选择烧录方式" /><figcaption aria-hidden="true">选择烧录方式</figcaption>
+</figure>
+<figure>
+<img src="https://pic.islet.space/2021/12/image-20211228215518196.png" alt="烧录成功提示" /><figcaption aria-hidden="true">烧录成功提示</figcaption>
+</figure>
+<h2 id="头文件查找错误">头文件查找错误</h2>
+<p>这个bug始终没有解决，之后再说吧。。。</p>
+<figure>
+<img src="https://pic.islet.space/2021/12/image-20211228232022467.png" alt="提示无该文件" /><figcaption aria-hidden="true">提示无该文件</figcaption>
+</figure>
+<h2 id="wifi初始化出错">WIFI初始化出错</h2>
+<p>将WiFi-station的代码搬到 MQTT-TCP中，发现 <code>wifiStationInit()</code> 函数初始化错误，报错的行数是 <code>117</code> 。</p>
+<figure>
+<img src="https://pic.islet.space/2021/12/image-20211229143428551.png" alt="wifi初始化函数出错" /><figcaption aria-hidden="true">wifi初始化函数出错</figcaption>
+</figure>
+<p>经检查，发现该函数示例代码的一部分，并未改动，且未添加其他自定义的 <code>.h</code> 或 <code>.c</code> 文件进行编译，应该不存在人为修改错误。</p>
+<figure>
+<img src="https://pic.islet.space/2021/12/image-20211229150011594.png" alt="检查函数定义" /><figcaption aria-hidden="true">检查函数定义</figcaption>
+</figure>
+<p>因为仅修改了本 <code>isletSpaceIotMain.c</code> 文件，就在本文件中搜索 <code>esp_event_loop_create_default</code> 关键字，发现在 <code>app_main()</code> 中也有该语句，初步判断可能是两次调用导致错误，就注释了 <code>298</code> 行 和 <code>299</code> 行进行重新编译和烧录，问题解决，设备可以正常连接到路由器。</p>
+<figure>
+<img src="https://pic.islet.space/2021/12/image-20211229150054429.png" alt="注释重复语句" /><figcaption aria-hidden="true">注释重复语句</figcaption>
+</figure>
+<h2 id="mqtt服务器连接错误">MQTT服务器连接错误</h2>
+<p>在设备成功接入WiFi后，发现MQTT客户端无法连接至服务器。给出的错误提示是 <code>There are no transports valid</code> ，大致意思即连接不可用。</p>
+<figure>
+<img src="https://pic.islet.space/2021/12/image-20211229150744192.png" alt="Monitor提示无可用传输" /><figcaption aria-hidden="true">Monitor提示无可用传输</figcaption>
+</figure>
+<p>经过检查，发现原来填写在 <code>sdkconfig</code> 文件中的 <code>Broker URL</code> 链接为 <code>https://iot.islet.space</code> ，而实际上，官网给出的配置方式如下：</p>
+<figure>
+<img src="https://pic.islet.space/2021/12/image-20211229152435708.png" alt="查看官方URI定义" /><figcaption aria-hidden="true">查看官方URI定义</figcaption>
+</figure>
+<p>打开项目配置菜单，修改为 <code>mqtt://iot.islet.space</code> ，并重新 Build 和 Flash。</p>
+<figure>
+<img src="https://pic.islet.space/2021/12/image-20211229151252895.png" alt="修改URL" /><figcaption aria-hidden="true">修改URL</figcaption>
+</figure>
+<p>可以发现错误已解决，设备已经正常连接至服务器。</p>
+<figure>
+<img src="https://pic.islet.space/2021/12/image-20211229152118764.png" alt="Monitor提示成功" /><figcaption aria-hidden="true">Monitor提示成功</figcaption>
+</figure>
+<p>尝试在对应主题下发布信息进行测试：</p>
+<figure>
+<img src="https://pic.islet.space/2021/12/image-20211229152036214.png" alt="尝试发布信息" /><figcaption aria-hidden="true">尝试发布信息</figcaption>
+</figure>
+<p>通过终端Monitor可以观察到，设备正常接收到数据：</p>
+<figure>
+<img src="https://pic.islet.space/2021/12/image-20211229152141547.png" alt="设备接收成功" /><figcaption aria-hidden="true">设备接收成功</figcaption>
+</figure>
+<h2 id="eventhandler未进入">eventHandler未进入</h2>
+<figure>
+<img src="https://pic.islet.space/2021/12/image-20211229182911935.png" alt="image-20211229182911935" /><figcaption aria-hidden="true">image-20211229182911935</figcaption>
+</figure>
+<h1 id="参考">参考</h1>
+<ol type="1">
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/xujiuba/article/details/107234040">Mac 安装 CMake 配置及环境配置</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=Lc6ausiKvQM">Quick User Guide for the ESP-IDF VS Code Extension</a></li>
+<li><a target="_blank" rel="noopener" href="https://docs.espressif.com/projects/esp-idf/zh_CN/latest/esp32/get-started/index.html#id2">ESP-IDF 编程指南</a></li>
+<li><a target="_blank" rel="noopener" href="https://docs.espressif.com/projects/esp-idf/en/latest/esp32/api-reference/protocols/mqtt.html">ESP-MQTT</a></li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -2074,211 +2500,6 @@ COMPILE AND LINK
 <li><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/f32cfd6c208b">OSI网络模型</a></li>
 <li><a target="_blank" rel="noopener" href="https://baike.baidu.com/item/本质安全/1078274">本质安全</a></li>
 <li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/87868499">本质安全型电气设备防爆原理</a></li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://islet.space/2021/09/20/Communication/2021-09-20-%E6%97%A0%E7%BA%BF%E9%80%9A%E4%BF%A1%E7%BD%91%E7%BB%9C/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Liewzheng">
-      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Coder的孤岛">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/09/20/Communication/2021-09-20-%E6%97%A0%E7%BA%BF%E9%80%9A%E4%BF%A1%E7%BD%91%E7%BB%9C/" class="post-title-link" itemprop="url">无线通信网络</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-
-    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
-    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2021-09-20 14:45:00" itemprop="dateCreated datePublished" datetime="2021-09-20T14:45:00+08:00">2021-09-20</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-09-24 07:23:21" itemprop="dateModified" datetime="2021-09-24T07:23:21+08:00">2021-09-24</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Communication/" itemprop="url" rel="index"><span itemprop="name">Communication</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="前置知识">前置知识</h1>
-<ul>
-<li>带宽及传输速率转换</li>
-<li>TCP/IP网络协议</li>
-<li>硬件功耗计算和测量</li>
-</ul>
-<h1 id="概述">概述</h1>
-<p>将从通信速率、通信距离、通信功耗、组网能力/网路容量、 应用场景 及 安全性 等各方面来区分无线通信各种技术。</p>
-<h2 id="通信距离和通信速率">通信距离和通信速率</h2>
-<table>
-<thead>
-<tr class="header">
-<th></th>
-<th>超近距离<br>10公分以内</th>
-<th>近距离<br>1米以内</th>
-<th>近距离<br>20米以内</th>
-<th>中距离<br>20至100米</th>
-<th>远距离<br>1公里以内</th>
-<th>超远距离<br>1公里以上</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><strong>超高速率</strong><br>&gt; 100Mbps</td>
-<td></td>
-<td>RFID</td>
-<td>WiFi</td>
-<td></td>
-<td>5G</td>
-<td></td>
-</tr>
-<tr class="even">
-<td><strong>高速率</strong><br>&lt; 100Mbps</td>
-<td></td>
-<td>RFID</td>
-<td>WiFi</td>
-<td></td>
-<td>3G/4G</td>
-<td></td>
-</tr>
-<tr class="odd">
-<td><strong>中速率</strong><br>&lt; 10Mbps</td>
-<td></td>
-<td></td>
-<td>WiFi<br>Bluethooth</td>
-<td>Bluethooth</td>
-<td>CMDA2K1X<br>2G</td>
-<td></td>
-</tr>
-<tr class="even">
-<td><strong>低速率</strong><br>&lt; 1Mbps</td>
-<td>NFC</td>
-<td></td>
-<td></td>
-<td>ZigBee<br>Z-Ware</td>
-<td>《IEEE 802.11 ah》</td>
-<td>Lora<br>NB-IOT（基于MTC）<br>GPRS</td>
-</tr>
-<tr class="odd">
-<td><strong>超低速率</strong><br>&lt; 1Kbps</td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td>Sigfox</td>
-</tr>
-</tbody>
-</table>
-<p>还有很多躺在历史垃圾堆角落里，没有得到使用和普及的通信协议，如 WiMax（IEEE 802.16），</p>
-<h2 id="通信功耗">通信功耗</h2>
-<p><strong>超高功耗</strong>：&gt; 100mA</p>
-<p><strong>高功耗</strong>：30~100mA</p>
-<p><strong>中功耗</strong>：&lt; 30mA</p>
-<p><strong>低功耗</strong>：&lt; 20mA</p>
-<p><strong>超低功耗</strong>：&lt; 10mA</p>
-<table>
-<thead>
-<tr class="header">
-<th>超低功耗</th>
-<th>低功耗</th>
-<th>中功耗</th>
-<th>高功耗</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-</tbody>
-</table>
-<h2 id="组网能力网路容量">组网能力/网路容量</h2>
-<h2 id="应用场景">应用场景</h2>
-<h2 id="lpwanlpwa">LPWAN/LPWA</h2>
-<p><strong>LPWAN</strong>， Low Power Wide Area Network，低功耗广域网络，也可以缩写为LPWA。</p>
-<p>LPWAN 不是指任何一种特定技术，而是作为任何网络的通用术语，这些网络旨在以比其他网络（如蜂窝、卫星或 WiFi）更低的功率进行无线通信。此外，与其他使用蓝牙或 NFC 的低功耗网络相比，LPWAN 的通信距离更远。</p>
-<p>LPWA 网络非常有限的带宽不适合大多数消费者和商业应用，例如语音、视频、音频甚至文本消息。因此，LPWA 网络几乎完全由物联网 (IoT) 和 M2M（机器对机器）通信中的设备使用。</p>
-<p>虽然冰箱、灯泡或 Nest 温度计等家用或商用设备都可以轻松搭载家庭或办公室 WiFi 连接，但某些设备不能依赖这种连接。</p>
-<p>LoRa、SigFox、NB-IoT 都属于 LPWA 的范畴，LoRa 不需要 SIM 卡，NB-IoT 需要 SIM 卡。</p>
-<figure>
-<img src="https://pic.islet.space/2021/09/image-20210920171429124.png" alt="image-20210920171429124" /><figcaption aria-hidden="true">image-20210920171429124</figcaption>
-</figure>
-<h1 id="lora">LoRa</h1>
-<p>LoRa是美国Semtech公司的专有技术，实际是一种采用扩频方案的无线调制解调技术。Semtech在2012年通过并购法国Cycleo公司获得LoRa的IP产权，以此设计制造射频芯片并进行市场销售，是一家纯半导体公司，垄断LoRa芯片的供货。目前Semtech虽然也进行少量LoRa的IP授权，如国内的阿里，但IP是Semtech专有，没有授权任何公司无法设计制造LoRa芯片，所以客户的选择余地很小。</p>
-<p>LoRa使用的也是公共频段进行射频信号传输，上层协议及规范由LoRaWan定义，LoRa联盟负责发布和维护。任何人可以购买LoRa芯片或者模块来设计LoRa终端和网关设备，也可以设计或者购买设备来搭建LoRa网络，所以目前多数的LoRa网络都是小区域和私有的，很少有全国性的通用物联网络，而设备和网络间的兼容也是一个很大的挑战。</p>
-<p>LoRa通过扩频技术实现高灵敏度，从而能够进行远距离传输，但是网络容量有限，无法高效实现大批量设备信息的并行接收和处理，这对于大面积或全国性的部署是个巨大挑战。</p>
-<h1 id="术语">术语</h1>
-<h2 id="link-budget">Link Budget</h2>
-<p>A link budget is used to compute cell coverage by accounting for all the factors that determine the cell coverage to balance the system cost against the required cell capacity. Link budget factors controlled by the RF engineer include transmitter-radiated power, antenna gain, noise figures, and co-channel interference (i.e., reuse factor <em>N</em>). Factors that cannot be controlled directly, but must be considered in the link budget, include propagation path loss and system bandwidth.</p>
-<p>链路预算是用来计算小区覆盖率的，它考虑了决定小区覆盖率的所有因素，以平衡系统成本和所需小区容量。由射频工程师控制的链路预算因素包括发射器辐射功率、天线增益、噪声数字和同信道干扰（即重用系数N）。不能直接控制，但必须在链路预算中考虑的因素包括传播路径损耗和系统带宽。</p>
-<h1 id="参考">参考</h1>
-<ol type="1">
-<li>《无线传感网络》杨博雄/倪玉华</li>
-<li><a target="_blank" rel="noopener" href="http://www.elecfans.com/iot/631444_a.html">物联网通信标准分类 谁最有优势？</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.zhihu.com/question/19687054/answer/632679689">为什么WIMAX没有普及？</a></li>
-<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/79948173">什么是LPWA</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.hisilicon.com/cn/techtalk/nb-iot">NB-IoT 通往智能世界的基础联接技术</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.sciencedirect.com/topics/engineering/link-budget">Link Budget - an overview | ScienceDirect Topics</a></li>
-<li><a target="_blank" rel="noopener" href="https://cloud.tencent.com/product/lpwa">LPWA 物联网络</a></li>
 </ol>
 
       

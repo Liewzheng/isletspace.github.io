@@ -162,7 +162,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">108</span>
+          <span class="site-state-item-count">109</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -173,7 +173,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">200</span>
+        <span class="site-state-item-count">202</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -780,6 +780,423 @@
 <h1 id="reference">REFERENCE</h1>
 <ol type="1">
 <li><a target="_blank" rel="noopener" href="https://www.cnblogs.com/lovesKey/p/10791914.html">在linux访问macos下的分区</a></li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://islet.space/2022/01/25/Computer/2022-01-25-repo-and-git/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Liewzheng">
+      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coder的孤岛">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/01/25/Computer/2022-01-25-repo-and-git/" class="post-title-link" itemprop="url">repo and git</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2022-01-25 11:15:00" itemprop="dateCreated datePublished" datetime="2022-01-25T11:15:00+08:00">2022-01-25</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2022-02-26 22:53:24" itemprop="dateModified" datetime="2022-02-26T22:53:24+08:00">2022-02-26</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Computer/" itemprop="url" rel="index"><span itemprop="name">Computer</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>本博文并不提供全面的教学指导，详细手册请查阅 <a target="_blank" rel="noopener" href="https://git-scm.com/docs/">Git-Reference</a> 和 <a target="_blank" rel="noopener" href="https://source.android.google.cn/source/developing?hl=zh-cn#staging-files">开发</a> 。</p>
+<p><code>Git</code> 是一个开放源代码的版本控制系统，专用于处理分布在多个代码库上的大型项目。</p>
+<p><code>Repo</code> 是 google android 以 <code>Git</code> 为基础构建的代码库管理工具，依赖于 <code>python2</code> 脚本调用 Git，主要用来下载、管理android项目的软件仓库。</p>
+<p><code>Repo</code> 简化了跨多个代码库运行的流程，与 <code>Git</code> 相辅相成。Repo 可以在必要时 <mark style="font-weight: 900;">整合多个 Git 代码库，将相关内容上传到我们的修订版本控制系统</mark>，借助单个 Repo 命令，<mark style="font-weight: 900;">可以将文件从多个代码库下载到本地工作目录</mark>。使用 Repo 执行基本的跨网络操作可大大简化文件管理工作。</p>
+<h1 id="git">GIT</h1>
+<p>对git的使用会分为 <a href="##INTROCUCTION"><strong>基础概念部分</strong></a>（即相关概念介绍）、<a href="##GIT%20COMMAND%20GRAMMER"><strong>指令语法</strong></a>、<a href="GIT%20SITUATION"><strong>使用场景</strong></a> 三部分。</p>
+<h2 id="introduction">INTRODUCTION</h2>
+<p><strong>DAG</strong>： Directed Acyclic Graph，有向无环图。</p>
+<p><strong>DVCS</strong>： Distributed Version Control System，分布式版本控制系统。</p>
+<h3 id="dvcs">DVCS</h3>
+<p><strong>节点</strong>：在DVCS中，每个节点代表项目的一个修订（一个版本），这些对象通常被称为提交。</p>
+<p><strong>有向边</strong>： 在DVCS中，每条边是基于两个修订之间的关系生成的。<mark style="font-weight: 900;">箭头是从父修订指向子修订的，代表他们之间的从属关系。</mark> 修订DAG中的箭头并不一定会形成闭环。通常修订的DAG是从左向右的结构（根节点在左，叶节点在右）或者自上而下结构（最新的版本在上面）。</p>
+<h3 id="branch-tag-refs-hash-code">BRANCH / TAG / REFS / HASH-CODE</h3>
+<p><strong>分支</strong>（branch）和 <strong>标签</strong> （tag）有时候也统称为 <strong>引用</strong>（refs），它们在修订 DAG 中的含义是样的，都是修订结构图表中的外部引用（指针）。</p>
+<figure>
+<img src="https://pic.islet.space/2022/02/image-20220226205719300.png" alt="image-20220226205719300" /><figcaption aria-hidden="true">image-20220226205719300</figcaption>
+</figure>
+<blockquote>
+<p>上图中，包含两个分支，当前的分支 Master 和另一分支 maint 。其中 <code>34ac2</code> 分支有一个 <code>v0.9</code> 的标签，另一个 <code>3fb00</code> 标签是合并提交的。</p>
+</blockquote>
+<p><strong>标签</strong>（tag），即 <strong>给定版本的符号名称</strong>，如 <code>v1.3-rc3</code> ，<mark style="font-weight: 900;">其永远指向相同对象，且不会变更</mark>。</p>
+<blockquote>
+<p>这就是一个允许开发人员快速查询和浏览的信息，且该信息必须对所有人来说都是具有相同意义的。</p>
+</blockquote>
+<p><strong>分支</strong>（branch），即 <strong>一系列开发工作的符号名称</strong>。</p>
+<p>本地分支的引用信息都存放在 <code>.git/refs/heads/</code> 路径下，如 <code>master</code> 分支信息存放于 <code>.git/refs/heads/master</code> 中，而 <code>refs/heads/</code> 为该 <code>master</code> 的命名空间。</p>
+<figure>
+<img src="https://pic.islet.space/2022/02/image-20220226211442066.png" alt="image-20220226211442066" /><figcaption aria-hidden="true">image-20220226211442066</figcaption>
+</figure>
+<blockquote>
+<p>目前Git在硬盘中采用了两种截然不同的方式来表示分支：<strong>松散格式</strong> 和 <strong>压缩格式</strong>。</p>
+<p>例如master分支（该分支是Git采用的默认分支名，用户在创建新的版本库时默认的分支名就是它）。</p>
+<ul>
+<li>采用 <strong>松散格式</strong> 时，它是 <code>.git/refs/heads/master</code> 中的一行文本，其中指代分支的 <strong>内容是十六进制的SHA-1码</strong>。</li>
+<li>采用 <strong>压缩格式</strong> 时，它是 <code>.git/packed-refs</code> 中的一行文本，使用 <strong>最顶部修订的SHA-1码</strong> 和 <strong>分支全名一起</strong> 表示该分支。</li>
+</ul>
+</blockquote>
+<h3 id="configuration">Configuration</h3>
+<p>可以通过 <code>git config --global user.email ""</code> 和 <code>git config --global user.name ""</code> 进行配置，相关信息存储在 <code>~/.gitconfig</code> 文件中。</p>
+<figure>
+<img src="https://pic.islet.space/2022/02/image-20220226203128964.png" alt="image-20220226203128964" /><figcaption aria-hidden="true">image-20220226203128964</figcaption>
+</figure>
+<h3 id="branch-name">Branch Name</h3>
+<table>
+<thead>
+<tr class="header">
+<th>分支</th>
+<th>命名</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>主分支</td>
+<td>master</td>
+<td>主分支，所有提供给用户使用的正式版本</td>
+</tr>
+<tr class="even">
+<td>开发分支</td>
+<td>dev</td>
+<td>开发分支，永远是功能最新最全的版本</td>
+</tr>
+<tr class="odd">
+<td>功能分支</td>
+<td>feature-*</td>
+<td>新功能分支，某个功能点正在开发的分支</td>
+</tr>
+<tr class="even">
+<td>发布分支</td>
+<td>release-*</td>
+<td>发布定期要上线的功能</td>
+</tr>
+<tr class="odd">
+<td>修复分支</td>
+<td>bug-*</td>
+<td>修复代码bug的分支</td>
+</tr>
+</tbody>
+</table>
+<h3 id="master">Master</h3>
+<p>代码库应该有且仅有一个主分支。所有提供给用户使用的正式版本，都在这个主分支上发布。Git主分支的名字，默认称为 <code>Master</code> 。<code>Master</code> 主分支是自动建立的，版本库初始化以后，默认就是在主分支在进行开发。</p>
+<p>主分支只用来分布重大版本，日常开发应该在另一条分支上完成。我们把开发用的分支，叫做 Dev 这个分支可以用来生成代码的最新隔夜版本（nightly）。如果想正式对外发布，就在 Master 分支上，对 Dev 分支进行”合并”（merge）。</p>
+<h3 id="head">HEAD</h3>
+<p><strong>git 中的分支</strong> 本质上是个指向 commit 对象的可变指针。</p>
+<p>而在每一个使用 git 的 <code>.git/</code> 路径下，还保存着一个名为 <code>HEAD</code> 的特别指针，一般来说，它是指向正在工作中的本地分支的指针。</p>
+<p><code>HEAD</code> 的指向是可以改变的，比如在 commit / checkout / branch / tag / retest / restore 等操作之后。</p>
+<p>有的时候 <code>HEAD</code> 会指向一个没有分支名字的修订版本，这种情况叫 <strong><em>detached HEAD</em></strong>。</p>
+<figure>
+<img src="https://pic.islet.space/2022/02/image-20220226203838866.png" alt="image-20220226203838866" /><figcaption aria-hidden="true">image-20220226203838866</figcaption>
+</figure>
+<p>在最底层实现中，Git 历史版本识别是通过一个 SHA-1 哈希码实现的，例如 <code>2b953b4380</code> 。</p>
+<p>Git 支持多种形式的版本查询，其中就包括使用哈希码的精确匹配（最少提供4个字符）。</p>
+<h2 id="git-command-grammer">GIT COMMAND GRAMMER</h2>
+<ol type="1">
+<li>使用 <code>git &lt;command&gt; -h</code> 可以获得该命令的所有参数用法帮助（简略的）。然后可以针对性地去搜索该指令和参数的用法。</li>
+<li>下方会列出一些较为常见的（自己会使用得到的）命令及其参数。个别较常见的命令会贴上一张官方的参数用法图片。</li>
+</ol>
+<h3 id="git-add">git add</h3>
+<h4 id="file-name">&lt;file name&gt;</h4>
+<p>使用本命令参数可以直接确认某个文件的变动记录。</p>
+<blockquote>
+<p>如 <code>git add readme.md</code> 确认了 <code>readme.md</code> 文件的修改，<code>git add .</code> 确认了当前路径下包含的所有子路径和子文件的修改。</p>
+</blockquote>
+<h3 id="git-blame">git blame</h3>
+<h4 id="file-name-1">&lt;file name&gt;</h4>
+<p>本参数可以查看文件内部每一行内容的变动，例如新增一行，文件的编辑者等。</p>
+<figure>
+<img src="https://pic.islet.space/2022/02/image-20220226202721363.png" alt="image-20220226202721363" /><figcaption aria-hidden="true">image-20220226202721363</figcaption>
+</figure>
+<blockquote>
+<p>跟 <code>git diff</code> 不同的是，本命令是真的打开文件然后一行一行地给你修改和提示信息，包括每一行是谁写的</p>
+</blockquote>
+<h3 id="git-branch">git branch</h3>
+<figure>
+<img src="https://pic.islet.space/2022/02/image-20220226213748945.png" alt="image-20220226213748945" /><figcaption aria-hidden="true">image-20220226213748945</figcaption>
+</figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git branch -D origin/xxxxxx</span><br><span class="line">git branch -D xxxxxx</span><br></pre></td></tr></table></figure>
+<h4 id="a">-a</h4>
+<p>使用本命令标志可以显示 <strong>本地 (local) 所有分支</strong> 和 <strong>远程 (remote) 所有分支</strong>。 其中，带 <code>*</code> 的为当前所在分支。</p>
+<figure>
+<img src="https://pic.islet.space/2022/02/image-20220226200020105.png" alt="image-20220226200020105" /><figcaption aria-hidden="true">image-20220226200020105</figcaption>
+</figure>
+<h4 id="d-branch-name">-d &lt;branch name&gt;</h4>
+<p>使用本命令标志可以删除 某个分支。</p>
+<figure>
+<img src="https://pic.islet.space/2022/02/image-20220226211322680.png" alt="image-20220226211322680" /><figcaption aria-hidden="true">image-20220226211322680</figcaption>
+</figure>
+<h4 id="v">-v</h4>
+<p>使用命令标志可以展示分支的哈希函数和commit信息，<code>-v</code> 即 <code>--verbose</code> ，表示 "冗长的"。</p>
+<blockquote>
+<p>例如: 下方，从 <code>master</code> 主分支刚创建出新分支 <code>SWV</code> 时，两者的哈希函数和commit信息是一样的。</p>
+<figure>
+<img src="https://pic.islet.space/2022/02/image-20220226214736094.png" alt="image-20220226214736094" /><figcaption aria-hidden="true">image-20220226214736094</figcaption>
+</figure>
+<p>但修改了 <code>SWV</code> 分支的内容并确认提交之后，其哈希函数和commit信息就发生了改变。</p>
+<figure>
+<img src="https://pic.islet.space/2022/02/image-20220226214912676.png" alt="image-20220226214912676" /><figcaption aria-hidden="true">image-20220226214912676</figcaption>
+</figure>
+</blockquote>
+<h3 id="git-checkout">git checkout</h3>
+<figure>
+<img src="https://pic.islet.space/2022/02/image-20220226213843563.png" alt="image-20220226213843563" /><figcaption aria-hidden="true">image-20220226213843563</figcaption>
+</figure>
+<h4 id="branch">&lt;branch&gt;</h4>
+<p>单独使用此参数可以用于切换分支（也有新的实验性语句 <code>switch</code> 可以使用，但是 <code>checkout</code> 更稳定）或恢复工作树文件。使用方式如：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git checkout dev</span><br><span class="line">git checkout origin/dev</span><br><span class="line">git checkout xxxxxx</span><br></pre></td></tr></table></figure>
+<h4 id="b">-b</h4>
+<p>使用本标志 + <code>&lt;new branch name&gt;</code> 可以创建一个新分支并切换至该分支，等同于 先使用 <code>git branch &lt;new branch name&gt;</code> 和 <code>git checkout &lt;new branch name&gt;</code> 。</p>
+<h4 id="orphan-branch-name">--orphan &lt;branch name&gt;</h4>
+<p>使用本命令标志可以创建一个与主分支没有联系的孤儿分支。</p>
+<h3 id="git-commit">git commit</h3>
+<h4 id="a-all">-a/-all</h4>
+<p>使用本标志指 <strong>接受被追踪文件的所有变更</strong>，可以在暂存区创建一个注释来实现操作隔离。</p>
+<h4 id="m">-m ""</h4>
+<p>本标志和参数可以支持在 <code>""</code> 内实现对合并的快速注释。</p>
+<h3 id="git-clone">git clone</h3>
+<p>使用本命令可以直接从某个库中拷贝某个路径下的 repository，如：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> git@git.islet.space:srv/led_blink.git</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>当然，拷贝不公开的repository时，需要确保已经将自己的 SSH-key 加入到该网站的 <code>/home/git/.ssh/authorized_keys</code> 文件中。公开的 repository 可以随便拷贝。</p>
+</blockquote>
+<h3 id="git-diff">git diff</h3>
+<p>本命令可以简要地查看距离上次 <code>commit</code> 操作到底修改什么信息。</p>
+<figure>
+<img src="https://pic.islet.space/2022/02/image-20220226202625977.png" alt="image-20220226202625977" /><figcaption aria-hidden="true">image-20220226202625977</figcaption>
+</figure>
+<h3 id="git-log">git log</h3>
+<p><strong>注意</strong>：所有的 <code>git log</code> 命令只会显示如下格式的 log 记录。</p>
+<figure>
+<img src="https://pic.islet.space/2022/02/image-20220226202114879.png" alt="image-20220226202114879" /><figcaption aria-hidden="true">image-20220226202114879</figcaption>
+</figure>
+<h4 id="num">-&lt;num&gt;</h4>
+<p>如输入 <code>git log -2</code>，可以查看当前项目最近两条的提交记录。</p>
+<h4 id="author-或---committer">--author 或 --committer</h4>
+<p>本标志支持查看提交者信息，使用方法如：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">log</span> --author=Linus</span><br></pre></td></tr></table></figure>
+<h4 id="merges-或---no-merges">--merges 或 --no-merges</h4>
+<p>本标志支持查看已合并和提交或非合并提交的信息。</p>
+<h4 id="path-file-name">&lt;path / file name&gt;</h4>
+<p>本参数可以</p>
+<h3 id="git-merge">git merge</h3>
+<p>默认情况下，Git执行 <strong>快进式合并</strong>（fast-forward merge），会直接将 Master 分支指向 Dev 分支。 使用 <code>–no–ff</code> 参数后，会执行正常合并，在 Master 分支上生成一个新节点。为了保证版本演进的清晰，我们希望采用这种做法。即：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git merge -no-ff dev</span><br></pre></td></tr></table></figure>
+<h3 id="git-pull">git pull</h3>
+<p>执行本命令后，Git系统会将服务器版本库中的变更下载到本机。自动将 remote 版本和 local 版本进行合并，然后把合并后的变更提交到<strong>本机</strong> 版本库中。</p>
+<h3 id="git-push">git push</h3>
+<h4 id="set-upstream">--set-upstream</h4>
+<p>设置本地（新）分支的远程上游分支，一些在网上可以查找到的信息如下：</p>
+<ul>
+<li>set upstream branches to work properly</li>
+<li>closely associated with remote branches</li>
+<li>define the branch tracked on the remote branches (also called as remote tracking branch)</li>
+<li><code>--set-upstream</code> is the same as <code>-u</code></li>
+</ul>
+<p>在本地创建的新分支如果希望在远程版本库中添加对应的上游分支，使用此命令和标志可以使得此分支推送至远程分支的目标更加明确。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git push --set-upstream origin better-random</span><br></pre></td></tr></table></figure>
+<h3 id="git-rebase">git rebase</h3>
+<p>rebase是将自己的分支重新基于别人的分支之上，即，在别人的基础上再添加什么东西。</p>
+<h3 id="git-reset">git reset</h3>
+<figure>
+<img src="https://pic.islet.space/2022/02/image-20220226223239807.png" alt="image-20220226223239807" /><figcaption aria-hidden="true">image-20220226223239807</figcaption>
+</figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git reset --hard HEAD^</span><br></pre></td></tr></table></figure>
+<h3 id="git-remote">git remote</h3>
+<p>本命令可以进行如下操作：</p>
+<ol type="1">
+<li>对远程repository进行 <strong>添加</strong>（add）、<strong>删除</strong>（remove）、<strong>重命名</strong>（rename）等操作。</li>
+</ol>
+<figure>
+<img src="https://pic.islet.space/2022/02/image-20220226223823738.png" alt="image-20220226223823738" /><figcaption aria-hidden="true">image-20220226223823738</figcaption>
+</figure>
+<h3 id="git-status">git status</h3>
+<p>直接使用本命令可以查看当前路径下所有文件的修改记录。</p>
+<figure>
+<img src="https://pic.islet.space/2022/02/image-20220226223119337.png" alt="image-20220226223119337" /><figcaption aria-hidden="true">image-20220226223119337</figcaption>
+</figure>
+<h2 id="git-situation">GIT SITUATION</h2>
+<h3 id="远程git-clone一个master分支为空的仓库时">远程git clone一个master分支为空的仓库时</h3>
+<p>要么整个仓库都为空，要么肯定还有分支，使用 <code>git branch -a</code> 查看远程仓库分支，一般如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">* dev</span><br><span class="line">  remotes/origin/xxxxxxxxxx</span><br><span class="line">  remotes/origin/HEAD -&gt; origin/dev</span><br><span class="line">  remotes/origin/dev</span><br><span class="line">  remotes/origin/master</span><br></pre></td></tr></table></figure>
+<p>而正好 <code>xxxxxxxxxx</code> 可能就是真正存放现有文件的分支，使用 <code>git checkout origin/xxxxxxxxxx</code> 进行分支切换。</p>
+<h3 id="conflict">conflict</h3>
+<p>当文件冲突时，Git系统无法自动合并它们，因为可能这些代码块不是独立的。</p>
+<figure>
+<img src="https://pic.islet.space/2022/02/image-20220225214016189.png" alt="image-20220225214016189" /><figcaption aria-hidden="true">image-20220225214016189</figcaption>
+</figure>
+<figure>
+<img src="https://pic.islet.space/2022/02/image-20220225211850394.png" alt="image-20220225211850394" /><figcaption aria-hidden="true">image-20220225211850394</figcaption>
+</figure>
+<p><code>git pull</code> 也 pull 不下来。</p>
+<figure>
+<img src="https://pic.islet.space/2022/02/image-20220225212102034.png" alt="image-20220225212102034" /><figcaption aria-hidden="true">image-20220225212102034</figcaption>
+</figure>
+<h1 id="repo">REPO</h1>
+<p>repo 部分将分为 <a href="##INSTALL%20REPO"><strong>安装repo</strong></a> 、<a href="##REPO%20COMMAND%20GRAMMER"><strong>命令语法</strong></a> 和 <a href="##REPO%20SITUATION"><strong>使用场景</strong></a> 三部分。</p>
+<h2 id="install-repo">INSTALL REPO</h2>
+<p><code>repo</code> 的安装有 <a href="###SETUP%20AUTOMATICALLY"><strong>自动</strong></a> 和 <a href="###SETUP%20MANUALLY"><strong>手动</strong></a> 两种，类 UNIX 系统都可以通过对应的包管理工具进行安装，但如果没有手动修改源，使用效果可能也不尽如人意。</p>
+<p>安装完毕之后还需要进行 <a href="####VERIFICATION"><strong>版本验证</strong></a>，可能还需要 <a href="PYTHON%20NOT%20FOUND"><strong>对python版本进行更改</strong></a> 。</p>
+<h3 id="setup-automatically">SETUP AUTOMATICALLY</h3>
+<p>根据 google android <a target="_blank" rel="noopener" href="https://source.android.google.cn/setup/develop?hl=zh-cn#installing-repo">installing repo</a> 指示，可以从 apt 包管理库中下载和安装 repo，也可以使用 google源、清华源或其他源进行手动下载。</p>
+<p>Debian 系 Linux 的安装：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get update</span><br><span class="line">sudo apt-get install repo</span><br></pre></td></tr></table></figure>
+<p>Mac 安装：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo port install repo</span><br></pre></td></tr></table></figure>
+<p>或</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo brew install repo</span><br></pre></td></tr></table></figure>
+<h3 id="setup-manually">SETUP MANUALLY</h3>
+<p>手动安装 <code>repo</code> 的大概思路如下：</p>
+<ol type="1">
+<li>在用户根目录 <code>~</code> 下新建 <code>bin</code> 文件夹，即把 <code>$HOME/bin</code> 或 <code>~/bin</code> 当做 <code>repo</code> 的执行文件路径。</li>
+<li>将该路径加入系统变量 <code>PATH</code> 中，可以通过写入 <code>~/.profile</code> 或对应的 shell 配置文件（如zsh的 <code>~/.zshrc</code> ）中并更新该配置文件来实现。</li>
+<li>然后在该路径下载 repo的执行程序，主要是将某个 url 中（如下方所示为清华源的repo）的信息写入 <code>~/bin/repo</code> 中。</li>
+<li>为所有用户 <code>a</code> 附加 <code>~/bin/repo</code> 的可执行 <code>x</code> 权限。</li>
+<li>把 <code>export REPO_URL='https://mirrors.tuna.tsinghua.edu.cn/git/git-repo'</code> 加入到配置文件中，使其一直生效（也可以在 terminal 中临时输入此命令，使其在设备重启前生效）。如果未写入 shell 的配置文件，则重启后该变量就会消失。</li>
+</ol>
+<p>下方代码以安装了 <code>zsh</code> shell 的 linux 或 debian 系系统为例，可以拷贝粘贴保存至脚本以运行。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 手动安装repo</span></span><br><span class="line">mkdir ~/bin</span><br><span class="line">PATH=~/bin:<span class="variable">$PATH</span></span><br><span class="line">curl https://mirrors.tuna.tsinghua.edu.cn/git/git-repo &gt; ~/bin/repo</span><br><span class="line">chmod a+x ~/bin/repo</span><br><span class="line"></span><br><span class="line"><span class="comment"># 将源添加到shell配置文件并使其生效</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;export REPO_URL=&#x27;https://mirrors.tuna.tsinghua.edu.cn/git/git-repo&#x27;&quot;</span> &gt;&gt; ~/.zshrc</span><br><span class="line"><span class="built_in">source</span> ~/.zshrc</span><br><span class="line"></span><br><span class="line"><span class="comment"># 验证信息</span></span><br><span class="line">repo version</span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$REPO</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p><strong>注意</strong>：google android用的是 <code>https://storage.googleapis.com/git-repo-downloads/repo</code> 的链接，但不是很方便下载，所以就更换成了清华源的。</p>
+</blockquote>
+<h4 id="verification">VERIFICATION</h4>
+<p>安装完毕之后，可以对手动安装的 <code>repo</code> 进行版本验证，输入 <code>repo version</code> 和 <code>echo $REPO_URL</code> 即可，结果如下：</p>
+<p>此处提示的 <code>&lt;repo not installed&gt;</code> 是正常的，因为在 <code>~</code> 目录下的确没有安装 <code>repo</code> .</p>
+<figure>
+<img src="https://pic.islet.space/2022/02/image-20220226193048479.png" alt="image-20220226193048479" /><figcaption aria-hidden="true">image-20220226193048479</figcaption>
+</figure>
+<h3 id="python-not-found">PYTHON NOT FOUND</h3>
+<p>如果出现以下提示，则说明你的系统中没有为 <code>python</code> 添加 <strong>软连接</strong>。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/usr/bin/env: ‘python’: No such file or directory</span><br></pre></td></tr></table></figure>
+<h4 id="解决方法">解决方法</h4>
+<ol type="1">
+<li>验证是否已经安装了 <code>python2</code> ：输入命令 <code>python2 --version</code>，如果提示对应的版本信息则跳到 第3步，否则进行 第2步。</li>
+<li>下载 <code>python2</code>：debian 系用户输入命令 <code>sudo apt install python2</code> 进行安装。mac系用户输入 <code>sudo port install python2</code> 进行安装。</li>
+<li>在 <code>/usr/bin/</code> 目录下为 <code>python2</code> 创建软链：<code>sudo ln -s /usr/bin/python2 /usr/bin/python</code></li>
+<li>再次运行 <code>repo init</code> 即可正常。</li>
+</ol>
+<p>如，在 Kali Linux 绑定 <code>python2</code> 为 <code>python</code> 之后，可以输入 <code>whereis python</code> 或 <code>python --version</code> 进行验证：</p>
+<figure>
+<img src="https://pic.islet.space/2022/01/image-20220125143434000.png" alt="image-20220125143434000" /><figcaption aria-hidden="true">image-20220125143434000</figcaption>
+</figure>
+<h2 id="repo-command-grammer">REPO COMMAND GRAMMER</h2>
+<ol type="1">
+<li>参考 <a target="_blank" rel="noopener" href="https://source.android.google.cn/setup/develop/repo?hl=zh-cn#upload">Repo 命令参考资料</a></li>
+<li>使用 <code>repo &lt;command&gt; -h</code> 可以获取相应命令的帮助。</li>
+<li>在初始化过 repo 的路径下使用 <code>repo help</code> 可以获得以下信息：</li>
+</ol>
+<figure>
+<img src="https://pic.islet.space/2022/02/image-20220226220906805.png" alt="image-20220226220906805" /><figcaption aria-hidden="true">image-20220226220906805</figcaption>
+</figure>
+<h3 id="repo-init">repo init</h3>
+<p>执行下方的命令会在当前目录中创建一个 <code>.repo/</code> 目录并初始化 Repo 的版本控制，其中包含存放 Repo 源代码，以及从 URL（对应下方 <code>-u</code> 参数） 中同步下来的 Git 代码库 的某个分支 （对应下方 <code>-b</code> 参数）。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">repo init -u &lt;git@xxxx.com:xxxx/manifest&gt; -b &lt;oneOfTheBranch&gt;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>-u</code>：即URL，指定从中检索清单代码库的网址。</li>
+<li><code>-m</code>：选择代码库中的清单文件。如果未选择清单名称，则默认为 <code>default.xml</code>。</li>
+<li><code>-b</code>：指定修订版本，即特定的 manifest-branch，可以是 <code>dev</code> 分支，也可以是特定分支，拉下来之后参照 <a href="##REPO%20SWITCH%20BRANCH">REPO SWITCH BRANCH</a> 进行分支切换。</li>
+</ul>
+<p><strong>注意</strong>：对于所有剩余的 Repo 命令，当前的工作目录必须是 <code>.repo/</code> 的父目录或该父目录的子目录。</p>
+<h3 id="repo-branch">repo branch</h3>
+<p>使用本命令可以查看所有的 <strong>目前可用的主题分支</strong>（currently available topic branches）。</p>
+<h3 id="repo-sync">repo sync</h3>
+<p>从 <code>manifest</code> 源中往外拉取分支。下方的 <code>-j&lt;number&gt;</code> 是指创建多线程进行数据资源获取，如 <code>-j4</code> 是指创建四线程进行数据资源获取。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">repo sync</span><br><span class="line">repo sync -j4</span><br><span class="line">repo sync -j8</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>但，bitbucket的网络资源极差，很多情况下都拉不下来代码。</p>
+</blockquote>
+<h3 id="repo-help">repo help</h3>
+<p>在其他地方如果没有运行过 <code>repo init</code> 而直接输入 <code>repo help</code> ，则会出现以下信息，详见 <a href="##REPO%20INIT">REPO INIT</a> 。</p>
+<figure>
+<img src="https://pic.islet.space/2022/02/image-20220226220753429.png" alt="image-20220226220753429" /><figcaption aria-hidden="true">image-20220226220753429</figcaption>
+</figure>
+<h2 id="repo-situation">REPO SITUATION</h2>
+<h3 id="repo-switch-branch">REPO SWITCH BRANCH</h3>
+<p>前文有说过 “借助单个 Repo 命令，<mark style="font-weight: 900;">可以将文件从多个代码库下载到本地工作目录</mark>”，即使用repo拉下来的是多个 git repository，且这个repo是通过 <code>.xml</code> 文件进行管理的，也就是它自身包含了一些版本和分支切换相关的信息。</p>
+<p>如果要对repo拉下来的东西进行分支切换，就要参考一下步骤：</p>
+<ol type="1">
+<li>到 <code>.repo/manifest</code> 路径中。</li>
+<li>使用 <code>git branch -a</code> 查看分支信息。</li>
+<li>使用 <code>git checkout &lt;branch name&gt;</code> 进行分支切换。</li>
+<li>再次使用 <code>repo sync</code> 命令进行同步。</li>
+</ol>
+<figure>
+<img src="https://pic.islet.space/2022/02/image-20220225211308567.png" alt="image-20220225211308567" /><figcaption aria-hidden="true">image-20220225211308567</figcaption>
+</figure>
+<p>下图是通过 <code>repo</code> 拉下来的多个git repository 之一中的隐藏文件，可以看到这个 <code>.git</code> 文件被使用指向上级 <code>.repo/</code> 路径下的某个 <code>.git</code> 文件，也就是说，需要先通过 <code>repo</code> 去拉取信息，再使用 <code>git</code> 来切换分支。</p>
+<figure>
+<img src="https://pic.islet.space/2022/02/image-20220225214801501.png" alt="image-20220225214801501" /><figcaption aria-hidden="true">image-20220225214801501</figcaption>
+</figure>
+<h1 id="reference">REFERENCE</h1>
+<ol type="1">
+<li><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/06e1f67c8939">Git与Repo简单入门</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.yiibai.com/git/git_rebase.html">git rebase 命令</a></li>
+<li><a target="_blank" rel="noopener" href="https://git-scm.com/docs">git reference</a></li>
+<li>《Git高手之路》，Jakub Narebski，人民邮电出版社</li>
 </ol>
 
       
@@ -1619,432 +2036,6 @@ wirespeek = 8e5
 <li>使用示波器探头直接接触对应的GPIO口并查看波形，查看主控板和底板之间是否存在问题。</li>
 </ol>
 <p>发现示波器探头从底板更换至主控板之后，示波器所显示波形并无差异。</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://islet.space/2021/12/27/Hardware/ESP32/2021-12-27-islet%E5%AE%B6%E5%BA%AD%E7%89%A9%E8%81%94%E7%BD%91/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Liewzheng">
-      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Coder的孤岛">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/12/27/Hardware/ESP32/2021-12-27-islet%E5%AE%B6%E5%BA%AD%E7%89%A9%E8%81%94%E7%BD%91/" class="post-title-link" itemprop="url">islet家庭物联网</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-
-    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
-    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2021-12-27 19:40:00" itemprop="dateCreated datePublished" datetime="2021-12-27T19:40:00+08:00">2021-12-27</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2022-02-24 19:41:26" itemprop="dateModified" datetime="2022-02-24T19:41:26+08:00">2022-02-24</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/InternetOfThings/" itemprop="url" rel="index"><span itemprop="name">InternetOfThings</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p><strong>GITEE</strong>: https://gitee.com/isletspace/esp32iot</p>
-<p>本项目是使用 <strong>微信小程序</strong>+<strong>腾讯云</strong>+<strong>乐鑫开发板</strong>+<strong>5V-多路-继电器</strong>+<strong>220V-AC-电器</strong> 的模式对家庭中的硬件进行检测和控制，本项目涉及到 <strong>网络前端</strong>、<strong>服务器后端</strong>、<strong>网络通信</strong> 和 <strong>物联网硬件控制</strong> 方面的相关知识。</p>
-<p><strong>需要实现的功能</strong>：</p>
-<ol type="1">
-<li>开发板能够自动连接家庭WiFi</li>
-<li>开发板能够通过MQTT协议与后台服务器取得联系</li>
-<li>开发板能够定时自动获取时钟并校准</li>
-<li>开发板能够根据MQTT协议控制外围电路</li>
-<li>开发板能够根据已经设置的参数与实时的传感器参数比对，并在一定环境条件内开启/关闭相关电路</li>
-<li>手机可以通过微信小程序发送MQTT数据至服务器</li>
-</ol>
-<p><strong>软件开发平台</strong>：Mac</p>
-<p><strong>硬件开发IDE</strong>：Arduino</p>
-<h1 id="硬件准备">硬件准备</h1>
-<ol type="1">
-<li>4路5V红板（光耦/高低电平）继电器 *1</li>
-<li>DHT11温度模块 *2</li>
-<li>加热器 *1</li>
-<li>ESP32-WROOM-32开发板 *1</li>
-</ol>
-<p>其他：</p>
-<ol type="1">
-<li>杜邦线</li>
-<li>电烙铁</li>
-<li>锡丝</li>
-<li>松香</li>
-<li>面包板</li>
-</ol>
-<h2 id="芯片模组比对选型">芯片模组比对选型</h2>
-<p>ESP32-WROOM-32X（此处 <code>X</code> 代表不确定） 和 ESP32-WROVER-X（此处 <code>X</code> 代表不确定） 在性能上基本一模一样，包括核心数、最大时钟频率、Flash大小、支持的接口类型 和 特殊传感器等等。除了在 PSRAM、工作温度范围、天线、WiFi最高频率 和 模组尺寸上有所区别外。 ESP32-WROVER-X 则具有PSRAM 和 最大的面积（18mm × 31.4mm × 3.3mm）。</p>
-<figure>
-<img src="https://pic.islet.space/2021/12/image-20211228014701607.png" alt="官方展示的ESP32模组性能参数对比" /><figcaption aria-hidden="true">官方展示的ESP32模组性能参数对比</figcaption>
-</figure>
-<h2 id="芯片选型">芯片选型</h2>
-<p>无脑选了ESP32-WROOM-32SE，反正自己用，而且便宜（￥21.5包邮）。</p>
-<h2 id="芯片基本信息">芯片基本信息</h2>
-<figure>
-<img src="https://pic.islet.space/2021/12/image-20211228012555509.png" alt="Arduino所展示的开发板可调参数" /><figcaption aria-hidden="true">Arduino所展示的开发板可调参数</figcaption>
-</figure>
-<h1 id="arduino-ide准备">Arduino IDE准备</h1>
-<p>使用 Arduino IDE 进行开发，但开发配置相关的 <code>.json</code> 文件 及其安装包都在 <code>github.com</code> 上，但因为加速器的加速层级可能和IDE拉取资源包所用的数据层级不在同一个上面，无法代理，就白天基本上无法下载，凌晨（正经程序员谁tm熬夜）才有机会下载东西。</p>
-<blockquote>
-<p>英文版下的 <code>首选项</code> 是 <code>Preferences</code> 。</p>
-</blockquote>
-<figure>
-<img src="https://pic.islet.space/2021/12/image-20211228011905234.png" alt="修改附加开发板管理网址" /><figcaption aria-hidden="true">修改附加开发板管理网址</figcaption>
-</figure>
-<p>然后去 <code>开发板管理器</code> 中搜索 <code>esp32</code> 进行安装。</p>
-<figure>
-<img src="https://pic.islet.space/2021/12/image-20211228012156101.png" alt="目录-开发板-开发板管理器" /><figcaption aria-hidden="true">目录-开发板-开发板管理器</figcaption>
-</figure>
-<figure>
-<img src="https://pic.islet.space/2021/12/image-20211228012244049.png" alt="搜索关键词“esp32”" /><figcaption aria-hidden="true">搜索关键词“esp32”</figcaption>
-</figure>
-<h2 id="解决github问题">解决github问题</h2>
-<h3 id="方法一">方法一</h3>
-<p>本来应该用如下链接进行配置的：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://dl.espressif.com/dl/package_esp32_index.json </span><br></pre></td></tr></table></figure>
-<p>自己扒拉了一遍该文件中可能包含的所有资源包（主要是 <code>github.com</code> 上的），然后修改了 <code>.json</code> 文件，放到自己的桶里，然后放出来使用，还好这个文件里有明确提到要哪些资源不然也没法扒拉。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://code.islet.space/espressif/dl/package_esp32_index.json</span><br></pre></td></tr></table></figure>
-<p><strong>注意</strong>：Mac系统下可能会因为曾经下载过的缓存文件无法生效（如果自行修改了网站上的 <code>.json</code> 文件的话），需要自行清除缓存，打开 <code>~/Library/ArduinoXX/cache/</code> 并对应删除该网站的文件夹即可，如 <code>code.islet.space</code> 。（这里的 <code>ArduinoXX</code> 中的 <code>XX</code> 需要自己去看自己的文件夹，应该是受版本控制的）</p>
-<figure>
-<img src="https://pic.islet.space/2021/12/image-20211228005455101.png" alt="修改链接后可以正常下载" /><figcaption aria-hidden="true">修改链接后可以正常下载</figcaption>
-</figure>
-<h3 id="方法二">方法二</h3>
-<p>自己去github，用浏览器或者下载器下好了以后放到 <code>用户目录--资源库--程序缓存--指定位置</code>（如下）。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">~&#x2F;Library&#x2F;ArduinoXX&#x2F;staging&#x2F;packages&#x2F;</span><br></pre></td></tr></table></figure>
-<p>这个文件夹也就需要放这么多文件吧。</p>
-<figure>
-<img src="https://pic.islet.space/2021/12/image-20211228012028024.png" alt="资源库缓存指定位置下的文件" /><figcaption aria-hidden="true">资源库缓存指定位置下的文件</figcaption>
-</figure>
-<p>亲测，第二种方法更好用。</p>
-<figure>
-<img src="https://pic.islet.space/2021/12/image-20211228011814461.png" alt="提示安装成功" /><figcaption aria-hidden="true">提示安装成功</figcaption>
-</figure>
-<h1 id="visual-studio-code-ide准备">Visual Studio Code IDE准备</h1>
-<p>总的来说，VS Code的IDE配置会比Arduino更为复杂，VS Code下载毫无压力，且VS Code使用习惯之后更加方便。</p>
-<p>至少前期配置工作来说，VS Code更为友好。</p>
-<h2 id="espressif-idf插件安装">Espressif IDF插件安装</h2>
-<p>首先去插件市场搜索 <code>Espressif IDF</code> 插件进行安装，然后点击 <code>查看</code> -&gt; <code>命令面板</code>。</p>
-<figure>
-<img src="https://pic.islet.space/2021/12/image-20211228182209737.png" alt="image-20211228182209737" /><figcaption aria-hidden="true">image-20211228182209737</figcaption>
-</figure>
-<p>到这里需要输入 <code>configure esp-idf extension</code> 以进入该插件的配置页面。</p>
-<figure>
-<img src="https://pic.islet.space/2021/12/image-20211228182314161.png" alt="image-20211228182314161" /><figcaption aria-hidden="true">image-20211228182314161</figcaption>
-</figure>
-<h2 id="必要工具安装">必要工具安装</h2>
-<p>然后它就会提示你需要安装几个必要插件，有 Git / Python / CMake 和 Ninja。这些都可以从Espressif的 <a target="_blank" rel="noopener" href="https://docs.espressif.com/projects/esp-idf/zh_CN/latest/esp32/get-started/index.html">官方文档</a> 中获取到安装步骤。</p>
-<figure>
-<img src="https://pic.islet.space/2021/12/image-20211228182508965.png" alt="image-20211228182508965" /><figcaption aria-hidden="true">image-20211228182508965</figcaption>
-</figure>
-<p>下方为四个工具的官方下载链接，前三个都可以通过官方下载软件包进行安装，第四个 Ninja 我安装不成功，是通过 Mac Ports 进行安装的。</p>
-<p>GIT : https://git-scm.com/</p>
-<p>PYTHON : https://www.python.org/downloads/</p>
-<p>CMAKE : https://cmake.org/download/</p>
-<p>NINJA : https://github.com/ninja-build/ninja/releases</p>
-<p>需要注意的是，CMAKE 和 Ninja 安装完还需要加入到系统环境变量 <code>PATH</code> 中去，Windows系统下的系统环境变量添加比较方便，下方为 Mac 系统下 CMake 的系统环境变量添加方法。</p>
-<h3 id="cmake命令行">CMAKE命令行</h3>
-<p>打开Mac系统下的 CMake GUI，点击 <code>Tools</code> --&gt; <code>How to Install For Command Line Use</code> ，可以查看到三种将 CMake 添加到命令行中去运行的方法。</p>
-<figure>
-<img src="https://pic.islet.space/2021/12/image-20211228183126458.png" alt="点击“工具”菜单中的“如何为命令行使用进行安装”" /><figcaption aria-hidden="true">点击“工具”菜单中的“如何为命令行使用进行安装”</figcaption>
-</figure>
-<figure>
-<img src="https://pic.islet.space/2021/12/image-20211228183411724.png" alt="可以查看到三种安装方法" /><figcaption aria-hidden="true">可以查看到三种安装方法</figcaption>
-</figure>
-<p>使用的是第二种方法，向命令行输入 <code>sudo "/Applications/CMake.app/Contents/bin/cmake-gui" --install</code> 并输入管理员密码即可。</p>
-<p>然后通过 <code>cmake --version</code> 可以查看到版本号说明安装成功，但需要注意的是 <code>whereis cmake</code> 还是没有用。</p>
-<figure>
-<img src="https://pic.islet.space/2021/12/image-20211228183403876.png" alt="操作结果" /><figcaption aria-hidden="true">操作结果</figcaption>
-</figure>
-<h3 id="工具安装验证">工具安装验证</h3>
-<p>四个必须要安装的软件都已经安装完毕，通过 <code>--version</code> 可以查看版本号。</p>
-<figure>
-<img src="https://pic.islet.space/2021/12/image-20211228184801497.png" alt="安装验证" /><figcaption aria-hidden="true">安装验证</figcaption>
-</figure>
-<h2 id="配置继续">配置继续</h2>
-<p>四个必要工具安装完毕之后，关闭 <code>ESP-IDF Setup</code> 页面，然后重新在 <strong>命令面板</strong> 输入 <code>configure esp-idf extension</code> 以进入该插件的配置页面。</p>
-<figure>
-<img src="https://pic.islet.space/2021/12/image-20211228184938407.png" alt="再次进入配置页面" /><figcaption aria-hidden="true">再次进入配置页面</figcaption>
-</figure>
-<p>此处选择 <code>EXPRESS</code> 即可，里面会要求选择从哪个服务器下载（自己看情况选择<code>Github</code> / <code>Espressif</code>）、IDF版本（默认选最新）、IDF放置路径、工具路径、使用的Python3路径 等几个信息，选完了就进入下一界面，会自动下载安装 ESP-IDF。</p>
-<figure>
-<img src="https://pic.islet.space/2021/12/image-20211228185458736.png" alt="详细配置页面" /><figcaption aria-hidden="true">详细配置页面</figcaption>
-</figure>
-<p>耐心等待下载完毕即可，我用 <code>Espressif</code> 服务器下载不下来，然后改用 <code>Github</code> 进行下载的。</p>
-<figure>
-<img src="https://pic.islet.space/2021/12/image-20211228185748221.png" alt="image-20211228185748221" /><figcaption aria-hidden="true">image-20211228185748221</figcaption>
-</figure>
-<p>下载过程页面如下：</p>
-<figure>
-<img src="https://pic.islet.space/2021/12/image-20211228190058612.png" alt="image-20211228190058612" /><figcaption aria-hidden="true">image-20211228190058612</figcaption>
-</figure>
-<figure>
-<img src="https://pic.islet.space/2021/12/image-20211228190027057.png" alt="image-20211228190027057" /><figcaption aria-hidden="true">image-20211228190027057</figcaption>
-</figure>
-<p>最后提示的安装成功：</p>
-<figure>
-<img src="https://pic.islet.space/2021/12/image-20211228190438498.png" alt="image-20211228190438498" /><figcaption aria-hidden="true">image-20211228190438498</figcaption>
-</figure>
-<h1 id="示例项目载入">示例项目载入</h1>
-<p>在 <strong>命令面板</strong> 中输入 <code>show examples projects</code> 。</p>
-<figure>
-<img src="https://pic.islet.space/2021/12/image-20211228190651117.png" alt="image-20211228190651117" /><figcaption aria-hidden="true">image-20211228190651117</figcaption>
-</figure>
-<p>即可调出 ESP-IDF的示例代码项目列表。</p>
-<figure>
-<img src="https://pic.islet.space/2021/12/image-20211228190738993.png" alt="image-20211228190738993" /><figcaption aria-hidden="true">image-20211228190738993</figcaption>
-</figure>
-<p>选择 <code>blink</code> 作为测试代码。</p>
-<figure>
-<img src="https://pic.islet.space/2021/12/image-20211228190839371.png" alt="image-20211228190839371" /><figcaption aria-hidden="true">image-20211228190839371</figcaption>
-</figure>
-<h2 id="项目构建">项目构建</h2>
-<p>这里可以用命令面板输入 <code>esp build your project</code> ，也可以点击GUI下方的 <img src="https://pic.islet.space/2021/12/image-20211231124940242.png" alt="image-20211231124940242" />进行构建。</p>
-<figure>
-<img src="https://pic.islet.space/2021/12/image-20211228191057987.png" alt="命令面板构建" /><figcaption aria-hidden="true">命令面板构建</figcaption>
-</figure>
-<p>构建完成后，会生成 <code>build</code> 文件夹，下次构建时CMake会查看变动的文件然后只编译变动过的代码。</p>
-<p>也可以删除该 <code>build</code> 文件夹，使其全部重新构建，会比较费时。</p>
-<figure>
-<img src="https://pic.islet.space/2021/12/image-20211228191156613.png" alt="build过程" /><figcaption aria-hidden="true">build过程</figcaption>
-</figure>
-<p>点击下方的闪电按钮<img src="https://pic.islet.space/2021/12/image-20211231125445685.png" alt="烧录按钮" />即可烧录，烧录成功提示如下：</p>
-<figure>
-<img src="https://pic.islet.space/2021/12/image-20211228221323556.png" alt="烧录过程" /><figcaption aria-hidden="true">烧录过程</figcaption>
-</figure>
-<h1 id="连接wifi">连接WiFi</h1>
-<p>下图为使用示例代码更改的项目代码文件内容：</p>
-<figure>
-<img src="https://pic.islet.space/2021/12/image-20211228222302314.png" alt="项目文件内容示例" /><figcaption aria-hidden="true">项目文件内容示例</figcaption>
-</figure>
-<p>利用ESP自带的示例代码<code>station</code> 进行调试和更改，需要注意以下几点：</p>
-<ol type="1">
-<li><p>不用去更改 <code>isletSpaceIotMain.c</code> 中的 <code>SSID</code> 和 <code>PASS</code> ，只需要在 <code>sdkconfig</code> 文件中进行更改即可（如下图）。</p></li>
-<li><p>所有的 WiFi设置参数 都可以在 <code>sdkconfig</code> 文件中进行修改，如需要连接 AP 的 名称和密码，还有自身设备所显示的名称。</p></li>
-<li><p>修改文件名之后，需要对两个 <code>CMakeList.txt</code>文件 和 一个<code>Makefile</code> 文件中的项目和文件名进行修改（如下图）。</p></li>
-</ol>
-<figure>
-<img src="https://pic.islet.space/2021/12/image-20211228222645861.png" alt="如果修改代码名称需要修改main文件夹下的CMakeList文件" /><figcaption aria-hidden="true">如果修改代码名称需要修改main文件夹下的CMakeList文件</figcaption>
-</figure>
-<figure>
-<img src="https://pic.islet.space/2021/12/image-20211228222717269.png" alt="如果修改项目名称需要修改根目录下的CMakeList" /><figcaption aria-hidden="true">如果修改项目名称需要修改根目录下的CMakeList</figcaption>
-</figure>
-<figure>
-<img src="https://pic.islet.space/2021/12/image-20211228222733903.png" alt="如果修改项目名称需要修改根目录下的Makefile" /><figcaption aria-hidden="true">如果修改项目名称需要修改根目录下的Makefile</figcaption>
-</figure>
-<h2 id="menuconfig">MENUCONFIG</h2>
-<p>MENUCONFIG 或者说 <code>sdkconfig</code> ，一个是图形界面的，一个是纯文本形式的。</p>
-<p>用menuconfig的话只需要找到下方的齿轮按钮即可。</p>
-<figure>
-<img src="https://pic.islet.space/2021/12/image-20211231130402110.png" alt="image-20211231130402110" /><figcaption aria-hidden="true">image-20211231130402110</figcaption>
-</figure>
-<p>可以找到WiFi相关的配置位置：</p>
-<figure>
-<img src="https://pic.islet.space/2021/12/image-20211231130507316.png" alt="image-20211231130507316" /><figcaption aria-hidden="true">image-20211231130507316</figcaption>
-</figure>
-<p>对 <code>sdkconfig</code> 文件中的设备名称进行修改。</p>
-<figure>
-<img src="https://pic.islet.space/2021/12/image-20211228223040901.png" alt="image-20211228223040901" /><figcaption aria-hidden="true">image-20211228223040901</figcaption>
-</figure>
-<p>修改完毕后可以在路由器 AP 的后台查看到已经连接的设备的名称，如下。</p>
-<figure>
-<img src="https://pic.islet.space/2021/12/image-20211228223134009.png" alt="image-20211228223134009" /><figcaption aria-hidden="true">image-20211228223134009</figcaption>
-</figure>
-<h1 id="mqtt协议">MQTT协议</h1>
-<p>根据 Espressif 官网的 <a target="_blank" rel="noopener" href="https://docs.espressif.com/projects/esp-idf/zh_CN/latest/esp32/api-reference/protocols/mqtt.html">ESP-MQTT</a> 开发文档可知，MQTT 协议支持以下几种形式：</p>
-<ul>
-<li><p>MQTT over TCP</p></li>
-<li><p>MQTT over SSL with mbedtls</p></li>
-<li><p>MQTT over Websocket</p></li>
-<li><p>MQTT over Websocket Secure.</p></li>
-</ul>
-<p>各MQTT协议形式（与对应SDK里的 <a href="##MQTT相关示例代码">MQTT示例代码</a>）及其所使用的端口号不同：</p>
-<ul>
-<li><code>protocols/mqtt/tcp</code>: MQTT over tcp, default port 1883</li>
-<li><code>protocols/mqtt/ssl</code>: MQTT over tcp, default port 8883</li>
-<li><code>protocols/mqtt/ssl_psk</code>: MQTT over tcp using pre-shared keys for authentication, default port 8883</li>
-<li><code>protocols/mqtt/ws</code>: MQTT over Websocket, default port 80</li>
-<li><code>protocols/mqtt/wss</code>: MQTT over Websocket Secure, default port 443</li>
-</ul>
-<h2 id="mqtt事件结构体">MQTT事件结构体</h2>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * MQTT event configuration structure</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> &#123;</span></span><br><span class="line">    <span class="keyword">esp_mqtt_event_id_t</span> event_id;       <span class="comment">/*!&lt; MQTT event type */</span></span><br><span class="line">    <span class="keyword">esp_mqtt_client_handle_t</span> client;    <span class="comment">/*!&lt; MQTT client handle for this event */</span></span><br><span class="line">    <span class="keyword">void</span> *user_context;                 <span class="comment">/*!&lt; User context passed from MQTT client config */</span></span><br><span class="line">    <span class="keyword">char</span> *data;                         <span class="comment">/*!&lt; Data associated with this event */</span></span><br><span class="line">    <span class="keyword">int</span> data_len;                       <span class="comment">/*!&lt; Length of the data for this event */</span></span><br><span class="line">    <span class="keyword">int</span> total_data_len;                 <span class="comment">/*!&lt; Total length of the data (longer data are supplied with multiple events) */</span></span><br><span class="line">    <span class="keyword">int</span> current_data_offset;            <span class="comment">/*!&lt; Actual offset for the data associated with this event */</span></span><br><span class="line">    <span class="keyword">char</span> *topic;                        <span class="comment">/*!&lt; Topic associated with this event */</span></span><br><span class="line">    <span class="keyword">int</span> topic_len;                      <span class="comment">/*!&lt; Length of the topic for this event associated with this event */</span></span><br><span class="line">    <span class="keyword">int</span> msg_id;                         <span class="comment">/*!&lt; MQTT messaged id of message */</span></span><br><span class="line">    <span class="keyword">int</span> session_present;                <span class="comment">/*!&lt; MQTT session_present flag for connection event */</span></span><br><span class="line">    <span class="keyword">esp_mqtt_error_codes_t</span> *error_handle; <span class="comment">/*!&lt; esp-mqtt error handle including esp-tls errors as well as internal mqtt errors */</span></span><br><span class="line">    <span class="keyword">bool</span> retain;                        <span class="comment">/*!&lt; Retained flag of the message associated with this event */</span></span><br><span class="line">&#125; <span class="keyword">esp_mqtt_event_t</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">esp_mqtt_event_t</span> *<span class="keyword">esp_mqtt_event_handle_t</span>;</span><br></pre></td></tr></table></figure>
-<h2 id="mqtt相关示例代码">MQTT相关示例代码</h2>
-<p>了解完官方开发文档中的信息，就可以知道MQTT示例代码里的这些文件夹命名含义，以及自己需要打开哪个示例代码了。</p>
-<figure>
-<img src="https://pic.islet.space/2021/12/image-20211228223617579.png" alt="image-20211228223617579" /><figcaption aria-hidden="true">image-20211228223617579</figcaption>
-</figure>
-<h2 id="menuconfig-1">MENUCONFIG</h2>
-<p>MENUCONFIG 页面可以看到MQTT的相关配置信息。</p>
-<figure>
-<img src="https://pic.islet.space/2021/12/image-20211229011902429.png" alt="image-20211229011902429" /><figcaption aria-hidden="true">image-20211229011902429</figcaption>
-</figure>
-<h1 id="mqtt服务器开发">MQTT服务器开发</h1>
-<p>自行购买了腾讯云的服务器，然后完成了配置（步骤略），发现自测“主题订阅”不成功。</p>
-<figure>
-<img src="https://pic.islet.space/2021/12/image-20211229033019004.png" alt="image-20211229033019004" /><figcaption aria-hidden="true">image-20211229033019004</figcaption>
-</figure>
-<p>然后刚好发现服务器的 Ubuntu 20 系统使用的防火墙是 <code>iptables</code> ，顺利打开 <code>1883</code> 端口。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo iptables -A INPUT -p tcp --dport 1883 -j ACCEPT</span><br></pre></td></tr></table></figure>
-<p>然后查看打开情况。</p>
-<figure>
-<img src="https://pic.islet.space/2021/12/image-20211229032825212.png" alt="image-20211229032825212" /><figcaption aria-hidden="true">image-20211229032825212</figcaption>
-</figure>
-<p>顺便在服务器页面也打开相关配置。</p>
-<figure>
-<img src="https://pic.islet.space/2021/12/image-20211229032753559.png" alt="image-20211229032753559" /><figcaption aria-hidden="true">image-20211229032753559</figcaption>
-</figure>
-<p>最后自测成功：</p>
-<figure>
-<img src="https://pic.islet.space/2021/12/image-20211229032920902.png" alt="image-20211229032920902" /><figcaption aria-hidden="true">image-20211229032920902</figcaption>
-</figure>
-<figure>
-<img src="https://pic.islet.space/2021/12/image-20211229032953396.png" alt="image-20211229032953396" /><figcaption aria-hidden="true">image-20211229032953396</figcaption>
-</figure>
-<h1 id="小程序开发未完">小程序开发（未完）</h1>
-<p>因为个人使用腾讯云注册了自己的域名 islet.space，且小程序也属于腾讯自家产品，为了后续开发的兼容性和便利性，就同步参阅了腾讯云的 <a target="_blank" rel="noopener" href="https://cloud.tencent.com/document/product/1081/47684">物联网自主品牌小程序开发文档</a> 。</p>
-<figure>
-<img src="https://pic.islet.space/2021/12/image-20211227202550338.png" alt="image-20211227202550338" /><figcaption aria-hidden="true">image-20211227202550338</figcaption>
-</figure>
-<h2 id="微信开发者工具">微信开发者工具</h2>
-<p>微信开发者工具下载页面：https://cloud.tencent.com/document/product/1081/47685</p>
-<figure>
-<img src="https://pic.islet.space/2021/12/image-20211227202759080.png" alt="image-20211227202759080" /><figcaption aria-hidden="true">image-20211227202759080</figcaption>
-</figure>
-<figure>
-<img src="https://pic.islet.space/2021/12/image-20211227203058077.png" alt="image-20211227203058077" /><figcaption aria-hidden="true">image-20211227203058077</figcaption>
-</figure>
-<h2 id="后台设置">后台设置</h2>
-<p><a target="_blank" rel="noopener" href="https://cloud.tencent.com/document/product/1081/34738">物联网开发平台</a></p>
-<h1 id="debug">DEBUG</h1>
-<h2 id="烧录和调试过程报错">烧录和调试过程报错</h2>
-<p>出现这种情况，可能是所选芯片不正确导致。</p>
-<figure>
-<img src="https://pic.islet.space/2021/12/image-20211228214645589.png" alt="烧录错误提示" /><figcaption aria-hidden="true">烧录错误提示</figcaption>
-</figure>
-<h3 id="解决过程">解决过程</h3>
-<p>重新选择了芯片，然后将烧录方法改为 <code>UART</code> ，重新烧录即可成功。</p>
-<figure>
-<img src="https://pic.islet.space/2021/12/image-20211228215715687.png" alt="在插件中选择”扩展设置“" /><figcaption aria-hidden="true">在插件中选择”扩展设置“</figcaption>
-</figure>
-<figure>
-<img src="https://pic.islet.space/2021/12/image-20211228215826153.png" alt="选择需要调试的设备类型" /><figcaption aria-hidden="true">选择需要调试的设备类型</figcaption>
-</figure>
-<figure>
-<img src="https://pic.islet.space/2021/12/image-20211228215747432.png" alt="选择烧录方式" /><figcaption aria-hidden="true">选择烧录方式</figcaption>
-</figure>
-<figure>
-<img src="https://pic.islet.space/2021/12/image-20211228215518196.png" alt="烧录成功提示" /><figcaption aria-hidden="true">烧录成功提示</figcaption>
-</figure>
-<h2 id="头文件查找错误">头文件查找错误</h2>
-<p>这个bug始终没有解决，之后再说吧。。。</p>
-<figure>
-<img src="https://pic.islet.space/2021/12/image-20211228232022467.png" alt="提示无该文件" /><figcaption aria-hidden="true">提示无该文件</figcaption>
-</figure>
-<h2 id="wifi初始化出错">WIFI初始化出错</h2>
-<p>将WiFi-station的代码搬到 MQTT-TCP中，发现 <code>wifiStationInit()</code> 函数初始化错误，报错的行数是 <code>117</code> 。</p>
-<figure>
-<img src="https://pic.islet.space/2021/12/image-20211229143428551.png" alt="wifi初始化函数出错" /><figcaption aria-hidden="true">wifi初始化函数出错</figcaption>
-</figure>
-<p>经检查，发现该函数示例代码的一部分，并未改动，且未添加其他自定义的 <code>.h</code> 或 <code>.c</code> 文件进行编译，应该不存在人为修改错误。</p>
-<figure>
-<img src="https://pic.islet.space/2021/12/image-20211229150011594.png" alt="检查函数定义" /><figcaption aria-hidden="true">检查函数定义</figcaption>
-</figure>
-<p>因为仅修改了本 <code>isletSpaceIotMain.c</code> 文件，就在本文件中搜索 <code>esp_event_loop_create_default</code> 关键字，发现在 <code>app_main()</code> 中也有该语句，初步判断可能是两次调用导致错误，就注释了 <code>298</code> 行 和 <code>299</code> 行进行重新编译和烧录，问题解决，设备可以正常连接到路由器。</p>
-<figure>
-<img src="https://pic.islet.space/2021/12/image-20211229150054429.png" alt="注释重复语句" /><figcaption aria-hidden="true">注释重复语句</figcaption>
-</figure>
-<h2 id="mqtt服务器连接错误">MQTT服务器连接错误</h2>
-<p>在设备成功接入WiFi后，发现MQTT客户端无法连接至服务器。给出的错误提示是 <code>There are no transports valid</code> ，大致意思即连接不可用。</p>
-<figure>
-<img src="https://pic.islet.space/2021/12/image-20211229150744192.png" alt="Monitor提示无可用传输" /><figcaption aria-hidden="true">Monitor提示无可用传输</figcaption>
-</figure>
-<p>经过检查，发现原来填写在 <code>sdkconfig</code> 文件中的 <code>Broker URL</code> 链接为 <code>https://iot.islet.space</code> ，而实际上，官网给出的配置方式如下：</p>
-<figure>
-<img src="https://pic.islet.space/2021/12/image-20211229152435708.png" alt="查看官方URI定义" /><figcaption aria-hidden="true">查看官方URI定义</figcaption>
-</figure>
-<p>打开项目配置菜单，修改为 <code>mqtt://iot.islet.space</code> ，并重新 Build 和 Flash。</p>
-<figure>
-<img src="https://pic.islet.space/2021/12/image-20211229151252895.png" alt="修改URL" /><figcaption aria-hidden="true">修改URL</figcaption>
-</figure>
-<p>可以发现错误已解决，设备已经正常连接至服务器。</p>
-<figure>
-<img src="https://pic.islet.space/2021/12/image-20211229152118764.png" alt="Monitor提示成功" /><figcaption aria-hidden="true">Monitor提示成功</figcaption>
-</figure>
-<p>尝试在对应主题下发布信息进行测试：</p>
-<figure>
-<img src="https://pic.islet.space/2021/12/image-20211229152036214.png" alt="尝试发布信息" /><figcaption aria-hidden="true">尝试发布信息</figcaption>
-</figure>
-<p>通过终端Monitor可以观察到，设备正常接收到数据：</p>
-<figure>
-<img src="https://pic.islet.space/2021/12/image-20211229152141547.png" alt="设备接收成功" /><figcaption aria-hidden="true">设备接收成功</figcaption>
-</figure>
-<h2 id="eventhandler未进入">eventHandler未进入</h2>
-<figure>
-<img src="https://pic.islet.space/2021/12/image-20211229182911935.png" alt="image-20211229182911935" /><figcaption aria-hidden="true">image-20211229182911935</figcaption>
-</figure>
-<h1 id="参考">参考</h1>
-<ol type="1">
-<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/xujiuba/article/details/107234040">Mac 安装 CMake 配置及环境配置</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=Lc6ausiKvQM">Quick User Guide for the ESP-IDF VS Code Extension</a></li>
-<li><a target="_blank" rel="noopener" href="https://docs.espressif.com/projects/esp-idf/zh_CN/latest/esp32/get-started/index.html#id2">ESP-IDF 编程指南</a></li>
-<li><a target="_blank" rel="noopener" href="https://docs.espressif.com/projects/esp-idf/en/latest/esp32/api-reference/protocols/mqtt.html">ESP-MQTT</a></li>
-</ol>
 
       
     </div>

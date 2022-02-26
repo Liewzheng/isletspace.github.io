@@ -162,7 +162,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">108</span>
+          <span class="site-state-item-count">109</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -173,7 +173,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">200</span>
+        <span class="site-state-item-count">202</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -207,6 +207,547 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://islet.space/2021/05/14/Communication/2021-05-14-I2C%E9%80%9A%E4%BF%A1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Liewzheng">
+      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coder的孤岛">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/05/14/Communication/2021-05-14-I2C%E9%80%9A%E4%BF%A1/" class="post-title-link" itemprop="url">I2C通信</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-05-14 10:55:00" itemprop="dateCreated datePublished" datetime="2021-05-14T10:55:00+08:00">2021-05-14</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2021-07-15 21:12:07" itemprop="dateModified" datetime="2021-07-15T21:12:07+08:00">2021-07-15</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Communication/" itemprop="url" rel="index"><span itemprop="name">Communication</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="i2c基本通信规则">I2C基本通信规则</h1>
+<p><strong>标准</strong>：<a target="_blank" rel="noopener" href="https://www.nxp.com/docs/en/user-guide/UM10204.pdf">《NXP_UM10204_I2C-bus specification and user manual》</a></p>
+<blockquote>
+<p><em>I<sup>2</sup>C总线是一个事实上的世界标准，现在已经在50多家公司生产的1000多种不同的IC中实施。</em></p>
+<p><em>此外，多功能的I<sup>2</sup>C总线被用于各种控制架构，如系统管理总线（SMBus）、电源管理总线（PMBus）、智能平台管理接口（IPMI）、显示数据通道（DDC）和高级电信计算架构（ATCA）。</em></p>
+<p><em>本文件帮助设备和系统设计者了解I<sup>2</sup>C总线的工作原理并实现工作应用。描述了各种操作模式。它包含了对I<sup>2</sup>C<strong>总线数据传输</strong>、握手和总线仲裁方案的全面介绍。详细的章节涵盖了I<sup>2</sup>C总线在每种工作模式下的时序和电气规范。</em></p>
+<p><em>I<sup>2</sup>C兼容芯片的设计者应将该文件作为参考，并确保新设备满足该文件中规定的所有限制。包含I<sup>2</sup>C器件的系统的设计者应审查本文件，并参考各个组件的数据表。</em></p>
+<p>——翻译自标准文件</p>
+</blockquote>
+<p>I<sup>2</sup>C(Inter－Integrated Circuit)是一种通用的总线协议。它是由Philips(飞利浦)公司，现NXP(恩智浦)半导体开发的一种简单的双向两线制总线协议标准。</p>
+<p>对于硬件设计人员来说，只需要2个管脚，极少的连接线和面积，就可以实现芯片间的通讯，对于软件开发者来说，可以使用同一个I<sup>2</sup>C驱动库，来实现实现不同器件的驱动，大大减少了软件的开发时间。极低的工作电流，降低了系统的功耗，完善的应答机制大大增强通讯的可靠性。</p>
+<h2 id="术语">术语</h2>
+<p><img src="https://pic.islet.space/2021/05/image-20210514111033910.png" alt="image-20210514111033910" style="zoom: 67%;" /></p>
+<table>
+<thead>
+<tr class="header">
+<th>术语</th>
+<th>释义</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>总线</td>
+<td>传输数据的通路</td>
+</tr>
+<tr class="even">
+<td>传送者</td>
+<td>传输数据至总线的设备</td>
+</tr>
+<tr class="odd">
+<td>接收者</td>
+<td>从总线上接受数据的设备</td>
+</tr>
+<tr class="even">
+<td>主（机）</td>
+<td>主动开启传输、生成时钟信号 并 主动结束传输的设备</td>
+</tr>
+<tr class="odd">
+<td>从（机）</td>
+<td>由主机寻址的设备</td>
+</tr>
+<tr class="even">
+<td>多主（机）</td>
+<td>在不损坏数据传输的情况下允许多主机可以试图同时控制总线</td>
+</tr>
+<tr class="odd">
+<td>仲裁</td>
+<td>确保在有多个主机同时试图控制总线的情况下，只允许一个主机这样做，而且仲裁成功的信息不会被（其他设备）破坏的程序。</td>
+</tr>
+<tr class="even">
+<td>同步</td>
+<td>确保两个及以上设备其时钟信号的同步</td>
+</tr>
+</tbody>
+</table>
+<p>以下这个图应该可以较好地解释“多主机”的概念，多个主机可以同时向外发出传输数据的申请，也可以主动结束其数据传输。虽然，I<sup>2</sup>C降低了总线复用的成本，但仍需要“仲裁”机制来解决多个主机之间的无序竞争状态。</p>
+<p><img src="https://pic.islet.space/2021/05/image-20210514112114667.png" alt="image-20210514112114667" style="zoom:67%;" /></p>
+<h2 id="硬件要求">硬件要求</h2>
+<h3 id="电气特性">电气特性</h3>
+<p>根据要求，I2C的高电平有效值要达到输入参考电压（一般是VDD）的0.7倍以上，低电平有效值需要达到输入参考电压的0.3倍以下。</p>
+<figure>
+<img src="https://pic.islet.space/2021/06/20210618143441.png" alt="image-20210618143438565" /><figcaption aria-hidden="true">image-20210618143438565</figcaption>
+</figure>
+<h3 id="总线硬件要求">总线硬件要求</h3>
+<p>通过 <strong>串行数据</strong>（SDA，Serial Data）和 <strong>串行时钟</strong>（SCL，Serial Clock）两条线路对设备进行连接。</p>
+<p>每个设备都通过自身的通信设备地址进行互相辨别，且每个设备都可以当发送者或接收者，取决于设备自身的功能定义。</p>
+<h3 id="标准传输速率">标准传输速率</h3>
+<p>各模式、速率及其传输方向见下方表格。</p>
+<blockquote>
+<p>Data on the I<sup>2</sup>C-bus can be transferred at rates of up to 100 kbit/s in the Standard-mode, up to 400 kbit/s in the Fast-mode, up to 1 Mbit/s in Fast-mode Plus, or up to 3.4 Mbit/s in the High-speed mode.</p>
+</blockquote>
+<table>
+<thead>
+<tr class="header">
+<th>MODE</th>
+<th>RATE</th>
+<th>TRANSFER DIRECTION</th>
+<th>DOWNWARD COMPATIBLE WITH</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>STANDARD</td>
+<td>100 Kbit/s</td>
+<td>bidirectional</td>
+<td>/</td>
+</tr>
+<tr class="even">
+<td>FAST</td>
+<td>400 Kbit/s</td>
+<td>bidirectional</td>
+<td>STANDARD</td>
+</tr>
+<tr class="odd">
+<td>FAST-PLUS</td>
+<td>1 Mbit/s</td>
+<td>bidirectional</td>
+<td>STANDARD / FAST</td>
+</tr>
+<tr class="even">
+<td>HIGH-SPEED</td>
+<td>3.4 Mbit/s</td>
+<td>bidirectional</td>
+<td>STANDARD / FAST / FAST-PLUS</td>
+</tr>
+<tr class="odd">
+<td>ULTRA-FAST</td>
+<td>5 Mbit/s</td>
+<td>unidirectional</td>
+<td>/</td>
+</tr>
+</tbody>
+</table>
+<h2 id="编码协议">编码协议</h2>
+<p>以下协议要求适用于双向通信模式（不包括ULTRA-FAST模式下的单向通信）</p>
+<h3 id="逻辑电平规定">逻辑电平规定</h3>
+<p>由于I<sup>2</sup>C的接入设备众多（如CMOS、NMOS、Bipolar等），因此逻辑电平0和逻辑电平1（的电压）并不是固定不变的，这取决于VDD的电平。</p>
+<p>输入参考电平会被控制在VDD电平的30%~70%之间。 V<sub>IL</sub> = 0.3 * V<sub>DD</sub>；V<sub>IH</sub> = 0.7 * V<sub>DD</sub> 。</p>
+<p>某些传统设备的输入电平会被固定在1.5V（V<sub>IL</sub>）和3.0V（V<sub>IH</sub>），但新设备都要求是 30%V<sub>DD</sub> 及 70%V<sub>DD</sub> 。</p>
+<p><strong>注意</strong>：V<sub>IL</sub>、V<sub>IH</sub>、V<sub>OL</sub>、V<sub>OH</sub>都是以参考电压作为基准的，即要达到某个电压的百分之多少时，才能够被认为是 <strong>逻辑电平0</strong> 或 <strong>逻辑电平1</strong> 。例如，可将V<sub>IL</sub> 视作当V<sub>DD</sub>下降到只有30%及以下时，为逻辑电平0，30%V<sub>DD</sub>是其逻辑电平的最高阈值；同理可得 V<sub>IH</sub> ；超过这个值而未到达70%的中间态则为不确定态。</p>
+<blockquote>
+<p>Due to the variety of different technology devices (CMOS, NMOS, bipolar) that can be connected to the I<sup>2</sup>C-bus, the levels of the logical ‘0’ (LOW) and ‘1’ (HIGH) are not fixed and depend on the associated level of VDD . Input reference levels are set as 30 % and 70 % of VDD ; VIL is 0.3VDD and VIH is 0.7V DD .</p>
+<p>See Figure 38, timing diagram. Some legacy device input levels were fixed at V<sub>IL</sub> = 1.5 V and V<sub>IH</sub> = 3.0 V, but all new devices require this 30 %/70 % specification.</p>
+</blockquote>
+<p><img src="https://pic.islet.space/2021/05/image-20210514134830615.png" alt="image-20210514134830615" style="zoom: 67%;" /></p>
+<h3 id="时序正确性">时序正确性</h3>
+<ul>
+<li>SDA上的数据必须在SCL高电平期间保持稳定，即不能在SCL高电平期间发生翻转（后见原因），只有在SCL低电平时可以翻转。</li>
+<li>时钟脉冲信号生成要先于数据传送。</li>
+</ul>
+<blockquote>
+<p>The data on the SDA line must be stable during the HIGH period of the clock. The HIGH or LOW state of the data line can only change when the clock signal on the SCL line is LOW (see Figure 4). One clock pulse is generated for each data bit transferred.</p>
+</blockquote>
+<p><img src="https://pic.islet.space/2021/05/image-20210514141512136.png" alt="image-20210514141512136" style="zoom: 80%;" /></p>
+<h3 id="开始及结束标志">开始及结束标志</h3>
+<ul>
+<li><p>传输开始时必须以一个 <strong>开始</strong> 信号作为标志，结束时必须以一个 <strong>结束</strong> 信号作为标志。</p></li>
+<li><p><strong>开始信号 </strong>是以SCL为高电平时的 <strong>SDA电平的由高转低</strong> 作为标志，<strong>结束信号</strong> 是以SCL高电平时的 <strong>SDA电平的由低转高</strong> 作为标志。</p></li>
+<li><p>开始和结束标志必须由主设备控制。</p></li>
+</ul>
+<blockquote>
+<p>All transactions begin with a START (S) and are terminated by a STOP (P) (see Figure 5). A HIGH to LOW transition on the SDA line while SCL is HIGH defines a START condition. A LOW to HIGH transition on the SDA line while SCL is HIGH defines a STOP condition.</p>
+</blockquote>
+<p><img src="https://pic.islet.space/2021/05/image-20210514142116674.png" alt="image-20210514142116674" style="zoom: 80%;" /></p>
+<h4 id="开始字节">开始字节</h4>
+<p><img src="https://pic.islet.space/2021/05/image-20210515150526897.png" alt="image-20210515150526897" style="zoom:67%;" /></p>
+<blockquote>
+<p>dummy acknowledge (HIGH) : 无声确认？？？</p>
+</blockquote>
+<h3 id="总线状态">总线状态</h3>
+<p>总线具有两种状态，<strong>繁忙</strong>（Busy）和 <strong>空闲</strong>（Free），即 SDA电平 “开始” 后，总线进入繁忙状态， SDA电平 “结束” 后，总线进入空闲状态。</p>
+<p><strong>注意</strong>：在总线繁忙期间，发生重复的“开始”状态（而不是“结束”状态），由于“重复开始”和 “开始” 功能相同，为了方便，统称为 “开始”，除非特殊说明为 “重复开始”。</p>
+<blockquote>
+<p>The bus stays busy if a repeated START (Sr) is generated instead of a STOP condition. In this respect, the START (S) and repeated START (Sr) conditions are functionally identical. For the remainder of this document, therefore, the S symbol is used as a generic term to represent both the START and repeated START conditions, unless Sr is particularly relevant.</p>
+</blockquote>
+<h3 id="传输比特位">传输比特位</h3>
+<ul>
+<li>SDA线上的字节传输必须满足8位长度。</li>
+<li>每次传输数据的字节数不受限制。</li>
+<li>每个字节数后都需要跟一个<strong>确认位（Acknowledge bit）</strong>。</li>
+<li>当从机无法完整接收或传输一个完整的数据字节时，例如正在产生内部中断等，除非其完成内部的某些功能，否则该从机将能够一直拉低SCL的电平，<strong>强制让主机一直处于等待状态</strong>。只有当从机准备好接收下一个完整的字节并释放SCL时，数据传输才会继续。</li>
+</ul>
+<blockquote>
+<p>Every byte put on the SDA line must be eight bits long. The number of bytes that can be transmitted per transfer is unrestricted. Each byte must be followed by an Acknowledge bit.</p>
+<p><strong>Data is transferred with the Most Significant Bit (MSB) first</strong> (see Figure 6). If a slave cannot receive or transmit another complete byte of data until it has performed some other function, for example servicing an internal interrupt, it can hold the clock line SCL LOW to force the master into a wait state. Data transfer then continues when the slave is ready for another byte of data and releases clock line SCL.</p>
+</blockquote>
+<p><img src="https://pic.islet.space/2021/05/image-20210514144620803.png" alt="image-20210514144620803" style="zoom:80%;" /></p>
+<h3 id="确认标志">确认标志</h3>
+<ul>
+<li>每个字节（8比特）后都跟着一个确认位，即前8位数据，第9位确认。</li>
+<li><strong>SCL上的时钟信号由主机产生，包括确认位的的第九个时钟脉冲</strong>。</li>
+<li>SDA线并不是由主机一直占有的，每发送完一个完整字节后，主机都会释放SDA线，由从机进行数据确认。</li>
+<li>发送者在确认时钟脉冲期间释放SDA线，以便接收者可以将SDA线拉低，并且在该时钟脉冲的高电平期间保持稳定的低电平。</li>
+<li>对于设置（set-up）和保持（Hold）的时间，都应该依照表10中只针对各种不同模式的要求进行设置。</li>
+<li>如果SDA电平在第九个时钟脉冲时仍保持高电平，则被定义为 “未确认状态”。则此时主机可以发送一个“结束”标志来结束当前连接，或发送一个“开始”标志来开启一次新的传送。</li>
+</ul>
+<p><mark>即，此时（第9个脉冲时）SDA的控制权已经被mater释放了，但仍为高电平，slave可以在这第9个时钟脉冲高电平期间获得控制权，如果确认收到数据，则将电平拉低，否则不拉低。</mark></p>
+<figure>
+<img src="https://pic.islet.space/2021/06/image-20210607141115024.png" alt="image-20210607141115024" /><figcaption aria-hidden="true">image-20210607141115024</figcaption>
+</figure>
+<blockquote>
+<p>The acknowledge takes place after every byte. The acknowledge bit allows the receiver to signal the transmitter that the byte was successfully received and another byte may be sent. The master generates all clock pulses, including the acknowledge ninth clock pulse.</p>
+<p>The Acknowledge signal is defined as follows: the transmitter releases the SDA line during the acknowledge clock pulse so the <strong><em>receiver can pull the SDA line LOW</em></strong> and it remains stable LOW during the HIGH period of this clock pulse (see Figure 4). Set-up and hold times (specified in Section 6) must also be taken into account.</p>
+<p>When SDA remains HIGH during this ninth clock pulse, this is defined as the Not Acknowledge signal. The master can then generate either a STOP condition to abort the transfer, or a repeated START condition to start a new transfer.</p>
+</blockquote>
+<p><strong>以下为五种“未确认/未应答”的可能情况</strong>：There are five conditions that lead to the generation of a NACK:</p>
+<ol type="1">
+<li><strong>传输地址错误</strong>：No receiver is present on the bus with the transmitted address so there is no device to respond with an acknowledge.</li>
+<li><strong>实时处理中</strong>：The receiver is unable to receive or transmit because it is performing some real-time function and is not ready to start communication with the master.</li>
+<li><strong>数据/代码未定义</strong>：During the transfer, the receiver <strong>gets data or commands that it does not understand.</strong></li>
+<li><strong>正在传输中</strong>：During the transfer, the receiver <strong>cannot receive any more data bytes</strong>.</li>
+<li><strong>未收到结束信号（收发身份未转换）</strong>：A master-receiver must signal the end of the transfer to the slave transmitter.</li>
+</ol>
+<h3 id="时钟同步">时钟同步</h3>
+<p>任意几个主机都可能同时发起数据传输请求，此时只有一个主机和一个从机可以掌握总线进行通信，此时需要通过 <strong>时间同步</strong> 和 <strong>仲裁</strong> 完成对总线的调配。</p>
+<p><strong>在单机系统（Single Master System）中，不需要时钟同步和仲裁。</strong></p>
+<p>时钟同步是通过I<sup>2</sup>C接口与SCL线的有线-AND连接进行的。</p>
+<p>这意味着SCL线上的高电平到低电平的转换会导致相关的主站开始对其低电平周期进行计数（如图7的CLK<sub>2</sub>），一旦一个主站时钟 CLK<sub>1</sub> 变为低电平，它就会将SCL线电平拉低，并保持在这个状态，直到另一个时钟 CLK<sub>2</sub> 达到高电平状态。</p>
+<p>然而，如果时钟 CLK<sub>2</sub> 仍在其低电平周期内，CLK<sub>1</sub> 的低电平到高电平转换可能不会改变SCL线的状态。</p>
+<p>因为SCL线被具有最长的低电平周期的主站 CLK<sub>2</sub> 保持为低电平，而在这段时间内，低电平周期较短的主站 CLK<sub>1</sub> 进入高电平等待状态。</p>
+<blockquote>
+<p>Clock synchronization is performed using the wired-AND connection of I<sup>2</sup>C interfaces to the SCL line. This means that a HIGH to LOW transition on the SCL line causes the masters concerned to start counting off their LOW period and, once a master clock has gone LOW, it holds the SCL line in that state until the clock HIGH state is reached (see Figure 7). However, if another clock is still within its LOW period, the LOW to HIGH transition of this clock may not change the state of the SCL line. The SCL line is therefore held LOW by the master with the longest LOW period. Masters with shorter LOW periods enter a HIGH wait-state during this time.</p>
+</blockquote>
+<p>当所有相关的主控器都结束了他们的低电平周期，时钟线被释放并变成高电平。</p>
+<p>然后，在主站时钟和SCL线的状态之间没有差异，所有的主站开始计算他们的高电平周期。</p>
+<p><strong>第一个完成其高电平周期的主站再次将SCL线拉到低电平</strong>。这样，就产生了一个<strong>同步的SCL时钟</strong>，<strong>其低电平周期由具有最长时钟低电平周期的主站决定</strong>，<strong>其高电平周期由具有最短时钟高电平周期的主站决定</strong>。</p>
+<p><img src="https://pic.islet.space/2021/05/image-20210514170202184.png" alt="image-20210514170202184" style="zoom: 67%;" /></p>
+<h3 id="竞争仲裁">竞争仲裁</h3>
+<p>仲裁和同步一样，是指只有在系统中使用一个以上的主站时才需要的协议的一个部分。注意，从机不参与仲裁程序。</p>
+<p>一个主站只有在总线空闲时才可以开始传输。两个主站可以在START条件的最小保持时间（tHD;STA）内产生一个START条件，从而在总线上产生一个有效的START条件。然后需要进行仲裁，以确定哪个主站将完成其传输。</p>
+<p>仲裁是逐位进行的。在每个比特期间，当SCL为高电平时，每个主站检查SDA电平是否与其所发送的内容相符，期间可能需要很多比特，只要传输的内容相同，两个主站实际上可以无误地完成整个信息传输过程。</p>
+<p><mark>当一个主站第一次试图发送一个高电平，但检测到SDA电平为低电平时，主站知道它已经失去了仲裁，并关闭其SDA输出驱动器</mark>。在其他主站被仲裁过程中，正在传输其信息的主站将继续其传输，没有信息丢失。</p>
+<p>失去仲裁的主站可以产生时钟脉冲，直到它失去仲裁的字节结束，并且必须在总线空闲时重新尝试传输。</p>
+<p><mark>如果一个主站也包含了一个从站功能，并且它在寻址阶段失去了仲裁，有可能获胜的主站正试图对它进行寻址。因此，失败的主站必须立即切换到其从站模式。</mark></p>
+<p>图8显示了两个主站的仲裁程序。可能涉及更多，这取决于有多少个主站连接到总线上。</p>
+<p><mark>当产生DATA1的主站的内部数据电平与SDA线上的实际电平有差异时，DATA1的输出被关闭。这并不影响由获胜主站发起的数据传输。</mark></p>
+<p><img src="https://pic.islet.space/2021/05/image-20210515142633906.png" alt="image-20210515142633906" style="zoom: 67%;" /></p>
+<h3 id="通用寻址">通用寻址</h3>
+<figure>
+<img src="https://pic.islet.space/2021/05/image-20210515172907284.png" alt="image-20210515172907284" /><figcaption aria-hidden="true">image-20210515172907284</figcaption>
+</figure>
+<figure>
+<img src="https://pic.islet.space/2021/05/image-20210515172945861.png" alt="image-20210515172945861" /><figcaption aria-hidden="true">image-20210515172945861</figcaption>
+</figure>
+<figure>
+<img src="https://pic.islet.space/2021/05/image-20210515172958184.png" alt="image-20210515172958184" /><figcaption aria-hidden="true">image-20210515172958184</figcaption>
+</figure>
+<h3 id="软复位">软复位</h3>
+<p>在发送general call (0000 0000)后，再发送一个 0000 0110 (06h) ，这样两个具有先后顺序的字节来定义软复位。</p>
+<p>首先，这种软复位是可选 ，并不是所有设备都会对软复位指令进行响应。</p>
+<p>在收到这2个字节的序列时，所有被设计为响应一般调用地址的设备都会复位，并接收其地址的可编程部分。</p>
+<blockquote>
+<p>On receiving this 2-byte sequence, all devices designed to respond to the general call address reset and take in the programmable part of their address.</p>
+</blockquote>
+<p>必须采取预防措施，确保设备在施加电源电压后没有拉低SDA或SCL线，因为这些低电平会阻断总线。</p>
+<h3 id="总线复位">总线复位</h3>
+<p>SCK信号一直卡在低电平的事件较少发生。</p>
+<ul>
+<li>如果I<sup>2</sup>C总线设备拥有硬件复位输入，则可以通过优先程序启用硬件中断复位来重置总线。</li>
+<li>如果没有硬件复位输入，则通过给设备循环供电，激活强制性的内部开机复位（POR）电路。</li>
+</ul>
+<p>SDA信号如果一直卡在低电平。</p>
+<ul>
+<li><p>则主机应该发送九次SCL时钟脉冲，此时令SDA保持低电平的设备在收到九次脉冲后应主动释放总线。</p></li>
+<li><p>如果九次脉冲没有用，则启用硬件中断复位或循环供电来清除总线。</p></li>
+</ul>
+<h3 id="设备id">设备ID</h3>
+<p>可选的3字节只读设备ID编码（an optional 3-byte read-only ）：</p>
+<ul>
+<li>12位是设备制造商编号，具有独一无二性</li>
+<li>9位零件ID，由设备制造商写入</li>
+<li>3位模具/晶元版本，由设备制造商写入</li>
+</ul>
+<p><img src="https://pic.islet.space/2021/05/image-20210515152141963.png" alt="image-20210515152141963" style="zoom:67%;" /></p>
+<ol type="1">
+<li><p>启动条件</p></li>
+<li><p>主站发送保留设备ID的 I<sup>2</sup>C 总线地址，后面的R/W位设置为<code>0</code>（写）：<code>1111 1000</code>。</p></li>
+<li><p>主站发送从属地址。LSB是一个 "不关心"的值，只有一个设备必须确认这个字节（拥有I<sup>2</sup>C总线从属地址的设备）。</p></li>
+<li><p>主站发送一个 Re-START 条件。</p></li>
+</ol>
+<blockquote>
+<p>备注：在 STOP 条件之后，再加上一个 START 条件，就会重置从属状态机，无法进行设备ID读取。另外，在 STOP 条件或 Re-START 条件之后，对另一个从属设备的访问也会重置从属状态机，无法执行Device ID读取。</p>
+</blockquote>
+<ol start="5" type="1">
+<li><p>主站发送保留设备ID的 I<sup>2</sup>C 总线地址，后面的R/W位设置为 <code>1</code>（读）：<code>1111 1001</code>。</p></li>
+<li><p>可以进行设备ID读取，从12个制造商位开始（第一个字节+第二个字节的4个MSB），然后是9个部件识别位（第二个字节的4个LSB+第三个字节的5个MSB），然后是三个芯片修订位（第三个字节的3个LSB）。</p></li>
+<li><p>主站通过NACKing最后一个字节来结束读取序列，从而重置从属设备的状态机，允许主站发送 STOP 条件。</p>
+<blockquote>
+<p>备注：设备ID的读取可以随时通过发送NACK来停止。</p>
+</blockquote></li>
+</ol>
+<p>如果主站在第三个字节之后继续ACK，从站就会滚回第一个字节，并继续发送设备ID序列，直到检测到 NACK。</p>
+<h1 id="adi-codec-i2c开发">ADI-Codec I2C开发</h1>
+<p>ADI</p>
+<h2 id="物理接口">物理接口</h2>
+<p>存在由ADI官方提供的评估板（和MediaWorks的板） 和 开发第一板（量产板）之间的引脚定义差别，一开始使用的是评估板的DPI 11 和 12引脚，即 <strong>DPI_P11</strong> 为 <strong><em>SDA</em></strong>，<strong>DPI_P12</strong> 为 <strong><em>SCLK</em></strong>。后来发现作为时钟引脚的DPI无法被控制，转而使用 DPI 11 和 13。即 <strong>DPI_P11</strong> 为 <strong><em>SDA</em></strong>，<strong>DPI_P13</strong> 为 <strong><em>SCLK</em></strong>。</p>
+<p><img src="https://pic.islet.space/2021/05/20210527144920.png" alt="image-20210524112141809" style="zoom:67%;" /></p>
+<figure>
+<img src="https://pic.islet.space/2021/06/20210621154130.png" alt="image-20210615083241938" /><figcaption aria-hidden="true">image-20210615083241938</figcaption>
+</figure>
+<p>MediaWorks核心板J3引脚排示意图</p>
+<p>以下描述均以评估板为例，DIY板不一定适用。</p>
+<h2 id="插口jumper定义">插口（Jumper）定义</h2>
+<p><img src="https://pic.islet.space/2021/04/image-20210427165847934.png" alt="image-20210427165847934" style="zoom: 67%;" /></p>
+<h2 id="时钟及pll">时钟及PLL</h2>
+<ol type="1">
+<li>1772的工作频率为12.288兆赫，而如果过要设置PLL，<strong>PLL输出一定是24.576兆赫。</strong></li>
+<li>通过 <code>MCLKIN</code> 端为codec提供核心时钟信号，可接入8至27兆赫信号。</li>
+<li>通过对 <code>0x0000</code> 到 <code>0x0005</code> 的寄存器进行写入修改PLL。</li>
+<li>PLL模式要被设置为分数或整数，则取决于MCLK的输入频率。</li>
+<li>在时钟信号达到PLL前，时钟信号会经过整数时间分频器以确保时钟频率符合要求；可以通过设置 0x0005 的bit[2:1]来设置其分频率。</li>
+<li>要使用PLL时，<strong>首先要明确PLL输出频率是多少</strong>，当PLL信号与时钟信号是整数倍关系时才需要使用整数分频器。</li>
+</ol>
+<figure>
+<img src="https://pic.islet.space/2021/05/image-20210513093158863.png" alt="image-20210513093158863" /><figcaption aria-hidden="true">image-20210513093158863</figcaption>
+</figure>
+<p>以下列举了整数型及分数型分频器的参数设置：</p>
+<p><img src="https://pic.islet.space/2021/05/image-20210513093047973.png" alt="image-20210513093047973" style="zoom:67%;" /></p>
+<h3 id="评估板电路图">评估板电路图</h3>
+<p><img src="https://pic.islet.space/2021/05/image-20210513092007130.png" alt="image-20210513092007130" style="zoom:67%;" /></p>
+<h2 id="输入输出">输入输出</h2>
+<h3 id="评估板电路图-1">评估板电路图</h3>
+<p><img src="https://pic.islet.space/2021/05/image-20210513090414605.png" alt="image-20210513090414605" style="zoom: 67%;" /></p>
+<h3 id="第0及第1通道">第0及第1通道</h3>
+<p>以下为codec芯片对引脚的定义，在提供一个接地端，构成TRS是完全没有问题，但是codec的定义和其评估板的外围电路设计有所区别。</p>
+<figure>
+<img src="https://pic.islet.space/2021/05/image-20210513083636462.png" alt="image-20210513083636462" /><figcaption aria-hidden="true">image-20210513083636462</figcaption>
+</figure>
+<p>正常3.5mm音频接口为TRS接口，其中T虽然为VCC（通常是），R作为音频信号输入，而S为接地端，且T和R可共同作为左右声道分别进行输入。（也有T和S定义相反的设计）</p>
+<p>但是按上述电路进行接线时，相当于TS接口（单声道）接线模式，却又不完全相同：</p>
+<ul>
+<li>使用 MICBIAS<sub>x</sub> 对14接口进行供电，此时Tip端是VCC。</li>
+<li>Ring端接13接口，充当Sleeve端（而实际上的Sleeve端因已经接地，可以不进行连接）。</li>
+<li>由Ring(AIN1REF)和Tip(AIN1)共同构成了TS单声道接线模式。</li>
+</ul>
+<h3 id="第2及第3通道">第2及第3通道</h3>
+<ul>
+<li>2/3输入通道是复用立体声通道，即1通道和0通道都可以单独接入音源，在物理音频接口上独立，但第2/3通道是在一起的，共用一个物理通道。UG第7页中也有提到。</li>
+</ul>
+<p><img src="https://pic.islet.space/2021/04/image-20210427104818097.png" alt="image-20210427104818097" style="zoom:50%;" /></p>
+<p><img src="https://pic.islet.space/2021/04/image-20210427105655639.png" alt="image-20210427105655639" style="zoom:67%;" /></p>
+<ul>
+<li>有四个单端输入通道可以设置为麦克风信号或线路信号，一个双立体声数字输入信号通道和也可被用于单端输出的两个差分(differential)输出。</li>
+</ul>
+<h2 id="i2c通信">I2C通信</h2>
+<h3 id="时序">时序</h3>
+<p>图85展示了 <strong>单字主写模式</strong> 的时序。每9个时钟脉冲，1772都会拉低一次SDA的电平以表示确认收到。</p>
+<p>图86展示了 多字主写模式 的时序。此图展示了2个字节大小数据（例如程序）的写入过程。<mark>1772会在每两个字节后增加一次子地址寄存器，因为被使用的子地址对应着 2字节 长度的寄存器或内存区域</mark>。</p>
+<p>图87展示了 单字主写模式后转变为 单字主读模式 的时序。1772作为从机接受数据后发送确认标志，主机立即发起重复开始的 单字主读模式，由从机发送至主机。</p>
+<p>图88展示了 多字主读模式 的时序，展示了读取目标字节为2bytes的示例。<em><u>此处上述黄底字重复</u></em>。其他地址范围可能有不同的字长，从一个到四个字节不等。ADAU1772总是对子地址进行解码，并设置自动递增电路，使地址在适当的字节数后递增。</p>
+<p><img src="https://pic.islet.space/2021/05/image-20210518105918652.png" alt="image-20210518105918652" style="zoom: 67%;" /></p>
+<blockquote>
+<p>S = 开始 标志</p>
+<p>P = 停止 标志</p>
+<p>AM = 主机确认标志</p>
+<p>AS = 从机确认标志</p>
+</blockquote>
+<h3 id="接口">接口</h3>
+<h4 id="usbi接口">USBi接口</h4>
+<p>​ 《SigmaStudio_USBi_to_EZ-Board_Adapter_Schematic-Rel_0.1.pdf》中对接口的定义，总共需要4个引脚，分别是1、3、4、10，对应着 SCL / SDA / VCC / GND；</p>
+<p><img src="https://pic.islet.space/2021/05/image-20210518112823329.png" alt="image-20210518112823329" style="zoom:67%;" /></p>
+<h4 id="接口-1">1772接口</h4>
+<p>需要用到的接口是 <code>SCL/SCLK</code> 和 <code>SDA/MISO</code> 。</p>
+<figure>
+<img src="https://pic.islet.space/2021/06/20210601105623.png" alt="image-20210518192233133" /><figcaption aria-hidden="true">image-20210518192233133</figcaption>
+</figure>
+<p>ADDR0 和 ADDR1 分别对应的是控制接口（CONTROL PORT）上的 <strong><em>CLATCH</em></strong> 和 <strong><em>CDATA</em></strong> 针脚。</p>
+<figure>
+<img src="https://pic.islet.space/2021/06/20210607150001.png" alt="image-20210607145600052" /><figcaption aria-hidden="true">image-20210607145600052</figcaption>
+</figure>
+<p><img src="https://pic.islet.space/2021/05/image-20210518112823329.png" alt="image-20210518112823329" style="zoom:67%;" /></p>
+<table>
+<colgroup>
+<col style="width: 6%" />
+<col style="width: 6%" />
+<col style="width: 6%" />
+<col style="width: 6%" />
+<col style="width: 6%" />
+<col style="width: 28%" />
+<col style="width: 29%" />
+<col style="width: 9%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>BIT_6</th>
+<th>BIT_5</th>
+<th>BIT_4</th>
+<th>BIT_3</th>
+<th>BIT_2</th>
+<th>BIT_1 / ADDR1 / CDATA</th>
+<th>BIT_0 / ADDR0 / CLATCH</th>
+<th>ADDRESS</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0x3C</td>
+</tr>
+<tr class="even">
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>0x3D</td>
+</tr>
+<tr class="odd">
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>0x3E</td>
+</tr>
+<tr class="even">
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>0x3F</td>
+</tr>
+</tbody>
+</table>
+<h4 id="接口-2">21479接口</h4>
+<p>《ADSP-21479 EZ-Board Evaluation System Manual》，需要用到的接口是 <code>SPI_CLK(DPI_P3)</code> 和 <code>SPI_MISO(DPI_P2)</code> 。</p>
+<p><img src="https://pic.islet.space/2021/05/image-20210518113240492.png" alt="image-20210518113240492" style="zoom:67%;" /></p>
+<p>对应评估板上的针脚接口如下图示 24（DPI_P3） 和 27（DPI_P2） 接口。</p>
+<figure>
+<img src="https://pic.islet.space/2021/05/20210519114409.png" alt="image-20210519114333234" /><figcaption aria-hidden="true">image-20210519114333234</figcaption>
+</figure>
+<h3 id="设备地址">设备地址</h3>
+<p>主机每次发送8位数据，其中最低的一位由主机发送标识读/写位。逻辑电平1是读，逻辑电平0是写。</p>
+<p>通过I2C方式进行连接的从机，其设备地址是7位数（1-7，对应表21是<code>bit0-bit6</code>），表21提供了1772的设备地址，<strong>ADDR1</strong> 和 <strong>ADDR0</strong> 位置可以通过接入pin的方式自由设置，即输入引脚的电平不同，每个1772都能够拥有4个独特的地址。此类方式允许多块1772接入同一I2C总线。</p>
+<ul>
+<li>即，默认情况下从机地址为 <code>0x3C</code> ，可以设置成其他：<code>0x3D</code> , <code>0x3E</code>, <code>0x3F</code>。</li>
+<li>每个SDA和SCL线都应该接入一个2.0KΩ的升压电阻，但不应该高过IOVDD。</li>
+</ul>
+<figure>
+<img src="https://pic.islet.space/2021/06/20210601105537.png" alt="image-20210519093557617" /><figcaption aria-hidden="true">image-20210519093557617</figcaption>
+</figure>
+<p><img src="https://pic.islet.space/2021/06/20210601105628.png" alt="image-20210519094454381" style="zoom: 67%;" /></p>
+<h2 id="相关问答">相关问答</h2>
+<p><strong>Q</strong>: what is the macro SIGMA_WRITE_DELAY supposed to do? Is it a simple delay? Why are there parameters regarding the device I2C address, data and length? <strong>A</strong>: This macro is used for applications that need to pause the data writes for a specific purpose. For example, if you <strong><em>need time for the PLL to be set before starting to write to the rest of the registers</em></strong>. It could be used as a simple delay, you’ll need to specify the device address always because some applications can require more than one DSP; the length is just the address byte length (could be 1 or 2 byte length) and data is the value in hex that represents the total time in milliseconds (that is up to the micro controller clock speed). The reason length is used, is that some DSPs work with one and some other require two address bytes.</p>
+<p><code>&lt;SigmaStudioFW.h&gt;</code> contains a lot of macros to be defined. What I found by examinating all the code is that what macros need to be defined depend on what you want to perform with your microcontroller.</p>
+<p>If you only need to load a DSP program with a call to default_download(), well, you only need (at least for the ADAU1761)</p>
+<p>to implement the two macros:</p>
+<ul>
+<li><p>SIGMA_WRITE_REGISTER_BLOCK</p></li>
+<li><p>SIGMA_WRITE_DELAY</p></li>
+</ul>
+<p>The first one is the basis of all the loading of data into <strong><em>program ram</em></strong>, <strong><em>parameter ram</em></strong>, and <strong><em>registers</em></strong>. The second one is only a delay (to be exact it serves to wait for the PLL to lock, in any case <strong><em>most of the times it can be implemented as a simple delay</em></strong>).</p>
+<p>If you want to use sequences, that is to implement some control of the DSP running with your microcontroller, you will probably need to implement the other macros. In particular if you will control volume sliders you will need to implement the conversion macros for integer or float to the internal 5.23 representation. You can search elsewhere on the forum, I saw some of this code.</p>
+<h1 id="开发代码">开发代码</h1>
+<p>ADI和Codec之间的I2C通信可以通过两种方式进行，第一种是操作21478上面的TWI寄存器，需要查看《HWR》以获取更多信息。第二种是学会控制引脚高低电平，通过高低电平模拟寄存器操控来读取和写入I2C设备。</p>
+<p>在开发过程中，先使用的第一种方式对TWI寄存器进行操控，但发现21479中有某个寄存器无法写入，故放弃。下面提供第二种方式中需要用到的三个文件，分别是 <code>TWI.h</code> 、 <code>TWI.c</code> 、<code>SigmaStudioFW.h</code> 。经调试，以下代码可以正常收发数据，实现对从设备的读/写。</p>
+<h2 id="twi.c">TWI.c</h2>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br><span class="line">265</span><br><span class="line">266</span><br><span class="line">267</span><br><span class="line">268</span><br><span class="line">269</span><br><span class="line">270</span><br><span class="line">271</span><br><span class="line">272</span><br><span class="line">273</span><br><span class="line">274</span><br><span class="line">275</span><br><span class="line">276</span><br><span class="line">277</span><br><span class="line">278</span><br><span class="line">279</span><br><span class="line">280</span><br><span class="line">281</span><br><span class="line">282</span><br><span class="line">283</span><br><span class="line">284</span><br><span class="line">285</span><br><span class="line">286</span><br><span class="line">287</span><br><span class="line">288</span><br><span class="line">289</span><br><span class="line">290</span><br><span class="line">291</span><br><span class="line">292</span><br><span class="line">293</span><br><span class="line">294</span><br><span class="line">295</span><br><span class="line">296</span><br><span class="line">297</span><br><span class="line">298</span><br><span class="line">299</span><br><span class="line">300</span><br><span class="line">301</span><br><span class="line">302</span><br><span class="line">303</span><br><span class="line">304</span><br><span class="line">305</span><br><span class="line">306</span><br><span class="line">307</span><br><span class="line">308</span><br><span class="line">309</span><br><span class="line">310</span><br><span class="line">311</span><br><span class="line">312</span><br><span class="line">313</span><br><span class="line">314</span><br><span class="line">315</span><br><span class="line">316</span><br><span class="line">317</span><br><span class="line">318</span><br><span class="line">319</span><br><span class="line">320</span><br><span class="line">321</span><br><span class="line">322</span><br><span class="line">323</span><br><span class="line">324</span><br><span class="line">325</span><br><span class="line">326</span><br><span class="line">327</span><br><span class="line">328</span><br><span class="line">329</span><br><span class="line">330</span><br><span class="line">331</span><br><span class="line">332</span><br><span class="line">333</span><br><span class="line">334</span><br><span class="line">335</span><br><span class="line">336</span><br><span class="line">337</span><br><span class="line">338</span><br><span class="line">339</span><br><span class="line">340</span><br><span class="line">341</span><br><span class="line">342</span><br><span class="line">343</span><br><span class="line">344</span><br><span class="line">345</span><br><span class="line">346</span><br><span class="line">347</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * TWI.C</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> *  Created on: 2021年6月16日</span></span><br><span class="line"><span class="comment"> *      Author: 431240</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&quot;TWI.H&quot;</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">//宏定义</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> HWDELAY &#123;HWDelay(MINDT);&#125;  <span class="comment">//延时函数</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> MTWACK &#123;TWIMWaitAck();&#125;       <span class="comment">//Master Transmitter Wait Ack</span></span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// ------------------------------------------------------------------------------------</span></span><br><span class="line"><span class="comment">// 全局变量声明</span></span><br><span class="line">DADDR tempDevAddr = <span class="number">0x00</span>;  <span class="comment">//临时设备地址存储比对变量，及其初始化</span></span><br><span class="line">RADDR tempRegAddr = <span class="number">0x00</span>;  <span class="comment">//临时寄存器地址存储对比变量，及其初始化</span></span><br><span class="line">TWIDATA bit = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">static</span> TWIDATA dataRead = <span class="number">0</span>;  <span class="comment">//用于观察数据写入后再读取的状态</span></span><br><span class="line"><span class="comment">//static TWIDATA addrAckRead = 0;  //调试观察用</span></span><br><span class="line"><span class="comment">//static TWIDATA regAckRead = 0;  //调试观察用</span></span><br><span class="line"><span class="comment">//static TWIDATA dataAckRead = 0;  //调试观察用</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">static</span> DADDR targetAddr = <span class="number">0x00</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// ------------------------------------------------------------------------------------</span></span><br><span class="line"><span class="comment">// 函数定义</span></span><br><span class="line"><span class="function"><span class="keyword">extern</span> <span class="keyword">void</span> <span class="title">TWITimerIsr</span><span class="params">(<span class="keyword">int</span> delayTime)</span></span>&#123;  <span class="comment">//用于产生中断高/低电平延时的定时器中断（句柄）</span></span><br><span class="line"> <span class="comment">//需要自定义，涉及到定时器调用相关函数，请自行查阅手册</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">extern</span> <span class="keyword">void</span> <span class="title">HWDelay</span><span class="params">(<span class="keyword">float</span> hwDelayTime)</span></span>&#123;  <span class="comment">// 定义硬件延时（单位微秒）</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">ifdef</span> HWDELAY_CORETIMER</span></span><br><span class="line">	timer_set(<span class="number">6400</span>*hwDelayTime, <span class="number">6400</span>*hwDelayTime);</span><br><span class="line">	timer_on();</span><br><span class="line">	timer_off();</span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">ifdef</span> HWDELAY_SYSWAITNOP</span></span><br><span class="line">	SysWaitNOP(HW_SYSWAITNOP_TIME);  <span class="comment">//此处使用循环函数进行延时</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">extern</span> <span class="keyword">void</span> <span class="title">TWIInit</span><span class="params">(<span class="keyword">void</span>)</span></span>&#123;  <span class="comment">//初始化函数</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">ifdef</span> EVA_21479</span></span><br><span class="line">	SRU(FLAG13_O,DPI_PB13_I);</span><br><span class="line">	SRU(FLAG11_O,DPI_PB11_I);</span><br><span class="line"></span><br><span class="line">	SRU(HIGH,DPI_PBEN13_I);</span><br><span class="line">	SRU(HIGH,DPI_PBEN11_I);</span><br><span class="line"></span><br><span class="line">	sysreg_bit_set( sysreg_FLAGS, (FLG11O|FLG13O) );</span><br><span class="line">	sysreg_bit_clr( sysreg_FLAGS, (FLG11|FLG13) );</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">else</span></span></span><br><span class="line">	SRU(FLAG8_O,DPI_PB08_I);</span><br><span class="line">	SRU(FLAG7_O,DPI_PB07_I);</span><br><span class="line"></span><br><span class="line">	SRU(HIGH,DPI_PBEN08_I);</span><br><span class="line">	SRU(HIGH,DPI_PBEN07_I);</span><br><span class="line"></span><br><span class="line">	sysreg_bit_set( sysreg_FLAGS, (FLG7O|FLG8O) );</span><br><span class="line">	sysreg_bit_clr( sysreg_FLAGS, (FLG7|FLG8) );</span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br><span class="line"></span><br><span class="line">	SDA_OUT;</span><br><span class="line">	SCL_OUT;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">extern</span> <span class="keyword">int</span> <span class="title">TWIStart</span><span class="params">(<span class="keyword">void</span>)</span></span>&#123;  <span class="comment">//启动函数</span></span><br><span class="line">	SDA_OUT;  <span class="comment">//设置为数据输出方向</span></span><br><span class="line"></span><br><span class="line">	S_SDA;</span><br><span class="line">	S_SCL;</span><br><span class="line">	HWDELAY;</span><br><span class="line"></span><br><span class="line">	C_SDA;</span><br><span class="line">	HWDELAY;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">extern</span> <span class="keyword">void</span> <span class="title">TWIReStart</span><span class="params">(<span class="keyword">void</span>)</span></span>&#123;  <span class="comment">//重启动函数</span></span><br><span class="line">	SDA_OUT;</span><br><span class="line"></span><br><span class="line">	C_SCL;</span><br><span class="line">	HWDELAY;</span><br><span class="line"></span><br><span class="line">	S_SDA;</span><br><span class="line">	S_SCL;</span><br><span class="line">	HWDELAY;</span><br><span class="line"></span><br><span class="line">	C_SDA;</span><br><span class="line">	HWDELAY;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">extern</span> <span class="keyword">void</span> <span class="title">TWIStop</span><span class="params">(<span class="keyword">void</span>)</span></span>&#123;  <span class="comment">//停止</span></span><br><span class="line">	SDA_OUT;</span><br><span class="line"></span><br><span class="line">	C_SCL;  <span class="comment">//modified by liewzheng</span></span><br><span class="line">	C_SDA;  <span class="comment">//在时钟信号拉高之前先拉低数据信号</span></span><br><span class="line">	HWDELAY;  <span class="comment">//modified by liewzheng</span></span><br><span class="line"></span><br><span class="line">	S_SCL;</span><br><span class="line">	HWDELAY;</span><br><span class="line"></span><br><span class="line">	S_SDA;  <span class="comment">//在时钟信号高电平时拉高数据信号</span></span><br><span class="line">	HWDELAY;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">extern</span> <span class="keyword">void</span> <span class="title">SendWithoutAck</span><span class="params">(<span class="keyword">void</span>)</span></span>&#123;  <span class="comment">//发送无需确认</span></span><br><span class="line">	SDA_OUT;</span><br><span class="line"></span><br><span class="line">	C_SDA;</span><br><span class="line">	HWDELAY;</span><br><span class="line"></span><br><span class="line">	S_SCL;</span><br><span class="line">	HWDELAY;</span><br><span class="line"></span><br><span class="line">	C_SCL;</span><br><span class="line"></span><br><span class="line">	SDA_IN;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">extern</span> TWIDATA <span class="title">TWIMWaitAck</span><span class="params">(<span class="keyword">void</span>)</span></span>&#123;  <span class="comment">//等待从机确认并读取确认信号</span></span><br><span class="line">	C_SCL;</span><br><span class="line">	SDA_IN;</span><br><span class="line">	HWDELAY;</span><br><span class="line"></span><br><span class="line">	S_SCL;</span><br><span class="line">	<span class="keyword">if</span>(!READ_SDA)&#123;</span><br><span class="line">		HWDELAY;</span><br><span class="line">		<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">else</span>&#123;</span><br><span class="line">		HWDELAY;</span><br><span class="line">		<span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">extern</span> <span class="keyword">void</span> <span class="title">TWISendByte</span><span class="params">(TWIDATA SentByte)</span></span>&#123;  <span class="comment">//发送一个字节</span></span><br><span class="line">	TWIDATA bit_count = <span class="number">8</span>;</span><br><span class="line">	SDA_OUT;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">while</span>(bit_count--)&#123;</span><br><span class="line">		<span class="keyword">if</span>(SentByte &amp; <span class="number">0x80</span>)&#123;</span><br><span class="line">			C_SCL;  <span class="comment">//先拉低SCL</span></span><br><span class="line">			S_SDA;  <span class="comment">//1则置高</span></span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span>&#123;</span><br><span class="line">			C_SCL;  <span class="comment">//先拉低SCL</span></span><br><span class="line">			C_SDA;  <span class="comment">//0则置低</span></span><br><span class="line">		&#125;</span><br><span class="line">		SentByte &lt;&lt;= <span class="number">1</span>;  <span class="comment">//前移一位</span></span><br><span class="line">		HWDELAY;</span><br><span class="line"></span><br><span class="line">		S_SCL;</span><br><span class="line">		HWDELAY;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">extern</span> <span class="keyword">void</span> <span class="title">TWIWriteByte</span><span class="params">(DADDR DevAddr, RADDR RegAddr, TWIDATA *Data)</span></span>&#123;</span><br><span class="line">		<span class="keyword">if</span>(TWIStart() != <span class="number">0</span>)&#123;</span><br><span class="line">			TWISendByte(DevAddr);</span><br><span class="line">			MTWACK;</span><br><span class="line"><span class="comment">//			addrAckRead = TWIMWaitAck();  //测试时使用</span></span><br><span class="line"></span><br><span class="line">			TWISendByte(RegAddr&gt;&gt;<span class="number">8</span>);  <span class="comment">//采用16bit寻址空间，先发送高8位地址，在发送低8位地址</span></span><br><span class="line">			MTWACK;</span><br><span class="line"><span class="comment">//			regAckRead = TWIMWaitAck();</span></span><br><span class="line"></span><br><span class="line">			TWISendByte(RegAddr);</span><br><span class="line">			MTWACK;</span><br><span class="line"><span class="comment">//			regAckRead = TWIMWaitAck();</span></span><br><span class="line"></span><br><span class="line">			TWISendByte(*(Data+<span class="number">0</span>));</span><br><span class="line">			MTWACK;</span><br><span class="line"><span class="comment">//			dataAckRead = TWIMWaitAck();</span></span><br><span class="line">		&#125;</span><br><span class="line">		TWIStop();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">extern</span> <span class="keyword">void</span> <span class="title">TWIWriteByteContinuly</span><span class="params">(DADDR DevAddr, RADDR RegAddr, <span class="keyword">int</span> length, TWIDATA *Data)</span></span>&#123;  <span class="comment">//连续发送数据，相同设备无暂停</span></span><br><span class="line">		TWIStart();</span><br><span class="line"></span><br><span class="line">		TWISendByte(DevAddr);</span><br><span class="line">		MTWACK;</span><br><span class="line"></span><br><span class="line">		TWISendByte(RegAddr&gt;&gt;<span class="number">8</span>);  <span class="comment">//采用16bit寻址空间，先发送高8位地址，在发送低8位地址</span></span><br><span class="line">		MTWACK;</span><br><span class="line"></span><br><span class="line">		TWISendByte(RegAddr);</span><br><span class="line">		MTWACK;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i &lt;length; i++)&#123;</span><br><span class="line">			TWISendByte(*(Data+i));</span><br><span class="line">			MTWACK;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		TWIStop();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">extern</span> DADDR <span class="title">TWIDAddrTest</span><span class="params">(<span class="keyword">void</span>)</span></span>&#123;  <span class="comment">// 设备地址测试验证</span></span><br><span class="line">	DADDR MAXADDR = <span class="number">0x7F</span>;  <span class="comment">//设置最大地址为0x7F，此处仅测试7bit设备地址，10bit不测试</span></span><br><span class="line">	DADDR tempAddress = <span class="number">0x00</span>;  <span class="comment">//设置设备最小值</span></span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span>(; tempAddress &lt;= MAXADDR; tempAddress++)  <span class="comment">//设置for循环</span></span><br><span class="line">	&#123;</span><br><span class="line">		TWISendByte((TWIDATA) tempAddress);<span class="comment">//发送设备地址</span></span><br><span class="line">		<span class="keyword">if</span>(TWIMWaitAck()) <span class="keyword">return</span> tempAddress;  <span class="comment">//等待应答，如果应答，则返回正确的设备地址</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0xFF</span>;  <span class="comment">//否则（运行结束时）返回0xFF。</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">extern</span> <span class="keyword">void</span> <span class="title">TWISCL</span><span class="params">(<span class="keyword">void</span>)</span></span>&#123;  <span class="comment">//Only used in Test mode</span></span><br><span class="line">	C_SCL;</span><br><span class="line">	S_SDA;</span><br><span class="line">	HWDELAY;</span><br><span class="line">	S_SCL;</span><br><span class="line">	C_SDA;</span><br><span class="line">	HWDELAY;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// ------------------------------------------------------------------------------------</span></span><br><span class="line"><span class="comment">// 以下函数未使用。</span></span><br><span class="line"><span class="function"><span class="keyword">extern</span> <span class="keyword">void</span> <span class="title">MRSendAck</span><span class="params">(<span class="keyword">void</span>)</span></span>&#123;  <span class="comment">//Only in Master-receiver mode, 发送确认信号给slave，仅在主-收模式时使用</span></span><br><span class="line">	SDA_OUT;</span><br><span class="line"></span><br><span class="line">	C_SDA;</span><br><span class="line">	HWDELAY;</span><br><span class="line"></span><br><span class="line">	S_SCL;</span><br><span class="line">	HWDELAY;</span><br><span class="line"></span><br><span class="line">	C_SCL;</span><br><span class="line"></span><br><span class="line">	SDA_IN;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">extern</span> TWIDATA <span class="title">TWI_read_byte</span><span class="params">(DADDR DevAddr, RADDR RegAddr)</span></span>&#123;</span><br><span class="line">	<span class="keyword">static</span> TWIDATA RetVal = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">	TWIStart();</span><br><span class="line"></span><br><span class="line">	TWISendByte( DevAddr );  <span class="comment">//发送设备地址和W标志位，等待确认，据Figure87</span></span><br><span class="line">	MTWACK;</span><br><span class="line"></span><br><span class="line">	TWISendByte(RegAddr&gt;&gt;<span class="number">8</span>);  <span class="comment">//发送MSB寄存器地址</span></span><br><span class="line">	MTWACK;</span><br><span class="line">	TWISendByte(RegAddr);  <span class="comment">//放LSB寄存器地址</span></span><br><span class="line">	MTWACK;</span><br><span class="line"></span><br><span class="line">	TWIReStart();  <span class="comment">//重启动并发送设备地址</span></span><br><span class="line"></span><br><span class="line">	TWISendByte( DevAddr+<span class="number">1</span> );  <span class="comment">//发送设备地址和R标志位，等待确认</span></span><br><span class="line">	MTWACK;</span><br><span class="line"></span><br><span class="line">	RetVal = TWIReceiveByte();</span><br><span class="line">	SendWithoutAck();</span><br><span class="line"></span><br><span class="line">	TWIStop();</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> RetVal;  <span class="comment">//返回目标寄存器的值</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">extern</span> <span class="keyword">void</span> <span class="title">TWI_write_2_byte</span><span class="params">(DADDR DevAddr, RADDR RegAddr, TWIDATA Data1, TWIDATA Data2)</span></span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (TWIStart() != <span class="number">0</span>)&#123;</span><br><span class="line">		TWISendByte(DevAddr); <span class="comment">//1、发送设备地址</span></span><br><span class="line">		MTWACK;</span><br><span class="line">		TWISendByte(RegAddr); <span class="comment">//2、发送寄存器地址</span></span><br><span class="line">		MTWACK;</span><br><span class="line">		TWISendByte(Data1); <span class="comment">//3、发送寄存器数据 for PORT 0</span></span><br><span class="line">		MTWACK;</span><br><span class="line">		TWISendByte(Data2); <span class="comment">//4、发送下一个寄存器数据 for PORT 1</span></span><br><span class="line">		MTWACK</span><br><span class="line">	&#125;</span><br><span class="line">	TWIStop();</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">extern</span> TWIDATA <span class="title">TWIReceiveByte</span><span class="params">(<span class="keyword">void</span>)</span></span>&#123;  <span class="comment">//作为主机，读取从机字节</span></span><br><span class="line">	TWIDATA Byte_count = <span class="number">8</span>;</span><br><span class="line">	TWIDATA RetVal = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">	C_SCL;</span><br><span class="line">	HWDELAY;</span><br><span class="line"></span><br><span class="line">	SDA_IN;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">while</span> (Byte_count--)&#123;</span><br><span class="line">		S_SCL;</span><br><span class="line">		RetVal &lt;&lt;= <span class="number">1</span>;</span><br><span class="line">		<span class="keyword">if</span> (READ_SDA)&#123;</span><br><span class="line">			RetVal = RetVal | <span class="number">1</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		HWDELAY;</span><br><span class="line">		C_SCL;</span><br><span class="line">		HWDELAY;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> RetVal;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">extern</span> DADDR <span class="title">TWIDevAddrTest</span><span class="params">(<span class="keyword">char</span> addressBit)</span></span>&#123;</span><br><span class="line">	<span class="keyword">switch</span>(addressBit)&#123;</span><br><span class="line">	<span class="keyword">case</span> (<span class="number">7</span>):</span><br><span class="line">			<span class="keyword">for</span>(targetAddr = <span class="number">0x00</span> ; targetAddr &lt; <span class="number">0x7F</span>; targetAddr++)&#123;</span><br><span class="line">				TWIStart();</span><br><span class="line">				TWISendByte(targetAddr&lt;&lt;<span class="number">1</span>);  <span class="comment">//尝试过target和target&lt;&lt;1都不行</span></span><br><span class="line">				<span class="keyword">if</span>(!TWIMWaitAck() ) &#123;</span><br><span class="line">					TWIStop();</span><br><span class="line">					<span class="keyword">return</span> targetAddr;</span><br><span class="line">				&#125;</span><br><span class="line">				<span class="keyword">else</span> TWIStop();</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">break</span>;</span><br><span class="line">	<span class="keyword">case</span> (<span class="number">10</span>):  <span class="comment">//此处需要自定义</span></span><br><span class="line">			<span class="keyword">break</span>;</span><br><span class="line">	<span class="keyword">default</span>:</span><br><span class="line">		<span class="keyword">return</span> (<span class="number">0x00</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> (<span class="number">0x00</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="twi.h">TWI.h</h2>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * TWI.H</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> *  Created on: 2021年6月16日</span></span><br><span class="line"><span class="comment"> *      Author: 431240</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> once</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sru21479.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;def21479.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cdef21479.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;signal.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;21479.h&gt;</span></span></span><br><span class="line"><span class="comment">//#include &quot;Common.h&quot;</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&quot;ADDS_21479_EzKit.h&quot;</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">/*-----------------------------------------------------------------------------------</span></span><br><span class="line"><span class="comment"> * 调试用宏定义</span></span><br><span class="line"><span class="comment"> -----------------------------------------------------------------------------------*/</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> NACK 0   <span class="comment">//不用从机确认</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> ACK 1  <span class="comment">//需要从机进行确认</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">//#define HWDELAY_CORETIMER</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> HWDELAY_SYSWAITNOP</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//#define EVA_21479 1  //如果是评估板</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">/*-----------------------------------------------------------------------------------</span></span><br><span class="line"><span class="comment"> * 数据类型定义</span></span><br><span class="line"><span class="comment"> -----------------------------------------------------------------------------------*/</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">unsigned</span> <span class="keyword">int</span> DADDR;  <span class="comment">//设备地址数据类型定义</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">unsigned</span> <span class="keyword">int</span> RADDR;  <span class="comment">//寄存器地址数据类型定义</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">unsigned</span> <span class="keyword">char</span> TWIDATA;  <span class="comment">//数据发送的数据类型定义</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// ------------------------------------------------------------------------------------</span></span><br><span class="line"><span class="comment">//  引脚定义：RST 定义为 DPI_12  ，  SDA 定义为 DPI_11  ，  SCL 定义为 DPI_13</span></span><br><span class="line"><span class="comment">// 在试制板中，两块codec均与21479的第7、8引脚连接，DPI_07定义为SDA, DPI_08定义为SCL</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> RST_OUT &#123;SRU(HIGH, DPI_PBEN12_I); &#125;   <span class="comment">//设置复位信号输出方向</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> S_RST  &#123;SRU(LOW, DPI_PB12_I); &#125;   <span class="comment">//拉低电平以设置复位信号</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> C_RST  &#123;SRU(HIGH, DPI_PB12_I);&#125;   <span class="comment">//拉高电平以释放复位信号</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">ifdef</span> EVA_21479</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> SDA_OUT &#123;SRU(HIGH, DPI_PBEN11_I); &#125;   <span class="comment">//设置SDA输出方向</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> SDA_IN  &#123;SRU(LOW, DPI_PBEN11_I); &#125;   <span class="comment">//设置SDA输入方向</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> C_SDA  &#123;SRU(LOW, DPI_PB11_I); &#125;   <span class="comment">//拉低SDA以清除数据</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> S_SDA  &#123;SRU(HIGH, DPI_PB11_I); &#125;   <span class="comment">//拉高SDA</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> SCL_OUT  &#123; SRU(HIGH, DPI_PBEN13_I); &#125;   <span class="comment">//SCL设定为输出方向的定义</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> C_SCL &#123;SRU(LOW, DPI_PB13_I); &#125;   <span class="comment">//拉低SCL以清除时钟</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> S_SCL &#123;SRU(HIGH, DPI_PB13_I); &#125;   <span class="comment">//拉高SCL以设置时钟</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> READ_SDA (*pDPI_PIN_STAT &amp; DPI_PB11)   <span class="comment">//从SDA读取数据</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> READ_SCL  (*pDPI_PIN_STAT &amp; DPI_PB13)  <span class="comment">//从SCL读取数据</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">else</span>  <span class="comment">//量产版</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> SDA_OUT &#123;SRU(HIGH, DPI_PBEN07_I); &#125;   <span class="comment">//设置SDA输出方向</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> SDA_IN  &#123;SRU(LOW, DPI_PBEN07_I); &#125;   <span class="comment">//设置SDA输入方向</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> C_SDA  &#123;SRU(LOW, DPI_PB07_I); &#125;   <span class="comment">//拉低SDA以清除数据</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> S_SDA  &#123;SRU(HIGH, DPI_PB07_I); &#125;   <span class="comment">//拉高SDA</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> SCL_OUT  &#123; SRU(HIGH, DPI_PBEN08_I); &#125;   <span class="comment">//SCL设定为输出方向的定义</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> C_SCL &#123;SRU(LOW, DPI_PB08_I); &#125;   <span class="comment">//拉低SCL以清除时钟</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> S_SCL &#123;SRU(HIGH, DPI_PB08_I); &#125;   <span class="comment">//拉高SCL以设置时钟</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> READ_SDA (*pDPI_PIN_STAT &amp; DPI_PB07)   <span class="comment">//从SDA读取数据</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> READ_SCL  (*pDPI_PIN_STAT &amp; DPI_PB08)  <span class="comment">//从SCL读取数据</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">//提示：靠近功放的codec，其ADDR1为1电平，ADDR0为高电平，其I2C地址是0x3E</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/*-----------------------------------------------------------------------------------</span></span><br><span class="line"><span class="comment"> * 数据宏定义</span></span><br><span class="line"><span class="comment"> -----------------------------------------------------------------------------------*/</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> MINDT 1   <span class="comment">//定义延迟最小时间 Minimal delay time</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">ifdef</span> HWDELAY_SYSWAITNOP</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> HW_SYSWAITNOP_TIME 100  <span class="comment">//定义使用SYSWAITNOP的延迟时间，默认90</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">/*-----------------------------------------------------------------------------------</span></span><br><span class="line"><span class="comment"> * 函数声明</span></span><br><span class="line"><span class="comment"> -----------------------------------------------------------------------------------*/</span></span><br><span class="line"><span class="function"><span class="keyword">extern</span> <span class="keyword">void</span> <span class="title">TWITimerIsr</span><span class="params">(<span class="keyword">int</span>)</span></span>;  <span class="comment">//用于产生中断高/低电平延时的定时器中断（句柄）</span></span><br><span class="line"><span class="function"><span class="keyword">extern</span> <span class="keyword">void</span> <span class="title">HWDelay</span><span class="params">(<span class="keyword">float</span>)</span></span>;  <span class="comment">// 定义硬件延时（单位微秒）</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">extern</span> <span class="keyword">void</span> <span class="title">TWIInit</span><span class="params">(<span class="keyword">void</span>)</span></span>;  <span class="comment">//初始化函数</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">extern</span> <span class="keyword">int</span> <span class="title">TWIStart</span><span class="params">(<span class="keyword">void</span>)</span></span>;  <span class="comment">//启动函数</span></span><br><span class="line"><span class="function"><span class="keyword">extern</span> <span class="keyword">void</span> <span class="title">TWIReStart</span><span class="params">(<span class="keyword">void</span>)</span></span>;  <span class="comment">//重启动函数</span></span><br><span class="line"><span class="function"><span class="keyword">extern</span> <span class="keyword">void</span> <span class="title">TWIStop</span><span class="params">(<span class="keyword">void</span>)</span></span>;  <span class="comment">//停止</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">extern</span> <span class="keyword">void</span> <span class="title">SendWithoutAck</span><span class="params">(<span class="keyword">void</span>)</span></span>;  <span class="comment">//发送无需确认</span></span><br><span class="line"><span class="function"><span class="keyword">extern</span> TWIDATA <span class="title">TWIMWaitAck</span><span class="params">(<span class="keyword">void</span>)</span></span>;  <span class="comment">//等待从机确认并读取确认信号</span></span><br><span class="line"><span class="function"><span class="keyword">extern</span> <span class="keyword">void</span> <span class="title">TWISendByte</span><span class="params">(TWIDATA)</span></span>;  <span class="comment">//发送一个字节</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">extern</span> <span class="keyword">void</span> <span class="title">TWIWriteByte</span><span class="params">(DADDR, RADDR, TWIDATA*)</span></span>;  <span class="comment">//单次发送数据</span></span><br><span class="line"><span class="function"><span class="keyword">extern</span> <span class="keyword">void</span> <span class="title">TWIWriteByteContinuly</span><span class="params">(DADDR, RADDR , <span class="keyword">int</span>, TWIDATA *)</span></span>;  <span class="comment">//连续发送数据，相同设备无暂停</span></span><br><span class="line"><span class="function"><span class="keyword">extern</span> DADDR <span class="title">TWIDAddrTest</span><span class="params">(<span class="keyword">void</span>)</span></span>;  <span class="comment">// 设备地址测试验证</span></span><br><span class="line"><span class="function"><span class="keyword">extern</span> <span class="keyword">void</span> <span class="title">TWISCL</span><span class="params">(<span class="keyword">void</span>)</span></span>;  <span class="comment">//Only used in Test mode</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 以下函数未使用。</span></span><br><span class="line"><span class="function"><span class="keyword">extern</span> <span class="keyword">void</span> <span class="title">MRSendAck</span><span class="params">(<span class="keyword">void</span>)</span></span>;  <span class="comment">//Only in Master-receiver mode, 发送确认信号给slave，仅在主-收模式时使用</span></span><br><span class="line"><span class="function"><span class="keyword">extern</span> TWIDATA <span class="title">TWI_read_byte</span><span class="params">(DADDR, RADDR)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">extern</span> <span class="keyword">void</span> <span class="title">TWI_write_2_byte</span><span class="params">(DADDR, RADDR, TWIDATA, TWIDATA)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">extern</span> TWIDATA <span class="title">TWIReceiveByte</span><span class="params">(<span class="keyword">void</span>)</span></span>;  <span class="comment">//作为主机，读取从机字节</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">extern</span> DADDR <span class="title">TWIDevAddrTest</span><span class="params">(<span class="keyword">char</span> addressBit)</span></span>;  <span class="comment">// 从机地址遍历测试</span></span><br></pre></td></tr></table></figure>
+<h2 id="sigmastudiofw.h">SigmaStudioFW.h</h2>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">// Modified by Liewzheng in June 9th, 2021</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">ifndef</span> __SIGMASTUDIOFW_H__</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> __SIGMASTUDIOFW_H__</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">/*-----------------------------------------------------------------------------------</span></span><br><span class="line"><span class="comment"> * 头文件</span></span><br><span class="line"><span class="comment"> -----------------------------------------------------------------------------------*/</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&quot;TWI.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&quot;ADDS_21479_EzKit.h&quot;</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">/*-----------------------------------------------------------------------------------</span></span><br><span class="line"><span class="comment"> * 数据类型定义</span></span><br><span class="line"><span class="comment"> -----------------------------------------------------------------------------------*/</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">unsigned</span> <span class="keyword">short</span> ADI_DATA_U16;</span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">unsigned</span> <span class="keyword">char</span>  ADI_REG_TYPE;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">/*-----------------------------------------------------------------------------------</span></span><br><span class="line"><span class="comment"> * 宏定义</span></span><br><span class="line"><span class="comment"> -----------------------------------------------------------------------------------*/</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> SIGMASTUDIOTYPE_FIXPOINT 	0</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> SIGMASTUDIOTYPE_INTEGER 	1</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 设置时钟分频，有且仅有一个能被启用</span></span><br><span class="line"><span class="comment">//#define CLK_DIV_1</span></span><br><span class="line"><span class="comment">//#define CLK_DIV_2</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> CLK_DIV_3</span></span><br><span class="line"><span class="comment">//#define CLK_DIV_4</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">unsigned</span> <span class="keyword">char</span> testPLL[<span class="number">5</span>] = &#123;<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*-----------------------------------------------------------------------------------</span></span><br><span class="line"><span class="comment"> * 宏定义——函数声明</span></span><br><span class="line"><span class="comment"> -----------------------------------------------------------------------------------*/</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> SIGMA_WRITE_REGISTER( devAddress, address, dataLength, data ) &#123;<span class="comment">/*<span class="doctag">TODO:</span> implement macro or define as function*/</span>&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> SIGMA_READ_REGISTER( devAddress, address, length, pData ) &#123;&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> SIGMA_SET_REGSITER_FIELD( regVal, fieldVal, fieldMask, fieldShift )  \</span></span><br><span class="line">		&#123; (regVal) = (((regVal) &amp; (~(fieldMask))) | (((fieldVal) &lt;&lt; (fieldShift)) &amp;&amp; (fieldMask))) &#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> SIGMA_GET_REGSITER_FIELD( regVal, fieldMask, fieldShift )  \</span></span><br><span class="line">		&#123; ((regVal) &amp; (fieldMask)) &gt;&gt; (fieldShift) &#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> SIGMASTUDIOTYPE_FIXPOINT_CONVERT( _value ) &#123;&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> SIGMASTUDIOTYPE_INTEGER_CONVERT( _value ) &#123;&#125;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">/*-----------------------------------------------------------------------------------</span></span><br><span class="line"><span class="comment"> * 函数定义</span></span><br><span class="line"><span class="comment"> -----------------------------------------------------------------------------------*/</span></span><br><span class="line"><span class="comment">// modified by liewzheng, in June 15th, 2021</span></span><br><span class="line"><span class="keyword">void</span> SIGMA_WRITE_REGISTER_BLOCK(  <span class="keyword">unsigned</span> <span class="keyword">int</span> devAddress,</span><br><span class="line">									<span class="keyword">unsigned</span> <span class="keyword">int</span> address,</span><br><span class="line">									<span class="keyword">unsigned</span> <span class="keyword">char</span> length,</span><br><span class="line">									ADI_REG_TYPE *pData ) &#123;</span><br><span class="line">	<span class="keyword">if</span>(length == <span class="number">1</span>)&#123;</span><br><span class="line">		TWIWriteByte(devAddress, address, pData);</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">if</span>(length &gt; <span class="number">1</span>)&#123;</span><br><span class="line">				TWIWriteByteContinuly(devAddress, (address), length, pData);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">else</span>&#123;</span><br><span class="line">		;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	SysWaitNOP(<span class="number">100</span>);   <span class="comment">//可以注释掉</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// modified by liewzheng, in June 15th, 2021</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">SIGMA_WRITE_DELAY</span><span class="params">(  <span class="keyword">unsigned</span> <span class="keyword">int</span> devAddress,</span></span></span><br><span class="line"><span class="function"><span class="params">						    <span class="keyword">unsigned</span> <span class="keyword">char</span> length,</span></span></span><br><span class="line"><span class="function"><span class="params">						    <span class="keyword">unsigned</span> <span class="keyword">char</span> *pData )</span> </span>&#123;</span><br><span class="line">	SysWaitNOP(<span class="number">10000000</span>);</span><br><span class="line">	SysWaitNOP(<span class="number">10000000</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br></pre></td></tr></table></figure>
+<h1 id="参考">参考</h1>
+<ol type="1">
+<li><a target="_blank" rel="noopener" href="https://www.nxp.com/docs/en/user-guide/UM10204.pdf">《NXP_UM10204_I2C-bus specification and user manual》</a></li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -2063,171 +2604,6 @@ RCA接口在我们日常生活中非常常见
 图 IK Multimedia AXE I/O
 </div>
 <p>​</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://islet.space/2021/05/01/Computer/2021-05-01-Fixed-Point-and-Floating-Point-Number-Representations/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Liewzheng">
-      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Coder的孤岛">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/05/01/Computer/2021-05-01-Fixed-Point-and-Floating-Point-Number-Representations/" class="post-title-link" itemprop="url">Fixed Point and Floating Point Number Representations</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-
-    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
-    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2021-05-01 10:05:00" itemprop="dateCreated datePublished" datetime="2021-05-01T10:05:00+08:00">2021-05-01</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-05-09 13:12:08" itemprop="dateModified" datetime="2021-05-09T13:12:08+08:00">2021-05-09</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Computer/" itemprop="url" rel="index"><span itemprop="name">Computer</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>​</p>
-<p><a target="_blank" rel="noopener" href="https://www.tutorialspoint.com/fixed-point-and-floating-point-number-representations#:~:text=In%20fixed%20point%20notation%2C%20there%20are%20a%20fixed,varying%20number%20of%20digits%20after%20the%20decimal%20point.">tutorialspoint.com</a></p>
-<p><em>Arjun Thakur</em></p>
-<p>Digital Computers use Binary number system to represent all types of information inside the computers. Alphanumeric characters are represented using binary bits (i.e., 0 and 1). Digital representations are easier to design, storage is easy, accuracy and precision are greater.</p>
-<p>There are various types of number representation techniques for digital number representation, for example: Binary number system, octal number system, decimal number system, and hexadecimal number system etc. But Binary number system is most relevant and popular for representing numbers in digital computer system.</p>
-<h1 id="storing-real-number">Storing Real Number</h1>
-<p>These are structures as following below −</p>
-<figure>
-<img src="https://pic.islet.space/2021/05/36_1.jpg" alt="img" /><figcaption aria-hidden="true">img</figcaption>
-</figure>
-<p>There are two major approaches to store real numbers (i.e., numbers with fractional component) in modern computing. These are (i) Fixed Point Notation and (ii) Floating Point Notation.</p>
-<p><mark>In fixed point notation, there are a fixed number of digits after the decimal point, whereas floating point number allows for a varying number of digits after the decimal point.</mark> 在定点表示法中，小数点后有固定位数，而浮点数允许小数点后有不同位数。</p>
-<h1 id="fixed-point-representation">Fixed-Point Representation</h1>
-<p>This representation has fixed number of bits for integer part and for fractional part. For example, if given fixed-point representation is <code>IIII.FFFF</code>, then you can store minimum value is <code>0000.0001</code> and maximum value is <code>9999.9999</code>. There are three parts of a fixed-point number representation: <strong><em>the sign field</em></strong>, <strong><em>integer field</em></strong>, and <strong><em>fractional field</em></strong>.</p>
-<figure>
-<img src="https://pic.islet.space/2021/05/36_2.jpg" alt="img" /><figcaption aria-hidden="true">img</figcaption>
-</figure>
-<p>We can represent these numbers using:</p>
-<ul>
-<li>Signed representation: range from -(2<sup>(k-1)</sup>-1) to (2<sup>(k-1)</sup>-1), for k bits.</li>
-<li>1’s complement representation: range from -(2<sup>(k-1)</sup>-1) to (2<sup>(k-1)</sup>-1), for k bits.</li>
-<li>2’s complementation representation: range from -(2<sup>(k-1)</sup>) to (2<sup>(k-1)</sup>-1), for k bits.</li>
-</ul>
-<p>2’s complementation representation is preferred in computer system because of unambiguous property and easier for arithmetic operations.</p>
-<h3 id="example">Example</h3>
-<p>Assume number is using 32-bit format which reserve 1 bit for the sign, 15 bits for the integer part and 16 bits for the fractional part.</p>
-<p>Then, <code>-43.625</code> is represented as following:</p>
-<figure>
-<img src="https://pic.islet.space/2021/05/36_3.jpg" alt="img" /><figcaption aria-hidden="true">img</figcaption>
-</figure>
-<p>Where, <mark>0 is used to represent plus(+) and 1 is used to represent minus(-) </mark>. 000000000101011 is 15 bit binary value for decimal 43 and 1010000000000000 is 16 bit binary value for fractional 0.625.</p>
-<p>The advantage of using a fixed-point representation is performance and disadvantage is relatively limited range of values that they can represent. So, <mark>it is usually inadequate for numerical analysis as it does not allow enough numbers and accuracy</mark>. A number whose representation exceeds 32 bits would have to be stored inexactly.</p>
-<figure>
-<img src="https://pic.islet.space/2021/05/36_4.jpg" alt="img" /><figcaption aria-hidden="true">img</figcaption>
-</figure>
-<p>These are above smallest positive number and largest positive number which can be store in 32-bit representation as given above format. Therefore, the smallest positive number is 2<sup>-16</sup> ≈ 0.000015 approximate and the largest positive number is (2<sup>15</sup>-1)+(1-2<sup>-16</sup>)=2<sup>15</sup>(1-2<sup>-16</sup>) =32768, and gap between these numbers is 2<sup>-16</sup>.</p>
-<p>We can move the radix point either left or right with the help of only integer field is 1.</p>
-<h1 id="floating-point-representation">Floating-Point Representation</h1>
-<p>This representation does not reserve a specific number of bits for the integer part or the fractional part. Instead it reserves a certain number of bits for the number (called the mantissa or significand) and a certain number of bits to say where within that number the decimal place sits (called the exponent).</p>
-<p>The floating number representation of a number has two part: the first part represents a signed fixed point number called mantissa. The second part of designates the position of the decimal (or binary) point and is called the exponent. The fixed point mantissa（定点尾数） may be fraction or an integer. Floating -point is always interpreted to represent a number in the following form: Mxr<sup>e</sup>.</p>
-<p>Only the mantissa m and the exponent e are physically represented in the register (including their sign). A floating-point binary number is represented in a similar manner except that is uses base 2 for the exponent. A floating-point number is said to be normalized if the most significant digit of the mantissa is <code>1</code>.</p>
-<figure>
-<img src="https://pic.islet.space/2021/05/36_5.jpg" alt="img" /><figcaption aria-hidden="true">img</figcaption>
-</figure>
-<p>So, actual number is (-1)<sup>s</sup> (1+m) x2<sup>(e-Bias)</sup>, where <em>s</em> is the sign bit, <em>m</em> is the mantissa, <em>e</em> is the exponent value, and <em>Bias</em> is the bias number.</p>
-<p>Note that signed integers and exponent are represented by either sign representation, or one’s complement representation, or two’s complement representation.</p>
-<p>The floating point representation is more flexible. Any non-zero number can be represented in the normalized form of ±(1.b<sub>1</sub>b<sub>2</sub>b<sub>3</sub> ...)<sub>2</sub> x2<sup>n</sup> This is normalized form of a number <code>x</code>.</p>
-<h3 id="example-1">Example</h3>
-<p>Suppose number is using 32-bit format: the 1 bit sign bit（符号位）, 8 bits for signed exponent（符号数）, and 23 bits for the fractional part（小数）. The leading bit 1 is not stored (as it is always 1 for a normalized number) and is referred to as a <em>“hidden bit</em>”.</p>
-<p>Then −53.5 is normalized as -53.5=(-110101.1)<sub>2</sub>=(-1.101011) x2<sup>5</sup> , which is represented as following below,</p>
-<figure>
-<img src="https://pic.islet.space/2021/05/36_6.jpg" alt="img" /><figcaption aria-hidden="true">img</figcaption>
-</figure>
-<p>Where <code>00000101</code> is the 8-bit binary value of exponent value <code>+5</code>.</p>
-<p>Note that 8-bit exponent ﬁeld is used to store integer exponents <code>-126 ≤  n ≤ 127</code>.</p>
-<p>The smallest normalized positive number that ﬁts into 32 bits is (1.000,000,000,000,000,000,000,00)2x26<sup>-126</sup>=2<sup>-126</sup>≈1.18x10<sup>-38</sup> , and largest normalized positive number that ﬁts into 32 bits is (1.111,111,111,111,111,111,111,11)2x2<sup>127</sup>=(224-1)x2<sup>104</sup> ≈ 3.40x10<sup>38</sup>. These numbers are represented as following below,</p>
-<figure>
-<img src="https://pic.islet.space/2021/05/36_7.jpg" alt="img" /><figcaption aria-hidden="true">img</figcaption>
-</figure>
-<p>The precision of a ﬂoating-point format is the number of positions reserved for binary digits plus one (for the hidden bit). In the examples considered here the precision is <code>23+1=24</code>.</p>
-<p>The gap between 1 and the next normalized ﬂoating-point number is known as machine epsilon. the gap is (1+2<sup>-23</sup>)-1=2<sup>-23</sup> for above example, but this is same as the smallest positive ﬂoating-point number because of non-uniform spacing unlike in the ﬁxed-point scenario.</p>
-<p>Note that non-terminating binary numbers can be represented in floating point representation, e.g., 1/3 = (0.010101 ...)<sup>2</sup> cannot be a ﬂoating-point number as its binary representation is non-terminating.</p>
-<h1 id="ieee-floating-point-number-representation">IEEE Floating point Number Representation</h1>
-<p>IEEE (Institute of Electrical and Electronics Engineers) has standardized Floating-Point Representation as following diagram.</p>
-<figure>
-<img src="https://pic.islet.space/2021/05/36_8.jpg" alt="img" /><figcaption aria-hidden="true">img</figcaption>
-</figure>
-<p>So, actual number is (-1)<sup>s</sup>(1+m)x2<sup>(e-Bias)</sup>, where <em>s</em> is the sign bit, <em>m</em> is the mantissa, <em>e</em> is the exponent value, and <em>Bias</em> is the bias number. The sign bit is 0 for positive number and 1 for negative number. Exponents are represented by or two’s complement representation.</p>
-<p><strong>According to IEEE 754 standard, the floating-point number is represented in following ways:</strong></p>
-<ul>
-<li>Half Precision (16 bit): 1 sign bit, 5 bit exponent, and 10 bit mantissa</li>
-<li>Single Precision (32 bit): 1 sign bit, 8 bit exponent, and 23 bit mantissa</li>
-<li>Double Precision (64 bit): 1 sign bit, 11 bit exponent, and 52 bit mantissa</li>
-<li>Quadruple Precision (128 bit): 1 sign bit, 15 bit exponent, and 112 bit mantissa</li>
-</ul>
-<h1 id="special-value-representation"><strong>Special Value Representation</strong></h1>
-<p>There are some special values depended upon different values of the exponent and mantissa in the IEEE 754 standard.</p>
-<ul>
-<li>All the exponent bits 0 with all mantissa bits 0 represents 0. If sign bit is 0, then +0, else -0.</li>
-<li>All the exponent bits 1 with all mantissa bits 0 represents infinity. If sign bit is 0, then +∞, else -∞.</li>
-<li>All the exponent bits 0 and mantissa bits non-zero represents <strong>denormalized number</strong>.</li>
-<li>All the exponent bits 1 and mantissa bits non-zero represents <strong>error</strong>.</li>
-</ul>
 
       
     </div>
