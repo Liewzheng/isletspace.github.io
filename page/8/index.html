@@ -162,7 +162,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">109</span>
+          <span class="site-state-item-count">111</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -173,7 +173,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">202</span>
+        <span class="site-state-item-count">208</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -207,6 +207,268 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://islet.space/2021/05/05/Signal/2021-05-05-%E4%BD%BF%E7%94%A8ADAU1761-PGA%E3%80%81ALC-%E7%9A%84DSP%E6%8E%A7%E5%88%B6%E6%A8%A1%E5%BC%8F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Liewzheng">
+      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coder的孤岛">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/05/05/Signal/2021-05-05-%E4%BD%BF%E7%94%A8ADAU1761-PGA%E3%80%81ALC-%E7%9A%84DSP%E6%8E%A7%E5%88%B6%E6%A8%A1%E5%BC%8F/" class="post-title-link" itemprop="url">使用ADAU1761 PGA、ALC 的DSP控制模式</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-05-05 11:00:32" itemprop="dateCreated datePublished" datetime="2021-05-05T11:00:32+08:00">2021-05-05</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2021-05-09 13:01:38" itemprop="dateModified" datetime="2021-05-09T13:01:38+08:00">2021-05-09</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Signal/" itemprop="url" rel="index"><span itemprop="name">Signal</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="使用adau1761-pga-alc的dsp控制模式">使用ADAU1761 PGA / ALC的DSP控制模式</h1>
+<p>ADAU1761模拟前端具有ALC（自动电平控制）功能，可根据输入信号的电平动态设置差分输入路径的增益。但是，可以绕过ALC，DSP程序可以直接控制应用于 <strong>差分输入</strong> 的增益量。</p>
+<p>为此，一个或两个通道的差分路径需要<strong>启用和取消静音</strong>。为了启用 <strong>差分路径</strong>，还应根据需要将<strong>LDBOOST</strong>（和/或<strong>RDBOOST</strong>）设置为0 dB或20 dB。</p>
+<p><a target="_blank" rel="noopener" href="https://ez.analog.com/cfs-file/__key/communityserver-wikis-components-files/00-00-00-01-75/1e169c85b74a88a01485d3c18fecd396.jpg"><img src="https://ez.analog.com/cfs-filesystemfile/__key/communityserver-components-secureimagefileviewer/communityserver-wikis-components-files-00-00-00-01-75/1e169c85b74a88a01485d3c18fecd396.jpg_2D00_373x238.jpg?_=636716033579270573" alt="img" /></a></p>
+<p>然后，<strong>应将ALCSEL</strong>位设置为<strong>DSP控制</strong>模式。</p>
+<p><a target="_blank" rel="noopener" href="https://ez.analog.com/cfs-file/__key/communityserver-wikis-components-files/00-00-00-01-75/be2493be5fd62ceb941ade31bb1c2ea2.jpg"><img src="https://ez.analog.com/cfs-filesystemfile/__key/communityserver-components-secureimagefileviewer/communityserver-wikis-components-files-00-00-00-01-75/be2493be5fd62ceb941ade31bb1c2ea2.jpg_2D00_136x228.jpg?_=636716033581410640" alt="img" /></a></p>
+<p>现在，在DSP程序原理图中，用户可以将<strong>AIGC输出</strong>单元添加到项目中：</p>
+<p><a target="_blank" rel="noopener" href="https://ez.analog.com/cfs-file/__key/communityserver-wikis-components-files/00-00-00-01-75/a6abc0254ac0020e47fd1b347f706504.jpg"><img src="https://ez.analog.com/cfs-filesystemfile/__key/communityserver-components-secureimagefileviewer/communityserver-wikis-components-files-00-00-00-01-75/a6abc0254ac0020e47fd1b347f706504.jpg_2D00_215x49.jpg?_=636716033575290474" alt="img" /></a></p>
+<p>通道0映射到左侧的PGA。</p>
+<p><a target="_blank" rel="noopener" href="https://ez.analog.com/cfs-file/__key/communityserver-wikis-components-files/00-00-00-01-75/524d0fbf699c770a6e85e142dd636b3b.png"><img src="https://ez.analog.com/cfs-filesystemfile/__key/communityserver-components-secureimagefileviewer/communityserver-wikis-components-files-00-00-00-01-75/524d0fbf699c770a6e85e142dd636b3b.png_2D00_91x54.png?_=636716033578360546" alt="img" /></a></p>
+<p>通道1映射到右侧的PGA。</p>
+<p><a target="_blank" rel="noopener" href="https://ez.analog.com/cfs-file/__key/communityserver-wikis-components-files/00-00-00-01-75/3a9410be5a75f96f99e4087743e69d2f.jpg"><img src="https://ez.analog.com/cfs-filesystemfile/__key/communityserver-components-secureimagefileviewer/communityserver-wikis-components-files-00-00-00-01-75/3a9410be5a75f96f99e4087743e69d2f.jpg_2D00_94x57.jpg?_=636716033575450467" alt="img" /></a></p>
+<p>现在，馈送到这些单元中每个单元的5.23信号确定了相应PGA的增益。</p>
+<p>作为一个简单的示例，要将每个PGA的增益设置为0.5（或-6 dB），请从<strong>Sources</strong>库创建一个<strong>DC Input Entry</strong>单元并将其设置为0.5，然后将其连接到<strong>AIGC输出</strong>。</p>
+<p><a target="_blank" rel="noopener" href="https://ez.analog.com/cfs-file/__key/communityserver-wikis-components-files/00-00-00-01-75/462b7691a9c4c01ab55c2f09825bd18e.jpg"><img src="https://ez.analog.com/cfs-filesystemfile/__key/communityserver-components-secureimagefileviewer/communityserver-wikis-components-files-00-00-00-01-75/462b7691a9c4c01ab55c2f09825bd18e.jpg_2D00_208x103.jpg?_=636716033578360546" alt="img" /></a></p>
+<p>在下一个示例中，使用“<strong>乘”</strong>和“<strong>加”</strong>单元缩放并移动10 Hz的<strong>正弦音调</strong>，使其范围在0到1之间，然后将其发送到<strong>AIGC输出</strong>单元。这会导致PGA增益在0 dB和静音之间快速来回移动，从而产生颤音效果。</p>
+<p><a target="_blank" rel="noopener" href="https://ez.analog.com/cfs-file/__key/communityserver-wikis-components-files/00-00-00-01-75/8f391a0c6d528ce961e9f54617503cd9.jpg"><img src="https://ez.analog.com/cfs-filesystemfile/__key/communityserver-components-secureimagefileviewer/communityserver-wikis-components-files-00-00-00-01-75/8f391a0c6d528ce961e9f54617503cd9.jpg_2D00_349x178.jpg?_=636716033575530468" alt="img" /></a></p>
+<p>在下面的示例中，每个输入的峰值电平由“<strong>峰值包络”</strong>单元检测，并且使用“<strong>除法”</strong>单元和“ <strong>DC输入条目”</strong>单元创建该信号的反相。结果发送到<strong>AIGC输出</strong>单元。这意味着输入峰值电平的倒数用于缩放PGA增益。结果是，当输入信号为低电平时，增益较高；但是，当输入电平增加时，增益将降低以避免削波。</p>
+<p><a target="_blank" rel="noopener" href="https://ez.analog.com/cfs-file/__key/communityserver-wikis-components-files/00-00-00-01-75/d24015ce9b3e9d247f8a8fb1e43943a3.jpg"><img src="https://ez.analog.com/cfs-filesystemfile/__key/communityserver-components-secureimagefileviewer/communityserver-wikis-components-files-00-00-00-01-75/d24015ce9b3e9d247f8a8fb1e43943a3.jpg_2D00_400x379.jpg?_=636716033578810577" alt="img" /></a></p>
+<p>这些只是在ADAU1761的PGA上使用DSP控制模式可以完成的操作的几个示例。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://islet.space/2021/05/03/Signal/2021-05-03-%E9%9F%B3%E9%A2%91%E8%AE%BE%E5%A4%87%E8%BF%9E%E6%8E%A5%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Liewzheng">
+      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coder的孤岛">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/05/03/Signal/2021-05-03-%E9%9F%B3%E9%A2%91%E8%AE%BE%E5%A4%87%E8%BF%9E%E6%8E%A5%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" class="post-title-link" itemprop="url">音频设备连接基础知识</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-05-03 17:08:00" itemprop="dateCreated datePublished" datetime="2021-05-03T17:08:00+08:00">2021-05-03</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2021-08-07 00:03:25" itemprop="dateModified" datetime="2021-08-07T00:03:25+08:00">2021-08-07</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Signal/" itemprop="url" rel="index"><span itemprop="name">Signal</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>​</p>
+<p><a target="_blank" rel="noopener" href="https://www.sohu.com/a/418986148_142772">sohu.com</a></p>
+<h1 id="阻抗介绍">阻抗介绍</h1>
+<p>仅针对音频系统中的电路进行说明</p>
+<ul>
+<li>在对电路施加电压时，电阻抗是 <strong>对电路中交流电的抵抗力的度量</strong>。</li>
+<li>阻抗以欧姆为单位（类似于电阻）测量，并且 <strong>可以认为是交流电路中的一种“交流电阻”</strong>。</li>
+<li>音频信号是交流电压，因为它们同时具有负电压和正电压（信号的正振幅和负振幅）。<strong>因此，音频信号是交流电</strong>（具有负电流和正电流）。</li>
+<li>仅当<strong>上级设备</strong>输出连接到前置放大器（或串联的下一个音频设备）时，音频信号才会通过。（上级设备的输出必须创建一个带有负载的电路，以使音频信号流动。）</li>
+</ul>
+<p><img src="https://pic.islet.space/2021/05/a0fcf0d70d88400289cafcd70441614e.png" alt="img" style="zoom:33%;" /></p>
+<p>在音频系统的连接中，有各式各样的设备进行设备串联，首先说两个概念：</p>
+<blockquote>
+<p><strong>输出阻抗</strong>： 音频设备输出端上的固有阻抗。</p>
+<p><strong>负载阻抗</strong>： 音频设备下一级（通常是前置放大器）的输入阻抗，该阻抗与上级的输出共同构成电路。</p>
+</blockquote>
+<p>在音频行业内，行业规定 <mark>输入接口的阻抗应为输出阻抗的10倍以上，这样才能保证音频信号的传输质量</mark>。</p>
+<p><mark>这样的 “<strong>阻抗匹配</strong>” 其实是为了 “<strong>电压匹配</strong>” ，而不是传统电学概念中的输入输出等阻抗的“阻抗匹配”。</mark></p>
+<p>源输出阻抗和输入阻抗之间的电压传递公式：</p>
+<p><strong>V<sub>L</sub>= Z<sub>L</sub>·V<sub>S</sub> / (Z<sub>S</sub>+ Z<sub>L</sub>)</strong></p>
+<blockquote>
+<p>V<sub>L</sub>输入端 =前置放大器输入端的电压。</p>
+<p>V<sub>S</sub>输出端 =麦克风输出端的电压。</p>
+<p>Z<sub>L</sub>输入端 =前置放大器的输入阻抗（麦克风负载阻抗）。</p>
+<p>Z<sub>S</sub>输出端 =麦克风输出阻抗。</p>
+</blockquote>
+<p>可以将其可视化为简单的分压器：</p>
+<p><img src="https://pic.islet.space/2021/05/db9e3783f23c47a4b3529b34e2d8710a.png" alt="img" style="zoom: 33%;" /></p>
+<div style="text-align: center; font-size: 10px; color: #aaa;">
+图 简化电路
+</div>
+<p>不难推算，如果其他所有条件保持不变，增加负载阻抗“ Z输入端”可使上级设备的输出电压与前置放大器的输入电压之间的匹配度更高。</p>
+<p>Z输入端起码要达到Z输出端的10倍以上，电压才可达到源输出端电压的90%，但是我们也不希望输入端的阻抗过大，因为阻抗过高会增加线路出现噪音的可能。</p>
+<p>这种最大化的电压传输称为“阻抗桥接”，或者称为“电压匹配”。</p>
+<h1 id="音频信号">音频信号</h1>
+<p>HOLA，在了解完阻抗的秘密之后，在这里我们简单说一下各个种类的信号等级和阻抗的差异。我们在这说下经常遇到的三类信号：<strong>麦克风信号</strong>、<strong>线路信号</strong>、<strong>乐器信号</strong>。</p>
+<div style="text-align: center; font-size: 10px; color: #aaa;">
+表 各类信号参数表
+</div>
+<p><img src="https://pic.islet.space/2021/05/0a2b0b9619794c908f565d648a72eec6.png" alt="img" style="zoom:50%;" /></p>
+<p><strong>麦克风信号</strong>，就是麦克风输出的信号，其电平大概在 <strong>-60dBV和-40dBV（0.001V - 0.010V)之间</strong>，通常需要前级放大器的放大才能正常使用，麦克风的<strong>输出阻抗通常在150Ω至200Ω之间</strong>。</p>
+<p>所以呢，你的声卡或者话放的Mic Input（麦克风输入）接口的阻值应至少该有1500Ω。</p>
+<p><img src="https://pic.islet.space/2021/05/d969f365edb84996b66525d18320fe3c.jpeg" alt="img" style="zoom:50%;" /></p>
+<div style="text-align: center; font-size: 10px; color: #aaa;">
+图 麦克风信号输入接口
+</div>
+<p><strong>线路信号</strong>也就是Line Level Signal，一般由TRS（大三芯）平衡线缆传递，比如一些播放器、效果器的输出信号都为线路信号，<strong>其电平约为0dBV（1V）</strong>，<strong>是麦克风信号电平的100倍-1000倍</strong>；<strong>其输出阻抗通常在100Ω至600Ω之间</strong>，Line Input（线路信号输入）接口的阻抗通常大于10,000Ω。有些音频接口有独立的Line Input，有的则是复合型。比如M-Audio Air192 | 4</p>
+<p><img src="https://pic.islet.space/2021/05/image-20210503171654739.png" alt="M-Audio  Air192|4" style="zoom: 50%;" /></p>
+<div style="text-align: center; font-size: 10px; color: #aaa;">
+图 M-Audio Air192 | 4
+</div>
+<p><strong>乐器信号</strong> - Instrument Level Signal，乐器信号的电平位于麦克风信号和线路信号之间，通常以TS（大两芯）线缆传递，通常需要<strong>前级放大器</strong>将其提升到合适的<strong>线路电平等级</strong>；电吉他、电贝斯、带有拾音器的原声乐器输出的信号均为乐器信号，通常这些乐器的输出阻抗非常高，约在7,000Ω至15,000Ω甚至更高。因此你经常能看到话放、声卡的线路输入通道上有“Hi-Z(高阻抗）”或者“Line/Instrument”切换开关，能使线路输入接口的阻值增加，以适配乐器信号输入，有些音频接口则直接独立出来高阻乐器输入接口。乐器输入接口阻值通常在1MΩ（100万欧姆）左右。</p>
+<p>在前文说过，如果<strong>乐器输入接口阻值过低时，信号会失真、高频丢失，声音听起来会很沉闷</strong>；而<strong>阻值过高时，会增加线路出现噪音</strong>的可能。而有一类设备能完美的解决这一问题，让你随心所欲的调节满意的音色。比如：</p>
+<p>IK Multimedia的Z‑Tone系列产品可对这些变量进行控制，通过使用高质量的前置放大器，并配备可调的输入阻抗，以使各种拾音器都能发出其完美的声音。Z-Tone系列有两款相关产品，有体积较大的Z‑Tone DI和更紧凑的Z‑Tone Buffer Boost。</p>
+<figure>
+<img src="https://pic.islet.space/2021/05/image-20210503172016745.png" alt="Z‑Tone Buffer Boost" /><figcaption aria-hidden="true">Z‑Tone Buffer Boost</figcaption>
+</figure>
+<div style="text-align: center; font-size: 10px; color: #aaa;">
+图 Z‑Tone Buffer Boost
+</div>
+<h1 id="实际应用">实际应用</h1>
+<p>如果<strong>将高阻抗输出输入到低阻抗麦克风电平输入中，它通常会使前置放大器过载</strong>。这将导致<strong>失真</strong>，甚至可能<strong>损坏前置放大器的电路</strong>！</p>
+<p>例如，如果你想将合成器、吉他等高阻信号插入调音台、音频接口的麦克风（XLR）输入，建议你使用<strong>DI盒转换</strong>，将高阻抗信号转换为低阻抗信号。</p>
+<p><img src="https://pic.islet.space/2021/05/c9178428f8ad4ecf8272344c07e24c02.jpeg" alt="img" style="zoom:50%;" /></p>
+<div style="text-align: center; font-size: 10px; color: #aaa;">
+图 使用Z-Tone DI录制箱琴
+</div>
+<p><strong>注意</strong>：最好将DI盒尽可能靠近高阻抗输出源，较长的走线应将转换后的低阻抗信号传送到调音台或声卡。通俗点说就是，连接时，两芯线短，卡农线长。这将有助于节省更多的音频信号高端频率。</p>
+<p>那么有的好奇的同学会问，低阻抗的输出接入高阻抗会怎样呢？按理论来说，低阻出，高阻入，很完美呀！但是…</p>
+<p>举个栗子🌰，我们的麦克风是低阻输出，你的吉他单块效果器是高阻输入，串联在一起是理想的选择，也有一些朋友想实现这样的操作，让声音变得更有意思。但是你直接拿XLR卡农转TS大两芯，从麦克风插到效果器上，这样是有问题的。</p>
+<p>问题在于，线路或乐器输入需要线路或乐器信号等级。线路和乐器信号的电压比麦克风信号高得多。</p>
+<p><strong>将低阻抗麦克风插入高阻抗乐器或线路输入会产生很低的电平信号。音频信号将接近接收端设备本底噪声，因此当你提升放大器的增益时也会产生更大噪声，这种不良的信噪比是很令人绝望的。</strong></p>
+<p>这时候你就需要Re-amp盒或者类似AXE I/O这种带有Re-amp功能的音频接口来实现你的这一想法。</p>
+<p><img src="https://pic.islet.space/2021/05/cb59d2afa93b469b91fe410bbc38df23.jpeg" alt="img" style="zoom:50%;" /></p>
+<div style="text-align: center; font-size: 10px; color: #aaa;">
+图 IK Multimedia AXE I/O
+</div>
+<p>​</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -355,6 +617,131 @@
 <li>All the exponent bits 0 and mantissa bits non-zero represents <strong>denormalized number</strong>.</li>
 <li>All the exponent bits 1 and mantissa bits non-zero represents <strong>error</strong>.</li>
 </ul>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://islet.space/2021/04/23/Linux/GCC/2021-04-23-How%20to%20Install%20GCC%20(build-essential)%20on%20Ubuntu%2020.04/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Liewzheng">
+      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coder的孤岛">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/04/23/Linux/GCC/2021-04-23-How%20to%20Install%20GCC%20(build-essential)%20on%20Ubuntu%2020.04/" class="post-title-link" itemprop="url">How to Install GCC (build-essential) on Ubuntu 20.04</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-04-23 23:58:32" itemprop="dateCreated datePublished" datetime="2021-04-23T23:58:32+08:00">2021-04-23</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2021-09-16 01:19:47" itemprop="dateModified" datetime="2021-09-16T01:19:47+08:00">2021-09-16</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Programming/" itemprop="url" rel="index"><span itemprop="name">Programming</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p><a target="_blank" rel="noopener" href="https://linuxize.com/post/how-to-install-gcc-on-ubuntu-20-04/#:~:text=The%20default%20Ubuntu%20repositories%20contain%20a%20meta-package%20named,as%20root%20or%20user%20with%20sudo%20privileges%20%3A">linuxize.com</a></p>
+<p>The GNU Compiler Collection (GCC) is a collection of compilers and libraries for C, C++, Objective-C, Fortran, Ada, <a target="_blank" rel="noopener" href="https://linuxize.com/post/how-to-install-go-on-ubuntu-20-04/">Go</a> , and D programming languages. A lot of open-source projects, including the Linux kernel and GNU tools, are compiled using GCC.</p>
+<p>This article explains how to install GCC on Ubuntu 20.04.</p>
+<h1 id="installing-gcc-on-ubuntu-20.04">Installing GCC on Ubuntu 20.04</h1>
+<p>The default Ubuntu repositories contain a meta-package named “build-essential” that includes the GNU compiler collection, GNU debugger, and other development libraries and tools required for compiling software.</p>
+<p>To install the Development Tools packages, run the following command as root or <a target="_blank" rel="noopener" href="https://linuxize.com/post/how-to-create-a-sudo-user-on-ubuntu/">user with sudo privileges</a> :</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt update</span><br><span class="line">sudo apt install build-essential</span><br></pre></td></tr></table></figure>
+<p>The command installs a lot of packages, including <code>gcc</code>, <code>g++</code> and <code>make</code>.</p>
+<p>You may also want to install the manual pages about using GNU/Linux for development:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install manpages-dev</span><br></pre></td></tr></table></figure>
+<p>Verify that the GCC compiler is successfully installed by running the following command that prints the GCC version:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gcc --version</span><br></pre></td></tr></table></figure>
+<p>Ubuntu 20.04 repositories provide GCC version <code>9.3.0</code>:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">gcc (Ubuntu 9.3.0-10ubuntu2) 9.3.0</span><br><span class="line">Copyright (C) 2019 Free Software Foundation, Inc.</span><br><span class="line">This is free software; see the source for copying conditions.  There is NO</span><br><span class="line">warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.</span><br></pre></td></tr></table></figure>
+<p>That’s it. GCC tools and libraries have been installed on your Ubuntu system.</p>
+<h1 id="compiling-a-hello-world-example">Compiling a Hello World Example</h1>
+<p>Compiling a basic C or C++ program using GCC is pretty easy. Open your <a target="_blank" rel="noopener" href="https://linuxize.com/post/how-to-install-visual-studio-code-on-ubuntu-18-04/">text editor</a> and create the following file:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nano hello.c</span><br></pre></td></tr></table></figure>
+<p>hello.c</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; hello.c</span><br><span class="line">#include &lt;stdio.h&gt;</span><br><span class="line"> </span><br><span class="line">int main() &#123;</span><br><span class="line">    printf(&quot;Hello, world!\n&quot;);</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Save the file and compile it into an executable:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gcc hello.c -o hello</span><br></pre></td></tr></table></figure>
+<p>This creates a binary file named <code>hello</code> in the same directory where you run the command.</p>
+<p>Execute the <code>hello</code> program with:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">.&#x2F;hello</span><br></pre></td></tr></table></figure>
+<p>The program should print:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Hello World!</span><br></pre></td></tr></table></figure>
+<h1 id="installing-multiple-gcc-versions">Installing Multiple GCC Versions</h1>
+<p>This section provides instructions about how to install and use multiple versions of GCC on Ubuntu 20.04. The newer versions of the GCC compiler include new functions and optimization improvements.</p>
+<p>At the time of writing this article, the default Ubuntu repositories include several GCC versions, from <code>7.x.x</code> to <code>10.x.x</code>.</p>
+<p>In the following example, we will install the latest three versions of GCC and G++.</p>
+<p>Install the desired GCC and G++ versions by typing:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install gcc-8 g++-8 gcc-9 g++-9 gcc-10 g++-10</span><br></pre></td></tr></table></figure>
+<p>The commands below configures alternative for each version and associate a priority with it. The default version is the one with the highest priority, in our case that is <code>gcc-10</code>.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo update-alternatives --install &#x2F;usr&#x2F;bin&#x2F;gcc gcc &#x2F;usr&#x2F;bin&#x2F;gcc-10 100 --slave &#x2F;usr&#x2F;bin&#x2F;g++ g++ &#x2F;usr&#x2F;bin&#x2F;g++-10 --slave &#x2F;usr&#x2F;bin&#x2F;gcov gcov &#x2F;usr&#x2F;bin&#x2F;gcov-10sudo update-alternatives --install &#x2F;usr&#x2F;bin&#x2F;gcc gcc &#x2F;usr&#x2F;bin&#x2F;gcc-9 90 --slave &#x2F;usr&#x2F;bin&#x2F;g++ g++ &#x2F;usr&#x2F;bin&#x2F;g++-9 --slave &#x2F;usr&#x2F;bin&#x2F;gcov gcov &#x2F;usr&#x2F;bin&#x2F;gcov-9sudo update-alternatives --install &#x2F;usr&#x2F;bin&#x2F;gcc gcc &#x2F;usr&#x2F;bin&#x2F;gcc-8 80 --slave &#x2F;usr&#x2F;bin&#x2F;g++ g++ &#x2F;usr&#x2F;bin&#x2F;g++-8 --slave &#x2F;usr&#x2F;bin&#x2F;gcov gcov &#x2F;usr&#x2F;bin&#x2F;gcov-8</span><br></pre></td></tr></table></figure>
+<p>Later if you want to change the default version use the <code>update-alternatives</code> command:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">sudo update-alternatives --config gcc</span><br><span class="line">There are 3 choices for the alternative gcc (providing &#x2F;usr&#x2F;bin&#x2F;gcc).</span><br><span class="line"></span><br><span class="line">  Selection    Path            Priority   Status</span><br><span class="line">------------------------------------------------------------</span><br><span class="line">* 0            &#x2F;usr&#x2F;bin&#x2F;gcc-10   100       auto mode</span><br><span class="line">  1            &#x2F;usr&#x2F;bin&#x2F;gcc-10   100       manual mode</span><br><span class="line">  2            &#x2F;usr&#x2F;bin&#x2F;gcc-8    80        manual mode</span><br><span class="line">  3            &#x2F;usr&#x2F;bin&#x2F;gcc-9    90        manual mode</span><br><span class="line"></span><br><span class="line">Press &lt;enter&gt; to keep the current choice[*], or type selection number:</span><br></pre></td></tr></table></figure>
+<p>You will be presented with a list of all installed GCC versions on your Ubuntu system. Enter the number of the version you want to be used as a default and press <code>Enter</code>.</p>
+<p>The command will create <a target="_blank" rel="noopener" href="https://linuxize.com/post/how-to-create-symbolic-links-in-linux-using-the-ln-command/">symbolic links</a> to the specific versions of GCC and G++.</p>
+<h1 id="conclusion">Conclusion</h1>
+<p>We’ve shown you how to installed GCC on Ubuntu 20.04. You can now visit the official <a target="_blank" rel="noopener" href="https://gcc.gnu.org/onlinedocs/">GCC Documentation</a> page and learn how to use GCC and G++ to compile your C and C++ programs.</p>
+<p>If you hit a problem or have feedback, leave a comment below.</p>
+<p>​</p>
 
       
     </div>
@@ -1008,131 +1395,6 @@ Shop Arrow.com选择了数字RF步进衰减器，数字音频衰减器等。 <a 
 <figure>
 <img src="https://pic.islet.space/2021/06/20210623161914.png" alt="image-20210623134006076" /><figcaption aria-hidden="true">image-20210623134006076</figcaption>
 </figure>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://islet.space/2021/04/23/Linux/GCC/2021-04-23-How%20to%20Install%20GCC%20(build-essential)%20on%20Ubuntu%2020.04/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Liewzheng">
-      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Coder的孤岛">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/04/23/Linux/GCC/2021-04-23-How%20to%20Install%20GCC%20(build-essential)%20on%20Ubuntu%2020.04/" class="post-title-link" itemprop="url">How to Install GCC (build-essential) on Ubuntu 20.04</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-
-    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
-    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2021-04-23 23:58:32" itemprop="dateCreated datePublished" datetime="2021-04-23T23:58:32+08:00">2021-04-23</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-09-16 01:19:47" itemprop="dateModified" datetime="2021-09-16T01:19:47+08:00">2021-09-16</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Programming/" itemprop="url" rel="index"><span itemprop="name">Programming</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p><a target="_blank" rel="noopener" href="https://linuxize.com/post/how-to-install-gcc-on-ubuntu-20-04/#:~:text=The%20default%20Ubuntu%20repositories%20contain%20a%20meta-package%20named,as%20root%20or%20user%20with%20sudo%20privileges%20%3A">linuxize.com</a></p>
-<p>The GNU Compiler Collection (GCC) is a collection of compilers and libraries for C, C++, Objective-C, Fortran, Ada, <a target="_blank" rel="noopener" href="https://linuxize.com/post/how-to-install-go-on-ubuntu-20-04/">Go</a> , and D programming languages. A lot of open-source projects, including the Linux kernel and GNU tools, are compiled using GCC.</p>
-<p>This article explains how to install GCC on Ubuntu 20.04.</p>
-<h1 id="installing-gcc-on-ubuntu-20.04">Installing GCC on Ubuntu 20.04</h1>
-<p>The default Ubuntu repositories contain a meta-package named “build-essential” that includes the GNU compiler collection, GNU debugger, and other development libraries and tools required for compiling software.</p>
-<p>To install the Development Tools packages, run the following command as root or <a target="_blank" rel="noopener" href="https://linuxize.com/post/how-to-create-a-sudo-user-on-ubuntu/">user with sudo privileges</a> :</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt update</span><br><span class="line">sudo apt install build-essential</span><br></pre></td></tr></table></figure>
-<p>The command installs a lot of packages, including <code>gcc</code>, <code>g++</code> and <code>make</code>.</p>
-<p>You may also want to install the manual pages about using GNU/Linux for development:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install manpages-dev</span><br></pre></td></tr></table></figure>
-<p>Verify that the GCC compiler is successfully installed by running the following command that prints the GCC version:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gcc --version</span><br></pre></td></tr></table></figure>
-<p>Ubuntu 20.04 repositories provide GCC version <code>9.3.0</code>:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">gcc (Ubuntu 9.3.0-10ubuntu2) 9.3.0</span><br><span class="line">Copyright (C) 2019 Free Software Foundation, Inc.</span><br><span class="line">This is free software; see the source for copying conditions.  There is NO</span><br><span class="line">warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.</span><br></pre></td></tr></table></figure>
-<p>That’s it. GCC tools and libraries have been installed on your Ubuntu system.</p>
-<h1 id="compiling-a-hello-world-example">Compiling a Hello World Example</h1>
-<p>Compiling a basic C or C++ program using GCC is pretty easy. Open your <a target="_blank" rel="noopener" href="https://linuxize.com/post/how-to-install-visual-studio-code-on-ubuntu-18-04/">text editor</a> and create the following file:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nano hello.c</span><br></pre></td></tr></table></figure>
-<p>hello.c</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; hello.c</span><br><span class="line">#include &lt;stdio.h&gt;</span><br><span class="line"> </span><br><span class="line">int main() &#123;</span><br><span class="line">    printf(&quot;Hello, world!\n&quot;);</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>Save the file and compile it into an executable:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gcc hello.c -o hello</span><br></pre></td></tr></table></figure>
-<p>This creates a binary file named <code>hello</code> in the same directory where you run the command.</p>
-<p>Execute the <code>hello</code> program with:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">.&#x2F;hello</span><br></pre></td></tr></table></figure>
-<p>The program should print:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Hello World!</span><br></pre></td></tr></table></figure>
-<h1 id="installing-multiple-gcc-versions">Installing Multiple GCC Versions</h1>
-<p>This section provides instructions about how to install and use multiple versions of GCC on Ubuntu 20.04. The newer versions of the GCC compiler include new functions and optimization improvements.</p>
-<p>At the time of writing this article, the default Ubuntu repositories include several GCC versions, from <code>7.x.x</code> to <code>10.x.x</code>.</p>
-<p>In the following example, we will install the latest three versions of GCC and G++.</p>
-<p>Install the desired GCC and G++ versions by typing:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install gcc-8 g++-8 gcc-9 g++-9 gcc-10 g++-10</span><br></pre></td></tr></table></figure>
-<p>The commands below configures alternative for each version and associate a priority with it. The default version is the one with the highest priority, in our case that is <code>gcc-10</code>.</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo update-alternatives --install &#x2F;usr&#x2F;bin&#x2F;gcc gcc &#x2F;usr&#x2F;bin&#x2F;gcc-10 100 --slave &#x2F;usr&#x2F;bin&#x2F;g++ g++ &#x2F;usr&#x2F;bin&#x2F;g++-10 --slave &#x2F;usr&#x2F;bin&#x2F;gcov gcov &#x2F;usr&#x2F;bin&#x2F;gcov-10sudo update-alternatives --install &#x2F;usr&#x2F;bin&#x2F;gcc gcc &#x2F;usr&#x2F;bin&#x2F;gcc-9 90 --slave &#x2F;usr&#x2F;bin&#x2F;g++ g++ &#x2F;usr&#x2F;bin&#x2F;g++-9 --slave &#x2F;usr&#x2F;bin&#x2F;gcov gcov &#x2F;usr&#x2F;bin&#x2F;gcov-9sudo update-alternatives --install &#x2F;usr&#x2F;bin&#x2F;gcc gcc &#x2F;usr&#x2F;bin&#x2F;gcc-8 80 --slave &#x2F;usr&#x2F;bin&#x2F;g++ g++ &#x2F;usr&#x2F;bin&#x2F;g++-8 --slave &#x2F;usr&#x2F;bin&#x2F;gcov gcov &#x2F;usr&#x2F;bin&#x2F;gcov-8</span><br></pre></td></tr></table></figure>
-<p>Later if you want to change the default version use the <code>update-alternatives</code> command:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">sudo update-alternatives --config gcc</span><br><span class="line">There are 3 choices for the alternative gcc (providing &#x2F;usr&#x2F;bin&#x2F;gcc).</span><br><span class="line"></span><br><span class="line">  Selection    Path            Priority   Status</span><br><span class="line">------------------------------------------------------------</span><br><span class="line">* 0            &#x2F;usr&#x2F;bin&#x2F;gcc-10   100       auto mode</span><br><span class="line">  1            &#x2F;usr&#x2F;bin&#x2F;gcc-10   100       manual mode</span><br><span class="line">  2            &#x2F;usr&#x2F;bin&#x2F;gcc-8    80        manual mode</span><br><span class="line">  3            &#x2F;usr&#x2F;bin&#x2F;gcc-9    90        manual mode</span><br><span class="line"></span><br><span class="line">Press &lt;enter&gt; to keep the current choice[*], or type selection number:</span><br></pre></td></tr></table></figure>
-<p>You will be presented with a list of all installed GCC versions on your Ubuntu system. Enter the number of the version you want to be used as a default and press <code>Enter</code>.</p>
-<p>The command will create <a target="_blank" rel="noopener" href="https://linuxize.com/post/how-to-create-symbolic-links-in-linux-using-the-ln-command/">symbolic links</a> to the specific versions of GCC and G++.</p>
-<h1 id="conclusion">Conclusion</h1>
-<p>We’ve shown you how to installed GCC on Ubuntu 20.04. You can now visit the official <a target="_blank" rel="noopener" href="https://gcc.gnu.org/onlinedocs/">GCC Documentation</a> page and learn how to use GCC and G++ to compile your C and C++ programs.</p>
-<p>If you hit a problem or have feedback, leave a comment below.</p>
-<p>​</p>
 
       
     </div>
@@ -1872,129 +2134,6 @@ Shop Arrow.com选择了数字RF步进衰减器，数字音频衰减器等。 <a 
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://islet.space/2021/04/20/Networking/2021-04-20-Unix%20domain%20socket%20%E7%AE%80%E4%BB%8B/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Liewzheng">
-      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Coder的孤岛">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/04/20/Networking/2021-04-20-Unix%20domain%20socket%20%E7%AE%80%E4%BB%8B/" class="post-title-link" itemprop="url">Unix domain socket 简介</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-
-    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
-    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2021-04-20 23:58:32" itemprop="dateCreated datePublished" datetime="2021-04-20T23:58:32+08:00">2021-04-20</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-04-29 00:52:30" itemprop="dateModified" datetime="2021-04-29T00:52:30+08:00">2021-04-29</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Networking/" itemprop="url" rel="index"><span itemprop="name">Networking</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/sparkdev/p/8359028.html">cnblogs.com</a></p>
-<p><strong>Unix domain socket 又叫 IPC(inter-process communication 进程间通信) socket，用于实现同一主机上的进程间通信。</strong>socket 原本是为网络通讯设计的，但后来在 socket 的框架上发展出一种 IPC 机制，就是 UNIX domain socket。虽然网络 socket 也可用于同一台主机的进程间通讯(通过 loopback 地址 127.0.0.1)，但是 UNIX domain socket 用于 IPC 更有效率：不需要经过网络协议栈，不需要打包拆包、计算校验和、维护序号和应答等，只是将应用层数据从一个进程拷贝到另一个进程。这是因为，IPC 机制本质上是可靠的通讯，而网络协议是为不可靠的通讯设计的。 UNIX domain socket 是全双工的，API 接口语义丰富，相比其它 IPC 机制有明显的优越性，目前已成为使用最广泛的 IPC 机制，比如 X Window 服务器和 GUI 程序之间就是通过 UNIX domain socket 通讯的。 Unix domain socket 是 POSIX 标准中的一个组件，所以不要被名字迷惑，linux 系统也是支持它的。</p>
-<p>下面通过一个简单的 demo 来理解相关概念。程序分为服务器端和客户端两部分，它们之间通过 unix domain socket 进行通信。</p>
-<h1 id="服务器端程序">服务器端程序</h1>
-<p>下面是一个非常简单的服务器端程序，它从客户端读字符，然后将每个字符转换为大写并回送给客户端：</p>
-<figure>
-<img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码" /><figcaption aria-hidden="true">复制代码</figcaption>
-</figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;stdlib.h&gt;  </span><br><span class="line">#include &lt;stdio.h&gt;  </span><br><span class="line">#include &lt;stddef.h&gt;  </span><br><span class="line">#include &lt;sys&#x2F;socket.h&gt;  </span><br><span class="line">#include &lt;sys&#x2F;un.h&gt;  </span><br><span class="line">#include &lt;errno.h&gt;  </span><br><span class="line">#include &lt;string.h&gt;  </span><br><span class="line">#include &lt;unistd.h&gt;  </span><br><span class="line">#include &lt;ctype.h&gt;   </span><br><span class="line"> </span><br><span class="line">#define MAXLINE 80  </span><br><span class="line"> </span><br><span class="line">char *socket_path &#x3D; &quot;server.socket&quot;;  </span><br><span class="line"> </span><br><span class="line">int main(void)  </span><br><span class="line">&#123;  </span><br><span class="line">    struct sockaddr_un serun, cliun;  </span><br><span class="line">    socklen_t cliun_len;  </span><br><span class="line">    int listenfd, connfd, size;  </span><br><span class="line">    char buf[MAXLINE];  </span><br><span class="line">    int i, n;  </span><br><span class="line"> </span><br><span class="line">    if ((listenfd &#x3D; socket(AF_UNIX, SOCK_STREAM, 0)) &lt; 0) &#123;  </span><br><span class="line">        perror(&quot;socket error&quot;);  </span><br><span class="line">        exit(1);  </span><br><span class="line">    &#125;  </span><br><span class="line"> </span><br><span class="line">    memset(&amp;serun, 0, sizeof(serun));  </span><br><span class="line">    serun.sun_family &#x3D; AF_UNIX;  </span><br><span class="line">    strcpy(serun.sun_path, socket_path);  </span><br><span class="line">    size &#x3D; offsetof(struct sockaddr_un, sun_path) + strlen(serun.sun_path);  </span><br><span class="line">    unlink(socket_path);  </span><br><span class="line">    if (bind(listenfd, (struct sockaddr *)&amp;serun, size) &lt; 0) &#123;  </span><br><span class="line">        perror(&quot;bind error&quot;);  </span><br><span class="line">        exit(1);  </span><br><span class="line">    &#125;  </span><br><span class="line">    printf(&quot;UNIX domain socket bound\n&quot;);  </span><br><span class="line">      </span><br><span class="line">    if (listen(listenfd, 20) &lt; 0) &#123;  </span><br><span class="line">        perror(&quot;listen error&quot;);  </span><br><span class="line">        exit(1);          </span><br><span class="line">    &#125;  </span><br><span class="line">    printf(&quot;Accepting connections ...\n&quot;);  </span><br><span class="line"> </span><br><span class="line">    while(1) &#123;  </span><br><span class="line">        cliun_len &#x3D; sizeof(cliun);         </span><br><span class="line">        if ((connfd &#x3D; accept(listenfd, (struct sockaddr *)&amp;cliun, &amp;cliun_len)) &lt; 0)&#123;  </span><br><span class="line">            perror(&quot;accept error&quot;);  </span><br><span class="line">            continue;  </span><br><span class="line">        &#125;  </span><br><span class="line">          </span><br><span class="line">        while(1) &#123;  </span><br><span class="line">            n &#x3D; read(connfd, buf, sizeof(buf));  </span><br><span class="line">            if (n &lt; 0) &#123;  </span><br><span class="line">                perror(&quot;read error&quot;);  </span><br><span class="line">                break;  </span><br><span class="line">            &#125; else if(n &#x3D;&#x3D; 0) &#123;  </span><br><span class="line">                printf(&quot;EOF\n&quot;);  </span><br><span class="line">                break;  </span><br><span class="line">            &#125;  </span><br><span class="line">              </span><br><span class="line">            printf(&quot;received: %s&quot;, buf);  </span><br><span class="line"> </span><br><span class="line">            for(i &#x3D; 0; i &lt; n; i++) &#123;  </span><br><span class="line">                buf[i] &#x3D; toupper(buf[i]);  </span><br><span class="line">            &#125;  </span><br><span class="line">            write(connfd, buf, n);  </span><br><span class="line">        &#125;  </span><br><span class="line">        close(connfd);  </span><br><span class="line">    &#125;  </span><br><span class="line">    close(listenfd);  </span><br><span class="line">    return 0;  </span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
-<figure>
-<img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码" /><figcaption aria-hidden="true">复制代码</figcaption>
-</figure>
-<p>简单介绍一下这段代码：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">int socket(int family, int type, int protocol);</span><br></pre></td></tr></table></figure>
-<p>使用 UNIX domain socket 的过程和网络 socket 十分相似，也要先调用 socket() 创建一个 socket 文件描述符. <strong>family</strong> 指定为 AF_UNIX，使用 AF_UNIX 会在系统上创建一个 socket 文件，不同进程通过读写这个文件来实现通信。 <strong>type</strong> 可以选择 SOCK_DGRAM 或 SOCK_STREAM。SOCK_STREAM 意味着会提供按顺序的、可靠、双向、面向连接的比特流。SOCK_DGRAM 意味着会提供定长的、不可靠、无连接的通信。 <strong>protocol</strong> 参数指定为 0 即可。 UNIX domain socket 与网络 socket 编程最明显的不同在于地址格式不同，用结构体 sockaddr_un 表示，网络编程的 socket 地址是 IP 地址加端口号，而 UNIX domain socket 的地址是一个 socket 类型的文件在文件系统中的路径，这个 socket 文件由 bind() 调用创建，如果调用 bind() 时该文件已存在，则 bind() 错误返回。因此，一般在调用 bind() 前会检查 socket 文件是否存在，如果存在就删除掉。 网络 socket 编程类似，在 bind 之后要 listen，表示通过 bind 的地址（也就是 socket 文件）提供服务。 接下来必须用 accept() 函数初始化连接。accept() 为每个连接创立新的套接字并从监听队列中移除这个连接。</p>
-<h1 id="客户端程序">客户端程序</h1>
-<p>下面是客户端程序，它接受用户的输入，并把字符串发送给服务器，然后接收服务器返回的字符串并打印：</p>
-<figure>
-<img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码" /><figcaption aria-hidden="true">复制代码</figcaption>
-</figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;stdlib.h&gt;  </span><br><span class="line">#include &lt;stdio.h&gt;  </span><br><span class="line">#include &lt;stddef.h&gt;  </span><br><span class="line">#include &lt;sys&#x2F;socket.h&gt;  </span><br><span class="line">#include &lt;sys&#x2F;un.h&gt;  </span><br><span class="line">#include &lt;errno.h&gt;  </span><br><span class="line">#include &lt;string.h&gt;  </span><br><span class="line">#include &lt;unistd.h&gt;  </span><br><span class="line"> </span><br><span class="line">#define MAXLINE 80  </span><br><span class="line"> </span><br><span class="line">char *client_path &#x3D; &quot;client.socket&quot;;  </span><br><span class="line">char *server_path &#x3D; &quot;server.socket&quot;;  </span><br><span class="line"> </span><br><span class="line">int main() &#123;  </span><br><span class="line">    struct  sockaddr_un cliun, serun;  </span><br><span class="line">    int len;  </span><br><span class="line">    char buf[100];  </span><br><span class="line">    int sockfd, n;  </span><br><span class="line"> </span><br><span class="line">    if ((sockfd &#x3D; socket(AF_UNIX, SOCK_STREAM, 0)) &lt; 0)&#123;  </span><br><span class="line">        perror(&quot;client socket error&quot;);  </span><br><span class="line">        exit(1);  </span><br><span class="line">    &#125;  </span><br><span class="line">      </span><br><span class="line">    &#x2F;&#x2F; 一般显式调用bind函数，以便服务器区分不同客户端  </span><br><span class="line">    memset(&amp;cliun, 0, sizeof(cliun));  </span><br><span class="line">    cliun.sun_family &#x3D; AF_UNIX;  </span><br><span class="line">    strcpy(cliun.sun_path, client_path);  </span><br><span class="line">    len &#x3D; offsetof(struct sockaddr_un, sun_path) + strlen(cliun.sun_path);  </span><br><span class="line">    unlink(cliun.sun_path);  </span><br><span class="line">    if (bind(sockfd, (struct sockaddr *)&amp;cliun, len) &lt; 0) &#123;  </span><br><span class="line">        perror(&quot;bind error&quot;);  </span><br><span class="line">        exit(1);  </span><br><span class="line">    &#125;  </span><br><span class="line"> </span><br><span class="line">    memset(&amp;serun, 0, sizeof(serun));  </span><br><span class="line">    serun.sun_family &#x3D; AF_UNIX;  </span><br><span class="line">    strcpy(serun.sun_path, server_path);  </span><br><span class="line">    len &#x3D; offsetof(struct sockaddr_un, sun_path) + strlen(serun.sun_path);  </span><br><span class="line">    if (connect(sockfd, (struct sockaddr *)&amp;serun, len) &lt; 0)&#123;  </span><br><span class="line">        perror(&quot;connect error&quot;);  </span><br><span class="line">        exit(1);  </span><br><span class="line">    &#125;  </span><br><span class="line"> </span><br><span class="line">    while(fgets(buf, MAXLINE, stdin) !&#x3D; NULL) &#123;    </span><br><span class="line">         write(sockfd, buf, strlen(buf));    </span><br><span class="line">         n &#x3D; read(sockfd, buf, MAXLINE);    </span><br><span class="line">         if ( n &lt; 0 ) &#123;    </span><br><span class="line">            printf(&quot;the other side has been closed.\n&quot;);    </span><br><span class="line">         &#125;else &#123;    </span><br><span class="line">            write(STDOUT_FILENO, buf, n);    </span><br><span class="line">         &#125;    </span><br><span class="line">    &#125;   </span><br><span class="line">    close(sockfd);  </span><br><span class="line">    return 0;  </span><br><span class="line">&#125;  </span><br></pre></td></tr></table></figure>
-<figure>
-<img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码" /><figcaption aria-hidden="true">复制代码</figcaption>
-</figure>
-<p>与网络 socket 编程不同的是，UNIX domain socket 客户端一般要显式调用 bind 函数，而不依赖系统自动分配的地址。客户端 bind 一个自己指定的 socket 文件名的好处是，该文件名可以包含客户端的 pid 等信息以便服务器区分不同的客户端。</p>
-<h1 id="运行上面的程序">运行上面的程序</h1>
-<p>分别把服务器端程序和客户端程序保存为 server.c 和 client.c 文件，并编译：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ gcc server.c -o server</span><br><span class="line">$ gcc client.c -o client</span><br></pre></td></tr></table></figure>
-<p>先启动服务器端程序，然后启动客户端程序输入字符串并回车：</p>
-<figure>
-<img src="https://images2017.cnblogs.com/blog/952033/201801/952033-20180126125928506-239880118.png" alt="img" /><figcaption aria-hidden="true">img</figcaption>
-</figure>
-<p>还不错，客户端得到了服务器端返回的大写字符串。接下来看看当前目录下的文件：</p>
-<figure>
-<img src="https://images2017.cnblogs.com/blog/952033/201801/952033-20180126125951834-1641586991.png" alt="img" /><figcaption aria-hidden="true">img</figcaption>
-</figure>
-<p>哈哈，多了两个 socket 文件。</p>
-<h1 id="总结">总结</h1>
-<p>Unix domain socket 主要用于同一主机上的进程间通信。与主机间的进程通信不同，它不是通过 "IP地址 + TCP或UDP端口号" 的方式进程通信，而是使用 socket 类型的文件来完成通信，因此在稳定性、可靠性以及效率方面的表现都很不错。</p>
-<p><strong>参考：</strong> <a target="_blank" rel="noopener" href="http://docs.linuxtone.org/ebooks/C&amp;CPP/c/ch37s04.html">UNIX Domain Socket IPC</a> [<a target="_blank" rel="noopener" href="http://blog.csdn.net/tzshlyt/article/details/53391655">linux] unix domain socket 例子</a></p>
-<p>​</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
     <link itemprop="mainEntityOfPage" href="http://islet.space/2021/04/20/Networking/2021-04-20-Networking/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2291,7 +2430,7 @@ Shop Arrow.com选择了数字RF步进衰减器，数字音频衰减器等。 <a 
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://islet.space/2021/04/19/Signal/MIC%20LEVEL%20vs%20LINE%20LEVEL%20Audio%20Levels%20Explained/">
+    <link itemprop="mainEntityOfPage" href="http://islet.space/2021/04/20/Networking/2021-04-20-Unix%20domain%20socket%20%E7%AE%80%E4%BB%8B/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -2304,7 +2443,7 @@ Shop Arrow.com选择了数字RF步进衰减器，数字音频衰减器等。 <a 
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/04/19/Signal/MIC%20LEVEL%20vs%20LINE%20LEVEL%20Audio%20Levels%20Explained/" class="post-title-link" itemprop="url">MIC LEVEL vs LINE LEVEL--Audio Levels Explained</a>
+          <a href="/2021/04/20/Networking/2021-04-20-Unix%20domain%20socket%20%E7%AE%80%E4%BB%8B/" class="post-title-link" itemprop="url">Unix domain socket 简介</a>
         </h2>
 
         <div class="post-meta-container">
@@ -2318,122 +2457,14 @@ Shop Arrow.com选择了数字RF步进衰减器，数字音频衰减器等。 <a 
       </span>
       <span class="post-meta-item-text">Posted on</span>
 
-      <time title="Created: 2021-04-19 23:58:32" itemprop="dateCreated datePublished" datetime="2021-04-19T23:58:32+08:00">2021-04-19</time>
+      <time title="Created: 2021-04-20 23:58:32" itemprop="dateCreated datePublished" datetime="2021-04-20T23:58:32+08:00">2021-04-20</time>
     </span>
       <span class="post-meta-item">
         <span class="post-meta-item-icon">
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-04-29 00:54:07" itemprop="dateModified" datetime="2021-04-29T00:54:07+08:00">2021-04-29</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Signal/" itemprop="url" rel="index"><span itemprop="name">Signal</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p><a target="_blank" rel="noopener" href="https://audiouniversityonline.com/mic-level-vs-line-level-audio-levels-explained/">audiouniversityonline.com</a></p>
-<p>In this post, you’ll learn the difference between microphone level and line level, as well as other levels commonly used in professional audio such as instrument level and speaker level.</p>
-<p>What is the difference between microphone level and line level?</p>
-<p><strong>Microphones and instruments output very low signal voltages, while +4dBu is the line level is the standard voltage level for professional audio equipment.</strong></p>
-<p><strong>In pro audio, you’ll generally be dealing with four types of audio signals: Mic Level, Instrument Level, Line Level, and Speaker Level</strong></p>
-<h1 id="microphone-level">Microphone Level</h1>
-<p>A microphone captures sound by converting pressure changes in the air into electrical currents in a wire. The electrical currents created by these pressure changes are very subtle. That’s why we use a microphone preamp – to amplify the signal to a more usable level.</p>
-<p>A microphone preamp takes in a mic level signal, amplifies it, and outputs a line level signal. This is controlled by the gain knob on your mixing console, audio interface, or outboard mic pre.</p>
-<p><img src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/04/Mic-Level-Chart-900.jpg" alt="img" style="zoom:50%;" /></p>
-<h1 id="instrument-level">Instrument Level</h1>
-<p>The pickups of an electric guitar convert the vibrations of the strings into electrical currents. Similar to those from a microphone, the electrical currents from a guitar pickup are very weak.</p>
-<p>A preamp can also be used to boost instrument level signals to line level.</p>
-<p><img src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/04/Instrument-Level-Chart-900.jpg" alt="img" style="zoom: 50%;" /></p>
-<p>Once an input signal is brought up to line level, it is optimized for use with professional audio equipment, such as mixing consoles, outboard effects, and amplifiers.</p>
-<p><img src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/04/Line-Level-Chart-900.jpg" alt="img" style="zoom:50%;" /></p>
-<h1 id="professional-vs-consumer-line-level">Professional vs Consumer Line Level</h1>
-<p>There are two standards for line level: +4 dBu (professional) and -10 dBV (consumer).</p>
-<p>Watch this video to learn the difference between professional and consumer line level. I also wrote a post on <a target="_blank" rel="noopener" href="https://audiouniversityonline.com/consumer-vs-professional-audio-levels-what-is-the-difference/">professional vs consumer audio levels</a> that will help you understand the difference.</p>
-<h1 id="speaker-level">Speaker Level</h1>
-<p>Line level is adequate for sending signals between devices, but not strong enough to power a speaker.In order to power a speaker, the line level signal needs to be amplified again.</p>
-<p>This can be done with a power amplifier. A power amp takes in a line level signal, amplifies it, and outputs a speaker level signal that is strong enough to power a speaker.</p>
-<p><img src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/04/Speaker-Level-Chart-900.jpg" alt="img" style="zoom:50%;" /></p>
-<h1 id="a-complete-audio-system">A Complete Audio System</h1>
-<p>In a complete system, you might run a microphone through a preamp and an electric guitar through another preamp.</p>
-<p>Once those signals are at line level, you can send them through outboard effects and eventually to an amplifier, which will add enough gain to the signal to power a speaker.</p>
-<p><img src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/04/Complete-Chart-900.jpg" alt="img" style="zoom:50%;" /></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://islet.space/2021/04/11/Web/2021-04-11-JavaScript/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Liewzheng">
-      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Coder的孤岛">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/04/11/Web/2021-04-11-JavaScript/" class="post-title-link" itemprop="url">Javascript</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-
-    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
-    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2021-04-11 23:58:32" itemprop="dateCreated datePublished" datetime="2021-04-11T23:58:32+08:00">2021-04-11</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-04-26 00:13:21" itemprop="dateModified" datetime="2021-04-26T00:13:21+08:00">2021-04-26</time>
+        <time title="Modified: 2021-04-29 00:52:30" itemprop="dateModified" datetime="2021-04-29T00:52:30+08:00">2021-04-29</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -2455,37 +2486,47 @@ Shop Arrow.com选择了数字RF步进衰减器，数字音频衰减器等。 <a 
     
     
     <div class="post-body" itemprop="articleBody">
-          <h1 id="面向对象编程">面向对象编程</h1>
-<h2 id="对象的抽象">对象的抽象</h2>
-<p><strong>抽象</strong> 是指一种归纳或总结，<strong>对象</strong> 是现实世界物体特征的实体。万事万物不论大小皆可看做对象， <strong>类</strong> 则是对各种不同对象的 <em>归纳总结</em>，类是对象的 <em>抽象表示形式</em>。</p>
-<blockquote>
-<p>例如，男演员Jack可以看做是一个对象，女演员Rose也可以看过是一个对象，而两者会被统一归纳为Person或者Human的类（或抽象）。每一个对象都有其独特的属性（Property）或功能（Function），而归纳总结出来的类则具有不同对象的相同属性或功能。</p>
-</blockquote>
-<p>基于类的面向对象语言是面向对象世界里的主流。虽然大多数面向对象开发语言都使用类来完成面向对象编程，但类不是面向对象编程的实质内涵。面向对象的实质内涵是将所有业务逻辑单元都视为一个对象（即，对象是目的或结果），且类不是唯一用来完成面向对象编程的方法。</p>
-<p>面向对象不能被当做面向类，否则会进入误区。对象和类的关系相当于一般程序设计语言中的 <strong>变量</strong> 和 <strong>变量类型</strong> 的关系。所以，有时类也被称为是一种数据类型，可以看做抽象数据类型的具体实现。此时的数据类型则是 <strong>数据 </strong>和 <strong>操作</strong> 的集合。</p>
-<h2 id="面向对象与面向过程的区别">面向对象与面向过程的区别</h2>
-<p>面向过程程序设计，即结构化程序设计，诸如Pascal、C。</p>
-<p>面向对象程序设计解决了结构化程序设计代码复用的难题，如C++、C#、Java、JavaScript、Python等都是。</p>
-<p><img src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/04/image-20210413144641711.png" alt="image-20210413144641711" style="zoom: 67%;" /></p>
-<p>面向过程也是把程序定义为“数据+作用于数据的操作算法”，但最重要的区别是：面向过程编程 <mark>使用过程操作数据结构</mark>， 而面向对象编程将过程和数据结构捆绑，使对象 <mark>操作自己的数据结构</mark>。</p>
-<h1 id="javascript的类">JavaScript的类</h1>
-<h2 id="类的创建">类的创建</h2>
-<p>JavaScript可以用关键字 <code>class</code> 进行赋值。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Rectangle</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="title">constructor</span>(<span class="params">height, width</span>)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.height = height;</span><br><span class="line">        <span class="built_in">this</span>.width = width;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 方法一：参数赋值法，间接调用构造器赋值</span></span><br><span class="line"><span class="keyword">var</span> oRectangle = <span class="keyword">new</span> Rectangle(<span class="number">10</span>, <span class="number">20</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 方法二：生成对象后单独调用赋值</span></span><br><span class="line"><span class="comment">// var oRectangle = new Rectangle();</span></span><br><span class="line"><span class="comment">// oRectangle.height = 10;</span></span><br><span class="line"><span class="comment">// oRectangle.width = 30;</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(oRectangle.height, oRectangle.width)</span><br></pre></td></tr></table></figure>
-<p>在MDN Web Docs中，对JavaScript类的定义如下：</p>
-<blockquote>
-<p>实际上，类是“特殊的函数”，就像你能够定义的函数表达式和函数声明一样，类语法有两个组成部分：<strong>类表达式 </strong>和 <strong>类声明</strong>。</p>
-</blockquote>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">HelloWrold</span>(<span class="params"></span>)</span>&#123;    <span class="comment">//To use keyword `function` instead of `class` to define a class</span></span><br><span class="line">    <span class="built_in">this</span>.printInfo = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;Hi! JavaScript!\n&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> oHelloWorld = <span class="keyword">new</span> HelloWorld();    <span class="comment">// Make a new object of the class named `HelloWorld`</span></span><br><span class="line"><span class="keyword">var</span> result = oHelloWorld.printInfo();    <span class="comment">//Call the method of the object to assign</span></span><br><span class="line"><span class="built_in">document</span>.write(result);</span><br></pre></td></tr></table></figure>
-<h2 id="构造器">构造器</h2>
-<p><strong>构造器（Constructor）</strong>，或称 <strong>构造方法</strong>，一种用于创建和初始化<code>class</code>创建的对象的特殊 <strong>方法（Methods）</strong>。<code>constructor([arguments]) &#123; ... &#125;</code>， 其中 <code>arguments</code> 看情况而定，可以省略。</p>
-<p><strong>注意</strong>：</p>
-<ol type="1">
-<li>在一个类中只能有一个名为 <code>constructor</code> 的特殊方法。 一个类中出现多次构造函数 (constructor)方法将会抛出一个 <code>SyntaxError</code> 错误。</li>
-<li>在一个构造方法中可以使用 <code>super</code> 关键字来 <mark>调用一个父类的构造方法</mark>。</li>
-<li>如果没有显式指定构造方法，则会添加默认的 constructor 方法。</li>
-</ol>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Polygon</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="title">constructor</span>(<span class="params">arg0, arg1</span>)</span> &#123;</span><br><span class="line">    <span class="built_in">this</span>.name = <span class="string">&#x27;Polygon&#x27;</span>;</span><br><span class="line">    <span class="built_in">this</span>.body = arg0 + arg1;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> poly1 = <span class="keyword">new</span> Polygon(<span class="number">10</span>,<span class="number">20</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(poly1.name, poly1.body);</span><br><span class="line"><span class="comment">// expected output: &quot;Polygon&quot; 30</span></span><br></pre></td></tr></table></figure>
+          <p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/sparkdev/p/8359028.html">cnblogs.com</a></p>
+<p><strong>Unix domain socket 又叫 IPC(inter-process communication 进程间通信) socket，用于实现同一主机上的进程间通信。</strong>socket 原本是为网络通讯设计的，但后来在 socket 的框架上发展出一种 IPC 机制，就是 UNIX domain socket。虽然网络 socket 也可用于同一台主机的进程间通讯(通过 loopback 地址 127.0.0.1)，但是 UNIX domain socket 用于 IPC 更有效率：不需要经过网络协议栈，不需要打包拆包、计算校验和、维护序号和应答等，只是将应用层数据从一个进程拷贝到另一个进程。这是因为，IPC 机制本质上是可靠的通讯，而网络协议是为不可靠的通讯设计的。 UNIX domain socket 是全双工的，API 接口语义丰富，相比其它 IPC 机制有明显的优越性，目前已成为使用最广泛的 IPC 机制，比如 X Window 服务器和 GUI 程序之间就是通过 UNIX domain socket 通讯的。 Unix domain socket 是 POSIX 标准中的一个组件，所以不要被名字迷惑，linux 系统也是支持它的。</p>
+<p>下面通过一个简单的 demo 来理解相关概念。程序分为服务器端和客户端两部分，它们之间通过 unix domain socket 进行通信。</p>
+<h1 id="服务器端程序">服务器端程序</h1>
+<p>下面是一个非常简单的服务器端程序，它从客户端读字符，然后将每个字符转换为大写并回送给客户端：</p>
+<figure>
+<img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码" /><figcaption aria-hidden="true">复制代码</figcaption>
+</figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;stdlib.h&gt;  </span><br><span class="line">#include &lt;stdio.h&gt;  </span><br><span class="line">#include &lt;stddef.h&gt;  </span><br><span class="line">#include &lt;sys&#x2F;socket.h&gt;  </span><br><span class="line">#include &lt;sys&#x2F;un.h&gt;  </span><br><span class="line">#include &lt;errno.h&gt;  </span><br><span class="line">#include &lt;string.h&gt;  </span><br><span class="line">#include &lt;unistd.h&gt;  </span><br><span class="line">#include &lt;ctype.h&gt;   </span><br><span class="line"> </span><br><span class="line">#define MAXLINE 80  </span><br><span class="line"> </span><br><span class="line">char *socket_path &#x3D; &quot;server.socket&quot;;  </span><br><span class="line"> </span><br><span class="line">int main(void)  </span><br><span class="line">&#123;  </span><br><span class="line">    struct sockaddr_un serun, cliun;  </span><br><span class="line">    socklen_t cliun_len;  </span><br><span class="line">    int listenfd, connfd, size;  </span><br><span class="line">    char buf[MAXLINE];  </span><br><span class="line">    int i, n;  </span><br><span class="line"> </span><br><span class="line">    if ((listenfd &#x3D; socket(AF_UNIX, SOCK_STREAM, 0)) &lt; 0) &#123;  </span><br><span class="line">        perror(&quot;socket error&quot;);  </span><br><span class="line">        exit(1);  </span><br><span class="line">    &#125;  </span><br><span class="line"> </span><br><span class="line">    memset(&amp;serun, 0, sizeof(serun));  </span><br><span class="line">    serun.sun_family &#x3D; AF_UNIX;  </span><br><span class="line">    strcpy(serun.sun_path, socket_path);  </span><br><span class="line">    size &#x3D; offsetof(struct sockaddr_un, sun_path) + strlen(serun.sun_path);  </span><br><span class="line">    unlink(socket_path);  </span><br><span class="line">    if (bind(listenfd, (struct sockaddr *)&amp;serun, size) &lt; 0) &#123;  </span><br><span class="line">        perror(&quot;bind error&quot;);  </span><br><span class="line">        exit(1);  </span><br><span class="line">    &#125;  </span><br><span class="line">    printf(&quot;UNIX domain socket bound\n&quot;);  </span><br><span class="line">      </span><br><span class="line">    if (listen(listenfd, 20) &lt; 0) &#123;  </span><br><span class="line">        perror(&quot;listen error&quot;);  </span><br><span class="line">        exit(1);          </span><br><span class="line">    &#125;  </span><br><span class="line">    printf(&quot;Accepting connections ...\n&quot;);  </span><br><span class="line"> </span><br><span class="line">    while(1) &#123;  </span><br><span class="line">        cliun_len &#x3D; sizeof(cliun);         </span><br><span class="line">        if ((connfd &#x3D; accept(listenfd, (struct sockaddr *)&amp;cliun, &amp;cliun_len)) &lt; 0)&#123;  </span><br><span class="line">            perror(&quot;accept error&quot;);  </span><br><span class="line">            continue;  </span><br><span class="line">        &#125;  </span><br><span class="line">          </span><br><span class="line">        while(1) &#123;  </span><br><span class="line">            n &#x3D; read(connfd, buf, sizeof(buf));  </span><br><span class="line">            if (n &lt; 0) &#123;  </span><br><span class="line">                perror(&quot;read error&quot;);  </span><br><span class="line">                break;  </span><br><span class="line">            &#125; else if(n &#x3D;&#x3D; 0) &#123;  </span><br><span class="line">                printf(&quot;EOF\n&quot;);  </span><br><span class="line">                break;  </span><br><span class="line">            &#125;  </span><br><span class="line">              </span><br><span class="line">            printf(&quot;received: %s&quot;, buf);  </span><br><span class="line"> </span><br><span class="line">            for(i &#x3D; 0; i &lt; n; i++) &#123;  </span><br><span class="line">                buf[i] &#x3D; toupper(buf[i]);  </span><br><span class="line">            &#125;  </span><br><span class="line">            write(connfd, buf, n);  </span><br><span class="line">        &#125;  </span><br><span class="line">        close(connfd);  </span><br><span class="line">    &#125;  </span><br><span class="line">    close(listenfd);  </span><br><span class="line">    return 0;  </span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
+<figure>
+<img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码" /><figcaption aria-hidden="true">复制代码</figcaption>
+</figure>
+<p>简单介绍一下这段代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">int socket(int family, int type, int protocol);</span><br></pre></td></tr></table></figure>
+<p>使用 UNIX domain socket 的过程和网络 socket 十分相似，也要先调用 socket() 创建一个 socket 文件描述符. <strong>family</strong> 指定为 AF_UNIX，使用 AF_UNIX 会在系统上创建一个 socket 文件，不同进程通过读写这个文件来实现通信。 <strong>type</strong> 可以选择 SOCK_DGRAM 或 SOCK_STREAM。SOCK_STREAM 意味着会提供按顺序的、可靠、双向、面向连接的比特流。SOCK_DGRAM 意味着会提供定长的、不可靠、无连接的通信。 <strong>protocol</strong> 参数指定为 0 即可。 UNIX domain socket 与网络 socket 编程最明显的不同在于地址格式不同，用结构体 sockaddr_un 表示，网络编程的 socket 地址是 IP 地址加端口号，而 UNIX domain socket 的地址是一个 socket 类型的文件在文件系统中的路径，这个 socket 文件由 bind() 调用创建，如果调用 bind() 时该文件已存在，则 bind() 错误返回。因此，一般在调用 bind() 前会检查 socket 文件是否存在，如果存在就删除掉。 网络 socket 编程类似，在 bind 之后要 listen，表示通过 bind 的地址（也就是 socket 文件）提供服务。 接下来必须用 accept() 函数初始化连接。accept() 为每个连接创立新的套接字并从监听队列中移除这个连接。</p>
+<h1 id="客户端程序">客户端程序</h1>
+<p>下面是客户端程序，它接受用户的输入，并把字符串发送给服务器，然后接收服务器返回的字符串并打印：</p>
+<figure>
+<img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码" /><figcaption aria-hidden="true">复制代码</figcaption>
+</figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;stdlib.h&gt;  </span><br><span class="line">#include &lt;stdio.h&gt;  </span><br><span class="line">#include &lt;stddef.h&gt;  </span><br><span class="line">#include &lt;sys&#x2F;socket.h&gt;  </span><br><span class="line">#include &lt;sys&#x2F;un.h&gt;  </span><br><span class="line">#include &lt;errno.h&gt;  </span><br><span class="line">#include &lt;string.h&gt;  </span><br><span class="line">#include &lt;unistd.h&gt;  </span><br><span class="line"> </span><br><span class="line">#define MAXLINE 80  </span><br><span class="line"> </span><br><span class="line">char *client_path &#x3D; &quot;client.socket&quot;;  </span><br><span class="line">char *server_path &#x3D; &quot;server.socket&quot;;  </span><br><span class="line"> </span><br><span class="line">int main() &#123;  </span><br><span class="line">    struct  sockaddr_un cliun, serun;  </span><br><span class="line">    int len;  </span><br><span class="line">    char buf[100];  </span><br><span class="line">    int sockfd, n;  </span><br><span class="line"> </span><br><span class="line">    if ((sockfd &#x3D; socket(AF_UNIX, SOCK_STREAM, 0)) &lt; 0)&#123;  </span><br><span class="line">        perror(&quot;client socket error&quot;);  </span><br><span class="line">        exit(1);  </span><br><span class="line">    &#125;  </span><br><span class="line">      </span><br><span class="line">    &#x2F;&#x2F; 一般显式调用bind函数，以便服务器区分不同客户端  </span><br><span class="line">    memset(&amp;cliun, 0, sizeof(cliun));  </span><br><span class="line">    cliun.sun_family &#x3D; AF_UNIX;  </span><br><span class="line">    strcpy(cliun.sun_path, client_path);  </span><br><span class="line">    len &#x3D; offsetof(struct sockaddr_un, sun_path) + strlen(cliun.sun_path);  </span><br><span class="line">    unlink(cliun.sun_path);  </span><br><span class="line">    if (bind(sockfd, (struct sockaddr *)&amp;cliun, len) &lt; 0) &#123;  </span><br><span class="line">        perror(&quot;bind error&quot;);  </span><br><span class="line">        exit(1);  </span><br><span class="line">    &#125;  </span><br><span class="line"> </span><br><span class="line">    memset(&amp;serun, 0, sizeof(serun));  </span><br><span class="line">    serun.sun_family &#x3D; AF_UNIX;  </span><br><span class="line">    strcpy(serun.sun_path, server_path);  </span><br><span class="line">    len &#x3D; offsetof(struct sockaddr_un, sun_path) + strlen(serun.sun_path);  </span><br><span class="line">    if (connect(sockfd, (struct sockaddr *)&amp;serun, len) &lt; 0)&#123;  </span><br><span class="line">        perror(&quot;connect error&quot;);  </span><br><span class="line">        exit(1);  </span><br><span class="line">    &#125;  </span><br><span class="line"> </span><br><span class="line">    while(fgets(buf, MAXLINE, stdin) !&#x3D; NULL) &#123;    </span><br><span class="line">         write(sockfd, buf, strlen(buf));    </span><br><span class="line">         n &#x3D; read(sockfd, buf, MAXLINE);    </span><br><span class="line">         if ( n &lt; 0 ) &#123;    </span><br><span class="line">            printf(&quot;the other side has been closed.\n&quot;);    </span><br><span class="line">         &#125;else &#123;    </span><br><span class="line">            write(STDOUT_FILENO, buf, n);    </span><br><span class="line">         &#125;    </span><br><span class="line">    &#125;   </span><br><span class="line">    close(sockfd);  </span><br><span class="line">    return 0;  </span><br><span class="line">&#125;  </span><br></pre></td></tr></table></figure>
+<figure>
+<img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码" /><figcaption aria-hidden="true">复制代码</figcaption>
+</figure>
+<p>与网络 socket 编程不同的是，UNIX domain socket 客户端一般要显式调用 bind 函数，而不依赖系统自动分配的地址。客户端 bind 一个自己指定的 socket 文件名的好处是，该文件名可以包含客户端的 pid 等信息以便服务器区分不同的客户端。</p>
+<h1 id="运行上面的程序">运行上面的程序</h1>
+<p>分别把服务器端程序和客户端程序保存为 server.c 和 client.c 文件，并编译：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ gcc server.c -o server</span><br><span class="line">$ gcc client.c -o client</span><br></pre></td></tr></table></figure>
+<p>先启动服务器端程序，然后启动客户端程序输入字符串并回车：</p>
+<figure>
+<img src="https://images2017.cnblogs.com/blog/952033/201801/952033-20180126125928506-239880118.png" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>还不错，客户端得到了服务器端返回的大写字符串。接下来看看当前目录下的文件：</p>
+<figure>
+<img src="https://images2017.cnblogs.com/blog/952033/201801/952033-20180126125951834-1641586991.png" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>哈哈，多了两个 socket 文件。</p>
+<h1 id="总结">总结</h1>
+<p>Unix domain socket 主要用于同一主机上的进程间通信。与主机间的进程通信不同，它不是通过 "IP地址 + TCP或UDP端口号" 的方式进程通信，而是使用 socket 类型的文件来完成通信，因此在稳定性、可靠性以及效率方面的表现都很不错。</p>
+<p><strong>参考：</strong> <a target="_blank" rel="noopener" href="http://docs.linuxtone.org/ebooks/C&amp;CPP/c/ch37s04.html">UNIX Domain Socket IPC</a> [<a target="_blank" rel="noopener" href="http://blog.csdn.net/tzshlyt/article/details/53391655">linux] unix domain socket 例子</a></p>
+<p>​</p>
 
       
     </div>
@@ -2505,7 +2546,7 @@ Shop Arrow.com选择了数字RF步进衰减器，数字音频衰减器等。 <a 
 
 
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/7/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><span class="page-number current">8</span><a class="page-number" href="/page/9/">9</a><span class="space">&hellip;</span><a class="page-number" href="/page/11/">11</a><a class="extend next" rel="next" href="/page/9/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <a class="extend prev" rel="prev" href="/page/7/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><span class="page-number current">8</span><a class="page-number" href="/page/9/">9</a><span class="space">&hellip;</span><a class="page-number" href="/page/12/">12</a><a class="extend next" rel="next" href="/page/9/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 

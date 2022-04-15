@@ -162,7 +162,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">109</span>
+          <span class="site-state-item-count">111</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -173,7 +173,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">202</span>
+        <span class="site-state-item-count">208</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -207,6 +207,327 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://islet.space/2022/04/13/Programming/2022-04-13-EIDE-with-VS-Code/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Liewzheng">
+      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coder的孤岛">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/04/13/Programming/2022-04-13-EIDE-with-VS-Code/" class="post-title-link" itemprop="url">EIDE with VS Code</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2022-04-13 18:00:00" itemprop="dateCreated datePublished" datetime="2022-04-13T18:00:00+08:00">2022-04-13</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2022-04-15 22:57:36" itemprop="dateModified" datetime="2022-04-15T22:57:36+08:00">2022-04-15</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Programming/" itemprop="url" rel="index"><span itemprop="name">Programming</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>本文主要是将 在KEIL上能够成功编译的 STM32F103VE 芯片项目转移到 VS Code 的 <strong>EIDE</strong> 插件中，主要是针对 Keil MDK-ARM 中的 Option 进行参数复制，即 EIDE 的配置。</p>
+<p>需要以下两个工具：</p>
+<ul>
+<li>Keil MDK-ARM</li>
+<li>Keil.STM32F1xx_DFP.2.4.0.pack</li>
+</ul>
+<p>其实还是依托于 Keil MDK-ARM ，只是换了 VS Code 的皮。</p>
+<h1 id="eide-install">EIDE INSTALL</h1>
+<p>首先需要在 VS Code 中安装 Embedded IDE（如下），官方手册：<a target="_blank" rel="noopener" href="https://docs.em-ide.com/">EIDE在线文档</a> 。</p>
+<figure>
+<img src="https://pic.islet.space/2022/04/image-20220414214014581.png" alt="image-20220414214014581" /><figcaption aria-hidden="true">image-20220414214014581</figcaption>
+</figure>
+<h1 id="eide-configuration">EIDE CONFIGURATION</h1>
+<p>对 EIDE 的配置主要包括 <a href="##扩展设置">扩展设置</a> 、<a href="##芯片支持包安装">芯片支持包安装</a> 、<a href="##构建参数设置">构建参数设置</a> 和 <a href="##项目属性设置">项目属性设置</a>。</p>
+<figure>
+<img src="https://pic.islet.space/2022/04/image-20220414211312253.png" alt="image-20220414211312253" /><figcaption aria-hidden="true">image-20220414211312253</figcaption>
+</figure>
+<h2 id="扩展设置">扩展设置</h2>
+<p>可以在 VS Code 的插件中选中 <code>Embedded IDE</code> ，在齿轮状设置图标菜单里选择 <code>扩展设置</code>，在里面配置好编译工具链的路径还有一些可设置选项。</p>
+<p><img src="https://pic.islet.space/2022/04/image-20220414203531929.png" alt="image-20220414203531929" style="zoom:50%;" /></p>
+<p>STM32 可以用 ARM CC 和 ARM GCC 进行编译，具体需要看芯片要求，Keil 的话用的是 ARM CC 5版本或者 ARM CC 6 版本。</p>
+<p>可以到 Keil MDK-ARM 的安装路径下进行查看，例如 在 <code>D:\Keil_v5\ARM\ARMCC\bin</code> 中，选择右键 <code>用 Powershell 打开</code>，然后输入 <code>./armcc.exe</code> 即可查看版本号。</p>
+<p><img src="https://pic.islet.space/2022/04/image-20220414183859215.png" alt="image-20220414183859215" style="zoom:50%;" /></p>
+<p>主要配置六个参数即可，需要根据本地的 Keil 安装路径来进行设置（不要盲目复制粘贴）。</p>
+<p><img src="https://pic.islet.space/2022/04/image-20220414203709473.png" alt="image-20220414203709473" style="zoom:50%;" /></p>
+<p><img src="https://pic.islet.space/2022/04/image-20220414203744037.png" alt="image-20220414203744037" style="zoom:50%;" /></p>
+<h2 id="芯片支持包安装">芯片支持包安装</h2>
+<p>Keil 的芯片支持包主要看 <code>Option</code> -&gt; <code>Target</code> 下的 <code>STM32F103xx.svd</code> 。</p>
+<p><img src="https://pic.islet.space/2022/04/image-20220414194711199.png" alt="image-20220414194711199" style="zoom:50%;" /></p>
+<p>通过本地搜索可以看到这个文件需要通过安装 <code>.pack</code> 扩展包得到。</p>
+<figure>
+<img src="https://pic.islet.space/2022/04/image-20220414190916865.png" alt="image-20220414190916865" /><figcaption aria-hidden="true">image-20220414190916865</figcaption>
+</figure>
+<p>到 <a target="_blank" rel="noopener" href="https://www.keil.com/dd2/Pack/">MDK5 Software Packs (keil.com)</a> 中搜索对应芯片的扩展包，如 <a target="_blank" rel="noopener" href="https://keilpack.azureedge.net/pack/Keil.STM32F1xx_DFP.2.4.0.pack"><code>Keil.STM32F1xx_DFP.2.4.0.pack</code></a> 。</p>
+<p><img src="https://pic.islet.space/2022/04/image-20220414193428926.png" alt="image-20220414193428926" style="zoom:33%;" /></p>
+<p>点击 芯片支持包 右侧的 加号，即可选择通过 <strong>在线安装</strong>（From Repo） 或者 <strong>离线安装</strong>（From Disk）。</p>
+<figure>
+<img src="https://pic.islet.space/2022/04/image-20220414212238565.png" alt="image-20220414212238565" /><figcaption aria-hidden="true">image-20220414212238565</figcaption>
+</figure>
+<figure>
+<img src="https://pic.islet.space/2022/04/image-20220414212220319.png" alt="image-20220414212220319" /><figcaption aria-hidden="true">image-20220414212220319</figcaption>
+</figure>
+<p>安装完扩展包之后 再点击下图中的加号，输入芯片型号进行进一步选择。</p>
+<p><img src="https://pic.islet.space/2022/04/image-20220414191124478.png" alt="image-20220414191124478" style="zoom: 33%;" /></p>
+<p>即可查看芯片的大致信息：</p>
+<p><img src="https://pic.islet.space/2022/04/image-20220414190706840.png" alt="image-20220414190706840" style="zoom:33%;" /></p>
+<h2 id="构建参数设置">构建参数设置</h2>
+<p>构建参数的依据是 Keil 中的这几个参数选项卡：</p>
+<p><img src="https://pic.islet.space/2022/04/image-20220414212732414.png" alt="image-20220414212732414" style="zoom:50%;" /></p>
+<p>方法：</p>
+<ol type="1">
+<li>提取 Keil 中的构建参数 （如下 C/C++ 参数设置）</li>
+<li>提取 EIDE 中的构建参数</li>
+<li>对比差异，以 Keil 为准对 EIDE 进行增删</li>
+</ol>
+<h3 id="cc-参数设置">C/C++ 参数设置</h3>
+<p>下方是 Keil 中对 C/C++ 的构建参数管理页面：</p>
+<p><img src="https://pic.islet.space/2022/04/image-20220414200627162.png" alt="image-20220414200627162" style="zoom: 50%;" /></p>
+<p>以下是从 Keil MD5 的 <code>Option</code> 中扒下来的编译参数，即最后一行的 <code>Compiler Control String</code> ：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">-c --cpu Cortex-M3 -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I include -I ../ -I ../../../Libraries/CMSIS/CM3/CoreSupport -I ../../../Libraries/CMSIS/CM3/DeviceSupport/ST/STM32F10x -I ../../../Libraries/STM32F10x_StdPeriph_Driver/inc -I ../../../Utilities/STM32_EVAL -I ../../../Utilities/STM32_EVAL/STM3210B_EVAL -I ../../../Utilities/STM32_EVAL/Common -I ../../STM32F10x_StdPeriph_Template -I ../MDK-ARM</span><br><span class="line">-IF:/Workspace/xiwang_production_test_embedded/Project/STM32F10x_StdPeriph_Template/MDK-ARM/RTE/_STM3210B-EVAL</span><br><span class="line">-ID:/Keil_v5/ARM/PACK/ARM/CMSIS/5.0.0/CMSIS/Include</span><br><span class="line">-ID:/Keil_v5/ARM/PACK/Keil/STM32F1xx_DFP/2.4.0/Device/Include</span><br><span class="line">-D__UVISION_VERSION=<span class="string">&quot;522&quot;</span> -D_RTE_ -DSTM32F10X_HD -DUSE_STDPERIPH_DRIVER -DSTM32F10X_HD -DUSE_STM3210B_EVAL</span><br><span class="line">-o .\build\STM3210B-EVAL\*.o --omf_browse .\build\STM3210B-EVAL\*.crf --depend .\build\STM3210B-EVAL\*.d</span><br></pre></td></tr></table></figure>
+<p>以下是从 EIDE 中扒下来的编译命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">......</span><br><span class="line"></span><br><span class="line">C <span class="built_in">command</span> line (armcc): </span><br><span class="line"></span><br><span class="line">-c --apcs=interwork --cpu Cortex-M3 --li --c99 -D__MICROLIB -O0 --split_sections --diag_suppress=1 --diag_suppress=1295 -g -I.\.. -I.\..\..\..\Libraries\CMSIS\CM3\CoreSupport -I.\..\..\..\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x -I.\..\..\..\Libraries\STM32F10x_StdPeriph_Driver\inc -I.\..\..\..\Utilities\STM32_EVAL -I.\..\..\..\Utilities\STM32_EVAL\STM32100E_EVAL -I.\..\..\..\Utilities\STM32_EVAL\Common -I.\.cmsis\dsp_lib -I.\.cmsis\include -I.\RTE\_STM32100E-EVAL -I.\.eide\deps -I.\include -I.\.eide\deps -DUSE_STDPERIPH_DRIVER -DSTM32F10X_HD_VL -DUSE_STM32100E_EVAL -DGD32F10X_HD</span><br><span class="line"></span><br><span class="line">CPP <span class="built_in">command</span> line (armcc): </span><br><span class="line"></span><br><span class="line">-c --cpp --apcs=interwork --cpu Cortex-M3 --li -D__MICROLIB -O0 --split_sections --diag_suppress=1 --diag_suppress=1295 -g -I.\.. -I.\..\..\..\Libraries\CMSIS\CM3\CoreSupport -I.\..\..\..\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x -I.\..\..\..\Libraries\STM32F10x_StdPeriph_Driver\inc -I.\..\..\..\Utilities\STM32_EVAL -I.\..\..\..\Utilities\STM32_EVAL\STM32100E_EVAL -I.\..\..\..\Utilities\STM32_EVAL\Common -I.\.cmsis\dsp_lib -I.\.cmsis\include -I.\RTE\_STM32100E-EVAL -I.\.eide\deps -I.\include -I.\.eide\deps -DUSE_STDPERIPH_DRIVER -DSTM32F10X_HD_VL -DUSE_STM32100E_EVAL -DGD32F10X_HD</span><br><span class="line"></span><br><span class="line">......</span><br></pre></td></tr></table></figure>
+<p><strong>EIDE 中查看编译命令的方法</strong>：项目名称右键点击 <code>查看生成的编译器命令行</code> 即可。</p>
+<p><img src="https://pic.islet.space/2022/04/image-20220414194229852.png" alt="image-20220414194229852" style="zoom:33%;" /></p>
+<p>互相比对二者之间的编译参数差异，发现以下差异：</p>
+<ol type="1">
+<li>Keil 中的代码优化等级为 <code>3</code> 即参数 <code>-O3</code> ，而 EIDE 中为 <code>0</code> 即参数 <code>-O0</code> 。</li>
+<li>EIDE 比 Kei多了几个参数 <code>--diag_suppress=1 --diag_suppress=1295</code> ，需要删除。</li>
+</ol>
+<h3 id="asm-和-linker-参数设置">ASM 和 Linker 参数设置</h3>
+<p>对比过 Keil 的参数之后，保持如下设置：</p>
+<figure>
+<img src="https://pic.islet.space/2022/04/image-20220414213239217.png" alt="image-20220414213239217" /><figcaption aria-hidden="true">image-20220414213239217</figcaption>
+</figure>
+<figure>
+<img src="https://pic.islet.space/2022/04/image-20220414213257541.png" alt="image-20220414213257541" /><figcaption aria-hidden="true">image-20220414213257541</figcaption>
+</figure>
+<h2 id="项目属性设置">项目属性设置</h2>
+<h3 id="包含路径设置">包含路径设置</h3>
+<p>这个就不多说了。</p>
+<p>需要注意的是，RTE路径下的 <code>STM32xxx-EVAL</code> 一定要是正确的，可以多，不要少。</p>
+<figure>
+<img src="https://pic.islet.space/2022/04/image-20220414213503962.png" alt="image-20220414213503962" /><figcaption aria-hidden="true">image-20220414213503962</figcaption>
+</figure>
+<h3 id="预处理定义">预处理定义</h3>
+<p>从 EIDE 导入 Keil 项目时，可能回设置很多不需要或者错误的 <strong>预处理定义</strong>（宏定义），需要跟 Keil 保持一致。</p>
+<p><img src="https://pic.islet.space/2022/04/image-20220414213732758.png" alt="image-20220414213732758" style="zoom:50%;" /></p>
+<p><img src="https://pic.islet.space/2022/04/image-20220414195358900.png" alt="image-20220414195358900" style="zoom:33%;" /></p>
+<h1 id="debug-records">DEBUG RECORDS</h1>
+<h2 id="expected-a">EXPECTED A }</h2>
+<p>提示 少了 <code>&#125;</code> ，该文件是官方文件，应该不会错。经过检查，发现是宏定义过多导致的错误，修改过 <a href="###预处理定义">预处理定义</a> 中的宏定义设置就解决了。</p>
+<p><img src="https://pic.islet.space/2022/04/image-20220414190748098.png" alt="image-20220414190748098" style="zoom:33%;" /></p>
+<p>如下，<code>STM32F10X_HD</code> 和 <code>STM32F10X_HD_VL</code> 冲突了。</p>
+<p><img src="https://pic.islet.space/2022/04/image-20220414194044509.png" alt="image-20220414194044509" style="zoom:50%;" /></p>
+<p>最后，编译结果：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line">[ INFO ] start building at 2022-04-14 20:22:39</span><br><span class="line"></span><br><span class="line">[ TOOL ] ARM Compiler 5.06 update 4 (build 422)</span><br><span class="line"></span><br><span class="line">[ INFO ] file statistics (rebuild mode)</span><br><span class="line"></span><br><span class="line">+---------+-----------+-----------+-----------+--------+</span><br><span class="line">| C Files | Cpp Files | Asm Files | Lib Files | Totals |</span><br><span class="line">+---------+-----------+-----------+-----------+--------+</span><br><span class="line">| 46      | 0         | 1         | 0         | 47     |</span><br><span class="line">+---------+-----------+-----------+-----------+--------+</span><br><span class="line"></span><br><span class="line">[ INFO ] start compilation (<span class="built_in">jobs</span>: 4) ...</span><br><span class="line"></span><br><span class="line">&gt;&gt; [  2%] CC <span class="string">&#x27;../../../Libraries/CMSIS/CM3/CoreSupport/core_cm3.c&#x27;</span></span><br><span class="line">&gt;&gt; [  4%] CC <span class="string">&#x27;main.c&#x27;</span></span><br><span class="line">&gt;&gt; [  6%] CC <span class="string">&#x27;../../../Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_flash.c&#x27;</span></span><br><span class="line">&gt;&gt; [  8%] CC <span class="string">&#x27;../../../Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_usart.c&#x27;</span></span><br><span class="line">......</span><br><span class="line">&gt;&gt; [ 89%] CC <span class="string">&#x27;source/stm32f10x_it.c&#x27;</span></span><br><span class="line">&gt;&gt; [ 91%] CC <span class="string">&#x27;../../../Utilities/STM32_EVAL/STM32100E_EVAL/stm32100e_eval_lcd.c&#x27;</span></span><br><span class="line">&gt;&gt; [ 93%] CC <span class="string">&#x27;source/system_stm32f10x.c&#x27;</span></span><br><span class="line">&gt;&gt; [ 95%] CC <span class="string">&#x27;../../../Utilities/STM32_EVAL/stm32_eval.c&#x27;</span></span><br><span class="line">&gt;&gt; [ 97%] CC <span class="string">&#x27;source/write.c&#x27;</span></span><br><span class="line">&gt;&gt; [100%] AS <span class="string">&#x27;../../../Libraries/CMSIS/CM3/DeviceSupport/ST/STM32F10x/startup/arm/startup_stm32f10x_hd_vl.s&#x27;</span></span><br><span class="line"></span><br><span class="line">[ INFO ] start linking ...</span><br><span class="line"></span><br><span class="line">Program Size: Code=9028 RO-data=340 RW-data=156 ZI-data=1412  </span><br><span class="line"></span><br><span class="line">Total RO  Size (Code + RO Data)                 9368 (   9.15kB)</span><br><span class="line">Total RW  Size (RW Data + ZI Data)              1568 (   1.53kB)</span><br><span class="line">Total ROM Size (Code + RO Data + RW Data)       9524 (   9.30kB)</span><br><span class="line"></span><br><span class="line">RAM  : [          ] 2.4%        1.5KB/64.0KB</span><br><span class="line">FLASH: [          ] 1.8%        9.3KB/512.0KB</span><br><span class="line"></span><br><span class="line">[ INFO ] start outputting file ...</span><br><span class="line"></span><br><span class="line">&gt;&gt; output hex file              [<span class="keyword">done</span>]</span><br><span class="line"></span><br><span class="line">file path: <span class="string">&quot;build/STM32100E-EVAL/FT_Test.hex&quot;</span></span><br><span class="line"></span><br><span class="line">&gt;&gt; output s19 file              [<span class="keyword">done</span>]</span><br><span class="line"></span><br><span class="line">file path: <span class="string">&quot;build/STM32100E-EVAL/FT_Test.s19&quot;</span></span><br><span class="line"></span><br><span class="line">&gt;&gt; output bin file              [<span class="keyword">done</span>]</span><br><span class="line"></span><br><span class="line">file path: <span class="string">&quot;build/STM32100E-EVAL/FT_Test.bin&quot;</span></span><br><span class="line"></span><br><span class="line">[ DONE ] build successfully !, elapsed time 0:0:9</span><br><span class="line"></span><br><span class="line">[ INFO ] run tasks after build ...</span><br><span class="line"></span><br><span class="line">&gt;&gt; axf to elf           [<span class="keyword">done</span>]</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://islet.space/2022/03/26/Programming/2022-03-26-matplotlib%E5%9B%BE%E5%BD%A2%E7%BB%98%E5%88%B6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Liewzheng">
+      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coder的孤岛">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/03/26/Programming/2022-03-26-matplotlib%E5%9B%BE%E5%BD%A2%E7%BB%98%E5%88%B6/" class="post-title-link" itemprop="url">matplotlib图形绘制</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2022-03-26 15:00:00" itemprop="dateCreated datePublished" datetime="2022-03-26T15:00:00+08:00">2022-03-26</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2022-04-15 22:57:36" itemprop="dateModified" datetime="2022-04-15T22:57:36+08:00">2022-04-15</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Programming/" itemprop="url" rel="index"><span itemprop="name">Programming</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>类似于 gnuplot ， matplotlib 也是开源的图形绘制软件。</p>
+<p>需要使用到的工具如下：</p>
+<ul>
+<li>Jupyter：python 分布调试 和 Markdown 笔记记录一体化工具。</li>
+<li>Python3.10</li>
+<li>Python3 插件： matplotlib / pandas</li>
+<li>VS code 所需插件： pylance</li>
+</ul>
+<p>其中， matplotlib 是绘图所用的开源工具库，而 pandas 是文档管理的 “瑞士军刀”。</p>
+<h1 id="环境安装">环境安装</h1>
+<h2 id="jupyter-安装">JUPYTER 安装</h2>
+<p>Jupyter可以支持在线和离线使用，在线即以网页形式支持使用，可以在服务器上进行部署。离线即在 Visual Studio Code 中以插件形式提供安装和使用。</p>
+<h3 id="在线安装">在线安装</h3>
+<p>以 Ubuntu 系统为例，可以用 <code>apt</code> 进行安装，也可以用 <code>pip</code> （或 <code>pip3</code> ）进行安装。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install jupyter</span><br></pre></td></tr></table></figure>
+<p>在线版 Jupyter 还需要安装一个 <code>ipyparallel</code> 的类：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pip3 install ipyparallel</span><br><span class="line">ipcluster start</span><br></pre></td></tr></table></figure>
+<h4 id="远程访问配置项">远程访问配置项</h4>
+<p>参考 《<a target="_blank" rel="noopener" href="https://www.cnblogs.com/wu-chao/p/8419889.html">ubuntu 安装Juypter并设置远程访问</a>》对 服务器端 Jupyter进行设置和访问测试。</p>
+<p>相关防火墙设置 / 证书 / 域名 不再赘述。</p>
+<h4 id="自启动配置">自启动配置</h4>
+<p>另外，Linux 服务器端 Jupyter 用 <code>jupyter notebook</code> 命令启动，无法开机自启，需要参考 《<a target="_blank" rel="noopener" href="https://blog.csdn.net/initiallht/article/details/122029888">Linux下Jupyter开机启动设置</a>》 进行设置。</p>
+<p>设置好后 在线版 Jupyter 编辑器的页面如下：</p>
+<figure>
+<img src="https://pic.islet.space/2022/03/image-20220327165129680.png" alt="在线使用界面" /><figcaption aria-hidden="true">在线使用界面</figcaption>
+</figure>
+<h3 id="离线安装">离线安装</h3>
+<p>在 VS code 插件中搜索并安装第一个 <code>Jupyter</code> 即可，插件系统会自动安装下面附带的 <code>Jupyter Keymap</code> 和 <code>Jupyter Notebook Renderers</code> 两个插件。</p>
+<figure>
+<img src="https://pic.islet.space/2022/03/image-20220327163752153.png" alt="image-20220327163752153" /><figcaption aria-hidden="true">image-20220327163752153</figcaption>
+</figure>
+<p>安装完之后，需要新建一个 <code>.ipynb</code> 格式的文件，即可自动打开 <code>Jupyter</code> 插件进行使用。</p>
+<figure>
+<img src="https://pic.islet.space/2022/03/image-20220327165214773.png" alt="离线使用界面" /><figcaption aria-hidden="true">离线使用界面</figcaption>
+</figure>
+<h2 id="pip-依赖库安装">PIP 依赖库安装</h2>
+<p>在线版和离线版都需要使用 terminal 打开并输入命令进行安装下方的依赖库：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip3 install matplotlib pandas</span><br></pre></td></tr></table></figure>
+<h1 id="图形生成代码">图形生成代码</h1>
+<p>下方利用 pandas 类对 <code>.csv</code> 文件中的相关列进行数据提取，然后利用 matplotlib 类对 数据进行绘图。</p>
+<p>因功能比较简单，不再赘述。</p>
+<p>具体需要注意的事项已在代码注释中写明。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 导入依赖库</span></span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="keyword">import</span> csv</span><br><span class="line"></span><br><span class="line"><span class="comment"># 导入工具</span></span><br><span class="line"><span class="keyword">from</span> pandas <span class="keyword">import</span> Series,DataFrame</span><br><span class="line"><span class="keyword">from</span> matplotlib <span class="keyword">import</span> pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">from</span> matplotlib.font_manager <span class="keyword">import</span> FontProperties</span><br><span class="line"></span><br><span class="line"><span class="comment"># 配置csv表格中的行信息</span></span><br><span class="line">column=[<span class="string">&quot;ts&quot;</span>,<span class="string">&quot;dx&quot;</span>,<span class="string">&quot;dy&quot;</span>,<span class="string">&quot;motion&quot;</span>,<span class="string">&quot;iqc&quot;</span>,<span class="string">&quot;shutter&quot;</span>,<span class="string">&quot;frame_avg&quot;</span>,<span class="string">&quot;status&quot;</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 设置文件路径</span></span><br><span class="line">csv_file_path = <span class="string">&#x27;../data/&#x27;</span></span><br><span class="line">pic_file_path = <span class="string">&#x27;../pic/&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 输入和输出文件名</span></span><br><span class="line">file = <span class="string">&#x27;20220327_135012&#x27;</span></span><br><span class="line">csv_file_name = file + <span class="string">&#x27;.csv&#x27;</span></span><br><span class="line">pic_file_name = file + <span class="string">&#x27;.jpg&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 配置各轴及标题标签</span></span><br><span class="line">chart_title = <span class="string">&#x27;A4 data collection in stm32l476rg&#x27;</span></span><br><span class="line">x_label = <span class="string">&#x27;time(ms)&#x27;</span></span><br><span class="line">y_label = <span class="string">&#x27;data collected&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 配置各线段标签</span></span><br><span class="line">line_1_label = <span class="string">&#x27;dx&#x27;</span></span><br><span class="line">line_2_label = <span class="string">&#x27;dy&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 配置线段透明度</span></span><br><span class="line">line_1_alpha = <span class="number">0.5</span></span><br><span class="line">line_2_alpha = <span class="number">0.5</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 配置线段类型</span></span><br><span class="line"><span class="comment"># 可选 scatter 和 line</span></span><br><span class="line">plot_type = <span class="string">&#x27;scatter&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 用于正常显示中文标签</span></span><br><span class="line">plt.rcParams[<span class="string">&#x27;font.sans-serif&#x27;</span>]=[<span class="string">&#x27;YAHEI&#x27;</span>]</span><br><span class="line"><span class="comment"># 用于正常显示正负号</span></span><br><span class="line">plt.rcParams[<span class="string">&#x27;axes.unicode_minus&#x27;</span>]=<span class="literal">False</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 定义空列表存放xy轴数据点</span></span><br><span class="line">x = []</span><br><span class="line">y = []</span><br><span class="line">z = []</span><br><span class="line"></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string"># 可以使用open()方法对csv文件进行读取</span></span><br><span class="line"><span class="string"># 但是暂时没有找到可以避免读取到头部信息的方法，即不能跳过部分数据进行读取</span></span><br><span class="line"><span class="string">with open( csv_file_path + csv_file_name, &#x27;r&#x27;, encoding=&#x27;utf8&#x27;) as csv_file:</span></span><br><span class="line"><span class="string">    plots = csv.reader(csv_file, delimiter=&#x27;,&#x27;)</span></span><br><span class="line"><span class="string">    for row in plots:</span></span><br><span class="line"><span class="string">        x.append(int(row[0]))</span></span><br><span class="line"><span class="string">        y.append(int(row[1]))</span></span><br><span class="line"><span class="string">        z.append(int(row[2]))</span></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用panda的read_csv()方法可以设置跳过部分数据进行处理</span></span><br><span class="line">csv_file = pd.read_csv(csv_file_path + csv_file_name, </span><br><span class="line">                       skiprows=<span class="number">21</span>,</span><br><span class="line">                       delimiter=<span class="string">&#x27;,&#x27;</span>, </span><br><span class="line">                       names=column) </span><br><span class="line"></span><br><span class="line"><span class="comment"># 将对应列数据放入变量中</span></span><br><span class="line">x = csv_file[<span class="string">&#x27;ts&#x27;</span>]</span><br><span class="line">y = csv_file[<span class="string">&#x27;dx&#x27;</span>]</span><br><span class="line">z = csv_file[<span class="string">&#x27;dy&#x27;</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 设置线段标签</span></span><br><span class="line"><span class="keyword">if</span>( plot_type==<span class="string">&#x27;line&#x27;</span>):</span><br><span class="line">    plt.plot(x,y, label=line_1_label, alpha=line_1_alpha, lw=<span class="number">1</span>)</span><br><span class="line">    plt.plot(x,z, label=line_2_label, alpha=line_2_alpha, lw=<span class="number">1</span>)</span><br><span class="line"><span class="keyword">elif</span>( plot_type == <span class="string">&#x27;scatter&#x27;</span>):</span><br><span class="line">    plt.scatter(x,y, label=line_1_label, alpha=line_1_alpha, s=<span class="number">1</span>)</span><br><span class="line">    plt.scatter(x,z, label=line_2_label, alpha=line_2_alpha, s=<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 设置x轴、y轴和标题标签</span></span><br><span class="line">plt.xlabel(x_label)</span><br><span class="line">plt.ylabel(y_label)</span><br><span class="line">plt.title(chart_title)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 展示图像</span></span><br><span class="line">plt.legend()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 图像保存</span></span><br><span class="line">plt.savefig( pic_file_path + pic_file_name , dpi=<span class="number">400</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<h1 id="使用方法">使用方法</h1>
+<ol type="1">
+<li>生成一个文件夹，下面包含三个并行子路径。</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">├── data</span><br><span class="line">├── pic</span><br><span class="line">└── src</span><br></pre></td></tr></table></figure>
+<p>网页版：</p>
+<figure>
+<img src="https://pic.islet.space/2022/03/image-20220327164922369.png" alt="网页版文件结构示意" /><figcaption aria-hidden="true">网页版文件结构示意</figcaption>
+</figure>
+<ol start="2" type="1">
+<li>将代码放到 <code>src/</code> 中，在将代码第19行中的 <code>file = '20220327_135012'</code> 文件名进行修改，确保其与 <code>data/</code> 路径下的 <code>.csv</code> 文件名成可以对上。</li>
+<li>执行整段代码，即可在 <code>pic/</code> 文件夹下找到对应的图像文件。</li>
+</ol>
+<h1 id="reference">REFERENCE</h1>
+<ol type="1">
+<li><p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/378378346">vscode写jupyter notebook</a></p></li>
+<li><p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/129004421">Pandas将csv数据拆分成多列并保存</a></p></li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1471,591 +1792,8 @@
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://islet.space/2022/01/22/Linux/2022-01-22-customize-vscode-font-in-debian-linux/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Liewzheng">
-      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Coder的孤岛">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/01/22/Linux/2022-01-22-customize-vscode-font-in-debian-linux/" class="post-title-link" itemprop="url">customize vscode font in debian linux</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-
-    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
-    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-      
-
-      <time title="Created: 2022-01-22 15:20:00 / Modified: 16:19:33" itemprop="dateCreated datePublished" datetime="2022-01-22T15:20:00+08:00">2022-01-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="install-fonts-on-debian-linux">INSTALL FONTS ON DEBIAN LINUX</h1>
-<p>We can install <strong><em>True Type</em></strong> or <strong><em>Open Type</em></strong> fonts(<code>.ttf</code> / <code>.otf</code> / <code>.ttc</code>) in <em>DEBIAN LINUX</em>, like ubuntu or kali.</p>
-<h2 id="download-font-from-website">DOWNLOAD FONT FROM WEBSITE</h2>
-<ol type="1">
-<li>Download <code>Cascadia Code</code> from <code>https://github.com/microsoft/cascadia-code/releases</code> and unzip it.</li>
-<li>We got 3 folders here: <code>/otf/</code> , <code>/ttf/</code> and <code>woff2</code> , and we only need `ttf</li>
-</ol>
-<h2 id="copy-files-to-system-font-directory">COPY FILES TO SYSTEM FONT DIRECTORY</h2>
-<p>Font fils are generally installed in either the system font directory on the path <code>/usr/share/fonts/</code> or in a user font directory that is frequently on one of the following paths:</p>
-<ul>
-<li><code>~/.local/share/fonts/</code></li>
-<li><code>~/usr/local/share/fonts/</code></li>
-</ul>
-<ol type="1">
-<li>Execute the following command to copy the fonts to system path</li>
-</ol>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo cp -r ttf /usr/share/fonts/CascadiaCode</span><br></pre></td></tr></table></figure>
-<h2 id="generate-font-chache">GENERATE FONT CHACHE</h2>
-<p>We need to build font infomation caches for apps using fontconfig for their font handling.</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> /usr/share/fonts/CascadiaCode</span><br><span class="line">fc-cache -f -v</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p><strong><em>NOTE</em></strong></p>
-<p>If you cannot execute <code>fc-cache</code> command , copy and execute the following command in terminal.</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install fontconfig</span><br></pre></td></tr></table></figure>
-</blockquote>
-<h2 id="verify-the-font-installation">VERIFY THE FONT INSTALLATION</h2>
-<p>Confirm that the fonts are installed by displaying the paths and style definitions with <code>fc-list</code> command filtered on the font family name with <code>grep</code> .</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">fc-list | grep <span class="string">&quot;Cascadia Code&quot;</span></span><br></pre></td></tr></table></figure>
-<h1 id="customize-vscode">CUSTOMIZE VSCODE</h1>
-<ol type="1">
-<li>Get to <code>Setting</code></li>
-</ol>
-<figure>
-<img src="https://pic.islet.space/2022/01/image-20220122161611892.png" alt="image-20220122161611892" /><figcaption aria-hidden="true">image-20220122161611892</figcaption>
-</figure>
-<ol start="2" type="1">
-<li>Search <code>font</code> in the bar</li>
-</ol>
-<figure>
-<img src="https://pic.islet.space/2022/01/image-20220122161750043.png" alt="image-20220122161750043" /><figcaption aria-hidden="true">image-20220122161750043</figcaption>
-</figure>
-<ol start="3" type="1">
-<li>Add <code>'Cascadia Code',</code> to the <code>Editor: Font Family</code> .</li>
-<li>Restart vscode.</li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://islet.space/2022/01/11/Hardware/STM32/2022-01-11-%E5%85%89%E7%94%B5%E4%BC%A0%E6%84%9F%E5%99%A8/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Liewzheng">
-      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Coder的孤岛">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/01/11/Hardware/STM32/2022-01-11-%E5%85%89%E7%94%B5%E4%BC%A0%E6%84%9F%E5%99%A8/" class="post-title-link" itemprop="url">Optical Sensor Development</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-
-    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
-    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2022-01-11 14:30:00" itemprop="dateCreated datePublished" datetime="2022-01-11T14:30:00+08:00">2022-01-11</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2022-01-23 19:37:19" itemprop="dateModified" datetime="2022-01-23T19:37:19+08:00">2022-01-23</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/InternetOfThings/" itemprop="url" rel="index"><span itemprop="name">InternetOfThings</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="基础技能">基础技能</h1>
-<ol type="1">
-<li>ARM架构芯片的样例代码加载、编译、烧录、调试工作熟悉。</li>
-<li>bitbucket 如何使用（是否需要配置SSH、repository如何pull和push、add、commit等） √</li>
-<li>confluence 如何使用（任务的查看、提交、文章的发布、协作等等）</li>
-</ol>
-<h1 id="ide-for-realtek">IDE for Realtek</h1>
-<h2 id="vscode-arm">VSCODE ARM</h2>
-<figure>
-<img src="https://pic.islet.space/2022/01/image-20220112105541195.png" alt="image-20220112105541195" /><figcaption aria-hidden="true">image-20220112105541195</figcaption>
-</figure>
-<figure>
-<img src="https://pic.islet.space/2022/01/image-20220112110410253.png" alt="image-20220112110410253" /><figcaption aria-hidden="true">image-20220112110410253</figcaption>
-</figure>
-<figure>
-<img src="https://pic.islet.space/2022/01/image-20220112110533598.png" alt="image-20220112110533598" /><figcaption aria-hidden="true">image-20220112110533598</figcaption>
-</figure>
-<figure>
-<img src="https://pic.islet.space/2022/01/image-20220112110507665.png" alt="image-20220112110507665" /><figcaption aria-hidden="true">image-20220112110507665</figcaption>
-</figure>
-<figure>
-<img src="https://pic.islet.space/2022/01/image-20220112105734831.png" alt="image-20220112105734831" /><figcaption aria-hidden="true">image-20220112105734831</figcaption>
-</figure>
-<h2 id="keil-arm">KEIL ARM</h2>
-<p>将Realtek RTL8762D SDK中的项目单独摘出来，放到某个文件夹下进行管理时，需要单独更改好几处内容：</p>
-<ol type="1">
-<li>C/C++的Include Path</li>
-<li>源文件的Source Path</li>
-<li>APP Image（<code>.bin</code> 生成文件），即 <code>after_build_common.bat</code> 的路径和内容。</li>
-</ol>
-<p>如下所示，把单独某个Project摘出来时会产生很多感叹号。</p>
-<figure>
-<img src="https://pic.islet.space/2022/01/image-20220112111951120.png" alt="image-20220112111951120" /><figcaption aria-hidden="true">image-20220112111951120</figcaption>
-</figure>
-<h3 id="头文件路径修改">头文件路径修改</h3>
-<p>此时需要进入设置中进行头文件路径修改</p>
-<figure>
-<img src="https://pic.islet.space/2022/01/image-20220112133356533.png" alt="image-20220112133356533" /><figcaption aria-hidden="true">image-20220112133356533</figcaption>
-</figure>
-<p>选择 <code>C/C++</code> 选项卡下的 <code>Include Paths</code> 进行修改。</p>
-<figure>
-<img src="https://pic.islet.space/2022/01/image-20220112133505056.png" alt="image-20220112133505056" /><figcaption aria-hidden="true">image-20220112133505056</figcaption>
-</figure>
-<p>原来的路径设置都是使用相对路径进行的，此时需要将 <code>sbee2-sdk-v1.0.0</code> 文件夹放到与你项目文件同盘的某个文件夹下，最好不要相距太远。</p>
-<figure>
-<img src="https://pic.islet.space/2022/01/image-20220112133731688.png" alt="image-20220112133731688" /><figcaption aria-hidden="true">image-20220112133731688</figcaption>
-</figure>
-<p>可以使用 VS Code将 <code>.uvprojx</code> 文件打开，使用搜索和替换工具对相关头文件的路径进行替换。</p>
-<h3 id="源文件路径修改">源文件路径修改</h3>
-<p>修改方法同头文件，</p>
-<figure>
-<img src="https://pic.islet.space/2022/01/image-20220117094508419.png" alt="image-20220117094508419" /><figcaption aria-hidden="true">image-20220117094508419</figcaption>
-</figure>
-<h3 id="bat文件路径修改">bat文件路径修改</h3>
-<p><code>.bat</code> 文件是用于在 <code>.o</code> 文件生成后的链接脚本。所以如果该脚本自身路径和脚本内的包含路径出错，可能会导致无法编译出对应的 <code>app_MP_adk#####</code> 文件。</p>
-<figure>
-<img src="https://pic.islet.space/2022/01/image-20220117095506866.png" alt="image-20220117095506866" /><figcaption aria-hidden="true">image-20220117095506866</figcaption>
-</figure>
-<p>下方为样例代码原来的设置情况：</p>
-<figure>
-<img src="https://pic.islet.space/2022/01/image-20220120134642405.png" alt="image-20220120134642405" /><figcaption aria-hidden="true">image-20220120134642405</figcaption>
-</figure>
-<p>在 <code>Option-User</code> 设置中，可以查看到 <code>After Build/Rebuild</code> 相关的设置，其中 <code>Run #1</code> 则是 Realtek MP Tools 需要烧录 EVB开发板相关的脚本文件。</p>
-<figure>
-<img src="https://pic.islet.space/2022/01/image-20220117095438927.png" alt="image-20220117095438927" /><figcaption aria-hidden="true">image-20220117095438927</figcaption>
-</figure>
-<p>将单独摘放出来的项目文件夹 <code>pixart_i2c</code> 与 <code>sbee2-sdk-v1.0.0</code> 和 <code>sbee2_wristband_sdk_upperstack_img</code> 放到同一个文件夹下。</p>
-<figure>
-<img src="https://pic.islet.space/2022/01/image-20220117110446703.png" alt="image-20220117110446703" /><figcaption aria-hidden="true">image-20220117110446703</figcaption>
-</figure>
-<p>因此修改 <code>.uvprojx</code> 文件内容下 <code>after_build_common.bat</code> 的路径时，将该路径修改为如下的相对路径即可：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">..\sbee2-sdk-v1.0.0\tool\after_build_common.bat <span class="variable">$J</span> <span class="comment">#L @L</span></span><br></pre></td></tr></table></figure>
-<figure>
-<img src="https://pic.islet.space/2022/01/image-20220117104943624.png" alt="image-20220117104943624" /><figcaption aria-hidden="true">image-20220117104943624</figcaption>
-</figure>
-<p>保存修改后的 <code>.uvprojx</code> 文件，可以看到 Keil V5 自动更新了相关设置。如下：</p>
-<figure>
-<img src="https://pic.islet.space/2022/01/image-20220117104955125.png" alt="image-20220117104955125" /><figcaption aria-hidden="true">image-20220117104955125</figcaption>
-</figure>
-<p><code>after_build_common.bat</code> 控制着自动生成Realtek 的 MP Tool 需要使用的 APP Bin文件，如果该 <code>Run #1</code> 没有启用，则无法生产该文件。</p>
-<figure>
-<img src="https://pic.islet.space/2022/01/image-20220117105247314.png" alt="image-20220117105247314" /><figcaption aria-hidden="true">image-20220117105247314</figcaption>
-</figure>
-<p>该<code>.bat</code> 文件下所有的 <code>..\..\..\tool\</code> 都要修改成 <code>..\sbee2-sdk-v1.0.0\tool\</code>，如果项目文件夹和SDK文件夹路径有异，则需要适当修改。</p>
-<figure>
-<img src="https://pic.islet.space/2022/01/image-20220117105040885.png" alt="image-20220117105040885" /><figcaption aria-hidden="true">image-20220117105040885</figcaption>
-</figure>
-<p>启用完成之后即可生成对应 <code>app_MP_adk#####</code> 文件</p>
-<figure>
-<img src="https://pic.islet.space/2022/01/image-20220117105414578.png" alt="image-20220117105414578" /><figcaption aria-hidden="true">image-20220117105414578</figcaption>
-</figure>
-<h1 id="hardwares">HARDWARES</h1>
-<h2 id="adapter">ADAPTER</h2>
-<h3 id="specification">SPECIFICATION</h3>
-<p>A4芯片，即KA8G2芯片用的转接板需要接入5V电压，LDO会转换电压。</p>
-<p>而PAT9126JA芯片则使用两个3.3V进行接入。</p>
-<h2 id="chip-board">CHIP &amp; BOARD</h2>
-<p>开发测试板为 Realtek RTL8762D EVB KIT。</p>
-<p>型号： RTL8762DW</p>
-<h2 id="sensor---ka8g2">SENSOR - KA8G2</h2>
-<blockquote>
-<p><strong><em>KAG2</em></strong> is a high performance and ultra low power <strong><em>CMOS-processed optical image sensor</em></strong> with <em>integrated digital image process circuits</em>. It is based on an optical navigation technology which measures changes in position by optically acquiring sequential surface images(frames) and mathematically determining the speed, the direction and the magnitude of motion. <strong><em>The displacement delta_X and delta_Y information are available in registers which are accessible through SPI serial interface.</em></strong> A host controller reads and translates the data from the SPI serial interface into RF signals before sending them to the host PC.</p>
-</blockquote>
-<h3 id="specification-1">SPECIFICATION</h3>
-<p><img src="https://pic.islet.space/2022/01/image-20220113150323525.png" alt="image-20220113150323525" style="zoom:50%;" /></p>
-<h3 id="hardware-linking">HARDWARE LINKING</h3>
-<figure>
-<img src="https://pic.islet.space/2022/01/image-20220112172532934.png" alt="image-20220112172532934" /><figcaption aria-hidden="true">image-20220112172532934</figcaption>
-</figure>
-<figure>
-<img src="https://pic.islet.space/2022/01/%E4%BC%81%E4%B8%9A%E5%BE%AE%E4%BF%A1%E6%88%AA%E5%9B%BE_16391255852712.png" alt="企业微信截图_16391255852712" /><figcaption aria-hidden="true">企业微信截图_16391255852712</figcaption>
-</figure>
-<h3 id="chip-initiate">CHIP INITIATE</h3>
-<p>这个芯片启动时，需要对一些寄存器进行写入以初始化。下方为二维数组，<code>sensor_init_regs[][0]</code> 为寄存器地址，<code>sensor_init_regs[][1]</code> 为寄存器需要写入的数据。</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">uint8_t</span> sensor_init_regs[<span class="number">7</span>][<span class="number">2</span>] = &#123;</span><br><span class="line">	&#123;<span class="number">0X09</span>, <span class="number">0XA5</span>&#125;,</span><br><span class="line">	&#123;<span class="number">0X26</span>, <span class="number">0X34</span>&#125;,</span><br><span class="line">	&#123;<span class="number">0X19</span>, <span class="number">0X04</span>&#125;,</span><br><span class="line">	&#123;<span class="number">0X6D</span>, <span class="number">0X39</span>&#125;,</span><br><span class="line">	&#123;<span class="number">0X0D</span>, <span class="number">0X20</span>&#125;,</span><br><span class="line">	&#123;<span class="number">0X0E</span>, <span class="number">0X20</span>&#125;,</span><br><span class="line">	&#123;<span class="number">0X09</span>, <span class="number">0X00</span>&#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<p>初始化时，需要注意以下问题：</p>
-<ol type="1">
-<li>某些主控芯片在使用两线SPI进行数据写入时，会有要求使用 <code>7bit</code> 地址，且 MSB 为 <code>1</code> 。此时需要判断是否需要认为修改地址的 MSB为 <code>1</code> ，例如 Realtek 的 RTL8762DW 芯片就不需要人为修改，人为修改会导致波形异常。而某些芯片需要人为写入MSB。</li>
-<li>在每一次写入寄存器之后，<mark style="font-weight: 900;">强烈建议进行延时</mark>，可以使用 <code>delay(0xFFFF)</code>，（尝试过 <code>0xFF</code> 太短，不能完成初始化写入）。</li>
-</ol>
-<h2 id="sensor---pat9126ja">SENSOR - PAT9126JA</h2>
-<ol type="1">
-<li>需要确定 <code>ID_SEL</code> 引脚的连接情况，是拉高、接地还是悬空。分别对应的 <code>CHIP ID</code> 都是不一样的，可能是<code>0x73</code>  <code>0x75</code>  <code>0x79</code> 三者之一。</li>
-</ol>
-<p>transformer 上的 <code>VCC</code> 为 <code>3.3V</code></p>
-<h3 id="specification-2">SPECIFICATION</h3>
-<p>这个芯片有两种电压要求，默认为高电压版本 <code>3.3V</code> ，可以通过SPI写入寄存器和硬件并线来达到降低至 <code>1.8V</code> 低电压的模式。</p>
-<h3 id="hadware-linking">HADWARE LINKING</h3>
-<figure>
-<img src="https://pic.islet.space/2022/01/OpticalSensorTransfer_I2C.png" alt="OpticalSensorTransfer_I2C" /><figcaption aria-hidden="true">OpticalSensorTransfer_I2C</figcaption>
-</figure>
-<h1 id="sdk-tools">SDK &amp; Tools</h1>
-<p>此处有 2个SDK包 和 3个tool包，分别是：</p>
-<ol type="1">
-<li><a target="_blank" rel="noopener" href="https://storage.islet.space/07_Mixosense/01_Realtek/RTL8762D/SDK/sbee2-sdk-v1.0.0.zip">sbee2-sdk-v1.0.0.zip</a></li>
-<li><a target="_blank" rel="noopener" href="https://storage.islet.space/07_Mixosense/01_Realtek/RTL8762D/SDK/sbee2_wristband_sdk_upperstack_img.zip">sbee2_wristband_sdk_upperstack_img.zip</a></li>
-<li><a target="_blank" rel="noopener" href="https://storage.islet.space/07_Mixosense/01_Realtek/RTL8762D/SDK/MPPackTool_v2.0.5.2.zip">MPPackTool_v2.0.5.2.zip</a></li>
-<li>日志输出软件：<a target="_blank" rel="noopener" href="https://storage.islet.space/07_Mixosense/01_Realtek/RTL8762D/SDK/DebugAnalyzer-v4.0.0.14.zip">DebugAnalyzer-v4.0.0.14.zip</a></li>
-<li>代码烧录软件：<a target="_blank" rel="noopener" href="https://storage.islet.space/07_Mixosense/01_Realtek/RTL8762D/SDK/BeeMPTool_kits_v1.0.5.0.zip">BeeMPTool_kits_v1.0.5.0.zip</a></li>
-</ol>
-<h1 id="build-flash-log">BUILD / FLASH / LOG</h1>
-<h2 id="build">BUILD</h2>
-<p>点击 <code>build</code> 按钮即可进行代码构建。</p>
-<figure>
-<img src="https://pic.islet.space/2022/01/image-20220113090856565.png" alt="image-20220113090856565" /><figcaption aria-hidden="true">image-20220113090856565</figcaption>
-</figure>
-<p><code>build</code> 完毕之后可以看到下方的成功提示 <code>0 Error(s), 0 Warning(s)</code>。</p>
-<figure>
-<img src="https://pic.islet.space/2022/01/image-20220113091008941.png" alt="image-20220113091008941" /><figcaption aria-hidden="true">image-20220113091008941</figcaption>
-</figure>
-<h2 id="flash">FLASH</h2>
-<p>FLAHS需要经过 configuration 、 detect 和 download 三步</p>
-<h3 id="configuration">configuration</h3>
-<p>根据《RTL8762D SDK User Guide CN》文件，RTL8762D 的 EVB KIT 是可以支持 JLINK 的（如下图所示）。</p>
-<p><img src="https://pic.islet.space/2022/01/image-20220113095321215.png" alt="image-20220113095321215" style="zoom:50%;" /></p>
-<p>但这里并未使用 JLINK，而是使用 Realtek 专门的工具 <code>BeeMPTool_kits</code>， 通过 <code>UART</code> 进行烧录。</p>
-<figure>
-<img src="https://pic.islet.space/2022/01/image-20220113095804076.png" alt="image-20220113095804076" /><figcaption aria-hidden="true">image-20220113095804076</figcaption>
-</figure>
-<p>打开 <code>MPTool.exe</code> ，并选中对应的芯片型号 <code>RTL8762D</code> ：</p>
-<figure>
-<img src="https://pic.islet.space/2022/01/image-20220113095854784.png" alt="image-20220113095854784" /><figcaption aria-hidden="true">image-20220113095854784</figcaption>
-</figure>
-<p>在这里选择 <code>调试</code> 模式进行烧录</p>
-<figure>
-<img src="https://pic.islet.space/2022/01/image-20220113095949881.png" alt="image-20220113095949881" /><figcaption aria-hidden="true">image-20220113095949881</figcaption>
-</figure>
-<p>在 <code>Config Set</code> 中选择 <code>Confirm</code> ，不需要修改什么东西。</p>
-<p><img src="https://pic.islet.space/2022/01/image-20220113100100098.png" alt="image-20220113100100098" style="zoom:50%;" /></p>
-<p>此处需要设置 Flash 地址映射文件 <code>flash map.ini</code> 。</p>
-<figure>
-<img src="https://pic.islet.space/2022/01/image-20220113100324900.png" alt="image-20220113100324900" /><figcaption aria-hidden="true">image-20220113100324900</figcaption>
-</figure>
-<figure>
-<img src="https://pic.islet.space/2022/01/image-20220113101953154.png" alt="image-20220113101953154" /><figcaption aria-hidden="true">image-20220113101953154</figcaption>
-</figure>
-<p>下方为 《RTL8762D SDK User Guide CN》文件中，9.1章节对五个images文件进行了描述。</p>
-<p><img src="https://pic.islet.space/2022/01/image-20220113102036834.png" alt="image-20220113102036834" style="zoom:67%;" /></p>
-<table>
-<colgroup>
-<col style="width: 22%" />
-<col style="width: 32%" />
-<col style="width: 45%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th>FILE TYPE</th>
-<th>DESCRIPTION</th>
-<th>FILE PATH</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>System Config File</td>
-<td>- 来自 <code>BeeMPTool_kits</code></td>
-<td><code>\BeeMPTool_kits_v1.0.5.0\BeeMPTool\ConfigFile\</code></td>
-</tr>
-<tr class="even">
-<td>Bank0 OTA Header File</td>
-<td>- 来自 <code>sbee2_wristband_sdk_upperstack_img</code></td>
-<td><code>\sbee2_wristband_sdk_upperstack_img\src\app\wristband\firmware\</code></td>
-</tr>
-<tr class="odd">
-<td>Bank0 Secure Boot Loader Image</td>
-<td>- 来自 <code>sbee2_wristband_sdk_upperstack_img</code></td>
-<td><code>\sbee2_wristband_sdk_upperstack_img\src\app\wristband\firmware\</code></td>
-</tr>
-<tr class="even">
-<td>Bank0 ROM Patch Image</td>
-<td>- 来自 <code>sbee2_wristband_sdk_upperstack_img</code></td>
-<td><code>\sbee2_wristband_sdk_upperstack_img\src\app\wristband\firmware\</code></td>
-</tr>
-<tr class="odd">
-<td>Bank0 APP Image</td>
-<td>- 来自 <code>sbee2-sdk-v1.0.0</code></td>
-<td><code>sbee2-sdk-v1.0.0\board\evb\io_sample\SPI3WIRE\spi3wire_polling\bin</code></td>
-</tr>
-</tbody>
-</table>
-<h4 id="关于app-image文件选择">关于app image文件选择</h4>
-<p>在Build完成后，会生成三个 <code>.bin</code> 文件，如果选择错误，会提示 <code>MD5 check error!Image type doesn't match IC type.</code> ，选择正确的话会提示 <code>File check OK</code> 。</p>
-<figure>
-<img src="https://pic.islet.space/2022/01/image-20220113111301561.png" alt="image-20220113111301561" /><figcaption aria-hidden="true">image-20220113111301561</figcaption>
-</figure>
-<h3 id="detect">detect</h3>
-<p>detect 的时候需要注意：</p>
-<ol type="1">
-<li>将 EVB kit上的 <code>J15</code> LOG口接地，否则会检测失败</li>
-<li>如果出现 <code>Failed</code> 字样，则按一下 EVB KIT 上的红色的 <code>RESET</code> 按钮进行复位后再尝试。</li>
-</ol>
-<figure>
-<img src="https://pic.islet.space/2022/01/image-20220113111054035.png" alt="image-20220113111054035" /><figcaption aria-hidden="true">image-20220113111054035</figcaption>
-</figure>
-<figure>
-<img src="https://pic.islet.space/2022/01/image-20220113103853161.png" alt="image-20220113103853161" /><figcaption aria-hidden="true">image-20220113103853161</figcaption>
-</figure>
-<h3 id="download">download</h3>
-<p>最后选择 <code>download</code> 下载即可。</p>
-<figure>
-<img src="https://pic.islet.space/2022/01/image-20220113104047601.png" alt="image-20220113104047601" /><figcaption aria-hidden="true">image-20220113104047601</figcaption>
-</figure>
-<h2 id="upperstack-flash">UPPERSTACK FLASH</h2>
-<p>自带的 <code>\sbee2-sdk-v1.0.0\doc\</code> 路径下的教程是，都是有 <code>Bank0 Upperstack Image</code> 需要烧录的。</p>
-<figure>
-<img src="https://pic.islet.space/2022/01/image-20220120140307997.png" alt="image-20220120140307997" /><figcaption aria-hidden="true">image-20220120140307997</figcaption>
-</figure>
-<p>步骤如下：</p>
-<ol type="1">
-<li><p>使用 <code>\sbee2_wristband_sdk_upperstack_img\src\app\wristband\firmware\upperstack_img</code> 路径下的 <code>.ini</code> 文件作为 layout 文件。（而之前使用的<code>flash map.ini</code> 地址为 <code>\sbee2_wristband_sdk_upperstack_img\src\app\wristband\firmware\</code>）</p></li>
-<li><p>指定 <code>\sbee2_wristband_sdk_upperstack_img\src\app\wristband\firmware\upperstack_img</code> 路径下的 <code>.bin</code> 文件作为 Upperstack Image 文件。</p></li>
-<li><p>将 <code>\sbee2_wristband_sdk_upperstack_img\board\evb_stack_img\wristband\flash_map.h</code> 文件作为项目工程里的唯一内存映射文件依赖。<code>flash_map.h</code> 被放在 <code>mem_config.h</code> 头文件下，间接被 <code>syetem_rtl876x.h</code> 引用。</p></li>
-</ol>
-<h2 id="log">LOG</h2>
-<p>RTL8762D 的 EVB KIT 不支持 JTAG 方式进行观察，（听说是）通信过程容易被打断。</p>
-<p>这里使用 <code>UART</code> 和 EVB KIT 上的 <code>J15</code> 口来观察 LOG数据。</p>
-<h3 id="log软件">LOG软件</h3>
-<p>使用专用工具 <code>DebugAnalyzer</code> 进行日志输出。</p>
-<ol type="1">
-<li>选择合适的串口，即使用 <code>FT232</code> 的UART口，将该芯片口的 <code>RX</code> 连接至 <code>RTL8762D</code> 板子上的 <code>J15</code> 口。并在电脑中选中对应的 <code>FT232</code> 设备。</li>
-</ol>
-<figure>
-<img src="https://pic.islet.space/2022/01/image-20220113093030488.png" alt="image-20220113093030488" /><figcaption aria-hidden="true">image-20220113093030488</figcaption>
-</figure>
-<ol start="2" type="1">
-<li>需要设置 <code>App Trace File</code> 。</li>
-</ol>
-<figure>
-<img src="https://pic.islet.space/2022/01/image-20220113093723962.png" alt="image-20220113093723962" /><figcaption aria-hidden="true">image-20220113093723962</figcaption>
-</figure>
-<ol start="3" type="1">
-<li>观察日志输出</li>
-</ol>
-<figure>
-<img src="https://pic.islet.space/2022/01/image-20220113104331739.png" alt="image-20220113104331739" /><figcaption aria-hidden="true">image-20220113104331739</figcaption>
-</figure>
-<h1 id="com-setting">COM SETTING</h1>
-<h2 id="uart-setting">UART SETTING</h2>
-<figure>
-<img src="https://pic.islet.space/2022/01/image-20220113111953878.png" alt="image-20220113111953878" /><figcaption aria-hidden="true">image-20220113111953878</figcaption>
-</figure>
-<h1 id="peripheral">PERIPHERAL</h1>
-<h1 id="wired-spi">3-WIRED SPI</h1>
-<p>以下是主控板 RTL8762D 的SDK对3线SPI的相关设置结构体。</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    <span class="keyword">uint32_t</span> SPI3WIRE_SysClock;     <span class="comment">/*!&lt; Specifies system clock */</span></span><br><span class="line">    <span class="keyword">uint32_t</span> SPI3WIRE_Speed;        <span class="comment">/*!&lt; Specifies SPI clock. */</span></span><br><span class="line">    <span class="keyword">uint32_t</span> SPI3WIRE_Mode;         <span class="comment">/*!&lt; Specifies SPI operation mode.</span></span><br><span class="line"><span class="comment">                                This parameter can be a value of @ref THREE_WIRE_SPI_mode */</span></span><br><span class="line">    <span class="keyword">uint32_t</span> SPI3WIRE_ReadDelay;    <span class="comment">/*!&lt; Specifies the delay time from the end of address phase to the start of read data phase.</span></span><br><span class="line"><span class="comment">                                    This parameter can be a value of 0x0 to 0x1f, delay time = (SPI3WIRE_ReadDelay+1)/(2*SPI3WIRE_Speed) */</span></span><br><span class="line">    <span class="keyword">uint32_t</span> SPI3WIRE_OutputDelay;  <span class="comment">/*!&lt; Specifies SPI output delay 1T or not.</span></span><br><span class="line"><span class="comment">                                 This parameter can be a value of @ref THREE_WIRE_SPI_OE_delay_config */</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">uint32_t</span> SPI3WIRE_ExtMode;      <span class="comment">/*!&lt; Specifies extended timing window for SPI output enable = 0. */</span></span><br><span class="line">&#125; SPI3WIRE_InitTypeDef;</span><br></pre></td></tr></table></figure>
-<h2 id="writing-delay">WRITING-DELAY</h2>
-<p><span class="math display">\[
-1s = 1^3ms = 1^6us = 1^9ns\\
-1Hz = 1^{-3}KHz = 1^{-6}MHz = 1^{-9}GHz
-\]</span></p>
-<p>在3线SPI的数据线读取过程中，在前一段地址帧结束且尚未开始读取数据前，会有一段延时。由 <code>spiReadDelay</code> 和 <code>spiWireSpeed</code> 两个参数控制。 <span class="math display">\[
-DelayTime = (spiReadDelay +1) / (2* spiWireSpeed)
-\tag{延时计算公式}
-\]</span> 例如， 当 <code>spiWireSpeed = 8e5</code> 时， 设置 <code>spiReadDelay = 0x03</code> ，此时 可以在中间延时 <code>2.5us</code> 。</p>
-<h2 id="clock_freq">CLOCK_FREQ</h2>
-<p>将RTL8762D的SPI通信时钟频率从 <code>2E7</code> 更改为 <code>1E6</code> 后可以短时间正常通信，但是稍微过一段时间就出现了不稳定，度数全为 <code>0</code> ，且复位后读取的 <code>chipID</code> 也为 <code>0x00, 0x00</code> 。</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// the actual frequency of spi is set by `SPI3_WIRE_SysClock`</span></span><br><span class="line"><span class="comment">// `1E6` means 1MHz, and `2E7` means 20MHz.</span></span><br><span class="line">SPI3WIRE_InitStruct.SPI3WIRE_SysClock       = <span class="number">1E6</span>;</span><br></pre></td></tr></table></figure>
-<figure>
-<img src="https://pic.islet.space/2022/01/image-20220119152741283.png" alt="image-20220119152741283" /><figcaption aria-hidden="true">image-20220119152741283</figcaption>
-</figure>
-<h2 id="timing">TIMING</h2>
-<p><span class="math display">\[
-Sysclk = 1e7 \\
-wirespeek = 8e5
-\]</span></p>
-<h1 id="wired-spi-1">2-WIRED SPI</h1>
-<blockquote>
-<p>To recover the correct communication of SPI, the host controller can de-assert the SCLK for at least tRESYNC (1us min), and then keep SCLK asserted for a certain time interval tWDT (1.7ms, min) as shown in below Figure . to force the SPI control circuits of the sensor to reset.</p>
-</blockquote>
-<figure>
-<img src="https://pic.islet.space/2022/01/image-20220120154724619.png" alt="image-20220120154724619" /><figcaption aria-hidden="true">image-20220120154724619</figcaption>
-</figure>
-<h1 id="debug-records">DEBUG RECORDS</h1>
-<figure>
-<img src="https://pic.islet.space/2022/01/image-20220112163300158.png" alt="image-20220112163300158" /><figcaption aria-hidden="true">image-20220112163300158</figcaption>
-</figure>
-<p>0x05 // 0000 0101</p>
-<p>// 1000 0101</p>
-<h2 id="delta_x-delta_y-unread">DELTA_X &amp; DELTA_Y UNREAD</h2>
-<p><code>Motion</code>  <code>DYOVF</code>  <code>DXOVF</code> 并未读出，未检测到移动。</p>
-<figure>
-<img src="https://pic.islet.space/2022/01/image-20220114110802052.png" alt="image-20220114110802052" /><figcaption aria-hidden="true">image-20220114110802052</figcaption>
-</figure>
-<p><code>Operation_Mode = 0xB8, cofiguration = 0x17</code> 均为默认</p>
-<figure>
-<img src="https://pic.islet.space/2022/01/image-20220114111325286.png" alt="image-20220114111325286" /><figcaption aria-hidden="true">image-20220114111325286</figcaption>
-</figure>
-<figure>
-<img src="https://pic.islet.space/2022/01/image-20220114111114776.png" alt="image-20220114111114776" /><figcaption aria-hidden="true">image-20220114111114776</figcaption>
-</figure>
-<p><code>0xB8</code> 使 设备处于睡眠模式，<code>configuration = 0x17</code> 使设备未处于 <code>sleep3</code> 且 <code>powerDown</code> 为正常模式，即未断电。</p>
-<p>所以需要修改 <code>Operation_Mode</code> 为 <code>0x01</code> 。</p>
-<p>在设置了下方的语句之后，LOG记录传送回来的 <code>OperationMode</code> 对应的数据为 <code>0xFC</code> 或 <code>0xB8</code> （ <code>1111 1100</code> 和 <code>1011 1000</code>） 。</p>
-<p>默认情况下 <code>OperationMode</code> 为 <code>0xB8</code> 即 <code>1011 1000</code> 。</p>
-<p>异常情况下 <code>OperationMode</code> 为 <code>0xFC</code> 即 <code>1111 1100</code> 。</p>
-<p>即第 <code>2</code> 位和 第 <code>6</code> 位会变，查数据手册，<mark>只有第 <code>2</code> 位（<code>Slp2mu_Enh</code>）有影响，该位控制芯片强制进入 <code>睡眠2</code> 模式。</mark></p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">spi3wire_writebyte(REG_KA8G2_OPERATION_MODE, KA8G2_OM_RUN);  <span class="comment">// edited by liew in 20211114</span></span><br></pre></td></tr></table></figure>
-<figure>
-<img src="https://pic.islet.space/2022/01/image-20220114135400211.png" alt="image-20220114135400211" /><figcaption aria-hidden="true">image-20220114135400211</figcaption>
-</figure>
-<figure>
-<img src="https://pic.islet.space/2022/01/image-20220114135647079.png" alt="image-20220114135647079" /><figcaption aria-hidden="true">image-20220114135647079</figcaption>
-</figure>
-<p>从《KA8G2 optical mouse sensor》中的 <strong>MOTION Pin Function</strong> 可以看出，<code>Motion</code> 寄存器即运动检测标志相关寄存器。</p>
-<p><img src="https://pic.islet.space/2022/01/image-20220114142319440.png" alt="image-20220114142319440" style="zoom:50%;" /></p>
-<h2 id="主控板io口数据异常">主控板IO口数据异常</h2>
-<p>下方为利用SDK进行 <strong>读数据</strong> 的相关操作：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span></span>&#123;</span><br><span class="line">    <span class="keyword">extern</span> <span class="keyword">uint32_t</span> random_seed_value;</span><br><span class="line">    srand(random_seed_value);</span><br><span class="line">    spi3wire_demo();</span><br><span class="line">	DBG_DIRECT(<span class="string">&quot;TEST_20220120&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> (<span class="number">1</span>)&#123;</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">uint8_t</span> i = <span class="number">0</span>; i&lt; <span class="number">0xFF</span>; i++)&#123;	</span><br><span class="line">			spi3wire_writebyte(<span class="number">0x7F</span>, i);</span><br><span class="line">			delaySys(<span class="number">0xF</span>);</span><br><span class="line">		&#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>并用逻辑分析仪进行捕获和分析，发现数据异常：</p>
-<figure>
-<img src="https://pic.islet.space/2022/01/image-20220120151632286.png" alt="image-20220120151632286" /><figcaption aria-hidden="true">image-20220120151632286</figcaption>
-</figure>
-<p>经过检查，发现时序解码无误，所有波形的高低和解码结果一致。</p>
-<figure>
-<img src="https://pic.islet.space/2022/01/image-20220120151645002.png" alt="image-20220120151645002" /><figcaption aria-hidden="true">image-20220120151645002</figcaption>
-</figure>
-<p>但是相连的数据之间数据差异较大。</p>
-<figure>
-<img src="https://pic.islet.space/2022/01/image-20220120151638254.png" alt="image-20220120151638254" /><figcaption aria-hidden="true">image-20220120151638254</figcaption>
-</figure>
-<p>查看LOG也发现数据的确有按照预定的逻辑进行循环：</p>
-<figure>
-<img src="https://pic.islet.space/2022/01/20220120.png" alt="20220120" /><figcaption aria-hidden="true">20220120</figcaption>
-</figure>
-<p>但是逻辑分析仪采出来的数据就是异常。</p>
-<p>经过分析，是因为逻辑分析仪的采样率为 <code>1MHz</code> ，与SPI外设的频率 <code>1e6</code> 一致。</p>
-<p>修改了逻辑分析仪的采样率为 <code>2MHz</code> ，提高了1倍，采样出来的逻辑就正常了。</p>
-<figure>
-<img src="https://pic.islet.space/2022/01/image-20220120162227888.png" alt="image-20220120162227888" /><figcaption aria-hidden="true">image-20220120162227888</figcaption>
-</figure>
-<p>但是之前的项目只用了写数据的函数。示波器波形和逻辑分析仪都能正常。</p>
-<p>改了项目主循环中的语句为读数据之后，就出现异常了。</p>
-<h3 id="问题推断">问题推断</h3>
-<p>通过注释部分语句，进行间歇性测试和波形观察。</p>
-<p>发现，spi读取语句 <code>uint8_t spi3wire_readbyte(uint8_t address)</code> 可能是波形不正常的原因。</p>
-<p>硬件查找主控板和底板的引脚问题：</p>
-<ol type="1">
-<li>找到扩展板上的GPIO口对应核心板上的哪个口</li>
-<li>使用示波器探头直接接触对应的GPIO口并查看波形，查看主控板和底板之间是否存在问题。</li>
-</ol>
-<p>发现示波器探头从底板更换至主控板之后，示波器所显示波形并无差异。</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/11/">11</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/12/">12</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 

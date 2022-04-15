@@ -162,7 +162,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">109</span>
+          <span class="site-state-item-count">111</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -173,7 +173,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">202</span>
+        <span class="site-state-item-count">208</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -207,6 +207,474 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://islet.space/2021/08/03/Programming/2021-08-03-Debug%E9%97%AE%E9%A2%98%E6%8E%92%E6%9F%A5%E6%80%9D%E8%B7%AF/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Liewzheng">
+      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coder的孤岛">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/08/03/Programming/2021-08-03-Debug%E9%97%AE%E9%A2%98%E6%8E%92%E6%9F%A5%E6%80%9D%E8%B7%AF/" class="post-title-link" itemprop="url">Debug问题排查思路</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-08-03 11:35:00" itemprop="dateCreated datePublished" datetime="2021-08-03T11:35:00+08:00">2021-08-03</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2021-10-14 23:59:13" itemprop="dateModified" datetime="2021-10-14T23:59:13+08:00">2021-10-14</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Programming/" itemprop="url" rel="index"><span itemprop="name">Programming</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>以下内容适用于嵌入式开发工程师。</p>
+<h1 id="裸机debug">裸机Debug</h1>
+<figure>
+<img src="https://pic.islet.space/2021/09/20210915214751.png" alt="image-20210804172539069" /><figcaption aria-hidden="true">image-20210804172539069</figcaption>
+</figure>
+<p>裸机调试过程中出现问题时，可以从以下几个角度进行考虑，分别是 <strong>电气特性</strong>、<strong>软件设置</strong> 、 <strong>代码设置</strong> 和 <strong>项目设置</strong>。</p>
+<h2 id="电气特性">电气特性</h2>
+<p>排查电气特性的方法，主要是使用 <strong>万用表</strong>、<strong>逻辑分析仪</strong>、<strong>示波器</strong> 等可以捕捉电信号的设备进行直接的观察。</p>
+<p>例如使用万用表、示波器来检查电信号的电压、电流是否在正常工作范围。</p>
+<h2 id="软件设置">软件设置</h2>
+<p>虽然软件设置和代码设置的命名方式相近，但是这里的软件设置更多强调的是系统级、寄存器级、驱动级的基础设置，而非算法级、代码级、逻辑级的更高一级设置。</p>
+<p>软件设置中，直观可见的是所有可能需要检查的问题点，都是可以通过查阅技术参考手册中的相关寄存器设置来检查是否设置正确的，包括中断、内存、时钟、外设等各项涉及到寄存器级别的内容。</p>
+<h2 id="代码设置">代码设置</h2>
+<p>代码设置，强调的是算法级、代码级 或 逻辑级 的软件编写或设置。</p>
+<p>需要检查的更多是对应 芯片 及其 板载环境 、工作系统 之间的关系，例如代码里面有没有导致死循环、或者多线程之间的资源锁死、内存溢出等情况。</p>
+<h2 id="项目设置">项目设置</h2>
+<h3 id="调试文件">调试文件</h3>
+<h4 id="调试协议">调试协议</h4>
+<h4 id="寻址文件">寻址文件</h4>
+<p>但看调试文件，同样是f28004x系列芯片，通用的寻址文件就多达十几种。</p>
+<figure>
+<img src="https://pic.islet.space/2021/09/image-20210804172803808.png" alt="image-20210804172803808" /><figcaption aria-hidden="true">image-20210804172803808</figcaption>
+</figure>
+<p>一般最高型号的芯片还有额外的 <code>.cmd</code> 文件，如：</p>
+<figure>
+<img src="https://pic.islet.space/2021/09/image-20210804172915025.png" alt="image-20210804172915025" /><figcaption aria-hidden="true">image-20210804172915025</figcaption>
+</figure>
+<p>此时就需要仔细挑选对应的寻址文件，避免多个寻址文件载入导致寻址空间重名冲突。</p>
+<h2 id="案例">案例</h2>
+<h3 id="adc中断未进入bug">ADC中断未进入BUG</h3>
+<h4 id="情况1组中断未打开">情况1——组中断未打开</h4>
+<p>ADC模块有检测到信号（下图<code>ADCRESULT0</code>） ，转换电容将电压转换成数值，但是没有触发中断，进而中断函数没有被执行。</p>
+<figure>
+<img src="https://pic.islet.space/2021/08/image-20210810093022182.png" alt="image-20210810093022182" /><figcaption aria-hidden="true">image-20210810093022182</figcaption>
+</figure>
+<p>仔细检查对应的ADC中断标志寄存器，整理思路：SOC可以正常收到EPWM6的触发源进而正常地对电压进行转换，然后将数值存到对应寄存器中。也就是说，EOC也有正常工作，能够生成脉冲中断。</p>
+<figure>
+<img src="https://pic.islet.space/2021/08/image-20210818100405137.png" alt="image-20210818100405137" /><figcaption aria-hidden="true">image-20210818100405137</figcaption>
+</figure>
+<p>对照着《TRM》中的说明文档再阅读一遍：</p>
+<figure>
+<img src="https://pic.islet.space/2021/08/image-20210818100624266.png" alt="image-20210818100624266" /><figcaption aria-hidden="true">image-20210818100624266</figcaption>
+</figure>
+<p>接着再对应检查一下与中断相关的溢出标志寄存器，发现的确有中断溢出了。</p>
+<figure>
+<img src="https://pic.islet.space/2021/08/image-20210818100710508.png" alt="image-20210818100710508" /><figcaption aria-hidden="true">image-20210818100710508</figcaption>
+</figure>
+<p>在ISR中断服务程序中写入一个全局调试变量，用于观察是否进入中断服务程序，可以知道其并未进入中断服务程序。</p>
+<figure>
+<img src="https://pic.islet.space/2021/08/image-20210818101346665.png" alt="image-20210818101346665" /><figcaption aria-hidden="true">image-20210818101346665</figcaption>
+</figure>
+<figure>
+<img src="https://pic.islet.space/2021/08/image-20210818101314520.png" alt="image-20210818101314520" /><figcaption aria-hidden="true">image-20210818101314520</figcaption>
+</figure>
+<p>最后对比检查样例代码中的main函数对ePIE寄存器的控制，发现少了一行对PIE控制寄存器的操作，补上~</p>
+<figure>
+<img src="https://pic.islet.space/2021/08/image-20210818101749256.png" alt="image-20210818101749256" /><figcaption aria-hidden="true">image-20210818101749256</figcaption>
+</figure>
+<p>成功进入中断：</p>
+<figure>
+<img src="https://pic.islet.space/2021/08/image-20210818101822146.png" alt="image-20210818101822146" /><figcaption aria-hidden="true">image-20210818101822146</figcaption>
+</figure>
+<p><strong>总结</strong></p>
+<ul>
+<li>此处很重要的是要仔细研读《TRM》文件，将文档内的中断流程进行一一对照校验检查</li>
+<li>理解玩系统框图后，按照信号进入的顺序对涉及到的寄存器依次进行检查，逐个排查之后，再对其他可能会出现问题的地方进行DEBUG代码编写。</li>
+<li>如果没有参照手册，就得参照样例文件逐行检查代码</li>
+</ul>
+<h3 id="开启adc-c模块之后idle函数就不再执行">开启ADC C模块之后IDLE函数就不再执行</h3>
+<h4 id="情况1中断函数不要处理大量数据计算">情况1——中断函数不要处理大量数据计算</h4>
+<p>IDLE函数是写在 <code>main()</code> 函数中，最后面的位置的，以 <code>while(1)</code> 语句进行包裹着的永远循环的语句。</p>
+<p>在 <code>main()</code> 函数中，一般会对整个系统、外设、内存、中断等进行初始化和配置，一旦所有工作部件跑起来之后，需要CPU进行数据处理时，就会暂停进入IDLE函数，转而去处理更为紧急的事情，例如进行浮点数计算（如果没有开启对应的FPU的话），此时IDLE函数就会过很长一段时间（时间不定，依据实时处理情况而定）才执行一次。</p>
+<p>例如下方所示，一旦开启了对应的中断处理函数中的电压、温度、阻值计算，需要处理器实时且大量的计算的话，就会造成CPU短时/长时荷载较高，无法进入IDLE函数，原本在IDLE函数中设置为1秒闪烁一次的LED灯，过了十几二十秒才关闭/打开。</p>
+<p>一旦将其注释，LED灯的闪烁速度又得到了恢复。</p>
+<p>也可以在中断向量表和处理程序处进行注释以关闭中断处理，也可以看到LED等闪烁正常。</p>
+<figure>
+<img src="https://pic.islet.space/2021/08/image-20210824190557672.png" alt="image-20210824190557672" /><figcaption aria-hidden="true">image-20210824190557672</figcaption>
+</figure>
+<h3 id="adc读值转换失败">ADC读值/转换失败</h3>
+<h4 id="情况1adc触发源更改">情况1——ADC触发源更改</h4>
+<p><strong>新增了功能</strong>：由主循环检测GPIO3上的引脚是否导通，导通则开启ePWM的时钟，否则不开启，开关检测代码如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">sw1WrapFunc</span><span class="params">(<span class="keyword">void</span>)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(GpioDataRegs.GPADAT.bit.GPIO3 == HIGH_LEVEL)&#123;  <span class="comment">//是否为高电平</span></span><br><span class="line">        <span class="keyword">if</span>(CpuSysRegs.PCLKCR2.bit.EPWM1 == ON) <span class="keyword">return</span>;</span><br><span class="line">        <span class="keyword">else</span> &#123;</span><br><span class="line">            EALLOW;</span><br><span class="line">            CpuSysRegs.PCLKCR2.bit.EPWM1 = ON;  <span class="comment">//高电平且未开启则开启</span></span><br><span class="line">            EDIS;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span>(GpioDataRegs.GPADAT.bit.GPIO3 == LOW_LEVEL)&#123;  <span class="comment">//是否为低电平</span></span><br><span class="line">        <span class="keyword">if</span>(CpuSysRegs.PCLKCR2.bit.EPWM1 == OFF) <span class="keyword">return</span>;</span><br><span class="line">        <span class="keyword">else</span> &#123;</span><br><span class="line">            EALLOW;</span><br><span class="line">            CpuSysRegs.PCLKCR2.bit.EPWM1 = OFF;  <span class="comment">//低电平且已开启则关闭</span></span><br><span class="line">            EDIS;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在增加了新功能之后，发现ADC突然不工作了，每次ePWM一关闭，ADC也跟着不工作，一打开ePWM，ADC又开始工作了。</p>
+<figure>
+<img src="https://pic.islet.space/2021/09/image-20210907134639238.png" alt="image-20210907134639238" /><figcaption aria-hidden="true">image-20210907134639238</figcaption>
+</figure>
+<figure>
+<img src="https://pic.islet.space/2021/09/image-20210907134734391.png" alt="image-20210907134734391" /><figcaption aria-hidden="true">image-20210907134734391</figcaption>
+</figure>
+<p>重新整理思路，想起来ADC工作的配置中，唯一一项跟PWM相关的就是其触发源。</p>
+<figure>
+<img src="https://pic.islet.space/2021/09/image-20210907135154333.png" alt="image-20210907135154333" /><figcaption aria-hidden="true">image-20210907135154333</figcaption>
+</figure>
+<figure>
+<img src="https://pic.islet.space/2021/09/image-20210907135359661.png" alt="image-20210907135359661" /><figcaption aria-hidden="true">image-20210907135359661</figcaption>
+</figure>
+<figure>
+<img src="https://pic.islet.space/2021/09/image-20210907135436244.png" alt="image-20210907135436244" /><figcaption aria-hidden="true">image-20210907135436244</figcaption>
+</figure>
+<p>修改其触发源为CPU1 Timer0，正常工作：</p>
+<figure>
+<img src="https://pic.islet.space/2021/09/image-20210907135823329.png" alt="image-20210907135823329" /><figcaption aria-hidden="true">image-20210907135823329</figcaption>
+</figure>
+<h4 id="情况2主函数被测试用的死循环卡住">情况2——主函数被测试用的死循环卡住</h4>
+<p>主循环中一定不能再套一个等待状态（或死循环）的语句，否则整个主循环将有可能永远被卡死。</p>
+<p>写完SCI部分函数后，发现ADC温度转换的不工作了，但ADC的中断程序（中断程序对全局变量的写入成功）和中断溢出标志是可以正常处理的，同时写了一个Debug变量放在主循环下的ADC包装函数中，发现数据并未被处理，因此可以判断主程序被卡死。</p>
+<p>解决方法是，将SCI通信发送和接收的功能写到中断程序中，让中断程序来处理。</p>
+<h3 id="ecap外设没有正常工作">ECAP外设没有正常工作</h3>
+<p>首先是注意到该外设对应的GPIO没有正常工作，查看 <code>GpioDataRegs</code> 下的 <code>GPADAT</code> 寄存器，发现GPIO10在其他外设都能正常工作的情况下，该引脚无法动弹（表现为：使用3.3V电源连接GPIO10，没有反映）。</p>
+<figure>
+<img src="https://pic.islet.space/2021/09/image-20210906172346311.png" alt="image-20210906172346311" /><figcaption aria-hidden="true">image-20210906172346311</figcaption>
+</figure>
+<p>然后查看eCAP引脚源代码，初步推断可能是引脚方向设置出错，更改以下源代码中的最后一句以更改引脚信号导通方向。</p>
+<p>源代码如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Init_eCAP_GPIO</span><span class="params">(<span class="keyword">void</span>)</span></span>&#123;</span><br><span class="line">    <span class="comment">//配置输入XBAR10</span></span><br><span class="line">    InputXbarRegs.INPUT10SELECT = <span class="number">0xA</span>; <span class="comment">// 将GPIO10(0xA)与输入XBAR 10进行连接</span></span><br><span class="line"></span><br><span class="line">    GpioCtrlRegs.GPAGMUX1.bit.GPIO10 = <span class="number">0</span>;  <span class="comment">//外设组多路配置</span></span><br><span class="line">    GpioCtrlRegs.GPAMUX1.bit.GPIO10 = <span class="number">3</span>;  <span class="comment">//外设多路配置</span></span><br><span class="line">    GpioCtrlRegs.GPADIR.bit.GPIO10 = <span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>再次测试发现结果正常。</p>
+<figure>
+<img src="https://pic.islet.space/2021/09/image-20210907094432301.png" alt="image-20210907094432301" /><figcaption aria-hidden="true">image-20210907094432301</figcaption>
+</figure>
+<p>修改后代码如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Init_eCAP_GPIO</span><span class="params">(<span class="keyword">void</span>)</span></span>&#123;</span><br><span class="line">    <span class="comment">//配置输入XBAR10</span></span><br><span class="line">    EALLOW;</span><br><span class="line">    InputXbarRegs.INPUT10SELECT = <span class="number">0xA</span>; <span class="comment">// 将GPIO10(0xA)与输入XBAR 10进行连接</span></span><br><span class="line"></span><br><span class="line">    GpioCtrlRegs.GPAGMUX1.bit.GPIO10 = <span class="number">0</span>;  <span class="comment">//外设组多路配置</span></span><br><span class="line">    GpioCtrlRegs.GPAMUX1.bit.GPIO10 = <span class="number">3</span>;  <span class="comment">//外设多路配置</span></span><br><span class="line">    GpioCtrlRegs.GPADIR.bit.GPIO10 = GPIO_SIGNAL_INPUT;  <span class="comment">// INPUT 输入</span></span><br><span class="line">    GpioCtrlRegs.GPAPUD.bit.GPIO10 = GPIO_PULLUP_DISABLE;</span><br><span class="line">    GpioCtrlRegs.GPAQSEL1.bit.GPIO10 = GPIO_SYNCHRONIZE;</span><br><span class="line">    EDIS;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>注意</strong>：因为GPIO9和GPIO10临近，默认情况下GPIO10还是会受到附近（结构上）其他GPIO电平的影响而拉高，此时即使设置了 <code>GPIO_PULLUP_DISABLE</code> 都没办法置低。同时，GPIO9也会因为GPIO10的电平拉低而拉低。</p>
+<h3 id="ecap引脚配置">ECAP引脚配置</h3>
+<p>从GPIO部分的图8-1、 引脚部分的 表4-6 、X-BAR部分的 图9-1 和 eCAP部分的表19-1 四份内容可以看出，GPIO10 没办法被通过INPUT X-BAR 复用到ECAP上。</p>
+<p>因为表4-6决定了，GPIO10不能复用到INPUT X-BAR 或 OUT-BAR，但可以复用为自己（GPIO10），只需要设置 <code>GPAGMUX.bit.GPIO10 = 0x0; GPAMUX.bit.GPIO10 = 0x0;</code> 即可。</p>
+<figure>
+<img src="https://pic.islet.space/2021/09/image-20210913105909558.png" alt="image-20210913105909558" /><figcaption aria-hidden="true">image-20210913105909558</figcaption>
+</figure>
+<figure>
+<img src="https://pic.islet.space/2021/09/image-20210913110038846.png" alt="image-20210913110038846" /><figcaption aria-hidden="true">image-20210913110038846</figcaption>
+</figure>
+<p><img src="https://pic.islet.space/2021/09/image-20210913110545272.png" alt="image-20210913110545272" style="zoom:67%;" /></p>
+<p><img src="https://pic.islet.space/2021/09/image-20210913110506997.png" alt="image-20210913110506997" style="zoom: 67%;" /></p>
+<h3 id="sci引脚导致复位">SCI引脚导致复位</h3>
+<p>SCI配置完毕后，与对应的GPIO引脚无法通信（即无高低电平变化），将逻辑分析仪插入对应的引脚，会导致芯片复位重启。</p>
+<p>原GPIO引脚配置为：一个GPIO为拉高和异步，另一个为拉高和同步。</p>
+<p>将两个GPIO修改为异步配置之后，并未出现复位情况。</p>
+<h3 id="sci-rx数据错误">SCI RX数据错误</h3>
+<p>使用RS485进行发送时，不仅接收会存在错误，发送也会存在错误。</p>
+<figure>
+<img src="https://pic.islet.space/2021/09/image-20210914155055154.png" alt="image-20210914155055154" /><figcaption aria-hidden="true">image-20210914155055154</figcaption>
+</figure>
+<div style="font-weight: 900; font-size: 0.8rem; text-align: center;">
+图 使用XCOM串口助手和GREE DATACONVERTER进行发送和CCS中数组值有异
+</div>
+<figure>
+<img src="https://pic.islet.space/2021/09/image-20210914155215669.png" alt="image-20210914155215669" /><figcaption aria-hidden="true">image-20210914155215669</figcaption>
+</figure>
+<div style="font-weight: 900; font-size: 0.8rem; text-align: center;">
+图 使用GREE DATACONVERTER接收数据时也存在错误-1
+</div>
+<p>在数据量较低且手动点击鼠标进行发送时，仍然会有数据处理错误：</p>
+<figure>
+<img src="https://pic.islet.space/2021/09/image-20210914170117568.png" alt="image-20210914170117568" /><figcaption aria-hidden="true">image-20210914170117568</figcaption>
+</figure>
+<div style="font-weight: 900; font-size: 0.8rem; text-align: center;">
+图 使用GREE DATACONVERTER接收数据时也存在错误-2
+</div>
+<p>同样的代码（中途未复位重启芯片）对比使用CH340芯片进行发送和接收：</p>
+<figure>
+<img src="https://pic.islet.space/2021/09/image-20210914155521881.png" alt="image-20210914155521881" /><figcaption aria-hidden="true">image-20210914155521881</figcaption>
+</figure>
+<div style="font-weight: 900; font-size: 0.8rem; text-align: center;">
+图 使用CH340进行发送和接收时数据无误
+</div>
+<p>SCI未触发中断</p>
+<h1 id="系统debug">系统Debug</h1>
+<h1 id="windowslinuxmac">Windows/Linux/Mac</h1>
+<h2 id="分离式代码的联合编译">分离式代码的联合编译</h2>
+<figure>
+<img src="https://pic.islet.space/2021/10/20211009172229.png" alt="image-20211009172014699" /><figcaption aria-hidden="true">image-20211009172014699</figcaption>
+</figure>
+<p>上图为使用VS Code进行项目编译时报错的情况，在使用 MinGW 的g++ 作为编译器时，一开始使用 <code>main.cpp</code> 作为被编译的文件进行编译运行，成功可用。</p>
+<figure>
+<img src="https://pic.islet.space/2021/10/20211011173023.png" alt="image-20211011150027217" /><figcaption aria-hidden="true">image-20211011150027217</figcaption>
+</figure>
+<p>后期新增了 <code>SerialPort.h</code> 和 <code>SerialPort.cpp</code> ，再次点击编译发现失败。说是查找不到 <code>SerialPort</code> 类下的函数定义相关的报错，并不是因为没有给 <code>SerialPort::SerialPort()</code> 等这些类里的函数进行定义，只是因为定义和声明并不在同一个 <code>.h</code> 文件里面。因为将类定义写在了 <code>.h</code> 文件中，而定义写在了另一个 <code>.cpp</code> 文件中，因此该编程方式称为 <strong>分离式代码</strong>。如果将其书写到同一个 <code>.hpp</code> 文件里，就称为 <strong>非分离式代码</strong>。</p>
+<p>采用的 <strong>分离式</strong> 的代码书写方法，造成了 <code>g++</code> 编译器在只编译 <code>main.cpp</code> 的情况下会报错 <strong>函数未定义</strong> 。</p>
+<h3 id="解决办法">解决办法</h3>
+<p>对分离式的 C++ 代码，需要联合多个 <code>.cpp</code> 文件进行编译，在Linux系统上使用命令行进行编译即可提现 如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">g++ main.cpp SerialPort.cpp -o main --std=c++17</span><br></pre></td></tr></table></figure>
+<p>上面就把 <code>main.cpp</code> 和 <code>SerialPort.cpp</code> 两个代码文件联合在一起进行编译，只生成一个 <code>main</code> 二进制可运行文件。</p>
+<p>类似，只要在Windows上能用同一句编译命令实现多个 <code>.cpp</code> 文件的编译即可，但自己没有找到如何在 VS Code中进行该操作方法。另辟蹊径找到了用Terminal进行搞定，方法如下：</p>
+<ol type="1">
+<li>将 <code>D:\mingw64\bin</code> 加入到 <strong>系统环境变量</strong> 的 <code>Path</code> 变量下：</li>
+</ol>
+<figure>
+<img src="https://pic.islet.space/2021/10/20211011173019.png" alt="image-20211011150836483" /><figcaption aria-hidden="true">image-20211011150836483</figcaption>
+</figure>
+<ol start="2" type="1">
+<li>打开 Terminal 进行跳转到工作目录，或者在工作目录按 <code>shift</code> 同时点击右键菜单里的 <code>在Windows终端中打开</code> 即可。</li>
+</ol>
+<figure>
+<img src="https://pic.islet.space/2021/10/20211011173017.png" alt="image-20211011150800473" /><figcaption aria-hidden="true">image-20211011150800473</figcaption>
+</figure>
+<ol start="3" type="1">
+<li>尝试进行编译，发现就不报这个 <code>undefined reference</code> 的错了。</li>
+</ol>
+<h3 id="总结">总结</h3>
+<p>分离式代码就需要联合多个 <code>.cpp</code> 文件进行编译，不能只编译一个 <code>main.cpp</code>，Windows Terminal 也可以直接操作 <code>g++</code> （只要加了系统变量）进行多文件编译。</p>
+<h2 id="cannot-convert">CANNOT CONVERT</h2>
+<p>以下为 VS Code中的报错：</p>
+<figure>
+<img src="https://pic.islet.space/2021/10/20211009172849.png" alt="image-20211009172830768" /><figcaption aria-hidden="true">image-20211009172830768</figcaption>
+</figure>
+<p>以下为 Terminal g++ 中的报错：</p>
+<figure>
+<img src="https://pic.islet.space/2021/10/20211011173012.png" alt="image-20211011151525322" /><figcaption aria-hidden="true">image-20211011151525322</figcaption>
+</figure>
+<p>cannot convert <code>const wchar_t*</code> to <code>LPCSTR</code> ，即是说，无法将<code>const wchar_t*</code> 类型转换为 <code>LPCSTR</code> 类型。</p>
+<p>LPCSTR，即 <em>long pointer const string</em> , 是Win32和VC++所使用的一种字符串数据类型。定义如下：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> _Null_terminated_ CONST CHAR *LPCSTR, *PCSTR; </span><br></pre></td></tr></table></figure>
+<p><code>LPCSTR</code> 代表了 <code>const char *</code> 类型，它是一个指向以 <code>\0</code> 结尾的 8 bit（单字节）<strong>ANSI字符数组</strong> 的常量指针。</p>
+<p>而 <code>const wchar_t *</code> 类型是一个指向 <code>\0</code> 结尾的 16 bit（双字节）<strong>Unicode字符数组</strong> 的常量指针。</p>
+<p>在VS2013编译器中直接输入的字符串常量（如 <code>“abc”</code> ）默认是以 <code>const char *</code> 的格式（即ANSI编码）储存的，因此会导致类型不匹配的编译错误。</p>
+<h3 id="解决办法-1">解决办法</h3>
+<p>以下办法查询自网络，未实践：</p>
+<ol type="1">
+<li>Visual Studio: 右击“解决方案资源管理器”中的项目，“属性→配置属性→常规→项目默认值→字符集”，默认的选项是“使用多字节字符集”，将它改为“使用Unicode字符集”即可。这样，输入的字符串会默认以 <code>const wchar_t *</code> 格式储存。</li>
+<li>使用 <code>_T</code> 宏，它在 &lt;tchar.h&gt; 中定义，它能够自动识别当前编译器字符串的储存格式并做出相应转换，避免这种类型的编译错误。具体使用方法为：将 <code>“abc”</code> 改为 <code>_T("abc")</code> 。</li>
+</ol>
+<p>以下办法亲自实验可用：</p>
+<ol type="1">
+<li>删除该实参 <code>L"xxxxxx"</code> 前的 <code>L</code> 字符即可，在使用 MinGW 编译器的情况下，如果有该 <code>L</code> 字符，就会一直报错，就算将文本字符集改成 <code>UTF-16 LE/BE</code> ，虽然不会报该 <code>L</code> 字符的错了，但仍会出现其他问题，也是因为字符集搞的鬼。在Linux或Mac下就不会报该错误。</li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://islet.space/2021/07/17/Hardware/Circuit/2021-07-17-%E7%94%B5%E9%9A%94%E7%A6%BB%E5%92%8C%E9%9D%9E%E7%94%B5%E9%9A%94%E7%A6%BB/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Liewzheng">
+      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coder的孤岛">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/07/17/Hardware/Circuit/2021-07-17-%E7%94%B5%E9%9A%94%E7%A6%BB%E5%92%8C%E9%9D%9E%E7%94%B5%E9%9A%94%E7%A6%BB/" class="post-title-link" itemprop="url">电隔离和非电隔离</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2021-07-17 10:40:00 / Modified: 11:42:40" itemprop="dateCreated datePublished" datetime="2021-07-17T10:40:00+08:00">2021-07-17</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Hardware/" itemprop="url" rel="index"><span itemprop="name">Hardware</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>在产品设计时，倘若没有考虑应用环境对电源隔离的要求，产品到了应用时就会出现因设计方案的不当导致的系统不稳定，甚至出现高压损坏后级负载的情况，以及出现危害人身财产安全的情况。因此产品设计是否需要隔离至关重要。</p>
+<h1 id="定义">定义</h1>
+<p><strong>隔离电源</strong>：电源的输入回路和输出回路之间没有直接的电气连接，输入和输出之间是绝缘的高阻态，没有电流回路。</p>
+<p><img src="https://pic.islet.space/2021/07/60935d50373e5-thumb.png" alt="img" style="zoom:67%;" /></p>
+<div style="text-align: center; font-weight: 900;">
+图1 采用变压器的隔离电源
+</div>
+<p><strong>非隔离电源</strong>：输入和输出之间有直接的电流回路，例如，输入和输出之间是共地的。以隔离的反激电路和非隔离的BUCK电路为例。</p>
+<p><img src="https://pic.islet.space/2021/07/60935d4fef66f-thumb.png" alt="img" style="zoom:67%;" /></p>
+<div style="text-align: center; font-weight: 900;">
+图2 非隔离电源
+</div>
+<p><img src="https://pic.islet.space/2021/07/60935d5048313-thumb.png" alt="img" style="zoom:50%;" /></p>
+<h1 id="优缺点对比">优缺点对比</h1>
+<p>由上述概念可知，对于常用的电源拓扑而言，非隔离电源主要有：<strong><em>Buck</em></strong>、<strong><em>Boost</em></strong>、<strong><em>Buck-Boost</em></strong>等。而隔离电源主要有各种带隔离变压器的 <strong><em>反激</em></strong>、<strong><em>正激</em></strong>、<strong><em>半桥</em></strong>、<strong><em>LLC</em></strong> 等拓扑。</p>
+<p>结合常用的隔离与非隔离电源，我们从直观上就可得出它们的一些优缺点，两者的优缺点几乎是相反的。使用隔离或非隔离的电源，需了解实际项目对电源的需求是怎样的。</p>
+<p>隔离和非隔离电源的主要差别在于 隔离模块的可靠性高，但成本高，效率差点。非隔离模块的结构很简单，成本低，效率高，安全性能差。因此，在如下几个场合，建议用隔离电源：</p>
+<ol type="1">
+<li></li>
+</ol>
+<p>总结的表如表1所示，两者的优缺点几乎是相反的。</p>
+<div style="text-align: center; font-weight: 900;">
+表1 隔离电源和非隔离电源的优缺点
+</div>
+<p><img src="https://pic.islet.space/2021/07/60935d504e874-thumb.png" alt="img" style="zoom:80%;" /></p>
+<h1 id="适用场景">适用场景</h1>
+<p>一般场合使用对模块电源隔离电压要求不是很高，但是 <mark> 更高的隔离电压可以保证模块电源具有更小的漏电流，更高的安全性和可靠性，并且 <strong><em>EMC特性</em></strong> 也更好一些</mark>，因此目前业界普遍的隔离电压水平为1500VDC以上。</p>
+<p>了解了隔离与非隔离电源的优缺点，对于一些常用的嵌入式供电，其对应的场景及推荐隔离方案如下：</p>
+<ol type="1">
+<li>系统前级的电源，为提高抗干扰性能，保证可靠性，一般用隔离电源。</li>
+<li>对安全有要求的场合，如需接市电的AC-DC，或医疗用的电源和白色家电，为保证人身的安全，必须用隔离电源，有些场合还必须用加强隔离的电源。</li>
+<li>对于远程工业通信的供电，为有效降低地电势差和导线耦合干扰的影响，为每个通信节点单独供电一般都用隔离电源。</li>
+<li>内部IC或部分电路供电，从性价比和体积出发，优先选用非隔离电源。</li>
+<li>对于采用电池供电，<mark>对续航力要求严苛的场合，采用非隔离供电</mark>。</li>
+</ol>
+<h3 id="隔离电源">隔离电源</h3>
+<ol type="1">
+<li><p>涉及可能触电的场合，如从电网取电，转成低压直流的场合，需用隔离的AC-DC电源；</p></li>
+<li><p>串行通信总线通过RS-232、RS-485和控制器局域网(CAN)等物理网络传送数据，这些相互连接的系统每个都配备有自己的电源，而且各系统之间往往间隔较远，因此，我们通常需要隔离电源进行电气隔离来确保系统的物理安全，且通过隔离 <mark style="font-style: Italic; font-weight: 900;">切断接地回路</mark>，来保护系统免受瞬态高电压冲击，同时减少信号失真；</p></li>
+<li><p>对外的I/O端口，为保证系统的可靠运行，也建议对I/O端口做电源隔离。</p></li>
+</ol>
+<h3 id="非隔离电源">非隔离电源</h3>
+<p>电路板内的IC或部分电路供电，从性价比和体积出发，优先选用非隔离的方案；如MPS的MP150/157/MP174系列buck型非隔离AC-DC，适合于1~5W应用；</p>
+<p>对于工作电压低于36V，采用电池供电，对续航力要求严苛的场合，优先采用非隔离供电，如MPS的MP2451/MPQ2451。</p>
+<h1 id="隔离电源模块选型的注意事项">隔离电源模块选型的注意事项</h1>
+<p>电源的隔离耐压在GB-4943国标中又叫抗电强度，这个GB-4943标准就是我们常说的信息类设备的安全标准，就是为了防止人员受到物理和电气伤害的国家标准，其中包括避免人受到电击伤害、物理伤害、爆炸等伤害。如下图为隔离电源结构图。</p>
+<p><img src="https://pic.islet.space/2021/07/60935d4fe8f0d-thumb.png" alt="img" style="zoom:120%;" /></p>
+<div style="text-align: center; font-weight: 900;">
+图 隔离电源结构
+</div>
+<p>作为模块电源的重要指标，标准中也规定了隔离耐压相关测试方法，简单的测试时一般采用等电位连接测试，连接示意图如下：</p>
+<figure>
+<img src="https://pic.islet.space/2021/07/60935d4fc9c96-thumb.png" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<div style="text-align: center; font-weight: 900;">
+图 隔离耐压测试示意
+</div>
+<h2 id="测试方法">测试方法</h2>
+<ol type="1">
+<li><p>将耐压计的电压设为规定的耐压值，电流设为规定的漏电流值，时间设为规定的测试时间值；</p></li>
+<li><p>操作耐压计开始测试，开始加压，在规定的测试时间内，模块应无击穿，无飞弧现象。</p></li>
+<li><p>注意在测试时焊接电源模块要选取合适的温度，避免反复焊接，损坏电源模块。</p></li>
+<li><p>除此之外还要注意：</p>
+<ol type="1">
+<li>要注意是AC-DC还是DC-DC。</li>
+<li>隔离电源模块的隔离耐压。例如隔离1000V DC 是否满足绝缘要求。</li>
+<li>隔离电源模块是否有进行全面的可靠性测试。电源模块要经过性能测试、容差测试、瞬态条件测试、可靠性测试、EMC电磁兼容测试、高低温测试、极限测试、寿命测试、安规测试等。</li>
+<li>隔离电源模块的生产工厂产线是否规范。电源模块生产线需要通过ISO9001, ISO14001，OHSAS18001等多项国际认证，如下图3所示。</li>
+<li>隔离电源模块是否有应用在工业、汽车等恶劣环境。电源模块不仅仅大量应用与恶劣的工业环境，同时在新能源汽车的BMS管理系统中也游刃有余。</li>
+</ol></li>
+</ol>
+<figure>
+<img src="https://pic.islet.space/2021/07/60935d503580c-thumb.png" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<div style="text-align: center; font-weight: 900;">
+图 ISO认证
+</div>
+<h1 id="总结">总结</h1>
+<p>很多人认为非隔离电源不如隔离电源好，因为隔离电源贵，所以肯定贵的就好。前几年非隔离的稳定性确实没有隔离稳定，但随着研发技术的更新，现如今非隔离已经非常成熟，日渐稳定。说到安全性，其实现在非隔离电源也是很安全的，只要在结构稍微做下改动，对人体还是很安全的，同样的道理，非隔离电源也是可以过很多安规标准，例如:ULTUVSAACE等。</p>
+<p>实际上非隔离电源损坏的根源就是电源AC线两端的浪涌电压所致，也可以这么说，雷击浪涌吧，这种电压是加在电压AC线两端的瞬间高压，有时高达三千伏，但时间很短，能量却极强，在打雷时会发生，或是在同一条AC线上，当一个大的负载断开瞬间，因为电流惯性的原因也会发生，这个电压进入电源，对于非隔离BUCK电路，会瞬间传达到输出，击坏恒流检测环，或是进一步击坏芯片，造成300v直通，而烧掉整条灯管。对于隔离反激电源，会击坏MOS,现象就是保管，芯片，MOS管全烧坏。现在LED驱动电源，在使用过程中坏的，80%以上都是这两种类似现象。而且，小型开关电源，就算是电源适配器，也经常损坏的是这个现象，均是浪涌电压所致，而在LED电源里，表现的更加普遍，这是因为LED的负载特性是特别的怕浪涌电压的。</p>
+<p>如果按照一般的理论来讲，电子电路里，元器件越少，可靠性越高，相应越多的元件的电路板可靠性则越低。实际上非隔离电路的元件是比隔离电路要少的，为什么隔离电路可靠性高。其实说白了，不是什么可靠性，而是 <mark>非隔离电路对于浪涌太敏感，抑制能力差</mark>，隔离电路，因为能量是先进入变压器，然后从变压器再输送到LED负载的。BUCK电路是输入电源一部分直接加在了LED负载上，故前者对浪涌抑制和衰减能力强，所以浪涌来时损坏的机率小而已。实际上，非隔离电源的问题主要是在于浪涌问题，目前这个问题，因为只有LED灯具在大批量应用时，从概率上才能看出其解决的程度，所以很多人没有提出好的防治办法，更多的人则是不知道浪涌电压为何物。LED灯具坏了，很多人也找不到原因，最后只能一句，什么此电源不稳定就了结了，具体哪里不稳定，他不知道。</p>
+<p>非隔离电源的优势一是效率，二是成本。</p>
+<p>非隔离电源适合的场合：首先，是室内的灯具，这种室内用电环境较好，浪涌影响小。第二，使用的场合是高压小电流，低压大电流用非隔离没有意义，因为低压大电流非隔离的效率并不比隔离的高，成本也低不到多少去。第三，电压相对较稳定的环境中使用非隔离电源。当然，如果有办法解决掉抑制浪涌的问题，那么非隔离电源的应用范围将大大拓宽！</p>
+<p>隔离电源因为浪涌的问题，损坏率也不可小觑，一般那种返修回来，击坏保险，芯片，MOS的第一个应该想到是浪涌问题。为了减少损坏率，在设计时就行要考虑到浪涌的因素进去，或是在使用时要告戒用户，尽量避免浪涌发生。（如室内灯具，打雷时暂时先关掉）</p>
+<p>综合所述，使用隔离与非隔离很多时候都是因为浪涌这个问题，而浪涌问题和用电环境是息息相关的，所以很多时候使用隔离电源和非隔离电源不能一刀切，非隔离电源在节能，成本上都是很有优势的，所以要科学的选用非隔离还是隔离作为LED驱动电源。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -4101,288 +4569,8 @@ CMP = (1- Duty)·(TBPRD-DB)
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://islet.space/2021/07/02/Signal/2021-07-02-PCMWAV%E6%A0%BC%E5%BC%8F/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Liewzheng">
-      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Coder的孤岛">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/07/02/Signal/2021-07-02-PCMWAV%E6%A0%BC%E5%BC%8F/" class="post-title-link" itemprop="url">PCM/WAV格式</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-
-    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
-    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2021-07-02 10:10:00" itemprop="dateCreated datePublished" datetime="2021-07-02T10:10:00+08:00">2021-07-02</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-12-10 22:37:12" itemprop="dateModified" datetime="2021-12-10T22:37:12+08:00">2021-12-10</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Signal/" itemprop="url" rel="index"><span itemprop="name">Signal</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/renhui/p/12148330.html">cnblogs.com</a></p>
-<h1 id="名词解析">名词解析</h1>
-<p>PCM(Pulse Code Modulation)也被称为脉码编码调制，PCM中的声音数据没有被压缩，它是由模拟信号经过采样、量化、编码转换成的标准的数字音频数据。采样转换方式参考下图进行了解：</p>
-<figure>
-<img src="https://img2018.cnblogs.com/blog/682616/202001/682616-20200104125147149-1090015063.png" alt="img" /><figcaption aria-hidden="true">img</figcaption>
-</figure>
-<p>音频采样包含以下几大要素：</p>
-<h2 id="采样率">采样率</h2>
-<p>采样率表示音频信号每秒的数字快照数。该速率决定了音频文件的频率范围。采样率越高，数字波形的形状越接近原始模拟波形。低采样率会限制可录制的频率范围，这可导致录音表现原始声音的效果不佳。根据奈奎斯特采样定理，为了重现给定频率，采样率必须至少是该频率的两倍。例如，一般CD唱片的采样率为每秒 44,100 个采样，因此可重现最高为 22,050 Hz 的频率，此频率刚好超过人类的听力极限 20,000 Hz。</p>
-<figure>
-<img src="https://img2018.cnblogs.com/blog/682616/202001/682616-20200104124551841-1606892798.png" alt="img" /><figcaption aria-hidden="true">img</figcaption>
-</figure>
-<p>图中A是低采样率的音频信号，其效果已经将原始声波进行了扭曲，B则是完全重现原始声波的高采样率的音频信号。</p>
-<p>数字音频常用的采样率如下：</p>
-<figure>
-<img src="https://img2018.cnblogs.com/blog/682616/202001/682616-20200104124756569-1015603325.png" alt="img" /><figcaption aria-hidden="true">img</figcaption>
-</figure>
-<h2 id="位深度">位深度</h2>
-<p>位深度决定动态范围。采样声波时，为每个采样指定最接近原始声波振幅的振幅值。较高的位深度可提供更多可能的振幅值，产生更大的动态范围、更低的噪声基准和更高的保真度。</p>
-<figure>
-<img src="https://img2018.cnblogs.com/blog/682616/202001/682616-20200104124916045-1853047547.png" alt="img" /><figcaption aria-hidden="true">img</figcaption>
-</figure>
-<p>位深度越高，提供的动态范围越大。</p>
-<h1 id="pcm">PCM</h1>
-<p>在上面的名词解析中我们应该对PCM有了一定的理解和认识，下面我们将对PCM做更多的讲解。</p>
-<h2 id="pcm音频数据存储方式">PCM音频数据存储方式</h2>
-<p>如果是单声道的文件，采样数据按时间的先后顺序依次存入。如果是单声道的音频文件，采样数据按时间的先后顺序依次存入（也可能采用 LRLRLR 方式存储，只是另一个声道的数据为 0）。</p>
-<p>如果是双声道的话通常按照 LRLRLR 的方式存储，存储的时候还和机器的大小端有关。（关于字节序大小端的相关内容可参考《<a target="_blank" rel="noopener" href="https://www.cnblogs.com/renhui/p/13600572.html">字节序问题之大小端模式讲解</a>》进行了解）</p>
-<p>PCM的存储方式为小端模式，存储Data数据排列如下图所示：</p>
-<figure>
-<img src="https://img2018.cnblogs.com/blog/682616/202001/682616-20200104112313716-290297915.png" alt="img" /><figcaption aria-hidden="true">img</figcaption>
-</figure>
-<h2 id="pcm-音频数据的参数">PCM 音频数据的参数</h2>
-<p>描述 PCM 音频数据的参数的时候有如下描述方式：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">44100HZ 16bit stereo: 每秒钟有 44100 次采样, 采样数据用 16 位（2 字节）记录, 双声道（立体声）</span><br><span class="line">22050HZ 8bit  mono: 每秒钟有 22050 次采样, 采样数据用 8 位（1 字节）记录, 单声道</span><br><span class="line">48000HZ 32bit 51ch: 每秒钟有 48000 次采样, 采样数据用 32 位（4 字节浮点型）记录, 5.1 声道</span><br></pre></td></tr></table></figure>
-<p>44100Hz 指的是采样率，它的意思是每秒取样 44100 次。采样率越大，存储数字音频所占的空间就越大。</p>
-<p>16bit 指的是采样精度，意思是原始模拟信号被采样后，每一个采样点在计算机中用 16 位（两个字节）来表示。采样精度越高越能精细地表示模拟信号的差异。</p>
-<p>Stereo 指的是声道数，也即采样时用到的麦克风的数量，麦克风越多就越能还原真实的采样环境（当然麦克风的放置位置也是有规定的）。</p>
-<h1 id="wav">WAV</h1>
-<p>WAV 是 Microsoft 和 IBM 为 PC 开发的一种声音文件格式，它符合 RIFF（Resource Interchange File Format）文件规范，用于保存 Windows 平台的音频信息资源，被 Windows 平台及其应用程序所广泛支持。WAVE 文件通常只是一个具有单个 “WAVE” 块的 RIFF 文件，该块由两个子块（”fmt” 子数据块和 ”data” 子数据块），它的格式如下图所示：</p>
-<figure>
-<img src="https://img2018.cnblogs.com/blog/682616/202001/682616-20200104131622902-1855086338.png" alt="img" /><figcaption aria-hidden="true">img</figcaption>
-</figure>
-<p><strong>WAV 格式定义</strong></p>
-<p>该格式的实质就是在 PCM 文件的前面加了一个文件头，每个字段的的含义如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">typedef struct &#123;</span><br><span class="line">    char          ChunkID[4]; &#x2F;&#x2F;内容为&quot;RIFF&quot;</span><br><span class="line">    unsigned long ChunkSize;  &#x2F;&#x2F;存储文件的字节数（不包含ChunkID和ChunkSize这8个字节）</span><br><span class="line">    char          Format[4];  &#x2F;&#x2F;内容为&quot;WAVE“</span><br><span class="line">&#125; WAVE_HEADER;</span><br><span class="line"> </span><br><span class="line">typedef struct &#123;</span><br><span class="line">   char           Subchunk1ID[4]; &#x2F;&#x2F;内容为&quot;fmt&quot;</span><br><span class="line">   unsigned long  Subchunk1Size;  &#x2F;&#x2F;存储该子块的字节数（不含前面的Subchunk1ID和Subchunk1Size这8个字节）</span><br><span class="line">   unsigned short AudioFormat;    &#x2F;&#x2F;存储音频文件的编码格式，例如若为PCM则其存储值为1。</span><br><span class="line">   unsigned short NumChannels;    &#x2F;&#x2F;声道数，单声道(Mono)值为1，双声道(Stereo)值为2，等等</span><br><span class="line">   unsigned long  SampleRate;     &#x2F;&#x2F;采样率，如8k，44.1k等</span><br><span class="line">   unsigned long  ByteRate;       &#x2F;&#x2F;每秒存储的bit数，其值 &#x3D; SampleRate * NumChannels * BitsPerSample &#x2F; 8</span><br><span class="line">   unsigned short BlockAlign;     &#x2F;&#x2F;块对齐大小，其值 &#x3D; NumChannels * BitsPerSample &#x2F; 8</span><br><span class="line">   unsigned short BitsPerSample;  &#x2F;&#x2F;每个采样点的bit数，一般为8,16,32等。</span><br><span class="line">&#125; WAVE_FMT;</span><br><span class="line"> </span><br><span class="line">typedef struct &#123;</span><br><span class="line">   char          Subchunk2ID[4]; &#x2F;&#x2F;内容为“data”</span><br><span class="line">   unsigned long Subchunk2Size;  &#x2F;&#x2F;接下来的正式的数据部分的字节数，其值 &#x3D; NumSamples * NumChannels * BitsPerSample &#x2F; 8</span><br><span class="line">&#125; WAVE_DATA;</span><br></pre></td></tr></table></figure>
-<p><strong>WAV 文件头解析</strong></p>
-<p>这里是一个 WAVE 文件的开头 72 字节，字节显示为十六进制数字：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">52 49 46 46 | 24 08 00 00 | 57 41 56 45</span><br><span class="line">66 6d 74 20 | 10 00 00 00 | 01 00 02 00 </span><br><span class="line">22 56 00 00 | 88 58 01 00 | 04 00 10 00</span><br><span class="line">64 61 74 61 | 00 08 00 00 | 00 00 00 00 </span><br><span class="line">24 17 1E F3 | 3C 13 3C 14 | 16 F9 18 F9</span><br><span class="line">34 E7 23 A6 | 3C F2 24 F2 | 11 CE 1A 0D</span><br></pre></td></tr></table></figure>
-<p>字段解析如下图：</p>
-<figure>
-<img src="https://img2018.cnblogs.com/blog/682616/202001/682616-20200104131832991-1533022058.png" alt="img" /><figcaption aria-hidden="true">img</figcaption>
-</figure>
-<h1 id="pcm-wav-开发实践">PCM &amp; WAV 开发实践</h1>
-<h2 id="pcm格式转为wav格式基于c语言">PCM格式转为WAV格式（基于C语言）</h2>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br></pre></td><td class="code"><pre><span class="line">int simplest_pcm16le_to_wave(const char *pcmpath,int channels,int sample_rate,const char *wavepath)</span><br><span class="line">&#123;</span><br><span class="line">    typedef struct WAVE_HEADER&#123;  </span><br><span class="line">        char         fccID[4];        </span><br><span class="line">        unsigned   long    dwSize;            </span><br><span class="line">        char         fccType[4];    </span><br><span class="line">    &#125;WAVE_HEADER;  </span><br><span class="line">    typedef struct WAVE_FMT&#123;  </span><br><span class="line">        char         fccID[4];        </span><br><span class="line">        unsigned   long       dwSize;            </span><br><span class="line">        unsigned   short     wFormatTag;    </span><br><span class="line">        unsigned   short     wChannels;  </span><br><span class="line">        unsigned   long       dwSamplesPerSec;  </span><br><span class="line">        unsigned   long       dwAvgBytesPerSec;  </span><br><span class="line">        unsigned   short     wBlockAlign;  </span><br><span class="line">        unsigned   short     uiBitsPerSample;  </span><br><span class="line">    &#125;WAVE_FMT;  </span><br><span class="line">    typedef struct WAVE_DATA&#123;  </span><br><span class="line">        char       fccID[4];          </span><br><span class="line">        unsigned long dwSize;              </span><br><span class="line">    &#125;WAVE_DATA;  </span><br><span class="line">    if(channels&#x3D;&#x3D;0||sample_rate&#x3D;&#x3D;0)&#123;</span><br><span class="line">    channels &#x3D; 2;</span><br><span class="line">    sample_rate &#x3D; 44100;</span><br><span class="line">    &#125;</span><br><span class="line">    int bits &#x3D; 16;</span><br><span class="line">    WAVE_HEADER   pcmHEADER;  </span><br><span class="line">    WAVE_FMT   pcmFMT;  </span><br><span class="line">    WAVE_DATA   pcmDATA;  </span><br><span class="line"> </span><br><span class="line">    unsigned   short   m_pcmData;</span><br><span class="line">    FILE   *fp,*fpout;  </span><br><span class="line">    fp&#x3D;fopen(pcmpath, &quot;rb&quot;);</span><br><span class="line">    if(fp &#x3D;&#x3D; NULL) &#123;  </span><br><span class="line">        printf(&quot;open pcm file error\n&quot;);</span><br><span class="line">        return -1;  </span><br><span class="line">    &#125;</span><br><span class="line">    fpout&#x3D;fopen(wavepath,   &quot;wb+&quot;);</span><br><span class="line">    if(fpout &#x3D;&#x3D; NULL) &#123;    </span><br><span class="line">        printf(&quot;create wav file error\n&quot;);  </span><br><span class="line">        return -1; </span><br><span class="line">    &#125;        </span><br><span class="line">    &#x2F;&#x2F;WAVE_HEADER</span><br><span class="line">    memcpy(pcmHEADER.fccID,&quot;RIFF&quot;,strlen(&quot;RIFF&quot;));                    </span><br><span class="line">    memcpy(pcmHEADER.fccType,&quot;WAVE&quot;,strlen(&quot;WAVE&quot;));  </span><br><span class="line">    fseek(fpout,sizeof(WAVE_HEADER),1); </span><br><span class="line">    &#x2F;&#x2F;WAVE_FMT</span><br><span class="line">    pcmFMT.dwSamplesPerSec&#x3D;sample_rate;  </span><br><span class="line">    pcmFMT.dwAvgBytesPerSec&#x3D;pcmFMT.dwSamplesPerSec*sizeof(m_pcmData);  </span><br><span class="line">    pcmFMT.uiBitsPerSample&#x3D;bits;</span><br><span class="line">    memcpy(pcmFMT.fccID,&quot;fmt &quot;,strlen(&quot;fmt &quot;));  </span><br><span class="line">    pcmFMT.dwSize&#x3D;16;  </span><br><span class="line">    pcmFMT.wBlockAlign&#x3D;2;  </span><br><span class="line">    pcmFMT.wChannels&#x3D;channels;  </span><br><span class="line">    pcmFMT.wFormatTag&#x3D;1;  </span><br><span class="line"> </span><br><span class="line">    fwrite(&amp;pcmFMT,sizeof(WAVE_FMT),1,fpout); </span><br><span class="line">    &#x2F;&#x2F;WAVE_DATA;</span><br><span class="line">    memcpy(pcmDATA.fccID,&quot;data&quot;,strlen(&quot;data&quot;));  </span><br><span class="line">    pcmDATA.dwSize&#x3D;0;</span><br><span class="line">    fseek(fpout,sizeof(WAVE_DATA),SEEK_CUR);</span><br><span class="line">    fread(&amp;m_pcmData,sizeof(unsigned short),1,fp);</span><br><span class="line">    while(!feof(fp))&#123;  </span><br><span class="line">        pcmDATA.dwSize+&#x3D;2;</span><br><span class="line">        fwrite(&amp;m_pcmData,sizeof(unsigned short),1,fpout);</span><br><span class="line">        fread(&amp;m_pcmData,sizeof(unsigned short),1,fp);</span><br><span class="line">    &#125;  </span><br><span class="line">    pcmHEADER.dwSize&#x3D;44+pcmDATA.dwSize;</span><br><span class="line">    rewind(fpout);</span><br><span class="line">    fwrite(&amp;pcmHEADER,sizeof(WAVE_HEADER),1,fpout);</span><br><span class="line">    fseek(fpout,sizeof(WAVE_FMT),SEEK_CUR);</span><br><span class="line">    fwrite(&amp;pcmDATA,sizeof(WAVE_DATA),1,fpout);</span><br><span class="line">    </span><br><span class="line">    fclose(fp);</span><br><span class="line">    fclose(fpout);</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>注意：函数里声明的数据类型unsigned long在有些C编译器上是64位的，这时候要改成unsigned int才可以，否则wav头有88bytes，标准的是44bytes，改完就正常了，对C还不熟悉的人小小的心得，另外，声道数和采样率也要注意，一般采样率有44100/16000/8000，要确认是哪个，声道是1还是2，这两个参数要设置好才会有正确的转换结果。</p>
-<h2 id="pcm降低某个声道的音量基于c语言">PCM降低某个声道的音量（基于C语言）</h2>
-<p>一般来说 PCM 数据中的波形幅值越大，代表音量越大，对于 PCM 音频数据而言，它的幅值（即该采样点采样值的大小）代表音量的大小。</p>
-<p>如果我们需要降低某个声道的音量，可以通过减小某个声道的数据的值来实现降低某个声道的音量。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">int pcm16le_half_volume_left( char *url ) &#123;</span><br><span class="line">    FILE *fp_in &#x3D; fopen( url, &quot;rb+&quot; );</span><br><span class="line">    FILE *fp_out &#x3D; fopen( &quot;output_half_left.pcm&quot;, &quot;wb+&quot; );</span><br><span class="line">    unsigned char *sample &#x3D; ( unsigned char * )malloc(4); &#x2F;&#x2F; 一次读取一个sample，因为是2声道，所以是4字节 </span><br><span class="line">    while ( !feof( fp_in ) )&#123;</span><br><span class="line">        fread( sample, 1, 4, fp_in );</span><br><span class="line">        short* sample_num &#x3D; ( short* )sample; &#x2F;&#x2F; 转成左右声道两个short数据</span><br><span class="line">        *sample_num &#x3D; *sample_num &#x2F; 2; &#x2F;&#x2F; 左声道数据减半</span><br><span class="line">        fwrite( sample, 1, 2, fp_out ); &#x2F;&#x2F; L</span><br><span class="line">        fwrite( sample + 2, 1, 2, fp_out ); &#x2F;&#x2F; R</span><br><span class="line">    &#125;</span><br><span class="line">    free( sample );</span><br><span class="line">    fclose( fp_in );</span><br><span class="line">    fclose( fp_out );</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>上述代码做的事情是：在读出左声道的 2 Byte 的取样值之后，将其转成了 C 语言中的一个 short 类型的变量。将该数值除以 2 之后写回到了 PCM 文件中。</p>
-<h2 id="分离pcm音频数据左右声道的数据">分离PCM音频数据左右声道的数据</h2>
-<p>因为PCM音频数据是按照LRLRLR的方式来存储左右声道的音频数据的，所以我们可以通过将它们交叉的读出来的方式来分离左右声道的数据：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">int simplest_pcm16le_split(char *url) &#123;</span><br><span class="line">    FILE *fp&#x3D;fopen(url,&quot;rb+&quot;);</span><br><span class="line">    FILE *fp1&#x3D;fopen(&quot;output_l.pcm&quot;,&quot;wb+&quot;);</span><br><span class="line">    FILE *fp2&#x3D;fopen(&quot;output_r.pcm&quot;,&quot;wb+&quot;);</span><br><span class="line">    unsigned char *sample&#x3D;(unsigned char *)malloc(4);</span><br><span class="line">    while(!feof(fp))&#123;</span><br><span class="line">        fread(sample,1,4,fp);</span><br><span class="line">        &#x2F;&#x2F;L</span><br><span class="line">        fwrite(sample,1,2,fp1);</span><br><span class="line">        &#x2F;&#x2F;R</span><br><span class="line">        fwrite(sample+2,1,2,fp2);</span><br><span class="line">    &#125;</span><br><span class="line">    free(sample);</span><br><span class="line">    fclose(fp);</span><br><span class="line">    fclose(fp1);</span><br><span class="line">    fclose(fp2);</span><br><span class="line">    return 0;</span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
-<h2 id="从pcm16le单声道音频采样数据中截取一部分数据">从PCM16LE单声道音频采样数据中截取一部分数据</h2>
-<p>本程序中的函数可以从PCM16LE单声道数据中截取一段数据，并输出截取数据的样值。函数的代码如下所示：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;**</span><br><span class="line"> * Cut a 16LE PCM single channel file.</span><br><span class="line"> * @param url        Location of PCM file.</span><br><span class="line"> * @param start_num  start point</span><br><span class="line"> * @param dur_num    how much point to cut</span><br><span class="line"> *&#x2F;</span><br><span class="line">int simplest_pcm16le_cut_singlechannel(char *url,int start_num,int dur_num)&#123;</span><br><span class="line">    FILE *fp&#x3D;fopen(url,&quot;rb+&quot;);</span><br><span class="line">    FILE *fp1&#x3D;fopen(&quot;output_cut.pcm&quot;,&quot;wb+&quot;);</span><br><span class="line">    FILE *fp_stat&#x3D;fopen(&quot;output_cut.txt&quot;,&quot;wb+&quot;);</span><br><span class="line"> </span><br><span class="line">    unsigned char *sample&#x3D;(unsigned char *)malloc(2);</span><br><span class="line"> </span><br><span class="line">    int cnt&#x3D;0;</span><br><span class="line">    while(!feof(fp))&#123;</span><br><span class="line">        fread(sample,1,2,fp);</span><br><span class="line">        if(cnt&gt;start_num&amp;&amp;cnt&lt;&#x3D;(start_num+dur_num))&#123;</span><br><span class="line">            fwrite(sample,1,2,fp1);</span><br><span class="line"> </span><br><span class="line">            short samplenum&#x3D;sample[1];</span><br><span class="line">            samplenum&#x3D;samplenum*256;</span><br><span class="line">            samplenum&#x3D;samplenum+sample[0];</span><br><span class="line"> </span><br><span class="line">            fprintf(fp_stat,&quot;%6d,&quot;,samplenum);</span><br><span class="line">            if(cnt%10&#x3D;&#x3D;0)</span><br><span class="line">                fprintf(fp_stat,&quot;\n&quot;,samplenum);</span><br><span class="line">        &#125;</span><br><span class="line">        cnt++;</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    free(sample);</span><br><span class="line">    fclose(fp);</span><br><span class="line">    fclose(fp1);</span><br><span class="line">    fclose(fp_stat);</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="将pcm16le双声道音频采样数据转换为pcm8音频采样数据">将PCM16LE双声道音频采样数据转换为PCM8音频采样数据</h2>
-<p>本程序中的函数可以通过计算的方式将PCM16LE双声道数据16bit的采样位数转换为8bit。函数的代码如下所示：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;**</span><br><span class="line"> * Convert PCM-16 data to PCM-8 data.</span><br><span class="line"> * @param url  Location of PCM file.</span><br><span class="line"> *&#x2F;</span><br><span class="line">int simplest_pcm16le_to_pcm8(char *url)&#123;</span><br><span class="line">    FILE *fp&#x3D;fopen(url,&quot;rb+&quot;);</span><br><span class="line">    FILE *fp1&#x3D;fopen(&quot;output_8.pcm&quot;,&quot;wb+&quot;);</span><br><span class="line"> </span><br><span class="line">    int cnt&#x3D;0;</span><br><span class="line"> </span><br><span class="line">    unsigned char *sample&#x3D;(unsigned char *)malloc(4);</span><br><span class="line"> </span><br><span class="line">    while(!feof(fp))&#123;</span><br><span class="line"> </span><br><span class="line">        short *samplenum16&#x3D;NULL;</span><br><span class="line">        char samplenum8&#x3D;0;</span><br><span class="line">        unsigned char samplenum8_u&#x3D;0;</span><br><span class="line">        fread(sample,1,4,fp);</span><br><span class="line">        &#x2F;&#x2F;(-32768-32767)</span><br><span class="line">        samplenum16&#x3D;(short *)sample;</span><br><span class="line">        samplenum8&#x3D;(*samplenum16)&gt;&gt;8;</span><br><span class="line">        &#x2F;&#x2F;(0-255)</span><br><span class="line">        samplenum8_u&#x3D;samplenum8+128;</span><br><span class="line">        &#x2F;&#x2F;L</span><br><span class="line">        fwrite(&amp;samplenum8_u,1,1,fp1);</span><br><span class="line"> </span><br><span class="line">        samplenum16&#x3D;(short *)(sample+2);</span><br><span class="line">        samplenum8&#x3D;(*samplenum16)&gt;&gt;8;</span><br><span class="line">        samplenum8_u&#x3D;samplenum8+128;</span><br><span class="line">        &#x2F;&#x2F;R</span><br><span class="line">        fwrite(&amp;samplenum8_u,1,1,fp1);</span><br><span class="line">        cnt++;</span><br><span class="line">    &#125;</span><br><span class="line">    printf(&quot;Sample Cnt:%d\n&quot;,cnt);</span><br><span class="line"> </span><br><span class="line">    free(sample);</span><br><span class="line">    fclose(fp);</span><br><span class="line">    fclose(fp1);</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>PCM16LE格式的采样数据的取值范围是-32768到32767，而PCM8格式的采样数据的取值范围是0到255。所以PCM16LE转换到PCM8需要经过两个步骤：第一步是将-32768到32767的16bit有符号数值转换为-128到127的8bit有符号数值，第二步是将-128到127的8bit有符号数值转换为0到255的8bit无符号数值。在本程序中，16bit采样数据是通过short类型变量存储的，而8bit采样数据是通过unsigned char类型存储的。</p>
-<h2 id="将pcm16le双声道音频采样数据的声音速度提高一倍">将PCM16LE双声道音频采样数据的声音速度提高一倍</h2>
-<p>本程序中的函数可以通过抽象的方式将PCM16LE双声道数据的速度提高一倍，采用采样每个声道奇(偶)数点的样值的方式，函数的代码如下所示：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;**</span><br><span class="line"> * Re-sample to double the speed of 16LE PCM file</span><br><span class="line"> * @param url  Location of PCM file.</span><br><span class="line"> *&#x2F;</span><br><span class="line">int simplest_pcm16le_doublespeed(char *url)&#123;</span><br><span class="line">    FILE *fp&#x3D;fopen(url,&quot;rb+&quot;);</span><br><span class="line">    FILE *fp1&#x3D;fopen(&quot;output_doublespeed.pcm&quot;,&quot;wb+&quot;);</span><br><span class="line"> </span><br><span class="line">    int cnt&#x3D;0;</span><br><span class="line"> </span><br><span class="line">    unsigned char *sample&#x3D;(unsigned char *)malloc(4);</span><br><span class="line"> </span><br><span class="line">    while(!feof(fp))&#123;</span><br><span class="line"> </span><br><span class="line">        fread(sample,1,4,fp);</span><br><span class="line"> </span><br><span class="line">        if(cnt%2!&#x3D;0)&#123;</span><br><span class="line">            &#x2F;&#x2F;L</span><br><span class="line">            fwrite(sample,1,2,fp1);</span><br><span class="line">            &#x2F;&#x2F;R</span><br><span class="line">            fwrite(sample+2,1,2,fp1);</span><br><span class="line">        &#125;</span><br><span class="line">        cnt++;</span><br><span class="line">    &#125;</span><br><span class="line">    printf(&quot;Sample Cnt:%d\n&quot;,cnt);</span><br><span class="line"> </span><br><span class="line">    free(sample);</span><br><span class="line">    fclose(fp);</span><br><span class="line">    fclose(fp1);</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h1 id="参考">参考</h1>
-<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/leixiaohua1020/article/details/50534316">视音频数据处理入门：PCM音频采样数据处理</a> --&gt; 致敬雷神！</p>
-<p>​</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://islet.space/2021/06/30/Hardware/DSP/2021-06-30-ADSP%E6%B7%B7%E5%90%88%E7%BC%96%E7%A8%8B/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Liewzheng">
-      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Coder的孤岛">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/06/30/Hardware/DSP/2021-06-30-ADSP%E6%B7%B7%E5%90%88%E7%BC%96%E7%A8%8B/" class="post-title-link" itemprop="url">ADSP混合编程</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-
-    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
-    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2021-06-30 14:00:00" itemprop="dateCreated datePublished" datetime="2021-06-30T14:00:00+08:00">2021-06-30</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-07-01 01:31:56" itemprop="dateModified" datetime="2021-07-01T01:31:56+08:00">2021-07-01</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Hardware/" itemprop="url" rel="index"><span itemprop="name">Hardware</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="伪操作和伪指令">伪操作和伪指令</h1>
-<p><strong><em>Directives</em></strong>，即 <strong>伪操作</strong>，是汇编语言中的特殊指令助记符。主要作用是为完成汇编程序做各种准备。伪操作仅是在源程序进行汇编时由汇编程序处理，而不是在计算机运行期间由机器执行的指令。即，伪操作只在汇编时起作用，一旦汇编结束，其使命也就结束了。</p>
-<p><strong><em>Pseudo-Instruction</em></strong>，即 <strong><em>伪指令</em></strong>，是汇编语言程序里的特殊指令助记符，不是 真指令。伪指令在汇编时被替换成合适的机器指令（根据芯片架构而定，不同芯片架构之间指令可能不同），故其也只在汇编时其作用，不在机器运行期间由机器执行。</p>
-<h1 id="adi汇编文件样式">ADI汇编文件样式</h1>
-<p>.asm 文件具有以下样式，包含 <strong><em>预处理指令</em></strong>（主要是C/C++宏定义）、汇编伪操作类别（assembler direcitives）、数据块、代码块、条件编译预处理 和 汇编标签。</p>
-<figure>
-<img src="https://pic.islet.space/2021/06/image-20210630170546778.png" alt="image-20210630170546778" /><figcaption aria-hidden="true">image-20210630170546778</figcaption>
-</figure>
-<h2 id="混合编程">混合编程</h2>
-<h3 id="使用asm">使用asm()</h3>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> img288; <span class="comment">//定义C语言变量</span></span><br><span class="line"><span class="keyword">asm</span>(<span class="string">&quot;ax0 = 0x5C;&quot;</span>);</span><br><span class="line"><span class="keyword">asm</span>(<span class="string">&quot;dm(img288_) = ax0;&quot;</span>);  <span class="comment">//用汇编语言赋值时，变量需要加后置下划线？？？</span></span><br><span class="line">img288 = <span class="number">0x5C</span>;  <span class="comment">//直接用C语言赋值</span></span><br></pre></td></tr></table></figure>
-<p>以上C语言与汇编代码经过编译后：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ax0 &#x3D; 0x5C;</span><br><span class="line">dm(img288_) &#x3D; ax0;</span><br><span class="line">my1 &#x3D; 92;</span><br><span class="line">dm(img288_) &#x3D; my1;</span><br></pre></td></tr></table></figure>
-<p><mark>此处可否把 <code>dm()</code> 当成一个类似于指针的东西</mark></p>
-<h3 id="使用汇编子程序">使用汇编子程序</h3>
-<p>使用汇编子程序是C语言程序与汇编语言接口的另一种方法。<mark>用户定义的子程序放在单独的汇编文件中，或是做成二进制的库文件，并将子程序的定义用GLOBEL输出，汇编后就可以供C语言程序调用</mark>。下面是一个不需要参数的子程序的例子：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">.MODULE&#x2F;RAM_delay_;</span><br><span class="line">.external del_cycle;  &#x2F;&#x2F;声明del_cycle是外部变量</span><br><span class="line">.global delay;  &#x2F;&#x2F;声明delay是全局变量</span><br><span class="line"></span><br><span class="line">delay_:</span><br><span class="line">function_entry;  &#x2F;&#x2F;子程序开始标志，必不可少</span><br><span class="line">ar &#x3D; dm(del_cycle_);</span><br><span class="line">cntr &#x3D; ar;</span><br><span class="line">do d_loop until ce;</span><br><span class="line">d_loop:nop;</span><br><span class="line">exit;  &#x2F;&#x2F;子程序结束标志，必不可少</span><br><span class="line">.ENDMOD;</span><br></pre></td></tr></table></figure>
-<p>注意：以上代码源自参考链接4，实际上代码中的关键字相差可能较大，需要根据实际情况进行改动。</p>
-<p>比如，21479系列芯片与ADAU1939芯片一同工作，其ADC采样代码如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">.section&#x2F;pm seg_pmco;  &#x2F;&#x2F;程序代码块，procedure memory section</span><br><span class="line"></span><br><span class="line">_Receive_ADC_Samples:  &#x2F;*应该类似于 &#123; *&#x2F;</span><br><span class="line">.global _Receive_ADC_Samples;  &#x2F;&#x2F;定义自己为全局函数</span><br><span class="line"></span><br><span class="line">	r1 &#x3D; -31;     </span><br><span class="line">	r0 &#x3D; dm(_rx1a_buf + Internal_ADC_L1);	</span><br><span class="line">	f0 &#x3D; float r0 by r1;	</span><br><span class="line">	dm(_Left_Channel_In1) &#x3D; r0;</span><br><span class="line">  </span><br><span class="line">	r0 &#x3D; dm(_rx1a_buf + Internal_ADC_R1);	</span><br><span class="line">	f0 &#x3D; float r0 by r1;	</span><br><span class="line">	dm(_Right_Channel_In1) &#x3D; r0;			</span><br><span class="line"></span><br><span class="line">	r0 &#x3D; dm(_rx1b_buf + Internal_ADC_L2);	</span><br><span class="line">	f0 &#x3D; float r0 by r1;	</span><br><span class="line">	dm(_Left_Channel_In2) &#x3D; r0;	</span><br><span class="line">	</span><br><span class="line">	r0 &#x3D; dm(_rx1b_buf + Internal_ADC_R2);	</span><br><span class="line">	f0 &#x3D; float r0 by r1;	</span><br><span class="line">	dm(_Right_Channel_In2) &#x3D; r0;			</span><br><span class="line"></span><br><span class="line">	r0 &#x3D; DM(AD1939_audio_frame_timer);</span><br><span class="line">	r0 &#x3D; r0 + 1;</span><br><span class="line">	DM(AD1939_audio_frame_timer) &#x3D; r0;</span><br><span class="line">	</span><br><span class="line">	leaf_exit;  &#x2F;&#x2F;程序结束标志，应该类似于return;吧</span><br><span class="line">_Receive_ADC_Samples.end:  &#x2F;*应该类似于 &#125;*&#x2F;</span><br></pre></td></tr></table></figure>
-<h1 id="dual-memory-support-keywords-dm-pm">Dual Memory Support Keywords (dm / pm)</h1>
-<p>This section describes <strong><em>cc21k</em></strong> language extension keywords to C and C++ that support the dual-memory space, modified Harvard architecture of the ADSP-21xxx processors. There are two keywords used to designate memory space: <strong><em>dm</em></strong> and <strong><em>pm</em></strong>. They can be used to specify the location of a static or global variable or to qualify a pointer declaration.</p>
-<p>以下规则适用于两种内存关键字（dm/pm）：</p>
-<ul>
-<li>The memory space keyword (dm or pm) refers to the expression to the right of the keyword.</li>
-<li>You can specify a memory space for each level of pointer. This corresponds to one memory space for each * in the declaration.</li>
-<li>The compiler uses <strong><em>Data Memory</em></strong> (DM) as the default memory space for all variables. All undeclared spaces for data are Data Memory spaces.</li>
-<li>The compiler always uses <strong><em>Program Memory</em></strong> (PM) as the memory space for functions. Function pointers always point to Program Memory.</li>
-<li>You cannot assign memory spaces to <strong><em>automatic variables</em></strong>. <mark>All automatic variables reside on the stack, which is always in Data Memory</mark>.</li>
-<li>Literal character strings always reside in Data Memory.</li>
-</ul>
-<h1 id="参考">参考</h1>
-<ol type="1">
-<li>《<a target="_blank" rel="noopener" href="https://www.analog.com/media/en/dsp-documentation/software-manuals/50_21k_cc_mn_rev_1.5.pdf">VisualDSP++ 5.0 C/C++ Compiler Manual for SHARC Processors</a>》</li>
-<li>《<a target="_blank" rel="noopener" href="https://www.analog.com/media/en/dsp-documentation/processor-manuals/236999443isr_21xxx.pdf">ADSP-21160 SHARC DSP Instruction Set Reference</a>》</li>
-<li>《嵌入式系统原理与应用设计》王光学，电子工业出版社</li>
-<li><a target="_blank" rel="noopener" href="http://www.gzweix.com/article/sort0250/sort0251/sort0288/info-228197_2.html">嵌入式C语言开发ADSP21XX系列</a></li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/3/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><span class="space">&hellip;</span><a class="page-number" href="/page/11/">11</a><a class="extend next" rel="next" href="/page/5/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <a class="extend prev" rel="prev" href="/page/3/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><span class="space">&hellip;</span><a class="page-number" href="/page/12/">12</a><a class="extend next" rel="next" href="/page/5/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 

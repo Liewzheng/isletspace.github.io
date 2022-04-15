@@ -162,7 +162,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">109</span>
+          <span class="site-state-item-count">111</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -173,7 +173,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">202</span>
+        <span class="site-state-item-count">208</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -207,6 +207,591 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://islet.space/2021/05/17/Computer/2021-05-17-%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Liewzheng">
+      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coder的孤岛">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/05/17/Computer/2021-05-17-%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80/" class="post-title-link" itemprop="url">汇编语言</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-05-17 20:00:00" itemprop="dateCreated datePublished" datetime="2021-05-17T20:00:00+08:00">2021-05-17</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2021-05-20 22:50:31" itemprop="dateModified" datetime="2021-05-20T22:50:31+08:00">2021-05-20</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Computer/" itemprop="url" rel="index"><span itemprop="name">Computer</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="x86指令集介绍">X86指令集介绍</h1>
+<h2 id="x86指令集的基本特色">X86指令集的基本特色</h2>
+<ul>
+<li>向下兼容</li>
+<li>变长指令
+<ul>
+<li>1-15字节，多为2-3字节长度</li>
+</ul></li>
+<li>多种寻址方式（可访问不对齐内存地址）</li>
+</ul>
+<figure>
+<img src="https://pic.islet.space/2021/05/image-20210517203416861.png" alt="image-20210517203416861" /><figcaption aria-hidden="true">image-20210517203416861</figcaption>
+</figure>
+<h2 id="x86寄存器">X86寄存器</h2>
+<p>指令集的通用寄存器个数有限</p>
+<blockquote>
+<p>X86-32下指令集通用寄存器数量为8个，x86-64下为16个</p>
+</blockquote>
+<p>至多只有一个操作数在内存中，另一个操作数为立即数或寄存器</p>
+<figure>
+<img src="https://pic.islet.space/2021/05/image-20210517204354665.png" alt="image-20210517204354665" /><figcaption aria-hidden="true">image-20210517204354665</figcaption>
+</figure>
+<figure>
+<img src="https://pic.islet.space/2021/05/image-20210517204446891.png" alt="image-20210517204446891" /><figcaption aria-hidden="true">image-20210517204446891</figcaption>
+</figure>
+<p><em>源自 网络PDF</em>——<a target="_blank" rel="noopener" href="https://www.google.com/url?sa=t&amp;rct=j&amp;q=&amp;esrc=s&amp;source=web&amp;cd=&amp;cad=rja&amp;uact=8&amp;ved=2ahUKEwimmc7O39DwAhV5yYsBHdS2CHMQFjAAegQIAxAD&amp;url=http%3A%2F%2Fimages.china-pub.com%2Febook4930001-4935000%2F4934543%2Fch02.pdf&amp;usg=AOvVaw0yJuRWmzjtj41FR6ld_Vmm">X86处理器架构</a></p>
+<h1 id="sharc汇编">SHARC汇编</h1>
+<p><a href="">《Assembler and Preprocessor Manual(including the ADSP-BFxxx, ADSP-21xxx, ADSP-TSxxx)》</a></p>
+<h2 id="visualdsp">VisualDSP++</h2>
+<p>以下是ADI官网对VisualDSP++（以下简称VDSP）的解释，本质上是个集成软件开发和调试环境（IDDE）。</p>
+<figure>
+<img src="https://pic.islet.space/2021/05/image-20210520005659254.png" alt="image-20210520005659254" /><figcaption aria-hidden="true">image-20210520005659254</figcaption>
+</figure>
+<p>汇编器的操作取决于两种类型的控制：汇编器指令和汇编器开关。</p>
+<blockquote>
+<p>Assembler operations depend on two types of controls: <strong>assembler directives</strong> and <strong>assembler switches</strong>.</p>
+</blockquote>
+<p>VDSP支持以下三种不同的汇编器：</p>
+<p><img src="https://pic.islet.space/2021/05/image-20210520010438229.png" alt="image-20210520010438229" style="zoom: 67%;" /></p>
+<p>DSP汇编开发者需要先熟悉以下内容：</p>
+<blockquote>
+<ul>
+<li><p>“<em>Writing Assembly Programs</em>” on page 1-3</p></li>
+<li><p>“<em>Using Assembler Support for C Structs</em>” on page 1-21</p></li>
+<li><p>“<em>Preprocessing a Program</em>” on page 1-24</p></li>
+<li><p>“<em>Using Assembler Feature Macros</em>” on page 1-25</p></li>
+<li><p>“<em>Generating Make Dependencies</em>” on page 1-37</p></li>
+<li><p>“<em>Reading a Listing File</em>” on page 1-38</p></li>
+<li><p>“<em>Enabling Statistical Profiling for Assembly Functions</em>” on page 1-38</p></li>
+<li><p>“<em>Specifying Assembler Options in VisualDSP++</em>” on page 1-173</p></li>
+</ul>
+</blockquote>
+<h2 id="总览">总览</h2>
+<p>汇编器 将 <strong>汇编源(.asm)</strong>、<strong>数据(.dat)</strong> 和 <strong>头文件(.h)</strong> 三者整理成可执行可链接的格式（ELF），也就是一个标准的 <strong>二进制文件(.doj)</strong>。</p>
+<p>另外，汇编器还将生成一个 <strong>列表文件(.lst)</strong>，展示二进制文件和源文件之间的联系。</p>
+<p>也就是说，编译成功后，.doj和.lst文件就是其编译结果。</p>
+<p><img src="https://pic.islet.space/2021/05/image-20210520011656751.png" alt="image-20210520011656751" style="zoom:67%;" /></p>
+<blockquote>
+<p>Figure 1-1 shows a graphical overview of the assembly process. The figure shows the preprocessor processing the assembly source (.asm) and header (.h) files.</p>
+<p>By default, the assembler processes an intermediate file to produce a binary object file (.doj) and an optional listing file (.lst).</p>
+</blockquote>
+<p><img src="https://pic.islet.space/2021/05/image-20210520012328329.png" alt="image-20210520012328329" style="zoom:67%;" /></p>
+<h2 id="编写">编写</h2>
+<ul>
+<li><p>Assembler directives are coded in assembly source files.</p></li>
+<li><p>The directives allow you to <strong>define variables</strong>, <strong>set up hardware features</strong>, and <strong>identify program sections</strong> for placement within processor memory.</p></li>
+<li><p>The assembler uses directives for guidance as it translates a source program into object code.</p></li>
+</ul>
+<p>注意：</p>
+<blockquote>
+<ul>
+<li><p>Do not use a <strong><em>word processor</em></strong> that embeds special control codes in the text.</p></li>
+<li><p>Use an <code>.asm</code> extension to source file names to identify them as assembly source files.</p></li>
+</ul>
+</blockquote>
+<p>可以使用像 <code>batch-file</code> 和 <code>makefile</code> 这样的命令行工具来汇编你的源文件。</p>
+<p>列表文件还提供了关于导入的C语言数据结构的信息。</p>
+<h2 id="问题解决">问题解决</h2>
+<h3 id="问题一">问题一</h3>
+<p><strong>现象</strong>：出现如下图所示的头文件缺少</p>
+<figure>
+<img src="https://pic.islet.space/2021/05/20210520095711.png" alt="image-20210520090023689" /><figcaption aria-hidden="true">image-20210520090023689</figcaption>
+</figure>
+<p><strong>原因</strong>：<code>.boj</code>文件和其所依赖的 <code>.h</code> 头文件相对路径不一致，或项目文件的绝对路径与原来创建时不一致。</p>
+<p><strong>例如</strong>：从文件 <code>Debug/system/startup_Idf/app_IVT.doj</code> 中可以看出，该文件的创作者是将其放置在 <code>D:\ADSP\workspace\LED_test\Debug</code> 下的，因此需要改变该项目文件的位置。</p>
+<p><strong>解决方法</strong>：在原创作者的绝对路径下放置该项目文件。</p>
+<figure>
+<img src="https://pic.islet.space/2021/05/20210520095708.png" alt="image-20210520090936369" /><figcaption aria-hidden="true">image-20210520090936369</figcaption>
+</figure>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://islet.space/2021/05/14/Communication/2021-05-14-I2C%E3%80%81SPI%E3%80%81TDM%E5%8F%8AI2S/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Liewzheng">
+      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coder的孤岛">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/05/14/Communication/2021-05-14-I2C%E3%80%81SPI%E3%80%81TDM%E5%8F%8AI2S/" class="post-title-link" itemprop="url">I^2^C、SPI、TDM及I2S</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-05-14 10:55:00" itemprop="dateCreated datePublished" datetime="2021-05-14T10:55:00+08:00">2021-05-14</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2021-07-15 21:12:20" itemprop="dateModified" datetime="2021-07-15T21:12:20+08:00">2021-07-15</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Communication/" itemprop="url" rel="index"><span itemprop="name">Communication</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="i2c">I<sup>2</sup>C</h1>
+<p><strong>标准</strong>：<a target="_blank" rel="noopener" href="https://www.nxp.com/docs/en/user-guide/UM10204.pdf">《NXP_UM10204_I<sup>2</sup>C-bus specification and user manual》</a></p>
+<blockquote>
+<p><em>I<sup>2</sup>C总线是一个事实上的世界标准，现在已经在50多家公司生产的1000多种不同的IC中实施。</em></p>
+<p><em>此外，多功能的I<sup>2</sup>C总线被用于各种控制架构，如系统管理总线（SMBus）、电源管理总线（PMBus）、智能平台管理接口（IPMI）、显示数据通道（DDC）和高级电信计算架构（ATCA）。</em></p>
+<p><em>本文件帮助设备和系统设计者了解I<sup>2</sup>C总线的工作原理并实现工作应用。描述了各种操作模式。它包含了对I<sup>2</sup>C<strong>总线数据传输</strong>、握手和总线仲裁方案的全面介绍。详细的章节涵盖了I<sup>2</sup>C总线在每种工作模式下的时序和电气规范。</em></p>
+<p><em>I<sup>2</sup>C兼容芯片的设计者应将该文件作为参考，并确保新设备满足该文件中规定的所有限制。包含I<sup>2</sup>C器件的系统的设计者应审查本文件，并参考各个组件的数据表。</em></p>
+<p>——翻译自标准文件</p>
+</blockquote>
+<p>I<sup>2</sup>C(Inter－Integrated Circuit)是一种通用的总线协议。它是由Philips(飞利浦)公司，现NXP(恩智浦)半导体开发的一种简单的双向两线制总线协议标准。</p>
+<p>对于硬件设计人员来说，只需要2个管脚，极少的连接线和面积，就可以实现芯片间的通讯，对于软件开发者来说，可以使用同一个I<sup>2</sup>C驱动库，来实现实现不同器件的驱动，大大减少了软件的开发时间。极低的工作电流，降低了系统的功耗，完善的应答机制大大增强通讯的可靠性。</p>
+<h2 id="术语">术语</h2>
+<p><img src="https://pic.islet.space/2021/05/image-20210514111033910.png" alt="image-20210514111033910" style="zoom: 67%;" /></p>
+<table>
+<thead>
+<tr class="header">
+<th>术语</th>
+<th>释义</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>总线</td>
+<td>传输数据的通路</td>
+</tr>
+<tr class="even">
+<td>传送者</td>
+<td>传输数据至总线的设备</td>
+</tr>
+<tr class="odd">
+<td>接收者</td>
+<td>从总线上接受数据的设备</td>
+</tr>
+<tr class="even">
+<td>主（机）</td>
+<td>主动开启传输、生成时钟信号 并 主动结束传输的设备</td>
+</tr>
+<tr class="odd">
+<td>从（机）</td>
+<td>由主机寻址的设备</td>
+</tr>
+<tr class="even">
+<td>多主（机）</td>
+<td>在不损坏数据传输的情况下允许多主机可以试图同时控制总线</td>
+</tr>
+<tr class="odd">
+<td>仲裁</td>
+<td>确保在有多个主机同时试图控制总线的情况下，只允许一个主机这样做，而且仲裁成功的信息不会被（其他设备）破坏的程序。</td>
+</tr>
+<tr class="even">
+<td>同步</td>
+<td>确保两个及以上设备其时钟信号的同步</td>
+</tr>
+</tbody>
+</table>
+<p>以下这个图应该可以较好地解释“多主机”的概念，多个主机可以同时向外发出传输数据的申请，也可以主动结束其数据传输。虽然，I<sup>2</sup>C降低了总线复用的成本，但仍需要“仲裁”机制来解决多个主机之间的无序竞争状态。</p>
+<p><img src="https://pic.islet.space/2021/05/image-20210514112114667.png" alt="image-20210514112114667" style="zoom:67%;" /></p>
+<h2 id="总线特征">总线特征</h2>
+<h3 id="总线硬件要求">总线硬件要求</h3>
+<p>通过 <strong>串行数据</strong>（SDA，Serial Data）和 <strong>串行时钟</strong>（SCL，Serial Clock）两条线路对设备进行连接。</p>
+<p>每个设备都通过自身的通信设备地址进行互相辨别，且每个设备都可以当发送者或接收者，取决于设备自身的功能定义。</p>
+<h3 id="标准传输速率">标准传输速率</h3>
+<p>各模式、速率及其传输方向见下方表格。</p>
+<blockquote>
+<p>Data on the I<sup>2</sup>C-bus can be transferred at rates of up to 100 kbit/s in the Standard-mode, up to 400 kbit/s in the Fast-mode, up to 1 Mbit/s in Fast-mode Plus, or up to 3.4 Mbit/s in the High-speed mode.</p>
+</blockquote>
+<table>
+<thead>
+<tr class="header">
+<th>MODE</th>
+<th>RATE</th>
+<th>TRANSFER DIRECTION</th>
+<th>DOWNWARD COMPATIBLE WITH</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>STANDARD</td>
+<td>100 Kbit/s</td>
+<td>bidirectional</td>
+<td>/</td>
+</tr>
+<tr class="even">
+<td>FAST</td>
+<td>400 Kbit/s</td>
+<td>bidirectional</td>
+<td>STANDARD</td>
+</tr>
+<tr class="odd">
+<td>FAST-PLUS</td>
+<td>1 Mbit/s</td>
+<td>bidirectional</td>
+<td>STANDARD / FAST</td>
+</tr>
+<tr class="even">
+<td>HIGH-SPEED</td>
+<td>3.4 Mbit/s</td>
+<td>bidirectional</td>
+<td>STANDARD / FAST / FAST-PLUS</td>
+</tr>
+<tr class="odd">
+<td>ULTRA-FAST</td>
+<td>5 Mbit/s</td>
+<td>unidirectional</td>
+<td>/</td>
+</tr>
+</tbody>
+</table>
+<figure>
+<img src="https://pic.islet.space/2021/05/image-20210522182927364.png" alt="image-20210522182927364" /><figcaption aria-hidden="true">image-20210522182927364</figcaption>
+</figure>
+<h2 id="协议要求">协议要求</h2>
+<p>以下协议要求适用于双向通信模式（不包括ULTRA-FAST模式下的单向通信）</p>
+<h3 id="逻辑电平规定">逻辑电平规定</h3>
+<p>由于I<sup>2</sup>C的接入设备众多（如CMOS、NMOS、Bipolar等），因此逻辑电平0和逻辑电平1（的电压）并不是固定不变的，这取决于VDD的电平。</p>
+<p>输入参考电平会被控制在VDD电平的30%~70%之间。 V<sub>IL</sub> = 0.3 * V<sub>DD</sub>；V<sub>IH</sub> = 0.7 * V<sub>DD</sub> 。</p>
+<p>某些传统设备的输入电平会被固定在1.5V（V<sub>IL</sub>）和3.0V（V<sub>IH</sub>），但新设备都要求是 30%V<sub>DD</sub> 及 70%V<sub>DD</sub> 。</p>
+<p><strong>注意</strong>：V<sub>IL</sub>、V<sub>IH</sub>、V<sub>OL</sub>、V<sub>OH</sub>都是以参考电压作为基准的，即要达到某个电压的百分之多少时，才能够被认为是 <strong>逻辑电平0</strong> 或 <strong>逻辑电平1</strong> 。例如，可将V<sub>IL</sub> 视作当V<sub>DD</sub>下降到只有30%及以下时，为逻辑电平0，30%V<sub>DD</sub>是其逻辑电平的最高阈值；同理可得 V<sub>IH</sub> ；超过这个值而未到达70%的中间态则为不确定态。</p>
+<blockquote>
+<p>Due to the variety of different technology devices (CMOS, NMOS, bipolar) that can be connected to the I<sup>2</sup>C-bus, the levels of the logical ‘0’ (LOW) and ‘1’ (HIGH) are not fixed and depend on the associated level of VDD . Input reference levels are set as 30 % and 70 % of VDD ; VIL is 0.3VDD and VIH is 0.7V DD .</p>
+<p>See Figure 38, timing diagram. Some legacy device input levels were fixed at V<sub>IL</sub> = 1.5 V and V<sub>IH</sub> = 3.0 V, but all new devices require this 30 %/70 % specification.</p>
+</blockquote>
+<p><img src="https://pic.islet.space/2021/05/image-20210514134830615.png" alt="image-20210514134830615" style="zoom: 67%;" /></p>
+<h3 id="时序正确性">时序正确性</h3>
+<ul>
+<li>SDA上的数据必须在SCL高电平期间保持稳定，即不能在SCL高电平期间发生翻转（后见原因），只有在SCL低电平时可以翻转。</li>
+<li>时钟脉冲信号生成要先于数据传送。</li>
+</ul>
+<blockquote>
+<p>The data on the SDA line must be stable during the HIGH period of the clock. The HIGH or LOW state of the data line can only change when the clock signal on the SCL line is LOW (see Figure 4). One clock pulse is generated for each data bit transferred.</p>
+</blockquote>
+<p><img src="https://pic.islet.space/2021/05/image-20210514141512136.png" alt="image-20210514141512136" style="zoom: 80%;" /></p>
+<h3 id="开始及结束标志">开始及结束标志</h3>
+<ul>
+<li><p>传输开始时必须以一个 <strong>开始</strong> 信号作为标志，结束时必须以一个 <strong>结束</strong> 信号作为标志。</p></li>
+<li><p><strong>开始信号 </strong>是以SCL为高电平时的 <strong>SDA电平的由高转低</strong> 作为标志，<strong>结束信号</strong> 是以SCL高电平时的 <strong>SDA电平的由低转高</strong> 作为标志。</p></li>
+<li><p>开始和结束标志必须由主设备控制。</p></li>
+</ul>
+<blockquote>
+<p>All transactions begin with a START (S) and are terminated by a STOP (P) (see Figure 5). A HIGH to LOW transition on the SDA line while SCL is HIGH defines a START condition. A LOW to HIGH transition on the SDA line while SCL is HIGH defines a STOP condition.</p>
+</blockquote>
+<p><img src="https://pic.islet.space/2021/05/image-20210514142116674.png" alt="image-20210514142116674" style="zoom: 80%;" /></p>
+<h4 id="开始字节">开始字节</h4>
+<p><img src="https://pic.islet.space/2021/05/image-20210515150526897.png" alt="image-20210515150526897" style="zoom:67%;" /></p>
+<blockquote>
+<p>dummy acknowledge (HIGH) : 无声确认？？？</p>
+</blockquote>
+<h3 id="总线状态">总线状态</h3>
+<p>总线具有两种状态，<strong>繁忙</strong>（Busy）和 <strong>空闲</strong>（Free），即 SDA电平 “开始” 后，总线进入繁忙状态， SDA电平 “结束” 后，总线进入空闲状态。</p>
+<p><strong>注意</strong>：在总线繁忙期间，发生重复的“开始”状态（而不是“结束”状态），由于“重复开始”和 “开始” 功能相同，为了方便，统称为 “开始”，除非特殊说明为 “重复开始”。</p>
+<blockquote>
+<p>The bus stays busy if a repeated START (Sr) is generated instead of a STOP condition. In this respect, the START (S) and repeated START (Sr) conditions are functionally identical. For the remainder of this document, therefore, the S symbol is used as a generic term to represent both the START and repeated START conditions, unless Sr is particularly relevant.</p>
+</blockquote>
+<h3 id="传输比特位">传输比特位</h3>
+<ul>
+<li>SDA线上的字节传输必须满足8位长度。</li>
+<li>每次传输数据的字节数不受限制。</li>
+<li>每个字节数后都需要跟一个<strong>确认位（Acknowledge bit）</strong>。</li>
+<li>当从机无法完整接收或传输一个完整的数据字节时，例如正在产生内部中断等，除非其完成内部的某些功能，否则该从机将能够一直拉低SCL的电平，<strong>强制让主机一直处于等待状态</strong>。只有当从机准备好接收下一个完整的字节并释放SCL时，数据传输才会继续。</li>
+</ul>
+<blockquote>
+<p>Every byte put on the SDA line must be eight bits long. The number of bytes that can be transmitted per transfer is unrestricted. Each byte must be followed by an Acknowledge bit.</p>
+<p><strong>Data is transferred with the Most Significant Bit (MSB) first</strong> (see Figure 6). If a slave cannot receive or transmit another complete byte of data until it has performed some other function, for example servicing an internal interrupt, it can hold the clock line SCL LOW to force the master into a wait state. Data transfer then continues when the slave is ready for another byte of data and releases clock line SCL.</p>
+</blockquote>
+<p><img src="https://pic.islet.space/2021/05/image-20210514144620803.png" alt="image-20210514144620803" style="zoom:80%;" /></p>
+<h3 id="确认标志">确认标志</h3>
+<ul>
+<li>每个字节（8比特）后都跟着一个确认位，即前8位数据，第9位确认。</li>
+<li><strong>SCL上的时钟信号由主机产生，包括确认位的的第九个时钟脉冲</strong>。</li>
+<li>SDA线并不是由主机一直占有的，每发送完一个完整字节后，主机都会释放SDA线，由从机进行数据确认。</li>
+<li>发送者在确认时钟脉冲期间释放SDA线，以便接收者可以将SDA线拉低，并且在该时钟脉冲的高电平期间保持稳定的低电平（见图4）。</li>
+<li>对于设置（set-up）和保持（Hold）的时间，都应该依照表10中只针对各种不同模式的要求进行设置。</li>
+<li>如果SDA电平在第九个时钟脉冲时仍保持高电平，则被定义为 “未确认状态”。则此时主机可以发送一个“结束”标志来结束当前连接，或发送一个“开始”标志来开启一次新的传送。</li>
+</ul>
+<p><img src="/home/kali/.config/Typora/typora-user-images/image-20210514154506246.png" alt="image-20210514154506246" style="zoom: 80%;" /></p>
+<blockquote>
+<p>The acknowledge takes place after every byte. The acknowledge bit allows the receiver to signal the transmitter that the byte was successfully received and another byte may be sent. The master generates all clock pulses, including the acknowledge ninth clock pulse.</p>
+<p>The Acknowledge signal is defined as follows: the transmitter releases the SDA line during the acknowledge clock pulse so the <strong><em>receiver can pull the SDA line LOW</em></strong> and it remains stable LOW during the HIGH period of this clock pulse (see Figure 4). Set-up and hold times (specified in Section 6) must also be taken into account.</p>
+<p>When SDA remains HIGH during this ninth clock pulse, this is defined as the Not Acknowledge signal. The master can then generate either a STOP condition to abort the transfer, or a repeated START condition to start a new transfer.</p>
+</blockquote>
+<p><strong>以下为五种“未确认/未应答”的可能情况</strong>：There are five conditions that lead to the generation of a NACK:</p>
+<ol type="1">
+<li><strong>传输地址错误</strong>：No receiver is present on the bus with the transmitted address so there is no device to respond with an acknowledge.</li>
+<li><strong>实时处理中</strong>：The receiver is unable to receive or transmit because it is performing some real-time function and is not ready to start communication with the master.</li>
+<li><strong>数据/代码未定义</strong>：During the transfer, the receiver <strong>gets data or commands that it does not understand.</strong></li>
+<li><strong>正在传输中</strong>：During the transfer, the receiver <strong>cannot receive any more data bytes</strong>.</li>
+<li><strong>未收到结束信号（收发身份未转换）</strong>：A master-receiver must signal the end of the transfer to the slave transmitter.</li>
+</ol>
+<h3 id="时钟同步">时钟同步</h3>
+<p>任意几个主机都可能同时发起数据传输请求，此时只有一个主机和一个从机可以掌握总线进行通信，此时需要通过 <strong>时间同步</strong> 和 <strong>仲裁</strong> 完成对总线的调配。</p>
+<p><strong>在单机系统（Single Master System）中，不需要时钟同步和仲裁。</strong></p>
+<p>时钟同步是通过I<sup>2</sup>C接口与SCL线的有线-AND连接进行的。</p>
+<p>这意味着SCL线上的高电平到低电平的转换会导致相关的主站开始对其低电平周期进行计数（如图7的CLK<sub>2</sub>），一旦一个主站时钟 CLK<sub>1</sub> 变为低电平，它就会将SCL线电平拉低，并保持在这个状态，直到另一个时钟 CLK<sub>2</sub> 达到高电平状态。</p>
+<p>然而，如果时钟 CLK<sub>2</sub> 仍在其低电平周期内，CLK<sub>1</sub> 的低电平到高电平转换可能不会改变SCL线的状态。</p>
+<p>因为SCL线被具有最长的低电平周期的主站 CLK<sub>2</sub> 保持为低电平，而在这段时间内，低电平周期较短的主站 CLK<sub>1</sub> 进入高电平等待状态。</p>
+<blockquote>
+<p>Clock synchronization is performed using the wired-AND connection of I<sup>2</sup>C interfaces to the SCL line. This means that a HIGH to LOW transition on the SCL line causes the masters concerned to start counting off their LOW period and, once a master clock has gone LOW, it holds the SCL line in that state until the clock HIGH state is reached (see Figure 7). However, if another clock is still within its LOW period, the LOW to HIGH transition of this clock may not change the state of the SCL line. The SCL line is therefore held LOW by the master with the longest LOW period. Masters with shorter LOW periods enter a HIGH wait-state during this time.</p>
+</blockquote>
+<p>当所有相关的主控器都结束了他们的低电平周期，时钟线被释放并变成高电平。</p>
+<p>然后，在主站时钟和SCL线的状态之间没有差异，所有的主站开始计算他们的高电平周期。</p>
+<p><strong>第一个完成其高电平周期的主站再次将SCL线拉到低电平</strong>。这样，就产生了一个<strong>同步的SCL时钟</strong>，<strong>其低电平周期由具有最长时钟低电平周期的主站决定</strong>，<strong>其高电平周期由具有最短时钟高电平周期的主站决定</strong>。</p>
+<p><img src="https://pic.islet.space/2021/05/image-20210514170202184.png" alt="image-20210514170202184" style="zoom: 67%;" /></p>
+<h3 id="竞争仲裁">竞争仲裁</h3>
+<p>仲裁和同步一样，是指只有在系统中使用一个以上的主站时才需要的协议的一个部分。注意，从机不参与仲裁程序。</p>
+<p>一个主站只有在总线空闲时才可以开始传输。两个主站可以在START条件的最小保持时间（tHD;STA）内产生一个START条件，从而在总线上产生一个有效的START条件。然后需要进行仲裁，以确定哪个主站将完成其传输。</p>
+<p>仲裁是逐位进行的。在每个比特期间，当SCL为高电平时，每个主站检查SDA电平是否与其所发送的内容相符，期间可能需要很多比特，只要传输的内容相同，两个主站实际上可以无误地完成整个信息传输过程。</p>
+<p><mark>当一个主站第一次试图发送一个高电平，但检测到SDA电平为低电平时，主站知道它已经失去了仲裁，并关闭其SDA输出驱动器</mark>。在其他主站被仲裁过程中，正在传输其信息的主站将继续其传输，没有信息丢失。</p>
+<p>失去仲裁的主站可以产生时钟脉冲，直到它失去仲裁的字节结束，并且必须在总线空闲时重新尝试传输。</p>
+<p><mark>如果一个主站也包含了一个从站功能，并且它在寻址阶段失去了仲裁，有可能获胜的主站正试图对它进行寻址。因此，失败的主站必须立即切换到其从站模式。</mark></p>
+<p>图8显示了两个主站的仲裁程序。可能涉及更多，这取决于有多少个主站连接到总线上。</p>
+<p><mark>当产生DATA1的主站的内部数据电平与SDA线上的实际电平有差异时，DATA1的输出被关闭。这并不影响由获胜主站发起的数据传输。</mark></p>
+<p><img src="https://pic.islet.space/2021/05/image-20210515142633906.png" alt="image-20210515142633906" style="zoom: 67%;" /></p>
+<h3 id="时间拉伸">时间拉伸</h3>
+<h3 id="从机地址和读取位">从机地址和读取位</h3>
+<h3 id="位寻址">10位寻址</h3>
+<h3 id="反转地址">反转地址</h3>
+<h3 id="通用寻址">通用寻址</h3>
+<figure>
+<img src="https://pic.islet.space/2021/05/image-20210515172907284.png" alt="image-20210515172907284" /><figcaption aria-hidden="true">image-20210515172907284</figcaption>
+</figure>
+<figure>
+<img src="https://pic.islet.space/2021/05/image-20210515172945861.png" alt="image-20210515172945861" /><figcaption aria-hidden="true">image-20210515172945861</figcaption>
+</figure>
+<figure>
+<img src="https://pic.islet.space/2021/05/image-20210515172958184.png" alt="image-20210515172958184" /><figcaption aria-hidden="true">image-20210515172958184</figcaption>
+</figure>
+<h3 id="软复位">软复位</h3>
+<p>在发送general call (0000 0000)后，再发送一个 0000 0110 (06h) ，这样两个具有先后顺序的字节来定义软复位。</p>
+<p>首先，这种软复位是可选 ，并不是所有设备都会对软复位指令进行响应。</p>
+<p>在收到这2个字节的序列时，所有被设计为响应一般调用地址的设备都会复位，并接收其地址的可编程部分。</p>
+<blockquote>
+<p>On receiving this 2-byte sequence, all devices designed to respond to the general call address reset and take in the programmable part of their address.</p>
+</blockquote>
+<p>必须采取预防措施，确保设备在施加电源电压后没有拉低SDA或SCL线，因为这些低电平会阻断总线。</p>
+<h3 id="总线复位">总线复位</h3>
+<p>SCK信号一直卡在低电平的事件较少发生。</p>
+<ul>
+<li>如果I<sup>2</sup>C总线设备拥有硬件复位输入，则可以通过优先程序启用硬件中断复位来重置总线。</li>
+<li>如果没有硬件复位输入，则通过给设备循环供电，激活强制性的内部开机复位（POR）电路。</li>
+</ul>
+<p>SDA信号如果一直卡在低电平。</p>
+<ul>
+<li><p>则主机应该发送九次SCL时钟脉冲，此时令SDA保持低电平的设备在收到九次脉冲后应主动释放总线。</p></li>
+<li><p>如果九次脉冲没有用，则启用硬件中断复位或循环供电来清除总线。</p></li>
+</ul>
+<h3 id="设备id">设备ID</h3>
+<p>可选的3字节只读设备ID编码（an optional 3-byte read-only ）：</p>
+<ul>
+<li>12位是设备制造商编号，具有独一无二性</li>
+<li>9位零件ID，由设备制造商写入</li>
+<li>3位模具/晶元版本，由设备制造商写入</li>
+</ul>
+<p><img src="https://pic.islet.space/2021/05/image-20210515152141963.png" alt="image-20210515152141963" style="zoom:67%;" /></p>
+<ol type="1">
+<li><p>启动条件</p></li>
+<li><p>主站发送保留设备ID的 I<sup>2</sup>C 总线地址，后面的R/W位设置为<code>0</code>（写）：<code>1111 1000</code>。</p></li>
+<li><p>主站发送从属地址。LSB是一个 "不关心"的值，只有一个设备必须确认这个字节（拥有I<sup>2</sup>C总线从属地址的设备）。</p></li>
+<li><p>主站发送一个 Re-START 条件。</p></li>
+</ol>
+<blockquote>
+<p>备注：在 STOP 条件之后，再加上一个 START 条件，就会重置从属状态机，无法进行设备ID读取。另外，在 STOP 条件或 Re-START 条件之后，对另一个从属设备的访问也会重置从属状态机，无法执行Device ID读取。</p>
+</blockquote>
+<ol start="5" type="1">
+<li><p>主站发送保留设备ID的 I<sup>2</sup>C 总线地址，后面的R/W位设置为 <code>1</code>（读）：<code>1111 1001</code>。</p></li>
+<li><p>可以进行设备ID读取，从12个制造商位开始（第一个字节+第二个字节的4个MSB），然后是9个部件识别位（第二个字节的4个LSB+第三个字节的5个MSB），然后是三个芯片修订位（第三个字节的3个LSB）。</p></li>
+<li><p>主站通过NACKing最后一个字节来结束读取序列，从而重置从属设备的状态机，允许主站发送 STOP 条件。</p>
+<blockquote>
+<p>备注：设备ID的读取可以随时通过发送NACK来停止。</p>
+</blockquote></li>
+</ol>
+<p>如果主站在第三个字节之后继续ACK，从站就会滚回第一个字节，并继续发送设备ID序列，直到检测到 NACK。</p>
+<h1 id="spi">SPI</h1>
+<p>标准：</p>
+<h2 id="术语-1">术语</h2>
+<h2 id="spi和i2c的对比">SPI和I<sup>2</sup>C的对比</h2>
+<table>
+<thead>
+<tr class="header">
+<th></th>
+<th>SPI</th>
+<th>I<sup>2</sup>C</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>通信模式</td>
+<td>全双工<br><em>（是指单主从设备之间的全双工，从设备之间无法进行通信）</em></td>
+<td>半双工<br><em>（任意主从设备可以分时复用同一条通信线路）</em></td>
+</tr>
+<tr class="even">
+<td>主从模式</td>
+<td>一主多从</td>
+<td>多主多从</td>
+</tr>
+<tr class="odd">
+<td>引脚占用</td>
+<td>从设备越多，对主机占用的引脚较多<br>主设备占用引脚：3+n<br>从设备占用引脚：4<br><em>（n为从设备数）</em></td>
+<td>主从设备均占用：2</td>
+</tr>
+<tr class="even">
+<td>应答响应</td>
+<td>无</td>
+<td>有</td>
+</tr>
+<tr class="odd">
+<td>传输速率</td>
+<td>最高：</td>
+<td>最高：3.4Mbps</td>
+</tr>
+<tr class="even">
+<td>从机选择</td>
+<td>通过 <strong>CS(SS)选择引脚</strong> 来选择</td>
+<td>通过 <strong>器件地址</strong> 来选择</td>
+</tr>
+<tr class="odd">
+<td>数据采样</td>
+<td>在SCLK边沿采样</td>
+<td>在SCL高电平采样</td>
+</tr>
+<tr class="even">
+<td>通信距离</td>
+<td>短</td>
+<td>短</td>
+</tr>
+</tbody>
+</table>
+<h1 id="uart">UART</h1>
+<p>标准：</p>
+<h1 id="tdm">TDM</h1>
+<p>标准：</p>
+<h1 id="i2s">I<sup>2</sup>S</h1>
+<p>标准：</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -2360,270 +2945,8 @@ RCA接口在我们日常生活中非常常见
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://islet.space/2021/05/05/Signal/2021-05-05-%E4%BD%BF%E7%94%A8ADAU1761-PGA%E3%80%81ALC-%E7%9A%84DSP%E6%8E%A7%E5%88%B6%E6%A8%A1%E5%BC%8F/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Liewzheng">
-      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Coder的孤岛">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/05/05/Signal/2021-05-05-%E4%BD%BF%E7%94%A8ADAU1761-PGA%E3%80%81ALC-%E7%9A%84DSP%E6%8E%A7%E5%88%B6%E6%A8%A1%E5%BC%8F/" class="post-title-link" itemprop="url">使用ADAU1761 PGA、ALC 的DSP控制模式</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-
-    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
-    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2021-05-05 11:00:32" itemprop="dateCreated datePublished" datetime="2021-05-05T11:00:32+08:00">2021-05-05</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-05-09 13:01:38" itemprop="dateModified" datetime="2021-05-09T13:01:38+08:00">2021-05-09</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Signal/" itemprop="url" rel="index"><span itemprop="name">Signal</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="使用adau1761-pga-alc的dsp控制模式">使用ADAU1761 PGA / ALC的DSP控制模式</h1>
-<p>ADAU1761模拟前端具有ALC（自动电平控制）功能，可根据输入信号的电平动态设置差分输入路径的增益。但是，可以绕过ALC，DSP程序可以直接控制应用于 <strong>差分输入</strong> 的增益量。</p>
-<p>为此，一个或两个通道的差分路径需要<strong>启用和取消静音</strong>。为了启用 <strong>差分路径</strong>，还应根据需要将<strong>LDBOOST</strong>（和/或<strong>RDBOOST</strong>）设置为0 dB或20 dB。</p>
-<p><a target="_blank" rel="noopener" href="https://ez.analog.com/cfs-file/__key/communityserver-wikis-components-files/00-00-00-01-75/1e169c85b74a88a01485d3c18fecd396.jpg"><img src="https://ez.analog.com/cfs-filesystemfile/__key/communityserver-components-secureimagefileviewer/communityserver-wikis-components-files-00-00-00-01-75/1e169c85b74a88a01485d3c18fecd396.jpg_2D00_373x238.jpg?_=636716033579270573" alt="img" /></a></p>
-<p>然后，<strong>应将ALCSEL</strong>位设置为<strong>DSP控制</strong>模式。</p>
-<p><a target="_blank" rel="noopener" href="https://ez.analog.com/cfs-file/__key/communityserver-wikis-components-files/00-00-00-01-75/be2493be5fd62ceb941ade31bb1c2ea2.jpg"><img src="https://ez.analog.com/cfs-filesystemfile/__key/communityserver-components-secureimagefileviewer/communityserver-wikis-components-files-00-00-00-01-75/be2493be5fd62ceb941ade31bb1c2ea2.jpg_2D00_136x228.jpg?_=636716033581410640" alt="img" /></a></p>
-<p>现在，在DSP程序原理图中，用户可以将<strong>AIGC输出</strong>单元添加到项目中：</p>
-<p><a target="_blank" rel="noopener" href="https://ez.analog.com/cfs-file/__key/communityserver-wikis-components-files/00-00-00-01-75/a6abc0254ac0020e47fd1b347f706504.jpg"><img src="https://ez.analog.com/cfs-filesystemfile/__key/communityserver-components-secureimagefileviewer/communityserver-wikis-components-files-00-00-00-01-75/a6abc0254ac0020e47fd1b347f706504.jpg_2D00_215x49.jpg?_=636716033575290474" alt="img" /></a></p>
-<p>通道0映射到左侧的PGA。</p>
-<p><a target="_blank" rel="noopener" href="https://ez.analog.com/cfs-file/__key/communityserver-wikis-components-files/00-00-00-01-75/524d0fbf699c770a6e85e142dd636b3b.png"><img src="https://ez.analog.com/cfs-filesystemfile/__key/communityserver-components-secureimagefileviewer/communityserver-wikis-components-files-00-00-00-01-75/524d0fbf699c770a6e85e142dd636b3b.png_2D00_91x54.png?_=636716033578360546" alt="img" /></a></p>
-<p>通道1映射到右侧的PGA。</p>
-<p><a target="_blank" rel="noopener" href="https://ez.analog.com/cfs-file/__key/communityserver-wikis-components-files/00-00-00-01-75/3a9410be5a75f96f99e4087743e69d2f.jpg"><img src="https://ez.analog.com/cfs-filesystemfile/__key/communityserver-components-secureimagefileviewer/communityserver-wikis-components-files-00-00-00-01-75/3a9410be5a75f96f99e4087743e69d2f.jpg_2D00_94x57.jpg?_=636716033575450467" alt="img" /></a></p>
-<p>现在，馈送到这些单元中每个单元的5.23信号确定了相应PGA的增益。</p>
-<p>作为一个简单的示例，要将每个PGA的增益设置为0.5（或-6 dB），请从<strong>Sources</strong>库创建一个<strong>DC Input Entry</strong>单元并将其设置为0.5，然后将其连接到<strong>AIGC输出</strong>。</p>
-<p><a target="_blank" rel="noopener" href="https://ez.analog.com/cfs-file/__key/communityserver-wikis-components-files/00-00-00-01-75/462b7691a9c4c01ab55c2f09825bd18e.jpg"><img src="https://ez.analog.com/cfs-filesystemfile/__key/communityserver-components-secureimagefileviewer/communityserver-wikis-components-files-00-00-00-01-75/462b7691a9c4c01ab55c2f09825bd18e.jpg_2D00_208x103.jpg?_=636716033578360546" alt="img" /></a></p>
-<p>在下一个示例中，使用“<strong>乘”</strong>和“<strong>加”</strong>单元缩放并移动10 Hz的<strong>正弦音调</strong>，使其范围在0到1之间，然后将其发送到<strong>AIGC输出</strong>单元。这会导致PGA增益在0 dB和静音之间快速来回移动，从而产生颤音效果。</p>
-<p><a target="_blank" rel="noopener" href="https://ez.analog.com/cfs-file/__key/communityserver-wikis-components-files/00-00-00-01-75/8f391a0c6d528ce961e9f54617503cd9.jpg"><img src="https://ez.analog.com/cfs-filesystemfile/__key/communityserver-components-secureimagefileviewer/communityserver-wikis-components-files-00-00-00-01-75/8f391a0c6d528ce961e9f54617503cd9.jpg_2D00_349x178.jpg?_=636716033575530468" alt="img" /></a></p>
-<p>在下面的示例中，每个输入的峰值电平由“<strong>峰值包络”</strong>单元检测，并且使用“<strong>除法”</strong>单元和“ <strong>DC输入条目”</strong>单元创建该信号的反相。结果发送到<strong>AIGC输出</strong>单元。这意味着输入峰值电平的倒数用于缩放PGA增益。结果是，当输入信号为低电平时，增益较高；但是，当输入电平增加时，增益将降低以避免削波。</p>
-<p><a target="_blank" rel="noopener" href="https://ez.analog.com/cfs-file/__key/communityserver-wikis-components-files/00-00-00-01-75/d24015ce9b3e9d247f8a8fb1e43943a3.jpg"><img src="https://ez.analog.com/cfs-filesystemfile/__key/communityserver-components-secureimagefileviewer/communityserver-wikis-components-files-00-00-00-01-75/d24015ce9b3e9d247f8a8fb1e43943a3.jpg_2D00_400x379.jpg?_=636716033578810577" alt="img" /></a></p>
-<p>这些只是在ADAU1761的PGA上使用DSP控制模式可以完成的操作的几个示例。</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://islet.space/2021/05/03/Signal/2021-05-03-%E9%9F%B3%E9%A2%91%E8%AE%BE%E5%A4%87%E8%BF%9E%E6%8E%A5%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Liewzheng">
-      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Coder的孤岛">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/05/03/Signal/2021-05-03-%E9%9F%B3%E9%A2%91%E8%AE%BE%E5%A4%87%E8%BF%9E%E6%8E%A5%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" class="post-title-link" itemprop="url">音频设备连接基础知识</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-
-    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
-    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2021-05-03 17:08:00" itemprop="dateCreated datePublished" datetime="2021-05-03T17:08:00+08:00">2021-05-03</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-08-07 00:03:25" itemprop="dateModified" datetime="2021-08-07T00:03:25+08:00">2021-08-07</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Signal/" itemprop="url" rel="index"><span itemprop="name">Signal</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>​</p>
-<p><a target="_blank" rel="noopener" href="https://www.sohu.com/a/418986148_142772">sohu.com</a></p>
-<h1 id="阻抗介绍">阻抗介绍</h1>
-<p>仅针对音频系统中的电路进行说明</p>
-<ul>
-<li>在对电路施加电压时，电阻抗是 <strong>对电路中交流电的抵抗力的度量</strong>。</li>
-<li>阻抗以欧姆为单位（类似于电阻）测量，并且 <strong>可以认为是交流电路中的一种“交流电阻”</strong>。</li>
-<li>音频信号是交流电压，因为它们同时具有负电压和正电压（信号的正振幅和负振幅）。<strong>因此，音频信号是交流电</strong>（具有负电流和正电流）。</li>
-<li>仅当<strong>上级设备</strong>输出连接到前置放大器（或串联的下一个音频设备）时，音频信号才会通过。（上级设备的输出必须创建一个带有负载的电路，以使音频信号流动。）</li>
-</ul>
-<p><img src="https://pic.islet.space/2021/05/a0fcf0d70d88400289cafcd70441614e.png" alt="img" style="zoom:33%;" /></p>
-<p>在音频系统的连接中，有各式各样的设备进行设备串联，首先说两个概念：</p>
-<blockquote>
-<p><strong>输出阻抗</strong>： 音频设备输出端上的固有阻抗。</p>
-<p><strong>负载阻抗</strong>： 音频设备下一级（通常是前置放大器）的输入阻抗，该阻抗与上级的输出共同构成电路。</p>
-</blockquote>
-<p>在音频行业内，行业规定 <mark>输入接口的阻抗应为输出阻抗的10倍以上，这样才能保证音频信号的传输质量</mark>。</p>
-<p><mark>这样的 “<strong>阻抗匹配</strong>” 其实是为了 “<strong>电压匹配</strong>” ，而不是传统电学概念中的输入输出等阻抗的“阻抗匹配”。</mark></p>
-<p>源输出阻抗和输入阻抗之间的电压传递公式：</p>
-<p><strong>V<sub>L</sub>= Z<sub>L</sub>·V<sub>S</sub> / (Z<sub>S</sub>+ Z<sub>L</sub>)</strong></p>
-<blockquote>
-<p>V<sub>L</sub>输入端 =前置放大器输入端的电压。</p>
-<p>V<sub>S</sub>输出端 =麦克风输出端的电压。</p>
-<p>Z<sub>L</sub>输入端 =前置放大器的输入阻抗（麦克风负载阻抗）。</p>
-<p>Z<sub>S</sub>输出端 =麦克风输出阻抗。</p>
-</blockquote>
-<p>可以将其可视化为简单的分压器：</p>
-<p><img src="https://pic.islet.space/2021/05/db9e3783f23c47a4b3529b34e2d8710a.png" alt="img" style="zoom: 33%;" /></p>
-<div style="text-align: center; font-size: 10px; color: #aaa;">
-图 简化电路
-</div>
-<p>不难推算，如果其他所有条件保持不变，增加负载阻抗“ Z输入端”可使上级设备的输出电压与前置放大器的输入电压之间的匹配度更高。</p>
-<p>Z输入端起码要达到Z输出端的10倍以上，电压才可达到源输出端电压的90%，但是我们也不希望输入端的阻抗过大，因为阻抗过高会增加线路出现噪音的可能。</p>
-<p>这种最大化的电压传输称为“阻抗桥接”，或者称为“电压匹配”。</p>
-<h1 id="音频信号">音频信号</h1>
-<p>HOLA，在了解完阻抗的秘密之后，在这里我们简单说一下各个种类的信号等级和阻抗的差异。我们在这说下经常遇到的三类信号：<strong>麦克风信号</strong>、<strong>线路信号</strong>、<strong>乐器信号</strong>。</p>
-<div style="text-align: center; font-size: 10px; color: #aaa;">
-表 各类信号参数表
-</div>
-<p><img src="https://pic.islet.space/2021/05/0a2b0b9619794c908f565d648a72eec6.png" alt="img" style="zoom:50%;" /></p>
-<p><strong>麦克风信号</strong>，就是麦克风输出的信号，其电平大概在 <strong>-60dBV和-40dBV（0.001V - 0.010V)之间</strong>，通常需要前级放大器的放大才能正常使用，麦克风的<strong>输出阻抗通常在150Ω至200Ω之间</strong>。</p>
-<p>所以呢，你的声卡或者话放的Mic Input（麦克风输入）接口的阻值应至少该有1500Ω。</p>
-<p><img src="https://pic.islet.space/2021/05/d969f365edb84996b66525d18320fe3c.jpeg" alt="img" style="zoom:50%;" /></p>
-<div style="text-align: center; font-size: 10px; color: #aaa;">
-图 麦克风信号输入接口
-</div>
-<p><strong>线路信号</strong>也就是Line Level Signal，一般由TRS（大三芯）平衡线缆传递，比如一些播放器、效果器的输出信号都为线路信号，<strong>其电平约为0dBV（1V）</strong>，<strong>是麦克风信号电平的100倍-1000倍</strong>；<strong>其输出阻抗通常在100Ω至600Ω之间</strong>，Line Input（线路信号输入）接口的阻抗通常大于10,000Ω。有些音频接口有独立的Line Input，有的则是复合型。比如M-Audio Air192 | 4</p>
-<p><img src="https://pic.islet.space/2021/05/image-20210503171654739.png" alt="M-Audio  Air192|4" style="zoom: 50%;" /></p>
-<div style="text-align: center; font-size: 10px; color: #aaa;">
-图 M-Audio Air192 | 4
-</div>
-<p><strong>乐器信号</strong> - Instrument Level Signal，乐器信号的电平位于麦克风信号和线路信号之间，通常以TS（大两芯）线缆传递，通常需要<strong>前级放大器</strong>将其提升到合适的<strong>线路电平等级</strong>；电吉他、电贝斯、带有拾音器的原声乐器输出的信号均为乐器信号，通常这些乐器的输出阻抗非常高，约在7,000Ω至15,000Ω甚至更高。因此你经常能看到话放、声卡的线路输入通道上有“Hi-Z(高阻抗）”或者“Line/Instrument”切换开关，能使线路输入接口的阻值增加，以适配乐器信号输入，有些音频接口则直接独立出来高阻乐器输入接口。乐器输入接口阻值通常在1MΩ（100万欧姆）左右。</p>
-<p>在前文说过，如果<strong>乐器输入接口阻值过低时，信号会失真、高频丢失，声音听起来会很沉闷</strong>；而<strong>阻值过高时，会增加线路出现噪音</strong>的可能。而有一类设备能完美的解决这一问题，让你随心所欲的调节满意的音色。比如：</p>
-<p>IK Multimedia的Z‑Tone系列产品可对这些变量进行控制，通过使用高质量的前置放大器，并配备可调的输入阻抗，以使各种拾音器都能发出其完美的声音。Z-Tone系列有两款相关产品，有体积较大的Z‑Tone DI和更紧凑的Z‑Tone Buffer Boost。</p>
-<figure>
-<img src="https://pic.islet.space/2021/05/image-20210503172016745.png" alt="Z‑Tone Buffer Boost" /><figcaption aria-hidden="true">Z‑Tone Buffer Boost</figcaption>
-</figure>
-<div style="text-align: center; font-size: 10px; color: #aaa;">
-图 Z‑Tone Buffer Boost
-</div>
-<h1 id="实际应用">实际应用</h1>
-<p>如果<strong>将高阻抗输出输入到低阻抗麦克风电平输入中，它通常会使前置放大器过载</strong>。这将导致<strong>失真</strong>，甚至可能<strong>损坏前置放大器的电路</strong>！</p>
-<p>例如，如果你想将合成器、吉他等高阻信号插入调音台、音频接口的麦克风（XLR）输入，建议你使用<strong>DI盒转换</strong>，将高阻抗信号转换为低阻抗信号。</p>
-<p><img src="https://pic.islet.space/2021/05/c9178428f8ad4ecf8272344c07e24c02.jpeg" alt="img" style="zoom:50%;" /></p>
-<div style="text-align: center; font-size: 10px; color: #aaa;">
-图 使用Z-Tone DI录制箱琴
-</div>
-<p><strong>注意</strong>：最好将DI盒尽可能靠近高阻抗输出源，较长的走线应将转换后的低阻抗信号传送到调音台或声卡。通俗点说就是，连接时，两芯线短，卡农线长。这将有助于节省更多的音频信号高端频率。</p>
-<p>那么有的好奇的同学会问，低阻抗的输出接入高阻抗会怎样呢？按理论来说，低阻出，高阻入，很完美呀！但是…</p>
-<p>举个栗子🌰，我们的麦克风是低阻输出，你的吉他单块效果器是高阻输入，串联在一起是理想的选择，也有一些朋友想实现这样的操作，让声音变得更有意思。但是你直接拿XLR卡农转TS大两芯，从麦克风插到效果器上，这样是有问题的。</p>
-<p>问题在于，线路或乐器输入需要线路或乐器信号等级。线路和乐器信号的电压比麦克风信号高得多。</p>
-<p><strong>将低阻抗麦克风插入高阻抗乐器或线路输入会产生很低的电平信号。音频信号将接近接收端设备本底噪声，因此当你提升放大器的增益时也会产生更大噪声，这种不良的信噪比是很令人绝望的。</strong></p>
-<p>这时候你就需要Re-amp盒或者类似AXE I/O这种带有Re-amp功能的音频接口来实现你的这一想法。</p>
-<p><img src="https://pic.islet.space/2021/05/cb59d2afa93b469b91fe410bbc38df23.jpeg" alt="img" style="zoom:50%;" /></p>
-<div style="text-align: center; font-size: 10px; color: #aaa;">
-图 IK Multimedia AXE I/O
-</div>
-<p>​</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/6/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><span class="page-number current">7</span><a class="page-number" href="/page/8/">8</a><span class="space">&hellip;</span><a class="page-number" href="/page/11/">11</a><a class="extend next" rel="next" href="/page/8/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <a class="extend prev" rel="prev" href="/page/6/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><span class="page-number current">7</span><a class="page-number" href="/page/8/">8</a><span class="space">&hellip;</span><a class="page-number" href="/page/12/">12</a><a class="extend next" rel="next" href="/page/8/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 
