@@ -162,7 +162,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">111</span>
+          <span class="site-state-item-count">112</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -173,7 +173,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">208</span>
+        <span class="site-state-item-count">210</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -207,6 +207,197 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://islet.space/2022/04/19/Communication/2022-01-18-HALF-DUPLEX-SPI/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Liewzheng">
+      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coder的孤岛">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/04/19/Communication/2022-01-18-HALF-DUPLEX-SPI/" class="post-title-link" itemprop="url">HALF DUPLEX SPI</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2022-04-19 13:40:00" itemprop="dateCreated datePublished" datetime="2022-04-19T13:40:00+08:00">2022-04-19</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2022-04-20 20:05:04" itemprop="dateModified" datetime="2022-04-20T20:05:04+08:00">2022-04-20</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Communication/" itemprop="url" rel="index"><span itemprop="name">Communication</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="spi简介">SPI简介</h1>
+<p>SPI 的物理线支持 <strong>三种类型</strong>：</p>
+<ul>
+<li><strong>片选线</strong>（NCS / CS / SS），某些数据手册会将 <strong>片选引脚</strong> 称为 <code>NSS</code> /<code>NCS</code> / <code>SEL</code> (<strong><em>Sel</em></strong>ect) / <code>CS</code> (<strong><em>C</em></strong>hip <strong><em>S</em></strong>elect) / <code>STE</code> (<strong><em>S</em></strong>laver <strong><em>T</em></strong>ransmit <strong><em>E</em></strong>nable)。</li>
+<li><strong>时钟线</strong>（CLK / SCK）</li>
+<li><strong>数据线</strong>（DA 或 MOSI 和 MISO ）（此处的 DA 特指单根支持半双工的数据线）。</li>
+</ul>
+<p><mark>需要注意的是，SPI的通信线有太多的名称，需要自行对照芯片手册进行查询，避免混淆。</mark></p>
+<p>SPI 通过对硬件资源的使用修改（禁用片选、禁 / 复用数据线）可以达到 <strong>全双工</strong> 或 <strong>半双工</strong> 通信的目的。标准SPI为 四线SPI （CS / CLK / MOSI / MISO）；最低支持2根数据引脚（仅保留 CLK / DA，其中DA为分时复用数据线 ）来达到半双工通信的目的，可以增加一 / 多根 CS 来达到拓展SPI从设备片选的目的；也可以利用四根独立的半双工数据线，来达到 标准四线SPI 四倍通信能力 的 六线SPI（一般被称为 <code>Quad-IO SPI</code>）。</p>
+<h2 id="spi分类">SPI分类</h2>
+<p>SPI通信按GPIO 数量可以分类为 2~6线 SPI，包含单工、半双工、全双工三总。</p>
+<table>
+<thead>
+<tr class="header">
+<th>按GPIO数量分类</th>
+<th>通信制式</th>
+<th>通信线</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>两线SPI</td>
+<td>单工/半双工</td>
+<td>CLK / DA 或 CLK / MOSI 或 CLK / MISO</td>
+</tr>
+<tr class="even">
+<td>三线SPI</td>
+<td>单工/半双工/全双工</td>
+<td>CS / CLK / DA 或 CLK / MOSI / MISO</td>
+</tr>
+<tr class="odd">
+<td>四线SPI</td>
+<td>全双工</td>
+<td>CS / CLK / MOSI / MISO</td>
+</tr>
+<tr class="even">
+<td>六线SPI</td>
+<td>全双工</td>
+<td>CS / CLK / DA1 / DA2 / DA3 / DA4</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>例如，据STM32L476RG芯片手册《<a target="_blank" rel="noopener" href="https://www.st.com/resource/en/reference_manual/rm0351-stm32l47xxx-stm32l48xxx-stm32l49xxx-and-stm32l4axxx-advanced-armbased-32bit-mcus-stmicroelectronics.pdf">RM0351</a>》第1450页所示，SPI外设可以被配置为以下三种模式，即 <strong>三线全双工</strong>，<strong>两线半双工</strong> 和 <strong>两线单工</strong>。</p>
+<ul>
+<li>Full-duplex synchronous transfers on three lines</li>
+<li>Half-duplex synchronous transfer on two lines (with bidirectional data line)</li>
+<li>Simplex synchronous transfers on two lines (with unidirectional data line)</li>
+</ul>
+</blockquote>
+<h1 id="half-duplex-spi">HALF DUPLEX SPI</h1>
+<p>半双工通信可以是 两线SPI 或 三线SPI，后面着重说明两者异同。</p>
+<h2 id="pin-definition">PIN DEFINITION</h2>
+<p><strong>NCS</strong>： SPI控制读写使能信号；<mark style="font-weight: 900;">使用时需要被拉低</mark>，否则SDIO会处在 HIGH-Z 态，而SCLK信号也会被无视。也可以被用于在通信错误发生时重置SPI 通信。两线SPI不需要这根线，但个别芯片可能需要这个引脚接地（不能悬空），具体看芯片手册。</p>
+<p><strong>SDIO</strong>： SPI的数据读写端口；半双工读写。只有在“从被控设备读出数据”的情况下，<code>SDIO</code> 才会由被控制设备控制。</p>
+<p><strong>SCLK</strong>： SPI接口时钟；<mark style="font-weight: 900;">总是由主控制器生成和控制。</mark></p>
+<h2 id="transmission-protocol">TRANSMISSION PROTOCOL</h2>
+<p>跟其他通信类似，SPI 的 SDIO 需要在 时钟低电平时 进行电平跳变。</p>
+<p>半双工SPI读写操作都包含两个字（byte），第一个字包含1 bit的 <strong>数据方向（或称 控制位）</strong> 和 7 bit的 <strong>地址</strong>，第二个字包含 <strong>数据</strong>。</p>
+<h3 id="关于数据方向控制位">关于数据方向/控制位</h3>
+<p>通常定义是，当需要写入数据时，控制位写 <code>1</code> 。当需要读出数据时，控制位写 <code>0</code> 。</p>
+<p><img src="https://pic.islet.space/2022/04/image-20220118135819247.png" alt="image-20220118135819247" style="zoom: 50%;" /></p>
+<p>但不一定所有支持半双工SPI的通信控制位都是在MSB，有可能是在 LSB 。</p>
+<blockquote>
+<p>如，下方右侧 SL8541E 的安卓平台主控，支持半双工SPI，但是其控制位就在地址字符的LSB上。</p>
+<figure>
+<img src="https://pic.islet.space/2022/04/image-20220419235450360.png" alt="image-20220419235450360" /><figcaption aria-hidden="true">image-20220419235450360</figcaption>
+</figure>
+</blockquote>
+<h3 id="写操作">写操作</h3>
+<p><mark style="font-weight:900;">主控制器在SCLK下降沿时改变 SDIO的电平，被控设备在SCLK上升沿时读取SDIO的电平。</mark></p>
+<figure>
+<img src="https://pic.islet.space/2022/04/image-20220118140526017.png" alt="image-20220118140526017" /><figcaption aria-hidden="true">image-20220118140526017</figcaption>
+</figure>
+<h3 id="读取操作">读取操作</h3>
+<blockquote>
+<p>SDIO会在SCLK下降沿时修改，主控制器需要在SCLK的上升沿时读取SDIO的电平信息。</p>
+</blockquote>
+<p><strong>注意</strong>：发送完地址字 之后需要延长半个周期的时钟低电平。</p>
+<figure>
+<img src="https://pic.islet.space/2022/04/image-20220118141033005.png" alt="image-20220118141033005" /><figcaption aria-hidden="true">image-20220118141033005</figcaption>
+</figure>
+<h1 id="debug-records">DEBUG RECORDS</h1>
+<p>下面这个时序图错误的坑是真的大，调了好就才折腾明白，这不能是 <code>Hi-Z</code> 态。</p>
+<h2 id="时序图错误">时序图错误</h2>
+<p>内部调试时发现，SDIO在读取数据前后必须是 <strong>输出模式</strong>，最好 <strong>强制拉高</strong>，而不是 <code>Hi-Z</code> 态。</p>
+<figure>
+<img src="https://pic.islet.space/2022/04/image-20220419210753902.png" alt="image-20220419210753902" /><figcaption aria-hidden="true">image-20220419210753902</figcaption>
+</figure>
+<h2 id="读写单个字符">读写单个字符</h2>
+<p>以下这两个函数中的 <code>for()</code> 使用了 MSB 发送数据，最好不要自作聪明将 <code>i</code> 的数据类型改为 <code>uint8_t</code> 或其他非负型数据，以下这种循环写法会让程序陷入死循环的。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">write_byte</span><span class="params">(<span class="keyword">uint8_t</span> data)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">7</span>; i&gt;= <span class="number">0</span>; i--)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span>( (data &gt;&gt; i) &amp; <span class="number">0x01</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            write_high_level();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">        &#123;</span><br><span class="line">            write_low_level();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">uint8_t</span> <span class="title">read_byte</span><span class="params">(<span class="keyword">void</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">uint8_t</span> data = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">7</span>; i&gt;= <span class="number">0</span>; i--)</span><br><span class="line">    &#123;</span><br><span class="line">        SCLK_SET_LOW;</span><br><span class="line">        delay_nop(LEVEL_DELAY_SLICES);</span><br><span class="line"></span><br><span class="line">        SCLK_SET_HIGH;</span><br><span class="line">        delay_nop(LEVEL_DELAY_SLICES);</span><br><span class="line"></span><br><span class="line">        data |= HAL_GPIO_ReadPin(SPI_DATA_GPIO_Port, SPI_DATA_Pin) &lt;&lt; i;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> data;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="source-code">SOURCE CODE</h1>
+<p>下方是适用于 STM32 平台的 <strong>GPIO-模拟</strong> <strong>半双工SPI</strong> 代码，利用 空指令进行延时控制，实现半双工（三线/两线）SPI 的通信。</p>
+<p>需要适配以下几个功能：</p>
+<ol type="1">
+<li>控制精细度在 <span class="math inline">\([10^{-9}s:10^{-6}s]\)</span> 之间的 <strong>精准延时</strong>（如果做不到，通信速率就上不去 <code>1MHz</code> ）。</li>
+<li>控制引脚电平的宏定义。</li>
+<li><strong>设置数据接口输出</strong> 和 <strong>设置数据接口输入</strong> 的代码。</li>
+<li><strong>拉高电平</strong> 和 <strong>拉低电平</strong> 的代码。</li>
+<li>对照着 <strong>正确的时序图</strong> 撸一遍 <strong>读单字符</strong> 和 <strong>写单字符</strong> 的代码。</li>
+<li>对照着 <strong>正确的时序图</strong> 撸一遍 <strong>写寄存器</strong> 和 <strong>读寄存器</strong> 的代码。</li>
+</ol>
+<p><strong>注意</strong>：都是按顺序来完成的，所有后面的功能都需要依托于前面的功能来实现。而且，需要用示波器（有条件）进行测量以校准通信速率，并使用正确的时序图进行编码（如果是错误的，浪费时间，尽快跟厂家确认）。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br><span class="line">265</span><br><span class="line">266</span><br><span class="line">267</span><br><span class="line">268</span><br><span class="line">269</span><br><span class="line">270</span><br><span class="line">271</span><br><span class="line">272</span><br><span class="line">273</span><br><span class="line">274</span><br><span class="line">275</span><br><span class="line">276</span><br><span class="line">277</span><br><span class="line">278</span><br><span class="line">279</span><br><span class="line">280</span><br><span class="line">281</span><br><span class="line">282</span><br><span class="line">283</span><br><span class="line">284</span><br><span class="line">285</span><br><span class="line">286</span><br><span class="line">287</span><br><span class="line">288</span><br><span class="line">289</span><br><span class="line">290</span><br><span class="line">291</span><br><span class="line">292</span><br><span class="line">293</span><br><span class="line">294</span><br><span class="line">295</span><br><span class="line">296</span><br><span class="line">297</span><br><span class="line">298</span><br><span class="line">299</span><br><span class="line">300</span><br><span class="line">301</span><br><span class="line">302</span><br><span class="line">303</span><br><span class="line">304</span><br><span class="line">305</span><br><span class="line">306</span><br><span class="line">307</span><br><span class="line">308</span><br><span class="line">309</span><br><span class="line">310</span><br><span class="line">311</span><br><span class="line">312</span><br><span class="line">313</span><br><span class="line">314</span><br><span class="line">315</span><br><span class="line">316</span><br><span class="line">317</span><br><span class="line">318</span><br><span class="line">319</span><br><span class="line">320</span><br><span class="line">321</span><br><span class="line">322</span><br><span class="line">323</span><br><span class="line">324</span><br><span class="line">325</span><br><span class="line">326</span><br><span class="line">327</span><br><span class="line">328</span><br><span class="line">329</span><br><span class="line">330</span><br><span class="line">331</span><br><span class="line">332</span><br><span class="line">333</span><br></pre></td><td class="code"><pre><span class="line"> <span class="comment">/*-----------------------------------------------------------------------------</span></span><br><span class="line"><span class="comment"> * HEARDER FILES</span></span><br><span class="line"><span class="comment"> *---------------------------------------------------------------------------*/</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdint.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdbool.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&quot;spi_access.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&quot;stm32l4xx_hal.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&quot;log.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&quot;main.h&quot;</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">/*-----------------------------------------------------------------------------</span></span><br><span class="line"><span class="comment"> * MACRO DEFINITIONS</span></span><br><span class="line"><span class="comment"> *---------------------------------------------------------------------------*/</span></span><br><span class="line"><span class="comment">// 通信引脚定义</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> SPI_DATA_Pin GPIO_PIN_5</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> SPI_DATA_GPIO_Port GPIOC</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> SPI_CLK_Pin GPIO_PIN_6</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> SPI_CLK_GPIO_Port GPIOC</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> SPI_CS_Pin GPIO_PIN_8</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> SPI_CS_GPIO_Port GPIOC</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 定义电平</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">ifndef</span> HIGH_LEVEL</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> HIGH_LEVEL GPIO_PIN_SET</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">ifndef</span> LOW_LEVEL</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> LOW_LEVEL GPIO_PIN_RESET</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 定义引脚电平控制</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> SDIO_SET_HIGH &#123;HAL_GPIO_WritePin(SPI_DATA_GPIO_Port,SPI_DATA_Pin,HIGH_LEVEL);&#125;</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> SDIO_SET_LOW  &#123;HAL_GPIO_WritePin(SPI_DATA_GPIO_Port,SPI_DATA_Pin,LOW_LEVEL);&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> SDIO_SET_IN   &#123;HAL_GPIO_ReadPin(SPI_DATA_GPIO_Port, SPI_DATA_Pin);&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> SCLK_SET_HIGH &#123;HAL_GPIO_WritePin(SPI_CLK_GPIO_Port, SPI_CLK_Pin, HIGH_LEVEL);&#125;</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> SCLK_SET_LOW  &#123;HAL_GPIO_WritePin(SPI_CLK_GPIO_Port, SPI_CLK_Pin, LOW_LEVEL);&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> SNCS_SET_HIGH &#123;HAL_GPIO_WritePin(SPI_CS_GPIO_Port, SPI_CS_Pin, HIGH_LEVEL);&#125;</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> SNCS_SET_LOW  &#123;HAL_GPIO_WritePin(SPI_CS_GPIO_Port, SPI_CS_Pin, LOW_LEVEL);&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 电平延时</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> LEVEL_DELAY_SLICES 80</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 寄存器（最大）尝试写入次数</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> MAX_WRITE_TIMES 10</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/*-----------------------------------------------------------------------------</span></span><br><span class="line"><span class="comment"> * DATA TYPE DECLARATION</span></span><br><span class="line"><span class="comment"> *---------------------------------------------------------------------------*/</span></span><br><span class="line"><span class="comment">// spi句柄</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    <span class="keyword">int</span> handle;</span><br><span class="line">&#125; spi_dev;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*-----------------------------------------------------------------------------</span></span><br><span class="line"><span class="comment"> * GLOBAL PARAMETERS</span></span><br><span class="line"><span class="comment"> *---------------------------------------------------------------------------*/</span></span><br><span class="line"><span class="keyword">static</span> <span class="keyword">bool</span> two_wired_spi;  <span class="comment">// 两线SPI使能开关</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/*-----------------------------------------------------------------------------</span></span><br><span class="line"><span class="comment"> * PRIVATE FUNCTIONS DEFINITION</span></span><br><span class="line"><span class="comment"> *---------------------------------------------------------------------------*/</span></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * @brief delay for a slice of cpu</span></span><br><span class="line"><span class="comment"> * @param &#123;volatile uint32_t&#125; times</span></span><br><span class="line"><span class="comment"> * @return &#123;*&#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">delay_nop</span><span class="params">(<span class="keyword">volatile</span> <span class="keyword">uint32_t</span> times)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">uint32_t</span> i = <span class="number">0</span>; i &lt; times; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        __NOP();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * @brief delay for 1us</span></span><br><span class="line"><span class="comment"> * @param &#123;volatile uint32_t&#125; times</span></span><br><span class="line"><span class="comment"> * @return &#123;*&#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">delay_us</span><span class="params">(<span class="keyword">volatile</span> <span class="keyword">uint32_t</span> times)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">uint32_t</span> i = <span class="number">0</span>; i &lt; times; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        __NOP();__NOP();__NOP();__NOP();__NOP();__NOP();__NOP();__NOP();</span><br><span class="line">        __NOP();__NOP();__NOP();__NOP();__NOP();__NOP();__NOP();__NOP();</span><br><span class="line">        __NOP();__NOP();__NOP();__NOP();__NOP();__NOP();__NOP();__NOP();</span><br><span class="line">        __NOP();__NOP();__NOP();__NOP();__NOP();__NOP();__NOP();__NOP();</span><br><span class="line">        __NOP();__NOP();__NOP();__NOP();__NOP();__NOP();__NOP();__NOP();</span><br><span class="line">        __NOP();__NOP();__NOP();__NOP();__NOP();__NOP();__NOP();__NOP();</span><br><span class="line">        __NOP();__NOP();__NOP();__NOP();__NOP();__NOP();__NOP();__NOP();</span><br><span class="line">        __NOP();__NOP();__NOP();__NOP();__NOP();__NOP();__NOP();__NOP();</span><br><span class="line">        __NOP();__NOP();__NOP();__NOP();__NOP();__NOP();__NOP();__NOP();</span><br><span class="line">        __NOP();__NOP();__NOP();__NOP();__NOP();__NOP();__NOP();__NOP();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">delay_ms</span><span class="params">(<span class="keyword">uint16_t</span> times)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">uint16_t</span> i = <span class="number">0</span>; i &lt; times; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        delay_us(<span class="number">1000</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">sdio_input_mode</span><span class="params">(<span class="keyword">void</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    GPIO_InitTypeDef GPIO_InitStruct = &#123;<span class="number">0</span>&#125;;</span><br><span class="line"></span><br><span class="line">    GPIO_InitStruct.Pin = SPI_DATA_Pin;</span><br><span class="line">    GPIO_InitStruct.Mode = GPIO_MODE_INPUT;</span><br><span class="line">    HAL_GPIO_Init(SPI_DATA_GPIO_Port, &amp;GPIO_InitStruct);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">sdio_output_mode</span><span class="params">(<span class="keyword">void</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    GPIO_InitTypeDef GPIO_InitStruct = &#123;<span class="number">0</span>&#125;;</span><br><span class="line"></span><br><span class="line">    GPIO_InitStruct.Pin = SPI_DATA_Pin ;</span><br><span class="line">    GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;</span><br><span class="line">    GPIO_InitStruct.Pull = GPIO_NOPULL;</span><br><span class="line">    GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;</span><br><span class="line">    HAL_GPIO_Init(SPI_DATA_GPIO_Port, &amp;GPIO_InitStruct);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">write_high_level</span><span class="params">(<span class="keyword">void</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    SCLK_SET_LOW;</span><br><span class="line">    SDIO_SET_HIGH;</span><br><span class="line">    delay_nop(LEVEL_DELAY_SLICES);</span><br><span class="line">    SCLK_SET_HIGH;</span><br><span class="line">    delay_nop(LEVEL_DELAY_SLICES);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">write_low_level</span><span class="params">(<span class="keyword">void</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    SCLK_SET_LOW;</span><br><span class="line">    SDIO_SET_LOW;</span><br><span class="line">    delay_nop(LEVEL_DELAY_SLICES);</span><br><span class="line">    SCLK_SET_HIGH;</span><br><span class="line">    delay_nop(LEVEL_DELAY_SLICES);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">write_byte</span><span class="params">(<span class="keyword">uint8_t</span> data)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">7</span>; i&gt;= <span class="number">0</span>; i--)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span>( (data &gt;&gt; i) &amp; <span class="number">0x01</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            write_high_level();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">        &#123;</span><br><span class="line">            write_low_level();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">uint8_t</span> <span class="title">read_byte</span><span class="params">(<span class="keyword">void</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">uint8_t</span> data = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">7</span>; i&gt;= <span class="number">0</span>; i--)</span><br><span class="line">    &#123;</span><br><span class="line">        SCLK_SET_LOW;</span><br><span class="line">        data |= HAL_GPIO_ReadPin(SPI_DATA_GPIO_Port, SPI_DATA_Pin) &lt;&lt; i;</span><br><span class="line">        delay_nop(LEVEL_DELAY_SLICES);</span><br><span class="line"></span><br><span class="line">        SCLK_SET_HIGH;</span><br><span class="line">        delay_nop(LEVEL_DELAY_SLICES);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> data;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*-----------------------------------------------------------------------------</span></span><br><span class="line"><span class="comment"> * PUBLIC FUNCTIONS DEFINITION</span></span><br><span class="line"><span class="comment"> *---------------------------------------------------------------------------*/</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> *<span class="title">write_sensor_init</span><span class="params">(<span class="keyword">bool</span> switch_two_wired_spi)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(switch_two_wired_spi) </span><br><span class="line">    &#123;</span><br><span class="line">        two_wired_spi = <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> </span><br><span class="line">    &#123;</span><br><span class="line">        two_wired_spi = <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    spi_dev *instance = <span class="literal">NULL</span>;</span><br><span class="line">    instance = <span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(spi_dev));</span><br><span class="line">    <span class="built_in">memset</span>(instance, <span class="number">0</span>, <span class="keyword">sizeof</span>(spi_dev));</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>(two_wired_spi)</span><br><span class="line">    &#123;</span><br><span class="line">        SNCS_SET_LOW;</span><br><span class="line">        SCLK_SET_HIGH;</span><br><span class="line">        delay_ms(<span class="number">5</span>);</span><br><span class="line">        SCLK_SET_LOW;</span><br><span class="line">        delay_ms(<span class="number">1</span>);</span><br><span class="line">        SCLK_SET_HIGH;</span><br><span class="line">        delay_ms(<span class="number">5</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">        sdio_input_mode();</span><br><span class="line">        SCLK_SET_HIGH;</span><br><span class="line">        delay_nop(LEVEL_DELAY_SLICES);</span><br><span class="line">        SCLK_SET_LOW;</span><br><span class="line">        delay_nop(LEVEL_DELAY_SLICES);</span><br><span class="line">        SCLK_SET_HIGH;</span><br><span class="line">        delay_nop(LEVEL_DELAY_SLICES);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    instance-&gt;handle = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">return</span> (<span class="keyword">void</span> *)instance;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">write_sensor_deinit</span><span class="params">(<span class="keyword">void</span>* handle)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (handle != <span class="literal">NULL</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">free</span>(handle);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">        LOGE(<span class="string">&quot;ERROR: NULL spi handle.&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">spi_resynchronized</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (two_wired_spi)</span><br><span class="line">    &#123;</span><br><span class="line">        SCLK_SET_HIGH;</span><br><span class="line">        SDIO_SET_HIGH;</span><br><span class="line">        delay_ms(<span class="number">2</span>);</span><br><span class="line">        SCLK_SET_LOW;</span><br><span class="line">        delay_us(<span class="number">1</span>);</span><br><span class="line">        SCLK_SET_HIGH;</span><br><span class="line">        delay_ms(<span class="number">2</span>);</span><br><span class="line">        SDIO_SET_IN;</span><br><span class="line">        delay_ms(<span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">// 暂时未完成</span></span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">write_register</span><span class="params">(<span class="keyword">uint8_t</span> regAddr, <span class="keyword">uint8_t</span> regData)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    regAddr |= <span class="number">0x80</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">uint8_t</span> write_times = <span class="number">0</span>; write_times &lt; MAX_WRITE_TIMES; write_times++)</span><br><span class="line">    &#123;</span><br><span class="line">        sdio_output_mode();  <span class="comment">// 设置SDIO为输出模式</span></span><br><span class="line">        SDIO_SET_HIGH;       <span class="comment">// 拉高SDIO电平</span></span><br><span class="line">        SCLK_SET_HIGH;       <span class="comment">// 拉高SCLK电平</span></span><br><span class="line">        delay_us(<span class="number">1</span>);         <span class="comment">// 2-wired spi</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span>(!two_wired_spi)</span><br><span class="line">        &#123;</span><br><span class="line">            SNCS_SET_LOW;    <span class="comment">// 拉低SNCS电平</span></span><br><span class="line">        &#125;</span><br><span class="line">        delay_nop(LEVEL_DELAY_SLICES);</span><br><span class="line"></span><br><span class="line">        write_byte(regAddr);</span><br><span class="line">        write_byte(regData);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span>(!two_wired_spi)</span><br><span class="line">        &#123;</span><br><span class="line">            SNCS_SET_HIGH;</span><br><span class="line">            sdio_input_mode();</span><br><span class="line">            delay_nop(LEVEL_DELAY_SLICES);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">        &#123;</span><br><span class="line">            delay_us(<span class="number">500</span>);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span>(read_register(regAddr) == regData) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    LOGE(<span class="string">&quot;ERROR: Write register failed.&quot;</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">uint8_t</span> <span class="title">read_register</span><span class="params">(<span class="keyword">uint8_t</span> regAddr)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">uint8_t</span> data = <span class="number">0</span>;</span><br><span class="line">    regAddr &amp;= <span class="number">0x7F</span>;     <span class="comment">// 设置为读取模式</span></span><br><span class="line"></span><br><span class="line">    sdio_output_mode();  <span class="comment">// 设置SDIO为输出模式</span></span><br><span class="line">    <span class="keyword">if</span>(two_wired_spi) delay_us(<span class="number">10</span>);</span><br><span class="line">    SDIO_SET_HIGH;       <span class="comment">// 拉高SDIO电平</span></span><br><span class="line">    SCLK_SET_HIGH;       <span class="comment">// 拉高SCLK电平</span></span><br><span class="line">    <span class="keyword">if</span>(two_wired_spi) delay_us(<span class="number">100</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>(!two_wired_spi)</span><br><span class="line">    &#123;</span><br><span class="line">        SNCS_SET_LOW;    <span class="comment">// 拉低SNCS电平</span></span><br><span class="line">    &#125;</span><br><span class="line">    delay_nop(LEVEL_DELAY_SLICES);</span><br><span class="line"></span><br><span class="line">    write_byte(regAddr);</span><br><span class="line"></span><br><span class="line">    SCLK_SET_LOW;</span><br><span class="line">    sdio_input_mode();</span><br><span class="line">    <span class="keyword">if</span>(two_wired_spi) delay_us(<span class="number">5</span>);</span><br><span class="line">    <span class="keyword">else</span> delay_nop(LEVEL_DELAY_SLICES);</span><br><span class="line"></span><br><span class="line">    data = read_byte();</span><br><span class="line"></span><br><span class="line">    SCLK_SET_HIGH;</span><br><span class="line">    sdio_output_mode();</span><br><span class="line">    delay_nop(LEVEL_DELAY_SLICES);</span><br><span class="line">    <span class="keyword">if</span>(two_wired_spi) delay_us(<span class="number">40</span>);</span><br><span class="line">    <span class="keyword">else</span> SNCS_SET_HIGH;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> data;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h1 id="reference">REFERENCE</h1>
+<ol type="1">
+<li>[【硬件通信协议】5. 实例解析非标准SPI(三线SPI)_sishuihuahua的博客-CSDN博客_三线spi](https://blog.csdn.net/sishuihuahua/article/details/105047926)</li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1660,120 +1851,6 @@
 <li>但是这种复制只是一种暂时的，重启之后就会被镜像文件所覆盖，所以要重新 snapshot 一下。<mark style="font-weight: 900;">注意，这一步一定要做，否则重启就失效了。</mark></li>
 </ol>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo bless --folder ~/nvme/System/Library/Displays/Contents/Resources/Overrides --bootefi --create-snapshot</span><br></pre></td></tr></table></figure>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://islet.space/2022/01/22/Hardware/STM32/2022-01-22-STM32-NUCLEOL476RG-DEVELOP/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Liewzheng">
-      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Coder的孤岛">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/01/22/Hardware/STM32/2022-01-22-STM32-NUCLEOL476RG-DEVELOP/" class="post-title-link" itemprop="url">STM32-NUCLEOL476RG DEVELOP</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-
-    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
-    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2022-01-22 19:30:00" itemprop="dateCreated datePublished" datetime="2022-01-22T19:30:00+08:00">2022-01-22</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2022-01-24 08:38:28" itemprop="dateModified" datetime="2022-01-24T08:38:28+08:00">2022-01-24</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/InternetOfThings/" itemprop="url" rel="index"><span itemprop="name">InternetOfThings</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>截止2022年1月23日，以下是ST公司的产品线，下图通过Flash大小和Nucleo类型对产品进行了一定划分。</p>
-<p><img src="https://pic.islet.space/2022/01/en.ln1847_stm32_nucleo.jpg" alt="img" style="zoom: 67%;" /></p>
-<h1 id="necleo-l476rg-data-brief">NECLEO-L476RG DATA BRIEF</h1>
-<p>Necleo系列开发板下面有很多型号，且每个型号的板子（除开芯片以外）设计应该都是大同小异的，所以最底层板子也就有了自己的型号。</p>
-<p>而 NecleoL476RG 开发板的底板型号为 <code>MB1136</code> 。且下方所有Necleo的产品都自带 ST-LINK/V2-1 调试器。</p>
-<figure>
-<img src="https://pic.islet.space/2022/01/image-20220122193806691.png" alt="image-20220122193806691" /><figcaption aria-hidden="true">image-20220122193806691</figcaption>
-</figure>
-<h2 id="st-linkv2-1">ST-LINK/V2-1</h2>
-<p>支持USB软件 <strong>重新检查</strong>（re-enumeration） 、支持虚拟COM口、支持大容量储存、支持超过 <code>100mA</code> 电流的电源管理，但是不支持 <strong><em>SWIM</em></strong> 接口且最小输入电压为 <code>3V</code> 。</p>
-<p>注意：一旦激活了 ST-LINK/V2-1 的目标读出保护功能，就会阻止目标应用运行事后运行（prevents the target application from running afterward.）目标读出保护必须被关闭（must be kept disabled on board）。</p>
-<p>可以根据跳线帽的两种状态来使用 ST-LINK/V2-1:</p>
-<ul>
-<li>在线编程和调试STM32（Program/debug the on-board STM32），此时 <code>CN2</code> 的两个跳线帽都连接着，处于在线编程状态（默认）。</li>
-<li>使用连接到SWD连接器CN4的电缆对外部应用板中的MCU进行编程/调试，此时 <code>CN2</code> 的两个跳线帽都不连接，以允许 <code>CN4</code> （即 <code>SWD</code> 接口）连接至外部连接器。</li>
-</ul>
-<figure>
-<img src="https://pic.islet.space/2022/01/image-20220123183857115.png" alt="image-20220123183857115" /><figcaption aria-hidden="true">image-20220123183857115</figcaption>
-</figure>
-<h2 id="layout">LAYOUT</h2>
-<p><img src="https://pic.islet.space/2022/01/image-20220123182028068.png" alt="image-20220123182028068" style="zoom:50%;" /></p>
-<p><img src="https://pic.islet.space/2022/01/image-20220123182139437.png" alt="image-20220123182139437" style="zoom:50%;" /></p>
-<h1 id="chip-breief">CHIP BREIEF</h1>
-<p>STM32 Nucleo L476RG 所使用的芯片是 <code>STM32L476RGT6U</code>，其中 <code>L4</code> 是系列号，<code>76</code> 是产线，<code>R</code> 是指64pin，<code>C</code> 是指 256Kbytes 的 Flash内存大小。</p>
-<p>下方为《<a target="_blank" rel="noopener" href="https://www.st.com/resource/en/data_brief/nucleo-l476rg.pdf">STM32 Nucleo-64 boards data brief</a>》提供的 <strong>产品芯片命名方法</strong>：</p>
-<figure>
-<img src="https://pic.islet.space/2022/01/image-20220122195540612.png" alt="image-20220122195540612" /><figcaption aria-hidden="true">image-20220122195540612</figcaption>
-</figure>
-<h1 id="reference">REFERENCE</h1>
-<ol type="1">
-<li><a target="_blank" rel="noopener" href="https://www.st.com/en/evaluation-tools/nucleo-l476rg.html">NUCLEO-L476RG</a></li>
-</ol>
 
       
     </div>
