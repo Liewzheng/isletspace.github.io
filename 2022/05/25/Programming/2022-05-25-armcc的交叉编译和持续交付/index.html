@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://code.islet.space/font//css?family=/CascadiaCode/CascadiaCode:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/themes/blue/pace-theme-minimal.css">
+  <script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"islet.space","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.7.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/db.json","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":true}}</script><script src="/js/config.js"></script>
+<meta name="description" content="因为基本上没什么人直接使用 armcc 作为自动化编译、持续集成和交付的工具，更多是使用 UV4 软件读取 .uvprojx 文件来获取编译信息，进而驱动 armcc 进行编译过程。 通过自行编辑 Makefile 文件，使用 make 和 armcc 工具可以对代码文件进行编译，可以进行静态库的生成，也可以生成可烧录文件，但是就不要想着复杂的 make test 等测试功能了。 DIFF BET">
+<meta property="og:type" content="article">
+<meta property="og:title" content="armcc的交叉编译和持续交付">
+<meta property="og:url" content="http://islet.space/2022/05/25/Programming/2022-05-25-armcc%E7%9A%84%E4%BA%A4%E5%8F%89%E7%BC%96%E8%AF%91%E5%92%8C%E6%8C%81%E7%BB%AD%E4%BA%A4%E4%BB%98/index.html">
+<meta property="og:site_name" content="Coder的孤岛">
+<meta property="og:description" content="因为基本上没什么人直接使用 armcc 作为自动化编译、持续集成和交付的工具，更多是使用 UV4 软件读取 .uvprojx 文件来获取编译信息，进而驱动 armcc 进行编译过程。 通过自行编辑 Makefile 文件，使用 make 和 armcc 工具可以对代码文件进行编译，可以进行静态库的生成，也可以生成可烧录文件，但是就不要想着复杂的 make test 等测试功能了。 DIFF BET">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://pic.islet.space/2022/06/image-20220608100300944.png">
+<meta property="og:image" content="https://pic.islet.space/2022/06/image-20220608100748964.png">
+<meta property="og:image" content="https://pic.islet.space/2022/06/image-20220609110616631.png">
+<meta property="og:image" content="https://pic.islet.space/2022/06/image-20220608105439447.png">
+<meta property="og:image" content="https://pic.islet.space/2022/06/image-20220608110734097.png">
+<meta property="og:image" content="https://pic.islet.space/2022/06/image-20220608151900214.png">
+<meta property="og:image" content="https://pic.islet.space/2022/06/image-20220608135309057.png">
+<meta property="article:published_time" content="2022-05-25T08:00:00.000Z">
+<meta property="article:modified_time" content="2022-06-09T13:53:25.585Z">
+<meta property="article:author" content="Liewzheng">
+<meta property="article:tag" content="keil">
+<meta property="article:tag" content="cmake">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://pic.islet.space/2022/06/image-20220608100300944.png">
+
+
+<link rel="canonical" href="http://islet.space/2022/05/25/Programming/2022-05-25-armcc%E7%9A%84%E4%BA%A4%E5%8F%89%E7%BC%96%E8%AF%91%E5%92%8C%E6%8C%81%E7%BB%AD%E4%BA%A4%E4%BB%98/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://islet.space/2022/05/25/Programming/2022-05-25-armcc%E7%9A%84%E4%BA%A4%E5%8F%89%E7%BC%96%E8%AF%91%E5%92%8C%E6%8C%81%E7%BB%AD%E4%BA%A4%E4%BB%98/","path":"2022/05/25/Programming/2022-05-25-armcc的交叉编译和持续交付/","title":"armcc的交叉编译和持续交付"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>armcc的交叉编译和持续交付 | Coder的孤岛</title>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<!-- hexo injector head_end end --></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Coder的孤岛</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">islet of the coder</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-首页"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-文章"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>文章</a></li>
+        <li class="menu-item menu-item-目录"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>目录</a></li>
+        <li class="menu-item menu-item-标签"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-简历"><a href="/resume/" rel="section"><i class="fa fa-address-card fa-fw"></i>简历</a></li>
+        <li class="menu-item menu-item-友链"><a href="/friends/" rel="section"><i class="fa fa-heartbeat fa-fw"></i>友链</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#diff-between-them"><span class="nav-number">1.</span> <span class="nav-text">DIFF BETWEEN THEM</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#keil-mdk-env"><span class="nav-number">2.</span> <span class="nav-text">KEIL MDK ENV</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#mdk-softpack"><span class="nav-number">2.1.</span> <span class="nav-text">MDK SOFTPACK</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#toolchain-downloads"><span class="nav-number">2.2.</span> <span class="nav-text">TOOLCHAIN DOWNLOADS</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#toolchain"><span class="nav-number">3.</span> <span class="nav-text">TOOLCHAIN</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#fromelf"><span class="nav-number">3.1.</span> <span class="nav-text">FROMELF</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#armlink"><span class="nav-number">3.2.</span> <span class="nav-text">ARMLINK</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#armcc"><span class="nav-number">3.3.</span> <span class="nav-text">ARMCC</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#makefile"><span class="nav-number">4.</span> <span class="nav-text">MAKEFILE</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#compiling-control-strings"><span class="nav-number">4.1.</span> <span class="nav-text">COMPILING CONTROL STRINGS</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#toolchain-1"><span class="nav-number">4.2.</span> <span class="nav-text">TOOLCHAIN</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#compiling-parameters"><span class="nav-number">4.3.</span> <span class="nav-text">COMPILING PARAMETERS</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#macro-definitions"><span class="nav-number">4.3.1.</span> <span class="nav-text">MACRO DEFINITIONS</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#cpu"><span class="nav-number">4.3.2.</span> <span class="nav-text">CPU</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#about-startup-file"><span class="nav-number">4.4.</span> <span class="nav-text">ABOUT STARTUP FILE</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#debug"><span class="nav-number">5.</span> <span class="nav-text">DEBUG</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#error"><span class="nav-number">5.1.</span> <span class="nav-text">ERROR</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#error-35-please-select-first-the-target-stm32l4xx-device-used-in-your-application"><span class="nav-number">5.1.1.</span> <span class="nav-text">ERROR #35: PLEASE SELECT FIRST THE TARGET STM32L4XX DEVICE USED IN YOUR APPLICATION</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#error-l6050u-the-code-size-of-the-image-exceeds-the-maximum"><span class="nav-number">5.1.2.</span> <span class="nav-text">ERROR L6050U: THE CODE SIZE OF THE IMAGE EXCEEDS THE MAXIMUM</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#error-a1854e-unknown-opcode-blx-maybe-wrong-target-cpu"><span class="nav-number">5.1.3.</span> <span class="nav-text">Error: A1854E: Unknown opcode &#39;BLX&#39;, maybe wrong target CPU?</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#warning"><span class="nav-number">5.2.</span> <span class="nav-text">WARNING</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#warning-1295-d-deprecated-declaration-two_wired_resync---give-arg-types"><span class="nav-number">5.2.1.</span> <span class="nav-text">Warning: #1295-D: Deprecated declaration two_wired_resync - give arg types</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#reference"><span class="nav-number">6.</span> <span class="nav-text">REFERENCE</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Liewzheng</p>
+  <div class="site-description" itemprop="description">笔记分享的旮旯孤岛而已</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">117</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">220</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="mailto:liewzheng@foxmail.com" title="E-Mail → mailto:liewzheng@foxmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://islet.space/2022/05/25/Programming/2022-05-25-armcc%E7%9A%84%E4%BA%A4%E5%8F%89%E7%BC%96%E8%AF%91%E5%92%8C%E6%8C%81%E7%BB%AD%E4%BA%A4%E4%BB%98/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Liewzheng">
+      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coder的孤岛">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          armcc的交叉编译和持续交付
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2022-05-25 16:00:00" itemprop="dateCreated datePublished" datetime="2022-05-25T16:00:00+08:00">2022-05-25</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2022-06-09 21:53:25" itemprop="dateModified" datetime="2022-06-09T21:53:25+08:00">2022-06-09</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Programming/" itemprop="url" rel="index"><span itemprop="name">Programming</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>因为基本上没什么人直接使用 armcc 作为自动化编译、持续集成和交付的工具，更多是使用 UV4 软件读取 <code>.uvprojx</code> 文件来获取编译信息，进而驱动 armcc 进行编译过程。</p>
+<p>通过自行编辑 <code>Makefile</code> 文件，使用 make 和 armcc 工具可以对代码文件进行编译，可以进行静态库的生成，也可以生成可烧录文件，但是就不要想着复杂的 <code>make test</code> 等测试功能了。</p>
+<h1 id="diff-between-them">DIFF BETWEEN THEM</h1>
+<p>下方详细描述一下使用 <code>arm-none-eabi-gcc</code> 、<code>make</code> 、<code>cmake</code> 与 <code>armcc</code> 、<code>make</code> 的不同。</p>
+<ol type="1">
+<li>使用 <code>arm-none-eabi-gcc</code> 和 <code>make</code> 编译的 SDK 过程属于 Unix Makefile 编译过程（详见 CMake 工具及官网对 <a target="_blank" rel="noopener" href="https://cmake.org/cmake/help/latest/manual/cmake-generators.7.html">CMakefiles Generators</a> 说明）。暂时不清楚使用 <code>armcc</code> 和 <code>cmake</code> 是如何生成 <code>Makefile</code> 的，因为尚不了解toolchain的绑定过程，导致一致检测到的是 windows平台本地的 <code>mingw</code> 工具。</li>
+<li>启动文件不同。详见 <a href="##ABOUT%20STARTUP%20FILE">ABOUT STARTUP FILE</a></li>
+<li>工具链指定方式不同。详见 <a href="##TOOLCHAIN">TOOLCHAIN</a></li>
+</ol>
+<h1 id="keil-mdk-env">KEIL MDK ENV</h1>
+<h2 id="mdk-softpack">MDK SOFTPACK</h2>
+<p><a target="_blank" rel="noopener" href="https://www.keil.com/dd2/pack/">MDK5 Software Packs</a></p>
+<h2 id="toolchain-downloads">TOOLCHAIN DOWNLOADS</h2>
+<p>首先需要安装版本较新的 Keil MDK-ARM 开发软件。最好是在Windows上安装，方便破解。</p>
+<p>可以从 <code>About uVision</code> 中查看版本信息。也可以直接在 PowerShell 中直接调用查看。</p>
+<p>MDK 的版本为 <code>v5.22</code> 确实是比较老旧的，建议下载 <code>v5.27</code> 及以上版本。</p>
+<p>下载链接：<a target="_blank" rel="noopener" href="https://storage.islet.space/02_Softwares/06_Embedded/01_CrossCompiler/keil_mdk_armcc/MDK528.exe">MDKv5.28</a>、<a target="_blank" rel="noopener" href="https://storage.islet.space/02_Softwares/06_Embedded/01_CrossCompiler/keil_mdk_armcc/MDK537.exe">MDKv5.37</a>、<a target="_blank" rel="noopener" href="https://storage.islet.space/02_Softwares/06_Embedded/01_CrossCompiler/keil_mdk_armcc/keygen.exe">keygen</a></p>
+<p>官网下载：<a target="_blank" rel="noopener" href="https://developer.arm.com/tools-and-software/embedded/arm-compiler/arm-compiler-5/downloads">ARM Compiler 5 Downloads</a></p>
+<figure>
+<img src="https://pic.islet.space/2022/06/image-20220608100300944.png" alt="image-20220608100300944" /><figcaption aria-hidden="true">image-20220608100300944</figcaption>
+</figure>
+<figure>
+<img src="https://pic.islet.space/2022/06/image-20220608100748964.png" alt="image-20220608100748964" /><figcaption aria-hidden="true">image-20220608100748964</figcaption>
+</figure>
+<h1 id="toolchain">TOOLCHAIN</h1>
+<p>下面的一些参数可以从 <a target="_blank" rel="noopener" href="https://developer.arm.com/documentation/dui0375/g/Compiler-Command-line-Options/">ARM Compiler v5.06 for uVision armcc User Guide</a> 获取帮助。</p>
+<h2 id="fromelf">FROMELF</h2>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">Options:</span><br><span class="line">       --<span class="built_in">help</span>         display this <span class="built_in">help</span> screen</span><br><span class="line">       --vsn          display version information</span><br><span class="line">       --output file  the output file. (defaults to stdout <span class="keyword">for</span> -text format)</span><br><span class="line">       --nodebug      <span class="keyword">do</span> not put debug areas <span class="keyword">in</span> the output image</span><br><span class="line">       --nolinkview   <span class="keyword">do</span> not put sections <span class="keyword">in</span> the output image</span><br><span class="line"></span><br><span class="line">Binary Output Formats:</span><br><span class="line">       --bin          Plain Binary</span><br><span class="line">       --m32          Motorola 32 bit Hex</span><br><span class="line">       --i32          Intel 32 bit Hex</span><br><span class="line">       --vhx          Byte Oriented Hex format</span><br><span class="line"></span><br><span class="line">       --base addr    Optionally <span class="built_in">set</span> base address <span class="keyword">for</span> m32,i32</span><br><span class="line"></span><br><span class="line">Output Formats Requiring Debug Information</span><br><span class="line">       --fieldoffsets Assembly Language Description of Structures/Classes</span><br><span class="line">       --expandarrays Arrays inside and outside structures are expanded</span><br><span class="line"></span><br><span class="line">Other Output Formats:</span><br><span class="line">       --elf         ELF</span><br><span class="line">       --text        Text Information</span><br><span class="line"></span><br><span class="line">                Flags <span class="keyword">for</span> Text Information</span><br><span class="line">                -v          verbose</span><br><span class="line">                -a          <span class="built_in">print</span> data addresses (For images built with debug)</span><br><span class="line">                -c          disassemble code</span><br><span class="line">                -d          <span class="built_in">print</span> contents of data section</span><br><span class="line">                -e          <span class="built_in">print</span> exception tables</span><br><span class="line">                -g          <span class="built_in">print</span> debug tables</span><br><span class="line">                -r          <span class="built_in">print</span> relocation information</span><br><span class="line">                -s          <span class="built_in">print</span> symbol table</span><br><span class="line">                -t          <span class="built_in">print</span> string table</span><br><span class="line">                -y          <span class="built_in">print</span> dynamic segment contents</span><br><span class="line">                -z          <span class="built_in">print</span> code and data size information</span><br></pre></td></tr></table></figure>
+<h2 id="armlink">ARMLINK</h2>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">Usage: armlink option-list input-file-list</span><br><span class="line"><span class="built_in">where</span></span><br><span class="line">    option-list      is a list of case-insensitive options.</span><br><span class="line">    input-file-list  is a list of input object and library files.</span><br><span class="line"></span><br><span class="line">General options (abbreviations shown capitalised):</span><br><span class="line">   --<span class="built_in">help</span>          Print this summary.</span><br><span class="line">   --output file   Specify the name of the output file.</span><br><span class="line">   --via file      Read further arguments from file.</span><br><span class="line"></span><br><span class="line">Options <span class="keyword">for</span> specifying memory map information:</span><br><span class="line">   --partial       Generate a partially linked object.</span><br><span class="line">   --scatter file  Create the memory map as described <span class="keyword">in</span> file.</span><br><span class="line">   --ro-base n     Set <span class="built_in">exec</span> addr of region containing RO sections.</span><br><span class="line">   --rw-base n     Set <span class="built_in">exec</span> addr of region containing RW/ZI sections.</span><br><span class="line"></span><br><span class="line">Options <span class="keyword">for</span> controlling image contents:</span><br><span class="line">   --bestdebug     Add debug information giving best debug view to image.</span><br><span class="line">   --datacompressor off</span><br><span class="line">                   Do not compress RW data sections.</span><br><span class="line">   --no_debug      Do not add debug information to image.</span><br><span class="line">   --entry         Specify entry sections and entry point.</span><br><span class="line">   --libpath       Specify path to find system libraries from.</span><br><span class="line">   --userlibpath   Specify path to find user libraries from.</span><br><span class="line">   --no_locals     Do not add <span class="built_in">local</span> symbols to image symbol table.</span><br><span class="line">   --no_remove     Do not remove unused sections from image.</span><br><span class="line"></span><br><span class="line">Options <span class="keyword">for</span> controlling image related information:</span><br><span class="line">   --callgraph     Create a static callgraph of <span class="built_in">functions</span>.</span><br><span class="line">   --feedback file Generate feedback that can be used by the compiler <span class="keyword">in</span> file.</span><br><span class="line">   --info topic    List misc. information about image.</span><br><span class="line">                    Available topics: (separate multiple topics with comma)</span><br><span class="line">                     common   List common sections eliminated from the image.</span><br><span class="line">                     debug    List eliminated input debug sections.</span><br><span class="line">                     sizes    List code and data sizes <span class="keyword">for</span> objects <span class="keyword">in</span> image.</span><br><span class="line">                     totals   List total sizes of all objects <span class="keyword">in</span> image.</span><br><span class="line">                     veneers  List veneers that have been generated.</span><br><span class="line">                     unused   List sections eliminated from the image.</span><br><span class="line">   --map           Display memory map of image.</span><br><span class="line">   --symbols       List symbols <span class="keyword">in</span> image.</span><br><span class="line">   --xref          List all cross-references between input sections.</span><br></pre></td></tr></table></figure>
+<p><code>--summary_stderr</code></p>
+<h2 id="armcc">ARMCC</h2>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">Usage:         armcc [options] file1 file2 ... filen</span><br><span class="line">Main options:</span><br><span class="line">        </span><br><span class="line">--arm          Generate ARM code</span><br><span class="line">--thumb        Generate Thumb code</span><br><span class="line">--c90          Switch to C mode (default <span class="keyword">for</span> .c files)</span><br><span class="line">--cpp          Switch to C++ mode (default <span class="keyword">for</span> .cpp files)</span><br><span class="line">-O0            Minimum optimization</span><br><span class="line">-O1            Restricted optimization <span class="keyword">for</span> debugging</span><br><span class="line">-O2            High optimization</span><br><span class="line">-O3            Maximum optimization</span><br><span class="line">-Ospace        Optimize <span class="keyword">for</span> codesize</span><br><span class="line">-Otime         Optimize <span class="keyword">for</span> maximum performance</span><br><span class="line">--cpu &lt;cpu&gt;    Select CPU to generate code <span class="keyword">for</span></span><br><span class="line">--cpu list     Output a list of all the selectable CPUs</span><br><span class="line">-o &lt;file&gt;      Name the final output file of the compilation</span><br><span class="line">-c             Compile only, <span class="keyword">do</span> not link</span><br><span class="line">--asm          Output assembly code as well as object code</span><br><span class="line">-S             Output assembly code instead of object code</span><br><span class="line">--interleave   Interleave <span class="built_in">source</span> with disassembly (use with --asm or -S)</span><br><span class="line">-E             Preprocess the C <span class="built_in">source</span> code only</span><br><span class="line">-D&lt;symbol&gt;     Define &lt;symbol&gt; on entry to the compiler</span><br><span class="line">-g             Generate tables <span class="keyword">for</span> high-level debugging</span><br><span class="line">-I&lt;directory&gt;  Include &lt;directory&gt; on the <span class="comment">#include search pat</span></span><br></pre></td></tr></table></figure>
+<h1 id="makefile">MAKEFILE</h1>
+<p>make 可以在任一路径下执行，只需要加入 <code>-C &lt;path&gt;</code> 即可，即告诉make工具在 <code>&lt;path&gt;</code> 路径下执行编译。方便了在 windows 命令行环境下的执行。</p>
+<p>编写 Makefile 的时候，某些变量可以通过外部传递，而且方法也很简单，甚至内部甚至不需要声明，只需要在引用处写明变量名称即可。然后外部调用时以 <code>VARIABLE="value"</code> 的形式进行声明即可。如下：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">make libmxs <span class="literal">-C</span> <span class="number">20220607</span> MANIFEST_PATH=<span class="string">&quot;F:\Workspace\20220511-galileo-manifest&quot;</span> TOOLCHAIN_PATH=<span class="string">&quot;D:\Keil_v528\ARM\ARMCC\bin&quot;</span></span><br></pre></td></tr></table></figure>
+<h2 id="compiling-control-strings">COMPILING CONTROL STRINGS</h2>
+<p>下面这些编译参数是复制自 KEIL IDE 的，对应的平台是 STM32L4R9。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">--c99</span><br><span class="line">-c </span><br><span class="line">--cpu Cortex-M4.fp</span><br><span class="line">-D__MICROLIB -g -O3 --apcs&#x3D;interwork --split_sections </span><br><span class="line"></span><br><span class="line">-I ..&#x2F;app </span><br><span class="line">-I ..&#x2F;M_BSP </span><br><span class="line">-I ..&#x2F;M_BSP&#x2F;BMM150 </span><br><span class="line">-I ..&#x2F;M_BSP&#x2F;Sensor_R1 </span><br><span class="line">-I ..&#x2F;M_BSP&#x2F;lps33k </span><br><span class="line">-I ..&#x2F;M_BSP&#x2F;lcd </span><br><span class="line">-I ..&#x2F;M_BSP&#x2F;PSRAM </span><br><span class="line">-I ..&#x2F;M_BSP&#x2F;OSPI_NOR </span><br><span class="line">-I ..&#x2F;Driver </span><br><span class="line">-I ..&#x2F;..&#x2F;..&#x2F;Drivers&#x2F;CMSIS&#x2F;Include </span><br><span class="line">-I ..&#x2F;..&#x2F;..&#x2F;Drivers&#x2F;CMSIS&#x2F;Device&#x2F;ST&#x2F;STM32L4xx&#x2F;Include </span><br><span class="line">-I ..&#x2F;..&#x2F;..&#x2F;Drivers&#x2F;STM32L4xx_HAL_Driver&#x2F;Inc </span><br><span class="line">-I ..&#x2F;..&#x2F;..&#x2F;Drivers&#x2F;BSP&#x2F;STM32L4R9I_EVAL </span><br><span class="line">-I ..&#x2F;..&#x2F;..&#x2F;Drivers&#x2F;BSP&#x2F;Components&#x2F;Common </span><br><span class="line"></span><br><span class="line">-I.&#x2F;RTE&#x2F;_Watch_EVAL</span><br><span class="line">-IC:&#x2F;Users&#x2F;mixo&#x2F;AppData&#x2F;Local&#x2F;Arm&#x2F;Packs&#x2F;ARM&#x2F;CMSIS&#x2F;5.5.1&#x2F;CMSIS&#x2F;Core&#x2F;Include</span><br><span class="line">-IDrivers&#x2F;CMSIS&#x2F;Device&#x2F;ST&#x2F;STM32L4xx&#x2F;Include</span><br><span class="line">-D__UVISION_VERSION&#x3D;&quot;528&quot; -D_RTE_ -DSTM32L4R9xx -DUSE_HAL_DRIVER -DUSE_GVO_390x390</span><br><span class="line">-o .\Watch\*.o --omf_browse .\Watch\*.crf --depend .\Watch\*.d</span><br></pre></td></tr></table></figure>
+<h2 id="toolchain-1">TOOLCHAIN</h2>
+<p>在 Makefile 文件中，往往为了互相兼容，默认编译器的名称就是 <code>gcc</code> ，只是前缀不同而已，而 <code>armcc</code> 编译器在使用时则需清晰指定名称。</p>
+<p>下方为 <code>armcc</code> 工具链的指定方式：</p>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 工具链</span></span><br><span class="line">CC=<span class="variable">$(TOOLCHAIN_PATH)\&quot;</span>armcc.exe<span class="string">&quot;</span></span><br><span class="line"><span class="string">AS=<span class="variable">$(TOOLCHAIN_PATH)\&quot;</span>armasm.exe&quot;</span></span><br><span class="line">AR=<span class="variable">$(TOOLCHAIN_PATH)\&quot;</span>armar.exe<span class="string">&quot;</span></span><br><span class="line"><span class="string">LINK=<span class="variable">$(TOOLCHAIN_PATH)\&quot;</span>armlink.exe&quot;</span></span><br><span class="line">FROM_ELF=<span class="variable">$(TOOLCHAIN_PATH)\&quot;</span>fromelf.exe<span class="string">&quot;</span></span><br></pre></td></tr></table></figure>
+<p>下方为 <code>arm-none-eabi-gcc</code> 工具链的指定（由 stm32 CubeMX 生成）。</p>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">PREFIX = arm-none-eabi-</span><br><span class="line"><span class="comment"># The gcc compiler bin path can be either defined in make command via GCC_PATH variable (&gt; make GCC_PATH=xxx)</span></span><br><span class="line"><span class="comment"># either it can be added to the PATH environment variable.</span></span><br><span class="line"><span class="keyword">ifdef</span> GCC_PATH</span><br><span class="line">CC = <span class="variable">$(GCC_PATH)</span>/<span class="variable">$(PREFIX)</span>gcc</span><br><span class="line">AS = <span class="variable">$(GCC_PATH)</span>/<span class="variable">$(PREFIX)</span>gcc -x assembler-with-cpp</span><br><span class="line">CP = <span class="variable">$(GCC_PATH)</span>/<span class="variable">$(PREFIX)</span>objcopy</span><br><span class="line">SZ = <span class="variable">$(GCC_PATH)</span>/<span class="variable">$(PREFIX)</span>size</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">CC = <span class="variable">$(PREFIX)</span>gcc</span><br><span class="line">AS = <span class="variable">$(PREFIX)</span>gcc -x assembler-with-cpp</span><br><span class="line">CP = <span class="variable">$(PREFIX)</span>objcopy</span><br><span class="line">SZ = <span class="variable">$(PREFIX)</span>size</span><br><span class="line"><span class="keyword">endif</span></span><br><span class="line">HEX = <span class="variable">$(CP)</span> -O ihex</span><br><span class="line">BIN = <span class="variable">$(CP)</span> -O binary -S</span><br></pre></td></tr></table></figure>
+<h2 id="compiling-parameters">COMPILING PARAMETERS</h2>
+<p>总结出常见的编译参数如下：</p>
+<h3 id="macro-definitions">MACRO DEFINITIONS</h3>
+<p>宏定义参数：<code>-DUSE_HAL_DRIVER</code> / <code>-DSTM32L4R9xx</code> / <code>-D__MICROLIB</code> 。</p>
+<p>其中，前两个还是要依具体芯片的硬件参数来看的</p>
+<h3 id="cpu">CPU</h3>
+<p>CPU 参数：<code>--cpu Cortex-M4.fp</code> / <code>--cpu Cortex-M4</code> 等。</p>
+<p>使用<code>armcc --cpu list</code> 命令可以查看所有可接受的芯片，如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line">--cpu=<span class="number">4</span></span><br><span class="line">--cpu=<span class="number">4</span>T</span><br><span class="line">--cpu=<span class="number">5</span>T</span><br><span class="line">--cpu=<span class="number">5</span>TE</span><br><span class="line">--cpu=<span class="number">5</span>TEJ</span><br><span class="line">--cpu=<span class="number">6</span>-M</span><br><span class="line">--cpu=<span class="number">6</span>S-M</span><br><span class="line">--cpu=<span class="number">7</span>-A</span><br><span class="line">--cpu=<span class="number">7</span>-R</span><br><span class="line">--cpu=<span class="number">7</span>-M</span><br><span class="line">--cpu=<span class="number">7</span>E-M</span><br><span class="line">--cpu=<span class="number">7</span>-A.security</span><br><span class="line">--cpu=ARM7EJ-S</span><br><span class="line">--cpu=ARM7TDMI</span><br><span class="line">--cpu=ARM720T</span><br><span class="line">--cpu=ARM7TDMI-S</span><br><span class="line">--cpu=ARM9TDMI</span><br><span class="line">--cpu=ARM920T</span><br><span class="line">--cpu=ARM922T</span><br><span class="line">--cpu=ARM9E-S</span><br><span class="line">--cpu=ARM926EJ-S</span><br><span class="line">--cpu=ARM946E-S</span><br><span class="line">--cpu=ARM966E-S</span><br><span class="line">--cpu=Cortex-M0</span><br><span class="line">--cpu=Cortex-M0plus</span><br><span class="line">--cpu=SC000</span><br><span class="line">--cpu=Cortex-M1</span><br><span class="line">--cpu=Cortex-M1.os_extension</span><br><span class="line">--cpu=Cortex-M1.no_os_extension</span><br><span class="line">--cpu=Cortex-M3</span><br><span class="line">--cpu=Cortex-M3-rev0</span><br><span class="line">--cpu=SC300</span><br><span class="line">--cpu=Cortex-M4</span><br><span class="line">--cpu=Cortex-M4.fp.sp</span><br><span class="line">--cpu=Cortex-M7</span><br><span class="line">--cpu=Cortex-M7.fp.sp</span><br><span class="line">--cpu=Cortex-M7.fp.dp</span><br><span class="line">--cpu=Cortex-R4</span><br><span class="line">--cpu=Cortex-R4F</span><br><span class="line">--cpu=Cortex-A5</span><br><span class="line">--cpu=Cortex-A5.vfp</span><br><span class="line">--cpu=Cortex-A5.neon</span><br><span class="line">--cpu=Cortex-A7</span><br><span class="line">--cpu=Cortex-A7.no_neon</span><br><span class="line">--cpu=Cortex-A7.no_neon.no_vfp</span><br><span class="line">--cpu=Cortex-A8</span><br><span class="line">--cpu=Cortex-A8.no_neon</span><br><span class="line">--cpu=Cortex-A8NoNEON</span><br><span class="line">--cpu=Cortex-A9</span><br><span class="line">--cpu=Cortex-A9.no_neon</span><br><span class="line">--cpu=Cortex-A9.no_neon.no_vfp</span><br><span class="line">--cpu=Cortex-A12</span><br><span class="line">--cpu=Cortex-A12.no_neon.no_vfp</span><br><span class="line">--cpu=Cortex-A15</span><br><span class="line">--cpu=Cortex-A15.no_neon</span><br><span class="line">--cpu=Cortex-A15.no_neon.no_vfp</span><br><span class="line">--cpu=Cortex-A17</span><br><span class="line">--cpu=Cortex-A17.no_neon.no_vfp</span><br></pre></td></tr></table></figure>
+<h2 id="about-startup-file">ABOUT STARTUP FILE</h2>
+<p>CubeMX 针对不同的编译方式和平台生成对应的 <code>startup file</code> 。而使用 Unix Makefile 编译的 <code>startup_stm32l476xx.s</code> 和 使用 Keil MDK-ARM 的是不一样的。</p>
+<p><code>startup_stm32xxxxxx.s</code> 是使用汇编语言写好的基本程序，当STM32 芯片上电启动的时候，会执行此处的汇编程序，从而建立 C 语言的运行环境，所以称之为启动文件。</p>
+<p>由于编译器不一致，所以 <code>.s</code> 的启动文件也不能互相兼容，需要使用 CubeMX重新生成。</p>
+<figure>
+<img src="https://pic.islet.space/2022/06/image-20220609110616631.png" alt="image-20220609110616631" /><figcaption aria-hidden="true">image-20220609110616631</figcaption>
+</figure>
+<h1 id="debug">DEBUG</h1>
+<h2 id="error">ERROR</h2>
+<h3 id="error-35-please-select-first-the-target-stm32l4xx-device-used-in-your-application">ERROR #35: PLEASE SELECT FIRST THE TARGET STM32L4XX DEVICE USED IN YOUR APPLICATION</h3>
+<figure>
+<img src="https://pic.islet.space/2022/06/image-20220608105439447.png" alt="image-20220608105439447" /><figcaption aria-hidden="true">image-20220608105439447</figcaption>
+</figure>
+<p>没有添加宏定义，添加 <code>-DSTM32L476xx</code> 和 <code>-DUSE_HAL_DRIVER</code> 即可。</p>
+<h3 id="error-l6050u-the-code-size-of-the-image-exceeds-the-maximum">ERROR L6050U: THE CODE SIZE OF THE IMAGE EXCEEDS THE MAXIMUM</h3>
+<figure>
+<img src="https://pic.islet.space/2022/06/image-20220608110734097.png" alt="image-20220608110734097" /><figcaption aria-hidden="true">image-20220608110734097</figcaption>
+</figure>
+<blockquote>
+<p>版权问题，当你在使用keil时，出现 <code>error: L6050U: The code size of this image (45178 bytes) exceeds the maximum allowed for this version of the linker.</code> 的时候，那就是 keil 没有被破解，软件本身的字节数有局限性，需要下载个MDK注册机进行破解！</p>
+</blockquote>
+<h3 id="error-a1854e-unknown-opcode-blx-maybe-wrong-target-cpu">Error: A1854E: Unknown opcode 'BLX', maybe wrong target CPU?</h3>
+<figure>
+<img src="https://pic.islet.space/2022/06/image-20220608151900214.png" alt="image-20220608151900214" /><figcaption aria-hidden="true">image-20220608151900214</figcaption>
+</figure>
+<h2 id="warning">WARNING</h2>
+<h3 id="warning-1295-d-deprecated-declaration-two_wired_resync---give-arg-types">Warning: #1295-D: Deprecated declaration two_wired_resync - give arg types</h3>
+<figure>
+<img src="https://pic.islet.space/2022/06/image-20220608135309057.png" alt="image-20220608135309057" /><figcaption aria-hidden="true">image-20220608135309057</figcaption>
+</figure>
+<p>在传递参数为空的函数中，必须写 <code>void</code> ，armcc要求比较严格，<code>arm-none-eabi</code> 的要求比较宽松。</p>
+<h1 id="reference">REFERENCE</h1>
+<ol type="1">
+<li><a target="_blank" rel="noopener" href="https://www.cnblogs.com/zhangsx/p/zhangsx_keil_tools_usage.html">keil编译链接过程以及ARMCC、ARMASM、FROMELF、ARMLINK、ARMAR的使用</a></li>
+<li><a target="_blank" rel="noopener" href="https://developer.arm.com/documentation/dui0375/g/Compiler-Command-line-Options/">ARM Compiler v5.06 for uVision armcc User Guide</a></li>
+<li>《<a target="_blank" rel="noopener" href="https://documentation-service.arm.com/static/5f721c6c1b758617cd950f6f?token=">ARM® Compiler v5.06 for μVision®</a>》</li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>感谢您的支持和鼓励</div>
+  <button>
+    Donate
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="https://photo.islet.space/2021/00/IMG_4588.JPG" alt="Liewzheng WeChat Pay">
+        <span>WeChat Pay</span>
+      </div>
+      <div>
+        <img src="https://photo.islet.space/2021/00/IMG_4590.JPG" alt="Liewzheng Alipay">
+        <span>Alipay</span>
+      </div>
+
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/keil/" rel="tag"># keil</a>
+              <a href="/tags/cmake/" rel="tag"># cmake</a>
+          </div>
+
+        
+
+  <div id="vcomments" style="margin: 1rem 0 0 0;"></div>
+  <script>
+    new Valine({
+      el: '#vcomments',
+      appId: 'vRGM12EcYxDSM2lat5qjjSeY-gzGzoHsz',
+      appKey: 'WBgAb6NTAFQ7DYtgH0uOPNNh'
+    })
+  </script>
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/05/24/Computer/2022-05-24-%E5%B5%8C%E5%85%A5%E5%BC%8F%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B%E5%B8%88%E7%9A%84%E7%94%9F%E4%BA%A7%E5%8A%9B%E5%B7%A5%E5%85%B7/" rel="prev" title="嵌入式软件工程师的生产力工具">
+                  <i class="fa fa-chevron-left"></i> 嵌入式软件工程师的生产力工具
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2022/06/09/Programming/Windows/2022-06-09-Bat-Script/" rel="next" title="Bat Script">
+                  Bat Script <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">粤ICP备19004822号 </a>
+  </div>
+
+<div class="copyright">
+  &copy; 2019 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">liewzheng</span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdn.jsdelivr.net/npm/mermaid@8.12.0/dist/mermaid.min.js","integrity":"sha256-0dD7vUjUCTGJjeLnPotQQJIcSzug5fO6WDMYYyNIX4c="}}</script>
+  <script src="/js/third-party/tags/mermaid.js"></script>
+
+
+  <script src="/js/third-party/pace.js"></script>
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":"enable","tags":"all","js":{"url":"https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js","integrity":"sha256-r+3itOMtGGjap0x+10hu6jW/gZCzxHsoKrOd7gyRSGY="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>

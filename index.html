@@ -162,7 +162,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">112</span>
+          <span class="site-state-item-count">117</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -173,7 +173,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">210</span>
+        <span class="site-state-item-count">220</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -207,6 +207,729 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://islet.space/2022/06/09/Programming/Windows/2022-06-09-Bat-Script/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Liewzheng">
+      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coder的孤岛">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/06/09/Programming/Windows/2022-06-09-Bat-Script/" class="post-title-link" itemprop="url">Bat Script</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2022-06-09 15:30:00 / Modified: 21:53:36" itemprop="dateCreated datePublished" datetime="2022-06-09T15:30:00+08:00">2022-06-09</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Programming/" itemprop="url" rel="index"><span itemprop="name">Programming</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>下面所有的脚本都会类比 Linux Shell Script 进行。</p>
+<blockquote>
+<p>Windows有两个命令行 shell：Command shell 和 PowerShell。 每个 shell 都是一个软件程序，它提供你与操作系统或应用程序之间的直接通信，提供一个环境来自动执行 IT 操作。</p>
+<p>Command shell 是内置于 Windows中，用于自动执行常规任务（例如用户帐户管理或夜间备份）和批处理 (.bat) 文件。 使用Windows脚本主机，可以在命令外壳中运行更复杂的脚本。 有关详细信息，请参阅 cscript 或 wscript。 通过使用脚本可以比使用用户界面更有效地执行操作。 脚本接受命令行中提供的所有命令。</p>
+<p>PowerShell 旨在扩展 Command shell 的功能，以运行名为 cmdlet 的 PowerShell 命令。 Cmdlet 类似于 Windows命令，但提供了更具可扩展性的脚本语言。 可以在 PowerShell 中Windows命令和 PowerShell cmdlet，但命令外壳只能运行 Windows 命令，不能运行 PowerShell cmdlet。</p>
+<p>若要实现最可靠、最新的自动化Windows，建议使用 PowerShell 而不是 Windows 命令或 Windows 脚本主机Windows自动化。</p>
+</blockquote>
+<h1 id="generic-script">Generic Script</h1>
+<h2 id="注释">注释</h2>
+<p>windows bat 批处理和 PowerShell 都可以使用 <code>::</code> 作为注释头部信息。与 Linux Shell Script 和 Python 的 <code>#</code> 不一致（反人类罪）。</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">:: 注释</span><br></pre></td></tr></table></figure>
+<h2 id="del-rd">DEL&amp; RD</h2>
+<p><code>del</code> 删除命令只能删除文件，<code>rd</code> 可以删除文件夹</p>
+<p><code>/Q</code> 是静默删除，不提示文字。<code>/S</code> 除目录本身外，还将删除指定目录下的所有子目录和文件。用于删除目录树。</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">:: 静默删除所有文件和文件夹</span><br><span class="line"><span class="built_in">del</span> /Q %BUILD_PATH%\*.o</span><br><span class="line"><span class="built_in">rd</span> /S /Q %BUILD_PATH%\bin</span><br><span class="line"><span class="built_in">rd</span> /S /Q %BUILD_PATH%\log</span><br><span class="line"><span class="built_in">rd</span> /S /Q %BUILD_PATH%\lib</span><br><span class="line"><span class="built_in">rd</span> /S /Q %BUILD_PATH%\map</span><br></pre></td></tr></table></figure>
+<h2 id="常见命令对照表">常见命令对照表</h2>
+<table>
+<thead>
+<tr class="header">
+<th>Windows Bat</th>
+<th>Windows PowerShell</th>
+<th>Linux Shell</th>
+<th>Others</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>help</td>
+<td>Get-Help</td>
+<td>man</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>cd /D</td>
+<td>Set-Location</td>
+<td>cd</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>cd</td>
+<td>Get-Location</td>
+<td>pwd</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>type</td>
+<td>Get-Content</td>
+<td>cat</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>rd /S<br>rmdir /S</td>
+<td>Remove-Item</td>
+<td>rm -r</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>del<br>erase</td>
+<td>Remove-Item</td>
+<td>rm</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>dir /b</td>
+<td></td>
+<td>ls</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>dir</td>
+<td>Get-ChildItem</td>
+<td>ll</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>cls</td>
+<td>Clear-Host</td>
+<td>clear</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>doskey</td>
+<td>Set-Alias</td>
+<td>alias</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>md<br>mkdir</td>
+<td>New-Item</td>
+<td>mkdir</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>move</td>
+<td>Move-Item</td>
+<td>mv</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>ren<br>rename</td>
+<td>Rename-Item</td>
+<td>mv</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>copy</td>
+<td>Copy-Item</td>
+<td>cp</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>echo</td>
+<td>Write-Output</td>
+<td>echo</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="条件语句">条件语句</h2>
+<p>bat 的条件语句教程：《<a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/windows-server/administration/windows-commands/if">if</a>》</p>
+<p>PowerShell 的条件语句教程：《<a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/powershell/module/microsoft.powershell.core/about/about_if?view=powershell-7.2">about_If</a>》</p>
+<h1 id="reference">REFERENCE</h1>
+<ol type="1">
+<li><a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/powershell/scripting/overview?view=powershell-7.2">什么是 PowerShell？</a></li>
+<li><a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/powershell/module/microsoft.powershell.management/?view=powershell-7.2">Microsoft.PowerShell.Management</a></li>
+<li><a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/windows-server/administration/windows-commands/windows-commands">Windows 命令</a></li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://islet.space/2022/05/25/Programming/2022-05-25-armcc%E7%9A%84%E4%BA%A4%E5%8F%89%E7%BC%96%E8%AF%91%E5%92%8C%E6%8C%81%E7%BB%AD%E4%BA%A4%E4%BB%98/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Liewzheng">
+      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coder的孤岛">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/05/25/Programming/2022-05-25-armcc%E7%9A%84%E4%BA%A4%E5%8F%89%E7%BC%96%E8%AF%91%E5%92%8C%E6%8C%81%E7%BB%AD%E4%BA%A4%E4%BB%98/" class="post-title-link" itemprop="url">armcc的交叉编译和持续交付</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2022-05-25 16:00:00" itemprop="dateCreated datePublished" datetime="2022-05-25T16:00:00+08:00">2022-05-25</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2022-06-09 21:53:25" itemprop="dateModified" datetime="2022-06-09T21:53:25+08:00">2022-06-09</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Programming/" itemprop="url" rel="index"><span itemprop="name">Programming</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>因为基本上没什么人直接使用 armcc 作为自动化编译、持续集成和交付的工具，更多是使用 UV4 软件读取 <code>.uvprojx</code> 文件来获取编译信息，进而驱动 armcc 进行编译过程。</p>
+<p>通过自行编辑 <code>Makefile</code> 文件，使用 make 和 armcc 工具可以对代码文件进行编译，可以进行静态库的生成，也可以生成可烧录文件，但是就不要想着复杂的 <code>make test</code> 等测试功能了。</p>
+<h1 id="diff-between-them">DIFF BETWEEN THEM</h1>
+<p>下方详细描述一下使用 <code>arm-none-eabi-gcc</code> 、<code>make</code> 、<code>cmake</code> 与 <code>armcc</code> 、<code>make</code> 的不同。</p>
+<ol type="1">
+<li>使用 <code>arm-none-eabi-gcc</code> 和 <code>make</code> 编译的 SDK 过程属于 Unix Makefile 编译过程（详见 CMake 工具及官网对 <a target="_blank" rel="noopener" href="https://cmake.org/cmake/help/latest/manual/cmake-generators.7.html">CMakefiles Generators</a> 说明）。暂时不清楚使用 <code>armcc</code> 和 <code>cmake</code> 是如何生成 <code>Makefile</code> 的，因为尚不了解toolchain的绑定过程，导致一致检测到的是 windows平台本地的 <code>mingw</code> 工具。</li>
+<li>启动文件不同。详见 <a href="##ABOUT%20STARTUP%20FILE">ABOUT STARTUP FILE</a></li>
+<li>工具链指定方式不同。详见 <a href="##TOOLCHAIN">TOOLCHAIN</a></li>
+</ol>
+<h1 id="keil-mdk-env">KEIL MDK ENV</h1>
+<h2 id="mdk-softpack">MDK SOFTPACK</h2>
+<p><a target="_blank" rel="noopener" href="https://www.keil.com/dd2/pack/">MDK5 Software Packs</a></p>
+<h2 id="toolchain-downloads">TOOLCHAIN DOWNLOADS</h2>
+<p>首先需要安装版本较新的 Keil MDK-ARM 开发软件。最好是在Windows上安装，方便破解。</p>
+<p>可以从 <code>About uVision</code> 中查看版本信息。也可以直接在 PowerShell 中直接调用查看。</p>
+<p>MDK 的版本为 <code>v5.22</code> 确实是比较老旧的，建议下载 <code>v5.27</code> 及以上版本。</p>
+<p>下载链接：<a target="_blank" rel="noopener" href="https://storage.islet.space/02_Softwares/06_Embedded/01_CrossCompiler/keil_mdk_armcc/MDK528.exe">MDKv5.28</a>、<a target="_blank" rel="noopener" href="https://storage.islet.space/02_Softwares/06_Embedded/01_CrossCompiler/keil_mdk_armcc/MDK537.exe">MDKv5.37</a>、<a target="_blank" rel="noopener" href="https://storage.islet.space/02_Softwares/06_Embedded/01_CrossCompiler/keil_mdk_armcc/keygen.exe">keygen</a></p>
+<p>官网下载：<a target="_blank" rel="noopener" href="https://developer.arm.com/tools-and-software/embedded/arm-compiler/arm-compiler-5/downloads">ARM Compiler 5 Downloads</a></p>
+<figure>
+<img src="https://pic.islet.space/2022/06/image-20220608100300944.png" alt="image-20220608100300944" /><figcaption aria-hidden="true">image-20220608100300944</figcaption>
+</figure>
+<figure>
+<img src="https://pic.islet.space/2022/06/image-20220608100748964.png" alt="image-20220608100748964" /><figcaption aria-hidden="true">image-20220608100748964</figcaption>
+</figure>
+<h1 id="toolchain">TOOLCHAIN</h1>
+<p>下面的一些参数可以从 <a target="_blank" rel="noopener" href="https://developer.arm.com/documentation/dui0375/g/Compiler-Command-line-Options/">ARM Compiler v5.06 for uVision armcc User Guide</a> 获取帮助。</p>
+<h2 id="fromelf">FROMELF</h2>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">Options:</span><br><span class="line">       --<span class="built_in">help</span>         display this <span class="built_in">help</span> screen</span><br><span class="line">       --vsn          display version information</span><br><span class="line">       --output file  the output file. (defaults to stdout <span class="keyword">for</span> -text format)</span><br><span class="line">       --nodebug      <span class="keyword">do</span> not put debug areas <span class="keyword">in</span> the output image</span><br><span class="line">       --nolinkview   <span class="keyword">do</span> not put sections <span class="keyword">in</span> the output image</span><br><span class="line"></span><br><span class="line">Binary Output Formats:</span><br><span class="line">       --bin          Plain Binary</span><br><span class="line">       --m32          Motorola 32 bit Hex</span><br><span class="line">       --i32          Intel 32 bit Hex</span><br><span class="line">       --vhx          Byte Oriented Hex format</span><br><span class="line"></span><br><span class="line">       --base addr    Optionally <span class="built_in">set</span> base address <span class="keyword">for</span> m32,i32</span><br><span class="line"></span><br><span class="line">Output Formats Requiring Debug Information</span><br><span class="line">       --fieldoffsets Assembly Language Description of Structures/Classes</span><br><span class="line">       --expandarrays Arrays inside and outside structures are expanded</span><br><span class="line"></span><br><span class="line">Other Output Formats:</span><br><span class="line">       --elf         ELF</span><br><span class="line">       --text        Text Information</span><br><span class="line"></span><br><span class="line">                Flags <span class="keyword">for</span> Text Information</span><br><span class="line">                -v          verbose</span><br><span class="line">                -a          <span class="built_in">print</span> data addresses (For images built with debug)</span><br><span class="line">                -c          disassemble code</span><br><span class="line">                -d          <span class="built_in">print</span> contents of data section</span><br><span class="line">                -e          <span class="built_in">print</span> exception tables</span><br><span class="line">                -g          <span class="built_in">print</span> debug tables</span><br><span class="line">                -r          <span class="built_in">print</span> relocation information</span><br><span class="line">                -s          <span class="built_in">print</span> symbol table</span><br><span class="line">                -t          <span class="built_in">print</span> string table</span><br><span class="line">                -y          <span class="built_in">print</span> dynamic segment contents</span><br><span class="line">                -z          <span class="built_in">print</span> code and data size information</span><br></pre></td></tr></table></figure>
+<h2 id="armlink">ARMLINK</h2>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">Usage: armlink option-list input-file-list</span><br><span class="line"><span class="built_in">where</span></span><br><span class="line">    option-list      is a list of case-insensitive options.</span><br><span class="line">    input-file-list  is a list of input object and library files.</span><br><span class="line"></span><br><span class="line">General options (abbreviations shown capitalised):</span><br><span class="line">   --<span class="built_in">help</span>          Print this summary.</span><br><span class="line">   --output file   Specify the name of the output file.</span><br><span class="line">   --via file      Read further arguments from file.</span><br><span class="line"></span><br><span class="line">Options <span class="keyword">for</span> specifying memory map information:</span><br><span class="line">   --partial       Generate a partially linked object.</span><br><span class="line">   --scatter file  Create the memory map as described <span class="keyword">in</span> file.</span><br><span class="line">   --ro-base n     Set <span class="built_in">exec</span> addr of region containing RO sections.</span><br><span class="line">   --rw-base n     Set <span class="built_in">exec</span> addr of region containing RW/ZI sections.</span><br><span class="line"></span><br><span class="line">Options <span class="keyword">for</span> controlling image contents:</span><br><span class="line">   --bestdebug     Add debug information giving best debug view to image.</span><br><span class="line">   --datacompressor off</span><br><span class="line">                   Do not compress RW data sections.</span><br><span class="line">   --no_debug      Do not add debug information to image.</span><br><span class="line">   --entry         Specify entry sections and entry point.</span><br><span class="line">   --libpath       Specify path to find system libraries from.</span><br><span class="line">   --userlibpath   Specify path to find user libraries from.</span><br><span class="line">   --no_locals     Do not add <span class="built_in">local</span> symbols to image symbol table.</span><br><span class="line">   --no_remove     Do not remove unused sections from image.</span><br><span class="line"></span><br><span class="line">Options <span class="keyword">for</span> controlling image related information:</span><br><span class="line">   --callgraph     Create a static callgraph of <span class="built_in">functions</span>.</span><br><span class="line">   --feedback file Generate feedback that can be used by the compiler <span class="keyword">in</span> file.</span><br><span class="line">   --info topic    List misc. information about image.</span><br><span class="line">                    Available topics: (separate multiple topics with comma)</span><br><span class="line">                     common   List common sections eliminated from the image.</span><br><span class="line">                     debug    List eliminated input debug sections.</span><br><span class="line">                     sizes    List code and data sizes <span class="keyword">for</span> objects <span class="keyword">in</span> image.</span><br><span class="line">                     totals   List total sizes of all objects <span class="keyword">in</span> image.</span><br><span class="line">                     veneers  List veneers that have been generated.</span><br><span class="line">                     unused   List sections eliminated from the image.</span><br><span class="line">   --map           Display memory map of image.</span><br><span class="line">   --symbols       List symbols <span class="keyword">in</span> image.</span><br><span class="line">   --xref          List all cross-references between input sections.</span><br></pre></td></tr></table></figure>
+<p><code>--summary_stderr</code></p>
+<h2 id="armcc">ARMCC</h2>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">Usage:         armcc [options] file1 file2 ... filen</span><br><span class="line">Main options:</span><br><span class="line">        </span><br><span class="line">--arm          Generate ARM code</span><br><span class="line">--thumb        Generate Thumb code</span><br><span class="line">--c90          Switch to C mode (default <span class="keyword">for</span> .c files)</span><br><span class="line">--cpp          Switch to C++ mode (default <span class="keyword">for</span> .cpp files)</span><br><span class="line">-O0            Minimum optimization</span><br><span class="line">-O1            Restricted optimization <span class="keyword">for</span> debugging</span><br><span class="line">-O2            High optimization</span><br><span class="line">-O3            Maximum optimization</span><br><span class="line">-Ospace        Optimize <span class="keyword">for</span> codesize</span><br><span class="line">-Otime         Optimize <span class="keyword">for</span> maximum performance</span><br><span class="line">--cpu &lt;cpu&gt;    Select CPU to generate code <span class="keyword">for</span></span><br><span class="line">--cpu list     Output a list of all the selectable CPUs</span><br><span class="line">-o &lt;file&gt;      Name the final output file of the compilation</span><br><span class="line">-c             Compile only, <span class="keyword">do</span> not link</span><br><span class="line">--asm          Output assembly code as well as object code</span><br><span class="line">-S             Output assembly code instead of object code</span><br><span class="line">--interleave   Interleave <span class="built_in">source</span> with disassembly (use with --asm or -S)</span><br><span class="line">-E             Preprocess the C <span class="built_in">source</span> code only</span><br><span class="line">-D&lt;symbol&gt;     Define &lt;symbol&gt; on entry to the compiler</span><br><span class="line">-g             Generate tables <span class="keyword">for</span> high-level debugging</span><br><span class="line">-I&lt;directory&gt;  Include &lt;directory&gt; on the <span class="comment">#include search pat</span></span><br></pre></td></tr></table></figure>
+<h1 id="makefile">MAKEFILE</h1>
+<p>make 可以在任一路径下执行，只需要加入 <code>-C &lt;path&gt;</code> 即可，即告诉make工具在 <code>&lt;path&gt;</code> 路径下执行编译。方便了在 windows 命令行环境下的执行。</p>
+<p>编写 Makefile 的时候，某些变量可以通过外部传递，而且方法也很简单，甚至内部甚至不需要声明，只需要在引用处写明变量名称即可。然后外部调用时以 <code>VARIABLE="value"</code> 的形式进行声明即可。如下：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">make libmxs <span class="literal">-C</span> <span class="number">20220607</span> MANIFEST_PATH=<span class="string">&quot;F:\Workspace\20220511-galileo-manifest&quot;</span> TOOLCHAIN_PATH=<span class="string">&quot;D:\Keil_v528\ARM\ARMCC\bin&quot;</span></span><br></pre></td></tr></table></figure>
+<h2 id="compiling-control-strings">COMPILING CONTROL STRINGS</h2>
+<p>下面这些编译参数是复制自 KEIL IDE 的，对应的平台是 STM32L4R9。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">--c99</span><br><span class="line">-c </span><br><span class="line">--cpu Cortex-M4.fp</span><br><span class="line">-D__MICROLIB -g -O3 --apcs&#x3D;interwork --split_sections </span><br><span class="line"></span><br><span class="line">-I ..&#x2F;app </span><br><span class="line">-I ..&#x2F;M_BSP </span><br><span class="line">-I ..&#x2F;M_BSP&#x2F;BMM150 </span><br><span class="line">-I ..&#x2F;M_BSP&#x2F;Sensor_R1 </span><br><span class="line">-I ..&#x2F;M_BSP&#x2F;lps33k </span><br><span class="line">-I ..&#x2F;M_BSP&#x2F;lcd </span><br><span class="line">-I ..&#x2F;M_BSP&#x2F;PSRAM </span><br><span class="line">-I ..&#x2F;M_BSP&#x2F;OSPI_NOR </span><br><span class="line">-I ..&#x2F;Driver </span><br><span class="line">-I ..&#x2F;..&#x2F;..&#x2F;Drivers&#x2F;CMSIS&#x2F;Include </span><br><span class="line">-I ..&#x2F;..&#x2F;..&#x2F;Drivers&#x2F;CMSIS&#x2F;Device&#x2F;ST&#x2F;STM32L4xx&#x2F;Include </span><br><span class="line">-I ..&#x2F;..&#x2F;..&#x2F;Drivers&#x2F;STM32L4xx_HAL_Driver&#x2F;Inc </span><br><span class="line">-I ..&#x2F;..&#x2F;..&#x2F;Drivers&#x2F;BSP&#x2F;STM32L4R9I_EVAL </span><br><span class="line">-I ..&#x2F;..&#x2F;..&#x2F;Drivers&#x2F;BSP&#x2F;Components&#x2F;Common </span><br><span class="line"></span><br><span class="line">-I.&#x2F;RTE&#x2F;_Watch_EVAL</span><br><span class="line">-IC:&#x2F;Users&#x2F;mixo&#x2F;AppData&#x2F;Local&#x2F;Arm&#x2F;Packs&#x2F;ARM&#x2F;CMSIS&#x2F;5.5.1&#x2F;CMSIS&#x2F;Core&#x2F;Include</span><br><span class="line">-IDrivers&#x2F;CMSIS&#x2F;Device&#x2F;ST&#x2F;STM32L4xx&#x2F;Include</span><br><span class="line">-D__UVISION_VERSION&#x3D;&quot;528&quot; -D_RTE_ -DSTM32L4R9xx -DUSE_HAL_DRIVER -DUSE_GVO_390x390</span><br><span class="line">-o .\Watch\*.o --omf_browse .\Watch\*.crf --depend .\Watch\*.d</span><br></pre></td></tr></table></figure>
+<h2 id="toolchain-1">TOOLCHAIN</h2>
+<p>在 Makefile 文件中，往往为了互相兼容，默认编译器的名称就是 <code>gcc</code> ，只是前缀不同而已，而 <code>armcc</code> 编译器在使用时则需清晰指定名称。</p>
+<p>下方为 <code>armcc</code> 工具链的指定方式：</p>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 工具链</span></span><br><span class="line">CC=<span class="variable">$(TOOLCHAIN_PATH)\&quot;</span>armcc.exe<span class="string">&quot;</span></span><br><span class="line"><span class="string">AS=<span class="variable">$(TOOLCHAIN_PATH)\&quot;</span>armasm.exe&quot;</span></span><br><span class="line">AR=<span class="variable">$(TOOLCHAIN_PATH)\&quot;</span>armar.exe<span class="string">&quot;</span></span><br><span class="line"><span class="string">LINK=<span class="variable">$(TOOLCHAIN_PATH)\&quot;</span>armlink.exe&quot;</span></span><br><span class="line">FROM_ELF=<span class="variable">$(TOOLCHAIN_PATH)\&quot;</span>fromelf.exe<span class="string">&quot;</span></span><br></pre></td></tr></table></figure>
+<p>下方为 <code>arm-none-eabi-gcc</code> 工具链的指定（由 stm32 CubeMX 生成）。</p>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">PREFIX = arm-none-eabi-</span><br><span class="line"><span class="comment"># The gcc compiler bin path can be either defined in make command via GCC_PATH variable (&gt; make GCC_PATH=xxx)</span></span><br><span class="line"><span class="comment"># either it can be added to the PATH environment variable.</span></span><br><span class="line"><span class="keyword">ifdef</span> GCC_PATH</span><br><span class="line">CC = <span class="variable">$(GCC_PATH)</span>/<span class="variable">$(PREFIX)</span>gcc</span><br><span class="line">AS = <span class="variable">$(GCC_PATH)</span>/<span class="variable">$(PREFIX)</span>gcc -x assembler-with-cpp</span><br><span class="line">CP = <span class="variable">$(GCC_PATH)</span>/<span class="variable">$(PREFIX)</span>objcopy</span><br><span class="line">SZ = <span class="variable">$(GCC_PATH)</span>/<span class="variable">$(PREFIX)</span>size</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">CC = <span class="variable">$(PREFIX)</span>gcc</span><br><span class="line">AS = <span class="variable">$(PREFIX)</span>gcc -x assembler-with-cpp</span><br><span class="line">CP = <span class="variable">$(PREFIX)</span>objcopy</span><br><span class="line">SZ = <span class="variable">$(PREFIX)</span>size</span><br><span class="line"><span class="keyword">endif</span></span><br><span class="line">HEX = <span class="variable">$(CP)</span> -O ihex</span><br><span class="line">BIN = <span class="variable">$(CP)</span> -O binary -S</span><br></pre></td></tr></table></figure>
+<h2 id="compiling-parameters">COMPILING PARAMETERS</h2>
+<p>总结出常见的编译参数如下：</p>
+<h3 id="macro-definitions">MACRO DEFINITIONS</h3>
+<p>宏定义参数：<code>-DUSE_HAL_DRIVER</code> / <code>-DSTM32L4R9xx</code> / <code>-D__MICROLIB</code> 。</p>
+<p>其中，前两个还是要依具体芯片的硬件参数来看的</p>
+<h3 id="cpu">CPU</h3>
+<p>CPU 参数：<code>--cpu Cortex-M4.fp</code> / <code>--cpu Cortex-M4</code> 等。</p>
+<p>使用<code>armcc --cpu list</code> 命令可以查看所有可接受的芯片，如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line">--cpu=<span class="number">4</span></span><br><span class="line">--cpu=<span class="number">4</span>T</span><br><span class="line">--cpu=<span class="number">5</span>T</span><br><span class="line">--cpu=<span class="number">5</span>TE</span><br><span class="line">--cpu=<span class="number">5</span>TEJ</span><br><span class="line">--cpu=<span class="number">6</span>-M</span><br><span class="line">--cpu=<span class="number">6</span>S-M</span><br><span class="line">--cpu=<span class="number">7</span>-A</span><br><span class="line">--cpu=<span class="number">7</span>-R</span><br><span class="line">--cpu=<span class="number">7</span>-M</span><br><span class="line">--cpu=<span class="number">7</span>E-M</span><br><span class="line">--cpu=<span class="number">7</span>-A.security</span><br><span class="line">--cpu=ARM7EJ-S</span><br><span class="line">--cpu=ARM7TDMI</span><br><span class="line">--cpu=ARM720T</span><br><span class="line">--cpu=ARM7TDMI-S</span><br><span class="line">--cpu=ARM9TDMI</span><br><span class="line">--cpu=ARM920T</span><br><span class="line">--cpu=ARM922T</span><br><span class="line">--cpu=ARM9E-S</span><br><span class="line">--cpu=ARM926EJ-S</span><br><span class="line">--cpu=ARM946E-S</span><br><span class="line">--cpu=ARM966E-S</span><br><span class="line">--cpu=Cortex-M0</span><br><span class="line">--cpu=Cortex-M0plus</span><br><span class="line">--cpu=SC000</span><br><span class="line">--cpu=Cortex-M1</span><br><span class="line">--cpu=Cortex-M1.os_extension</span><br><span class="line">--cpu=Cortex-M1.no_os_extension</span><br><span class="line">--cpu=Cortex-M3</span><br><span class="line">--cpu=Cortex-M3-rev0</span><br><span class="line">--cpu=SC300</span><br><span class="line">--cpu=Cortex-M4</span><br><span class="line">--cpu=Cortex-M4.fp.sp</span><br><span class="line">--cpu=Cortex-M7</span><br><span class="line">--cpu=Cortex-M7.fp.sp</span><br><span class="line">--cpu=Cortex-M7.fp.dp</span><br><span class="line">--cpu=Cortex-R4</span><br><span class="line">--cpu=Cortex-R4F</span><br><span class="line">--cpu=Cortex-A5</span><br><span class="line">--cpu=Cortex-A5.vfp</span><br><span class="line">--cpu=Cortex-A5.neon</span><br><span class="line">--cpu=Cortex-A7</span><br><span class="line">--cpu=Cortex-A7.no_neon</span><br><span class="line">--cpu=Cortex-A7.no_neon.no_vfp</span><br><span class="line">--cpu=Cortex-A8</span><br><span class="line">--cpu=Cortex-A8.no_neon</span><br><span class="line">--cpu=Cortex-A8NoNEON</span><br><span class="line">--cpu=Cortex-A9</span><br><span class="line">--cpu=Cortex-A9.no_neon</span><br><span class="line">--cpu=Cortex-A9.no_neon.no_vfp</span><br><span class="line">--cpu=Cortex-A12</span><br><span class="line">--cpu=Cortex-A12.no_neon.no_vfp</span><br><span class="line">--cpu=Cortex-A15</span><br><span class="line">--cpu=Cortex-A15.no_neon</span><br><span class="line">--cpu=Cortex-A15.no_neon.no_vfp</span><br><span class="line">--cpu=Cortex-A17</span><br><span class="line">--cpu=Cortex-A17.no_neon.no_vfp</span><br></pre></td></tr></table></figure>
+<h2 id="about-startup-file">ABOUT STARTUP FILE</h2>
+<p>CubeMX 针对不同的编译方式和平台生成对应的 <code>startup file</code> 。而使用 Unix Makefile 编译的 <code>startup_stm32l476xx.s</code> 和 使用 Keil MDK-ARM 的是不一样的。</p>
+<p><code>startup_stm32xxxxxx.s</code> 是使用汇编语言写好的基本程序，当STM32 芯片上电启动的时候，会执行此处的汇编程序，从而建立 C 语言的运行环境，所以称之为启动文件。</p>
+<p>由于编译器不一致，所以 <code>.s</code> 的启动文件也不能互相兼容，需要使用 CubeMX重新生成。</p>
+<figure>
+<img src="https://pic.islet.space/2022/06/image-20220609110616631.png" alt="image-20220609110616631" /><figcaption aria-hidden="true">image-20220609110616631</figcaption>
+</figure>
+<h1 id="debug">DEBUG</h1>
+<h2 id="error">ERROR</h2>
+<h3 id="error-35-please-select-first-the-target-stm32l4xx-device-used-in-your-application">ERROR #35: PLEASE SELECT FIRST THE TARGET STM32L4XX DEVICE USED IN YOUR APPLICATION</h3>
+<figure>
+<img src="https://pic.islet.space/2022/06/image-20220608105439447.png" alt="image-20220608105439447" /><figcaption aria-hidden="true">image-20220608105439447</figcaption>
+</figure>
+<p>没有添加宏定义，添加 <code>-DSTM32L476xx</code> 和 <code>-DUSE_HAL_DRIVER</code> 即可。</p>
+<h3 id="error-l6050u-the-code-size-of-the-image-exceeds-the-maximum">ERROR L6050U: THE CODE SIZE OF THE IMAGE EXCEEDS THE MAXIMUM</h3>
+<figure>
+<img src="https://pic.islet.space/2022/06/image-20220608110734097.png" alt="image-20220608110734097" /><figcaption aria-hidden="true">image-20220608110734097</figcaption>
+</figure>
+<blockquote>
+<p>版权问题，当你在使用keil时，出现 <code>error: L6050U: The code size of this image (45178 bytes) exceeds the maximum allowed for this version of the linker.</code> 的时候，那就是 keil 没有被破解，软件本身的字节数有局限性，需要下载个MDK注册机进行破解！</p>
+</blockquote>
+<h3 id="error-a1854e-unknown-opcode-blx-maybe-wrong-target-cpu">Error: A1854E: Unknown opcode 'BLX', maybe wrong target CPU?</h3>
+<figure>
+<img src="https://pic.islet.space/2022/06/image-20220608151900214.png" alt="image-20220608151900214" /><figcaption aria-hidden="true">image-20220608151900214</figcaption>
+</figure>
+<h2 id="warning">WARNING</h2>
+<h3 id="warning-1295-d-deprecated-declaration-two_wired_resync---give-arg-types">Warning: #1295-D: Deprecated declaration two_wired_resync - give arg types</h3>
+<figure>
+<img src="https://pic.islet.space/2022/06/image-20220608135309057.png" alt="image-20220608135309057" /><figcaption aria-hidden="true">image-20220608135309057</figcaption>
+</figure>
+<p>在传递参数为空的函数中，必须写 <code>void</code> ，armcc要求比较严格，<code>arm-none-eabi</code> 的要求比较宽松。</p>
+<h1 id="reference">REFERENCE</h1>
+<ol type="1">
+<li><a target="_blank" rel="noopener" href="https://www.cnblogs.com/zhangsx/p/zhangsx_keil_tools_usage.html">keil编译链接过程以及ARMCC、ARMASM、FROMELF、ARMLINK、ARMAR的使用</a></li>
+<li><a target="_blank" rel="noopener" href="https://developer.arm.com/documentation/dui0375/g/Compiler-Command-line-Options/">ARM Compiler v5.06 for uVision armcc User Guide</a></li>
+<li>《<a target="_blank" rel="noopener" href="https://documentation-service.arm.com/static/5f721c6c1b758617cd950f6f?token=">ARM® Compiler v5.06 for μVision®</a>》</li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://islet.space/2022/05/24/Computer/2022-05-24-%E5%B5%8C%E5%85%A5%E5%BC%8F%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B%E5%B8%88%E7%9A%84%E7%94%9F%E4%BA%A7%E5%8A%9B%E5%B7%A5%E5%85%B7/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Liewzheng">
+      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coder的孤岛">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/05/24/Computer/2022-05-24-%E5%B5%8C%E5%85%A5%E5%BC%8F%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B%E5%B8%88%E7%9A%84%E7%94%9F%E4%BA%A7%E5%8A%9B%E5%B7%A5%E5%85%B7/" class="post-title-link" itemprop="url">嵌入式软件工程师的生产力工具</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2022-05-24 10:45:00" itemprop="dateCreated datePublished" datetime="2022-05-24T10:45:00+08:00">2022-05-24</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2022-06-04 13:15:47" itemprop="dateModified" datetime="2022-06-04T13:15:47+08:00">2022-06-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Computer/" itemprop="url" rel="index"><span itemprop="name">Computer</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="common-tools">Common Tools</h1>
+<p>软件启动：utools / alfred</p>
+<p>小插件合集：utools</p>
+<p>文件搜索：everything(windows)</p>
+<p>MD：Typora（插件Pandoc）</p>
+<p>图床：picgo</p>
+<p>自由：V2Ray-Core / ClashX</p>
+<p>网站视频下载：Downie4</p>
+<p>截图：Snipaste</p>
+<p>解压：Bandizip</p>
+<p>思维导图：Xmind</p>
+<p>翻译：deepl /</p>
+<h1 id="engineer">Engineer</h1>
+<p>BASH：zsh（Oh-my-zsh）</p>
+<p>终端插件：<a href="fig.io">fig</a></p>
+<p>zsh皮肤：powerlevel10k</p>
+<h1 id="python">Python</h1>
+<p>代码编辑器：Jupyter Lab（比Notebook更好用）</p>
+<p>Python环境管理工具：Miniconda</p>
+<p>Python常用库：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install pandas xlrd openpyxl xlsxwriter requests lxml html5lib BeautifulSoup4 matplotlib seaborn plotly bokeh scipy statsmodels python-frontmatter opencv-python</span><br></pre></td></tr></table></figure>
+<h1 id="embedded">Embedded</h1>
+<h2 id="vs-code-插件">VS code 插件</h2>
+<p>git痕迹查看：GitLens</p>
+<p>代码注释：Doxygen</p>
+<p>Keil开发代替IDE：EIDE</p>
+<h2 id="compiling">Compiling</h2>
+<p>交叉编译：cmake / make</p>
+<p>单元测试：valgrind lcov</p>
+<h1 id="jenkins">Jenkins</h1>
+<p>environment Injector</p>
+<p>Publish Over FTP</p>
+<p>CMake</p>
+<p>xUnit</p>
+<h1 id="linux">Linux</h1>
+<ul>
+<li><code>rsync</code> ：同步文件。</li>
+<li><code>tree</code> ：目录树</li>
+<li></li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://islet.space/2022/05/22/Programming/Python/2022-05-22-python-%E8%B0%83%E8%AF%95%E6%97%A5%E5%BF%97/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Liewzheng">
+      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coder的孤岛">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/05/22/Programming/Python/2022-05-22-python-%E8%B0%83%E8%AF%95%E6%97%A5%E5%BF%97/" class="post-title-link" itemprop="url">python 调试日志</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2022-05-22 01:25:00" itemprop="dateCreated datePublished" datetime="2022-05-22T01:25:00+08:00">2022-05-22</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2022-06-09 21:57:55" itemprop="dateModified" datetime="2022-06-09T21:57:55+08:00">2022-06-09</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Programming/" itemprop="url" rel="index"><span itemprop="name">Programming</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="奇淫巧技">奇淫巧技</h1>
+<h2 id="文本替换">文本替换</h2>
+<h3 id="object-类型文本替换">object 类型文本替换</h3>
+<p>object 目前还没有找到替换方法，可以将 <code>object</code> 类型转换成 <code>string</code> 数据类型，再用 <code>str.replace()</code> 方法进行文本替换。</p>
+<ol type="1">
+<li>用 <code>.astype('string')</code> 方法将 <code>object</code> 类型转换成 <code>string</code> 类型。</li>
+<li>使用 <code>.str.replace(&lt;old-string&gt;,&lt;new-string&gt;)</code> 方法对文本进行替换。并使用 <code>tmp</code> 变量进行保存。</li>
+<li>将 <code>tmp</code> 变量重新赋值给原来的变量。</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">pdata[<span class="string">&#x27;timestamp&#x27;</span>] = pdata.timestamp.astype(<span class="string">&#x27;string&#x27;</span>)  <span class="comment"># 将 object 类型转换成 string类型</span></span><br><span class="line">tmp = pdata[<span class="string">&#x27;timestamp&#x27;</span>].<span class="built_in">str</span>.replace(<span class="string">&#x27;BIN3-&#x27;</span>,<span class="string">&#x27;&#x27;</span>)</span><br><span class="line">pdata[<span class="string">&#x27;timestamp&#x27;</span>] = tmp</span><br></pre></td></tr></table></figure>
+<h1 id="debug-record">DEBUG RECORD</h1>
+<h2 id="nonetype-object-is-not-subscriptable">nonetype object is not subscriptable</h2>
+<p>大概意思就是，这个 <code>timestamp</code> 是 <code>object</code> 数据类型，替换了之后这个不能显示了估计。</p>
+<figure>
+<img src="https://pic.islet.space/2022/06/image-20220522012451872.png" alt="image-20220522012451872" /><figcaption aria-hidden="true">image-20220522012451872</figcaption>
+</figure>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://islet.space/2022/05/11/Programming/2022-05-11-wsl%E4%B8%8B%E7%BC%96%E8%AF%91stm32%E5%B9%B3%E5%8F%B0%E7%9A%84%E8%BD%AF%E4%BB%B6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Liewzheng">
+      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coder的孤岛">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/05/11/Programming/2022-05-11-wsl%E4%B8%8B%E7%BC%96%E8%AF%91stm32%E5%B9%B3%E5%8F%B0%E7%9A%84%E8%BD%AF%E4%BB%B6/" class="post-title-link" itemprop="url">wsl下编译stm32平台的软件</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2022-05-11 15:19:00" itemprop="dateCreated datePublished" datetime="2022-05-11T15:19:00+08:00">2022-05-11</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2022-06-09 21:53:32" itemprop="dateModified" datetime="2022-06-09T21:53:32+08:00">2022-06-09</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Programming/" itemprop="url" rel="index"><span itemprop="name">Programming</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>本文是介绍嵌入式工程师的CLI编译工具部署方法，所用编译器是 ARM GCC，即 <code>gcc-arm-none-eabi</code> ，案例也是使用 STM32 CubeMX 生成的文件。中间涉及到一些 <strong>单元测试</strong> 相关的插件安装可以视情况选择或弃用。</p>
+<p>下方的操作需要提前安装好 Windows子系统Linux（<strong>WSL</strong>，Windows Subsystem Linux）或者 <strong>虚拟机</strong>，且确保使用的是 shell 是 <code>zsh</code>，否则下方的一些配置文件（如 <code>~/.zshrc</code> ）需要手动改成对应 shell 的配置文件。</p>
+<h1 id="安装软件">安装软件</h1>
+<figure>
+<img src="https://pic.islet.space/2022/05/image-20220507181341683.png" alt="image-20220507181341683" /><figcaption aria-hidden="true">image-20220507181341683</figcaption>
+</figure>
+<h2 id="安装git">安装git</h2>
+<p>仅实例安装，配置 用户名 和 邮箱 那些的操作请自行搜索。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install git</span><br></pre></td></tr></table></figure>
+<h2 id="安装工具链编译器">安装工具链/编译器</h2>
+<ol type="1">
+<li>到 <a target="_blank" rel="noopener" href="https://developer.arm.com/downloads/-/gnu-rm">官网</a> 去下载自己需要的编译器。</li>
+<li>然后进行解压到与 repo 相同位置的 <code>~/bin</code> （放其他位置也可以）。</li>
+<li>设置系统变量</li>
+</ol>
+<p>下方以 <code>gcc-arm-none-eabi-5_4-2016q3</code> 为例：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> ~/Downloads</span><br><span class="line">wget https://storage.islet.space/02_Softwares/06_Embedded/01_CrossCompiler/gcc-arm-none-eabi/gcc-arm-none-eabi-5_4-2016q3.tar.gz</span><br><span class="line">tar -zxvf gcc-arm-none-eabi-5_4-2016q3.tar.gz</span><br><span class="line">cp -r ~/Downloads/gcc-arm-none-eabi-5_4-2016q3 ~/bin/</span><br></pre></td></tr></table></figure>
+<h2 id="安装编译工具">安装编译工具</h2>
+<p>下方这些操作默认安装不指定版本的cmake和make。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install cmake make</span><br></pre></td></tr></table></figure>
+<h2 id="安装单元测试工具">安装单元测试工具</h2>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install lcov valgrind</span><br></pre></td></tr></table></figure>
+<h2 id="安装repo">安装repo</h2>
+<p><code>git</code> 和 <code>python2</code> 是 <code>repo</code> 的依赖，记得先安装。</p>
+<ol type="1">
+<li>创建 <code>~/bin</code> 路径。</li>
+<li>选择国内源安装repo。</li>
+<li>赋予 <code>~/bin/repo</code> 执行权限。</li>
+<li>使 <code>REPO_URL</code> 变成系统变量。</li>
+<li>将 <code>~/bin</code> 放到 <code>PATH</code> 环境变量中。</li>
+<li>使配置生效。。</li>
+</ol>
+<p>这一步简化成下面这些操作，对照着执行即可。（千万不要直接用 <code>apt install repo</code> 进行安装，国内大部分情况用不了）</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">mkdir ~/bin</span><br><span class="line">curl https://mirrors.tuna.tsinghua.edu.cn/git/git-repo &gt; ~/bin/repo</span><br><span class="line">chmod a+x ~/bin/repo</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;export REPO_URL=&#x27;https://mirrors.tuna.tsinghua.edu.cn/git/git-repo&#x27;&quot;</span> &gt;&gt; ~/.zshrc</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;export PATH=~/bin:<span class="variable">$PATH</span>&quot;</span> &gt;&gt; ~/.zshrc</span><br><span class="line"><span class="built_in">source</span> ~/.zshrc</span><br></pre></td></tr></table></figure>
+<h1 id="拉代码">拉代码</h1>
+<p>下方仅实例 repo 工具的代码拉取指令</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">repo init -u git@github.com:xxx/xxxxxx.git -b dev</span><br><span class="line">repo sync -j8</span><br></pre></td></tr></table></figure>
+<p>拉下来之后会有下面这些文件，其中 <code>out</code> 、 <code>tmp</code> 是之后才生成的。</p>
+<figure>
+<img src="https://pic.islet.space/2022/05/image-20220511154414265.png" alt="image-20220511154414265" /><figcaption aria-hidden="true">image-20220511154414265</figcaption>
+</figure>
+<h1 id="编译命令">编译命令</h1>
+<p>使用编写的脚本进行单元测试、编译和其他操作：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./sdk/build/build.sh --board stm32l476rg --compiler <span class="variable">$ARM_GCC_PATH</span> --debug</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -960,897 +1683,6 @@
 <figure>
 <img src="https://pic.islet.space/2022/02/image-20220224004120934.png" alt="image-20220224004120934" /><figcaption aria-hidden="true">image-20220224004120934</figcaption>
 </figure>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://islet.space/2022/02/23/Linux/2022-02-23-%E8%87%AA%E5%BB%BAgit%E8%BF%9C%E7%A8%8B%E4%BB%93%E5%BA%93/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Liewzheng">
-      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Coder的孤岛">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/02/23/Linux/2022-02-23-%E8%87%AA%E5%BB%BAgit%E8%BF%9C%E7%A8%8B%E4%BB%93%E5%BA%93/" class="post-title-link" itemprop="url">自建git远程仓库</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-
-    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
-    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-      
-
-      <time title="Created: 2022-02-23 01:45:00 / Modified: 21:18:15" itemprop="dateCreated datePublished" datetime="2022-02-23T01:45:00+08:00">2022-02-23</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>基本上也就只参考了廖雪峰这篇 《 <a target="_blank" rel="noopener" href="https://www.liaoxuefeng.com/wiki/896043488029600/899998870925664">搭建Git服务器</a> 》 的文章。</p>
-<h1 id="部署git服务器">部署git服务器</h1>
-<h2 id="确保已安装git">确保已安装git</h2>
-<p>for debian linux:</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install git </span><br></pre></td></tr></table></figure>
-<p>and check the version of it:</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git --version</span><br></pre></td></tr></table></figure>
-<h2 id="创建git账户">创建git账户</h2>
-<p>Add a account name <code>git</code> in linux :</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo adduser git</span><br></pre></td></tr></table></figure>
-<h2 id="设置使用者的ssh配置">设置使用者的SSH配置</h2>
-<p>Copy the SSH keys of your client computers to save to the file in <code>/home/git/.ssh/authorized_keys</code> .</p>
-<h2 id="禁用shell登录">禁用shell登录</h2>
-<p>For the safety of your server, you should ban the shell login for <code>git</code> account.</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo vim /etc/passwd</span><br></pre></td></tr></table></figure>
-<p>Find something like <code>git:x:1001:1001:,,,:/home/git:/bin/bash</code> , and modify it to:</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git:x:1001:1001:,,,:/home/git:/usr/bin/git-shell</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p><code>git</code>用户可以正常通过ssh使用git，但无法登录shell，因为已经为<code>git</code>用户指定的<code>git-shell</code>每次一登录就自动退出。</p>
-</blockquote>
-<h1 id="新建仓库">新建仓库</h1>
-<ul>
-<li>Build a directory named <code>srv</code> to store the repositories. (Of course you can name it the way you like.)</li>
-<li>Initializa a new bare repository name <code>xxx</code>.</li>
-<li>Change its owner as the user <code>git</code> which is just created before.</li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> /srv/</span><br><span class="line">sudo git init --bare /srv/xxxx.git</span><br><span class="line">sudo chown -R git:git /srv/xxxx.git</span><br></pre></td></tr></table></figure>
-<p>And you can copy the script below TO CREATE YOUR NEW REPOSITY. Remember to save it as <code>.sh</code> file and use <code>chmod +x</code> command to make it executable.</p>
-<blockquote>
-<p>By default, this script is stored as <code>gitInit.sh</code> in the diretory <code>/srv</code>.</p>
-<p>If you change the script execute diretory, remember to modify the script below.</p>
-</blockquote>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">GIT_REPOSITORY=<span class="variable">$1</span></span><br><span class="line">sudo git init --bare <span class="variable">$GIT_REPOSITORY</span>.git</span><br><span class="line">sudo chown -R git:git <span class="variable">$GIT_REPOSITORY</span>.git</span><br></pre></td></tr></table></figure>
-<p>USAGE:</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./gitInit.sh &lt;newRepository&gt;</span><br></pre></td></tr></table></figure>
-<h1 id="使用仓库">使用仓库</h1>
-<p>到这一步为止，已经可以使用 <code>git pull git@&lt;yourServer&gt;:/srv/xxx.git</code> 进行仓库拉取了。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git <span class="built_in">clone</span> git@&lt;yourServer&gt;:/srv/sample.git</span><br></pre></td></tr></table></figure>
-<p>And you will see:</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Cloning into <span class="string">&#x27;sample&#x27;</span>...</span><br><span class="line">warning: You appear to have cloned an empty repository.</span><br></pre></td></tr></table></figure>
-<p>如果需要添加一个固定的远程仓库，需要使用到 <code>url</code> ，即需要开启了 <code>443</code> 端口的服务器。</p>
-<h1 id="其他服务器管理">其他服务器管理</h1>
-<h2 id="证书颁发">证书颁发</h2>
-<p>如下所示，下面的子域名已经签审了 SSL 证书了，可以正常使用 <code>443</code> 端口不被拒绝。</p>
-<figure>
-<img src="https://pic.islet.space/2022/02/image-20220223015715136.png" alt="image-20220223015715136" /><figcaption aria-hidden="true">image-20220223015715136</figcaption>
-</figure>
-<h2 id="防火墙设置">防火墙设置</h2>
-<p>确保腾讯云服务器管理页面下的防火墙设置中已开启 <code>443</code> 端口。</p>
-<figure>
-<img src="https://pic.islet.space/2022/02/image-20220223015852398.png" alt="image-20220223015852398" /><figcaption aria-hidden="true">image-20220223015852398</figcaption>
-</figure>
-<p>使用 ubuntu 和 centos 系统的可以参考 《<a href="https://islet.space/2019/03/05/Linux/SSH/CentOS7%E5%AE%89%E8%A3%85iptables%E9%98%B2%E7%81%AB%E5%A2%99/#%E4%B8%89-%E8%AE%BE%E7%BD%AE%E7%8E%B0%E6%9C%89%E8%A7%84%E5%88%99">CentOS7安装iptables防火墙</a>》 开启 <code>443</code> 端口，直接运行下面命令即可：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo iptables -A INPUT -p tcp --dport 443 -j ACCEPT</span><br></pre></td></tr></table></figure>
-<h2 id="克隆远程仓库">克隆远程仓库</h2>
-<p>如果本地已有仓库，可能会与远程服务器的 <code>master</code> 分支冲突，需要自行使用 <code>git fetch</code> 管理，然后使用 <code>git push --set-upstream master</code> 进行上传。</p>
-<figure>
-<img src="https://pic.islet.space/2022/02/image-20220223014741138.png" alt="image-20220223014741138" /><figcaption aria-hidden="true">image-20220223014741138</figcaption>
-</figure>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://islet.space/2022/02/22/Macintosh/2022-02-22-%E6%9B%B4%E6%94%B9mac%E7%9A%84%E9%BB%98%E8%AE%A4shell%E4%B8%BAfish/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Liewzheng">
-      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Coder的孤岛">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/02/22/Macintosh/2022-02-22-%E6%9B%B4%E6%94%B9mac%E7%9A%84%E9%BB%98%E8%AE%A4shell%E4%B8%BAfish/" class="post-title-link" itemprop="url">更改Mac的默认shell为fish</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-
-    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
-    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2022-02-22 20:50:00" itemprop="dateCreated datePublished" datetime="2022-02-22T20:50:00+08:00">2022-02-22</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2022-02-23 00:17:11" itemprop="dateModified" datetime="2022-02-23T00:17:11+08:00">2022-02-23</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Macintosh/" itemprop="url" rel="index"><span itemprop="name">Macintosh</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>Mac 平台自带的 zsh 真的极不好用，同样是 unix-like 平台，跟 kali 平台上的 zsh 体验相差甚远。 一直都是黑白配色，而且修改中断和配置的动手能力确实没有那么强。偶然适用了一下 <code>fish</code> ，发现在 Mac 平台使用效果挺好的，就决定进行更换。切换成黑色背景后更为舒适了，之前一直使用瞎眼的白色。</p>
-<figure>
-<img src="https://pic.islet.space/2022/02/image-20220223001619177.png" alt="image-20220223001619177" /><figcaption aria-hidden="true">image-20220223001619177</figcaption>
-</figure>
-<h1 id="fish-setup">FISH SETUP</h1>
-<p>我安装了 MacPorts 包管理工具，直接用 <code>port</code> 命令即可安装 <code>fish</code> 。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo port install fish</span><br></pre></td></tr></table></figure>
-<h1 id="add-fish-to-etcshells">ADD FISH TO /etc/shells</h1>
-<p>使用 <code>which fish</code> 可以调出 <code>fish</code> 的安装路径（用 <code>port</code> 安装的话默认路径是 <code>/opt/local/bin/fish</code> ），复制该路径，然后粘贴到 <code>/etc/shells</code> 文件末尾。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/shells</span><br></pre></td></tr></table></figure>
-<p><strong>NOTE</strong>：千万不要用 <code>sudo vim /etc/shells</code> 这样会修改到 <code>root</code> 管理员角色的 shell （如果出问题就会很麻烦），用户自己折腾自己的 shell 就好了。</p>
-<p>通过 <code>cat /etc/shells</code> 可以查看所有可供使用的 shell 。</p>
-<h1 id="change-default-shell">CHANGE DEFAULT SHELL</h1>
-<p>使用 <code>chsh</code> 语句即可将 <code>fish</code> 设置为默认 shell 。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chsh -s /opt/<span class="built_in">local</span>/bin/fish</span><br></pre></td></tr></table></figure>
-<h1 id="note">NOTE</h1>
-<p><code>fish</code> 所使用的配置文件并非 <code>~/.fish</code> 而是 <code>~/.bash_profile</code> ，在里面修改完内容可以 <code>source</code> 该文件进行立即更新。</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://islet.space/2022/01/28/Linux/System/2022-01-28-Kali-%E4%B8%8E-MBA-2015/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Liewzheng">
-      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Coder的孤岛">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/01/28/Linux/System/2022-01-28-Kali-%E4%B8%8E-MBA-2015/" class="post-title-link" itemprop="url">Kali 与 MBA-2015</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-
-    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
-    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2022-01-28 12:00:00" itemprop="dateCreated datePublished" datetime="2022-01-28T12:00:00+08:00">2022-01-28</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2022-02-23 00:20:06" itemprop="dateModified" datetime="2022-02-23T00:20:06+08:00">2022-02-23</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="网卡驱动安装">网卡驱动安装</h1>
-<p>Macbook Air 2015年 13英寸版所使用的的网卡是 博通的 <code>BCM94360CS2</code> 。</p>
-<p>可以从 <code>关于本机</code> --&gt; <code>系统报告</code> --&gt; <code>Wi-Fi</code> 中查看到硬件固件版本。</p>
-<figure>
-<img src="https://pic.islet.space/2022/02/image-20220128154108052.png" alt="image-20220128154108052" /><figcaption aria-hidden="true">image-20220128154108052</figcaption>
-</figure>
-<p>安装完Linux之后，暂时无法联网，需要使用有线网络进行上网，可以使用 iPhone 接 <code>lighting-USBA</code> 的转接线进行上网，然后使用 <code>apt</code> 命令下载安装 <code>bcmwl-kernel-source</code> 。</p>
-<p>如果使用 <code>pkgs.org</code> 官网上下载的 <code>bcmwl-kernel-source.dpkg</code> 则会提示缺少很多依赖，无法直接一步安装到位。</p>
-<figure>
-<img src="https://pic.islet.space/2022/02/image-20220128154312606.png" alt="image-20220128154312606" /><figcaption aria-hidden="true">image-20220128154312606</figcaption>
-</figure>
-<h1 id="apfs-硬盘内容读取">APFS 硬盘内容读取</h1>
-<p><code>https://github.com/sgan81/apfs-fuse/</code></p>
-<h1 id="reference">REFERENCE</h1>
-<ol type="1">
-<li><a target="_blank" rel="noopener" href="https://www.cnblogs.com/lovesKey/p/10791914.html">在linux访问macos下的分区</a></li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://islet.space/2022/01/25/Computer/2022-01-25-repo-and-git/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Liewzheng">
-      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Coder的孤岛">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/01/25/Computer/2022-01-25-repo-and-git/" class="post-title-link" itemprop="url">repo and git</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-
-    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
-    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2022-01-25 11:15:00" itemprop="dateCreated datePublished" datetime="2022-01-25T11:15:00+08:00">2022-01-25</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2022-02-26 22:53:24" itemprop="dateModified" datetime="2022-02-26T22:53:24+08:00">2022-02-26</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Computer/" itemprop="url" rel="index"><span itemprop="name">Computer</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>本博文并不提供全面的教学指导，详细手册请查阅 <a target="_blank" rel="noopener" href="https://git-scm.com/docs/">Git-Reference</a> 和 <a target="_blank" rel="noopener" href="https://source.android.google.cn/source/developing?hl=zh-cn#staging-files">开发</a> 。</p>
-<p><code>Git</code> 是一个开放源代码的版本控制系统，专用于处理分布在多个代码库上的大型项目。</p>
-<p><code>Repo</code> 是 google android 以 <code>Git</code> 为基础构建的代码库管理工具，依赖于 <code>python2</code> 脚本调用 Git，主要用来下载、管理android项目的软件仓库。</p>
-<p><code>Repo</code> 简化了跨多个代码库运行的流程，与 <code>Git</code> 相辅相成。Repo 可以在必要时 <mark style="font-weight: 900;">整合多个 Git 代码库，将相关内容上传到我们的修订版本控制系统</mark>，借助单个 Repo 命令，<mark style="font-weight: 900;">可以将文件从多个代码库下载到本地工作目录</mark>。使用 Repo 执行基本的跨网络操作可大大简化文件管理工作。</p>
-<h1 id="git">GIT</h1>
-<p>对git的使用会分为 <a href="##INTROCUCTION"><strong>基础概念部分</strong></a>（即相关概念介绍）、<a href="##GIT%20COMMAND%20GRAMMER"><strong>指令语法</strong></a>、<a href="GIT%20SITUATION"><strong>使用场景</strong></a> 三部分。</p>
-<h2 id="introduction">INTRODUCTION</h2>
-<p><strong>DAG</strong>： Directed Acyclic Graph，有向无环图。</p>
-<p><strong>DVCS</strong>： Distributed Version Control System，分布式版本控制系统。</p>
-<h3 id="dvcs">DVCS</h3>
-<p><strong>节点</strong>：在DVCS中，每个节点代表项目的一个修订（一个版本），这些对象通常被称为提交。</p>
-<p><strong>有向边</strong>： 在DVCS中，每条边是基于两个修订之间的关系生成的。<mark style="font-weight: 900;">箭头是从父修订指向子修订的，代表他们之间的从属关系。</mark> 修订DAG中的箭头并不一定会形成闭环。通常修订的DAG是从左向右的结构（根节点在左，叶节点在右）或者自上而下结构（最新的版本在上面）。</p>
-<h3 id="branch-tag-refs-hash-code">BRANCH / TAG / REFS / HASH-CODE</h3>
-<p><strong>分支</strong>（branch）和 <strong>标签</strong> （tag）有时候也统称为 <strong>引用</strong>（refs），它们在修订 DAG 中的含义是样的，都是修订结构图表中的外部引用（指针）。</p>
-<figure>
-<img src="https://pic.islet.space/2022/02/image-20220226205719300.png" alt="image-20220226205719300" /><figcaption aria-hidden="true">image-20220226205719300</figcaption>
-</figure>
-<blockquote>
-<p>上图中，包含两个分支，当前的分支 Master 和另一分支 maint 。其中 <code>34ac2</code> 分支有一个 <code>v0.9</code> 的标签，另一个 <code>3fb00</code> 标签是合并提交的。</p>
-</blockquote>
-<p><strong>标签</strong>（tag），即 <strong>给定版本的符号名称</strong>，如 <code>v1.3-rc3</code> ，<mark style="font-weight: 900;">其永远指向相同对象，且不会变更</mark>。</p>
-<blockquote>
-<p>这就是一个允许开发人员快速查询和浏览的信息，且该信息必须对所有人来说都是具有相同意义的。</p>
-</blockquote>
-<p><strong>分支</strong>（branch），即 <strong>一系列开发工作的符号名称</strong>。</p>
-<p>本地分支的引用信息都存放在 <code>.git/refs/heads/</code> 路径下，如 <code>master</code> 分支信息存放于 <code>.git/refs/heads/master</code> 中，而 <code>refs/heads/</code> 为该 <code>master</code> 的命名空间。</p>
-<figure>
-<img src="https://pic.islet.space/2022/02/image-20220226211442066.png" alt="image-20220226211442066" /><figcaption aria-hidden="true">image-20220226211442066</figcaption>
-</figure>
-<blockquote>
-<p>目前Git在硬盘中采用了两种截然不同的方式来表示分支：<strong>松散格式</strong> 和 <strong>压缩格式</strong>。</p>
-<p>例如master分支（该分支是Git采用的默认分支名，用户在创建新的版本库时默认的分支名就是它）。</p>
-<ul>
-<li>采用 <strong>松散格式</strong> 时，它是 <code>.git/refs/heads/master</code> 中的一行文本，其中指代分支的 <strong>内容是十六进制的SHA-1码</strong>。</li>
-<li>采用 <strong>压缩格式</strong> 时，它是 <code>.git/packed-refs</code> 中的一行文本，使用 <strong>最顶部修订的SHA-1码</strong> 和 <strong>分支全名一起</strong> 表示该分支。</li>
-</ul>
-</blockquote>
-<h3 id="configuration">Configuration</h3>
-<p>可以通过 <code>git config --global user.email ""</code> 和 <code>git config --global user.name ""</code> 进行配置，相关信息存储在 <code>~/.gitconfig</code> 文件中。</p>
-<figure>
-<img src="https://pic.islet.space/2022/02/image-20220226203128964.png" alt="image-20220226203128964" /><figcaption aria-hidden="true">image-20220226203128964</figcaption>
-</figure>
-<h3 id="branch-name">Branch Name</h3>
-<table>
-<thead>
-<tr class="header">
-<th>分支</th>
-<th>命名</th>
-<th>说明</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>主分支</td>
-<td>master</td>
-<td>主分支，所有提供给用户使用的正式版本</td>
-</tr>
-<tr class="even">
-<td>开发分支</td>
-<td>dev</td>
-<td>开发分支，永远是功能最新最全的版本</td>
-</tr>
-<tr class="odd">
-<td>功能分支</td>
-<td>feature-*</td>
-<td>新功能分支，某个功能点正在开发的分支</td>
-</tr>
-<tr class="even">
-<td>发布分支</td>
-<td>release-*</td>
-<td>发布定期要上线的功能</td>
-</tr>
-<tr class="odd">
-<td>修复分支</td>
-<td>bug-*</td>
-<td>修复代码bug的分支</td>
-</tr>
-</tbody>
-</table>
-<h3 id="master">Master</h3>
-<p>代码库应该有且仅有一个主分支。所有提供给用户使用的正式版本，都在这个主分支上发布。Git主分支的名字，默认称为 <code>Master</code> 。<code>Master</code> 主分支是自动建立的，版本库初始化以后，默认就是在主分支在进行开发。</p>
-<p>主分支只用来分布重大版本，日常开发应该在另一条分支上完成。我们把开发用的分支，叫做 Dev 这个分支可以用来生成代码的最新隔夜版本（nightly）。如果想正式对外发布，就在 Master 分支上，对 Dev 分支进行”合并”（merge）。</p>
-<h3 id="head">HEAD</h3>
-<p><strong>git 中的分支</strong> 本质上是个指向 commit 对象的可变指针。</p>
-<p>而在每一个使用 git 的 <code>.git/</code> 路径下，还保存着一个名为 <code>HEAD</code> 的特别指针，一般来说，它是指向正在工作中的本地分支的指针。</p>
-<p><code>HEAD</code> 的指向是可以改变的，比如在 commit / checkout / branch / tag / retest / restore 等操作之后。</p>
-<p>有的时候 <code>HEAD</code> 会指向一个没有分支名字的修订版本，这种情况叫 <strong><em>detached HEAD</em></strong>。</p>
-<figure>
-<img src="https://pic.islet.space/2022/02/image-20220226203838866.png" alt="image-20220226203838866" /><figcaption aria-hidden="true">image-20220226203838866</figcaption>
-</figure>
-<p>在最底层实现中，Git 历史版本识别是通过一个 SHA-1 哈希码实现的，例如 <code>2b953b4380</code> 。</p>
-<p>Git 支持多种形式的版本查询，其中就包括使用哈希码的精确匹配（最少提供4个字符）。</p>
-<h2 id="git-command-grammer">GIT COMMAND GRAMMER</h2>
-<ol type="1">
-<li>使用 <code>git &lt;command&gt; -h</code> 可以获得该命令的所有参数用法帮助（简略的）。然后可以针对性地去搜索该指令和参数的用法。</li>
-<li>下方会列出一些较为常见的（自己会使用得到的）命令及其参数。个别较常见的命令会贴上一张官方的参数用法图片。</li>
-</ol>
-<h3 id="git-add">git add</h3>
-<h4 id="file-name">&lt;file name&gt;</h4>
-<p>使用本命令参数可以直接确认某个文件的变动记录。</p>
-<blockquote>
-<p>如 <code>git add readme.md</code> 确认了 <code>readme.md</code> 文件的修改，<code>git add .</code> 确认了当前路径下包含的所有子路径和子文件的修改。</p>
-</blockquote>
-<h3 id="git-blame">git blame</h3>
-<h4 id="file-name-1">&lt;file name&gt;</h4>
-<p>本参数可以查看文件内部每一行内容的变动，例如新增一行，文件的编辑者等。</p>
-<figure>
-<img src="https://pic.islet.space/2022/02/image-20220226202721363.png" alt="image-20220226202721363" /><figcaption aria-hidden="true">image-20220226202721363</figcaption>
-</figure>
-<blockquote>
-<p>跟 <code>git diff</code> 不同的是，本命令是真的打开文件然后一行一行地给你修改和提示信息，包括每一行是谁写的</p>
-</blockquote>
-<h3 id="git-branch">git branch</h3>
-<figure>
-<img src="https://pic.islet.space/2022/02/image-20220226213748945.png" alt="image-20220226213748945" /><figcaption aria-hidden="true">image-20220226213748945</figcaption>
-</figure>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git branch -D origin/xxxxxx</span><br><span class="line">git branch -D xxxxxx</span><br></pre></td></tr></table></figure>
-<h4 id="a">-a</h4>
-<p>使用本命令标志可以显示 <strong>本地 (local) 所有分支</strong> 和 <strong>远程 (remote) 所有分支</strong>。 其中，带 <code>*</code> 的为当前所在分支。</p>
-<figure>
-<img src="https://pic.islet.space/2022/02/image-20220226200020105.png" alt="image-20220226200020105" /><figcaption aria-hidden="true">image-20220226200020105</figcaption>
-</figure>
-<h4 id="d-branch-name">-d &lt;branch name&gt;</h4>
-<p>使用本命令标志可以删除 某个分支。</p>
-<figure>
-<img src="https://pic.islet.space/2022/02/image-20220226211322680.png" alt="image-20220226211322680" /><figcaption aria-hidden="true">image-20220226211322680</figcaption>
-</figure>
-<h4 id="v">-v</h4>
-<p>使用命令标志可以展示分支的哈希函数和commit信息，<code>-v</code> 即 <code>--verbose</code> ，表示 "冗长的"。</p>
-<blockquote>
-<p>例如: 下方，从 <code>master</code> 主分支刚创建出新分支 <code>SWV</code> 时，两者的哈希函数和commit信息是一样的。</p>
-<figure>
-<img src="https://pic.islet.space/2022/02/image-20220226214736094.png" alt="image-20220226214736094" /><figcaption aria-hidden="true">image-20220226214736094</figcaption>
-</figure>
-<p>但修改了 <code>SWV</code> 分支的内容并确认提交之后，其哈希函数和commit信息就发生了改变。</p>
-<figure>
-<img src="https://pic.islet.space/2022/02/image-20220226214912676.png" alt="image-20220226214912676" /><figcaption aria-hidden="true">image-20220226214912676</figcaption>
-</figure>
-</blockquote>
-<h3 id="git-checkout">git checkout</h3>
-<figure>
-<img src="https://pic.islet.space/2022/02/image-20220226213843563.png" alt="image-20220226213843563" /><figcaption aria-hidden="true">image-20220226213843563</figcaption>
-</figure>
-<h4 id="branch">&lt;branch&gt;</h4>
-<p>单独使用此参数可以用于切换分支（也有新的实验性语句 <code>switch</code> 可以使用，但是 <code>checkout</code> 更稳定）或恢复工作树文件。使用方式如：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git checkout dev</span><br><span class="line">git checkout origin/dev</span><br><span class="line">git checkout xxxxxx</span><br></pre></td></tr></table></figure>
-<h4 id="b">-b</h4>
-<p>使用本标志 + <code>&lt;new branch name&gt;</code> 可以创建一个新分支并切换至该分支，等同于 先使用 <code>git branch &lt;new branch name&gt;</code> 和 <code>git checkout &lt;new branch name&gt;</code> 。</p>
-<h4 id="orphan-branch-name">--orphan &lt;branch name&gt;</h4>
-<p>使用本命令标志可以创建一个与主分支没有联系的孤儿分支。</p>
-<h3 id="git-commit">git commit</h3>
-<h4 id="a-all">-a/-all</h4>
-<p>使用本标志指 <strong>接受被追踪文件的所有变更</strong>，可以在暂存区创建一个注释来实现操作隔离。</p>
-<h4 id="m">-m ""</h4>
-<p>本标志和参数可以支持在 <code>""</code> 内实现对合并的快速注释。</p>
-<h3 id="git-clone">git clone</h3>
-<p>使用本命令可以直接从某个库中拷贝某个路径下的 repository，如：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> git@git.islet.space:srv/led_blink.git</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>当然，拷贝不公开的repository时，需要确保已经将自己的 SSH-key 加入到该网站的 <code>/home/git/.ssh/authorized_keys</code> 文件中。公开的 repository 可以随便拷贝。</p>
-</blockquote>
-<h3 id="git-diff">git diff</h3>
-<p>本命令可以简要地查看距离上次 <code>commit</code> 操作到底修改什么信息。</p>
-<figure>
-<img src="https://pic.islet.space/2022/02/image-20220226202625977.png" alt="image-20220226202625977" /><figcaption aria-hidden="true">image-20220226202625977</figcaption>
-</figure>
-<h3 id="git-log">git log</h3>
-<p><strong>注意</strong>：所有的 <code>git log</code> 命令只会显示如下格式的 log 记录。</p>
-<figure>
-<img src="https://pic.islet.space/2022/02/image-20220226202114879.png" alt="image-20220226202114879" /><figcaption aria-hidden="true">image-20220226202114879</figcaption>
-</figure>
-<h4 id="num">-&lt;num&gt;</h4>
-<p>如输入 <code>git log -2</code>，可以查看当前项目最近两条的提交记录。</p>
-<h4 id="author-或---committer">--author 或 --committer</h4>
-<p>本标志支持查看提交者信息，使用方法如：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">log</span> --author=Linus</span><br></pre></td></tr></table></figure>
-<h4 id="merges-或---no-merges">--merges 或 --no-merges</h4>
-<p>本标志支持查看已合并和提交或非合并提交的信息。</p>
-<h4 id="path-file-name">&lt;path / file name&gt;</h4>
-<p>本参数可以</p>
-<h3 id="git-merge">git merge</h3>
-<p>默认情况下，Git执行 <strong>快进式合并</strong>（fast-forward merge），会直接将 Master 分支指向 Dev 分支。 使用 <code>–no–ff</code> 参数后，会执行正常合并，在 Master 分支上生成一个新节点。为了保证版本演进的清晰，我们希望采用这种做法。即：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git merge -no-ff dev</span><br></pre></td></tr></table></figure>
-<h3 id="git-pull">git pull</h3>
-<p>执行本命令后，Git系统会将服务器版本库中的变更下载到本机。自动将 remote 版本和 local 版本进行合并，然后把合并后的变更提交到<strong>本机</strong> 版本库中。</p>
-<h3 id="git-push">git push</h3>
-<h4 id="set-upstream">--set-upstream</h4>
-<p>设置本地（新）分支的远程上游分支，一些在网上可以查找到的信息如下：</p>
-<ul>
-<li>set upstream branches to work properly</li>
-<li>closely associated with remote branches</li>
-<li>define the branch tracked on the remote branches (also called as remote tracking branch)</li>
-<li><code>--set-upstream</code> is the same as <code>-u</code></li>
-</ul>
-<p>在本地创建的新分支如果希望在远程版本库中添加对应的上游分支，使用此命令和标志可以使得此分支推送至远程分支的目标更加明确。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git push --set-upstream origin better-random</span><br></pre></td></tr></table></figure>
-<h3 id="git-rebase">git rebase</h3>
-<p>rebase是将自己的分支重新基于别人的分支之上，即，在别人的基础上再添加什么东西。</p>
-<h3 id="git-reset">git reset</h3>
-<figure>
-<img src="https://pic.islet.space/2022/02/image-20220226223239807.png" alt="image-20220226223239807" /><figcaption aria-hidden="true">image-20220226223239807</figcaption>
-</figure>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git reset --hard HEAD^</span><br></pre></td></tr></table></figure>
-<h3 id="git-remote">git remote</h3>
-<p>本命令可以进行如下操作：</p>
-<ol type="1">
-<li>对远程repository进行 <strong>添加</strong>（add）、<strong>删除</strong>（remove）、<strong>重命名</strong>（rename）等操作。</li>
-</ol>
-<figure>
-<img src="https://pic.islet.space/2022/02/image-20220226223823738.png" alt="image-20220226223823738" /><figcaption aria-hidden="true">image-20220226223823738</figcaption>
-</figure>
-<h3 id="git-status">git status</h3>
-<p>直接使用本命令可以查看当前路径下所有文件的修改记录。</p>
-<figure>
-<img src="https://pic.islet.space/2022/02/image-20220226223119337.png" alt="image-20220226223119337" /><figcaption aria-hidden="true">image-20220226223119337</figcaption>
-</figure>
-<h2 id="git-situation">GIT SITUATION</h2>
-<h3 id="远程git-clone一个master分支为空的仓库时">远程git clone一个master分支为空的仓库时</h3>
-<p>要么整个仓库都为空，要么肯定还有分支，使用 <code>git branch -a</code> 查看远程仓库分支，一般如下：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">* dev</span><br><span class="line">  remotes/origin/xxxxxxxxxx</span><br><span class="line">  remotes/origin/HEAD -&gt; origin/dev</span><br><span class="line">  remotes/origin/dev</span><br><span class="line">  remotes/origin/master</span><br></pre></td></tr></table></figure>
-<p>而正好 <code>xxxxxxxxxx</code> 可能就是真正存放现有文件的分支，使用 <code>git checkout origin/xxxxxxxxxx</code> 进行分支切换。</p>
-<h3 id="conflict">conflict</h3>
-<p>当文件冲突时，Git系统无法自动合并它们，因为可能这些代码块不是独立的。</p>
-<figure>
-<img src="https://pic.islet.space/2022/02/image-20220225214016189.png" alt="image-20220225214016189" /><figcaption aria-hidden="true">image-20220225214016189</figcaption>
-</figure>
-<figure>
-<img src="https://pic.islet.space/2022/02/image-20220225211850394.png" alt="image-20220225211850394" /><figcaption aria-hidden="true">image-20220225211850394</figcaption>
-</figure>
-<p><code>git pull</code> 也 pull 不下来。</p>
-<figure>
-<img src="https://pic.islet.space/2022/02/image-20220225212102034.png" alt="image-20220225212102034" /><figcaption aria-hidden="true">image-20220225212102034</figcaption>
-</figure>
-<h1 id="repo">REPO</h1>
-<p>repo 部分将分为 <a href="##INSTALL%20REPO"><strong>安装repo</strong></a> 、<a href="##REPO%20COMMAND%20GRAMMER"><strong>命令语法</strong></a> 和 <a href="##REPO%20SITUATION"><strong>使用场景</strong></a> 三部分。</p>
-<h2 id="install-repo">INSTALL REPO</h2>
-<p><code>repo</code> 的安装有 <a href="###SETUP%20AUTOMATICALLY"><strong>自动</strong></a> 和 <a href="###SETUP%20MANUALLY"><strong>手动</strong></a> 两种，类 UNIX 系统都可以通过对应的包管理工具进行安装，但如果没有手动修改源，使用效果可能也不尽如人意。</p>
-<p>安装完毕之后还需要进行 <a href="####VERIFICATION"><strong>版本验证</strong></a>，可能还需要 <a href="PYTHON%20NOT%20FOUND"><strong>对python版本进行更改</strong></a> 。</p>
-<h3 id="setup-automatically">SETUP AUTOMATICALLY</h3>
-<p>根据 google android <a target="_blank" rel="noopener" href="https://source.android.google.cn/setup/develop?hl=zh-cn#installing-repo">installing repo</a> 指示，可以从 apt 包管理库中下载和安装 repo，也可以使用 google源、清华源或其他源进行手动下载。</p>
-<p>Debian 系 Linux 的安装：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get update</span><br><span class="line">sudo apt-get install repo</span><br></pre></td></tr></table></figure>
-<p>Mac 安装：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo port install repo</span><br></pre></td></tr></table></figure>
-<p>或</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo brew install repo</span><br></pre></td></tr></table></figure>
-<h3 id="setup-manually">SETUP MANUALLY</h3>
-<p>手动安装 <code>repo</code> 的大概思路如下：</p>
-<ol type="1">
-<li>在用户根目录 <code>~</code> 下新建 <code>bin</code> 文件夹，即把 <code>$HOME/bin</code> 或 <code>~/bin</code> 当做 <code>repo</code> 的执行文件路径。</li>
-<li>将该路径加入系统变量 <code>PATH</code> 中，可以通过写入 <code>~/.profile</code> 或对应的 shell 配置文件（如zsh的 <code>~/.zshrc</code> ）中并更新该配置文件来实现。</li>
-<li>然后在该路径下载 repo的执行程序，主要是将某个 url 中（如下方所示为清华源的repo）的信息写入 <code>~/bin/repo</code> 中。</li>
-<li>为所有用户 <code>a</code> 附加 <code>~/bin/repo</code> 的可执行 <code>x</code> 权限。</li>
-<li>把 <code>export REPO_URL='https://mirrors.tuna.tsinghua.edu.cn/git/git-repo'</code> 加入到配置文件中，使其一直生效（也可以在 terminal 中临时输入此命令，使其在设备重启前生效）。如果未写入 shell 的配置文件，则重启后该变量就会消失。</li>
-</ol>
-<p>下方代码以安装了 <code>zsh</code> shell 的 linux 或 debian 系系统为例，可以拷贝粘贴保存至脚本以运行。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 手动安装repo</span></span><br><span class="line">mkdir ~/bin</span><br><span class="line">PATH=~/bin:<span class="variable">$PATH</span></span><br><span class="line">curl https://mirrors.tuna.tsinghua.edu.cn/git/git-repo &gt; ~/bin/repo</span><br><span class="line">chmod a+x ~/bin/repo</span><br><span class="line"></span><br><span class="line"><span class="comment"># 将源添加到shell配置文件并使其生效</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;export REPO_URL=&#x27;https://mirrors.tuna.tsinghua.edu.cn/git/git-repo&#x27;&quot;</span> &gt;&gt; ~/.zshrc</span><br><span class="line"><span class="built_in">source</span> ~/.zshrc</span><br><span class="line"></span><br><span class="line"><span class="comment"># 验证信息</span></span><br><span class="line">repo version</span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$REPO</span></span><br></pre></td></tr></table></figure>
-<blockquote>
-<p><strong>注意</strong>：google android用的是 <code>https://storage.googleapis.com/git-repo-downloads/repo</code> 的链接，但不是很方便下载，所以就更换成了清华源的。</p>
-</blockquote>
-<h4 id="verification">VERIFICATION</h4>
-<p>安装完毕之后，可以对手动安装的 <code>repo</code> 进行版本验证，输入 <code>repo version</code> 和 <code>echo $REPO_URL</code> 即可，结果如下：</p>
-<p>此处提示的 <code>&lt;repo not installed&gt;</code> 是正常的，因为在 <code>~</code> 目录下的确没有安装 <code>repo</code> .</p>
-<figure>
-<img src="https://pic.islet.space/2022/02/image-20220226193048479.png" alt="image-20220226193048479" /><figcaption aria-hidden="true">image-20220226193048479</figcaption>
-</figure>
-<h3 id="python-not-found">PYTHON NOT FOUND</h3>
-<p>如果出现以下提示，则说明你的系统中没有为 <code>python</code> 添加 <strong>软连接</strong>。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/usr/bin/env: ‘python’: No such file or directory</span><br></pre></td></tr></table></figure>
-<h4 id="解决方法">解决方法</h4>
-<ol type="1">
-<li>验证是否已经安装了 <code>python2</code> ：输入命令 <code>python2 --version</code>，如果提示对应的版本信息则跳到 第3步，否则进行 第2步。</li>
-<li>下载 <code>python2</code>：debian 系用户输入命令 <code>sudo apt install python2</code> 进行安装。mac系用户输入 <code>sudo port install python2</code> 进行安装。</li>
-<li>在 <code>/usr/bin/</code> 目录下为 <code>python2</code> 创建软链：<code>sudo ln -s /usr/bin/python2 /usr/bin/python</code></li>
-<li>再次运行 <code>repo init</code> 即可正常。</li>
-</ol>
-<p>如，在 Kali Linux 绑定 <code>python2</code> 为 <code>python</code> 之后，可以输入 <code>whereis python</code> 或 <code>python --version</code> 进行验证：</p>
-<figure>
-<img src="https://pic.islet.space/2022/01/image-20220125143434000.png" alt="image-20220125143434000" /><figcaption aria-hidden="true">image-20220125143434000</figcaption>
-</figure>
-<h2 id="repo-command-grammer">REPO COMMAND GRAMMER</h2>
-<ol type="1">
-<li>参考 <a target="_blank" rel="noopener" href="https://source.android.google.cn/setup/develop/repo?hl=zh-cn#upload">Repo 命令参考资料</a></li>
-<li>使用 <code>repo &lt;command&gt; -h</code> 可以获取相应命令的帮助。</li>
-<li>在初始化过 repo 的路径下使用 <code>repo help</code> 可以获得以下信息：</li>
-</ol>
-<figure>
-<img src="https://pic.islet.space/2022/02/image-20220226220906805.png" alt="image-20220226220906805" /><figcaption aria-hidden="true">image-20220226220906805</figcaption>
-</figure>
-<h3 id="repo-init">repo init</h3>
-<p>执行下方的命令会在当前目录中创建一个 <code>.repo/</code> 目录并初始化 Repo 的版本控制，其中包含存放 Repo 源代码，以及从 URL（对应下方 <code>-u</code> 参数） 中同步下来的 Git 代码库 的某个分支 （对应下方 <code>-b</code> 参数）。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">repo init -u &lt;git@xxxx.com:xxxx/manifest&gt; -b &lt;oneOfTheBranch&gt;</span><br></pre></td></tr></table></figure>
-<ul>
-<li><code>-u</code>：即URL，指定从中检索清单代码库的网址。</li>
-<li><code>-m</code>：选择代码库中的清单文件。如果未选择清单名称，则默认为 <code>default.xml</code>。</li>
-<li><code>-b</code>：指定修订版本，即特定的 manifest-branch，可以是 <code>dev</code> 分支，也可以是特定分支，拉下来之后参照 <a href="##REPO%20SWITCH%20BRANCH">REPO SWITCH BRANCH</a> 进行分支切换。</li>
-</ul>
-<p><strong>注意</strong>：对于所有剩余的 Repo 命令，当前的工作目录必须是 <code>.repo/</code> 的父目录或该父目录的子目录。</p>
-<h3 id="repo-branch">repo branch</h3>
-<p>使用本命令可以查看所有的 <strong>目前可用的主题分支</strong>（currently available topic branches）。</p>
-<h3 id="repo-sync">repo sync</h3>
-<p>从 <code>manifest</code> 源中往外拉取分支。下方的 <code>-j&lt;number&gt;</code> 是指创建多线程进行数据资源获取，如 <code>-j4</code> 是指创建四线程进行数据资源获取。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">repo sync</span><br><span class="line">repo sync -j4</span><br><span class="line">repo sync -j8</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>但，bitbucket的网络资源极差，很多情况下都拉不下来代码。</p>
-</blockquote>
-<h3 id="repo-help">repo help</h3>
-<p>在其他地方如果没有运行过 <code>repo init</code> 而直接输入 <code>repo help</code> ，则会出现以下信息，详见 <a href="##REPO%20INIT">REPO INIT</a> 。</p>
-<figure>
-<img src="https://pic.islet.space/2022/02/image-20220226220753429.png" alt="image-20220226220753429" /><figcaption aria-hidden="true">image-20220226220753429</figcaption>
-</figure>
-<h2 id="repo-situation">REPO SITUATION</h2>
-<h3 id="repo-switch-branch">REPO SWITCH BRANCH</h3>
-<p>前文有说过 “借助单个 Repo 命令，<mark style="font-weight: 900;">可以将文件从多个代码库下载到本地工作目录</mark>”，即使用repo拉下来的是多个 git repository，且这个repo是通过 <code>.xml</code> 文件进行管理的，也就是它自身包含了一些版本和分支切换相关的信息。</p>
-<p>如果要对repo拉下来的东西进行分支切换，就要参考一下步骤：</p>
-<ol type="1">
-<li>到 <code>.repo/manifest</code> 路径中。</li>
-<li>使用 <code>git branch -a</code> 查看分支信息。</li>
-<li>使用 <code>git checkout &lt;branch name&gt;</code> 进行分支切换。</li>
-<li>再次使用 <code>repo sync</code> 命令进行同步。</li>
-</ol>
-<figure>
-<img src="https://pic.islet.space/2022/02/image-20220225211308567.png" alt="image-20220225211308567" /><figcaption aria-hidden="true">image-20220225211308567</figcaption>
-</figure>
-<p>下图是通过 <code>repo</code> 拉下来的多个git repository 之一中的隐藏文件，可以看到这个 <code>.git</code> 文件被使用指向上级 <code>.repo/</code> 路径下的某个 <code>.git</code> 文件，也就是说，需要先通过 <code>repo</code> 去拉取信息，再使用 <code>git</code> 来切换分支。</p>
-<figure>
-<img src="https://pic.islet.space/2022/02/image-20220225214801501.png" alt="image-20220225214801501" /><figcaption aria-hidden="true">image-20220225214801501</figcaption>
-</figure>
-<h1 id="reference">REFERENCE</h1>
-<ol type="1">
-<li><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/06e1f67c8939">Git与Repo简单入门</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.yiibai.com/git/git_rebase.html">git rebase 命令</a></li>
-<li><a target="_blank" rel="noopener" href="https://git-scm.com/docs">git reference</a></li>
-<li>《Git高手之路》，Jakub Narebski，人民邮电出版社</li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://islet.space/2022/01/23/Computer/2022-01-23-%E7%BB%99Mac-Big-Sur%E4%BF%AE%E6%94%B9%E5%A4%96%E6%8E%A5%E6%98%BE%E7%A4%BA%E5%99%A8%E7%9A%84%E5%88%86%E8%BE%A8%E7%8E%87/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Liewzheng">
-      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Coder的孤岛">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/01/23/Computer/2022-01-23-%E7%BB%99Mac-Big-Sur%E4%BF%AE%E6%94%B9%E5%A4%96%E6%8E%A5%E6%98%BE%E7%A4%BA%E5%99%A8%E7%9A%84%E5%88%86%E8%BE%A8%E7%8E%87/" class="post-title-link" itemprop="url">给Mac Big Sur修改外接显示器的分辨率</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-
-    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
-    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-      
-
-      <time title="Created: 2022-01-23 17:30:00 / Modified: 18:11:59" itemprop="dateCreated datePublished" datetime="2022-01-23T17:30:00+08:00">2022-01-23</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Computer/" itemprop="url" rel="index"><span itemprop="name">Computer</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>本文参考 《<a target="_blank" rel="noopener" href="https://zhangzi.life/articles/1605255382000">Mac 外接显示器色彩问题</a>》和 《<a target="_blank" rel="noopener" href="https://sspai.com/post/57549#!">为 macOS 10.15 开启 HiDPI，让 2K 显示器更舒适</a>》两篇文章。</p>
-<p>刚买来新的 HUAWEI Mateview 无线版，显示器分辨率为 <code>3840*2560</code> ，该死的 <code>3:2</code> 屏幕啊，我图啥......</p>
-<p>外接2015年的Macbook Air的MiniDP口输出准4K分辨率。</p>
-<p>但是，但是，但是~~Air只能输出 <code>16:9</code> 和 <code>16:10</code> 的分辨率，让我搞了整整一下午来调整这个分辨率，4个小时啊。</p>
-<p>算了，总结一下吧。</p>
-<h1 id="关闭sip">关闭SIP</h1>
-<p>Big sur 和之前版本不同，需要的操作如下：</p>
-<ol type="1">
-<li>关机</li>
-<li>长按 <code>Command</code> 键 和 <code>R</code> 键（都不要松开），短按 开机电源键，直到出现进度条才能松开。</li>
-<li>找到终端，然后输入 <code>csrutil authenticated-root disable</code> ，出现 <code>successfully</code> 字样就算是成功了。（之前的版本是 <code>csrutil disable</code> ）</li>
-</ol>
-<h1 id="查询设备号">查询设备号</h1>
-<ol type="1">
-<li>先断开显示器，输入如下代码：</li>
-</ol>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ioreg -l | grep <span class="string">&quot;DisplayVendorID&quot;</span></span><br><span class="line">ioreg -l | grep <span class="string">&quot;DisplayProductID&quot;</span></span><br></pre></td></tr></table></figure>
-<ol start="2" type="1">
-<li>再插上显示器，再次运行上方代码。</li>
-<li>两次得出来的不同的设备号就可以区分哪个 <code>VendorID</code> 和 <code>ProductID</code> 是外接显示器的。</li>
-</ol>
-<figure>
-<img src="https://pic.islet.space/2022/01/image-20220123175000229.png" alt="image-20220123175000229" /><figcaption aria-hidden="true">image-20220123175000229</figcaption>
-</figure>
-<ol start="4" type="1">
-<li>记下那串代码，并将外接显示器的两个ID转换成对应的十六进制数， 如 <code>8950</code> 即 <code>22f6</code> , <code>28194</code> 即 <code>66e2</code></li>
-</ol>
-<h1 id="生成配置参数">生成配置参数</h1>
-<ol type="1">
-<li>在用户目录 ，即 <code>~</code> 下，使用 <code>DisplayVendorID-xxxx</code> （<code>xxxx</code> 即对应外接显示器 Vendor 号的16进制 ）创建一个文件夹。</li>
-<li>然后在对应文件夹下创建一个 使用 <code>DisplayProductID-yyyy</code> （ yyyy` 即对应外接显示器 Product 号的16进制 ）创建一个无后缀名的文件。</li>
-<li>到 <a target="_blank" rel="noopener" href="https://codeclou.github.io/Display-Override-PropertyList-File-Parser-and-Generator-with-HiDPI-Support-For-Scaled-Resolutions/">Scaled Resolution for your Mac</a> 网站生成配置参数，在红色框中分别填入你外接显示器的对应参数，和你想使你的显示器所呈现的分辨率参数。</li>
-</ol>
-<figure>
-<img src="https://pic.islet.space/2022/01/image-20220123175609151.png" alt="image-20220123175609151" /><figcaption aria-hidden="true">image-20220123175609151</figcaption>
-</figure>
-<ol start="4" type="1">
-<li>复制右侧的 xml 代码至刚刚的 <code>DisplayProductID-yyyy</code> 文件中，并保存。</li>
-</ol>
-<h1 id="导入系统">导入系统</h1>
-<p>在Big Sur系统下，根目录 <code>/</code> 是禁止写入的，需要稍微用点技巧（走点弯路）。</p>
-<ol type="1">
-<li>新建一个文件夹，将解除SIP之后的 <code>/</code> 挂载到某个地方，如下方所示：</li>
-</ol>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mkdir ~/nvme</span><br><span class="line">sudo mount -o nobrowse -t apfs /dev/disk1s5 ~/nvme/</span><br></pre></td></tr></table></figure>
-<p>其中，<code>/dev/disk1s5</code> 中的 <code>/disk1s5</code> 要通过 <strong>磁盘工具</strong> 各自查看自己的 <strong>设备</strong> ，最后面的 <code>s1</code> 去掉不写。</p>
-<figure>
-<img src="https://pic.islet.space/2022/01/image-20220123173550666.png" alt="image-20220123173550666" /><figcaption aria-hidden="true">image-20220123173550666</figcaption>
-</figure>
-<ol start="2" type="1">
-<li>然后就可以 <code>cd</code> 进去查看对应目录下的文件内容，但是所有读写操作都需要加上 <code>sudo</code> 才可以。</li>
-</ol>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> ~/nvme/System/Library/Displays/Contents/Resources/Overrides</span><br><span class="line">ls</span><br></pre></td></tr></table></figure>
-<figure>
-<img src="https://pic.islet.space/2022/01/image-20220123173806535.png" alt="image-20220123173806535" /><figcaption aria-hidden="true">image-20220123173806535</figcaption>
-</figure>
-<ol start="3" type="1">
-<li>把 <code>~/DisplayVendorID-xxxx</code> 复制到 <code>~/nvme/System/Library/Displays/Contents/Resources/Overrides</code> 里面：</li>
-</ol>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo cp -r ~/DisplayVendorID-22f6 ~/nvme/System/Library/Displays/Contents/Resources/Overrides/DisplayVendorID-22f6</span><br></pre></td></tr></table></figure>
-<p>复制完毕之后可以再 <code>ls</code> 查看，就存在了。</p>
-<ol start="4" type="1">
-<li>但是这种复制只是一种暂时的，重启之后就会被镜像文件所覆盖，所以要重新 snapshot 一下。<mark style="font-weight: 900;">注意，这一步一定要做，否则重启就失效了。</mark></li>
-</ol>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo bless --folder ~/nvme/System/Library/Displays/Contents/Resources/Overrides --bootefi --create-snapshot</span><br></pre></td></tr></table></figure>
 
       
     </div>
