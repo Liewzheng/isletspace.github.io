@@ -162,18 +162,18 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">117</span>
+          <span class="site-state-item-count">118</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
           <a href="/categories/">
-        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-count">13</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">220</span>
+        <span class="site-state-item-count">221</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -207,6 +207,139 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://islet.space/2021/06/21/Programming/C/2021-06-21-%E5%AD%98%E5%82%A8%E7%B1%BB%E5%88%AB%E3%80%81%E9%93%BE%E6%8E%A5%E5%92%8C%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Liewzheng">
+      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coder的孤岛">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/06/21/Programming/C/2021-06-21-%E5%AD%98%E5%82%A8%E7%B1%BB%E5%88%AB%E3%80%81%E9%93%BE%E6%8E%A5%E5%92%8C%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/" class="post-title-link" itemprop="url">存储类别、链接和内存管理</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2021-06-21 21:50:00 / Modified: 22:12:11" itemprop="dateCreated datePublished" datetime="2021-06-21T21:50:00+08:00">2021-06-21</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Programming/" itemprop="url" rel="index"><span itemprop="name">Programming</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="存储类别">存储类别</h1>
+<p>即 stroage class，C语言提供了多种不同的模型和存储类别在内存中存储数据。</p>
+<blockquote>
+<p>从硬件方面看， 被存储的每个值都占有一定的物理内存，C语言称之为对象（object）。</p>
+<p>与面向对象编程中的对象不同，面向对象编程的对象指的是“类对象”。</p>
+</blockquote>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> entity = <span class="number">3</span>;</span><br></pre></td></tr></table></figure>
+<p>该声明创造了一个名为 entity 的 <strong>标识符</strong>（identifier）。标识符可以用来 <strong>指定</strong>（desingate）特定对象的内容，且须遵循变量的命名规则。</p>
+<p>标识符即 软件（C语言）指定硬件内存中的对象（内存区块）的方式。</p>
+<p>同时，那些指定对象的表达式被称为 <strong>左值</strong>。</p>
+<p>左值可以被理解为是 “有具体存储位置的 <strong>对象</strong> ”，区别于 “仅有值而没有具体存储位置” 的数据。</p>
+<p>另，左值中也有可修改的 <strong>普通左值</strong>， 和不能支持修改的 <strong>常量左值</strong>。</p>
+<blockquote>
+<p><em>“左”(left)的原意是指可以放在赋值符号“=”的左边，但其实也表示能作为&amp;和++等操作符的操作数（B语言中已经如此）。而且，现代C/C++中的含义已经不局限于此。lvalue的 <code>l</code> 被重新解释为location。这也对应于ISO C11/ISO C++11的 <strong>内存位置</strong>(memory location)。</em></p>
+<p>——百度百科</p>
+</blockquote>
+<p>从一个左值中必定可以解析出对应对象的地址，除非该对象是位字段（bit-field）或者被声明为寄存器存储类。生成左值的运算符包括下标运算符（subscript operator）[]和间接运算符（indirection operator）*，如下表所示（如果 array 已被声明为数组，而 ptr 被声明为指针变量）。</p>
+<table>
+<thead>
+<tr class="header">
+<th>表达式</th>
+<th>是左值吗</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>array[1]</td>
+<td>是；一个数组元素是一个具有位置的对象</td>
+</tr>
+<tr class="even">
+<td>&amp;array[1]</td>
+<td>否；此对象的位置，并非一个具有位置的对象</td>
+</tr>
+<tr class="odd">
+<td>ptr</td>
+<td>是；此指针变量是一个具有位詈的对象</td>
+</tr>
+<tr class="even">
+<td>*ptr</td>
+<td>是；指针所指的地方是一个具有位置的对象</td>
+</tr>
+<tr class="odd">
+<td>ptr+1</td>
+<td>否；此加法产生一个新的地址值，但不是一个对象</td>
+</tr>
+<tr class="even">
+<td>*ptr+l</td>
+<td>否；此加法产生一个新的算术值，但不是一个对象</td>
+</tr>
+</tbody>
+</table>
+<h1 id="参考">参考</h1>
+<ol type="1">
+<li>《C Primer Plus》, Stephen Prata</li>
+<li><a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E5%B7%A6%E5%80%BC">左值</a></li>
+<li><a target="_blank" rel="noopener" href="http://c.biancheng.net/view/281.html">C语言左值与右值详解</a></li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -2937,111 +3070,6 @@
 <p><strong>简单总结</strong></p>
 <p>完成同一功能，不同内核提供的系统调用（也就是一个函数）是不同的，例如创建进程，linux下是fork函数，windows下是creatprocess函数。好，我现在在linux下写一个程序，用到fork函数，那么这个程序该怎么往windows上移植？我需要把源代码里的fork通通改成creatprocess，然后重新编译...</p>
 <p>posix标准的出现就是为了解决这个问题。linux和windows都要实现基本的posix标准，linux把fork函数封装成posix_fork（随便说的），windows把creatprocess函数也封装成posix_fork，都声明在unistd.h里。这样，程序员编写普通应用时候，只用包含unistd.h，调用posix_fork函数，程序就在源代码级别可移植了</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://islet.space/2021/05/23/Programming/C++/2021-05-23-%E5%9F%BA%E6%9C%AC%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B-%E4%B8%8E-%E6%9E%84%E9%80%A0%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Liewzheng">
-      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Coder的孤岛">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/05/23/Programming/C++/2021-05-23-%E5%9F%BA%E6%9C%AC%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B-%E4%B8%8E-%E6%9E%84%E9%80%A0%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/" class="post-title-link" itemprop="url">基本数据类型 与 构造数据类型</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-
-    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
-    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-      
-
-      <time title="Created: 2021-05-23 19:21:00 / Modified: 23:50:04" itemprop="dateCreated datePublished" datetime="2021-05-23T19:21:00+08:00">2021-05-23</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Programming/" itemprop="url" rel="index"><span itemprop="name">Programming</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>[cnblogs.com](https://www.cnblogs.com/ybtools/p/6432464.html#:~:text=构造数据类型指可以通过其他的数据类型进行构造，可由程序员自定义，故又称为 ",自定义数据类型 "。 基本数据类型包括整型（short%2Cint%2Clong）、实型（又称浮点型）（float和double）、字符型char、布尔型bool等，他们都可以用于定义常量和变量。)</p>
-<p>PS：本文以C++为例介绍数据类型。</p>
-<h1 id="数据类型">数据类型　</h1>
-<p>从广义上根据量的值是否可变，可分为<strong>常量</strong>和<strong>变量</strong>两种数据类型。</p>
-<p>根据数据复杂程度，划分为<strong>基本数据类型</strong>和<strong>构造数据类型</strong>这两大类。</p>
-<p><strong>基本数据类型</strong> 包括：整型（short,int,long）、实型（又称浮点型）（float和double）、字符型char、布尔型bool等。</p>
-<p><strong>构造数据类型</strong> 包括：数组类型、枚举类型enum、指针类型、引用类型、结构体struct、联合体union（又称联合，共用体）、类class等。</p>
-<p>构造数据类型指可以通过其他的数据类型进行构造，可由程序员自定义，故又称为 "<strong>自定义数据类型</strong>"。</p>
-<h1 id="基本数据类型">基本数据类型</h1>
-<p>基本数据类型包括整型（short,int,long）、实型（又称浮点型）（float和double）、字符型char、布尔型bool等，他们都可以用于定义常量和变量。</p>
-<p>基本数据类型，也叫做基础类型，或内置类型。</p>
-<p><strong>1、整型（short,int,long）</strong></p>
-<p>整型量，包括短整型short、整型int、长整型long，而且3种类型都可以分别再细分为：有符号(signed)以及无符号(unsigned)。</p>
-<p><strong>2、实型（又称浮点型）（float和double）</strong></p>
-<p>实型，又称为浮点型，它包括两种数据类型：单精度浮点数float和双精度浮点数double。他们都是有符号数据类型。如果一个数值常量，包含小数点、指数部分（字符e），则为浮点数。</p>
-<p>双精度浮点型，还可细分为双精度（double型）、长双精度（long double）</p>
-<p><strong>3、字符型char</strong></p>
-<p>字符型char类型定义的常量，必须要用单括号括起来。</p>
-<p>例如：char ch='a' ; //把字符常量'a'存储到ch中。</p>
-<p>字符型char类型量也可以细分为有符号(char)和无符号(unsigned char)。</p>
-<p><strong>4、布尔型bool</strong></p>
-<p>布尔型的取值为true或者false。</p>
-<p>布尔型变量的说明：例：bool flag，则布尔型数据的变量flag取值：只有 false 和 true 两个值，即分别是0和1。</p>
-<h1 id="构造数据类型">构造数据类型</h1>
-<p>有些比较复杂的数据，单纯用基本数据类型未能表示，在C++中程序员可以用基本数据类型来自定义构造出新的数据类型，称构造数据类型，也称作 <strong><em>构造类型</em></strong>、<strong><em>构造数据类型</em></strong>。</p>
-<p>构造数据类型除了可以用常见的如int、float和double、char、bool等基本数据类型进行构造，也可以包含其他构造类型的数据。</p>
-<p>构造数据类型包括：数组类型、枚举类型enum、指针类型、引用类型、结构体struct、联合体union（又称联合，共用体）、class类等，他们可以通过其他的数据类型进行构造，由程序员自定义，所以又称为自定义数据类型。</p>
-<p>参考：http://blog.csdn.net/u013174689/article/details/17484223</p>
-<p>​</p>
 
       
     </div>

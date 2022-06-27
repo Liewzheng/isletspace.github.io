@@ -162,18 +162,18 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">117</span>
+          <span class="site-state-item-count">118</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
           <a href="/categories/">
-        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-count">13</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">220</span>
+        <span class="site-state-item-count">221</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -207,6 +207,837 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://islet.space/2021/02/10/Programming/CSS/2021-02-10-CSS%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Liewzheng">
+      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coder的孤岛">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/02/10/Programming/CSS/2021-02-10-CSS%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="post-title-link" itemprop="url">CSS学习笔记</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-02-10 09:07:00" itemprop="dateCreated datePublished" datetime="2021-02-10T09:07:00+08:00">2021-02-10</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2021-08-07 00:04:20" itemprop="dateModified" datetime="2021-08-07T00:04:20+08:00">2021-08-07</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Programming/" itemprop="url" rel="index"><span itemprop="name">Programming</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="css基础">CSS基础</h1>
+<p><strong>书写方式：</strong> <code>CSS属性:</code> <code>属性值;</code></p>
+<h2 id="css-类命名规则">1. CSS 类命名规则</h2>
+<h3 id="公共命名规则">公共命名规则</h3>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">CSS样式命名</th>
+<th style="text-align: left;">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">wrapper</td>
+<td style="text-align: left;">页面外围控制整体布局宽度</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">container或content</td>
+<td style="text-align: left;">容器,用于最外层</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">layout</td>
+<td style="text-align: left;">布局</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">head, header</td>
+<td style="text-align: left;">页头部分</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">foot, footer</td>
+<td style="text-align: left;">页脚部分</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">nav</td>
+<td style="text-align: left;">主导航</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">subnav</td>
+<td style="text-align: left;">二级导航</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">menu</td>
+<td style="text-align: left;">菜单</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">submenu</td>
+<td style="text-align: left;">子菜单</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">sideBar</td>
+<td style="text-align: left;">侧栏</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">sidebar_a, sidebar_b</td>
+<td style="text-align: left;">左边栏或右边栏</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">main</td>
+<td style="text-align: left;">页面主体</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">tag</td>
+<td style="text-align: left;">标签</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">msg message</td>
+<td style="text-align: left;">提示信息</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">tips</td>
+<td style="text-align: left;">小技巧</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">vote</td>
+<td style="text-align: left;">投票</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">friendlink</td>
+<td style="text-align: left;">友情连接</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">title</td>
+<td style="text-align: left;">标题</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">summary</td>
+<td style="text-align: left;">摘要</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">loginbar</td>
+<td style="text-align: left;">登录条</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">searchInput</td>
+<td style="text-align: left;">搜索输入框</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">hot</td>
+<td style="text-align: left;">热门热点</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">search</td>
+<td style="text-align: left;">搜索</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">search_output</td>
+<td style="text-align: left;">搜索输出和搜索结果相似</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">searchBar</td>
+<td style="text-align: left;">搜索条</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">search_results</td>
+<td style="text-align: left;">搜索结果</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">copyright</td>
+<td style="text-align: left;">版权信息</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">branding</td>
+<td style="text-align: left;">商标</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">logo</td>
+<td style="text-align: left;">网站LOGO标志</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">siteinfo</td>
+<td style="text-align: left;">网站信息</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">siteinfoLegal</td>
+<td style="text-align: left;">法律声明</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">siteinfoCredits</td>
+<td style="text-align: left;">信誉</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">joinus</td>
+<td style="text-align: left;">加入我们</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">partner</td>
+<td style="text-align: left;">合作伙伴</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">service</td>
+<td style="text-align: left;">服务</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">regsiter</td>
+<td style="text-align: left;">注册</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">arr/arrow</td>
+<td style="text-align: left;">箭头</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">guild</td>
+<td style="text-align: left;">指南</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">sitemap</td>
+<td style="text-align: left;">网站地图</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">list</td>
+<td style="text-align: left;">列表</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">homepage</td>
+<td style="text-align: left;">首页</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">subpage</td>
+<td style="text-align: left;">二级页面子页面</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">tool, toolbar</td>
+<td style="text-align: left;">工具条</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">drop</td>
+<td style="text-align: left;">下拉</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">dorpmenu</td>
+<td style="text-align: left;">下拉菜单</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">status</td>
+<td style="text-align: left;">状态</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">scroll</td>
+<td style="text-align: left;">滚动</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">.tab</td>
+<td style="text-align: left;">标签页</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">.left .right .center</td>
+<td style="text-align: left;">居左、中、右</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">.news</td>
+<td style="text-align: left;">新闻</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">.download</td>
+<td style="text-align: left;">下载</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">.banner</td>
+<td style="text-align: left;">广告条(顶部广告条)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="其他div命名规则">其他DIV命名规则</h3>
+<p>　　登录条:loginBar</p>
+<p>　　标志:logo</p>
+<p>　　侧栏:sideBar</p>
+<p>　　广告:banner</p>
+<p>　　导航:nav</p>
+<p>　　子导航:subNav</p>
+<p>　　菜单:menu</p>
+<p>　　子菜单:subMenu</p>
+<p>　　搜索:search</p>
+<p>　　滚动:scroll</p>
+<p>　　页面主体:main</p>
+<p>　　内容:content</p>
+<p>　　标签页:tab</p>
+<p>　　文章列表:list</p>
+<p>　　提示信息:msg</p>
+<p>　　小技巧:tips</p>
+<p>　　栏目标题:title</p>
+<p>　　友情链接:friendLink</p>
+<p>　　页脚:footer</p>
+<p>　　加入:joinus</p>
+<p>　　指南:guild</p>
+<p>　　服务:service</p>
+<p>　　热点:hot</p>
+<p>　　新闻:news</p>
+<p>　　下载:download</p>
+<p>　　注册:regsiter</p>
+<p>　　状态:status</p>
+<p>　　按钮:btn</p>
+<p>　　投票:vote</p>
+<p>　　合作伙伴:partner</p>
+<p>　　版权:copyRight</p>
+<h2 id="选择器">2. 选择器</h2>
+<h3 id="基础选择器">基础选择器</h3>
+<p>选择器按作用大小（从小到大）分为 <code>ID选择器(使用井字符做特殊标注：#)</code> 、<code>类选择器（使用英文点号做特殊标注：.）</code> 、 <code>标签选择器</code> 及 <code>通配符选择器（使用英文星号做特殊标注：*）</code>。</p>
+<table>
+<colgroup>
+<col style="width: 9%" />
+<col style="width: 48%" />
+<col style="width: 22%" />
+<col style="width: 19%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>选择器类型</th>
+<th>选择器特性</th>
+<th>style书写方式</th>
+<th>style应用方式</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>ID选择器</td>
+<td>1. 与其他选择器类型一致，特殊之处是大部分情况作JavaScript调用<br/>2. 需要编写唯一id不可重复使用</td>
+<td>#DivStyle { color: red; }</td>
+<td>id="DivStyle"</td>
+</tr>
+<tr class="even">
+<td>类选择器</td>
+<td>1. 作用于使用class属性的一类标签，同面向对象的其他语言特性一致<br/>2. 单个标签可以使用多个类，中间以空格隔开</td>
+<td>.ClassStyle { color: black;}</td>
+<td>Class="ClassStyle ....."</td>
+</tr>
+<tr class="odd">
+<td>标签选择器</td>
+<td>作用于所有使用本标签的标签</td>
+<td>div { color: blue; }</td>
+<td>/</td>
+</tr>
+<tr class="even">
+<td>通配符选择器</td>
+<td>作用于所有标签</td>
+<td>* { clolor: pink; }</td>
+<td>/</td>
+</tr>
+</tbody>
+</table>
+<h3 id="复合选择器">复合选择器</h3>
+<table>
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 44%" />
+<col style="width: 44%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>复合选择器类型</th>
+<th>选择器特性</th>
+<th>style书写方式</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>后代选择器</td>
+<td>1. 可以选择<strong>某个</strong>父标签下的<strong>某个</strong>全部子标签，不管其是否在同一个层级<br/>2. 当标签发生嵌套时，内层标签就称为外层标签的后代<br/>3. 浏览器按照标签层级的关系进行查找，并<u>对最内层标签进行修改</u>，因此可以定义多重标签选择，如可以使用基础选择器（类选择器及ID选择器）进行组合使用<br/>4. 内外层选择器之间 <mark>以空格隔开</mark></td>
+<td>外层标签 内层标签 {属性}<br/>ol li { color: #000; }<br/>ol li a { color: #777; }<br/>.nav li a { color: pruple;}</td>
+</tr>
+<tr class="even">
+<td>子代选择器</td>
+<td>1. 即与后代选择器不同，仅对父级标签下的某一类选择器进行操作，不会作用于其他子代的同类标签<br/>2. 使用符号 <code>&gt;</code> 进行操作</td>
+<td>.nav&gt;a {color: pink;}</td>
+</tr>
+<tr class="odd">
+<td>集选择器（相邻选择器）</td>
+<td>1. 在两个没有从属关系（子代或后代）和相同特点（如同类标签）的同级不同类标签中，定义一个相同的样式<br/>2. 多个标签进行选择时使用英文逗号 <code>,</code> 进行并列选择<br/>3. 并集选择器内可使用 <strong>简单选择器</strong> 和 <strong>复合选择器</strong>（如 后代选择器 和 子代选择器），竖向书写选择器</td>
+<td>div, p {color: pink; }</td>
+</tr>
+<tr class="even">
+<td>伪类选择器</td>
+<td>1. 用于给某些选择器添加特殊效果（如给链接添加特殊效果），或者选择某个元素<br/>2. 结构伪类、链接伪类、表单伪类<br/>3. 伪类选择器其实更像是一个行为选择器（或状态选择器），它定义了一个/类标签在不同状态下的样式，书写形式如：<code>标签</code>: <code>状态/行为</code> <code>&#123;属性&#125;</code></td>
+<td>.OnlineTitle:link {<br/> color: #222222;<br/> text-decoration: none;<br/>}</td>
+</tr>
+</tbody>
+</table>
+<p><strong>并集选择器</strong></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">HTML</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!--</span></span><br><span class="line"><span class="comment">如要求将下方熊大、熊二及佩奇一家都改为粉色，则按照&lt;style&gt;中的方式进行书写</span></span><br><span class="line"><span class="comment">--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">style</span>&gt;</span></span><br><span class="line">            //在两个没有从属关系（子代或后代）和相同特点（如同类标签）的同级不同类标签中，定义一个相同的样式</span><br><span class="line"><span class="css">            <span class="selector-tag">div</span>,</span></span><br><span class="line"><span class="css">            <span class="selector-tag">p</span>,</span></span><br><span class="line"><span class="css">            <span class="selector-class">.pig</span> <span class="selector-tag">li</span> &#123;                //类选择器</span></span><br><span class="line"><span class="css">                <span class="attribute">color</span>: pink;</span></span><br><span class="line">            &#125;</span><br><span class="line">        <span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span>&gt;</span>熊大<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">p</span>&gt;</span>熊二<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">span</span>&gt;</span>关头强<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">ul</span> <span class="attr">class</span>=<span class="string">&quot;pig&quot;</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">li</span>&gt;</span>PIG 1<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">li</span>&gt;</span>PIG 2<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">li</span>&gt;</span>PIG 3<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p><strong>链接伪类选择器</strong></p>
+<p>四个使用方式: link / visited / hover / active</p>
+<ol type="1">
+<li>为了确保生效，应按照LVHA的顺序进行声明。</li>
+<li><code>&lt;a&gt;</code> 链接在浏览器中具有默认样式，不会因为在<code>&lt;body&gt;</code>中而随之改变，实际工作中需要给链接单独指定样式。</li>
+<li>使用时，加上冒号 <code>:</code> 与 四种<code>状态</code>之一 即可</li>
+</ol>
+<p>举例：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">a</span><span class="selector-pseudo">:hover</span></span><br><span class="line">&#123; </span><br><span class="line">	<span class="attribute">background-color</span>:yellow;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>当鼠标经过父级元素时，显示子元素的遮罩层：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.tudou</span><span class="selector-pseudo">:hover</span> <span class="selector-class">.mask</span> &#123;</span><br><span class="line">	<span class="attribute">display</span>: block;      <span class="comment">/* 显示遮罩层 */</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>最小盒子：</strong>即只能存放文字了，不能再存放其他标签/元素，如 <code>&lt;p&gt;</code>、<code>&lt;h1&gt;</code>等文字块级标签；</p>
+<h3 id="元素显示模式">元素显示模式</h3>
+<p>是指在页面上的元素以 <strong>块状模式</strong> 、 <strong>行内模式</strong> 或 <strong>行内块模式</strong> 进行显示。元素按显示模式可以分为 <strong>块状（级）元素</strong> 及 <strong>行内元素（内联元素）</strong> 及 <strong>行内块元素</strong> 三种类型。</p>
+<table>
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 30%" />
+<col style="width: 30%" />
+<col style="width: 30%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>元素类型</th>
+<th>典型标签</th>
+<th>特点</th>
+<th>注意点</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>块状元素</td>
+<td><code>&lt;h1&gt;</code>~<code>&lt;h6&gt;</code> 、 <code>&lt;p&gt;</code>、 <code>&lt;div&gt;</code>、<code>&lt;ul&gt;</code>、<code>&lt;ol&gt;</code>、<code>&lt;li&gt;</code>......</td>
+<td>1. 即使设置标签宽度，也是独占一行<br/>2. 高、宽、外边距及内边距可调节<br/>3. 默认宽度是父级宽度的100%<br/>4. 是一个容器及盒子，可以放任何标签</td>
+<td>文字类的标签内不可以存放块元素</td>
+</tr>
+<tr class="even">
+<td>行内元素（内联元素）</td>
+<td><code>&lt;a&gt;</code>、 <code>&lt;strong&gt;</code>、<code>&lt;b&gt;</code>、 <code>&lt;em&gt;</code>、<code>&lt;i&gt;</code> ......</td>
+<td>1. 相邻行内元素在一行上，一行可以显示多个<br/>2. 直接设置宽高无效，可以间接设置<br/>3. 默认宽度就是其内容宽度<br/>4. 行内元素只能容纳文本及其他行内元素</td>
+<td>1. 链接中不允许再放其他链接<br/>2. <code>&lt;a&gt;</code>中可以放置块元素，但是转换成块级元素最安全</td>
+</tr>
+<tr class="odd">
+<td>行内块元素</td>
+<td><code>&lt;input&gt;</code>、 <code>&lt;image&gt;</code>、<code>&lt;td&gt;</code>......</td>
+<td>1. 同时具有块元素及行内元素的特定<br/>2. 和相邻行内元素（行内块）在一行上，但是有空白缝隙，可以一行显示多个<br/>3. 默认宽度即内容宽度<br/>4. 高度、行高、外边距及内边距可控制</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p><strong>元素显示模式的转换</strong></p>
+<p>即一个模式的元素需要另一个模式的特性，可以通过在CSS的标签样式属性中添加display语句进行转换。</p>
+<p>转换为块级元素： <em><code>display: block;</code></em></p>
+<p>转换为行内元素： <em><code>display: inline;</code></em></p>
+<p>转换为行内块元素： <em><code>display: inline-block;</code></em></p>
+<h3 id="权重">权重</h3>
+<table>
+<thead>
+<tr class="header">
+<th>选择器类型</th>
+<th>权重</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>继承</td>
+<td>无</td>
+</tr>
+<tr class="even">
+<td>通配符选择器、子代选择器、相邻选择器（并集选择器）</td>
+<td>0,0,0,0</td>
+</tr>
+<tr class="odd">
+<td>元素选择器、伪元素选择器</td>
+<td>0,0,0,1</td>
+</tr>
+<tr class="even">
+<td>类选择器、伪类选择器、属性选择器</td>
+<td>0,0,1,0</td>
+</tr>
+<tr class="odd">
+<td>ID选择器</td>
+<td>0,1,0,0</td>
+</tr>
+<tr class="even">
+<td>内联选择器</td>
+<td>1,0,0,0</td>
+</tr>
+<tr class="odd">
+<td>!IMPORTANT</td>
+<td>无限</td>
+</tr>
+</tbody>
+</table>
+<p>选择器的加权结果并非二进制，而是在各个数位上进行单独相加，例如元素选择器与类选择器的加权结果为 <code>0,0,1,1</code>，左侧数位的数值越大，权重越高。</p>
+<h2 id="list">3. List</h2>
+<p><code>list-style</code> CSS 属性是一个简写对属性集合，包括<code>list-style-type</code>, <code>list-style-image,</code> 和 <code>list-style-position</code>。</p>
+<p><code>list-style: none | circle | square inside ;</code>表示<code>&lt;ul&gt;</code> 下 <code>&lt;li&gt;</code> 前的小点样式，如“无、圆圈、实心方形”。</p>
+<p>例如：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">ul</span> <span class="attr">class</span>=<span class="string">&quot;one&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">li</span>&gt;</span>List Item1<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">li</span>&gt;</span>List Item2<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">li</span>&gt;</span>List Item3<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br><span class="line">List 2</span><br><span class="line"><span class="tag">&lt;<span class="name">ul</span> <span class="attr">class</span>=<span class="string">&quot;two&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">li</span>&gt;</span>List Item A<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">li</span>&gt;</span>List Item B<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">li</span>&gt;</span>List Item C<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>及</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.one</span> &#123;</span><br><span class="line">  <span class="attribute">list-style</span>: circle;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.two</span> &#123;</span><br><span class="line">  <span class="attribute">list-style</span>: square inside;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="background">4. Background</h2>
+<p><code>background-color</code> 可以设置为 <code>transparent</code>，即透明的，不可视的。</p>
+<p><code>background-image</code> 可以设置为 <code>none</code>，也可以跟上一个 <code>url()</code> 链接。如：<code>background-image: url(http://xxxxxx.com/123.jpg)</code></p>
+<p><code>background-repeat: repeat | no-repea | repeat-x | repeat-y</code> ，分别是指 重复（平铺）、不平铺、在x轴上平铺 及 在y轴上平铺 。</p>
+<p><code>background-position: top | bottom | left | right | center;</code> 除了可以使用类似于左侧的方位词定位，还可以使用坐标轴数值定位。</p>
+<h2 id="font">5. Font</h2>
+<p><strong>FONT-FAMILY 字体族</strong></p>
+<p>通用属性之一，用于设置网页显示字体，font-family的使用方式为 <code>font-family=" "</code> ，双引号内可以书写多个字体，引擎会按顺序搜索本地字体并使用，如果都没有则使用本地字体。</p>
+<p><strong>注意：</strong>建议使用字体的全英文进行书写，如 <strong>微软雅黑</strong> 全英文为 <strong>Microsoft YaHei</strong>，英文书写时有空格的应用单引号<code>‘’</code> 进行包裹。</p>
+<p><strong>FONT-SIZE 字体大小</strong></p>
+<p>通常用于对body标签内所有正文字体大小的设置，对标题（如<code>h3</code>）大小的设置仍需另起样式。</p>
+<p><strong>复合写法</strong></p>
+<p><code>font: font-style font-weight font-size/line-height font-family;</code></p>
+<p><code>font-size</code> 和 <code>font-family</code> 不可缺省</p>
+<h2 id="text">6. Text</h2>
+<p><strong>文本属性</strong></p>
+<table>
+<colgroup>
+<col style="width: 22%" />
+<col style="width: 47%" />
+<col style="width: 30%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>属性</th>
+<th>书写方式</th>
+<th>注意</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>color<br/>颜色</td>
+<td>1. 常见英文表示法，直接书写该颜色英文即可，如 pink  red  blue  purple<br/>2. 16进制表示法，用#号进行书写，如#FF00FF<br/>3. RGB表示法，如rgb(0,0,255)</td>
+<td>16进制简写为#fff<br/>实际开发中用16进制</td>
+</tr>
+<tr class="even">
+<td>text-align<br/>文本对齐</td>
+<td>仅有左、中、右三种表示方式，用英文 left  center  right 进行书写</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>text-indent<br/>文本缩进</td>
+<td>缩进可以用2种方式表示：<br/>1. 精准缩进：即直接使用 <code>px</code> 单位进行书写，表示缩进多少像素点，缺点是容易出现问题<br/>2. 字符单位缩进：即按照字符大小，自适应缩进字符距离，单位是em，如 <code>2em</code>，可以缩进2个字符</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>text-decoration<br/>文本修饰</td>
+<td>常见的修饰类型有四种：无（none）、上划线（overline）、下划线（underline）、删除线（line-through）</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>line-height</td>
+<td>行高=上行距+下行距+字高，且上行距=下行距</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="box-module">7. Box Module</h2>
+<p>盒子模型主要分三部分：<strong>border</strong>（边框）、<strong>padding</strong>（内边距）及 <strong>margin</strong>（外边距）。</p>
+<h3 id="border">Border</h3>
+<p>边框主要有一下三种参数：粗细、颜色及样式</p>
+<ul>
+<li>粗细(border-width: 5px;)</li>
+<li>颜色(boder-color: #555) （<em>注意：如果这个值没有设置，它的默认值是元素的 color属性值（是文字颜色而非背景色）</em>），可以定义为transparent（透明的）</li>
+<li>样式(boder-style: none | hidden | dotted | dashed | solid | double(双层线) | groove(内雕刻) | ridge(外浮雕) | inset(内凹陷) | outset(外凹陷) )</li>
+</ul>
+<p>border属性之可以在中间添加上、下、左、右四个方位词和三参数之一，如 border-top-color | border-bottom-style ....</p>
+<p>边框使用时会影响盒子大小，需要注意调整。</p>
+<p><strong>复合写法</strong></p>
+<p><code>border: [border-width ||border-style ||border-color |inherit] ;</code></p>
+<h3 id="padding">Padding</h3>
+<p>内边距涉及到的参数包括 上下左右四边的边距。</p>
+<p>在未设置内盒子的width时，设置padding对内盒子实际显示大小不起影响，一旦设置width，则会让盒子的width在显示时超过设置参数的大小。</p>
+<h3 id="margin">Margin</h3>
+<p>外边距同内边距。</p>
+<p>在标准流下，设置块级盒子width参数后，设置margin左右为auto，可以让盒子实现居中效果。（以下三种写法，推荐第一个，第一个参数表示上下，第二个参数表示左右）</p>
+<p><code>margin: 0 auto;</code></p>
+<p><code>margin: auto;</code></p>
+<p><code>margin-left: auto; margin-right: auto;</code></p>
+<h3 id="qa">Q/A</h3>
+<p><strong>盒子塌陷的解决方案</strong></p>
+<p>以下为两个盒子嵌套，同时设置上边距导致塌陷问题的解决方案：</p>
+<ul>
+<li>可以为父元素定义上边框/上内边距</li>
+<li>可以为父元素添加 <code>overflow: hidden;</code></li>
+<li>利用浮动、固定、绝对定位解决</li>
+</ul>
+<h2 id="float">8. Float</h2>
+<p>浮动最初的开发目的是让图片和文字产生环绕效果的，浮动可以让多个块级元素在一行内显示。</p>
+<p><code>float: none | left | right;</code></p>
+<p><strong>注意：</strong>两个行内块元素中间会有空白间隙存在，如果父级元素设定了宽度，会让元素存放不下。需要给此类行内块元素设定浮动</p>
+<p><strong>浮动特性：</strong></p>
+<ul>
+<li><p>脱标</p></li>
+<li><p>顶端对齐</p></li>
+<li><p>具有行内块元素特性</p></li>
+</ul>
+<p><strong>外边距合并</strong></p>
+<blockquote>
+<p>外边距合并指的是，当两个垂直外边距相遇时，它们将形成一个外边距。合并后的外边距的高度等于两个发生合并的外边距的高度中的较大者。</p>
+</blockquote>
+<p><strong>注释：</strong>只有普通文档流中块框的垂直外边距才会发生外边距合并。行内框、浮动框或绝对定位之间的外边距不会合并。</p>
+<p>在标准流中嵌套一个带有外边距的浮动框，不会让他们产生外边距合并。</p>
+<h2 id="clean-float">9. Clean Float</h2>
+<p>清除浮动也叫闭合浮动，是指在未指定父级元素高度而子级元素为浮动时，会对父级元素同级的标准流造成影响，因而需要清除该类浮动造成的弊端的情况。</p>
+<p>清除浮动的四种方式：</p>
+<table>
+<colgroup>
+<col style="width: 9%" />
+<col style="width: 35%" />
+<col style="width: 20%" />
+<col style="width: 35%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>方法</th>
+<th>说明</th>
+<th>写法</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>额外标签</td>
+<td>[w3c推荐]也称隔墙法，指在浮动的块（行内块）级元素后面新增一个带有<code>clear: both;</code>属性的额外标签（要求是块级元素）来屏蔽浮动的影响。</td>
+<td><code>clear: both;</code></td>
+<td>弊端是增加了额外标签，对H5结构造成负担；<br/>要求新增的标签不能是行内元素</td>
+</tr>
+<tr class="even">
+<td>父级添加overflow</td>
+<td>仅给父级元素添加overflow，添加hidden、auto、scroll皆可。</td>
+<td><code>overflow: hidden | auto | scroll</code></td>
+<td>优点是代码简洁，缺点是无法显示溢出的部分</td>
+</tr>
+<tr class="odd">
+<td>:after伪元素</td>
+<td>额外标签法的升级版，利用CSS样式添加额外标签<br/>仅给父级元素添加</td>
+<td>见下方</td>
+<td>没有增加额外标签，样式写法较为复杂；</td>
+</tr>
+<tr class="even">
+<td>双伪元素</td>
+<td>在子级前后各添加一个伪元素</td>
+<td>见下方</td>
+<td>代码简洁，照顾低版本。</td>
+</tr>
+</tbody>
+</table>
+<p><strong>:after伪元素代码示例：</strong></p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.clearfix</span>:after &#123;</span><br><span class="line">	content: <span class="string">&quot;&quot;</span>;</span><br><span class="line">	<span class="attribute">display</span>: block;</span><br><span class="line">	<span class="attribute">height</span>: <span class="number">0</span>;</span><br><span class="line">	<span class="attribute">clear</span>: both;</span><br><span class="line">	<span class="attribute">visibility</span>: hidden;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.clearfix</span> &#123;       <span class="comment">/* IE6、7专有 */</span></span><br><span class="line">	*zoom: <span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>双伪元素代码示例：</strong></p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.clearfix</span>:before, .clearfix:after&#123;</span><br><span class="line">	content: <span class="string">&quot;&quot;</span>;</span><br><span class="line">	<span class="attribute">display</span>: table;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.clearfix</span>:after&#123;</span><br><span class="line">	clear: both;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.clearfix</span>&#123;</span><br><span class="line">	*zoom: <span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="position">10. Position</h2>
+<h3 id="定位的意义">定位的意义</h3>
+<p>让盒子自由地在某个盒子中移动或固定在屏幕中的某个位置，并且可以压住其他盒子。</p>
+<p><strong>注意：</strong>对于标准流和浮动，不可以使用定位。</p>
+<h3 id="定位模式">定位模式</h3>
+<p><code>position: static | relative | absolute | fixed ;</code></p>
+<table>
+<colgroup>
+<col style="width: 12%" />
+<col style="width: 14%" />
+<col style="width: 5%" />
+<col style="width: 27%" />
+<col style="width: 39%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>定位分类</th>
+<th>脱标</th>
+<th>使用情况</th>
+<th>参考系</th>
+<th>其他特点</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>静态定位 <code>static</code></td>
+<td>否，不能使用边偏移</td>
+<td>很少</td>
+<td>无，不设置边偏移</td>
+<td>按照标准流特性摆放位置</td>
+</tr>
+<tr class="even">
+<td>相对定位 <code>relative</code></td>
+<td>否，占用标准流的位置</td>
+<td>常用</td>
+<td>自身原来的位置</td>
+<td>相对于自身原来的位置来移动<br/>设置相对定位后，后面的标准流<strong>不会脱标</strong>，不会让身后的标准流往前挤或往后挤；<br/>通常是给绝对定位当父级元素的属性</td>
+</tr>
+<tr class="odd">
+<td>绝对定位 <code>absolute</code></td>
+<td>是，不占用标准流的位置</td>
+<td>常用</td>
+<td>最近一级父级以上带有定位的盒子（子绝父相）</td>
+<td>如果没有已定位的父级元素，则以浏览器进行绝对定位</td>
+</tr>
+<tr class="even">
+<td>固定定位 <code>fixed</code></td>
+<td>是，不占用标准流的位置</td>
+<td>常用</td>
+<td>浏览器的可视窗口</td>
+<td>与父级元素无关，不随窗口滚动条滚动<br/></td>
+</tr>
+<tr class="odd">
+<td>粘性定位 <code>sticky</code></td>
+<td>否，占用标准流的位置</td>
+<td>很少</td>
+<td>浏览器的可视窗口</td>
+<td>相对定位和固定定位的混合体，具有两者的某些特点<br/>必须添加至少一个边偏移参数<br/>需与滚动搭配使用，对IE兼容性差，类似粘性定位的做法通常用JavaScript来做</td>
+</tr>
+</tbody>
+</table>
+<h3 id="边偏移">边偏移</h3>
+<p>相对于父级盒子（或者有定位的祖辈盒子）的边线偏移量（偏移量可以为负值）。</p>
+<p>需要在设置好定位模式后边偏移才能生效。</p>
+<p><strong>四种偏移：</strong>top、bottom、right、left；</p>
+<p><strong>例：</strong><code>top: 10px; right: 20px;</code></p>
+<p><strong>如何将内容固定到版心右侧？</strong></p>
+<p>使用固定定位至左侧的50%，在调整<code>margin-left</code>值至版心宽度的一般（直接书写数值px）。</p>
+<p><strong>如何让内容固定到屏幕正中心？</strong></p>
+<p>使用固定定位至左侧和顶部的50%，再使用<code>margin-left</code>和<code>margin-right</code>的负值来抵消自身宽高的一半。</p>
+<h3 id="定位显示优先级">定位显示优先级</h3>
+<p>定位显示优先级，即定位叠放顺序，是指 <strong>具有定位属性的盒子</strong>（类似于PS图层）在Z轴上的显示优先级，数值越大则优先级越高。</p>
+<p>如果设置为<code>auto</code>，则按照H5结构书写顺序以“后来居上”的原则显示。</p>
+<p>如果设置为数值，则比auto优先级更高，但是不能写单位。</p>
+<p><code>z-index: (number) | auto;</code></p>
+<h3 id="定位的特殊性质">定位的特殊性质</h3>
+<ul>
+<li>给行内元素添加绝对或者固定定位后，可以设置宽度和高度（不等同于与块级元素互换特性？）</li>
+<li>给块级元素添加绝对或者固定宽度后，不设置宽高也可以则应用内容的大小</li>
+</ul>
+<h2 id="显示与隐藏">11. 显示与隐藏</h2>
+<p>显示与隐藏的三种方式：display（显示隐藏）、visibility（显示隐藏）、overflow （溢出显示隐藏）</p>
+<table>
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 41%" />
+<col style="width: 41%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>方式</th>
+<th>用法</th>
+<th>特性</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>display（显示隐藏）</td>
+<td>该属性本来是设置元素如何显示的；<br /><code>display: none;</code> 用于隐藏对象；<br /><code>display: block;</code> 除了用于转换成块级元素，还可以用于显示元素；</td>
+<td>隐藏元素后，不再占有其原位置；<br />应用广泛，搭配js做网页特效用；</td>
+</tr>
+<tr class="even">
+<td>visibility（显示隐藏）</td>
+<td>用于设置元素的可见性；<br /><code>visibility: visible | hidden | inherit | collapse ;</code></td>
+<td>隐藏元素后，仍占有其原位置；<br /></td>
+</tr>
+<tr class="odd">
+<td>overflow （溢出显示隐藏）</td>
+<td>仅针对溢出元素框的部分进行显示或隐藏；<br /><code>overflow: visible;</code> 设置时<code>clip</code>属性设置将失效；<br /><code>overflow: hidden;</code> 不显示超过对象尺寸的内容；<br /><code>overflow: scroll;</code> 以滚动条形式显示，不管是否内容是否溢出；<br /><code>overflow: auto;</code> 自动判断内容长度，按需添加滚动条；</td>
+<td>如果带有定位属性，应慎用 <code>overflow: hidden;</code> ，会隐藏多余的部分</td>
+</tr>
+</tbody>
+</table>
+<h2 id="布局">12. 布局</h2>
+<h3 id="常见的布局形式">常见的布局形式</h3>
+<p><strong>传统布局方式：</strong>普通流（文档流、标准流）、浮动、定位。</p>
+<p><strong>通栏：</strong>是指和浏览器一样宽。</p>
+<p><strong>布局设计准则：</strong></p>
+<ul>
+<li><p>纵向块级元素用标准流，横向块级元素用浮动。</p></li>
+<li><p>先用标准流的父元素排列上下位置，之后内部子元素采取浮动排列左右位置，复合网页布局第一准则。</p></li>
+<li><p>浮动的盒子只会影响浮动盒子后方的标准流，不影响前方的标准流。</p></li>
+<li><p>应首先采用“一浮全浮”设计原则。</p></li>
+<li><p>在产品列表数量众多、文字数量众多等不能明确盒子高度的情况下不应指定父级盒子的高度， 否则会出现父级盒子因高度限制而出现子元素无法显示的情况，应让子元素撑开父元素。</p></li>
+<li><p>当给父元素设置标准流却未设置高度，而子元素为浮动时，父元素会高度塌陷。因浮动的子元素不占有高度，因此子元素浮动会会导致无高度的标准流父级元素高度塌陷，影响后续布局。</p></li>
+</ul>
+<h3 id="css属性书写建议">CSS属性书写建议</h3>
+<ol type="1">
+<li>布局定位属性：display / position / float / clear / visibility / overflow (建议display第一个写)</li>
+<li>自身属性：width / height / margin / padding / border / background</li>
+<li>文本属性：color / font / text-decoration / text-align / vertical-align / white-space / break-word</li>
+<li>其他属性：content / cursor / border-radius / box-shadow / text-shadow / background:liner-gradient ....</li>
+</ol>
+<h3 id="页面布局的整体思路">页面布局的整体思路</h3>
+<ol type="1">
+<li>确定版心，即可视区</li>
+<li>分析行、块 以及 块中的列模块</li>
+<li>列模块经常浮动布局，确定列大小后确定列的位置</li>
+<li>先结构，后样式</li>
+</ol>
+<h3 id="关于导航栏">关于导航栏</h3>
+<p>实际开发中，不会直接只用<code>&lt;a&gt;</code>来制作导航栏，而是用<code>&lt;li&gt;</code>包含链接的<code>&lt;li&gt;</code>+<code>&lt;a&gt;</code>来制作。</p>
+<p><code>&lt;li&gt;</code>+<code>&lt;a&gt;</code>语义更加清晰，更为有条理的列表型内容。如果直接用<code>&lt;a&gt;</code>，搜索引擎容易辨别为有堆砌关键字嫌疑（故意堆砌关键字存在被搜索引擎降权的风险），从而影响网站排名。</p>
+<h2 id="特殊符号">13. 特殊符号</h2>
+<p>小于号 &lt; <code>&amp;lt;</code></p>
+<p>大于号 &gt; <code>&amp;gt;</code></p>
+<h1 id="高级技巧">高级技巧</h1>
+<p>目标：</p>
+<ul>
+<li><p>能够使用精灵图</p></li>
+<li><p>能够使用字体图标</p></li>
+<li><p>能够写出CSS三角</p></li>
+<li><p>能够写出常见的CSS用户界面样式</p></li>
+<li><p>能够说出常见的布局技巧</p></li>
+</ul>
+<h2 id="css-sprites">CSS Sprites</h2>
+<p>CSS精灵技术的目的：减少客户端向服务器的请求次数，减小服务器的压力，提高网页的加载速度。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -6598,110 +7429,6 @@ vt. 分离；使分离；劈开；离开；分解
 <ol type="1">
 <li>《<a target="_blank" rel="noopener" href="https://www.cnblogs.com/kreo/p/4368811.html">CentOS7安装iptables防火墙</a>》</li>
 <li>《<a target="_blank" rel="noopener" href="http://coolaf.com/tool/port">国内端口检测网站</a>》</li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://islet.space/2019/03/03/Linux/SSH/%E4%BD%BF%E7%94%A8SELinux%E5%BC%80%E6%94%BESSH%E7%AB%AF%E5%8F%A3/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Liewzheng">
-      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Coder的孤岛">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2019/03/03/Linux/SSH/%E4%BD%BF%E7%94%A8SELinux%E5%BC%80%E6%94%BESSH%E7%AB%AF%E5%8F%A3/" class="post-title-link" itemprop="url">使用SELinux开放SSH端口</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-
-    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
-    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2019-03-03 12:00:00" itemprop="dateCreated datePublished" datetime="2019-03-03T12:00:00+08:00">2019-03-03</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2019-03-05 13:59:48" itemprop="dateModified" datetime="2019-03-05T13:59:48+08:00">2019-03-05</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="什么是selinux">什么是SELinux</h1>
-<p>SELinux(Security-Enhanced Linux) 是美国国家安全局（NSA）对于强制访问控制的实现，是 Linux历史上最杰出的新安全子系统。</p>
-<p>NSA是在Linux社区的帮助下开发了一种访问控制体系，在这种访问控制体系的限制下，进程只能访问那些在他的任务中所需要文件。SELinux 默认安装在 Fedora 和 Red Hat Enterprise Linux 上，也可以作为其他发行版上容易安装的包得到。</p>
-<h1 id="使用selinux开放ssh端口">使用SELinux开放SSH端口</h1>
-<ol type="1">
-<li>查看SELinux开放给ssh使用的端口</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">semanage port -l|grep ssh</span><br></pre></td></tr></table></figure>
-<p>如果系统打印如下，则说明没有开放新添加端口。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh_port_t                    tcp      22</span><br></pre></td></tr></table></figure>
-<ol start="2" type="1">
-<li>添加新端口</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">semanage port -a -t ssh_port_t -p tcp 22222</span><br></pre></td></tr></table></figure>
-<p>正确添加后再次查看，会显示如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh_port_t                    tcp      22，22222</span><br></pre></td></tr></table></figure>
-<h1 id="参考链接">参考链接</h1>
-<ol type="1">
-<li>《<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/SElinux">SELinux</a>》</li>
-<li>《<a target="_blank" rel="noopener" href="https://blog.csdn.net/ausboyue/article/details/53691953">CentOS7增加或修改SSH端口号</a>》</li>
-<li>《<a target="_blank" rel="noopener" href="http://cn.linux.vbird.org/linux_basic/0440processcontrol.php">第十七章、程序管理与 SELinux 初探</a>》</li>
 </ol>
 
       

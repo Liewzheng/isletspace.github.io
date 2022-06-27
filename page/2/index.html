@@ -162,18 +162,18 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">117</span>
+          <span class="site-state-item-count">118</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
           <a href="/categories/">
-        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-count">13</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">220</span>
+        <span class="site-state-item-count">221</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -207,6 +207,124 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://islet.space/2022/02/24/Linux/Server/2022-02-24-Jenkins%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%83%A8%E7%BD%B2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Liewzheng">
+      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coder的孤岛">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/02/24/Linux/Server/2022-02-24-Jenkins%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%83%A8%E7%BD%B2/" class="post-title-link" itemprop="url">Jenkins服务器部署</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2022-02-24 00:30:00 / Modified: 19:32:16" itemprop="dateCreated datePublished" datetime="2022-02-24T00:30:00+08:00">2022-02-24</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>本文只涉及 Jenkins 在 Debian Linux (Kali) 下的相关安装，不涉及使用教程，关于Jenkins的相关科普请自行搜。</p>
+<h1 id="jenkins安装">Jenkins安装</h1>
+<p>Jenkins 可以通过两种方式运行：</p>
+<ul>
+<li>通过官网下载 <code>http://mirrors.jenkins.io/war-stable/latest/jenkins.war</code> 程序，并确保安装了 <code>openjdk-8</code> 即可。此种方式是直接运行 <code>.war</code> 的软件的，免安装，但基于 <code>ssh</code> 远程连接的用户断开连接之后可能会导致无法运行。即，如果不知道如何正确操作shell以便在后台运行该免安装程序，就不推荐使用。</li>
+<li>另一种是安装版本，仍然需要用户提前先安装好 <code>openjdk-8</code> ，然后通过 <a target="_blank" rel="noopener" href="https://pkg.jenkins.io/debian/">官网教程</a> 来添加源和使用 <code>apt</code> 命令进行安装。这种方式可以使用 <code>systemctl</code> 命令确保 Jenkins 开机自启动并在后台运行。</li>
+</ul>
+<h2 id="java-setup">JAVA SETUP</h2>
+<p>需要注意的是，jre有 oracle 版本和 openjdk 版本，需要安装后者。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt update ; sudo apt upgrade ; sudo apt install openjdk-8-jre</span><br></pre></td></tr></table></figure>
+<p>将 <code>JAVA_HOME</code> 写到你对应的 shell 配置文件中。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">export JAVA_HOME&#x3D;&#x2F;usr&#x2F;lib&#x2F;jvm&#x2F;java-1.8.0-openjdk-amd64</span><br><span class="line">export CLASSPATH&#x3D;$JAVA_HOME&#x2F;jre&#x2F;lib&#x2F;rt.jar:$JAVA_HOME&#x2F;lib&#x2F;dt.jar:$JAVA_HOME&#x2F;lib&#x2F;tools.jar</span><br><span class="line">export PATH&#x3D;$JAVA_HOME&#x2F;bin:$PATH</span><br></pre></td></tr></table></figure>
+<h2 id="免安装运行">免安装运行</h2>
+<p>下面就是使用 <code>java -jar jenkins.war --httpPort=8080</code> 命令来免安装运行的。</p>
+<figure>
+<img src="https://pic.islet.space/2022/02/image-20220224003818560.png" alt="image-20220224003818560" /><figcaption aria-hidden="true">image-20220224003818560</figcaption>
+</figure>
+<h2 id="安装运行">安装运行</h2>
+<p>实际上，直接运行下面的 <code>sudo apt install openjdk-11-jre</code> 可能会导致无法运行，原因不明，还是推荐自行使用 <code>sudo apt install openjdk-8-jre</code> 进行安装。</p>
+<figure>
+<img src="https://pic.islet.space/2022/02/image-20220224191828341.png" alt="image-20220224191828341" /><figcaption aria-hidden="true">image-20220224191828341</figcaption>
+</figure>
+<h2 id="防火墙配置">防火墙配置</h2>
+<p>这一点就不再赘述了。</p>
+<ol type="1">
+<li><strong>开启系统内端口</strong>：用 <code>iptables</code> 参考 《<a href="https://islet.space/2019/03/05/Linux/SSH/CentOS7%E5%AE%89%E8%A3%85iptables%E9%98%B2%E7%81%AB%E5%A2%99/">CentOS7安装iptables防火墙</a>》，注意看后面评论内容。</li>
+<li><strong>开启控制台端口</strong>：配置为云服务器的要去网页界面的控制台将对应端口打开。</li>
+</ol>
+<h1 id="jenkins配置">Jenkins配置</h1>
+<p>安装完毕之后，在浏览器中输入 对应网址的 <code>8080</code> 端口，进入页面后输入管理员密码。</p>
+<figure>
+<img src="https://pic.islet.space/2022/02/image-20220224003852043.png" alt="image-20220224003852043" /><figcaption aria-hidden="true">image-20220224003852043</figcaption>
+</figure>
+<p>选择新手入门配置安装插件。</p>
+<figure>
+<img src="https://pic.islet.space/2022/02/image-20220224003716199.png" alt="image-20220224003716199" /><figcaption aria-hidden="true">image-20220224003716199</figcaption>
+</figure>
+<p>安装完毕之后就会让你设置管理员账户。</p>
+<p>虽然，java11是推荐安装，可我就是运行失败。</p>
+<figure>
+<img src="https://pic.islet.space/2022/02/image-20220224004120934.png" alt="image-20220224004120934" /><figcaption aria-hidden="true">image-20220224004120934</figcaption>
+</figure>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -2204,114 +2322,6 @@ wirespeek = 8e5
 <li><a target="_blank" rel="noopener" href="https://docs.espressif.com/projects/esp-idf/zh_CN/latest/esp32/get-started/index.html#id2">ESP-IDF 编程指南</a></li>
 <li><a target="_blank" rel="noopener" href="https://docs.espressif.com/projects/esp-idf/en/latest/esp32/api-reference/protocols/mqtt.html">ESP-MQTT</a></li>
 </ol>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://islet.space/2021/12/27/Blog/2021-12-27-hexo%E5%BF%85%E8%A3%85%E6%8F%92%E4%BB%B6/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Liewzheng">
-      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Coder的孤岛">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/12/27/Blog/2021-12-27-hexo%E5%BF%85%E8%A3%85%E6%8F%92%E4%BB%B6/" class="post-title-link" itemprop="url">hexo必装插件及安装脚本</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-
-    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
-    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-      
-
-      <time title="Created: 2021-12-27 10:30:00 / Modified: 11:05:03" itemprop="dateCreated datePublished" datetime="2021-12-27T10:30:00+08:00">2021-12-27</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Blog/" itemprop="url" rel="index"><span itemprop="name">Blog</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>请先确保电脑上已经安装了必须的软件，如 <code>node.js</code> 和 <code>git</code> ，因为日常需要使用 <strong>代码</strong>、<strong>数学公式</strong>、<strong>流程图</strong>、<strong>搜索</strong> 等工具，所以下方的插件安装也主要是与此相关的。</p>
-<p><strong>注意</strong>：以下仅适用于 <code>hexo-next</code> 主题。</p>
-<h1 id="插件安装">插件安装</h1>
-<p>先放一个博客 islet.space 需要使用到的插件，都需要使用 <code>npm</code> 进行安装。</p>
-<figure>
-<img src="https://pic.islet.space/2021/12/image-20211227103125833.png" alt="本博客使用到的一些插件" /><figcaption aria-hidden="true">本博客使用到的一些插件</figcaption>
-</figure>
-<p>将下方这段脚本保存至 <code>hexo_install.sh</code> 文件中，并使用 <code>chmod +x hexo_install.sh</code> 命令为其添加执行权限，并使用 <code>./hexo_install.sh</code> 进行执行即可。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> uninstall the unnecessary renderer,like marked and kramed</span></span><br><span class="line">sudo npm uninstall hexo-renderer-marked --save</span><br><span class="line">sudo npm uninstall hexo-renderer-kramed --save</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> install the necessary plugins <span class="keyword">for</span> hexo</span></span><br><span class="line">sudo npm install @fancyapps/fancybox --save</span><br><span class="line">sudo npm install @fortawesome/fontawesome-free --save</span><br><span class="line">sudo npm install @next-theme/pjax --save</span><br><span class="line">sudo npm install @next-theme/plugins --save</span><br><span class="line">sudo npm install hexo-deployer-git --save</span><br><span class="line">sudo npm install hexo-filter-mermaid-diagrams --save</span><br><span class="line">sudo npm install hexo-generator-searchdb --save</span><br><span class="line">sudo npm install hexo-math --save</span><br><span class="line">sudo npm install hexo-renderer-ejs --save</span><br><span class="line">sudo npm install hexo-renderer-pandoc --save</span><br><span class="line">sudo npm install hexo-renderer-stylus --save</span><br></pre></td></tr></table></figure>
-<h1 id="插件启用">插件启用</h1>
-<h2 id="pandoc">pandoc</h2>
-<p>若要启用pandoc进行渲染，除了之前必须要卸载旧的渲染器（如 <code>marked</code> 和 <code>kramed</code> 外），还需要去github页面下载一个pandoc的渲染器软件并进行安装。</p>
-<p><strong>pandoc下载链接</strong>：https://github.com/jgm/pandoc/releases</p>
-<h2 id="mermaid">mermaid</h2>
-<p>mermaid需要显示的话也需要安装插件，需要在hexo-next主题文件夹下的 <code>_config.yml</code> 文件中进行启用，如下：</p>
-<figure>
-<img src="https://pic.islet.space/2021/12/image-20211227105005422.png" alt="mermaid在主题配置文件中的启用" /><figcaption aria-hidden="true">mermaid在主题配置文件中的启用</figcaption>
-</figure>
-<h2 id="latex">latex</h2>
-<p>latex数学公式可以由 <code>pandoc</code> 渲染器进行渲染，只需要在hexo-next主题文件夹下的 <code>_config.yml</code> 文件中启用 <code>mathjax</code> ，如下：</p>
-<figure>
-<img src="https://pic.islet.space/2021/12/image-20211227104717614.png" alt="数学公式在主题配置文件中的启用" /><figcaption aria-hidden="true">数学公式在主题配置文件中的启用</figcaption>
-</figure>
-<h2 id="search">search</h2>
-<p>搜索功能功能不仅需要安装插件，还需要分别在博客文件夹根目录中的 <code>_config.yml</code> 和 hexo-next主题文件夹下的 <code>_config.yml</code> 文件中进行启用，如下：</p>
-<figure>
-<img src="https://pic.islet.space/2021/12/image-20211227105545754.png" alt="博客根目录配置文件下的启用" /><figcaption aria-hidden="true">博客根目录配置文件下的启用</figcaption>
-</figure>
-<p><strong>注意</strong>：此处的 <code>db.json</code> 需要在 <code>public</code> 文件夹中也有一份的时候启用；如果 <code>db.json</code> 无法使用，则更换为 <code>search.xml</code> 。因为 <code>db.json</code> 或 <code>search.xml</code> 是由插件生成的搜索数据库（可以这么看）。</p>
-<figure>
-<img src="https://pic.islet.space/2021/12/image-20211227105510478.png" alt="hexo主题配置文件下的启用" /><figcaption aria-hidden="true">hexo主题配置文件下的启用</figcaption>
-</figure>
 
       
     </div>

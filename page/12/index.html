@@ -162,18 +162,18 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">117</span>
+          <span class="site-state-item-count">118</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
           <a href="/categories/">
-        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-count">13</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">220</span>
+        <span class="site-state-item-count">221</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -207,6 +207,219 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://islet.space/2019/01/10/Hardware/ESP32/2019-01-10-ESP32%20SDK%E7%9A%84%E9%85%8D%E7%BD%AE/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Liewzheng">
+      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coder的孤岛">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2019/01/10/Hardware/ESP32/2019-01-10-ESP32%20SDK%E7%9A%84%E9%85%8D%E7%BD%AE/" class="post-title-link" itemprop="url">ESP32 SDK的配置</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2019-01-10 09:00:00" itemprop="dateCreated datePublished" datetime="2019-01-10T09:00:00+08:00">2019-01-10</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2019-01-11 13:43:18" itemprop="dateModified" datetime="2019-01-11T13:43:18+08:00">2019-01-11</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/InternetOfThings/" itemprop="url" rel="index"><span itemprop="name">InternetOfThings</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>本文将直接摘抄和引用<a target="_blank" rel="noopener" href="https://docs.espressif.com/projects/esp-idf/zh_CN/latest/get-started/index.html">ESPRESSIF官网文档</a>对ESP32 SDK配置的描述，并对具体执行步骤加一些自己的备注和注意事项。</p>
+<p>本文中以Ubuntu为Linux系统的代表，在所有安装步骤<code>apt-get install</code>及涉及到其他读写<code>cp</code>、<code>mkdir</code>或<code>rm</code>的操作中，如遇到<code>Permission denied</code>等权限不够的问题，请在命令开头添加<code>sudo</code>或直接另起一行输入<code>sudo -s</code>，然后输入密码(有些命令不需要输入密码)获取 <strong>root</strong> 权限。</p>
+<p>Eclipse的使用可以在三大平台上进行，但是用<code>.bin</code>文件烧录到开发板的过程目前仅在Windows平台找得到烧录工具，望悉知。</p>
+<p>为方便描述，本文定义<code>终端</code>为MSYS2及Terminal的统称，<code>XXXXX</code>为你电脑的用户名，<code>*</code>为你的端口号数字。</p>
+<p>本文分为三部分： - 工具及SDK的下载及配置 - 使用终端运行工程 - 使用Eclipse运行工程</p>
+<h1 id="一工具及sdk的下载及配置">一、工具及SDK的下载及配置</h1>
+<p>本节共有五部分： - 工具(MSYS2和Git) - ESP-IDF - Xtensa - 环境变量设置 - python依赖包</p>
+<h2 id="工具">1. 工具</h2>
+<p>此部分在官方文档里面称为“设置工具链”。</p>
+<h3 id="msys2for-windows-only">1.1 MSYS2(for Windows only)</h3>
+<p>跟Git Bash Shell同理，直接从<a target="_blank" rel="noopener" href="http://www.msys2.org/">MSYS2官网</a>下载和安装到C盘根目录<code>C:/</code>下即可。或者直接下载ESPRESSIF提供的<a target="_blank" rel="noopener" href="https://dl.espressif.com/dl/esp32_win32_msys2_environment_and_toolchain-20181001.zip">.zip文件</a>，解压到<code>C:/</code>。</p>
+<p>能不能放到其他盘，暂时没有试验过，对于使用MSYS2的开发者而言，最好是到<code>C:\msys32\mingw32.exe</code>文件属性中设置好管理员权限。</p>
+<p>本下载仅用于windows平台，对于Mac及Linux平台而言，可以直接调用Terminal进行后续步骤。</p>
+<h3 id="gitfor-mac-linux">1.2 Git(for Mac &amp; Linux)</h3>
+<p>此步骤要在Terminal中进行，便于将ESPRESSIF保存在Github的ESP-IDF下载到本地。</p>
+<p>运行以下命令安装（Debian/Ubuntu）： <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt-get install git</span><br></pre></td></tr></table></figure> 以及（Mac）：<a target="_blank" rel="noopener" href="https://git-scm.com/download/mac">Git下载</a></p>
+<p><strong>ESP-IDF</strong> 是ESP32设备的SDK，另外，MSYS2自带Git工具。如果已经安装过Git工具了，可以使用<code>git</code>或<code>git version</code>语句进行查看。</p>
+<h2 id="esp-idf">2. ESP-IDF</h2>
+<p>在创建文件夹<code>esp</code>的过程中，确保自己没有使用到root权限来创建文件夹，查看的方法是打开<code>Files</code>应用，看看<code>esp</code>文件夹上面是否有个锁的图表。因为后续添加的环境变量局限于 <strong>XXXXX</strong> 用户，而执行文件因为在创建的过程中就属于 <strong>root</strong> 用户了，就不能够识别个人用户创建的环境变量<code>IDF_PATH</code>。为ESP-IDF的获取创建好文件夹，运行以下命令： <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cd ~&#x2F;</span><br><span class="line">mkdir -p esp</span><br><span class="line">cd esp</span><br></pre></td></tr></table></figure> 如果使用了 <strong>root</strong> 权限来创建esp文件夹，请使用命令<code>rm -d -f ~/esp</code>来删除 空的esp文件夹 或 使用命令<code>rm -r -f ~/esp</code>非空的esp文件夹。然后重启终端，使用普通用户权限再次创建。</p>
+<p><img src="https://docs.espressif.com/projects/esp-idf/zh_CN/latest/_images/msys2-terminal-window.png" alt="msys2-terminal-window" /> 然后运行下面语句，ESP-IDF 将会被下载到 <code>~/esp/esp-idf</code> 目录下。 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone --recursive https:&#x2F;&#x2F;github.com&#x2F;espressif&#x2F;esp-idf.git</span><br></pre></td></tr></table></figure></p>
+<p><strong>注意：</strong> 上面克隆仓库的语句中有个 <code>--recursive</code> 选项。如果你克隆 ESP-IDF 时 <strong><em>没有带这个选项</em></strong> ，你还需要运行额外的命令（如下）来获取子模块： <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd esp-idf</span><br><span class="line">git submodule update --init</span><br></pre></td></tr></table></figure></p>
+<h2 id="xtensafor-mac-linux-only">3. Xtensa(for MAC &amp; Linux only)</h2>
+<p><strong>Windows平台因为使用MSYS2的原因，自带了Xtensa，因此可以忽略此步骤。</strong></p>
+<p><strong>Linux平台</strong> <a target="_blank" rel="noopener" href="https://dl.espressif.com/dl/xtensa-esp32-elf-linux64-1.22.0-80-g6c4433a-5.2.0.tar.gz">Xtensa-Linux-64bit</a>下载解压。 执行如下命令： <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd ~&#x2F;esp</span><br><span class="line">tar -xzf ~&#x2F;Downloads&#x2F;xtensa-esp32-elf-linux64-1.22.0-80-g6c4433a-5.2.0.tar.gz</span><br></pre></td></tr></table></figure></p>
+<p><strong>MAC平台</strong> <a target="_blank" rel="noopener" href="https://dl.espressif.com/dl/xtensa-esp32-elf-osx-1.22.0-80-g6c4433a-5.2.0.tar.gz">Xtensa-MAC</a> <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd ~&#x2F;esp</span><br><span class="line">tar -xzf ~&#x2F;Downloads&#x2F;xtensa-esp32-elf-osx-1.22.0-80-g6c4433a-5.2.0.tar.gz</span><br></pre></td></tr></table></figure></p>
+<h2 id="环境变量设置">4. 环境变量设置</h2>
+<p><strong>Windows平台：</strong> 寻找到路径<code>C:/msys32/etc/profile.d/</code>，然后使用记事本或其他文本工具新建一个名为<code>export_idf_path.sh</code>的文件，然后将你的<code>esp-idf</code>路径写入文件中，如： <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">export IDF_PATH&#x3D;&quot;C:&#x2F;msys32&#x2F;home&#x2F;XXXXX&#x2F;esp&#x2F;esp-idf&quot;</span><br></pre></td></tr></table></figure></p>
+<p>安装vim工具或使用其他文本工具，打开<code>~/.profile</code>文件。使用vim工具的话，单击<code>i</code>健进行插入，鼠标点击粘贴以下代码后，按<code>ESC</code>键，然后输入<code>:w</code>进行保存，再次输入<code>:q</code>推出vim工具，ubuntu平台的vim工具安装命令： <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt-get install vim</span><br></pre></td></tr></table></figure></p>
+<p><strong>Linux平台</strong> <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">export PATH&#x3D;&quot;$HOME&#x2F;esp&#x2F;xtensa-esp32-elf&#x2F;bin:$PATH&quot;</span><br><span class="line">export IDF_PATH&#x3D;~&#x2F;esp&#x2F;esp-idf</span><br></pre></td></tr></table></figure></p>
+<p><strong>MAC平台</strong> <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">export PATH&#x3D;$HOME&#x2F;esp&#x2F;xtensa-esp32-elf&#x2F;bin:$PATH</span><br><span class="line">export IDF_PATH&#x3D;~&#x2F;esp&#x2F;esp-idf</span><br></pre></td></tr></table></figure></p>
+<p>完成修改后重启终端，并在终端中输入以下命令可以查看是否设置成功，如果不成功或者后续步骤中出现<code>No such file or directory</code>的错误提示，请尝试重启系统。 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">printenv IDF_PATH</span><br><span class="line">printenv PATH</span><br></pre></td></tr></table></figure></p>
+<figure>
+<img src="http://uk-liewzheng-blog-pic.oss-eu-west-1.aliyuncs.com/2019/01/10/ESP32_SDK%E7%9A%84%E9%85%8D%E7%BD%AE/Environment_Setting_PATH.png" alt="Environment_Setting_PATH" /><figcaption aria-hidden="true">Environment_Setting_PATH</figcaption>
+</figure>
+<h2 id="python依赖包安装">5. python依赖包安装</h2>
+<p>直接输入以下命令，安装依赖于Python的软件包： <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python -m pip install --user -r $IDF_PATH&#x2F;requirements.txt</span><br></pre></td></tr></table></figure></p>
+<p><strong>注意</strong> 在终端输入<code>python</code>可查看版本，如果你的电脑安装的是不同版本的Python，则调用不同的语句进行安装，如<code>python2</code> <code>python2.7</code>。 <img src="http://uk-liewzheng-blog-pic.oss-eu-west-1.aliyuncs.com/2019/01/10/ESP32_SDK%E7%9A%84%E9%85%8D%E7%BD%AE/Tools_Downloads_Python.png" alt="Tools_Downloads_Python" /> <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python2.7 -m pip install --user -r $IDF_PATH&#x2F;requirements.txt</span><br></pre></td></tr></table></figure></p>
+<p>如果在此步骤出现<code>/usr/bin/python2.7: No module named pip</code>的问题，则输入以下命令进行pip module安装： <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt-get install python-pip</span><br></pre></td></tr></table></figure></p>
+<h1 id="二使用终端运行工程">二、使用终端运行工程</h1>
+<p>本节共有四部分： - 工程样例复制 - 开发板连接 - 工程参数设置 - 命令行烧录</p>
+<h2 id="工程样例复制">1. 工程样例复制</h2>
+<p>在<code>C:/msys32/home/XXXXX/esp/esp-idf/examples/</code>下面会有很多ESP-IDF自带的工程样例，按照用途分类。本节将使用<code>/get-started/hello_world</code>作为示范。</p>
+<p>拷贝样例： <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd ~&#x2F;esp</span><br><span class="line">cp -r $IDF_PATH&#x2F;examples&#x2F;get-started&#x2F;hello_world .</span><br></pre></td></tr></table></figure></p>
+<p>要注意的是，拷贝样例的语句中，那个点<code>.</code>必不可少，且和前面的路径中有个空格<code></code>。</p>
+<h2 id="开发板连接">2. 开发板连接</h2>
+<p>将 ESP32 开发板连接到 PC，然后检查串口号，看看它能否正常通信。 ### 2.1 驱动 以下是乐鑫 ESP32 开发板驱动程序的链接：</p>
+<p>ESP32-PICO-KIT 和 ESP32-DevKitC - <a target="_blank" rel="noopener" href="https://www.silabs.com/products/development-tools/software/usb-to-uart-bridge-vcp-drivers">CP210x USB to UART Bridge VCP Drivers</a> ESP32-WROVER-KIT 和 ESP32 Demo Board - <a target="_blank" rel="noopener" href="https://www.ftdichip.com/Drivers/VCP.htm">FTDI Virtual COM Port Drivers</a></p>
+<p>装完驱动之后，Windows平台的设备管理器中是如下显示的： <img src="https://docs.espressif.com/projects/esp-idf/zh_CN/latest/_images/esp32-devkitc-in-device-manager1.png" alt="esp32-devkitc-in-device-manager1" /></p>
+<h3 id="端口号">2.2 端口号</h3>
+<p><strong>Windows平台：</strong> 在<code>设备管理器</code>中查看<code>端口</code>并记录下其设备尾部标注的端口号<code>COM*</code>。 <img src="https://docs.espressif.com/projects/esp-idf/zh_CN/latest/_images/esp32-devkitc-in-device-manager1.png" alt="esp32-devkitc-in-device-manager1" /></p>
+<p><strong>Linux和Mac的平台：</strong> 在终端里面，分别运行查看端口命令两次，一次是在插入开发板前，一次是在插入开发板后。 <strong>Linux:</strong> <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ls &#x2F;dev&#x2F;tty*</span><br></pre></td></tr></table></figure> <strong>Mac:</strong> <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ls &#x2F;dev&#x2F;cu.*</span><br></pre></td></tr></table></figure> 另外，Linux平台还需要为登录用户添加串口读写权限： <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo usermod -a -G dialout $XXXXX</span><br></pre></td></tr></table></figure></p>
+<p><strong>Putty工具</strong> 下载和使用<a target="_blank" rel="noopener" href="https://www.putty.org/">Putty工具</a>对开发板进行串口连接确认。</p>
+<p>运行终端，设置串口：波特率 = 115200，数据位 = 8，停止位 = 1，奇偶校验 = N。</p>
+<p>以下是设置串口和在 Windows 和 Linux 上传输参数（如 115200-8-1-N）的一些截屏示例。注意选择上述步骤中确认的串口进行设置。</p>
+<p><img src="https://docs.espressif.com/projects/esp-idf/zh_CN/latest/_images/putty-settings-windows1.png" alt="putty-settings-windows1" /> <img src="https://docs.espressif.com/projects/esp-idf/zh_CN/latest/_images/putty-settings-linux1.png" alt="putty-settings-linux1" /></p>
+<h2 id="工程参数设置">3. 工程参数设置</h2>
+<p>在终端窗口中，输入<code>cd ~/esp/hello_world</code>进入<code>hello_world</code>所在目录，然后启动工程配置工具: <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">make menuconfig</span><br></pre></td></tr></table></figure> <img src="https://docs.espressif.com/projects/esp-idf/zh_CN/latest/_images/project-configuration1.png" alt="project-configuration1" /></p>
+<p>在菜单中，进入<code>Serial flasher config</code>&gt;<code>Default serial port</code>输入之前记录下来的串口号(<code>/dev/tty*</code>，<code>/dev/cu.*</code>或<code>/COM*</code>)，工程会加载到该串口上。输入回车确认选择，选择<code>&lt; Save &gt;</code>保存配置，然后选择<code>&lt; Exit &gt;</code>退出应用程序。</p>
+<p>以下是<code>menuconfig</code>的使用小技巧： 1. 使用 <strong>up &amp; down</strong> 组合键在菜单中上下移动 2. 使用 <strong>Enter</strong> 键进入一个子菜单，<strong>Escape</strong> 键退出子菜单或退出整个菜单 3. 输入 <code>?</code> 查看帮助信息，<strong>Enter</strong> 键退出帮助屏幕 4. 使用空格键或 <code>Y</code> 和 <code>N</code> 键来使能 (Yes) 和禁止 (No) 带有复选框 “<code>[*]</code>” 的配置项 5. 当光标在某个配置项上面高亮时，输入 <code>?</code> 可以直接查看该项的帮助信息 6. 输入 <code>/</code> 搜索配置项</p>
+<p><strong>注意</strong> 如果再此步骤出现<code>&lt;command-line&gt;:0:12: fatal error: curses.h: No such file or directory</code>的错误提示，则</p>
+<h2 id="命令行烧录">4. 命令行烧录</h2>
+<h3 id="烧录">4.1 烧录</h3>
+<p>这条命令会编译应用程序和所有的 ESP-IDF 组件，生成 bootloader、分区表和应用程序 bin 文件，并将这些 bin 文件烧写到 ESP32 板子上。 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">make flash</span><br></pre></td></tr></table></figure> 烧写成功的话，板子将会复位，应用程序 “hello_world” 开始启动，在终端显示如下： <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">esptool.py v2.0-beta2</span><br><span class="line">Flashing binaries to serial port &#x2F;dev&#x2F;ttyUSB0 (app at offset 0x10000)...</span><br><span class="line">esptool.py v2.0-beta2</span><br><span class="line">Connecting........___</span><br><span class="line">Uploading stub...</span><br><span class="line">Running stub...</span><br><span class="line">Stub running...</span><br><span class="line">Changing baud rate to 921600</span><br><span class="line">Changed.</span><br><span class="line">Attaching SPI flash...</span><br><span class="line">Configuring flash size...</span><br><span class="line">Auto-detected Flash size: 4MB</span><br><span class="line">Flash params set to 0x0220</span><br><span class="line">Compressed 11616 bytes to 6695...</span><br><span class="line">Wrote 11616 bytes (6695 compressed) at 0x00001000 in 0.1 seconds (effective 920.5 kbit&#x2F;s)...</span><br><span class="line">Hash of data verified.</span><br><span class="line">Compressed 408096 bytes to 171625...</span><br><span class="line">Wrote 408096 bytes (171625 compressed) at 0x00010000 in 3.9 seconds (effective 847.3 kbit&#x2F;s)...</span><br><span class="line">Hash of data verified.</span><br><span class="line">Compressed 3072 bytes to 82...</span><br><span class="line">Wrote 3072 bytes (82 compressed) at 0x00008000 in 0.0 seconds (effective 8297.4 kbit&#x2F;s)...</span><br><span class="line">Hash of data verified.</span><br><span class="line"></span><br><span class="line">Leaving...</span><br><span class="line">Hard resetting...</span><br></pre></td></tr></table></figure></p>
+<h3 id="端口监控">4.2 端口监控</h3>
+<p>如果要查看 “hello_world” 程序是否真的在运行，输入命令 make monitor。这个命令会启动 IDF Monitor 程序（ESP-IDF自带工具），也可以使用其他串口助手进行查看。 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">make monitor</span><br></pre></td></tr></table></figure> 串口启动时，在终端显示如下： <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">$ make monitor</span><br><span class="line">MONITOR</span><br><span class="line">--- idf_monitor on &#x2F;dev&#x2F;ttyUSB0 115200 ---</span><br><span class="line">--- Quit: Ctrl+] | Menu: Ctrl+T | Help: Ctrl+T followed by Ctrl+H ---</span><br><span class="line">ets Jun  8 2016 00:22:57</span><br><span class="line"></span><br><span class="line">rst:0x1 (POWERON_RESET),boot:0x13 (SPI_FAST_FLASH_BOOT)</span><br><span class="line">ets Jun  8 2016 00:22:57</span><br><span class="line">...</span><br></pre></td></tr></table></figure> 开发板输出到串口的信息，在终端显示如下： <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line">Hello world!</span><br><span class="line">Restarting in 10 seconds...</span><br><span class="line">I (211) cpu_start: Starting scheduler on APP CPU.</span><br><span class="line">Restarting in 9 seconds...</span><br><span class="line">Restarting in 8 seconds...</span><br><span class="line">Restarting in 7 seconds...</span><br></pre></td></tr></table></figure></p>
+<h1 id="三-使用eclipse运行工程">三、 使用Eclipse运行工程</h1>
+<p>本节共有四部分： - JRE &amp; Eclipse - Eclipse项目运行 - Build Project - Flash tools烧录</p>
+<h2 id="jre-eclipse">1. JRE &amp; Eclipse</h2>
+<h3 id="jre安装">1.1 JRE安装</h3>
+<p><a target="_blank" rel="noopener" href="https://www.oracle.com/technetwork/java/javase/downloads/jre8-downloads-2133155.html">JRE(Java Runtime Environment)</a>要在Eclipse之前安装，并在终端使用如下命令验证是否安装成功并查看版本： <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java -version</span><br></pre></td></tr></table></figure></p>
+<h3 id="eclipse安装">1.2 Eclipse安装</h3>
+<p>Eclipse IDE 是一个可视化的集成开发环境，可用于编写、编译和调试 ESP-IDF 项目。</p>
+<p>下载相应的Eclipse并安装到电脑：<a target="_blank" rel="noopener" href="https://www.eclipse.org/">eclipse.org</a>,在安装的过程中记得要选择<code>Eclipse for C/C++ Development</code>(有的版本也可能显示为 CDT)。</p>
+<h2 id="eclipse项目运行">2. Eclipse项目运行</h2>
+<h3 id="导入工程样例">2.1 导入工程样例</h3>
+<ol type="1">
+<li><p>运行 Eclipse，选择 <strong>File</strong> -&gt; <strong>Import…</strong>。</p></li>
+<li><p>弹出的对话框中选择 <strong>C/C++</strong> -&gt; <strong>Existing Code as Makefile Project</strong>，然后点击 <strong>Next</strong>。</p></li>
+<li><p>在下个界面中 <strong>Existing Code Location</strong> 位置输入您的 IDF 项目的路径（如：<strong>C:/msys32/home/XXXXX/esp/hello_world</strong>）。 <em>注意：这里应输入 ESP-IDF 项目的路径，而非 ESP-IDF 本身的路径。</em></p></li>
+<li><p>在本界面，找到 <strong>Toolchain for Indexer Settings</strong>，选择 <strong>Cross GCC</strong>，最后点击 <strong>Finish</strong>。</p></li>
+</ol>
+<h3 id="设置工程项目属性">2.2 设置工程项目属性</h3>
+<figure>
+<img src="http://uk-liewzheng-blog-pic.oss-eu-west-1.aliyuncs.com/2019/01/10/ESP32_SDK%E7%9A%84%E9%85%8D%E7%BD%AE/Eclipse_Project_Properties.png" alt="Eclipse_Project_Properties" /><figcaption aria-hidden="true">Eclipse_Project_Properties</figcaption>
+</figure>
+<p>在本小节中，会 <strong>添加或修改三个主要的环境变量</strong> ：<code>BTACH_BUILD</code>、<code>IDF_PATH</code>和<code>PATH</code>。这些变量可以只在 <strong>项目属性</strong> 中修改，也可以直接到 <strong>系统环境变量</strong> 中修改。（添加到系统环境变量中的方法本文无讲解）</p>
+<figure>
+<img src="http://uk-liewzheng-blog-pic.oss-eu-west-1.aliyuncs.com/2019/01/10/ESP32_SDK%E7%9A%84%E9%85%8D%E7%BD%AE/Eclipse_Project_Properties_Environment_Value.png" alt="Eclipse_Project_Properties_Environment_Value" /><figcaption aria-hidden="true">Eclipse_Project_Properties_Environment_Value</figcaption>
+</figure>
+<ol type="1">
+<li><p>新项目将出现在Eclipse左侧的 <strong>Project Explorer</strong> 选项卡中。选择导入的项目，在右键菜单中选择 <strong>Properties</strong>。</p></li>
+<li><p>点击 <strong>C/C++ Build</strong> 下的 <strong>Environment</strong> 属性页，点击 <strong>Add…</strong> 按钮，输入 <code>BATCH_BUILD</code> 和 <code>1</code>。</p></li>
+<li><p>点击 <strong>Add…</strong>，输入 <strong>IDF_PATH</strong> 中输入 ESP-IDF 所在的完整安装路径 <code>C:/msys32/home/XXXXX/esp/esp-idf</code> 。Linux及MAC平台的安装路径 <code>/home/XXXXX/esp/esp-idf</code> .</p></li>
+<li><p>选择 <code>PATH</code> 环境变量，不要改变默认值。</p></li>
+</ol>
+<p><strong>Windows 用户：</strong> 将 <code>C:\msys32\mingw32\bin;C:\msys32\opt\xtensa-esp32-elf\bin;C:\msys32\usr\bi</code> 添加到 <code>PATH</code> 环境变量的靠前位置（如果您将 msys32 安装到了其它目录，则需要更改对应的路径以匹配您的本地环境）。</p>
+<ol start="5" type="1">
+<li>在 macOS 平台上，增加一个 <code>PYTHONPATH</code> 环境变量，并将其设置为 <code>/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages</code>， 保证系统中预先安装的 Python （需安装 pyserial 模块）可以覆盖 Eclipse 内置的任何 Python。</li>
+</ol>
+<figure>
+<img src="http://uk-liewzheng-blog-pic.oss-eu-west-1.aliyuncs.com/2019/01/10/ESP32_SDK%E7%9A%84%E9%85%8D%E7%BD%AE/Eclipse_Project_Properties_Preprocessor_Include.png" alt="Eclipse_Project_Properties_Preprocessor_Include" /><figcaption aria-hidden="true">Eclipse_Project_Properties_Preprocessor_Include</figcaption>
+</figure>
+<ol start="6" type="1">
+<li>前往 <strong>C/C++ General</strong> -&gt; <strong>Preprocessor Include Paths</strong> 属性页面，点击 <strong>Providers</strong> 选项卡:</li>
+</ol>
+<p>选择 <strong>CDT Cross GCC Built-in Compiler Settings</strong>，将 <strong>Command to get compiler specs</strong> 修改为 <code>xtensa-esp32-elf-gcc $&#123;FLAGS&#125; -std=c++11 -E -P -v -dD "$&#123;INPUTS&#125;"</code>。</p>
+<p>选择 <strong>“CDT GCC Build Output Parser</strong>，将 <strong>Compiler command pattern</strong> 修改为 <code>xtensa-esp32-elf-(gcc|g\+\+|c\+\+|cc|cpp|clang)</code>。</p>
+<figure>
+<img src="http://uk-liewzheng-blog-pic.oss-eu-west-1.aliyuncs.com/2019/01/10/ESP32_SDK%E7%9A%84%E9%85%8D%E7%BD%AE/Eclipse_Project_Properties_Indexer.png" alt="Eclipse_Project_Properties_Indexer" /><figcaption aria-hidden="true">Eclipse_Project_Properties_Indexer</figcaption>
+</figure>
+<ol start="7" type="1">
+<li>前往 <strong>C/C++ General</strong> -&gt; <strong>Indexer</strong> 属性页面，选择 <strong>Enable project specific settings</strong> 以启用本页上的其他设置。然后去除 <strong>Allow heuristic resolution of includes</strong> 勾选，因为启用此选项时，Eclipse 有时无法找到正确的头文件目录。</li>
+</ol>
+<figure>
+<img src="http://uk-liewzheng-blog-pic.oss-eu-west-1.aliyuncs.com/2019/01/10/ESP32_SDK%E7%9A%84%E9%85%8D%E7%BD%AE/Eclipse_Project_Properties_Build_Behavior.png" alt="Eclipse_Project_Properties_Build_Behavior" /><figcaption aria-hidden="true">Eclipse_Project_Properties_Build_Behavior</figcaption>
+</figure>
+<ol start="8" type="1">
+<li><p>点击 <strong>C/C++ Build</strong> -&gt; <strong>Behavior</strong> 属性页，选中 <strong>Enable parallel build</strong> 以启用多任务并行构建。</p></li>
+<li><p>保存项目属性并退出属性设置界面。</p></li>
+</ol>
+<h2 id="build-project">3. Build Project</h2>
+<p>选择菜单栏中的 <strong>Project</strong> -&gt; <strong>Build Project</strong>。在此步骤中，将会调用ESP-IDF生成三个文件：<code>bootloader.bin</code>、<code>partition_singleapp.bin</code>和<code>hello_world.bin</code>。分别对应的是启动程序、分区程序和应用主程序。</p>
+<p>成功构建工程项目之后，Eclipse下方的 <strong>Console</strong> 选项卡将会显示如下： <img src="http://uk-liewzheng-blog-pic.oss-eu-west-1.aliyuncs.com/2019/01/10/ESP32_SDK%E7%9A%84%E9%85%8D%E7%BD%AE/build_successfully.png" alt="build_successfully" /></p>
+<h2 id="flash-tools烧录">4. Flash tools烧录</h2>
+<p><a target="_blank" rel="noopener" href="https://www.espressif.com/sites/default/files/tools/flash_download_tools_v3.6.5.zip">Flash tools</a>（仅在<a target="_blank" rel="noopener" href="https://www.espressif.com/zh-hans/products/hardware/esp32/resources">ESPRESSIF官网</a>上找到Windows版本）下载并解压到相应位置，打开后进行如下配置。 正确配置后便可成功烧录，要注意的是，<code>bootloader.bin</code>对应放在地址<code>0x1000</code>的位置,<code>partition_singleapp.bin</code>对应放在地址<code>0x8000</code>的位置,<code>helloworld.bin</code>对应放在地址<code>0x10000</code>的位置。 <img src="http://uk-liewzheng-blog-pic.oss-eu-west-1.aliyuncs.com/2019/01/10/ESP32_SDK%E7%9A%84%E9%85%8D%E7%BD%AE/flash_download.png" alt="flash_download" /></p>
+<h1 id="参考链接">参考链接</h1>
+<ol type="1">
+<li>《<a target="_blank" rel="noopener" href="https://blog.csdn.net/sergeycao/article/details/8210849">ubuntu下文件拷贝命令cp命令</a>》</li>
+<li>《<a target="_blank" rel="noopener" href="https://blog.csdn.net/hotmocha/article/details/7354630">ubuntu rm命令</a>》</li>
+<li>《<a target="_blank" rel="noopener" href="http://www.cnblogs.com/peida/archive/2012/10/25/2738271.html">mkdir命令</a>》</li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
