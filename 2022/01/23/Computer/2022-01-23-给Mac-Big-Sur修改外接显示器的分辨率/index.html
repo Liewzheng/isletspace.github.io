@@ -34,7 +34,7 @@
 <meta property="og:image" content="https://pic.islet.space/2022/01/image-20220123173550666.png">
 <meta property="og:image" content="https://pic.islet.space/2022/01/image-20220123173806535.png">
 <meta property="article:published_time" content="2022-01-23T09:30:00.000Z">
-<meta property="article:modified_time" content="2022-01-23T10:11:59.115Z">
+<meta property="article:modified_time" content="2022-01-23T10:11:59.000Z">
 <meta property="article:author" content="Liewzheng">
 <meta property="article:tag" content="mac">
 <meta property="article:tag" content="Big Sur">
@@ -173,7 +173,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">119</span>
+          <span class="site-state-item-count">124</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -184,7 +184,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">222</span>
+        <span class="site-state-item-count">230</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -278,17 +278,25 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <p>本文参考 《<a target="_blank" rel="noopener" href="https://zhangzi.life/articles/1605255382000">Mac 外接显示器色彩问题</a>》和 《<a target="_blank" rel="noopener" href="https://sspai.com/post/57549#!">为 macOS 10.15 开启 HiDPI，让 2K 显示器更舒适</a>》两篇文章。</p>
-<p>刚买来新的 HUAWEI Mateview 无线版，显示器分辨率为 <code>3840*2560</code> ，该死的 <code>3:2</code> 屏幕啊，我图啥......</p>
+        <p>本文参考 《<a target="_blank" rel="noopener" href="https://zhangzi.life/articles/1605255382000">Mac
+外接显示器色彩问题</a>》和 《<a target="_blank" rel="noopener" href="https://sspai.com/post/57549#!">为
+macOS 10.15 开启 HiDPI，让 2K 显示器更舒适</a>》两篇文章。</p>
+<p>刚买来新的 HUAWEI Mateview 无线版，显示器分辨率为
+<code>3840*2560</code> ，该死的 <code>3:2</code>
+屏幕啊，我图啥......</p>
 <p>外接2015年的Macbook Air的MiniDP口输出准4K分辨率。</p>
-<p>但是，但是，但是~~Air只能输出 <code>16:9</code> 和 <code>16:10</code> 的分辨率，让我搞了整整一下午来调整这个分辨率，4个小时啊。</p>
+<p>但是，但是，但是~~Air只能输出 <code>16:9</code> 和 <code>16:10</code>
+的分辨率，让我搞了整整一下午来调整这个分辨率，4个小时啊。</p>
 <p>算了，总结一下吧。</p>
 <h1 id="关闭sip">关闭SIP</h1>
 <p>Big sur 和之前版本不同，需要的操作如下：</p>
 <ol type="1">
 <li>关机</li>
-<li>长按 <code>Command</code> 键 和 <code>R</code> 键（都不要松开），短按 开机电源键，直到出现进度条才能松开。</li>
-<li>找到终端，然后输入 <code>csrutil authenticated-root disable</code> ，出现 <code>successfully</code> 字样就算是成功了。（之前的版本是 <code>csrutil disable</code> ）</li>
+<li>长按 <code>Command</code> 键 和 <code>R</code>
+键（都不要松开），短按 开机电源键，直到出现进度条才能松开。</li>
+<li>找到终端，然后输入 <code>csrutil authenticated-root disable</code>
+，出现 <code>successfully</code> 字样就算是成功了。（之前的版本是
+<code>csrutil disable</code> ）</li>
 </ol>
 <h1 id="查询设备号">查询设备号</h1>
 <ol type="1">
@@ -297,50 +305,79 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ioreg -l | grep <span class="string">&quot;DisplayVendorID&quot;</span></span><br><span class="line">ioreg -l | grep <span class="string">&quot;DisplayProductID&quot;</span></span><br></pre></td></tr></table></figure>
 <ol start="2" type="1">
 <li>再插上显示器，再次运行上方代码。</li>
-<li>两次得出来的不同的设备号就可以区分哪个 <code>VendorID</code> 和 <code>ProductID</code> 是外接显示器的。</li>
+<li>两次得出来的不同的设备号就可以区分哪个 <code>VendorID</code> 和
+<code>ProductID</code> 是外接显示器的。</li>
 </ol>
 <figure>
-<img src="https://pic.islet.space/2022/01/image-20220123175000229.png" alt="image-20220123175000229" /><figcaption aria-hidden="true">image-20220123175000229</figcaption>
+<img src="https://pic.islet.space/2022/01/image-20220123175000229.png"
+alt="image-20220123175000229" />
+<figcaption aria-hidden="true">image-20220123175000229</figcaption>
 </figure>
 <ol start="4" type="1">
-<li>记下那串代码，并将外接显示器的两个ID转换成对应的十六进制数， 如 <code>8950</code> 即 <code>22f6</code> , <code>28194</code> 即 <code>66e2</code></li>
+<li>记下那串代码，并将外接显示器的两个ID转换成对应的十六进制数， 如
+<code>8950</code> 即 <code>22f6</code> , <code>28194</code> 即
+<code>66e2</code></li>
 </ol>
 <h1 id="生成配置参数">生成配置参数</h1>
 <ol type="1">
-<li>在用户目录 ，即 <code>~</code> 下，使用 <code>DisplayVendorID-xxxx</code> （<code>xxxx</code> 即对应外接显示器 Vendor 号的16进制 ）创建一个文件夹。</li>
-<li>然后在对应文件夹下创建一个 使用 <code>DisplayProductID-yyyy</code> （ yyyy` 即对应外接显示器 Product 号的16进制 ）创建一个无后缀名的文件。</li>
-<li>到 <a target="_blank" rel="noopener" href="https://codeclou.github.io/Display-Override-PropertyList-File-Parser-and-Generator-with-HiDPI-Support-For-Scaled-Resolutions/">Scaled Resolution for your Mac</a> 网站生成配置参数，在红色框中分别填入你外接显示器的对应参数，和你想使你的显示器所呈现的分辨率参数。</li>
+<li>在用户目录 ，即 <code>~</code> 下，使用
+<code>DisplayVendorID-xxxx</code> （<code>xxxx</code> 即对应外接显示器
+Vendor 号的16进制 ）创建一个文件夹。</li>
+<li>然后在对应文件夹下创建一个 使用 <code>DisplayProductID-yyyy</code>
+（ yyyy` 即对应外接显示器 Product 号的16进制
+）创建一个无后缀名的文件。</li>
+<li>到 <a
+target="_blank" rel="noopener" href="https://codeclou.github.io/Display-Override-PropertyList-File-Parser-and-Generator-with-HiDPI-Support-For-Scaled-Resolutions/">Scaled
+Resolution for your Mac</a>
+网站生成配置参数，在红色框中分别填入你外接显示器的对应参数，和你想使你的显示器所呈现的分辨率参数。</li>
 </ol>
 <figure>
-<img src="https://pic.islet.space/2022/01/image-20220123175609151.png" alt="image-20220123175609151" /><figcaption aria-hidden="true">image-20220123175609151</figcaption>
+<img src="https://pic.islet.space/2022/01/image-20220123175609151.png"
+alt="image-20220123175609151" />
+<figcaption aria-hidden="true">image-20220123175609151</figcaption>
 </figure>
 <ol start="4" type="1">
-<li>复制右侧的 xml 代码至刚刚的 <code>DisplayProductID-yyyy</code> 文件中，并保存。</li>
+<li>复制右侧的 xml 代码至刚刚的 <code>DisplayProductID-yyyy</code>
+文件中，并保存。</li>
 </ol>
 <h1 id="导入系统">导入系统</h1>
-<p>在Big Sur系统下，根目录 <code>/</code> 是禁止写入的，需要稍微用点技巧（走点弯路）。</p>
+<p>在Big Sur系统下，根目录 <code>/</code>
+是禁止写入的，需要稍微用点技巧（走点弯路）。</p>
 <ol type="1">
-<li>新建一个文件夹，将解除SIP之后的 <code>/</code> 挂载到某个地方，如下方所示：</li>
+<li>新建一个文件夹，将解除SIP之后的 <code>/</code>
+挂载到某个地方，如下方所示：</li>
 </ol>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mkdir ~/nvme</span><br><span class="line">sudo mount -o nobrowse -t apfs /dev/disk1s5 ~/nvme/</span><br></pre></td></tr></table></figure>
-<p>其中，<code>/dev/disk1s5</code> 中的 <code>/disk1s5</code> 要通过 <strong>磁盘工具</strong> 各自查看自己的 <strong>设备</strong> ，最后面的 <code>s1</code> 去掉不写。</p>
+<p>其中，<code>/dev/disk1s5</code> 中的 <code>/disk1s5</code> 要通过
+<strong>磁盘工具</strong> 各自查看自己的 <strong>设备</strong>
+，最后面的 <code>s1</code> 去掉不写。</p>
 <figure>
-<img src="https://pic.islet.space/2022/01/image-20220123173550666.png" alt="image-20220123173550666" /><figcaption aria-hidden="true">image-20220123173550666</figcaption>
+<img src="https://pic.islet.space/2022/01/image-20220123173550666.png"
+alt="image-20220123173550666" />
+<figcaption aria-hidden="true">image-20220123173550666</figcaption>
 </figure>
 <ol start="2" type="1">
-<li>然后就可以 <code>cd</code> 进去查看对应目录下的文件内容，但是所有读写操作都需要加上 <code>sudo</code> 才可以。</li>
+<li>然后就可以 <code>cd</code>
+进去查看对应目录下的文件内容，但是所有读写操作都需要加上
+<code>sudo</code> 才可以。</li>
 </ol>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> ~/nvme/System/Library/Displays/Contents/Resources/Overrides</span><br><span class="line">ls</span><br></pre></td></tr></table></figure>
 <figure>
-<img src="https://pic.islet.space/2022/01/image-20220123173806535.png" alt="image-20220123173806535" /><figcaption aria-hidden="true">image-20220123173806535</figcaption>
+<img src="https://pic.islet.space/2022/01/image-20220123173806535.png"
+alt="image-20220123173806535" />
+<figcaption aria-hidden="true">image-20220123173806535</figcaption>
 </figure>
 <ol start="3" type="1">
-<li>把 <code>~/DisplayVendorID-xxxx</code> 复制到 <code>~/nvme/System/Library/Displays/Contents/Resources/Overrides</code> 里面：</li>
+<li>把 <code>~/DisplayVendorID-xxxx</code> 复制到
+<code>~/nvme/System/Library/Displays/Contents/Resources/Overrides</code>
+里面：</li>
 </ol>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo cp -r ~/DisplayVendorID-22f6 ~/nvme/System/Library/Displays/Contents/Resources/Overrides/DisplayVendorID-22f6</span><br></pre></td></tr></table></figure>
 <p>复制完毕之后可以再 <code>ls</code> 查看，就存在了。</p>
 <ol start="4" type="1">
-<li>但是这种复制只是一种暂时的，重启之后就会被镜像文件所覆盖，所以要重新 snapshot 一下。<mark style="font-weight: 900;">注意，这一步一定要做，否则重启就失效了。</mark></li>
+<li>但是这种复制只是一种暂时的，重启之后就会被镜像文件所覆盖，所以要重新
+snapshot
+一下。<mark style="font-weight: 900;">注意，这一步一定要做，否则重启就失效了。</mark></li>
 </ol>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo bless --folder ~/nvme/System/Library/Displays/Contents/Resources/Overrides --bootefi --create-snapshot</span><br></pre></td></tr></table></figure>
 

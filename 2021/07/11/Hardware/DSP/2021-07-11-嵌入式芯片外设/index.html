@@ -29,21 +29,14 @@
 <meta property="og:site_name" content="Coder的孤岛">
 <meta property="og:description" content="嵌入式芯片（如MCU、DSP等）内部包含众多的模块化外设，如 串口控制模块，SPI模块，I2C模块，A&#x2F;D模块，PWM模块，CAN模块，EEPROM，比较器模块，等等，它们都集成在芯片内部，有相对应的内部控制寄存器，可通过指令直接控制。 按照控制信号类别对外设进行分类，可以分为 模拟外设（Analog Peripherals）、控制外设（Control Peripherals） 和 通信外设（Co">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://pic.islet.space/2021/07/v2-9fdd0b85b26f7ff8074a8c58b1aba945_720w.jpg">
-<meta property="og:image" content="https://pic.islet.space/2021/07/v2-2d0d2214e132b1a9982d3ab50db429ff_720w.jpg">
-<meta property="og:image" content="https://pic.islet.space/2021/07/20200416154658460.png">
-<meta property="og:image" content="c:/Users/431240.IT2004/AppData/Roaming/Typora/typora-user-images/image-20210711162150611.png">
-<meta property="og:image" content="c:/Users/431240.IT2004/AppData/Roaming/Typora/typora-user-images/image-20210711163535822.png">
-<meta property="og:image" content="c:/Users/431240.IT2004/AppData/Roaming/Typora/typora-user-images/image-20210711163548817.png">
 <meta property="article:published_time" content="2021-07-11T05:50:00.000Z">
-<meta property="article:modified_time" content="2021-07-15T13:11:03.830Z">
+<meta property="article:modified_time" content="2021-07-15T13:11:03.000Z">
 <meta property="article:author" content="Liewzheng">
 <meta property="article:tag" content="TI">
 <meta property="article:tag" content="嵌入式">
 <meta property="article:tag" content="外设">
 <meta property="article:tag" content="peripheral">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://pic.islet.space/2021/07/v2-9fdd0b85b26f7ff8074a8c58b1aba945_720w.jpg">
 
 
 <link rel="canonical" href="http://islet.space/2021/07/11/Hardware/DSP/2021-07-11-%E5%B5%8C%E5%85%A5%E5%BC%8F%E8%8A%AF%E7%89%87%E5%A4%96%E8%AE%BE/">
@@ -176,7 +169,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">119</span>
+          <span class="site-state-item-count">124</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -187,7 +180,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">222</span>
+        <span class="site-state-item-count">230</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -287,21 +280,51 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <p>嵌入式芯片（如MCU、DSP等）内部包含众多的模块化外设，如 串口控制模块，SPI模块，I2C模块，A/D模块，PWM模块，CAN模块，EEPROM，比较器模块，等等，它们都集成在芯片内部，有相对应的内部控制寄存器，可通过指令直接控制。</p>
-<p>按照控制信号类别对外设进行分类，可以分为 <strong>模拟外设</strong>（Analog Peripherals）、<strong>控制外设</strong>（Control Peripherals） 和 <strong>通信外设</strong>（Communication Peripherals）。</p>
-<p><strong>模拟外设</strong> 的常见外设如 <strong>模数转换器</strong>（Analog-to-Digital Convertor, ADC）、<strong>可编程增益放大器</strong>（Programmable Gain Amplifier, PGA）、<strong>温度传感器</strong>（Temperature Sensor）、<strong>缓冲数模转换器</strong>（Buffered Digital-to-Analog Convertor, DAC）和 <strong>比较器</strong>（Comparator Subsystem）。</p>
-<p><strong>控制外设</strong> 的常见设备如 <strong>捕获器</strong>（Capture, CAP）、<strong>脉冲幅频调制器</strong>（Pulse Width Modulator, PWM）、<strong>正交编码器脉冲</strong>（ Quadrature Encoder Pulse, QEP）和 <strong>西格玛-德尔塔滤波器模块 </strong>（Sigma-Delta Filter Module, SDFM）。</p>
-<p><strong>通信外设</strong> 的常见设备如 （Controller Area Network, CAN）、<strong>双线通信</strong>（Inter-Integrated Circuit, I2C）、<strong>电源管理总线接口</strong>（Power Management Bus Interface, PMBus）、<strong>串行通信接口</strong>（Serial Communications Interface, SCI）、<strong>串行外设接口</strong>（Serial Peripheral Interface, SPI）、<strong>局域互联网络</strong>（Local Interconnect Network, LIN） 和 <strong>高速串行接口</strong>（Fast Serial Interface, FSI）。</p>
+        <p>嵌入式芯片（如MCU、DSP等）内部包含众多的模块化外设，如
+串口控制模块，SPI模块，I2C模块，A/D模块，PWM模块，CAN模块，EEPROM，比较器模块，等等，它们都集成在芯片内部，有相对应的内部控制寄存器，可通过指令直接控制。</p>
+<p>按照控制信号类别对外设进行分类，可以分为
+<strong>模拟外设</strong>（Analog
+Peripherals）、<strong>控制外设</strong>（Control Peripherals） 和
+<strong>通信外设</strong>（Communication Peripherals）。</p>
+<p><strong>模拟外设</strong> 的常见外设如
+<strong>模数转换器</strong>（Analog-to-Digital Convertor,
+ADC）、<strong>可编程增益放大器</strong>（Programmable Gain Amplifier,
+PGA）、<strong>温度传感器</strong>（Temperature
+Sensor）、<strong>缓冲数模转换器</strong>（Buffered Digital-to-Analog
+Convertor, DAC）和 <strong>比较器</strong>（Comparator Subsystem）。</p>
+<p><strong>控制外设</strong> 的常见设备如
+<strong>捕获器</strong>（Capture,
+CAP）、<strong>脉冲幅频调制器</strong>（Pulse Width Modulator,
+PWM）、<strong>正交编码器脉冲</strong>（ Quadrature Encoder Pulse,
+QEP）和 <strong>西格玛-德尔塔滤波器模块 </strong>（Sigma-Delta Filter
+Module, SDFM）。</p>
+<p><strong>通信外设</strong> 的常见设备如 （Controller Area Network,
+CAN）、<strong>双线通信</strong>（Inter-Integrated Circuit,
+I2C）、<strong>电源管理总线接口</strong>（Power Management Bus
+Interface, PMBus）、<strong>串行通信接口</strong>（Serial Communications
+Interface, SCI）、<strong>串行外设接口</strong>（Serial Peripheral
+Interface, SPI）、<strong>局域互联网络</strong>（Local Interconnect
+Network, LIN） 和 <strong>高速串行接口</strong>（Fast Serial Interface,
+FSI）。</p>
 <h1 id="cla">CLA</h1>
 <p>为了解决DSP在对实时控制要求比较高的场合中CPU计算速度不足以及计算负担过重，TI很早之前就已经推出了具有CLA功能的DSP。</p>
-<p>CLA，即Control Law Accelerator，是一个32位浮点数计算加速器，可以理解为一个专门为浮点数运算而优化的CPU。其可以 <strong>独立</strong> 于CPU进行运算操作，并 <mark>可以同时访问</mark> 到ePWM，eCAP，eQEP，ADC result以及Comparator <mark>寄存器</mark>。相当于两个CPU并行工作，从而减少了主CPU的运算负担。</p>
+<p>CLA，即Control Law
+Accelerator，是一个32位浮点数计算加速器，可以理解为一个专门为浮点数运算而优化的CPU。其可以
+<strong>独立</strong> 于CPU进行运算操作，并 <mark>可以同时访问</mark>
+到ePWM，eCAP，eQEP，ADC result以及Comparator
+<mark>寄存器</mark>。相当于两个CPU并行工作，从而减少了主CPU的运算负担。</p>
 <p>也就是说 CLA可以同时访问所有模拟外设的寄存器。</p>
 <p>可以将CLA看作是辅助CPU进行计算的浮点运算协处理器（co-processor）。</p>
 <p>一个典型的应用场景如下：</p>
-<p><img src="https://pic.islet.space/2021/07/v2-9fdd0b85b26f7ff8074a8c58b1aba945_720w.jpg" alt="img" />闭环控制电路</p>
+<p><img
+src="https://pic.islet.space/2021/07/v2-9fdd0b85b26f7ff8074a8c58b1aba945_720w.jpg"
+alt="img" />闭环控制电路</p>
 <p>CPU通过ADC采集主电路的电压、电流信息，计算得到控制逻辑（包括频率以及占空比等），从而控制电路工作。因此如果CPU的计算负担很大，比如说需要计算傅里叶分解，比如说需要计算反三角函数等，那么就造成了极大的控制时延。而CLA应运而生，专门为计算浮点数进行优化，且不会造成CPU阻塞于计算而对异常情况无法响应的情况。</p>
 <figure>
-<img src="https://pic.islet.space/2021/07/v2-2d0d2214e132b1a9982d3ab50db429ff_720w.jpg" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+<img
+src="https://pic.islet.space/2021/07/v2-2d0d2214e132b1a9982d3ab50db429ff_720w.jpg"
+alt="img" />
+<figcaption aria-hidden="true">img</figcaption>
 </figure>
 <div style="text-align: center; font-weight: 900;">
 图 28069和28027对比
@@ -309,44 +332,91 @@
 <p>上图则对比了具有CLA功能的28069和不具有CLA功能的28027的控制延时。对于没有CLA功能的28027，其CPU在ADC采样结束之后触发SOC中断，随后进行闭环计算，最后再结束一个周期的控制，开始下一个周期。而具有<mark>CLA</mark>功能的28069则<mark>可以在采样结束之后立即自主触发CLA计算</mark>（由于没有菊花链，所以触发迅速），并且由于<mark>CLA针对浮点数计算进行优化，因此计算时间更短</mark>。更重要的是，<mark>CPU不需要进行任何操作，因此CPU可以有空闲完成其他任务，比如异常检测，比如故障上报等等</mark>。</p>
 <p>简单来说，采用CLA的系统具有<strong>更小的计算时延</strong>，<strong>CPU负担更小，</strong>因此其系统更加迅速稳定。</p>
 <h1 id="clb">CLB</h1>
-<p>The C2000 configurable logic block (CLB) is a collection of configurable blocks that interconnect through software to implement custom digital logic functions.</p>
+<p>The C2000 configurable logic block (CLB) is a collection of
+configurable blocks that interconnect through software to implement
+custom digital logic functions.</p>
 <p>The CLB subsystem contains a number of identical tiles.</p>
 <h1 id="gpio">GPIO</h1>
-<p>GPIO，即General-purpose input/output，通用型之输入输出（接口）。功能类似8051的P0—P3，其接脚可以供使用者由程控自由使用，PIN脚依现实考量可作为通用输入（GPI）或通用输出（GPO）或通用输入与输出（GPIO），如当clk generator, chip select等。 既然一个引脚可以用于输入、输出或其他特殊功能，那么一定有寄存器用来选择这些功能。对于输入，一定可以通过读取某个寄存器来确定引脚电位的高低；对于输出，一定可以通过写入某个寄存器来让这个引脚输出高电位或者低电位；对于其他特殊功能，则有另外的寄存器来控制它们。</p>
+<p>GPIO，即General-purpose
+input/output，通用型之输入输出（接口）。功能类似8051的P0—P3，其接脚可以供使用者由程控自由使用，PIN脚依现实考量可作为通用输入（GPI）或通用输出（GPO）或通用输入与输出（GPIO），如当clk
+generator, chip select等。
+既然一个引脚可以用于输入、输出或其他特殊功能，那么一定有寄存器用来选择这些功能。对于输入，一定可以通过读取某个寄存器来确定引脚电位的高低；对于输出，一定可以通过写入某个寄存器来让这个引脚输出高电位或者低电位；对于其他特殊功能，则有另外的寄存器来控制它们。</p>
 <h1 id="cmpss">CMPSS</h1>
-<p>CMPSS，即Comparator Subsystem，比较器子系统。由模拟比较器和支持电路组成，可用于峰值电流模式控制、开关电源、功率因数校正、电压跳闸监测等应用。</p>
+<p>CMPSS，即Comparator
+Subsystem，比较器子系统。由模拟比较器和支持电路组成，可用于峰值电流模式控制、开关电源、功率因数校正、电压跳闸监测等应用。</p>
 <p>每个CMPSS包含两个比较器、两个12位DAC参考、两个数字滤波器和一个斜坡发生器。比较器在每个模块中表示为“H”或“L”，其中“H”和“L”分别表示高和低。每个比较器产生一个数字输出，指示正输入端的电压是否大于负输入端的电压。比较器的正输入由外部引脚或PGA驱动，负输入可由外部引脚或可编程参考12位DAC驱动。每个比较器输出通过一个可编程的数字滤波器，可以消除假跳闸信号。如果不需要滤波，也可以使用未滤波的输出。一个可选的斜坡发生器电路可用于控制高比较器的12位参考DAC值。</p>
-<p><img src="https://pic.islet.space/2021/07/20200416154658460.png" /></p>
+<p><img
+src="https://pic.islet.space/2021/07/20200416154658460.png" /></p>
 <h1 id="can">CAN</h1>
-<p>A controller area network(CAN) is ideally suited to the many high-level industrial protocols embracing CAN and <strong><em>ISO-11898:2003</em></strong> as their physical layer.</p>
+<p>A controller area network(CAN) is ideally suited to the many
+high-level industrial protocols embracing CAN and
+<strong><em>ISO-11898:2003</em></strong> as their physical layer.</p>
 <h2 id="introduction">Introduction</h2>
 <ul>
-<li><p>The CAN bus was developed by BOSCH as a <strong><em>multi-master</em></strong>, <strong><em>message broadcast</em></strong> system that specifies a maximum signaling rate of <strong><em>1 megabit per second</em></strong>(bps).</p></li>
-<li><p>CAN is an International Standardization Organization (ISO) defined serial communications bus originally developed for the automotive industry to replace the complex wiring harness with a two-wire bus.</p></li>
-<li><p>CAN <em>does not</em> send large blocks of data point-to-point from node A to Node B under the supervision of the central bus master.</p></li>
-<li><p>In a CAN network, <mark>many short messages</mark> like temperature or RPM <mark>are broadcast to the entire network</mark>, which provides for <mark>data consistency in every node of the system</mark>. 保证系统中各节点的数据一致性。</p></li>
-<li><p>CAN's specification calls for high immunity to electrical interface and the ability to self-diagnose and repair data errors.</p></li>
+<li><p>The CAN bus was developed by BOSCH as a
+<strong><em>multi-master</em></strong>, <strong><em>message
+broadcast</em></strong> system that specifies a maximum signaling rate
+of <strong><em>1 megabit per second</em></strong>(bps).</p></li>
+<li><p>CAN is an International Standardization Organization (ISO)
+defined serial communications bus originally developed for the
+automotive industry to replace the complex wiring harness with a
+two-wire bus.</p></li>
+<li><p>CAN <em>does not</em> send large blocks of data point-to-point
+from node A to Node B under the supervision of the central bus
+master.</p></li>
+<li><p>In a CAN network, <mark>many short messages</mark> like
+temperature or RPM <mark>are broadcast to the entire network</mark>,
+which provides for <mark>data consistency in every node of the
+system</mark>. 保证系统中各节点的数据一致性。</p></li>
+<li><p>CAN's specification calls for high immunity to electrical
+interface and the ability to self-diagnose and repair data
+errors.</p></li>
 </ul>
 <p>以下为ISO 11898 对 CAN 标准架构层级解释框图：</p>
 <figure>
-<img src="C:\Users\431240.IT2004\AppData\Roaming\Typora\typora-user-images\image-20210711162150611.png" alt="image-20210711162150611" /><figcaption aria-hidden="true">image-20210711162150611</figcaption>
+<img
+src="C:\Users\431240.IT2004\AppData\Roaming\Typora\typora-user-images\image-20210711162150611.png"
+alt="image-20210711162150611" />
+<figcaption aria-hidden="true">image-20210711162150611</figcaption>
 </figure>
-<p>The CAN communication protocol is a <strong><em>carrier-sense</em></strong>, <strong><em>multiple-access</em></strong> protocol with <strong><em>collision detection</em></strong> and <strong><em>arbitration on message priority</em></strong> (<strong><em>CSMA</em></strong> / <strong><em>CD+AMP</em></strong>). <strong><em>CSMA</em></strong> means that each node on a bus must wait for a prescribed period of inactivity before attempting to send a message. <strong><em>CD+AMP</em></strong> means that collisions are resolved through a bit-wise arbitration, based on a preprogrammed priority of each message in the identifier field of a message. The higher priority identifier always wins bus access.</p>
+<p>The CAN communication protocol is a
+<strong><em>carrier-sense</em></strong>,
+<strong><em>multiple-access</em></strong> protocol with
+<strong><em>collision detection</em></strong> and
+<strong><em>arbitration on message priority</em></strong>
+(<strong><em>CSMA</em></strong> / <strong><em>CD+AMP</em></strong>).
+<strong><em>CSMA</em></strong> means that each node on a bus must wait
+for a prescribed period of inactivity before attempting to send a
+message. <strong><em>CD+AMP</em></strong> means that collisions are
+resolved through a bit-wise arbitration, based on a preprogrammed
+priority of each message in the identifier field of a message. The
+higher priority identifier always wins bus access.</p>
 <p>CAN 包含 standard CAN 和 Extended CAN。</p>
 <figure>
-<img src="C:\Users\431240.IT2004\AppData\Roaming\Typora\typora-user-images\image-20210711163535822.png" alt="image-20210711163535822" /><figcaption aria-hidden="true">image-20210711163535822</figcaption>
+<img
+src="C:\Users\431240.IT2004\AppData\Roaming\Typora\typora-user-images\image-20210711163535822.png"
+alt="image-20210711163535822" />
+<figcaption aria-hidden="true">image-20210711163535822</figcaption>
 </figure>
 <figure>
-<img src="C:\Users\431240.IT2004\AppData\Roaming\Typora\typora-user-images\image-20210711163548817.png" alt="image-20210711163548817" /><figcaption aria-hidden="true">image-20210711163548817</figcaption>
+<img
+src="C:\Users\431240.IT2004\AppData\Roaming\Typora\typora-user-images\image-20210711163548817.png"
+alt="image-20210711163548817" />
+<figcaption aria-hidden="true">image-20210711163548817</figcaption>
 </figure>
 <h1 id="术语">术语</h1>
 <p><strong>菊花链</strong>：在电子电气工程中菊花链代表一种配线方案，例如设备A和设备B用电缆相连，设备B再用电缆和设备C相连，设备C用电缆和设备D相连，在这种连接方法中不会形成网状的拓扑结构，只有相邻的设备之间才能直接通信，例如在上例中设备A是不能和设备C直接通信的，它们必须通过设备B来中转，这种方法同样不会形成环路。因为最后一个设备不会连向第一个设备。这种连线方法能够用来传输电力，数字信号和模拟信号。</p>
 <h1 id="参考">参考</h1>
 <ol type="1">
-<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/72232829">CLA介绍及使用指南</a></li>
+<li><a
+target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/72232829">CLA介绍及使用指南</a></li>
 <li><a target="_blank" rel="noopener" href="https://baike.baidu.com/item/gpio">GPIO</a></li>
-<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/whyorwhnt/article/details/105547472">TMS320F280049C 学习笔记16 比较器子系统(CMPSS)</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.ti.com/lit/an/sloa101b/sloa101b.pdf">《Introduction to the Controller Area Network(CAN)》</a></li>
+<li><a
+target="_blank" rel="noopener" href="https://blog.csdn.net/whyorwhnt/article/details/105547472">TMS320F280049C
+学习笔记16 比较器子系统(CMPSS)</a></li>
+<li><a
+target="_blank" rel="noopener" href="https://www.ti.com/lit/an/sloa101b/sloa101b.pdf">《Introduction to
+the Controller Area Network(CAN)》</a></li>
 </ol>
 
     </div>

@@ -1,0 +1,926 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://code.islet.space/font//css?family=/CascadiaCode/CascadiaCode:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/themes/blue/pace-theme-minimal.css">
+  <script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"islet.space","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.7.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/db.json","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":true}}</script><script src="/js/config.js"></script>
+<meta name="description" content="FTDI 硬件是由 FTDI chip 公司开发的用于高性能 USB 转各种底层通信协议 的芯片。所支持的协议包括 UART &#x2F; SPI &#x2F; I2C &#x2F; JTAG etc. ，还有特殊的 bit-bang 协议。 FT4232 基本上是 FT2232 的升级版，从 2个8bit 独立通道，升级成 4个8bit 独立通道，每个通道都具有独立互不干扰的时钟。 FT4232HL 芯片可以实现 USB 2">
+<meta property="og:type" content="article">
+<meta property="og:title" content="FT4232H 开发笔记">
+<meta property="og:url" content="http://islet.space/2022/06/23/Hardware/FTDI/2022-06-23-FT4232H-%E5%BC%80%E5%8F%91%E7%AC%94%E8%AE%B0/index.html">
+<meta property="og:site_name" content="Coder的孤岛">
+<meta property="og:description" content="FTDI 硬件是由 FTDI chip 公司开发的用于高性能 USB 转各种底层通信协议 的芯片。所支持的协议包括 UART &#x2F; SPI &#x2F; I2C &#x2F; JTAG etc. ，还有特殊的 bit-bang 协议。 FT4232 基本上是 FT2232 的升级版，从 2个8bit 独立通道，升级成 4个8bit 独立通道，每个通道都具有独立互不干扰的时钟。 FT4232HL 芯片可以实现 USB 2">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://pic.islet.space/2022/06/image-20220623145709022.png">
+<meta property="og:image" content="https://pic.islet.space/2022/06/0630_1.jpg">
+<meta property="og:image" content="https://pic.islet.space/2022/07/image-20220707162556201.png">
+<meta property="og:image" content="https://pic.islet.space/2022/07/image-20220707162928727.png">
+<meta property="og:image" content="https://pic.islet.space/2022/07/image-20220707163519992.png">
+<meta property="og:image" content="https://pic.islet.space/2022/07/image-20220707163532847.png">
+<meta property="og:image" content="https://pic.islet.space/2022/06/image-20220623145154624.png">
+<meta property="og:image" content="https://pic.islet.space/2022/06/image-20220627131603779.png">
+<meta property="og:image" content="https://pic.islet.space/2022/06/image-20220623145344049.png">
+<meta property="og:image" content="https://pic.islet.space/2022/06/image-20220627122210831.png">
+<meta property="og:image" content="https://pic.islet.space/2022/06/image-20220627140842391.png">
+<meta property="og:image" content="https://pic.islet.space/2022/07/image-20220707154811965.png">
+<meta property="og:image" content="https://pic.islet.space/2022/07/image-20220707151059741.png">
+<meta property="og:image" content="https://pic.islet.space/2022/07/image-20220707152918917.png">
+<meta property="og:image" content="https://pic.islet.space/2022/07/image-20220707152805911.png">
+<meta property="og:image" content="https://pic.islet.space/2022/07/202207141726135.png">
+<meta property="og:image" content="https://pic.islet.space/2022/07/202207141726094.png">
+<meta property="og:image" content="https://pic.islet.space/2022/07/202207141730761.png">
+<meta property="og:image" content="https://pic.islet.space/2022/07/202207141732771.png">
+<meta property="og:image" content="https://pic.islet.space/2022/07/image-20220711161012120.png">
+<meta property="og:image" content="https://pic.islet.space/2022/07/image-20220712121857849.png">
+<meta property="og:image" content="https://pic.islet.space/2022/07/image-20220712122514462.png">
+<meta property="og:image" content="https://pic.islet.space/2022/07/image-20220711123340879.png">
+<meta property="article:published_time" content="2022-06-23T06:30:00.000Z">
+<meta property="article:modified_time" content="2022-07-15T04:00:15.000Z">
+<meta property="article:author" content="Liewzheng">
+<meta property="article:tag" content="FTDI">
+<meta property="article:tag" content="FT423H">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://pic.islet.space/2022/06/image-20220623145709022.png">
+
+
+<link rel="canonical" href="http://islet.space/2022/06/23/Hardware/FTDI/2022-06-23-FT4232H-%E5%BC%80%E5%8F%91%E7%AC%94%E8%AE%B0/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://islet.space/2022/06/23/Hardware/FTDI/2022-06-23-FT4232H-%E5%BC%80%E5%8F%91%E7%AC%94%E8%AE%B0/","path":"2022/06/23/Hardware/FTDI/2022-06-23-FT4232H-开发笔记/","title":"FT4232H 开发笔记"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>FT4232H 开发笔记 | Coder的孤岛</title>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<!-- hexo injector head_end end --></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Coder的孤岛</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">islet of the coder</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-首页"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-文章"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>文章</a></li>
+        <li class="menu-item menu-item-目录"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>目录</a></li>
+        <li class="menu-item menu-item-标签"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-简历"><a href="/resume/" rel="section"><i class="fa fa-address-card fa-fw"></i>简历</a></li>
+        <li class="menu-item menu-item-友链"><a href="/friends/" rel="section"><i class="fa fa-heartbeat fa-fw"></i>友链</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#environment"><span class="nav-number">1.</span> <span class="nav-text">ENVIRONMENT</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#electrical-specification"><span class="nav-number">1.1.</span> <span class="nav-text">ELECTRICAL SPECIFICATION</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#spi-pinout"><span class="nav-number">1.2.</span> <span class="nav-text">SPI PINOUT</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ft4232hl-pin-description"><span class="nav-number">1.3.</span> <span class="nav-text">FT4232HL PIN DESCRIPTION</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#bit-bang-%E6%A8%A1%E5%BC%8F%E4%B8%8B%E7%9A%84-ft4232h-%E7%9A%84%E5%BC%95%E8%84%9A"><span class="nav-number">1.4.</span> <span class="nav-text">Bit-Bang 模式下的 FT4232H
+的引脚</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#driver-install"><span class="nav-number">1.5.</span> <span class="nav-text">DRIVER INSTALL</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#d2xxx-%E7%BC%96%E7%A8%8B%E6%8C%87%E5%8D%97"><span class="nav-number">2.</span> <span class="nav-text">D2XXX 编程指南</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#ft_setbitmode"><span class="nav-number">2.1.</span> <span class="nav-text">FT_SetBitMode()</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ucmarsk-%E8%AE%BE%E7%BD%AE%E8%AF%B4%E6%98%8E"><span class="nav-number">2.1.1.</span> <span class="nav-text">ucMarsk 设置说明</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ucmode-%E8%AE%BE%E7%BD%AE%E8%AF%B4%E6%98%8E"><span class="nav-number">2.1.2.</span> <span class="nav-text">ucMode 设置说明</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ft_getbitmode"><span class="nav-number">2.2.</span> <span class="nav-text">FT_GetBitMode()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ft_setbaudrate"><span class="nav-number">2.3.</span> <span class="nav-text">FT_SetBaudRate()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ft_read"><span class="nav-number">2.4.</span> <span class="nav-text">FT_Read()</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#bit-bang-mode"><span class="nav-number">3.</span> <span class="nav-text">BIT BANG MODE</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%82%E6%AD%A5bit-bang%E6%A8%A1%E5%BC%8F"><span class="nav-number">3.1.</span> <span class="nav-text">异步Bit-Bang模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%90%8C%E6%AD%A5bit-bang%E6%A8%A1%E5%BC%8F"><span class="nav-number">3.2.</span> <span class="nav-text">同步Bit-Bang模式</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ftdi-bit-bang"><span class="nav-number">4.</span> <span class="nav-text">FTDI BIT-BANG</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BE%8B1"><span class="nav-number">4.1.</span> <span class="nav-text">例1</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BE%8B2"><span class="nav-number">4.2.</span> <span class="nav-text">例2</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BE%8B3"><span class="nav-number">4.3.</span> <span class="nav-text">例3</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#spi-bit-bang"><span class="nav-number">4.4.</span> <span class="nav-text">SPI + BIT-BANG</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ftdi-hal"><span class="nav-number">5.</span> <span class="nav-text">FTDI HAL</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B9%B47%E6%9C%8811%E6%97%A5-1610"><span class="nav-number">5.1.</span> <span class="nav-text">2022年7月11日 16:10</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ftd2xx_hal_read_pin_level"><span class="nav-number">5.2.</span> <span class="nav-text">ftd2xx_hal_read_pin_level</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%94%B5%E5%B9%B3%E8%AF%BB%E5%8F%96%E8%83%BD%E5%8A%9B%E5%88%86%E6%9E%90"><span class="nav-number">5.2.1.</span> <span class="nav-text">电平读取能力分析</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#debug-record"><span class="nav-number">6.</span> <span class="nav-text">DEBUG RECORD</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#null-expression-encountered"><span class="nav-number">6.1.</span> <span class="nav-text">NULL expression encountered</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#reference"><span class="nav-number">7.</span> <span class="nav-text">REFERENCE</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Liewzheng</p>
+  <div class="site-description" itemprop="description">笔记分享的旮旯孤岛而已</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">124</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">230</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="mailto:liewzheng@foxmail.com" title="E-Mail → mailto:liewzheng@foxmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://islet.space/2022/06/23/Hardware/FTDI/2022-06-23-FT4232H-%E5%BC%80%E5%8F%91%E7%AC%94%E8%AE%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Liewzheng">
+      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coder的孤岛">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          FT4232H 开发笔记
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2022-06-23 14:30:00" itemprop="dateCreated datePublished" datetime="2022-06-23T14:30:00+08:00">2022-06-23</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2022-07-15 12:00:15" itemprop="dateModified" datetime="2022-07-15T12:00:15+08:00">2022-07-15</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Hardware/" itemprop="url" rel="index"><span itemprop="name">Hardware</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>FTDI 硬件是由 FTDI chip 公司开发的用于高性能 <strong>USB
+转各种底层通信协议</strong> 的芯片。所支持的协议包括 UART / SPI / I2C /
+JTAG etc. ，还有特殊的 bit-bang 协议。</p>
+<p>FT4232 基本上是 FT2232 的升级版，从 2个8bit 独立通道，升级成 4个8bit
+独立通道，每个通道都具有独立互不干扰的时钟。</p>
+<p>FT4232HL 芯片可以实现 USB 2.0 转换成
+<strong>四个虚拟通道</strong>（<strong>VCP</strong>，即 Virtual COM
+Port） 的功能，该四个虚拟通道可以模拟 UART / JTAG / SPI / I2C
+功能，IO口电压为 <code>3.3V</code> 。</p>
+<p>本文基于 FT423H 的迷你模块进行开发，该芯片的官方说明如 《<a
+target="_blank" rel="noopener" href="https://ftdichip.com/products/ft4232hl/">FT4232HL</a>》 。</p>
+<h1 id="environment">ENVIRONMENT</h1>
+<p><strong><a target="_blank" rel="noopener" href="http://libusb.info">libusb 1.0</a></strong> -
+Library for talking to USB devices from user-space. Needed by libftdi.
+<strong><a target="_blank" rel="noopener" href="https://github.com/martinh/libconfuse">libconfuse</a>
+-</strong> Library for parsing configuration files. Needed by
+ftdi_eeprom.</p>
+<h2 id="electrical-specification">ELECTRICAL SPECIFICATION</h2>
+<p><img src="https://pic.islet.space/2022/06/image-20220623145709022.png" alt="image-20220623145709022" style="zoom:50%;" /></p>
+<p>FT4232HL开发板 <strong>正面</strong> 视图引脚分布：</p>
+<figure>
+<img
+src="https://pic.islet.space/2022/06/%E4%BC%81%E4%B8%9A%E5%BE%AE%E4%BF%A1%E6%88%AA%E5%9B%BE_1655968113415.png"
+alt="img" />
+<figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>FT4232HL开发板 <strong>反面</strong> 视图引脚分布：</p>
+<p><img src="https://pic.islet.space/2022/06/0630_1.jpg" /></p>
+<h2 id="spi-pinout">SPI PINOUT</h2>
+<p>如果使用 libMPSSE 进行 SPI 通信开发，则默认使用下方的通信接口。</p>
+<figure>
+<img src="https://pic.islet.space/2022/07/image-20220707162556201.png"
+alt="image-20220707162556201" />
+<figcaption aria-hidden="true">image-20220707162556201</figcaption>
+</figure>
+<h2 id="ft4232hl-pin-description">FT4232HL PIN DESCRIPTION</h2>
+<figure>
+<img src="https://pic.islet.space/2022/07/image-20220707162928727.png"
+alt="image-20220707162928727" />
+<figcaption aria-hidden="true">image-20220707162928727</figcaption>
+</figure>
+<h2 id="bit-bang-模式下的-ft4232h-的引脚">Bit-Bang 模式下的 FT4232H
+的引脚</h2>
+<p>FT4232H的通道 A、B、C 或通道 D 可以被配置为 bit-bang
+接口。有两种类型的 bit-bang 模式：同步和异步。</p>
+<p>当配置为任何 bit-bang
+模式（同步或异步）时，使用的引脚和信号的描述见表3.6</p>
+<figure>
+<img src="https://pic.islet.space/2022/07/image-20220707163519992.png"
+alt="image-20220707163519992" />
+<figcaption aria-hidden="true">image-20220707163519992</figcaption>
+</figure>
+<figure>
+<img src="https://pic.islet.space/2022/07/image-20220707163532847.png"
+alt="image-20220707163532847" />
+<figcaption aria-hidden="true">image-20220707163532847</figcaption>
+</figure>
+<h2 id="driver-install">DRIVER INSTALL</h2>
+<p>FT4232H 的驱动分为 VCP / D2XXX 和 D3XXX 三个。其中，D3XXX 是适用于
+USB 3.0 的，这里不需要安装。</p>
+<p>window 版本的驱动安装器就包含了 VCP 和 D2XXX。</p>
+<p>驱动安装页面：<a
+target="_blank" rel="noopener" href="https://ftdichip.com/drivers/vcp-drivers/">Virtual COM Port
+Drivers</a></p>
+<p>官方驱动安装教程：<a
+target="_blank" rel="noopener" href="https://ftdichip.com/wp-content/uploads/2022/05/AN_396-FTDI-Drivers-Installation-Guide-for-Windows-10_11.pdf">Windows
+10/11 Installation Guide</a></p>
+<figure>
+<img src="https://pic.islet.space/2022/06/image-20220623145154624.png"
+alt="装了CDM驱动的Windows平台" />
+<figcaption aria-hidden="true">装了CDM驱动的Windows平台</figcaption>
+</figure>
+<figure>
+<img src="https://pic.islet.space/2022/06/image-20220627131603779.png"
+alt="linux平台的usb列表" />
+<figcaption aria-hidden="true">linux平台的usb列表</figcaption>
+</figure>
+<p><strong>注意</strong>：驱动安装完毕之后，PC 不会立即识别
+该设备。需要使用 跳线帽，将 CN3 的 <code>1</code> 和 <code>3</code>
+口进行短接。让设备供上5V的电。</p>
+<p><img src="https://pic.islet.space/2022/06/image-20220623145344049.png" alt="image-20220623145344049" style="zoom:50%;" /></p>
+<h1 id="d2xxx-编程指南">D2XXX 编程指南</h1>
+<p>D2XXX 是针对 FTDI 的专用接口（Proprietary Interface ）。</p>
+<blockquote>
+<p>FTDI provides two alternative software interfaces for its range of
+USB-UART and USB-FIFO ICs. One interface provides a Virtual COM Port
+(VCP) which appears to the system as a legacy COM port. The second
+interface, D2XX, is provided via a proprietary DLL (FTD2XX.DLL). The
+D2XX interface provides special functions that are not available in
+standard operating system COM port APIs, such as setting the device into
+a different mode or writing data into the device EEPROM.</p>
+</blockquote>
+<p>FTDI 为USB-UART 和 USB-FIFO IC
+提供两种可供选择的软件接口：<strong>虚拟串口</strong>（<strong>VCP</strong>，Virtual
+COM Port） 和 <strong>D2XXX</strong> 。</p>
+<p>在 Windows 上，D2XXX 和 VCP 驱动 则在同一个驱动包中进行分发，称为
+<strong>综合驱动模块</strong>（CDM, Combined Driver Model）。下图解释了
+Windows 端的 CDM 模块架构。</p>
+<p><img src="https://pic.islet.space/2022/06/image-20220627122210831.png" alt="image-20220627122210831" style="zoom:50%;" /></p>
+<p>而在 类Unix平台 和 Windows CE 上，VCP 和 D2XXX
+是相互排斥的选项，因为在一个特定的时间内，一个特定的设备ID只能安装一种驱动类型。</p>
+<p>Windows 上虽然可以装 VCP 和 D2XXX
+两种驱动，但是任意时间也只有一种驱动能用。</p>
+<p>VCP 是专用于 虚拟串口 的驱动，因此FTDI 官方并不提供 应用级
+示例代码。而 D2XXX 是 FTDI 的专用接口，官方提供了 FTD2XXX
+库的应用程序以供开发。</p>
+<p><img src="https://pic.islet.space/2022/06/image-20220627140842391.png" alt="image-20220627140842391" style="zoom:50%;" /></p>
+<p>其中，libMPSSE 是 SPI/I2C/JTAG 的通信的库文件，依赖于底层的
+libftd2xx</p>
+<h2 id="ft_setbitmode">FT_SetBitMode()</h2>
+<figure>
+<img src="https://pic.islet.space/2022/07/image-20220707154811965.png"
+alt="image-20220707154811965" />
+<figcaption aria-hidden="true">image-20220707154811965</figcaption>
+</figure>
+<h3 id="ucmarsk-设置说明">ucMarsk 设置说明</h3>
+<p>位模式的必要值。<mark>这设置了哪些位是输入和输出。位值为0时，将相应的引脚设为输入，位值为1时，将相应的引脚设为输出。</mark></p>
+<p>在CBUS Bit
+Bang的情况下，这个值的上位数控制哪些引脚是输入和输出，而下位数控制哪些输出是高电平和低电平。</p>
+<p>注意： 它与 <code>FT_SetBitMode()</code> 不是互相的关系</p>
+<p>根据 <a href="##%20SPI%20PINOUT">SPI PINOUT</a>
+的图标说明，应该将以下引脚的掩码设置为如下：</p>
+<table>
+<thead>
+<tr class="header">
+<th>主控引脚</th>
+<th>所接从设备引脚</th>
+<th>输入输出状态</th>
+<th>掩码</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>A0</td>
+<td>SCLK</td>
+<td>output</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td>A1</td>
+<td>MOSI</td>
+<td>output</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td>A2</td>
+<td>MISO</td>
+<td>input</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td>A3</td>
+<td>SNCS</td>
+<td>output</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td>A4</td>
+<td></td>
+<td></td>
+<td>x</td>
+</tr>
+<tr class="even">
+<td>A5</td>
+<td></td>
+<td></td>
+<td>x</td>
+</tr>
+<tr class="odd">
+<td>A6</td>
+<td></td>
+<td></td>
+<td>x</td>
+</tr>
+<tr class="even">
+<td>A7</td>
+<td></td>
+<td></td>
+<td>x</td>
+</tr>
+</tbody>
+</table>
+<p>此时，掩码必须设置为 <code>0xFB</code> 或 <code>0x0B</code></p>
+<h3 id="ucmode-设置说明">ucMode 设置说明</h3>
+<blockquote>
+<p><code>0x0</code> = Reset <code>0x1</code> = Asynchronous Bit Bang
+<code>0x2</code> = MPSSE (FT2232, FT2232H, FT4232H and FT232H devices
+only) <code>0x4</code> = Synchronous Bit Bang (FT232R, FT245R, FT2232,
+FT2232H, FT4232H and FT232H devices only) <code>0x8</code> = MCU Host
+Bus Emulation Mode (FT2232, FT2232H, FT4232H and FT232H devices only)
+<code>0x10</code> = Fast Opto-Isolated Serial Mode (FT2232, FT2232H,
+FT4232H and FT232H devices only) <code>0x20</code> = CBUS Bit Bang Mode
+(FT232R and FT232H devices only) <code>0x40</code> = Single Channel
+Synchronous 245 FIFO Mode (FT2232H and FT232H devices only)</p>
+</blockquote>
+<h2 id="ft_getbitmode">FT_GetBitMode()</h2>
+<p>FT_GetBitMode
+返回各引脚的瞬时值。将返回一个单字节，其中包含各引脚的当前值，包括那些输入和输出的引脚。</p>
+<p>或对FT232R的可用位模式的描述，请参见应用说明
+"FT232R和FT245R的bit-bang模式"。
+关于FT2232的可用位模式的描述，请参见应用说明 "FT2232的位模式功能"。
+关于FT232B和FT245B的比特爆炸模式的描述，见应用说明
+"FT232B/FT245B比特爆炸模式"。
+关于T4232H和FT2232H器件支持的位模式的描述，请参见IC数据表。
+这些应用说明可从FTDI网站下载。</p>
+<h2 id="ft_setbaudrate">FT_SetBaudRate()</h2>
+<p>数据传输的速率可以通过使用 <code>FT_SetBaudRate()</code>
+命令来控制。<mark style="font-weight: 900;">异步模式的时钟实际上是所设波特率的16倍</mark>。一个9600波特的值将以每秒（9600x16）=153600
+byte的速度传输数据，或每6.5μS一个 byte。</p>
+<p>FTDI 器件最大可设置的波特率是
+<code>3M baud</code>，但为了让数据有时间在 <code>WR#</code>
+选通周围设置和保持，数据的波特率最大应该是
+<code>1M baud</code>（62500x16）。最小的数据波特率是
+<code>4.8kbaud</code>（300 x 16）。</p>
+<h2 id="ft_read">FT_Read()</h2>
+<figure>
+<img src="https://pic.islet.space/2022/07/image-20220707151059741.png"
+alt="image-20220707151059741" />
+<figcaption aria-hidden="true">image-20220707151059741</figcaption>
+</figure>
+<blockquote>
+<p>FT_Read always returns the number of bytes read in lpdwBytesReturned.
+This function does not return until dwBytesToRead bytes have been read
+into the buffer. The number of bytes in the receive queue can be
+determined by calling FT_GetStatus or FT_GetQueueStatus, and passed to
+FT_Read as dwBytesToRead so that the function reads the device and
+returns immediately.</p>
+<p>When a read timeout value has been specified in a previous call to
+FT_SetTimeouts, FT_Read returns when the timer expires or dwBytesToRead
+have been read, whichever occurs first. If the timeout occurred, FT_Read
+reads available data into the buffer and returns FT_OK. An application
+should use the function return value and lpdwBytesReturned when
+processing the buffer. If the return value is FT_OK, and
+lpdwBytesReturned is equal to dwBytesToRead then FT_Read has completed
+normally. If the return value is FT_OK, and lpdwBytesReturned is less
+then dwBytesToRead then a timeout has occurred and the read has been
+partially completed. Note that if a timeout occurred and no data was
+read, the return value is still FT_OK.</p>
+</blockquote>
+<p><code>FT_Read()</code> 总是返回在 <code>lpdwBytesReturned</code>
+中读取的字节数。 在 <code>dwBytesToRead</code>
+字节被读入缓冲区之前，该函数不会返回。接收队列中的字节数可以通过调用<code>FT_GetStatus()</code>
+或 <code>FT_GetQueueStatus()</code> 来确定，并作为
+<code>dwBytesToRead</code> 传给
+<code>FT_Read()</code>，以便该函数读取设备并立即返回。</p>
+<p>当在先前对 <code>FT_SetTimeouts()</code>
+的调用中指定了一个读取超时值时，<code>FT_Read()</code> 在定时器过期或
+<code>dwBytesToRead</code>
+已被读取时返回，以先发生者为准。如果超时发生，<code>FT_Read()</code>
+将可用数据读入缓冲区并返回 <code>FT_OK</code>。</p>
+<p>在处理缓冲区时，应用程序应使用该函数的返回值和
+<code>lpdwBytesReturned</code> 。如果返回值为 <code>FT_OK</code>，并且
+<code>lpdwBytesReturned</code> 等于 <code>dwBytesToRead</code> ，那么
+<code>FT_Read()</code> 已经正常完成。如果返回值是
+<code>FT_OK</code>，并且 <code>lpdwBytesReturned</code> 小于
+<code>dwBytesToRead</code>，那么就发生了一个超时，读取已经部分完成。</p>
+<p><mark>请注意，如果发生了超时并且没有读取任何数据，返回值仍然是
+<code>FT_OK</code> 。<code>FT_IO_ERROR</code>
+的返回值表明函数的参数有错误，或者发生了致命的错误，如USB断开连接。</mark></p>
+<h1 id="bit-bang-mode">BIT BANG MODE</h1>
+<h2 id="异步bit-bang模式">异步Bit-Bang模式</h2>
+<p>异步 Bit-Bang 模式与 BM-style Bit-Bang
+模式相同。<mark>在任何配置为异步模式的通道上，以正常方式写入设备的数据将被自锁到并行I/O数据引脚（那些被配置为输出的引脚）。每个I/O引脚都可以独立设置为输入或输出。数据的时钟输出速率由波特率发生器控制。</mark></p>
+<p>为了使数据发生变化，必须有新的数据写入，而且
+<strong>波特率时钟</strong>
+必须跳动。如果没有新的数据被写入通道，引脚将保持最后写入的值。</p>
+<blockquote>
+<ol type="1">
+<li>那这个波特率时钟 怎么控制？能否指定任一引脚进行输出？</li>
+</ol>
+</blockquote>
+<h2 id="同步bit-bang模式">同步Bit-Bang模式</h2>
+<blockquote>
+<p>The synchronous Bit-Bang mode will only update the output parallel
+I/O port pins whenever data is sent from the USB interface to the
+parallel interface. When this is done, data is read from the USB Rx FIFO
+buffer and written out on the pins. Data can only be received from the
+parallel pins (to the USB Tx FIFO interface) when the parallel interface
+has been written to.</p>
+<p>With Synchronous Bit-Bang mode, data will only be sent out by the
+FT4232H if there is space in the FT4232H USB TXFIFO for data to be read
+from the parallel interface pins. This Synchronous Bit-Bang mode will
+read the data bus parallel I/O pins first, before it transmits data from
+the USB RxFIFO. It is therefore 1 byte behind the output, and so to read
+the inputs for the byte that you have just sent, another byte must be
+sent.</p>
+</blockquote>
+<blockquote>
+<p>同步模式只有在数据从USB接口发送到并行接口时才会更新输出的
+<strong>并行I/O端口</strong> 引脚。当这样做的时候，数据从USB Rx
+FIFO缓冲器中读出，并在引脚上写出。<mark>只有当并行接口被写入时，才能从并行引脚接收数据（到USB
+Tx FIFO接口）。</mark></p>
+<p>同步Bit-Bang模式与异步Bit-Bang模式的不同之处在于，只有当USB接口写入并行输出时，设备的并行输出才被读取。这使得控制程序更容易测量对USB输出刺激的反应，<mark>因为返回到USB接口的数据与输出数据是同步的。</mark></p>
+</blockquote>
+<p>在同步模式下，读和写操作会被同步进行。此时，数据总线引脚会在写入数据前先读取数据（针对每个byte）。因此，该数据引脚读取到的数值总是比写出去的数值要慢一个byte。</p>
+<p>与异步模式不同，数据引脚只会在写入数据前立即进行读取操作。因此，为了读取
+“写入一个byte的响应结果” ，必须要发送另一个byte。
+另外，只有当设备中有空间可以从引脚读取数据时，数据才会被写入引脚。</p>
+<p>每个引脚都可以独立设置为输入或输出。数据的时钟输出率由波特率发生器控制。要改变引脚的状态，必须写入新的数据，并且波特率时钟必须跳动（the
+baud rate clock hask to
+tick）。如果没有新的数据被写入设备，输出引脚将保持最后写入的数值。</p>
+<p>当同步模式被启用时，I/O信号线的配置如表3.1所示。请注意，在首次进入同步模式后，任何引脚的默认配置，如果设置为输出，则默认被设置为
+<strong>输出低电平</strong>（0V）。（随后向任何引脚写一个 <code>1</code>
+将把该引脚设置为VCCIO）
+当进入同步模式后，如果希望在任何输出上驱动一个高值，那么有必要首先用
+<code>FT_SetBitMode()</code> 方法把这些引脚设置为输入，用
+<code>FT_Write()</code> 把它们写一个 <code>1</code> ，然后用
+<code>FT_SetBitMode()</code>
+把它们设置为输出。请注意，当设备处于同步位串模式时，EEPROM
+UART信号反转选项（signal inversion option）对这些引脚没有影响。</p>
+<figure>
+<img src="https://pic.islet.space/2022/07/image-20220707152918917.png"
+alt="image-20220707152918917" />
+<figcaption aria-hidden="true">image-20220707152918917</figcaption>
+</figure>
+<p>FT200XD 和 FT201X提供两条信号线；FT220X、FT230X 和
+FT234XD提供四条信号线；而 FT221X、FT231X 和
+FT240X上总共有八条信号线。</p>
+<p>任何一个FT-X系列器件的CBUS引脚都可以被配置为在器件处于同步位串模式时发出
+<strong>内部读取</strong> <code>RD#</code> 或 <strong>内部写入</strong>
+<code>WR#</code>
+频段（strobes）（注意，FT200XD、FT220X、FT221X和FT234XD只有一个<code>CBUS</code>
+引脚，因此只能选择 <code>RD#</code> 或 <code>WR#</code>
+）。通过在内部EEPROM中设置适当的值，<code>CBUS</code>
+引脚也可用于提供时钟信号。</p>
+<p>所有的bit-bang模式都需要使用D2XX驱动，<mark>不可能通过VCP驱动使用这些功能，也不可能同时使用
+<code>CBUS bit-bang</code> 和
+<code>VCP</code></mark>。表3.2列出了用于同步 bit-bang
+模式的基本命令。这些功能的完整描述可在《D2XX程序员指南》中找到。</p>
+<figure>
+<img src="https://pic.islet.space/2022/07/image-20220707152805911.png"
+alt="image-20220707152805911" />
+<figcaption aria-hidden="true">image-20220707152805911</figcaption>
+</figure>
+<h1 id="ftdi-bit-bang">FTDI BIT-BANG</h1>
+<p>FT432 如果需要配置成 Bit-Bang模式，需要：</p>
+<ol type="1">
+<li>使用 <code>FT_Open()</code> 打开对应通道</li>
+<li>使用 <code>FT_SetBitMode()</code> 为8个pin配置输入或输出，FTDI
+称之为掩码（mask），0则代表输入，1则代表输出，例如 <code>0x0F</code>
+则代表 <code>0~3</code> pin 设置为输出，<code>4~7</code>
+pin设置为输入。</li>
+<li>同时，在 <code>FT_SetBitMode()</code> 第三个参数
+<code>ucEnable</code> 传递参数即可打开对应模式，如：
+<ol type="1">
+<li><code>FT_BITMODE_SYNC_BITBANG</code> 即 同步 Bit-Bang 模式</li>
+<li><code>FT_BITMODE_SYNC_BITBANG</code> 即 异步 Bit-Bang 模式</li>
+<li><code>FT_BITMODE_RESET</code> 即 默认的 UART 模式。</li>
+</ol></li>
+<li>FT4232 的每个通道都是具有独立时钟的，为
+<code>FT_SetBaudRate()</code>
+传递参数即可设置SPI通信频率。实际上此处设置的并不是
+SPI外设的工作频率，而是该 channel 通过 <code>FT_Write()</code>
+接口改变引脚高低电平的频率。
+<ol type="1">
+<li>同步 Bit-Bang 模式下，每 <code>100000</code> 波特率约为
+<code>250KHz</code> 时钟，如果使其工作在 <code>1MHz</code>
+频率下，则需要设置波特率为 <code>400000</code>。</li>
+<li>异步 Bit-Bang 模式下的时钟为波特率的 <code>16</code> 倍</li>
+</ol></li>
+<li>使用读取和写入的接口 <code>FT_Write()</code> 和
+<code>FT_Read()</code>
+会按照该通道设定的时钟频率去改变/读取引脚数据。</li>
+</ol>
+<p>操作一次 FT_Write() ，如下，即可在 一个频率的半个周期内 改变 8个pin
+的高低电平。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">bytes_written_number = <span class="number">0</span>;</span><br><span class="line">  ftStatus             = FT_Write(ft_handle,</span><br><span class="line">                      &amp;(byte_write_to_slave-&gt;all),</span><br><span class="line">                      bits_to_send,</span><br><span class="line">                      &amp;bytes_written_number);</span><br><span class="line">  CHECK_STATUS(ftStatus);</span><br></pre></td></tr></table></figure>
+<blockquote>
+<ul>
+<li><p>ft_handle
+是通道的句柄（注意：一个通道一个句柄，不是一个句柄适用所有通道）</p></li>
+<li><p>byte_write_to_slave.all 是一个 8bit 的 UCHAR 类型数据。</p></li>
+<li><p>bits_to_send 为 待发送数据量</p></li>
+<li><p>bytes_written_number 是 已写入数据量</p></li>
+</ul>
+</blockquote>
+<h2 id="例1">例1</h2>
+<p>如果将 掩码 配置为 <code>0xFF</code>
+，即8个通道均为输出。且输出每个通道单次输出的数值，均为
+<code>0xFF</code>，输出 16次，即调用 <code>FT_Write()</code>
+16次，那么得到的图像应该如下：</p>
+<p><img src="https://pic.islet.space/2022/07/202207141726135.png" alt="index" style="zoom:33%;" /></p>
+<h2 id="例2">例2</h2>
+<p>如果将 掩码 配置为 <code>0xFF</code> 。交替输出 <code>0xFF</code> 和
+<code>0x00</code>，输出 16 次，那么得到的图像应该如下：</p>
+<p><strong>Q:</strong>
+为什么上面只有8个时钟，即1个byte大小，为什么是输出16次？</p>
+<p><strong>A:</strong> 因为FTDI的 <code>FT_Write()</code>
+接口写入一次数据，只能控制半个周期内的8个pin脚数据，如果需要发送一个周期的数据，则需要写两次，如果需要发送8个bit，则需要输出16次。</p>
+<p><img src="https://pic.islet.space/2022/07/202207141726094.png" alt="2" style="zoom:33%;" /></p>
+<h2 id="例3">例3</h2>
+<p>如果将 掩码 配置为 <code>0x0B</code>，即 <code>0000 1011</code>
+，（按照 MPSSE-SPI Example 设置的相同配置），<code>pin0</code> 为
+<code>SCK</code> ，<code>pin1</code> 为 <code>MOSI</code>，
+<code>pin2</code> 为 <code>MISO</code> ， <code>pin3</code> 为
+<code>CS</code> 。</p>
+<p>默认情况下，输入引脚的电平会被拉低。如果设置为输入引脚，<code>FT_Write()</code>
+无法改变其电平。</p>
+<p><code>FT_Write()</code> 一共需要写入 32次数据：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">UCHAR byte_write_to_slave[<span class="number">32</span>] = &#123;</span><br><span class="line">    <span class="number">0x01</span>, <span class="number">0x00</span>, <span class="number">0x01</span>, <span class="number">0x00</span>, <span class="number">0x01</span>, <span class="number">0x00</span>, <span class="number">0x01</span>, <span class="number">0x00</span>,</span><br><span class="line">    <span class="number">0x01</span>, <span class="number">0x00</span>, <span class="number">0x01</span>, <span class="number">0x00</span>, <span class="number">0x01</span>, <span class="number">0x00</span>, <span class="number">0x03</span>, <span class="number">0x02</span>,</span><br><span class="line">    <span class="number">0x01</span>, <span class="number">0x00</span>, <span class="number">0x01</span>, <span class="number">0x00</span>, <span class="number">0x01</span>, <span class="number">0x00</span>, <span class="number">0x01</span>, <span class="number">0x00</span>,</span><br><span class="line">    <span class="number">0x01</span>, <span class="number">0x00</span>, <span class="number">0x01</span>, <span class="number">0x00</span>, <span class="number">0x01</span>, <span class="number">0x00</span>, <span class="number">0x01</span>, <span class="number">0x00</span>&#125;;</span><br></pre></td></tr></table></figure>
+<p><img src="https://pic.islet.space/2022/07/202207141730761.png" alt="3" style="zoom:33%;" /></p>
+<p>可以看到在 <code>byte_write_to_slave[14]</code> 和
+<code>byte_write_to_slave[15]</code> 时需要主动拉高 <code>pin1</code>
+的电平，并维持 2个 falf period（即 one period）。</p>
+<p>再用 FT_Read() 读取 32 次数据，将数据存储到
+<code>UCHAR byte_read_from_slave[32]</code> 中，并从
+<code>byte_read_from_slave[16]</code> ~
+<code>byte_read_from_slave[31]</code> 的 16
+个数据中，每间隔1个数据，将对应 <code>pin2</code> 的数据左移存储到
+<code>data_read</code> 中。</p>
+<p>代码可以是这样的：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">UCHAR data_read = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">8</span>; i++)</span><br><span class="line">&#123;</span><br><span class="line">    data_read |= ( byte_read_from_slave[ <span class="number">16</span> + i * <span class="number">2</span> ] &amp; <span class="number">0x03</span>) &lt;&lt; ( <span class="number">7</span> - i );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>Q:</strong> 为什么 <code>FT_Read()</code>
+需要读取32次数据？</p>
+<p><strong>A:</strong> 因为这是 同步 Bit-Bang
+模式的特性，根据手册说明，每次读取一定数据量之前，都要写入一定的数据量。异步
+Big-Bang 模式是不用这样的。</p>
+<h2 id="spi-bit-bang">SPI + BIT-BANG</h2>
+<p>如果按照例3 的方法去发送数据，可能会发现收到的数据一直是异常的。</p>
+<p>因为 输出引脚 会保持其最后的输出电平，如 byte_read_from_slave[31]
+数据为 0x00，这就让 pin0 ，即 SCK 发送完数据之后保持了低电平，与 CPOL=1
+的要求相违背。</p>
+<p>因此不能只发送和接收32个数据，而应该在对应的发送数据的前后加上一个周期，即声明一个长度为36的数组
+UCHAR byte_read_from_slave[36] 。</p>
+<p><code>byte_read_from_slave[0]</code> /
+<code>byte_read_from_slave[1]</code> /
+<code>byte_read_from_slave[34]</code> /
+<code>byte_read_from_slave[35]</code> 均应设置为 0x09
+，如下波形所示。</p>
+<p><img src="https://pic.islet.space/2022/07/202207141732771.png" alt="image-20220714173158679" style="zoom:33%;" /></p>
+<h1 id="ftdi-hal">FTDI HAL</h1>
+<p>FTDI HAL 是基于 D2XX
+库、由个人编写的、可替换libMPSSE的SPI库，目前仅有SPI相关的代码。</p>
+<h2 id="年7月11日-1610">2022年7月11日 16:10</h2>
+<p>各通道的可以配置不同的handle和config
+参数去打开和关闭。也可以读GPIO，没问题了。</p>
+<figure>
+<img src="https://pic.islet.space/2022/07/image-20220711161012120.png"
+alt="image-20220711161012120" />
+<figcaption aria-hidden="true">image-20220711161012120</figcaption>
+</figure>
+<h2 id="ftd2xx_hal_read_pin_level">ftd2xx_hal_read_pin_level</h2>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * @brief GPIO 电平读取接口</span></span><br><span class="line"><span class="comment"> * @param &#123;FT_HANDLE*&#125; ft_handle：待读取通道句柄</span></span><br><span class="line"><span class="comment"> * @param &#123;UCHAR&#125; pin_to_read：待读取引脚</span></span><br><span class="line"><span class="comment"> * @param &#123;UCHAR*&#125; pin_level：电平值</span></span><br><span class="line"><span class="comment"> * @return FT_OK if successful, otherwise the return value is an FT error code.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function">FT_STATUS <span class="title">ftd2xx_hal_read_pin_level</span><span class="params">(FT_HANDLE* ft_handle,</span></span></span><br><span class="line"><span class="function"><span class="params">                                    UCHAR pin_to_read,</span></span></span><br><span class="line"><span class="function"><span class="params">                                    UCHAR* pin_level)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    FT_STATUS ftStatus = FT_OK;</span><br><span class="line">    FTD2XX_HAL_DATA byte_read_from_slave;</span><br><span class="line">    FTD2XX_HAL_DATA byte_write_to_slave;</span><br><span class="line">    DWORD byte_read_number  = <span class="number">0</span>;</span><br><span class="line">    byte_write_to_slave.all = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (pin_to_read &gt; <span class="number">7</span> || pin_level == <span class="literal">NULL</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> FT_INVALID_ARGS;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    ftStatus =</span><br><span class="line">        FT_Write(*ft_handle, &amp;(byte_write_to_slave.all), <span class="number">1</span>, &amp;byte_read_number);</span><br><span class="line">    CHECK_STATUS(ftStatus);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 从同道中读取8个pin的电平</span></span><br><span class="line">    byte_read_number = <span class="number">0</span>;</span><br><span class="line">    ftStatus =</span><br><span class="line">        FT_Read(*ft_handle, &amp;(byte_read_from_slave.all), <span class="number">1</span>, &amp;byte_read_number);</span><br><span class="line">    CHECK_STATUS(ftStatus);</span><br><span class="line"></span><br><span class="line">    *pin_level = (byte_read_from_slave.all &gt;&gt; pin_to_read) &amp; <span class="number">0x01</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> ftStatus;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="电平读取能力分析">电平读取能力分析</h3>
+<ul>
+<li>利用esp32 的 GPIO 发送pwm波（宽度为 <code>350ns</code> ，周期约为
+<code>750ns</code> ），发送 <code>10000</code>次后停止，该接口能够读取到
+<code>76~80</code> 次。</li>
+</ul>
+<p><img
+src="https://pic.islet.space/2022/07/PNG%E5%9B%BE%E5%83%8F.png" /></p>
+<figure>
+<img src="https://pic.islet.space/2022/07/image-20220712121857849.png"
+alt="image-20220712121857849" />
+<figcaption aria-hidden="true">image-20220712121857849</figcaption>
+</figure>
+<ul>
+<li>拉长 pwm波周期至 <code>33us</code>，同样发送
+<code>10000</code>次后停止，该接口能够读取到 <code>6660</code>
+次左右。</li>
+</ul>
+<p><img
+src="https://pic.islet.space/2022/07/PNG%E5%9B%BE%E5%83%8F%202.png" /></p>
+<figure>
+<img src="https://pic.islet.space/2022/07/image-20220712122514462.png"
+alt="image-20220712122514462" />
+<figcaption aria-hidden="true">image-20220712122514462</figcaption>
+</figure>
+<p>GPIO电平读取频率大致在 <code>5KHz</code> ~ <code>50KHz</code>
+之间，即接口两次调用的时间间隔在 <code>20us</code> ~ <code>200us</code>
+之间。</p>
+<h1 id="debug-record">DEBUG RECORD</h1>
+<h2 id="null-expression-encountered">NULL expression encountered</h2>
+<figure>
+<img src="https://pic.islet.space/2022/07/image-20220711123340879.png"
+alt="image-20220711123340879" />
+<figcaption aria-hidden="true">image-20220711123340879</figcaption>
+</figure>
+<p>这是因为运行需要 <code>sudo</code> 权限，即
+<code>sudo ./tmp/galileo_sdk/application/sample_app_raw_data_irq</code>
+。如果还是不行，应该是没有卸载 <code>ftdi_sio</code> 和
+<code>usbserial</code> ，即 <code>sudo rmmod ftdi_sio usbserial</code>
+。</p>
+<p><strong>注意</strong>：卸载 <code>usbserial</code>
+后，如果这时候linux系统内有其他设备对 <code>libusb-1.0-0-dev</code>
+有依赖，那它会无法正常工作。</p>
+<h1 id="reference">REFERENCE</h1>
+<ol type="1">
+<li><a
+target="_blank" rel="noopener" href="https://gist.github.com/jkiv/eac61b6706d6c3c306b42f4c6adbf1e9">FTDI
+GPIO example</a></li>
+<li><a
+target="_blank" rel="noopener" href="https://github.com/aehparta/ftdi-bitbang">aehparta/ftdi-bitbang</a></li>
+<li><a
+target="_blank" rel="noopener" href="https://www.ftdichip.com/Support/Knowledgebase/index.html?synchronousbitbangmode.htm">FTDI
+Knowledgebase</a></li>
+<li><a
+target="_blank" rel="noopener" href="https://github.com/swharden/AVR-projects/tree/master/FTDI%202018-05-30%20bit%20bang">swharden/AVR-projects</a></li>
+<li><a
+target="_blank" rel="noopener" href="https://swharden.com/blog/2018-06-03-bit-bang-ftdi-usb-to-serial-converters-to-drive-spi-devices/">Bit-Bang
+FTDI USB-to-Serial Converters to Drive SPI Devices</a></li>
+<li><a
+target="_blank" rel="noopener" href="https://www.intra2net.com/en/developer/libftdi/index.php">libFTDI
+- FTDI USB driver with bitbang mode</a></li>
+<li><a
+target="_blank" rel="noopener" href="https://ftdichip.com/document/application-notes/">Documents/Application
+Notes</a></li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>感谢您的支持和鼓励</div>
+  <button>
+    Donate
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="https://photo.islet.space/2021/00/IMG_4588.JPG" alt="Liewzheng WeChat Pay">
+        <span>WeChat Pay</span>
+      </div>
+      <div>
+        <img src="https://photo.islet.space/2021/00/IMG_4590.JPG" alt="Liewzheng Alipay">
+        <span>Alipay</span>
+      </div>
+
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/FTDI/" rel="tag"># FTDI</a>
+              <a href="/tags/FT423H/" rel="tag"># FT423H</a>
+          </div>
+
+        
+
+  <div id="vcomments" style="margin: 1rem 0 0 0;"></div>
+  <script>
+    new Valine({
+      el: '#vcomments',
+      appId: 'vRGM12EcYxDSM2lat5qjjSeY-gzGzoHsz',
+      appKey: 'WBgAb6NTAFQ7DYtgH0uOPNNh'
+    })
+  </script>
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/06/15/Embedded/2022-06-15-STM32_Programmer_CLI-%E4%BD%BF%E7%94%A8%E7%AC%94%E8%AE%B0/" rel="prev" title="STM32_Programmer_CLI 使用笔记">
+                  <i class="fa fa-chevron-left"></i> STM32_Programmer_CLI 使用笔记
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2022/06/27/Linux/Shell/2022-06-27-%E4%BE%BF%E6%8D%B7%E8%84%9A%E6%9C%AC/" rel="next" title="便捷脚本">
+                  便捷脚本 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">粤ICP备19004822号 </a>
+  </div>
+
+<div class="copyright">
+  &copy; 2019 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">liewzheng</span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdn.jsdelivr.net/npm/mermaid@8.12.0/dist/mermaid.min.js","integrity":"sha256-0dD7vUjUCTGJjeLnPotQQJIcSzug5fO6WDMYYyNIX4c="}}</script>
+  <script src="/js/third-party/tags/mermaid.js"></script>
+
+
+  <script src="/js/third-party/pace.js"></script>
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":"enable","tags":"all","js":{"url":"https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js","integrity":"sha256-r+3itOMtGGjap0x+10hu6jW/gZCzxHsoKrOd7gyRSGY="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>

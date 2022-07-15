@@ -168,7 +168,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">119</span>
+          <span class="site-state-item-count">124</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -179,7 +179,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">222</span>
+        <span class="site-state-item-count">230</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -279,26 +279,47 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <p>MQTT全称Message Queue Telemetry Transport，是一个针对轻量级的发布/订阅式消息传输场景的协议，同时也是被推崇的物联网传输协议。 MQTT：<a target="_blank" rel="noopener" href="http://mqtt.org" class="uri">http://mqtt.org</a></p>
-<p>在以Linux为内核的服务器上，可以有很多种方法来搭建MQTT服务，如Apache Apollo、Emqttd和Eclipse Mosquitto等等。 本文以将在阿里云Ubuntu云服务器上，创建专门用作MQTT服务器的账户，然后安装、开启并测试Mosquitto。</p>
+        <p>MQTT全称Message Queue Telemetry
+Transport，是一个针对轻量级的发布/订阅式消息传输场景的协议，同时也是被推崇的物联网传输协议。
+MQTT：<a target="_blank" rel="noopener" href="http://mqtt.org" class="uri">http://mqtt.org</a></p>
+<p>在以Linux为内核的服务器上，可以有很多种方法来搭建MQTT服务，如Apache
+Apollo、Emqttd和Eclipse Mosquitto等等。
+本文以将在阿里云Ubuntu云服务器上，创建专门用作MQTT服务器的账户，然后安装、开启并测试Mosquitto。</p>
 <h1 id="mqtt服务官网">1. MQTT服务（官网）：</h1>
-<p>Apache Apollo：<a target="_blank" rel="noopener" href="http://activemq.apache.org/apollo/" class="uri">http://activemq.apache.org/apollo/</a> EMQTTD：<a target="_blank" rel="noopener" href="http://emqttd.com" class="uri">http://emqttd.com</a> Eclipse Mosquitto: <a target="_blank" rel="noopener" href="http://mosquitto.org" class="uri">http://mosquitto.org</a></p>
+<p>Apache Apollo：<a target="_blank" rel="noopener" href="http://activemq.apache.org/apollo/"
+class="uri">http://activemq.apache.org/apollo/</a> EMQTTD：<a
+target="_blank" rel="noopener" href="http://emqttd.com" class="uri">http://emqttd.com</a> Eclipse
+Mosquitto: <a target="_blank" rel="noopener" href="http://mosquitto.org"
+class="uri">http://mosquitto.org</a></p>
 <h1 id="准备工作">2. 准备工作</h1>
 <h2 id="创建新用户">2.1 创建新用户</h2>
-<p>创建新用户是为了防止用户账户及密码泄露造成服务器root账号的信息安全及管理问题，因此很有必要单独创建一个用于MQTT服务的账户。 请在Terminal输入以下命令，XXXXX为你要新建的用户名称。 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure></p>
+<p>创建新用户是为了防止用户账户及密码泄露造成服务器root账号的信息安全及管理问题，因此很有必要单独创建一个用于MQTT服务的账户。
+请在Terminal输入以下命令，XXXXX为你要新建的用户名称。 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure></p>
 <h2 id="安装mosquitto">2.2 安装Mosquitto</h2>
 <h1 id="测试mqtt">3. 测试MQTT</h1>
 <h2 id="电脑客户端安装">3.1 电脑客户端安装</h2>
-<p><a target="_blank" rel="noopener" href="https://mqttfx.jensd.de/index.php/download">MQTT.fx</a> ## 3.2 测试 ### 3.2.1 登录 在两台连接到不同IP的设备上（这里要求这两台设备不会连接到同一个网段，包括同一个WiFi）分别填写MQTT服务器的信息，包括： * 服务器的IP（或绑定了IP的域名） * 端口号（物联网用的MQTT端口号默认为：1883） * 用户名 * 密码 * 作为订阅者/发布者的昵称（大致是这个意思）</p>
+<p><a target="_blank" rel="noopener" href="https://mqttfx.jensd.de/index.php/download">MQTT.fx</a> ##
+3.2 测试 ### 3.2.1 登录
+在两台连接到不同IP的设备上（这里要求这两台设备不会连接到同一个网段，包括同一个WiFi）分别填写MQTT服务器的信息，包括：
+* 服务器的IP（或绑定了IP的域名） *
+端口号（物联网用的MQTT端口号默认为：1883） * 用户名 * 密码 *
+作为订阅者/发布者的昵称（大致是这个意思）</p>
 <h3 id="主题订阅及收信">3.2.2 主题订阅及收信</h3>
-<p>在其中一台设备上填写订阅信息的主题名称，填写好后点Subscribe按钮。 在另一台设备上，填写发布信息的主题名称，填写好后在文本发送框填写发布内容并点击Publish按钮。</p>
+<p>在其中一台设备上填写订阅信息的主题名称，填写好后点Subscribe按钮。
+在另一台设备上，填写发布信息的主题名称，填写好后在文本发送框填写发布内容并点击Publish按钮。</p>
 <p>然后就可以欢快地在两台设备上发布和接收信息了，测试结束。</p>
 <h1 id="参考链接">参考链接</h1>
 <ol type="1">
-<li>《<a target="_blank" rel="noopener" href="https://blog.csdn.net/yannanxiu/article/details/70504586">【MQTT】在Ubuntu下搭建MQTT服务器</a>》</li>
-<li>《<a target="_blank" rel="noopener" href="http://mc.dfrobot.com.cn/forum.php?mod=viewthread&amp;tid=27276">micropython之动手搭建自己的MQTT服务器并实现通信（点亮led）</a>》</li>
-<li>《<a target="_blank" rel="noopener" href="https://www.howtoing.com/how-to-install-and-secure-the-mosquitto-mqtt-messaging-broker-on-ubuntu-16-04">如何在Ubuntu 16.04上安装和保护Mosquitto MQTT消息传递代理</a>》</li>
-<li>《<a target="_blank" rel="noopener" href="https://blog.csdn.net/lele52141/article/details/6593840">ubuntu用户添加adduser, useradd</a>》</li>
+<li>《<a
+target="_blank" rel="noopener" href="https://blog.csdn.net/yannanxiu/article/details/70504586">【MQTT】在Ubuntu下搭建MQTT服务器</a>》</li>
+<li>《<a
+target="_blank" rel="noopener" href="http://mc.dfrobot.com.cn/forum.php?mod=viewthread&amp;tid=27276">micropython之动手搭建自己的MQTT服务器并实现通信（点亮led）</a>》</li>
+<li>《<a
+target="_blank" rel="noopener" href="https://www.howtoing.com/how-to-install-and-secure-the-mosquitto-mqtt-messaging-broker-on-ubuntu-16-04">如何在Ubuntu
+16.04上安装和保护Mosquitto MQTT消息传递代理</a>》</li>
+<li>《<a
+target="_blank" rel="noopener" href="https://blog.csdn.net/lele52141/article/details/6593840">ubuntu用户添加adduser,
+useradd</a>》</li>
 </ol>
 
     </div>

@@ -30,7 +30,7 @@
 <meta property="og:description" content="c.biancheng.net 编译注意 注意：在clang上使用lambda表达式时可能会报错，编译时需要添加option -std&#x3D;c++11 。  This is because clang++ by default compiles your code using ISO C++ 1998 standard (including the defects addressed in the I">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2021-05-29T15:30:00.000Z">
-<meta property="article:modified_time" content="2021-05-29T15:51:21.290Z">
+<meta property="article:modified_time" content="2021-05-29T15:51:21.000Z">
 <meta property="article:author" content="Liewzheng">
 <meta property="article:tag" content="C++">
 <meta property="article:tag" content="lambda">
@@ -154,7 +154,8 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BC%96%E8%AF%91%E6%B3%A8%E6%84%8F"><span class="nav-number">1.</span> <span class="nav-text">编译注意</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#lambda%E4%BB%8B%E7%BB%8D"><span class="nav-number">2.</span> <span class="nav-text">Lambda介绍</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#lambda-%E8%A1%A8%E8%BE%BE%E5%BC%8F%E7%9A%84%E6%A6%82%E5%BF%B5%E5%92%8C%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95"><span class="nav-number">3.</span> <span class="nav-text">Lambda 表达式的概念和基本用法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%8D%95%E8%8E%B7%E5%88%97%E8%A1%A8"><span class="nav-number">4.</span> <span class="nav-text">捕获列表</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#lambda-%E8%A1%A8%E8%BE%BE%E5%BC%8F%E7%9A%84%E7%B1%BB%E5%9E%8B"><span class="nav-number">5.</span> <span class="nav-text">Lambda 表达式的类型</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%A3%B0%E6%98%8E%E5%BC%8F%E7%9A%84%E7%BC%96%E7%A8%8B%E9%A3%8E%E6%A0%BC%E7%AE%80%E6%B4%81%E7%9A%84%E4%BB%A3%E7%A0%81"><span class="nav-number">6.</span> <span class="nav-text">声明式的编程风格，简洁的代码</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BC%96%E8%AF%91%E6%B3%A8%E6%84%8F"><span class="nav-number">1.</span> <span class="nav-text">编译注意</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#lambda%E4%BB%8B%E7%BB%8D"><span class="nav-number">2.</span> <span class="nav-text">Lambda介绍</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#lambda-%E8%A1%A8%E8%BE%BE%E5%BC%8F%E7%9A%84%E6%A6%82%E5%BF%B5%E5%92%8C%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95"><span class="nav-number">3.</span> <span class="nav-text">Lambda
+表达式的概念和基本用法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%8D%95%E8%8E%B7%E5%88%97%E8%A1%A8"><span class="nav-number">4.</span> <span class="nav-text">捕获列表</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#lambda-%E8%A1%A8%E8%BE%BE%E5%BC%8F%E7%9A%84%E7%B1%BB%E5%9E%8B"><span class="nav-number">5.</span> <span class="nav-text">Lambda 表达式的类型</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%A3%B0%E6%98%8E%E5%BC%8F%E7%9A%84%E7%BC%96%E7%A8%8B%E9%A3%8E%E6%A0%BC%E7%AE%80%E6%B4%81%E7%9A%84%E4%BB%A3%E7%A0%81"><span class="nav-number">6.</span> <span class="nav-text">声明式的编程风格，简洁的代码</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -167,7 +168,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">119</span>
+          <span class="site-state-item-count">124</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -178,7 +179,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">222</span>
+        <span class="site-state-item-count">230</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -272,17 +273,33 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <p><a target="_blank" rel="noopener" href="http://c.biancheng.net/view/3741.html">c.biancheng.net</a></p>
+        <p><a
+target="_blank" rel="noopener" href="http://c.biancheng.net/view/3741.html">c.biancheng.net</a></p>
 <h1 id="编译注意">编译注意</h1>
-<p><strong>注意</strong>：在clang上使用lambda表达式时可能会报错，编译时需要添加option <code>-std=c++11</code> 。</p>
+<p><strong>注意</strong>：在clang上使用lambda表达式时可能会报错，编译时需要添加option
+<code>-std=c++11</code> 。</p>
 <blockquote>
-<p>This is because <strong>clang++</strong> <a target="_blank" rel="noopener" href="http://clang.llvm.org/cxx_status.html">by default compiles your code using ISO C++ 1998 standard (including the defects addressed in the ISO C++ 2003 standard) except for 'export' (which has been removed in C++11)</a></p>
-<p>Lambdas are part of <a target="_blank" rel="noopener" href="http://clang.llvm.org/">Clang's</a> <a target="_blank" rel="noopener" href="http://clang.llvm.org/docs/LanguageExtensions.html#cxx11">C++11 Language Extension</a>, therefore you need to compile your code with <strong>-std=c++11</strong> or <strong>-std=gnu++11</strong></p>
-<p>——<a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/13351032/clangs-support-of-c-11-lambda#:~:text=Lambdas%20are%20part%20of%20Clang%27s%20C%2B%2B11%20Language%20Extension%2C,support%20status%20and%20Activating%20C%2B%2B11%20support%20in%20Clang">STACKOVERFLOW</a></p>
+<p>This is because <strong>clang++</strong> <a
+target="_blank" rel="noopener" href="http://clang.llvm.org/cxx_status.html">by default compiles your
+code using ISO C++ 1998 standard (including the defects addressed in the
+ISO C++ 2003 standard) except for 'export' (which has been removed in
+C++11)</a></p>
+<p>Lambdas are part of <a target="_blank" rel="noopener" href="http://clang.llvm.org/">Clang's</a> <a
+target="_blank" rel="noopener" href="http://clang.llvm.org/docs/LanguageExtensions.html#cxx11">C++11
+Language Extension</a>, therefore you need to compile your code with
+<strong>-std=c++11</strong> or <strong>-std=gnu++11</strong></p>
+<p>——<a
+target="_blank" rel="noopener" href="https://stackoverflow.com/questions/13351032/clangs-support-of-c-11-lambda#:~:text=Lambdas%20are%20part%20of%20Clang%27s%20C%2B%2B11%20Language%20Extension%2C,support%20status%20and%20Activating%20C%2B%2B11%20support%20in%20Clang">STACKOVERFLOW</a></p>
 </blockquote>
 <h1 id="lambda介绍">Lambda介绍</h1>
-<p>lambda 表达式是 <a target="_blank" rel="noopener" href="http://c.biancheng.net/cplus/">C++</a>11 最重要也最常用的一个特性之一，<a target="_blank" rel="noopener" href="http://c.biancheng.net/csharp/">C#</a> 3.5 和 <a target="_blank" rel="noopener" href="http://c.biancheng.net/java/">Java</a> 8 中就引入了 lambda 表达式。</p>
-<p>lambda 来源于 <strong>函数式编程</strong> 的概念，也是现代编程语言的一个特点。C++11 这次终于把 lambda 加进来了。</p>
+<p>lambda 表达式是 <a target="_blank" rel="noopener" href="http://c.biancheng.net/cplus/">C++</a>11
+最重要也最常用的一个特性之一，<a
+target="_blank" rel="noopener" href="http://c.biancheng.net/csharp/">C#</a> 3.5 和 <a
+target="_blank" rel="noopener" href="http://c.biancheng.net/java/">Java</a> 8 中就引入了 lambda
+表达式。</p>
+<p>lambda 来源于 <strong>函数式编程</strong>
+的概念，也是现代编程语言的一个特点。C++11 这次终于把 lambda
+加进来了。</p>
 <p>lambda表达式有如下优点：</p>
 <ul>
 <li><strong>声明式编程风格</strong>：就地匿名定义目标函数或函数对象，不需要额外写一个命名函数或者函数对象。以更直接的方式去写程序，好的可读性和可维护性。</li>
@@ -290,8 +307,11 @@
 <li>在需要的时间和地点实现功能闭包，使程序更灵活。</li>
 </ul>
 <p>下面，先从 lambda 表达式的基本功能开始介绍它。</p>
-<h1 id="lambda-表达式的概念和基本用法">Lambda 表达式的概念和基本用法</h1>
-<p>lambda 表达式定义了一个 <strong>匿名函数</strong>，并且可以 <strong>捕获一定范围内的变量</strong>。lambda 表达式的语法形式可简单归纳如下：</p>
+<h1 id="lambda-表达式的概念和基本用法">Lambda
+表达式的概念和基本用法</h1>
+<p>lambda 表达式定义了一个 <strong>匿名函数</strong>，并且可以
+<strong>捕获一定范围内的变量</strong>。lambda
+表达式的语法形式可简单归纳如下：</p>
 <p><code>[ capture ] ( params ) opt -&gt; ret &#123; body; &#125;;</code></p>
 <blockquote>
 <ul>
@@ -304,58 +324,97 @@
 </blockquote>
 <p>因此，一个完整的 lambda 表达式看起来像这样：</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">auto</span> f = [](<span class="keyword">int</span> a) -&gt; <span class="keyword">int</span> &#123; <span class="keyword">return</span> a + <span class="number">1</span>; &#125;;std::cout &lt;&lt; <span class="built_in">f</span>(<span class="number">1</span>) &lt;&lt; std::endl;  </span><br></pre></td></tr></table></figure>
-<p>可以看到，上面通过一行代码定义了一个小小的功能闭包，用来将输入加 1 并返回。</p>
-<p>在 C++11 中，lambda 表达式的返回值是通过前面介绍的《<a target="_blank" rel="noopener" href="http://c.biancheng.net/view/3727.html">C++返回值类型后置</a>》语法来定义的。</p>
-<p>其实很多时候，lambda 表达式的返回值是非常明显的，比如这个例子。因此，C++11 中允许省略 lambda 表达式的返回值定义：</p>
+<p>可以看到，上面通过一行代码定义了一个小小的功能闭包，用来将输入加 1
+并返回。</p>
+<p>在 C++11 中，lambda 表达式的返回值是通过前面介绍的《<a
+target="_blank" rel="noopener" href="http://c.biancheng.net/view/3727.html">C++返回值类型后置</a>》语法来定义的。</p>
+<p>其实很多时候，lambda
+表达式的返回值是非常明显的，比如这个例子。因此，C++11 中允许省略 lambda
+表达式的返回值定义：</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">auto</span> f = [](<span class="keyword">int</span> a)&#123; <span class="keyword">return</span> a + <span class="number">1</span>; &#125;;</span><br></pre></td></tr></table></figure>
 <p>这样编译器就会根据 return 语句自动推导出返回值类型。</p>
 <p>需要注意的是，初始化列表不能用于返回值的自动推导：</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">auto</span> x1 = [](<span class="keyword">int</span> i)&#123; <span class="keyword">return</span> i; &#125;; <span class="comment">// OK: return type is int</span></span><br><span class="line"><span class="keyword">auto</span> x2 = []()&#123; <span class="keyword">return</span> &#123; <span class="number">1</span>, <span class="number">2</span> &#125;; &#125;; <span class="comment">// error: 无法推导出返回值类型</span></span><br></pre></td></tr></table></figure>
 <p>这时我们需要显式给出具体的返回值类型。</p>
-<p>另外，lambda 表达式在没有参数列表时，参数列表是可以省略的。因此像下面的写法都是正确的：</p>
+<p>另外，lambda
+表达式在没有参数列表时，参数列表是可以省略的。因此像下面的写法都是正确的：</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">auto</span> f1 = []()&#123; <span class="keyword">return</span> <span class="number">1</span>; &#125;;</span><br><span class="line"><span class="keyword">auto</span> f2 = []&#123; <span class="keyword">return</span> <span class="number">1</span>; &#125;; <span class="comment">// 省略空参数表</span></span><br></pre></td></tr></table></figure>
 <h1 id="捕获列表">捕获列表</h1>
 <p>lambda 表达式还可以通过捕获列表捕获一定范围内的变量：</p>
 <ul>
 <li>[] 不捕获任何变量。</li>
-<li>[&amp;] 捕获外部作用域中所有变量，并作为引用在函数体中使用（按引用捕获）。</li>
-<li>[=] 捕获外部作用域中所有变量，并作为副本在函数体中使用（按值捕获）。</li>
-<li>[=，&amp;foo] 按值捕获外部作用域中所有变量，并按引用捕获 foo 变量。</li>
+<li>[&amp;]
+捕获外部作用域中所有变量，并作为引用在函数体中使用（按引用捕获）。</li>
+<li>[=]
+捕获外部作用域中所有变量，并作为副本在函数体中使用（按值捕获）。</li>
+<li>[=，&amp;foo] 按值捕获外部作用域中所有变量，并按引用捕获 foo
+变量。</li>
 <li>[bar] 按值捕获 bar 变量，同时不捕获其他变量。</li>
-<li>[this] 捕获当前类中的 this <a target="_blank" rel="noopener" href="http://c.biancheng.net/c/80/">指针</a>，让 lambda 表达式拥有和当前类成员函数同样的访问权限。如果已经使用了 &amp; 或者 =，就默认添加此选项。捕获 this 的目的是可以在 lamda 中使用当前类的成员函数和成员变量。</li>
+<li>[this] 捕获当前类中的 this <a
+target="_blank" rel="noopener" href="http://c.biancheng.net/c/80/">指针</a>，让 lambda
+表达式拥有和当前类成员函数同样的访问权限。如果已经使用了 &amp; 或者
+=，就默认添加此选项。捕获 this 的目的是可以在 lamda
+中使用当前类的成员函数和成员变量。</li>
 </ul>
 <p>下面看一下它的具体用法，如下所示。</p>
 <p>【实例】lambda 表达式的基本用法。</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span>&#123;</span>    </span><br><span class="line"><span class="keyword">public</span>:    </span><br><span class="line">	<span class="keyword">int</span> i_ = <span class="number">0</span>;    </span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">func</span><span class="params">(<span class="keyword">int</span> x, <span class="keyword">int</span> y)</span></span>&#123;        </span><br><span class="line">		<span class="keyword">auto</span> x1 = []&#123; <span class="keyword">return</span> i_; &#125;;                            </span><br><span class="line">		<span class="keyword">auto</span> x2 = [=]&#123; <span class="keyword">return</span> i_ + x + y; &#125;;                   </span><br><span class="line">		<span class="keyword">auto</span> x3 = [&amp;]&#123; <span class="keyword">return</span> i_ + x + y; &#125;;                   </span><br><span class="line">		<span class="keyword">auto</span> x4 = [<span class="keyword">this</span>]&#123; <span class="keyword">return</span> i_; &#125;;                        </span><br><span class="line">		<span class="keyword">auto</span> x5 = [<span class="keyword">this</span>]&#123; <span class="keyword">return</span> i_ + x + y; &#125;;                </span><br><span class="line">		<span class="keyword">auto</span> x6 = [<span class="keyword">this</span>, x, y]&#123; <span class="keyword">return</span> i_ + x + y; &#125;;          </span><br><span class="line">		<span class="keyword">auto</span> x7 = [<span class="keyword">this</span>]&#123; <span class="keyword">return</span> i_++; &#125;;                  </span><br><span class="line">		&#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> a = <span class="number">0</span>, b = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">auto</span> f1 = []&#123; <span class="keyword">return</span> a; &#125;;               </span><br><span class="line"><span class="keyword">auto</span> f2 = [&amp;]&#123; <span class="keyword">return</span> a++; &#125;;            </span><br><span class="line"><span class="keyword">auto</span> f3 = [=]&#123; <span class="keyword">return</span> a; &#125;;              </span><br><span class="line"><span class="keyword">auto</span> f4 = [=]&#123; <span class="keyword">return</span> a++; &#125;;            </span><br><span class="line"><span class="keyword">auto</span> f5 = [a]&#123; <span class="keyword">return</span> a + b; &#125;;          </span><br><span class="line"><span class="keyword">auto</span> f6 = [a, &amp;b]&#123; <span class="keyword">return</span> a + (b++); &#125;;  </span><br><span class="line"><span class="keyword">auto</span> f7 = [=, &amp;b]&#123; <span class="keyword">return</span> a + (b++); &#125;;  </span><br></pre></td></tr></table></figure>
-<p>从上例中可以看到，lambda 表达式的捕获列表精细地控制了 lambda 表达式能够访问的外部变量，以及如何访问这些变量。</p>
-<p><strong>注意</strong>：默认状态下 lambda 表达式无法修改通过复制方式捕获的外部变量。如果希望修改这些变量的话，我们需要使用引用方式进行捕获。</p>
+<p>从上例中可以看到，lambda 表达式的捕获列表精细地控制了 lambda
+表达式能够访问的外部变量，以及如何访问这些变量。</p>
+<p><strong>注意</strong>：默认状态下 lambda
+表达式无法修改通过复制方式捕获的外部变量。如果希望修改这些变量的话，我们需要使用引用方式进行捕获。</p>
 <p>一个容易出错的细节是关于 lambda 表达式的延迟调用的：</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> a = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">auto</span> f = [=]&#123; <span class="keyword">return</span> a; &#125;;      </span><br><span class="line">a += <span class="number">1</span>;                         </span><br><span class="line">std::cout &lt;&lt; <span class="built_in">f</span>() &lt;&lt; std::endl;  </span><br></pre></td></tr></table></figure>
-<p>在这个例子中，lambda 表达式按值捕获了所有外部变量。在捕获的一瞬间，a 的值就已经被复制到f中了。之后 a 被修改，但此时 f 中存储的 a 仍然还是捕获时的值，因此，最终输出结果是 0。</p>
-<p>如果希望 lambda 表达式在调用时能够即时访问外部变量，我们应当使用引用方式捕获。</p>
-<p>从上面的例子中我们知道，按值捕获得到的外部变量值是在 lambda 表达式定义时的值。此时所有外部变量均被复制了一份存储在 lambda 表达式变量中。此时虽然修改 lambda 表达式中的这些外部变量并不会真正影响到外部，我们却仍然无法修改它们。</p>
-<p>那么如果希望去修改按值捕获的外部变量应当怎么办呢？这时，需要显式指明 lambda 表达式为 mutable：</p>
+<p>在这个例子中，lambda 表达式按值捕获了所有外部变量。在捕获的一瞬间，a
+的值就已经被复制到f中了。之后 a 被修改，但此时 f 中存储的 a
+仍然还是捕获时的值，因此，最终输出结果是 0。</p>
+<p>如果希望 lambda
+表达式在调用时能够即时访问外部变量，我们应当使用引用方式捕获。</p>
+<p>从上面的例子中我们知道，按值捕获得到的外部变量值是在 lambda
+表达式定义时的值。此时所有外部变量均被复制了一份存储在 lambda
+表达式变量中。此时虽然修改 lambda
+表达式中的这些外部变量并不会真正影响到外部，我们却仍然无法修改它们。</p>
+<p>那么如果希望去修改按值捕获的外部变量应当怎么办呢？这时，需要显式指明
+lambda 表达式为 mutable：</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> a = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">auto</span> f1 = [=]&#123; <span class="keyword">return</span> a++; &#125;;             </span><br><span class="line"><span class="keyword">auto</span> f2 = [=]() <span class="keyword">mutable</span> &#123; <span class="keyword">return</span> a++; &#125;;  </span><br></pre></td></tr></table></figure>
-<p>需要注意的一点是，被 mutable 修饰的 lambda 表达式就算没有参数也要写明参数列表。</p>
+<p>需要注意的一点是，被 mutable 修饰的 lambda
+表达式就算没有参数也要写明参数列表。</p>
 <h1 id="lambda-表达式的类型">Lambda 表达式的类型</h1>
 <p>最后，介绍一下 lambda 表达式的类型。</p>
-<p>lambda 表达式的类型在 C++11 中被称为“闭包类型（Closure Type）”。它是一个特殊的，匿名的非 nunion 的类类型。</p>
-<p>因此，我们可以认为它是一个带有 operator() 的类，即仿函数。因此，我们可以使用 std::function 和 std::bind 来存储和操作 lambda 表达式：</p>
+<p>lambda 表达式的类型在 C++11 中被称为“闭包类型（Closure
+Type）”。它是一个特殊的，匿名的非 nunion 的类类型。</p>
+<p>因此，我们可以认为它是一个带有 operator()
+的类，即仿函数。因此，我们可以使用 std::function 和 std::bind
+来存储和操作 lambda 表达式：</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">std::function&lt;<span class="built_in"><span class="keyword">int</span></span>(<span class="keyword">int</span>)&gt;  f1 = [](<span class="keyword">int</span> a)&#123; <span class="keyword">return</span> a; &#125;;std::function&lt;<span class="built_in"><span class="keyword">int</span></span>(<span class="keyword">void</span>)&gt; f2 = std::<span class="built_in">bind</span>([](<span class="keyword">int</span> a)&#123; <span class="keyword">return</span> a; &#125;, <span class="number">123</span>);</span><br></pre></td></tr></table></figure>
-<p>另外，对于没有捕获任何变量的 lambda 表达式，还可以被转换成一个普通的函数指针：</p>
+<p>另外，对于没有捕获任何变量的 lambda
+表达式，还可以被转换成一个普通的函数指针：</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> <span class="keyword">func_t</span> = <span class="built_in"><span class="keyword">int</span></span>(*)(<span class="keyword">int</span>);</span><br><span class="line"><span class="keyword">func_t</span> f = [](<span class="keyword">int</span> a)&#123; <span class="keyword">return</span> a; &#125;;</span><br><span class="line"><span class="built_in">f</span>(<span class="number">123</span>);</span><br></pre></td></tr></table></figure>
-<p>lambda 表达式可以说是就地定义仿函数闭包的“语法糖”。它的捕获列表捕获住的任何外部变量，最终均会变为闭包类型的成员变量。而一个使用了成员变量的类的 operator()，如果能直接被转换为普通的函数指针，那么 lambda 表达式本身的 this 指针就丢失掉了。而没有捕获任何外部变量的 lambda 表达式则不存在这个问题。</p>
-<p>这里也可以很自然地解释为何按值捕获无法修改捕获的外部变量。因为按照 C++ 标准，lambda 表达式的 operator() 默认是 const 的。一个 const 成员函数是无法修改成员变量的值的。而 mutable 的作用，就在于取消 operator() 的 const。</p>
-<p>需要注意的是，没有捕获变量的 lambda 表达式可以直接转换为函数指针，而捕获变量的 lambda 表达式则不能转换为函数指针。看看下面的代码：</p>
+<p>lambda
+表达式可以说是就地定义仿函数闭包的“语法糖”。它的捕获列表捕获住的任何外部变量，最终均会变为闭包类型的成员变量。而一个使用了成员变量的类的
+operator()，如果能直接被转换为普通的函数指针，那么 lambda 表达式本身的
+this 指针就丢失掉了。而没有捕获任何外部变量的 lambda
+表达式则不存在这个问题。</p>
+<p>这里也可以很自然地解释为何按值捕获无法修改捕获的外部变量。因为按照
+C++ 标准，lambda 表达式的 operator() 默认是 const 的。一个 const
+成员函数是无法修改成员变量的值的。而 mutable 的作用，就在于取消
+operator() 的 const。</p>
+<p>需要注意的是，没有捕获变量的 lambda
+表达式可以直接转换为函数指针，而捕获变量的 lambda
+表达式则不能转换为函数指针。看看下面的代码：</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">typedef</span> <span class="title">void</span><span class="params">(*Ptr)</span><span class="params">(<span class="keyword">int</span>*)</span></span>;</span><br><span class="line">Ptr p = [](<span class="keyword">int</span>* p)&#123;<span class="keyword">delete</span> p;&#125;;  </span><br><span class="line">Ptr p1 = [&amp;](<span class="keyword">int</span>* p)&#123;<span class="keyword">delete</span> p;&#125;;  </span><br></pre></td></tr></table></figure>
 <p>上面第二行代码能编译通过，而第三行代码不能编译通过，因为第三行的代码捕获了变量，不能直接转换为函数指针。</p>
 <h1 id="声明式的编程风格简洁的代码">声明式的编程风格，简洁的代码</h1>
-<p>就地定义匿名函数，不再需要定义函数对象，大大简化了标准库算法的调用。比如，在 C++11 之前，我们要调用 for_each 函数将 vector 中的偶数打印出来，如下所示。</p>
+<p>就地定义匿名函数，不再需要定义函数对象，大大简化了标准库算法的调用。比如，在
+C++11 之前，我们要调用 for_each 函数将 vector
+中的偶数打印出来，如下所示。</p>
 <p>【实例】lambda 表达式代替函数对象的示例。</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CountEven</span>&#123;</span>    </span><br><span class="line">	<span class="keyword">int</span>&amp; count_;<span class="keyword">public</span>:    </span><br><span class="line">	<span class="built_in">CountEven</span>(<span class="keyword">int</span>&amp; count) : <span class="built_in">count_</span>(count) &#123;&#125;    <span class="function"><span class="keyword">void</span> <span class="title">operator</span><span class="params">()</span><span class="params">(<span class="keyword">int</span> val)</span>    </span>&#123;        <span class="keyword">if</span> (!(val &amp; <span class="number">1</span>))               &#123;            ++ count_;        &#125;    &#125;&#125;;</span><br><span class="line">	std::vector&lt;<span class="keyword">int</span>&gt; v = &#123; <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span> &#125;;</span><br><span class="line">	<span class="keyword">int</span> even_count = <span class="number">0</span>;for_each(v.<span class="built_in">begin</span>(), v.<span class="built_in">end</span>(), <span class="built_in">CountEven</span>(even_count));std::cout &lt;&lt; <span class="string">&quot;The number of even is &quot;</span> &lt;&lt; even_count &lt;&lt; std::endl;</span><br></pre></td></tr></table></figure>
-<p>这样写既烦琐又容易出错。有了 lambda 表达式以后，我们可以使用真正的闭包概念来替换掉这里的仿函数，代码如下：</p>
+<p>这样写既烦琐又容易出错。有了 lambda
+表达式以后，我们可以使用真正的闭包概念来替换掉这里的仿函数，代码如下：</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">std::vector&lt;<span class="keyword">int</span>&gt; v = &#123; <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span> &#125;;</span><br><span class="line"><span class="keyword">int</span> even_count = <span class="number">0</span>;</span><br><span class="line">for_each( v.<span class="built_in">begin</span>(), v.<span class="built_in">end</span>(), [&amp;even_count](<span class="keyword">int</span> val)        &#123;            <span class="keyword">if</span> (!(val &amp; <span class="number">1</span>))              &#123;                ++ even_count;            &#125;        &#125;);</span><br><span class="line">std::cout &lt;&lt; <span class="string">&quot;The number of even is &quot;</span> &lt;&lt; even_count &lt;&lt; std::endl;</span><br></pre></td></tr></table></figure>
-<p>lambda 表达式的价值在于，就地封装短小的功能闭包，可以极其方便地表达出我们希望执行的具体操作，并让上下文结合得更加紧密。</p>
+<p>lambda
+表达式的价值在于，就地封装短小的功能闭包，可以极其方便地表达出我们希望执行的具体操作，并让上下文结合得更加紧密。</p>
 <p>​</p>
 
     </div>

@@ -30,7 +30,7 @@
 <meta property="og:description" content="geeksforgeeks.org NPM (Node Package Manager) is the default package manager employed in JavaScript runtime environment in Node.js. It has a very frequently used command npm install [Package Name] –sav">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2021-05-19T12:10:00.000Z">
-<meta property="article:modified_time" content="2021-08-06T16:03:57.960Z">
+<meta property="article:modified_time" content="2021-08-06T16:03:57.000Z">
 <meta property="article:author" content="Liewzheng">
 <meta property="article:tag" content="node">
 <meta property="article:tag" content="Nodejs">
@@ -168,7 +168,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">119</span>
+          <span class="site-state-item-count">124</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -179,7 +179,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">222</span>
+        <span class="site-state-item-count">230</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -279,16 +279,37 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <p><a target="_blank" rel="noopener" href="https://www.geeksforgeeks.org/what-is-the-meaning-of-save-for-npm-install/">geeksforgeeks.org</a></p>
-<p><strong><a target="_blank" rel="noopener" href="https://www.geeksforgeeks.org/node-js-npm-node-package-manager/">NPM (Node Package Manager)</a></strong> is the default package manager employed in JavaScript runtime environment in Node.js. It has a very frequently used command <strong>npm install [Package Name] –save</strong>. But the fact is there is no difference between <strong>npm install [Package Name]</strong> and <strong>npm install [Package Name] –save</strong> in the later version after npm 5.0.0 onwards.</p>
-<p>Before npm 5.0.0, it was necessary to add <code>--save</code> after package name because it will save the installed package to package.json file in the dependency section. If you are using a recent version of npm save yourself from unnecessary typing and use <strong>npm install [Package Name]</strong> instead of <strong>npm install [Package Name] <code>--save</code></strong> by default it will add the installed package to the dependency list in the package.json file.</p>
+        <p><a
+target="_blank" rel="noopener" href="https://www.geeksforgeeks.org/what-is-the-meaning-of-save-for-npm-install/">geeksforgeeks.org</a></p>
+<p><strong><a
+target="_blank" rel="noopener" href="https://www.geeksforgeeks.org/node-js-npm-node-package-manager/">NPM
+(Node Package Manager)</a></strong> is the default package manager
+employed in JavaScript runtime environment in Node.js. It has a very
+frequently used command <strong>npm install [Package Name]
+–save</strong>. But the fact is there is no difference between
+<strong>npm install [Package Name]</strong> and <strong>npm install
+[Package Name] –save</strong> in the later version after npm 5.0.0
+onwards.</p>
+<p>Before npm 5.0.0, it was necessary to add <code>--save</code> after
+package name because it will save the installed package to package.json
+file in the dependency section. If you are using a recent version of npm
+save yourself from unnecessary typing and use <strong>npm install
+[Package Name]</strong> instead of <strong>npm install [Package Name]
+<code>--save</code></strong> by default it will add the installed
+package to the dependency list in the package.json file.</p>
 <p><strong>NPM has several commands which are listed below:</strong></p>
 <ol type="1">
 <li><p>–save or -S:</p>
-<p>When the following command is used with npm install this will save all your installed core packages into the dependency section in the package.json file. Core dependencies are those packages without which your application will not give desired results. But as mentioned earlier, it is an unnecessary feature in the npm 5.0.0 version onwards.</p>
+<p>When the following command is used with npm install this will save
+all your installed core packages into the dependency section in the
+package.json file. Core dependencies are those packages without which
+your application will not give desired results. But as mentioned
+earlier, it is an unnecessary feature in the npm 5.0.0 version
+onwards.</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install --save</span><br></pre></td></tr></table></figure></li>
 <li><p>–save-prod or -P:</p>
-<p>The following command is introduced in the later version of npm it will perform the same task as the</p>
+<p>The following command is introduced in the later version of npm it
+will perform the same task as the</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">--save</span><br></pre></td></tr></table></figure>
 <p>command unless any other command such as</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-D</span><br></pre></td></tr></table></figure>
@@ -301,26 +322,39 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">--save-dev</span><br></pre></td></tr></table></figure>
 <p>or</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-D</span><br></pre></td></tr></table></figure>
-<p>command your installed packages will be added to devDependency section of the package.json file. Development dependencies are those packages which only meant for development purpose it will not affect the application’s result.</p>
+<p>command your installed packages will be added to devDependency
+section of the package.json file. Development dependencies are those
+packages which only meant for development purpose it will not affect the
+application’s result.</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install --save-dev</span><br></pre></td></tr></table></figure></li>
 <li><p>–save-optional or -O:</p>
-<p>When this command is used the install the that packages will be listed under the optional Dependency section of the package.json file. Optional dependencies are those packages which are only used when a particular feature of the application is used and will not be required if that functionality isn’t used.</p>
+<p>When this command is used the install the that packages will be
+listed under the optional Dependency section of the package.json file.
+Optional dependencies are those packages which are only used when a
+particular feature of the application is used and will not be required
+if that functionality isn’t used.</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install --save-optional</span><br></pre></td></tr></table></figure></li>
 <li><p>–no-save:</p>
-<p>When this command is used with npm install it will not allow the installed packages from being saved into the dependency section.</p>
+<p>When this command is used with npm install it will not allow the
+installed packages from being saved into the dependency section.</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install --no-save</span><br></pre></td></tr></table></figure></li>
 </ol>
-<p><strong>Note:</strong> NPM provides two additional options to save dependencies into package.json file.</p>
+<p><strong>Note:</strong> NPM provides two additional options to save
+dependencies into package.json file.</p>
 <ol type="1">
 <li><p>–save-exact or -E:</p>
-<p>This is an additional or optional command provided by the npm that will save the exact version of the installed packages which are configured at the time of development. It will not download the dependencies from npm’s default server range operator.</p>
+<p>This is an additional or optional command provided by the npm that
+will save the exact version of the installed packages which are
+configured at the time of development. It will not download the
+dependencies from npm’s default server range operator.</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install --save-exact</span><br></pre></td></tr></table></figure></li>
 <li><p>–save-bundle or -B:</p>
 <p>The following command is also an optional command when</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">--save-bundle</span><br></pre></td></tr></table></figure>
 <p>or</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-B</span><br></pre></td></tr></table></figure>
-<p>is used. This will also add the saved dependencies under the bundleDependency list.</p>
+<p>is used. This will also add the saved dependencies under the
+bundleDependency list.</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install --save-bundle</span><br></pre></td></tr></table></figure></li>
 </ol>
 <p>​</p>

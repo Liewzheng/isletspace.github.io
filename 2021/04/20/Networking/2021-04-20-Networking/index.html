@@ -34,7 +34,7 @@
 <meta property="og:image" content="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/04/image-20210414100053078.png">
 <meta property="og:image" content="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/04/image-20210423135807684.png">
 <meta property="article:published_time" content="2021-04-20T15:58:32.000Z">
-<meta property="article:modified_time" content="2021-04-25T16:14:57.310Z">
+<meta property="article:modified_time" content="2021-04-25T16:14:57.000Z">
 <meta property="article:author" content="Liewzheng">
 <meta property="article:tag" content="Web">
 <meta property="article:tag" content="CDN">
@@ -173,7 +173,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">119</span>
+          <span class="site-state-item-count">124</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -184,7 +184,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">222</span>
+        <span class="site-state-item-count">230</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -286,15 +286,21 @@
     <div class="post-body" itemprop="articleBody">
         <h3 id="cdn">CDN</h3>
 <blockquote>
-<p><em>内容分发网络（Content Delivery Network，CDN）是建立并覆盖在承载网上，由不同区域的服务器组成的分布式网络。将源站资源缓存到全国各地的边缘服务器，供用户就近获取，降低源站压力。</em></p>
+<p><em>内容分发网络（Content Delivery
+Network，CDN）是建立并覆盖在承载网上，由不同区域的服务器组成的分布式网络。将源站资源缓存到全国各地的边缘服务器，供用户就近获取，降低源站压力。</em></p>
 <p>——阿里云</p>
-<p><em>CDN是构建在现有网络基础之上的智能虚拟网络，依靠 <strong>部署在各地的边缘服务器</strong>，通过中心平台的负载均衡、内容分发、调度等功能模块，使用户就近获取所需内容，降低网络拥塞，提高用户访问响应速度和命中率。CDN的关键技术主要有内容存储和分发技术。</em></p>
+<p><em>CDN是构建在现有网络基础之上的智能虚拟网络，依靠
+<strong>部署在各地的边缘服务器</strong>，通过中心平台的负载均衡、内容分发、调度等功能模块，使用户就近获取所需内容，降低网络拥塞，提高用户访问响应速度和命中率。CDN的关键技术主要有内容存储和分发技术。</em></p>
 <p>——百度百科</p>
 </blockquote>
-<p>个人理解，实际部署CDN中最重要的概念即 <strong>节点</strong>、<strong>缓存服务器</strong> 和 <strong>中心平台</strong>。</p>
+<p>个人理解，实际部署CDN中最重要的概念即
+<strong>节点</strong>、<strong>缓存服务器</strong> 和
+<strong>中心平台</strong>。</p>
 <ul>
 <li>节点是指在足够广的范围内识别出合适数量的网络拓扑节点，这些节点往往处在网络所及最远之处的各地，能够有效分摊用户访问对主干网络的压力；</li>
-<li>而缓存服务器即“部署在各地的边缘服务器”，是指能够 <strong>制定规则</strong> <strong>自动识别并缓存数据</strong> 以供用户快速访问，分担主干网络压力的实体。</li>
+<li>而缓存服务器即“部署在各地的边缘服务器”，是指能够
+<strong>制定规则</strong> <strong>自动识别并缓存数据</strong>
+以供用户快速访问，分担主干网络压力的实体。</li>
 <li>中心平台可以对缓存服务器实现负载均衡、内容分发和调度等功能。</li>
 </ul>
 <h4 id="工作原理">工作原理</h4>
@@ -305,7 +311,8 @@
 </li>
 <li>LDNS检查缓存中是否有<code>www.a.com</code>的IP地址记录。如果有，则直接返回给终端用户；如果没有，则向授权DNS查询。<br />
 </li>
-<li>当授权DNS解析<code>www.a.com</code>时，返回域名CNAME <code>www.a.tbcdn.com</code>对应IP地址。<br />
+<li>当授权DNS解析<code>www.a.com</code>时，返回域名CNAME
+<code>www.a.tbcdn.com</code>对应IP地址。<br />
 </li>
 <li>域名解析请求发送至阿里云DNS调度系统，并为请求分配最佳节点IP地址。</li>
 <li>LDNS获取DNS返回的解析IP地址。</li>
@@ -313,7 +320,8 @@
 <li>用户向获取的IP地址发起对该资源的访问请求。
 <ul>
 <li>如果该IP地址对应的节点已缓存该资源，则会将数据直接返回给用户，例如，图中步骤7和8，请求结束。</li>
-<li>如果该IP地址对应的节点未缓存该资源，则节点向源站发起对该资源的请求。获取资源后，结合用户自定义配置的缓存策略，将资源缓存至节点，例如，图中的北京节点，并返回给用户，请求结束。配置缓存策略的操作方法，请参见<a target="_blank" rel="noopener" href="https://help.aliyun.com/document_detail/27136.htm?spm=a2c4g.11186623.2.3.694925b3RabzbR#concept-f24-32d-xdb">缓存配置</a>。</li>
+<li>如果该IP地址对应的节点未缓存该资源，则节点向源站发起对该资源的请求。获取资源后，结合用户自定义配置的缓存策略，将资源缓存至节点，例如，图中的北京节点，并返回给用户，请求结束。配置缓存策略的操作方法，请参见<a
+target="_blank" rel="noopener" href="https://help.aliyun.com/document_detail/27136.htm?spm=a2c4g.11186623.2.3.694925b3RabzbR#concept-f24-32d-xdb">缓存配置</a>。</li>
 </ul></li>
 </ol>
 <p><img src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/04/p4886.png" alt="img" style="zoom: 67%;" /></p>
@@ -321,62 +329,128 @@
 </blockquote>
 <h4 id="应用场景">应用场景</h4>
 <h5 id="场景概述">场景概述</h5>
-<p>CDN的业务使用场景分为 <strong>静态内容加速</strong>、<strong>动态内容加速</strong> 和 <strong>安全加速</strong> 。</p>
+<p>CDN的业务使用场景分为
+<strong>静态内容加速</strong>、<strong>动态内容加速</strong> 和
+<strong>安全加速</strong> 。</p>
 <blockquote>
 <p><strong>静态内容（静态资源）</strong></p>
 <p>静态内容是指在不同请求中访问到的数据都相同的静态文件。例如：图片、视频、网站中的文件（html、css、js）、软件安装包、apk文件、压缩包文件等。</p>
-<p>CDN加速的本质是 <strong>缓存加速</strong>。将您服务器上存储的静态内容缓存在阿里云CDN节点上，当您访问这些静态内容时，无需访问服务器源站，就近访问阿里云CDN节点即可获取相同内容。从而达到加速的效果，同时减轻服务器源站的压力。</p>
+<p>CDN加速的本质是
+<strong>缓存加速</strong>。将您服务器上存储的静态内容缓存在阿里云CDN节点上，当您访问这些静态内容时，无需访问服务器源站，就近访问阿里云CDN节点即可获取相同内容。从而达到加速的效果，同时减轻服务器源站的压力。</p>
 <p><strong>动态内容（动态资源）</strong></p>
 <p>动态内容是指在不同请求中访问到的数据不相同的动态内容。例如：网站中的文件（asp、jsp、php、perl、cgi）、API接口、数据库交互请求等。</p>
 <p><strong>当您访问这些动态内容时，每次都需要访问您的服务器，由服务器动态生成实时的数据并返回给您。</strong>因此CDN的缓存加速不适用于加速动态内容，CDN无法缓存实时变化的动态内容。对于动态内容请求，CDN节点只能转发回您的服务器源站，没有加速效果。</p>
-<p>如果您的网站或App应用有较多动态内容，例如需要对各种API接口进行加速，则需要使用 <a target="_blank" rel="noopener" href="https://www.alibabacloud.com/zh/product/dcdn">阿里云全站加速</a> 产品。全站加速能同时加速动态和静态内容，加速方式如下：</p>
+<p>如果您的网站或App应用有较多动态内容，例如需要对各种API接口进行加速，则需要使用
+<a
+target="_blank" rel="noopener" href="https://www.alibabacloud.com/zh/product/dcdn">阿里云全站加速</a>
+产品。全站加速能同时加速动态和静态内容，加速方式如下：</p>
 <ul>
 <li>静态内容使用CDN加速。</li>
-<li>动态内容通过阿里云的 <strong>路由优化</strong>、<strong>传输优化</strong> 等动态加速技术以最快的速度访问您的服务器源站获取数据。从而达到全站加速的效果。</li>
+<li>动态内容通过阿里云的
+<strong>路由优化</strong>、<strong>传输优化</strong>
+等动态加速技术以最快的速度访问您的服务器源站获取数据。从而达到全站加速的效果。</li>
 </ul>
 <p>——阿里云</p>
 </blockquote>
 <h5 id="全站加速">全站加速</h5>
 <blockquote>
-<p>全站加速（Dynamic Route for Content Delivery Network）是阿里云自主研发的融合了动态加速和静态加速技术的CDN产品。该产品一站式解决了页面动静态资源混杂、跨运营商、网络不稳定、单线源站、突发流量、网络拥塞等诸多因素导致的响应慢、丢包、服务不稳定的问题，提升全站性能和用户体验。</p>
+<p>全站加速（Dynamic Route for Content Delivery
+Network）是阿里云自主研发的融合了动态加速和静态加速技术的CDN产品。该产品一站式解决了页面动静态资源混杂、跨运营商、网络不稳定、单线源站、突发流量、网络拥塞等诸多因素导致的响应慢、丢包、服务不稳定的问题，提升全站性能和用户体验。</p>
 <p><strong>工作原理</strong></p>
 <p>阿里云全站加速通过智能路由区分客户请求内容，实现动静态加速。通过架构图，您可以了解全站加速的工作原理。</p>
 <p><img src="https://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/zh-CN/5931788951/p6063.png" style="zoom: 40%;" /></p>
 <ul>
 <li>智能区分动静态内容：域名接入阿里云全站加速后，通过域名访问的动静态内容将被智能识别并区分。</li>
-<li>动静态内容同时加速：静态内容使用阿里云CDN加速，缓存在CDN节点上，供您就近访问。动态内容通过 <strong>智能路由优化</strong>、<strong>协议优化</strong> 等动态加速技术快速回源获取。</li>
+<li>动静态内容同时加速：静态内容使用阿里云CDN加速，缓存在CDN节点上，供您就近访问。动态内容通过
+<strong>智能路由优化</strong>、<strong>协议优化</strong>
+等动态加速技术快速回源获取。</li>
 </ul>
 <p><strong>全站加速与CDN对比</strong></p>
 <p><img src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/04/image-20210414100053078.png" alt="image-20210414100053078" style="zoom: 80%;" /></p>
 </blockquote>
 <h3 id="ssh">SSH</h3>
-<p>SSH is a program for logging into a remote machine and for excuting commands on a remote machine.</p>
-<p>It's intended to provide secure encrypted communications between two untrusted hosts over and insecure network.</p>
-<p>X11 connections, arbitrary TCP ports and UNIX-domain sockets can also be forwarded over the secure channel.</p>
+<p>SSH is a program for logging into a remote machine and for excuting
+commands on a remote machine.</p>
+<p>It's intended to provide secure encrypted communications between two
+untrusted hosts over and insecure network.</p>
+<p>X11 connections, arbitrary TCP ports and UNIX-domain sockets can also
+be forwarded over the secure channel.</p>
 <h4 id="authentication">Authentication</h4>
 <p>The OpenSSH SSH client supports SSH protocol 2.</p>
-<p>Five available authentication methods: GSSAPI-based / host-based / public key / challenge-response and password.</p>
+<p>Five available authentication methods: GSSAPI-based / host-based /
+public key / challenge-response and password.</p>
 <h5 id="host-based">Host-based</h5>
-<p>If the machine the user logs in from is listed in <code>/etc/hosts.equiv</code> or <code>/etc/ssh/shosts.equiv</code> on the remote machine, the user is non-root and the user names are the same on both sides, or if the files <code>~/.rhosts</code> or <code>~/.shosts</code> exist in the user's home directory on the remote machine and contain a line containing the name of the client machine and the name of the user on that machine, the user is considered for login. Additionally, the server must be able to verify the client's host key (see the description of <code>/etc/ssh/ssh_known_hosts</code> and <code>~/.ssh/known_hosts</code>, below) for login to be permitted. This authentication method closes security holes due to IP spoofing, DNS spoofing, and routing spoofing.</p>
-<p>[<strong>Note to the administrator</strong>: <code>/etc/hosts.equiv</code>, <code>~/.rhosts</code>, and the rlogin/rsh protocol in general, are inherently insecure and should be disabled if security is desired.]</p>
+<p>If the machine the user logs in from is listed in
+<code>/etc/hosts.equiv</code> or <code>/etc/ssh/shosts.equiv</code> on
+the remote machine, the user is non-root and the user names are the same
+on both sides, or if the files <code>~/.rhosts</code> or
+<code>~/.shosts</code> exist in the user's home directory on the remote
+machine and contain a line containing the name of the client machine and
+the name of the user on that machine, the user is considered for login.
+Additionally, the server must be able to verify the client's host key
+(see the description of <code>/etc/ssh/ssh_known_hosts</code> and
+<code>~/.ssh/known_hosts</code>, below) for login to be permitted. This
+authentication method closes security holes due to IP spoofing, DNS
+spoofing, and routing spoofing.</p>
+<p>[<strong>Note to the administrator</strong>:
+<code>/etc/hosts.equiv</code>, <code>~/.rhosts</code>, and the
+rlogin/rsh protocol in general, are inherently insecure and should be
+disabled if security is desired.]</p>
 <h5 id="public-key">Public key</h5>
-<p>The scheme is based on public-key cryptography, using cryptosystems where encryption and decryption are done using separate keys, and it is unfeasible to derive the decryption key from the encryption key. The idea is that each user creates a public/private key pair for authentication purposes.</p>
-<p><strong><em>The server knows the public key, and only the user knows the private key.</em></strong> ssh implements public key authentication protocol automatically, using one of the <strong>DSA</strong>, <strong>ECDSA</strong>, <strong>Ed25519</strong> or <strong>RSA</strong> algorithms. The HISTORY section of ssl(8) <a target="_blank" rel="noopener" href="http://www.openbsd.org/cgi-bin/man.cgi?query=ssl&amp;sektion=8#HISTORY">[i]</a> on non-OpenBSD systems contains a brief discussion of the DSA and RSA algorithms.</p>
-<p>The file <code>~/.ssh/authorized_keys</code> lists the public keys that are permitted for logging in. When the user logs in, the ssh program tells the server which key pair it would like to use for authentication. The client proves that it has access to the private key and the server checks that the corresponding public key is authorized to accept the account.</p>
-<p>The user should then <mark>copy the public key to <code>~/.ssh/authorized_keys</code> in his/her home directory on the remote machine.</mark> The authorized_keys file corresponds to the conventional <code>~/.rhosts</code> file, and has one key per line, though the lines can be very long. After this, the user can log in without giving the password.</p>
+<p>The scheme is based on public-key cryptography, using cryptosystems
+where encryption and decryption are done using separate keys, and it is
+unfeasible to derive the decryption key from the encryption key. The
+idea is that each user creates a public/private key pair for
+authentication purposes.</p>
+<p><strong><em>The server knows the public key, and only the user knows
+the private key.</em></strong> ssh implements public key authentication
+protocol automatically, using one of the <strong>DSA</strong>,
+<strong>ECDSA</strong>, <strong>Ed25519</strong> or <strong>RSA</strong>
+algorithms. The HISTORY section of ssl(8) <a
+target="_blank" rel="noopener" href="http://www.openbsd.org/cgi-bin/man.cgi?query=ssl&amp;sektion=8#HISTORY">[i]</a>
+on non-OpenBSD systems contains a brief discussion of the DSA and RSA
+algorithms.</p>
+<p>The file <code>~/.ssh/authorized_keys</code> lists the public keys
+that are permitted for logging in. When the user logs in, the ssh
+program tells the server which key pair it would like to use for
+authentication. The client proves that it has access to the private key
+and the server checks that the corresponding public key is authorized to
+accept the account.</p>
+<p>The user should then <mark>copy the public key to
+<code>~/.ssh/authorized_keys</code> in his/her home directory on the
+remote machine.</mark> The authorized_keys file corresponds to the
+conventional <code>~/.rhosts</code> file, and has one key per line,
+though the lines can be very long. After this, the user can log in
+without giving the password.</p>
 <h6 id="ssh-keygen">ssh-keygen</h6>
 <p>To generate a public key for ssh, we need to use:</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh-kegen -t rsa</span><br></pre></td></tr></table></figure>
-<p>The terminal will ask if <code>/root/.ssh/id_rsa</code> the file you save the key:</p>
+<p>The terminal will ask if <code>/root/.ssh/id_rsa</code> the file you
+save the key:</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Generating public&#x2F;private rsa key pair.</span><br><span class="line">Enter file in which to save the key (&#x2F;root&#x2F;.ssh&#x2F;id_rsa):</span><br></pre></td></tr></table></figure>
-<p>The terminal will require you to enter the <em>passphrase</em> twice.</p>
+<p>The terminal will require you to enter the <em>passphrase</em>
+twice.</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Enter passphrase (empty for no passphrase):</span><br><span class="line">Enter same passphrase again:</span><br></pre></td></tr></table></figure>
-<p><strong><em>Identification</em></strong> is the private key used by the server(the remote machine). And the <strong><em>public key</em></strong> is generated for the client to authenticate while logging in the server.</p>
+<p><strong><em>Identification</em></strong> is the private key used by
+the server(the remote machine). And the <strong><em>public
+key</em></strong> is generated for the client to authenticate while
+logging in the server.</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Your identification has been saved in &#x2F;root&#x2F;.ssh&#x2F;id_rsa</span><br><span class="line">Your public key has been saved in &#x2F;root&#x2F;.ssh&#x2F;id_rsa.pub</span><br><span class="line">The key fingerprint is:</span><br><span class="line">SHA256: *******</span><br><span class="line">The key&#39;s randomart imge is:</span><br></pre></td></tr></table></figure>
 <blockquote>
 <p>The user creates his/her key pair by running ssh-keygen(1).</p>
-<p>This stores the <strong><em>private key</em></strong> in <code>~/.ssh/id_dsa</code> (DSA), <code>~/.ssh/id_ecdsa</code> (ECDSA), <code>~/.ssh/id_ecdsa_sk</code> (authenticator-hosted ECDSA), <code>~/.ssh/id_ed25519</code> (Ed25519), <code>~/.ssh/id_ed25519_sk</code> (authenticator-hosted Ed25519), or <code>~/.ssh/id_rsa</code> (RSA) .</p>
-<p>The the <strong><em>public key</em></strong> stores in <code>~/.ssh/id_dsa.pub</code> (DSA), <code>~/.ssh/id_ecdsa.pub</code> (ECDSA), <code>~/.ssh/id_ecdsa_sk.pub</code> (authenticator-hosted ECDSA), <code>~/.ssh/id_ed25519.pub</code> (Ed25519), <code>~/.ssh/id_ed25519_sk.pub</code> (authenticator-hosted Ed25519), or <code>~/.ssh/id_rsa.pub</code> (RSA) in the <strong>user's home directory</strong>.</p>
+<p>This stores the <strong><em>private key</em></strong> in
+<code>~/.ssh/id_dsa</code> (DSA), <code>~/.ssh/id_ecdsa</code> (ECDSA),
+<code>~/.ssh/id_ecdsa_sk</code> (authenticator-hosted ECDSA),
+<code>~/.ssh/id_ed25519</code> (Ed25519),
+<code>~/.ssh/id_ed25519_sk</code> (authenticator-hosted Ed25519), or
+<code>~/.ssh/id_rsa</code> (RSA) .</p>
+<p>The the <strong><em>public key</em></strong> stores in
+<code>~/.ssh/id_dsa.pub</code> (DSA), <code>~/.ssh/id_ecdsa.pub</code>
+(ECDSA), <code>~/.ssh/id_ecdsa_sk.pub</code> (authenticator-hosted
+ECDSA), <code>~/.ssh/id_ed25519.pub</code> (Ed25519),
+<code>~/.ssh/id_ed25519_sk.pub</code> (authenticator-hosted Ed25519), or
+<code>~/.ssh/id_rsa.pub</code> (RSA) in the <strong>user's home
+directory</strong>.</p>
 </blockquote>
 <p>Check and copy your <code>.pub</code> file to the local computer.</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> ~/.ssh/</span><br><span class="line">vim id_rsa.pub</span><br></pre></td></tr></table></figure>
@@ -385,57 +459,100 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chmod 0600 ~/.ssh/id_rsa</span><br></pre></td></tr></table></figure>
 <h4 id="login-format">Login Format</h4>
 <p><code>user@hostname</code> : <code>root@qq.com</code></p>
-<p><code>ssh://root@hostname:port</code> : <code>ssh://root@qq.com:666</code></p>
+<p><code>ssh://root@hostname:port</code> :
+<code>ssh://root@qq.com:666</code></p>
 <h3 id="ssl">SSL</h3>
-<p>基于 SSL 证书，可将站点由 HTTP（Hypertext Transfer Protocol）切换到 HTTPS（Hyper Text Transfer Protocol over Secure Socket Layer），即基于安全套接字层（SSL）进行安全数据传输的加密版 HTTP 协议。</p>
+<p>基于 SSL 证书，可将站点由 HTTP（Hypertext Transfer Protocol）切换到
+HTTPS（Hyper Text Transfer Protocol over Secure Socket
+Layer），即基于安全套接字层（SSL）进行安全数据传输的加密版 HTTP
+协议。</p>
 <h4 id="ssl优势">SSL优势</h4>
 <ul>
-<li><p><strong>防流量劫持：</strong>全站 HTTPS 是根治运营商、中间人流量劫持的解决方案，不仅可以杜绝网页中显示的小广告，更可以保护用户隐私安全。</p></li>
-<li><p><strong>提升搜索排名：</strong>采用 HTTPS 可以帮忙搜索排名的提升，提高站点的可信度和品牌形象。</p></li>
-<li><p><strong>杜绝钓鱼网站：</strong>HTTPS 地址栏绿色图标可以帮助用户识别出钓鱼网站，保障用户和企业的利益不受损害，增强用户信任。</p></li>
+<li><p><strong>防流量劫持：</strong>全站 HTTPS
+是根治运营商、中间人流量劫持的解决方案，不仅可以杜绝网页中显示的小广告，更可以保护用户隐私安全。</p></li>
+<li><p><strong>提升搜索排名：</strong>采用 HTTPS
+可以帮忙搜索排名的提升，提高站点的可信度和品牌形象。</p></li>
+<li><p><strong>杜绝钓鱼网站：</strong>HTTPS
+地址栏绿色图标可以帮助用户识别出钓鱼网站，保障用户和企业的利益不受损害，增强用户信任。</p></li>
 </ul>
 <h4 id="ssl证书签发">SSL证书签发</h4>
 <p>域名型证书由以下品牌提供自动审核认证，快速签发。</p>
 <ul>
-<li><strong>SecureSite</strong>：全球最大的信息安全厂商和服务商，最权威的数字证书颁发机构，为企业、个人用户和服务供应商提供广泛的内容和网络安全解决方案，全球500强中有93%选择了 VeriSign SSL 数字证书，目前均由 SecureSite 提供服务。</li>
-<li><strong>TrustAsia®（亚洲诚信）</strong>：亚数信息科技（上海）有限公司应用于信息安全领域的品牌，是 SecureSite 的白金合作伙伴，专业为企业提供包含数字证书在内的所有网络安全服务。</li>
-<li><strong>GeoTrust</strong>：GeoTrust 是全球第二大数字证书颁发机构（CA），也是身份认证和信任认证领域的领导者，该公司各种先进的技术使得任何大小的机构和公司都能安全地低成本地部署 SSL 数字证书和实现各种身份认证。从2001年成立到2006年占领全球市场25%的市场份额，VeriSign 于2006年5月 - 2006年9月以1.25亿美元收购 GeoTrust，目前也同为 SecureSite 旗下 SSL 证书的<strong>性价比高</strong>的品牌。</li>
-<li><strong>GlobalSign</strong>： GlobalSign 成立于1996年，是一家声誉卓著，备受信赖的 CA 中s心和 SSL 数字证书提供商，在全球总计颁发超过2000万张数字证书。GlobalSign 的专业实力获得中国网络市场众多服务器、域名注册商、系统服务供应商的青睐，成为其数字证书服务的合作伙伴。</li>
-<li><strong>WoTrus（沃通）</strong>：沃通电子认证服务有限公司（WoTrus CA Limited）是同时获得国内电子认证服务许可证（由工信部颁发）和通过国际认证的证书颁发机构（CA）。专业为企业提供权威第三方数字身份认证服务，颁发全球信任的各种数字证书产品。</li>
-<li><strong>DNSPod 品牌国密标准（SM2）证书</strong>：DNSPod 为腾讯云自有品牌，采用国密标准，并且是纯国产数字证书，由国内知名 CA 机构提供基础设置支撑，敏捷高效，同时满足国家监管需求。</li>
+<li><strong>SecureSite</strong>：全球最大的信息安全厂商和服务商，最权威的数字证书颁发机构，为企业、个人用户和服务供应商提供广泛的内容和网络安全解决方案，全球500强中有93%选择了
+VeriSign SSL 数字证书，目前均由 SecureSite 提供服务。</li>
+<li><strong>TrustAsia®（亚洲诚信）</strong>：亚数信息科技（上海）有限公司应用于信息安全领域的品牌，是
+SecureSite
+的白金合作伙伴，专业为企业提供包含数字证书在内的所有网络安全服务。</li>
+<li><strong>GeoTrust</strong>：GeoTrust
+是全球第二大数字证书颁发机构（CA），也是身份认证和信任认证领域的领导者，该公司各种先进的技术使得任何大小的机构和公司都能安全地低成本地部署
+SSL
+数字证书和实现各种身份认证。从2001年成立到2006年占领全球市场25%的市场份额，VeriSign
+于2006年5月 - 2006年9月以1.25亿美元收购 GeoTrust，目前也同为 SecureSite
+旗下 SSL 证书的<strong>性价比高</strong>的品牌。</li>
+<li><strong>GlobalSign</strong>： GlobalSign
+成立于1996年，是一家声誉卓著，备受信赖的 CA 中s心和 SSL
+数字证书提供商，在全球总计颁发超过2000万张数字证书。GlobalSign
+的专业实力获得中国网络市场众多服务器、域名注册商、系统服务供应商的青睐，成为其数字证书服务的合作伙伴。</li>
+<li><strong>WoTrus（沃通）</strong>：沃通电子认证服务有限公司（WoTrus CA
+Limited）是同时获得国内电子认证服务许可证（由工信部颁发）和通过国际认证的证书颁发机构（CA）。专业为企业提供权威第三方数字身份认证服务，颁发全球信任的各种数字证书产品。</li>
+<li><strong>DNSPod 品牌国密标准（SM2）证书</strong>：DNSPod
+为腾讯云自有品牌，采用国密标准，并且是纯国产数字证书，由国内知名 CA
+机构提供基础设置支撑，敏捷高效，同时满足国家监管需求。</li>
 </ul>
 <h4 id="ssl证书品牌差异">SSL证书品牌差异</h4>
 <p>不同品牌的证书在浏览器地址栏、加密强度、赔付保障上均存在差异，最重要的差异点在于根证书。</p>
-<p>例如，GeoTrust 通配符是 GeoTrust 根证书签发的，而 SecureSite 通配符是 SecureSite 根证书签发的。<mark>Digicert 根证书可以兼容市面上所有的浏览器，对移动端的支持也是最好的</mark>，而 Trustasia 通配符也是 Digicert 根证书签发的，GlobalSign 通配符是 GlobalSign 的根证书签发的，DNSPod 是由 Wotrus 的根证书签发的，Wotrus 通配符是 Sectigo 的根证书签发的。</p>
+<p>例如，GeoTrust 通配符是 GeoTrust 根证书签发的，而 SecureSite 通配符是
+SecureSite 根证书签发的。<mark>Digicert
+根证书可以兼容市面上所有的浏览器，对移动端的支持也是最好的</mark>，而
+Trustasia 通配符也是 Digicert 根证书签发的，GlobalSign 通配符是
+GlobalSign 的根证书签发的，DNSPod 是由 Wotrus 的根证书签发的，Wotrus
+通配符是 Sectigo 的根证书签发的。</p>
 <blockquote>
 <p><strong>通配符：</strong></p>
 <p><strong>根证书：</strong></p>
 </blockquote>
 <p>单纯从技术角度，SecureSite（原 Verisign）和 GeoTrust 的区别如下：</p>
 <ul>
-<li>算法支持上 SecureSite（支持 RSA、DSA、ECC 三种算法）优于 GeoTrust（支持 RSA、DSA 两种算法）。</li>
-<li>兼容性 SecureSite 优于 GeoTrust，SecureSite 可兼容市面上所有的浏览器，对移动端的支持也是极好的。</li>
+<li>算法支持上 SecureSite（支持 RSA、DSA、ECC 三种算法）优于
+GeoTrust（支持 RSA、DSA 两种算法）。</li>
+<li>兼容性 SecureSite 优于 GeoTrust，SecureSite
+可兼容市面上所有的浏览器，对移动端的支持也是极好的。</li>
 <li>OCSP 响应速度上 SecureSite 优于 GeoTrust。</li>
-<li>CA 安全性方面 SecureSite 优于 GeoTrust，SecureSite 是国际知名安全厂商，CA 的安全级别也是国际第一的安全系数。</li>
-<li>SecureSite 证书除实现加密传输以外，还另外有恶意软件扫描和漏洞评估的附加功能。</li>
-<li>SecureSite 对证书有商业保险赔付保障，金额最高为175万美金，GeoTrust 最高为150万美金。</li>
+<li>CA 安全性方面 SecureSite 优于 GeoTrust，SecureSite
+是国际知名安全厂商，CA 的安全级别也是国际第一的安全系数。</li>
+<li>SecureSite
+证书除实现加密传输以外，还另外有恶意软件扫描和漏洞评估的附加功能。</li>
+<li>SecureSite 对证书有商业保险赔付保障，金额最高为175万美金，GeoTrust
+最高为150万美金。</li>
 </ul>
 <h4 id="ssl证书格式">SSL证书格式</h4>
-<p>SSL证书分为 <code>pem</code> 和 <code>key</code> 这两种格式，分别存储的是 <strong>证书base64加密</strong> 和 <strong>私钥base64加密</strong> 还有 格式分割符，也就是说pem存的是证书，key 存的是私钥。</p>
+<p>SSL证书分为 <code>pem</code> 和 <code>key</code>
+这两种格式，分别存储的是 <strong>证书base64加密</strong> 和
+<strong>私钥base64加密</strong> 还有
+格式分割符，也就是说pem存的是证书，key 存的是私钥。</p>
 <p>如pem中的内容：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">-----BEGIN CERTIFICATE-----</span><br><span class="line">略</span><br><span class="line">-----END CERTIFICATE-----</span><br></pre></td></tr></table></figure>
-<p><code>-----BEGIN CERTIFICATE-----</code> 和 <code>-----END CERTIFICATE-----</code> 为分割分，表示在这两个中间存的是证书的base64编码</p>
+<p><code>-----BEGIN CERTIFICATE-----</code> 和
+<code>-----END CERTIFICATE-----</code>
+为分割分，表示在这两个中间存的是证书的base64编码</p>
 <p>备注：</p>
 <p>如key中的内容：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">-----BEGIN RSA PRIVATE KEY-----</span><br><span class="line">略</span><br><span class="line">-----END RSA PRIVATE KEY-----</span><br></pre></td></tr></table></figure>
-<p><code>-----BEGIN RSA PRIVATE KEY-----</code> 和 <code>-----END RSA PRIVATE KEY-----</code> 为分割符号，表示在这两个中间存的是私钥的base64编码</p>
-<p>备注：CERTIFICATE 单词代表证书的意思；PRIVATE KEY 单词代表 私钥、秘钥的意思。</p>
+<p><code>-----BEGIN RSA PRIVATE KEY-----</code> 和
+<code>-----END RSA PRIVATE KEY-----</code>
+为分割符号，表示在这两个中间存的是私钥的base64编码</p>
+<p>备注：CERTIFICATE 单词代表证书的意思；PRIVATE KEY 单词代表
+私钥、秘钥的意思。</p>
 <h4 id="ssl证书配置">SSL证书配置</h4>
 <p>以下以“阿里云OSS"及“腾讯云COS”的对象存储（bucket）与域名（name）绑定过程中，对SSL证书的配置为例，进行解释和说明，不对详细步骤进行描述，仅解释原理。</p>
 <h5 id="域名及bucket绑定">域名及Bucket绑定</h5>
 <p>阿里云及腾讯云都可以申请对象存储和域名，所申请的域名按正规流程均需要经过挂载至某个服务器进行备案（国内公安要求）后才可以与对象存储绑定，进而颁发证书给挂载至对象存储的域名。</p>
 <h5 id="ssl证书申请及配置">SSL证书申请及配置</h5>
-<p>若域名互相绑定后未配置SSL则会导致https访问失败，配置SSL需要给自己的域名申请免费SSL证书，阿里云及腾讯云都可以免费申请为期一年的证书，按流程填写信息并等待审核下发即可；获得证书后需要选择“其他”类型的证书进行下载。证书中需要的 <strong>公钥</strong> 即 <code>.pem</code> 格式文件，而 <strong>私钥</strong> 即 <code>.key</code> 格式文件，分别填写到Bucket的域名管理页面内下的 <strong>证书上传</strong> 中。</p>
+<p>若域名互相绑定后未配置SSL则会导致https访问失败，配置SSL需要给自己的域名申请免费SSL证书，阿里云及腾讯云都可以免费申请为期一年的证书，按流程填写信息并等待审核下发即可；获得证书后需要选择“其他”类型的证书进行下载。证书中需要的
+<strong>公钥</strong> 即 <code>.pem</code> 格式文件，而
+<strong>私钥</strong> 即 <code>.key</code>
+格式文件，分别填写到Bucket的域名管理页面内下的 <strong>证书上传</strong>
+中。</p>
 <p>流程大致如下：</p>
 <pre class="mermaid">graph LR
     开始 --> Bucket申请--可选CDN加速开启--> 获得Bucket域名或CDN加速域名 --CNAME解析-->域名绑定-->结束
@@ -449,18 +566,21 @@
 <ul>
 <li>Client向Server <mark>发去SYN标志</mark></li>
 <li>Server收到后向Client <mark>回复SYN和ACK标志</mark></li>
-<li>Client收到由Server发过来的SYN和ACK后 <mark>回复一个ACK标志</mark></li>
+<li>Client收到由Server发过来的SYN和ACK后
+<mark>回复一个ACK标志</mark></li>
 </ul>
 <p>以上即为三次握手协议的主要流程，其实只有Server收到该ACK时，才标志着双方建立连接。以下介绍几种”意外“情况。</p>
 <p><strong>情况一：</strong>当Client第一次收到SYN和ACK时，Client就单方面“认为”自己已经和Server建立连接了。但网络通信时并不能百分百保证可靠，假如Client发了ACK，但Server并未收到，则Server就并不”认为“自己与Client建立了连接。Server和Client都有自己的定时器，在发送数据之后就开始计时，不管如何，此时Client都已经发了ACK了，“觉得”自己已经建立了连接，而Server不然，Server就会再次发送SYN和ACK以请求Client的确认。</p>
 <p><strong>情况二：</strong>多个Client向Server同时发送SYN请求，Server收到信息后立即回复SYN和ACK，并且需要为每一个Client设立一个计时器以等待他们的ACK信息。假如此刻Client的数量非常多且每一个都发送了一次SYN请求，则Server的计时器则会立刻被用光，导致任何正常请求都无法连接。（针对此种攻击方式，提出了二次SYN当成一次SYN的防攻击手段，即Client需要连续发两次SYN在标明自己是真的“有意”连接，不是恶意发送攻击的，但此类二次验证方式比较简单，仍然容易被模仿）</p>
 <h5 id="icmp-flood">ICMP Flood</h5>
 <p>ICMP也算是网络层协议的一员，封装在IP协议中，是IP协议的附属协议，可以直接被用户进程直接使用。</p>
-<p>此处的ICMP Flood指的是利用集群设备在同一时间使用 ping 功能对目标主机发起请求，强制主机进行回复，致使目标主机瘫痪。</p>
+<p>此处的ICMP Flood指的是利用集群设备在同一时间使用 ping
+功能对目标主机发起请求，强制主机进行回复，致使目标主机瘫痪。</p>
 <p>以下为ping的英文解释</p>
 <blockquote>
 <p><em>PING - Send ICMP ECHO_REQUEST to network hosts</em></p>
-<p><em>Ping uses the ICMP protocol's mandatory ECHO_REQUEST datagram to elicit an ICMP ECHO_RESPONSE from a host or gateway.</em></p>
+<p><em>Ping uses the ICMP protocol's mandatory ECHO_REQUEST datagram to
+elicit an ICMP ECHO_RESPONSE from a host or gateway.</em></p>
 <p>—— from 'manual of ping' in linux</p>
 </blockquote>
 <h3 id="选择数据库服务器的五个原则">选择数据库服务器的五个原则</h3>
@@ -481,23 +601,48 @@
 <p><strong>结论：</strong>尽量选择支持系统多的服务器，因为服务器兼容的系统越多，你就可以拥有更大选择空间。</p>
 <p><strong>总结：</strong>首先数据库服务器的性能要求很高，所以在CPU，内存，以及硬盘等方面都有很高的要求，其次是存储，存储要具备良好的稳定性，来满足长期运作的服务器随时读取写入等操作不会出现错误。最后希望通过总结的以上五点，帮助你挑选你所需要的数据库服务器。</p>
 <h3 id="服务器产品结构">服务器产品结构</h3>
-<p>U是厚度要求，是一种表示服务器外部尺寸的单位，是unit的缩略语，详细的尺寸由作为业界团体的美国电子工业协会（EIA）所决定。 <code>1U=4.445cm</code> ， 1U至7U的产品结构是指外形满足EIA规格、厚度为4.445cm-31.115cm的服务器。</p>
+<p>U是厚度要求，是一种表示服务器外部尺寸的单位，是unit的缩略语，详细的尺寸由作为业界团体的美国电子工业协会（EIA）所决定。
+<code>1U=4.445cm</code> ，
+1U至7U的产品结构是指外形满足EIA规格、厚度为4.445cm-31.115cm的服务器。</p>
 <p>多少U是指服务器的尺寸大小。在专业机房，托管的服务器一般是放在机柜里面的，机柜从上到下有很多单位格，我们叫一格为1U(U是unit的意思)。如果一个机柜是42U高，如果每2个服务器中间留1U空间，那么可以放21个1U的主机。同样情况放2U主机就只能放14台了。</p>
 <p>很多机房托管费用会按所占U的多少来收费的。</p>
 <h3 id="nat">NAT</h3>
 <p>NAT（Network Address Translation，网络地址转换）是1994年提出的。</p>
-<p>当在专用网内部的一些主机本来已经分配到了本地IP地址（即仅在本专用网内使用的专用地址），但现在又想和因特网上的主机通信（并不需要加密）时，可使用NAT方法。 这种方法需要在专用网（私网IP）连接到因特网（公网IP）的路由器上 <mark>安装NAT软件</mark> 。装有NAT软件的路由器叫做NAT路由器，它至少有一个有效的外部全球IP地址（公网IP地址）。</p>
-<p>这样，所有使用本地地址（私网IP地址）的主机在和外界通信时，都要在 <strong>NAT路由器</strong> 上将其本地地址转换成全球IP地址，才能和因特网连接。 另外，这种通过使用少量的全球IP地址（公网IP地址）代表较多的私有IP地址的方式，将有助于减缓可用的IP地址空间的枯竭。在RFC 2663中有对NAT的说明。</p>
+<p>当在专用网内部的一些主机本来已经分配到了本地IP地址（即仅在本专用网内使用的专用地址），但现在又想和因特网上的主机通信（并不需要加密）时，可使用NAT方法。
+这种方法需要在专用网（私网IP）连接到因特网（公网IP）的路由器上
+<mark>安装NAT软件</mark>
+。装有NAT软件的路由器叫做NAT路由器，它至少有一个有效的外部全球IP地址（公网IP地址）。</p>
+<p>这样，所有使用本地地址（私网IP地址）的主机在和外界通信时，都要在
+<strong>NAT路由器</strong>
+上将其本地地址转换成全球IP地址，才能和因特网连接。
+另外，这种通过使用少量的全球IP地址（公网IP地址）代表较多的私有IP地址的方式，将有助于减缓可用的IP地址空间的枯竭。在RFC
+2663中有对NAT的说明。</p>
 <p><strong>举例</strong>：</p>
 <blockquote>
-<p>在内网下 <code>192.168.0.100</code> 这台电脑上开了一个http网站服务，那么端口默认是 <code>80</code>，在内网下你直接通过浏览器输入 <code>http://192.168.0.100</code> 直接打开网站，这个内网链接地址在外是打不开的。 通过内网穿透后平台 <strong>分配</strong> 一个公网地址（给内网的设备）,比如 <code>http://test123k.nat.nsloop.com</code> 用户在外时就可以通过这个公网地址打开网站。</p>
+<p>在内网下 <code>192.168.0.100</code>
+这台电脑上开了一个http网站服务，那么端口默认是
+<code>80</code>，在内网下你直接通过浏览器输入
+<code>http://192.168.0.100</code>
+直接打开网站，这个内网链接地址在外是打不开的。 通过内网穿透后平台
+<strong>分配</strong> 一个公网地址（给内网的设备）,比如
+<code>http://test123k.nat.nsloop.com</code>
+用户在外时就可以通过这个公网地址打开网站。</p>
 </blockquote>
-<p>要使用内网穿透服务，需要先确定好 <mark>内网要映射的IP和端口</mark> ，穿透成功后内网的IP+端口，映射成为公网的域名+端口（如需要IP，可以在CMD命令下PING 服务器的IP地址） 穿透前: 访问IP地址 <code>192.168.0.100</code> 端口 <code>3389</code> 穿透后：访问地址 <code>s0.nsloop.com</code> 端口 <code>12843</code> 。</p>
+<p>要使用内网穿透服务，需要先确定好 <mark>内网要映射的IP和端口</mark>
+，穿透成功后内网的IP+端口，映射成为公网的域名+端口（如需要IP，可以在CMD命令下PING
+服务器的IP地址） 穿透前: 访问IP地址 <code>192.168.0.100</code> 端口
+<code>3389</code> 穿透后：访问地址 <code>s0.nsloop.com</code> 端口
+<code>12843</code> 。</p>
 <p>内网穿透是通过服务器中继转发数据来实现的将内网端口映射到公网，速度上没有P2P直连的快。</p>
 <h3 id="异地组网">异地组网</h3>
 <h3 id="内网穿透">内网穿透</h3>
-<p>内网穿透（Intranet penetration），也即 NAT 穿透，进行 NAT 穿透是为了使具有某一个特定源 IP 地址和源端口号的数据包 <mark>不被 NAT 设备屏蔽而正确路由到内网主机</mark> 。</p>
-<p>UDP 内网穿透的实质是利用路由器上的NAT 系统。NAT 是一种将私有（保留）地址转化为合法IP地址的转换技术，它被广泛应用于各种类型 Internet 接入方式和各种类型的网络中。<mark>NAT可以完成重用地址，并且对于内部的网络结构可以实现对外隐蔽</mark>。</p>
+<p>内网穿透（Intranet penetration），也即 NAT 穿透，进行 NAT
+穿透是为了使具有某一个特定源 IP 地址和源端口号的数据包 <mark>不被 NAT
+设备屏蔽而正确路由到内网主机</mark> 。</p>
+<p>UDP 内网穿透的实质是利用路由器上的NAT 系统。NAT
+是一种将私有（保留）地址转化为合法IP地址的转换技术，它被广泛应用于各种类型
+Internet
+接入方式和各种类型的网络中。<mark>NAT可以完成重用地址，并且对于内部的网络结构可以实现对外隐蔽</mark>。</p>
 
     </div>
 

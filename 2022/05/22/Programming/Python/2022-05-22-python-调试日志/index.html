@@ -31,7 +31,7 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://pic.islet.space/2022/06/image-20220522012451872.png">
 <meta property="article:published_time" content="2022-05-21T17:25:00.000Z">
-<meta property="article:modified_time" content="2022-06-09T13:57:55.061Z">
+<meta property="article:modified_time" content="2022-06-09T13:57:55.000Z">
 <meta property="article:author" content="Liewzheng">
 <meta property="article:tag" content="Pandas">
 <meta property="article:tag" content="Debug Record">
@@ -156,7 +156,8 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%A5%87%E6%B7%AB%E5%B7%A7%E6%8A%80"><span class="nav-number">1.</span> <span class="nav-text">奇淫巧技</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%87%E6%9C%AC%E6%9B%BF%E6%8D%A2"><span class="nav-number">1.1.</span> <span class="nav-text">文本替换</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#object-%E7%B1%BB%E5%9E%8B%E6%96%87%E6%9C%AC%E6%9B%BF%E6%8D%A2"><span class="nav-number">1.1.1.</span> <span class="nav-text">object 类型文本替换</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#debug-record"><span class="nav-number">2.</span> <span class="nav-text">DEBUG RECORD</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#nonetype-object-is-not-subscriptable"><span class="nav-number">2.1.</span> <span class="nav-text">nonetype object is not subscriptable</span></a></li></ol></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%A5%87%E6%B7%AB%E5%B7%A7%E6%8A%80"><span class="nav-number">1.</span> <span class="nav-text">奇淫巧技</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%87%E6%9C%AC%E6%9B%BF%E6%8D%A2"><span class="nav-number">1.1.</span> <span class="nav-text">文本替换</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#object-%E7%B1%BB%E5%9E%8B%E6%96%87%E6%9C%AC%E6%9B%BF%E6%8D%A2"><span class="nav-number">1.1.1.</span> <span class="nav-text">object 类型文本替换</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#debug-record"><span class="nav-number">2.</span> <span class="nav-text">DEBUG RECORD</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#nonetype-object-is-not-subscriptable"><span class="nav-number">2.1.</span> <span class="nav-text">nonetype object is not
+subscriptable</span></a></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -169,7 +170,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">119</span>
+          <span class="site-state-item-count">124</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -180,7 +181,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">222</span>
+        <span class="site-state-item-count">230</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -283,18 +284,27 @@
         <h1 id="奇淫巧技">奇淫巧技</h1>
 <h2 id="文本替换">文本替换</h2>
 <h3 id="object-类型文本替换">object 类型文本替换</h3>
-<p>object 目前还没有找到替换方法，可以将 <code>object</code> 类型转换成 <code>string</code> 数据类型，再用 <code>str.replace()</code> 方法进行文本替换。</p>
+<p>object 目前还没有找到替换方法，可以将 <code>object</code> 类型转换成
+<code>string</code> 数据类型，再用 <code>str.replace()</code>
+方法进行文本替换。</p>
 <ol type="1">
-<li>用 <code>.astype('string')</code> 方法将 <code>object</code> 类型转换成 <code>string</code> 类型。</li>
-<li>使用 <code>.str.replace(&lt;old-string&gt;,&lt;new-string&gt;)</code> 方法对文本进行替换。并使用 <code>tmp</code> 变量进行保存。</li>
+<li>用 <code>.astype('string')</code> 方法将 <code>object</code>
+类型转换成 <code>string</code> 类型。</li>
+<li>使用
+<code>.str.replace(&lt;old-string&gt;,&lt;new-string&gt;)</code>
+方法对文本进行替换。并使用 <code>tmp</code> 变量进行保存。</li>
 <li>将 <code>tmp</code> 变量重新赋值给原来的变量。</li>
 </ol>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">pdata[<span class="string">&#x27;timestamp&#x27;</span>] = pdata.timestamp.astype(<span class="string">&#x27;string&#x27;</span>)  <span class="comment"># 将 object 类型转换成 string类型</span></span><br><span class="line">tmp = pdata[<span class="string">&#x27;timestamp&#x27;</span>].<span class="built_in">str</span>.replace(<span class="string">&#x27;BIN3-&#x27;</span>,<span class="string">&#x27;&#x27;</span>)</span><br><span class="line">pdata[<span class="string">&#x27;timestamp&#x27;</span>] = tmp</span><br></pre></td></tr></table></figure>
 <h1 id="debug-record">DEBUG RECORD</h1>
-<h2 id="nonetype-object-is-not-subscriptable">nonetype object is not subscriptable</h2>
-<p>大概意思就是，这个 <code>timestamp</code> 是 <code>object</code> 数据类型，替换了之后这个不能显示了估计。</p>
+<h2 id="nonetype-object-is-not-subscriptable">nonetype object is not
+subscriptable</h2>
+<p>大概意思就是，这个 <code>timestamp</code> 是 <code>object</code>
+数据类型，替换了之后这个不能显示了估计。</p>
 <figure>
-<img src="https://pic.islet.space/2022/06/image-20220522012451872.png" alt="image-20220522012451872" /><figcaption aria-hidden="true">image-20220522012451872</figcaption>
+<img src="https://pic.islet.space/2022/06/image-20220522012451872.png"
+alt="image-20220522012451872" />
+<figcaption aria-hidden="true">image-20220522012451872</figcaption>
 </figure>
 
     </div>
@@ -339,7 +349,7 @@
   </script>
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/2022/05/11/Programming/2022-05-11-wsl%E4%B8%8B%E7%BC%96%E8%AF%91stm32%E5%B9%B3%E5%8F%B0%E7%9A%84%E8%BD%AF%E4%BB%B6/" rel="prev" title="wsl下编译stm32平台的软件">
+                <a href="/2022/05/11/Programming/Compiling/2022-05-11-wsl%E4%B8%8B%E7%BC%96%E8%AF%91stm32%E5%B9%B3%E5%8F%B0%E7%9A%84%E8%BD%AF%E4%BB%B6/" rel="prev" title="wsl下编译stm32平台的软件">
                   <i class="fa fa-chevron-left"></i> wsl下编译stm32平台的软件
                 </a>
             </div>

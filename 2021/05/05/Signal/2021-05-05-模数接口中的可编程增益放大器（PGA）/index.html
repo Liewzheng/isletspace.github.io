@@ -29,16 +29,14 @@
 <meta property="og:site_name" content="Coder的孤岛">
 <meta property="og:description" content="原文出处：https:&#x2F;&#x2F;www.21ic.com&#x2F;app&#x2F;analog&#x2F;201207&#x2F;134812.htm 用可编程增益放大器(PGA)处理数据采集系统中传感器&#x2F;变送器模拟输出和信号处理数字之间的接口。单片和高集成度PGA现在被可编程、更高精度、更高吞吐量和更小封装尺寸的模块和混合方案替代。 由于来自传感器&#x2F;变送器的模拟信号的本性，使其工作必须具备相当大的动态范围。这要求采用连续增益级在进行任何">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://pic.islet.space/2021/04/fb222bc5a544088d5a7fc0c708476621.jpg">
-<meta property="og:image" content="http://pic.islet.space/2021/04/8b55f596bcfdf9a408bd3c959504fb21.jpg">
 <meta property="og:image" content="http://pic.islet.space/2021/04/8CzZ7BjS2OMEYQJ.jpg">
 <meta property="article:published_time" content="2021-05-05T15:58:32.000Z">
-<meta property="article:modified_time" content="2021-05-20T14:53:04.710Z">
+<meta property="article:modified_time" content="2021-05-20T14:53:04.000Z">
 <meta property="article:author" content="Liewzheng">
 <meta property="article:tag" content="PGA">
 <meta property="article:tag" content="forwarding">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://pic.islet.space/2021/04/fb222bc5a544088d5a7fc0c708476621.jpg">
+<meta name="twitter:image" content="http://pic.islet.space/2021/04/8CzZ7BjS2OMEYQJ.jpg">
 
 
 <link rel="canonical" href="http://islet.space/2021/05/05/Signal/2021-05-05-%E6%A8%A1%E6%95%B0%E6%8E%A5%E5%8F%A3%E4%B8%AD%E7%9A%84%E5%8F%AF%E7%BC%96%E7%A8%8B%E5%A2%9E%E7%9B%8A%E6%94%BE%E5%A4%A7%E5%99%A8%EF%BC%88PGA%EF%BC%89/">
@@ -171,7 +169,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">119</span>
+          <span class="site-state-item-count">124</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -182,7 +180,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">222</span>
+        <span class="site-state-item-count">230</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -285,11 +283,19 @@
         <p>原文出处：https://www.21ic.com/app/analog/201207/134812.htm</p>
 <p>用可编程增益放大器(PGA)处理数据采集系统中传感器/变送器模拟输出和信号处理数字之间的接口。单片和高集成度PGA现在被可编程、更高精度、更高吞吐量和更小封装尺寸的模块和混合方案替代。</p>
 <p>由于来自传感器/变送器的模拟信号的本性，使其工作必须具备相当大的动态范围。这要求采用连续增益级在进行任何实际的数字处理之前增大这些信号，PGA能满足这种要求。</p>
-<p>PGA是可变增益放大器(VGA)的一种。VGA提供可变和连续增益控制，而PGA <mark>必须在软件控制下以固定步(通常6dB步)做到可变增益控制</mark>。达到更精细的分辨步0.5dB是可能的。 一般多通道数据采集系统用很多不同类型的传感器/变送器，这包括 <strong>热电偶</strong>、<strong>惠斯登电桥</strong>，<strong>热敏电阻</strong>、<strong>应变计</strong> 和 <strong>超声系统</strong>。虽然，传感器/变送器是基于不同的物理原理，但大多数产品是 <strong>以电压做为输出</strong>。甚至这会产生中间值(如电容或电阻)，但最终变换为电压，以便在数据采集系统中进行</p>
-<p><img src="http://pic.islet.space/2021/04/fb222bc5a544088d5a7fc0c708476621.jpg" /></p>
+<p>PGA是可变增益放大器(VGA)的一种。VGA提供可变和连续增益控制，而PGA
+<mark>必须在软件控制下以固定步(通常6dB步)做到可变增益控制</mark>。达到更精细的分辨步0.5dB是可能的。
+一般多通道数据采集系统用很多不同类型的传感器/变送器，这包括
+<strong>热电偶</strong>、<strong>惠斯登电桥</strong>，<strong>热敏电阻</strong>、<strong>应变计</strong>
+和
+<strong>超声系统</strong>。虽然，传感器/变送器是基于不同的物理原理，但大多数产品是
+<strong>以电压做为输出</strong>。甚至这会产生中间值(如电容或电阻)，但最终变换为电压，以便在数据采集系统中进行</p>
+<p><img
+src="http://pic.islet.space/2021/04/fb222bc5a544088d5a7fc0c708476621.jpg" /></p>
 <p>传感器/变送器的输出可覆盖非常大的范围，需要PGA来处理传感器/变送器输出到ADC的接口。</p>
 <blockquote>
-<p>例如，在工业过程控制系统中，低频信号可以几毫伏到几伏变化。需要PGA来匹配这种宽传感器/变送器输出范围到特定的ADC输入范围。通常，在输入数据采集通道最低信号电平与最高信号电平之比是2个量级或更大。 12位ADC接收小于ADC满标输入十分之一的信号仅可提供8位分辨率，除非在信号到达ADC之前用PGA放大。PGA允许在软件控制下使接收信号的增益达到宽范围增益一带宽乘积。这可避免钳位并允许采用较便宜的ADC，如用12位ADC替代16位ADC。</p>
+<p>例如，在工业过程控制系统中，低频信号可以几毫伏到几伏变化。需要PGA来匹配这种宽传感器/变送器输出范围到特定的ADC输入范围。通常，在输入数据采集通道最低信号电平与最高信号电平之比是2个量级或更大。
+12位ADC接收小于ADC满标输入十分之一的信号仅可提供8位分辨率，除非在信号到达ADC之前用PGA放大。PGA允许在软件控制下使接收信号的增益达到宽范围增益一带宽乘积。这可避免钳位并允许采用较便宜的ADC，如用12位ADC替代16位ADC。</p>
 </blockquote>
 <p>PGA可做更多事情。PGA缓冲来自前级(通常是多路转换器)ADC的输入，防止多路转换器导通电阻所引起的加载。PGA也提供差分别单端的变换，大多数跟踪和保持型ADC需要单输入。把PGA连接到差分多路转换器输出时，PGA提供共模抑制。</p>
 <p>在市场上可以得到很多种PGA和支持元件。这包括可独立应用的运放被专门设计成PGA、ASIC、集成有可编程滤波器的PGA、仪表放大器PGA、用于运放的数字电位器前端、PGA用数字可编程分压器、ADC驱动器。有时把PGA和DAC集成在同一芯片上。</p>
@@ -304,18 +310,23 @@
 <li>Microchip公司的MCP6S2X家族PGA具有2、6和8通道输入，包含多路转换器并可通过串行外设接口(SPI)总线进行增益控制和通道选择。</li>
 <li>NS公司的LMH6718IC是双PGA，具有高输出(200mA)驱动信号。<br />
 </li>
-<li>高性能小封装的PAG有ADI公司的AD8555，这是封装在微型8引线SOIC中的数字可编程信号调理自动零放大器，它包含放大器，比较器，用Digit Trim技术的电阻调节分压器和缓冲器。其500V/℃总输入失调漂移是其他竞争产品的1/20。</li>
-<li>Linear公司的LTC6915A也是小封装高性能PGA。此仪表放大器封装为16引线SSOP或12引线DFN，可把它放置在最靠近传感器/变送器的地方。它所占电路板面积是等效分立方案的1/6。零漂移特性具有高达4096的宽可编程动态范围(增益精度0.1%)。它也有50mV/℃漂移和与增益无关的125dB CMRR。<br />
+<li>高性能小封装的PAG有ADI公司的AD8555，这是封装在微型8引线SOIC中的数字可编程信号调理自动零放大器，它包含放大器，比较器，用Digit
+Trim技术的电阻调节分压器和缓冲器。其500V/℃总输入失调漂移是其他竞争产品的1/20。</li>
+<li>Linear公司的LTC6915A也是小封装高性能PGA。此仪表放大器封装为16引线SSOP或12引线DFN，可把它放置在最靠近传感器/变送器的地方。它所占电路板面积是等效分立方案的1/6。零漂移特性具有高达4096的宽可编程动态范围(增益精度0.1%)。它也有50mV/℃漂移和与增益无关的125dB
+CMRR。<br />
 </li>
 <li>对于低失真是主要考虑因素的应用，可以选择Intersil公司PGA缓冲器HFA11XX，其低失真电平低到-73dBc、噪声电平低到7"9nV/√Hz。</li>
-<li>TI公司的THS7001/7002单/双PGA采用Power PAD封装，包含分离的低噪声前置放大器和增益放大级。此器件可达到非常低的噪声电平(低到1.7nV/√Hz)。</li>
-<li>其他可注意的PGA包括ADI公司的AD628首款具有可编程增益的共模差分放大器和Linear公司的LTC1564 PGA(除放大器外，它还具有8阶软件可编程抗混淆滤波器)。</li>
+<li>TI公司的THS7001/7002单/双PGA采用Power
+PAD封装，包含分离的低噪声前置放大器和增益放大级。此器件可达到非常低的噪声电平(低到1.7nV/√Hz)。</li>
+<li>其他可注意的PGA包括ADI公司的AD628首款具有可编程增益的共模差分放大器和Linear公司的LTC1564
+PGA(除放大器外，它还具有8阶软件可编程抗混淆滤波器)。</li>
 </ul>
 </blockquote>
 <p>PGA也集成有其他前端电路。</p>
 <blockquote>
 <p>如Maxim公司的MAX14XX家族，这是包含PGA的信号调理ASIC。这种器件直接用于传感器/变送器和ADC之间。</p>
-<p>Maxim公司的ADC驱动器MAX2055具有低失真(-76dBc 2次谐波和-69dBc 3次谐波)特性，其差分输出是为驱动高速ADC专门设计的。</p>
+<p>Maxim公司的ADC驱动器MAX2055具有低失真(-76dBc 2次谐波和-69dBc
+3次谐波)特性，其差分输出是为驱动高速ADC专门设计的。</p>
 </blockquote>
 <p>一些PGA供应商也提供驱动PGA前端的数字电位计和分压器IC。</p>
 <blockquote>
@@ -324,16 +335,22 @@
 <p>另外，Xicor也提供不少PGA器件，这些PGA器件对于执行数字控制的电位计(DCP)是最佳的。</p>
 </blockquote>
 <h1 id="集成方案">集成方案</h1>
-<p>现在，很多公司把PGA和其他信号调理电路直接集成在ADC芯片上。这种方法有利于所占空间更小，比分离PGA和ADC方案具有更好的性能。然而，其成本比较高，集成PGA在ADC上除灵活性较低外，还有 <mark>较高的时钟噪声电平</mark>。</p>
+<p>现在，很多公司把PGA和其他信号调理电路直接集成在ADC芯片上。这种方法有利于所占空间更小，比分离PGA和ADC方案具有更好的性能。然而，其成本比较高，集成PGA在ADC上除灵活性较低外，还有
+<mark>较高的时钟噪声电平</mark>。</p>
 <blockquote>
 <p>带线化前端的Maxim公司的MAX1457(图2)传统器线性化IC就是其中一种，它包含12位ADC。</p>
-<p>ADI公司的ADC7707高精度信号调理16位S-D ADC包含多路转换器、缓冲器、PGA、电荷平衡电路、串行接口和时钟产生器。</p>
+<p>ADI公司的ADC7707高精度信号调理16位S-D
+ADC包含多路转换器、缓冲器、PGA、电荷平衡电路、串行接口和时钟产生器。</p>
 <p>ADI公司的ADC7708/18S-D6位/24位ADC具有与AD7707相同的电路，但它们的目标是低电压和低功率应用。</p>
 </blockquote>
 <figure>
-<img src="http://pic.islet.space/2021/04/8b55f596bcfdf9a408bd3c959504fb21.jpg" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+<img
+src="http://pic.islet.space/2021/04/8b55f596bcfdf9a408bd3c959504fb21.jpg"
+alt="img" />
+<figcaption aria-hidden="true">img</figcaption>
 </figure>
-<p>一个感兴趣的高集成度ADC是ADC7731 24位S-D器件，它具有ADC77017的所有电路。另外，还加上定标微控制器(图3)。此IC的目标是低噪声高吞吐量应用。</p>
+<p>一个感兴趣的高集成度ADC是ADC7731
+24位S-D器件，它具有ADC77017的所有电路。另外，还加上定标微控制器(图3)。此IC的目标是低噪声高吞吐量应用。</p>
 <p>Maxim公司也有带集成PGA的双6位ADC，它具有90Sample/s吞吐率、功耗仅550mW。</p>
 <p><img src="http://pic.islet.space/2021/04/8CzZ7BjS2OMEYQJ.jpg" /></p>
 <p>我们将会看到更多包含PGA和其他信号处理电路的ADC吗？</p>

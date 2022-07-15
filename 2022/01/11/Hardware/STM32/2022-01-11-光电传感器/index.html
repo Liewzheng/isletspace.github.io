@@ -22,12 +22,12 @@
   <script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"islet.space","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.7.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/db.json","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":true}}</script><script src="/js/config.js"></script>
-<meta name="description" content="基础技能  ARM架构芯片的样例代码加载、编译、烧录、调试工作熟悉。 bitbucket 如何使用（是否需要配置SSH、repository如何pull和push、add、commit等） √ confluence 如何使用（任务的查看、提交、文章的发布、协作等等）  IDE for Realtek VSCODE ARM  image-20220112105541195   image-20220">
+<meta name="description" content="基础技能  ARM架构芯片的样例代码加载、编译、烧录、调试工作熟悉。 bitbucket 如何使用（是否需要配置SSH、repository如何pull和push、add、commit等） √ confluence 如何使用（任务的查看、提交、文章的发布、协作等等）  IDE for Realtek VSCODE ARM   image-20220112105541195    image-202">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Optical Sensor Development">
 <meta property="og:url" content="http://islet.space/2022/01/11/Hardware/STM32/2022-01-11-%E5%85%89%E7%94%B5%E4%BC%A0%E6%84%9F%E5%99%A8/index.html">
 <meta property="og:site_name" content="Coder的孤岛">
-<meta property="og:description" content="基础技能  ARM架构芯片的样例代码加载、编译、烧录、调试工作熟悉。 bitbucket 如何使用（是否需要配置SSH、repository如何pull和push、add、commit等） √ confluence 如何使用（任务的查看、提交、文章的发布、协作等等）  IDE for Realtek VSCODE ARM  image-20220112105541195   image-20220">
+<meta property="og:description" content="基础技能  ARM架构芯片的样例代码加载、编译、烧录、调试工作熟悉。 bitbucket 如何使用（是否需要配置SSH、repository如何pull和push、add、commit等） √ confluence 如何使用（任务的查看、提交、文章的发布、协作等等）  IDE for Realtek VSCODE ARM   image-20220112105541195    image-202">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://pic.islet.space/2022/01/image-20220112105541195.png">
 <meta property="og:image" content="https://pic.islet.space/2022/01/image-20220112110410253.png">
@@ -50,7 +50,6 @@
 <meta property="og:image" content="https://pic.islet.space/2022/01/image-20220117105414578.png">
 <meta property="og:image" content="https://pic.islet.space/2022/01/image-20220113150323525.png">
 <meta property="og:image" content="https://pic.islet.space/2022/01/image-20220112172532934.png">
-<meta property="og:image" content="https://pic.islet.space/2022/01/%E4%BC%81%E4%B8%9A%E5%BE%AE%E4%BF%A1%E6%88%AA%E5%9B%BE_16391255852712.png">
 <meta property="og:image" content="https://pic.islet.space/2022/01/OpticalSensorTransfer_I2C.png">
 <meta property="og:image" content="https://pic.islet.space/2022/01/image-20220113090856565.png">
 <meta property="og:image" content="https://pic.islet.space/2022/01/image-20220113091008941.png">
@@ -86,7 +85,7 @@
 <meta property="og:image" content="https://pic.islet.space/2022/01/20220120.png">
 <meta property="og:image" content="https://pic.islet.space/2022/01/image-20220120162227888.png">
 <meta property="article:published_time" content="2022-01-11T06:30:00.000Z">
-<meta property="article:modified_time" content="2022-01-23T11:37:19.115Z">
+<meta property="article:modified_time" content="2022-01-23T11:37:19.000Z">
 <meta property="article:author" content="Liewzheng">
 <meta property="article:tag" content="optical sensor">
 <meta name="twitter:card" content="summary">
@@ -223,7 +222,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">119</span>
+          <span class="site-state-item-count">124</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -234,7 +233,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">222</span>
+        <span class="site-state-item-count">230</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -337,93 +336,152 @@
         <h1 id="基础技能">基础技能</h1>
 <ol type="1">
 <li>ARM架构芯片的样例代码加载、编译、烧录、调试工作熟悉。</li>
-<li>bitbucket 如何使用（是否需要配置SSH、repository如何pull和push、add、commit等） √</li>
+<li>bitbucket
+如何使用（是否需要配置SSH、repository如何pull和push、add、commit等）
+√</li>
 <li>confluence 如何使用（任务的查看、提交、文章的发布、协作等等）</li>
 </ol>
 <h1 id="ide-for-realtek">IDE for Realtek</h1>
 <h2 id="vscode-arm">VSCODE ARM</h2>
 <figure>
-<img src="https://pic.islet.space/2022/01/image-20220112105541195.png" alt="image-20220112105541195" /><figcaption aria-hidden="true">image-20220112105541195</figcaption>
+<img src="https://pic.islet.space/2022/01/image-20220112105541195.png"
+alt="image-20220112105541195" />
+<figcaption aria-hidden="true">image-20220112105541195</figcaption>
 </figure>
 <figure>
-<img src="https://pic.islet.space/2022/01/image-20220112110410253.png" alt="image-20220112110410253" /><figcaption aria-hidden="true">image-20220112110410253</figcaption>
+<img src="https://pic.islet.space/2022/01/image-20220112110410253.png"
+alt="image-20220112110410253" />
+<figcaption aria-hidden="true">image-20220112110410253</figcaption>
 </figure>
 <figure>
-<img src="https://pic.islet.space/2022/01/image-20220112110533598.png" alt="image-20220112110533598" /><figcaption aria-hidden="true">image-20220112110533598</figcaption>
+<img src="https://pic.islet.space/2022/01/image-20220112110533598.png"
+alt="image-20220112110533598" />
+<figcaption aria-hidden="true">image-20220112110533598</figcaption>
 </figure>
 <figure>
-<img src="https://pic.islet.space/2022/01/image-20220112110507665.png" alt="image-20220112110507665" /><figcaption aria-hidden="true">image-20220112110507665</figcaption>
+<img src="https://pic.islet.space/2022/01/image-20220112110507665.png"
+alt="image-20220112110507665" />
+<figcaption aria-hidden="true">image-20220112110507665</figcaption>
 </figure>
 <figure>
-<img src="https://pic.islet.space/2022/01/image-20220112105734831.png" alt="image-20220112105734831" /><figcaption aria-hidden="true">image-20220112105734831</figcaption>
+<img src="https://pic.islet.space/2022/01/image-20220112105734831.png"
+alt="image-20220112105734831" />
+<figcaption aria-hidden="true">image-20220112105734831</figcaption>
 </figure>
 <h2 id="keil-arm">KEIL ARM</h2>
-<p>将Realtek RTL8762D SDK中的项目单独摘出来，放到某个文件夹下进行管理时，需要单独更改好几处内容：</p>
+<p>将Realtek RTL8762D
+SDK中的项目单独摘出来，放到某个文件夹下进行管理时，需要单独更改好几处内容：</p>
 <ol type="1">
 <li>C/C++的Include Path</li>
 <li>源文件的Source Path</li>
-<li>APP Image（<code>.bin</code> 生成文件），即 <code>after_build_common.bat</code> 的路径和内容。</li>
+<li>APP Image（<code>.bin</code> 生成文件），即
+<code>after_build_common.bat</code> 的路径和内容。</li>
 </ol>
 <p>如下所示，把单独某个Project摘出来时会产生很多感叹号。</p>
 <figure>
-<img src="https://pic.islet.space/2022/01/image-20220112111951120.png" alt="image-20220112111951120" /><figcaption aria-hidden="true">image-20220112111951120</figcaption>
+<img src="https://pic.islet.space/2022/01/image-20220112111951120.png"
+alt="image-20220112111951120" />
+<figcaption aria-hidden="true">image-20220112111951120</figcaption>
 </figure>
 <h3 id="头文件路径修改">头文件路径修改</h3>
 <p>此时需要进入设置中进行头文件路径修改</p>
 <figure>
-<img src="https://pic.islet.space/2022/01/image-20220112133356533.png" alt="image-20220112133356533" /><figcaption aria-hidden="true">image-20220112133356533</figcaption>
+<img src="https://pic.islet.space/2022/01/image-20220112133356533.png"
+alt="image-20220112133356533" />
+<figcaption aria-hidden="true">image-20220112133356533</figcaption>
 </figure>
-<p>选择 <code>C/C++</code> 选项卡下的 <code>Include Paths</code> 进行修改。</p>
+<p>选择 <code>C/C++</code> 选项卡下的 <code>Include Paths</code>
+进行修改。</p>
 <figure>
-<img src="https://pic.islet.space/2022/01/image-20220112133505056.png" alt="image-20220112133505056" /><figcaption aria-hidden="true">image-20220112133505056</figcaption>
+<img src="https://pic.islet.space/2022/01/image-20220112133505056.png"
+alt="image-20220112133505056" />
+<figcaption aria-hidden="true">image-20220112133505056</figcaption>
 </figure>
-<p>原来的路径设置都是使用相对路径进行的，此时需要将 <code>sbee2-sdk-v1.0.0</code> 文件夹放到与你项目文件同盘的某个文件夹下，最好不要相距太远。</p>
+<p>原来的路径设置都是使用相对路径进行的，此时需要将
+<code>sbee2-sdk-v1.0.0</code>
+文件夹放到与你项目文件同盘的某个文件夹下，最好不要相距太远。</p>
 <figure>
-<img src="https://pic.islet.space/2022/01/image-20220112133731688.png" alt="image-20220112133731688" /><figcaption aria-hidden="true">image-20220112133731688</figcaption>
+<img src="https://pic.islet.space/2022/01/image-20220112133731688.png"
+alt="image-20220112133731688" />
+<figcaption aria-hidden="true">image-20220112133731688</figcaption>
 </figure>
-<p>可以使用 VS Code将 <code>.uvprojx</code> 文件打开，使用搜索和替换工具对相关头文件的路径进行替换。</p>
+<p>可以使用 VS Code将 <code>.uvprojx</code>
+文件打开，使用搜索和替换工具对相关头文件的路径进行替换。</p>
 <h3 id="源文件路径修改">源文件路径修改</h3>
 <p>修改方法同头文件，</p>
 <figure>
-<img src="https://pic.islet.space/2022/01/image-20220117094508419.png" alt="image-20220117094508419" /><figcaption aria-hidden="true">image-20220117094508419</figcaption>
+<img src="https://pic.islet.space/2022/01/image-20220117094508419.png"
+alt="image-20220117094508419" />
+<figcaption aria-hidden="true">image-20220117094508419</figcaption>
 </figure>
 <h3 id="bat文件路径修改">bat文件路径修改</h3>
-<p><code>.bat</code> 文件是用于在 <code>.o</code> 文件生成后的链接脚本。所以如果该脚本自身路径和脚本内的包含路径出错，可能会导致无法编译出对应的 <code>app_MP_adk#####</code> 文件。</p>
+<p><code>.bat</code> 文件是用于在 <code>.o</code>
+文件生成后的链接脚本。所以如果该脚本自身路径和脚本内的包含路径出错，可能会导致无法编译出对应的
+<code>app_MP_adk#####</code> 文件。</p>
 <figure>
-<img src="https://pic.islet.space/2022/01/image-20220117095506866.png" alt="image-20220117095506866" /><figcaption aria-hidden="true">image-20220117095506866</figcaption>
+<img src="https://pic.islet.space/2022/01/image-20220117095506866.png"
+alt="image-20220117095506866" />
+<figcaption aria-hidden="true">image-20220117095506866</figcaption>
 </figure>
 <p>下方为样例代码原来的设置情况：</p>
 <figure>
-<img src="https://pic.islet.space/2022/01/image-20220120134642405.png" alt="image-20220120134642405" /><figcaption aria-hidden="true">image-20220120134642405</figcaption>
+<img src="https://pic.islet.space/2022/01/image-20220120134642405.png"
+alt="image-20220120134642405" />
+<figcaption aria-hidden="true">image-20220120134642405</figcaption>
 </figure>
-<p>在 <code>Option-User</code> 设置中，可以查看到 <code>After Build/Rebuild</code> 相关的设置，其中 <code>Run #1</code> 则是 Realtek MP Tools 需要烧录 EVB开发板相关的脚本文件。</p>
+<p>在 <code>Option-User</code> 设置中，可以查看到
+<code>After Build/Rebuild</code> 相关的设置，其中 <code>Run #1</code>
+则是 Realtek MP Tools 需要烧录 EVB开发板相关的脚本文件。</p>
 <figure>
-<img src="https://pic.islet.space/2022/01/image-20220117095438927.png" alt="image-20220117095438927" /><figcaption aria-hidden="true">image-20220117095438927</figcaption>
+<img src="https://pic.islet.space/2022/01/image-20220117095438927.png"
+alt="image-20220117095438927" />
+<figcaption aria-hidden="true">image-20220117095438927</figcaption>
 </figure>
-<p>将单独摘放出来的项目文件夹 <code>pixart_i2c</code> 与 <code>sbee2-sdk-v1.0.0</code> 和 <code>sbee2_wristband_sdk_upperstack_img</code> 放到同一个文件夹下。</p>
+<p>将单独摘放出来的项目文件夹 <code>pixart_i2c</code> 与
+<code>sbee2-sdk-v1.0.0</code> 和
+<code>sbee2_wristband_sdk_upperstack_img</code> 放到同一个文件夹下。</p>
 <figure>
-<img src="https://pic.islet.space/2022/01/image-20220117110446703.png" alt="image-20220117110446703" /><figcaption aria-hidden="true">image-20220117110446703</figcaption>
+<img src="https://pic.islet.space/2022/01/image-20220117110446703.png"
+alt="image-20220117110446703" />
+<figcaption aria-hidden="true">image-20220117110446703</figcaption>
 </figure>
-<p>因此修改 <code>.uvprojx</code> 文件内容下 <code>after_build_common.bat</code> 的路径时，将该路径修改为如下的相对路径即可：</p>
+<p>因此修改 <code>.uvprojx</code> 文件内容下
+<code>after_build_common.bat</code>
+的路径时，将该路径修改为如下的相对路径即可：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">..\sbee2-sdk-v1.0.0\tool\after_build_common.bat <span class="variable">$J</span> <span class="comment">#L @L</span></span><br></pre></td></tr></table></figure>
 <figure>
-<img src="https://pic.islet.space/2022/01/image-20220117104943624.png" alt="image-20220117104943624" /><figcaption aria-hidden="true">image-20220117104943624</figcaption>
+<img src="https://pic.islet.space/2022/01/image-20220117104943624.png"
+alt="image-20220117104943624" />
+<figcaption aria-hidden="true">image-20220117104943624</figcaption>
 </figure>
-<p>保存修改后的 <code>.uvprojx</code> 文件，可以看到 Keil V5 自动更新了相关设置。如下：</p>
+<p>保存修改后的 <code>.uvprojx</code> 文件，可以看到 Keil V5
+自动更新了相关设置。如下：</p>
 <figure>
-<img src="https://pic.islet.space/2022/01/image-20220117104955125.png" alt="image-20220117104955125" /><figcaption aria-hidden="true">image-20220117104955125</figcaption>
+<img src="https://pic.islet.space/2022/01/image-20220117104955125.png"
+alt="image-20220117104955125" />
+<figcaption aria-hidden="true">image-20220117104955125</figcaption>
 </figure>
-<p><code>after_build_common.bat</code> 控制着自动生成Realtek 的 MP Tool 需要使用的 APP Bin文件，如果该 <code>Run #1</code> 没有启用，则无法生产该文件。</p>
+<p><code>after_build_common.bat</code> 控制着自动生成Realtek 的 MP Tool
+需要使用的 APP Bin文件，如果该 <code>Run #1</code>
+没有启用，则无法生产该文件。</p>
 <figure>
-<img src="https://pic.islet.space/2022/01/image-20220117105247314.png" alt="image-20220117105247314" /><figcaption aria-hidden="true">image-20220117105247314</figcaption>
+<img src="https://pic.islet.space/2022/01/image-20220117105247314.png"
+alt="image-20220117105247314" />
+<figcaption aria-hidden="true">image-20220117105247314</figcaption>
 </figure>
-<p>该<code>.bat</code> 文件下所有的 <code>..\..\..\tool\</code> 都要修改成 <code>..\sbee2-sdk-v1.0.0\tool\</code>，如果项目文件夹和SDK文件夹路径有异，则需要适当修改。</p>
+<p>该<code>.bat</code> 文件下所有的 <code>..\..\..\tool\</code>
+都要修改成
+<code>..\sbee2-sdk-v1.0.0\tool\</code>，如果项目文件夹和SDK文件夹路径有异，则需要适当修改。</p>
 <figure>
-<img src="https://pic.islet.space/2022/01/image-20220117105040885.png" alt="image-20220117105040885" /><figcaption aria-hidden="true">image-20220117105040885</figcaption>
+<img src="https://pic.islet.space/2022/01/image-20220117105040885.png"
+alt="image-20220117105040885" />
+<figcaption aria-hidden="true">image-20220117105040885</figcaption>
 </figure>
 <p>启用完成之后即可生成对应 <code>app_MP_adk#####</code> 文件</p>
 <figure>
-<img src="https://pic.islet.space/2022/01/image-20220117105414578.png" alt="image-20220117105414578" /><figcaption aria-hidden="true">image-20220117105414578</figcaption>
+<img src="https://pic.islet.space/2022/01/image-20220117105414578.png"
+alt="image-20220117105414578" />
+<figcaption aria-hidden="true">image-20220117105414578</figcaption>
 </figure>
 <h1 id="hardwares">HARDWARES</h1>
 <h2 id="adapter">ADAPTER</h2>
@@ -435,82 +493,137 @@
 <p>型号： RTL8762DW</p>
 <h2 id="sensor---ka8g2">SENSOR - KA8G2</h2>
 <blockquote>
-<p><strong><em>KAG2</em></strong> is a high performance and ultra low power <strong><em>CMOS-processed optical image sensor</em></strong> with <em>integrated digital image process circuits</em>. It is based on an optical navigation technology which measures changes in position by optically acquiring sequential surface images(frames) and mathematically determining the speed, the direction and the magnitude of motion. <strong><em>The displacement delta_X and delta_Y information are available in registers which are accessible through SPI serial interface.</em></strong> A host controller reads and translates the data from the SPI serial interface into RF signals before sending them to the host PC.</p>
+<p><strong><em>KAG2</em></strong> is a high performance and ultra low
+power <strong><em>CMOS-processed optical image sensor</em></strong> with
+<em>integrated digital image process circuits</em>. It is based on an
+optical navigation technology which measures changes in position by
+optically acquiring sequential surface images(frames) and mathematically
+determining the speed, the direction and the magnitude of motion.
+<strong><em>The displacement delta_X and delta_Y information are
+available in registers which are accessible through SPI serial
+interface.</em></strong> A host controller reads and translates the data
+from the SPI serial interface into RF signals before sending them to the
+host PC.</p>
 </blockquote>
 <h3 id="specification-1">SPECIFICATION</h3>
 <p><img src="https://pic.islet.space/2022/01/image-20220113150323525.png" alt="image-20220113150323525" style="zoom:50%;" /></p>
 <h3 id="hardware-linking">HARDWARE LINKING</h3>
 <figure>
-<img src="https://pic.islet.space/2022/01/image-20220112172532934.png" alt="image-20220112172532934" /><figcaption aria-hidden="true">image-20220112172532934</figcaption>
+<img src="https://pic.islet.space/2022/01/image-20220112172532934.png"
+alt="image-20220112172532934" />
+<figcaption aria-hidden="true">image-20220112172532934</figcaption>
 </figure>
 <figure>
-<img src="https://pic.islet.space/2022/01/%E4%BC%81%E4%B8%9A%E5%BE%AE%E4%BF%A1%E6%88%AA%E5%9B%BE_16391255852712.png" alt="企业微信截图_16391255852712" /><figcaption aria-hidden="true">企业微信截图_16391255852712</figcaption>
+<img
+src="https://pic.islet.space/2022/01/%E4%BC%81%E4%B8%9A%E5%BE%AE%E4%BF%A1%E6%88%AA%E5%9B%BE_16391255852712.png"
+alt="企业微信截图_16391255852712" />
+<figcaption aria-hidden="true">企业微信截图_16391255852712</figcaption>
 </figure>
 <h3 id="chip-initiate">CHIP INITIATE</h3>
-<p>这个芯片启动时，需要对一些寄存器进行写入以初始化。下方为二维数组，<code>sensor_init_regs[][0]</code> 为寄存器地址，<code>sensor_init_regs[][1]</code> 为寄存器需要写入的数据。</p>
+<p>这个芯片启动时，需要对一些寄存器进行写入以初始化。下方为二维数组，<code>sensor_init_regs[][0]</code>
+为寄存器地址，<code>sensor_init_regs[][1]</code>
+为寄存器需要写入的数据。</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">uint8_t</span> sensor_init_regs[<span class="number">7</span>][<span class="number">2</span>] = &#123;</span><br><span class="line">	&#123;<span class="number">0X09</span>, <span class="number">0XA5</span>&#125;,</span><br><span class="line">	&#123;<span class="number">0X26</span>, <span class="number">0X34</span>&#125;,</span><br><span class="line">	&#123;<span class="number">0X19</span>, <span class="number">0X04</span>&#125;,</span><br><span class="line">	&#123;<span class="number">0X6D</span>, <span class="number">0X39</span>&#125;,</span><br><span class="line">	&#123;<span class="number">0X0D</span>, <span class="number">0X20</span>&#125;,</span><br><span class="line">	&#123;<span class="number">0X0E</span>, <span class="number">0X20</span>&#125;,</span><br><span class="line">	&#123;<span class="number">0X09</span>, <span class="number">0X00</span>&#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 <p>初始化时，需要注意以下问题：</p>
 <ol type="1">
-<li>某些主控芯片在使用两线SPI进行数据写入时，会有要求使用 <code>7bit</code> 地址，且 MSB 为 <code>1</code> 。此时需要判断是否需要认为修改地址的 MSB为 <code>1</code> ，例如 Realtek 的 RTL8762DW 芯片就不需要人为修改，人为修改会导致波形异常。而某些芯片需要人为写入MSB。</li>
-<li>在每一次写入寄存器之后，<mark style="font-weight: 900;">强烈建议进行延时</mark>，可以使用 <code>delay(0xFFFF)</code>，（尝试过 <code>0xFF</code> 太短，不能完成初始化写入）。</li>
+<li>某些主控芯片在使用两线SPI进行数据写入时，会有要求使用
+<code>7bit</code> 地址，且 MSB 为 <code>1</code>
+。此时需要判断是否需要认为修改地址的 MSB为 <code>1</code> ，例如 Realtek
+的 RTL8762DW
+芯片就不需要人为修改，人为修改会导致波形异常。而某些芯片需要人为写入MSB。</li>
+<li>在每一次写入寄存器之后，<mark style="font-weight: 900;">强烈建议进行延时</mark>，可以使用
+<code>delay(0xFFFF)</code>，（尝试过 <code>0xFF</code>
+太短，不能完成初始化写入）。</li>
 </ol>
 <h2 id="sensor---pat9126ja">SENSOR - PAT9126JA</h2>
 <ol type="1">
-<li>需要确定 <code>ID_SEL</code> 引脚的连接情况，是拉高、接地还是悬空。分别对应的 <code>CHIP ID</code> 都是不一样的，可能是<code>0x73</code>  <code>0x75</code>  <code>0x79</code> 三者之一。</li>
+<li>需要确定 <code>ID_SEL</code>
+引脚的连接情况，是拉高、接地还是悬空。分别对应的 <code>CHIP ID</code>
+都是不一样的，可能是<code>0x73</code>  <code>0x75</code>
+ <code>0x79</code> 三者之一。</li>
 </ol>
 <p>transformer 上的 <code>VCC</code> 为 <code>3.3V</code></p>
 <h3 id="specification-2">SPECIFICATION</h3>
-<p>这个芯片有两种电压要求，默认为高电压版本 <code>3.3V</code> ，可以通过SPI写入寄存器和硬件并线来达到降低至 <code>1.8V</code> 低电压的模式。</p>
+<p>这个芯片有两种电压要求，默认为高电压版本 <code>3.3V</code>
+，可以通过SPI写入寄存器和硬件并线来达到降低至 <code>1.8V</code>
+低电压的模式。</p>
 <h3 id="hadware-linking">HADWARE LINKING</h3>
 <figure>
-<img src="https://pic.islet.space/2022/01/OpticalSensorTransfer_I2C.png" alt="OpticalSensorTransfer_I2C" /><figcaption aria-hidden="true">OpticalSensorTransfer_I2C</figcaption>
+<img src="https://pic.islet.space/2022/01/OpticalSensorTransfer_I2C.png"
+alt="OpticalSensorTransfer_I2C" />
+<figcaption aria-hidden="true">OpticalSensorTransfer_I2C</figcaption>
 </figure>
 <h1 id="sdk-tools">SDK &amp; Tools</h1>
 <p>此处有 2个SDK包 和 3个tool包，分别是：</p>
 <ol type="1">
-<li><a target="_blank" rel="noopener" href="https://storage.islet.space/07_Mixosense/01_Realtek/RTL8762D/SDK/sbee2-sdk-v1.0.0.zip">sbee2-sdk-v1.0.0.zip</a></li>
-<li><a target="_blank" rel="noopener" href="https://storage.islet.space/07_Mixosense/01_Realtek/RTL8762D/SDK/sbee2_wristband_sdk_upperstack_img.zip">sbee2_wristband_sdk_upperstack_img.zip</a></li>
-<li><a target="_blank" rel="noopener" href="https://storage.islet.space/07_Mixosense/01_Realtek/RTL8762D/SDK/MPPackTool_v2.0.5.2.zip">MPPackTool_v2.0.5.2.zip</a></li>
-<li>日志输出软件：<a target="_blank" rel="noopener" href="https://storage.islet.space/07_Mixosense/01_Realtek/RTL8762D/SDK/DebugAnalyzer-v4.0.0.14.zip">DebugAnalyzer-v4.0.0.14.zip</a></li>
-<li>代码烧录软件：<a target="_blank" rel="noopener" href="https://storage.islet.space/07_Mixosense/01_Realtek/RTL8762D/SDK/BeeMPTool_kits_v1.0.5.0.zip">BeeMPTool_kits_v1.0.5.0.zip</a></li>
+<li><a
+target="_blank" rel="noopener" href="https://storage.islet.space/07_Mixosense/01_Realtek/RTL8762D/SDK/sbee2-sdk-v1.0.0.zip">sbee2-sdk-v1.0.0.zip</a></li>
+<li><a
+target="_blank" rel="noopener" href="https://storage.islet.space/07_Mixosense/01_Realtek/RTL8762D/SDK/sbee2_wristband_sdk_upperstack_img.zip">sbee2_wristband_sdk_upperstack_img.zip</a></li>
+<li><a
+target="_blank" rel="noopener" href="https://storage.islet.space/07_Mixosense/01_Realtek/RTL8762D/SDK/MPPackTool_v2.0.5.2.zip">MPPackTool_v2.0.5.2.zip</a></li>
+<li>日志输出软件：<a
+target="_blank" rel="noopener" href="https://storage.islet.space/07_Mixosense/01_Realtek/RTL8762D/SDK/DebugAnalyzer-v4.0.0.14.zip">DebugAnalyzer-v4.0.0.14.zip</a></li>
+<li>代码烧录软件：<a
+target="_blank" rel="noopener" href="https://storage.islet.space/07_Mixosense/01_Realtek/RTL8762D/SDK/BeeMPTool_kits_v1.0.5.0.zip">BeeMPTool_kits_v1.0.5.0.zip</a></li>
 </ol>
 <h1 id="build-flash-log">BUILD / FLASH / LOG</h1>
 <h2 id="build">BUILD</h2>
 <p>点击 <code>build</code> 按钮即可进行代码构建。</p>
 <figure>
-<img src="https://pic.islet.space/2022/01/image-20220113090856565.png" alt="image-20220113090856565" /><figcaption aria-hidden="true">image-20220113090856565</figcaption>
+<img src="https://pic.islet.space/2022/01/image-20220113090856565.png"
+alt="image-20220113090856565" />
+<figcaption aria-hidden="true">image-20220113090856565</figcaption>
 </figure>
-<p><code>build</code> 完毕之后可以看到下方的成功提示 <code>0 Error(s), 0 Warning(s)</code>。</p>
+<p><code>build</code> 完毕之后可以看到下方的成功提示
+<code>0 Error(s), 0 Warning(s)</code>。</p>
 <figure>
-<img src="https://pic.islet.space/2022/01/image-20220113091008941.png" alt="image-20220113091008941" /><figcaption aria-hidden="true">image-20220113091008941</figcaption>
+<img src="https://pic.islet.space/2022/01/image-20220113091008941.png"
+alt="image-20220113091008941" />
+<figcaption aria-hidden="true">image-20220113091008941</figcaption>
 </figure>
 <h2 id="flash">FLASH</h2>
 <p>FLAHS需要经过 configuration 、 detect 和 download 三步</p>
 <h3 id="configuration">configuration</h3>
-<p>根据《RTL8762D SDK User Guide CN》文件，RTL8762D 的 EVB KIT 是可以支持 JLINK 的（如下图所示）。</p>
+<p>根据《RTL8762D SDK User Guide CN》文件，RTL8762D 的 EVB KIT
+是可以支持 JLINK 的（如下图所示）。</p>
 <p><img src="https://pic.islet.space/2022/01/image-20220113095321215.png" alt="image-20220113095321215" style="zoom:50%;" /></p>
-<p>但这里并未使用 JLINK，而是使用 Realtek 专门的工具 <code>BeeMPTool_kits</code>， 通过 <code>UART</code> 进行烧录。</p>
+<p>但这里并未使用 JLINK，而是使用 Realtek 专门的工具
+<code>BeeMPTool_kits</code>， 通过 <code>UART</code> 进行烧录。</p>
 <figure>
-<img src="https://pic.islet.space/2022/01/image-20220113095804076.png" alt="image-20220113095804076" /><figcaption aria-hidden="true">image-20220113095804076</figcaption>
+<img src="https://pic.islet.space/2022/01/image-20220113095804076.png"
+alt="image-20220113095804076" />
+<figcaption aria-hidden="true">image-20220113095804076</figcaption>
 </figure>
-<p>打开 <code>MPTool.exe</code> ，并选中对应的芯片型号 <code>RTL8762D</code> ：</p>
+<p>打开 <code>MPTool.exe</code> ，并选中对应的芯片型号
+<code>RTL8762D</code> ：</p>
 <figure>
-<img src="https://pic.islet.space/2022/01/image-20220113095854784.png" alt="image-20220113095854784" /><figcaption aria-hidden="true">image-20220113095854784</figcaption>
+<img src="https://pic.islet.space/2022/01/image-20220113095854784.png"
+alt="image-20220113095854784" />
+<figcaption aria-hidden="true">image-20220113095854784</figcaption>
 </figure>
 <p>在这里选择 <code>调试</code> 模式进行烧录</p>
 <figure>
-<img src="https://pic.islet.space/2022/01/image-20220113095949881.png" alt="image-20220113095949881" /><figcaption aria-hidden="true">image-20220113095949881</figcaption>
+<img src="https://pic.islet.space/2022/01/image-20220113095949881.png"
+alt="image-20220113095949881" />
+<figcaption aria-hidden="true">image-20220113095949881</figcaption>
 </figure>
-<p>在 <code>Config Set</code> 中选择 <code>Confirm</code> ，不需要修改什么东西。</p>
+<p>在 <code>Config Set</code> 中选择 <code>Confirm</code>
+，不需要修改什么东西。</p>
 <p><img src="https://pic.islet.space/2022/01/image-20220113100100098.png" alt="image-20220113100100098" style="zoom:50%;" /></p>
 <p>此处需要设置 Flash 地址映射文件 <code>flash map.ini</code> 。</p>
 <figure>
-<img src="https://pic.islet.space/2022/01/image-20220113100324900.png" alt="image-20220113100324900" /><figcaption aria-hidden="true">image-20220113100324900</figcaption>
+<img src="https://pic.islet.space/2022/01/image-20220113100324900.png"
+alt="image-20220113100324900" />
+<figcaption aria-hidden="true">image-20220113100324900</figcaption>
 </figure>
 <figure>
-<img src="https://pic.islet.space/2022/01/image-20220113101953154.png" alt="image-20220113101953154" /><figcaption aria-hidden="true">image-20220113101953154</figcaption>
+<img src="https://pic.islet.space/2022/01/image-20220113101953154.png"
+alt="image-20220113101953154" />
+<figcaption aria-hidden="true">image-20220113101953154</figcaption>
 </figure>
-<p>下方为 《RTL8762D SDK User Guide CN》文件中，9.1章节对五个images文件进行了描述。</p>
+<p>下方为 《RTL8762D SDK User Guide
+CN》文件中，9.1章节对五个images文件进行了描述。</p>
 <p><img src="https://pic.islet.space/2022/01/image-20220113102036834.png" alt="image-20220113102036834" style="zoom:67%;" /></p>
 <table>
 <colgroup>
@@ -554,65 +667,102 @@
 </tbody>
 </table>
 <h4 id="关于app-image文件选择">关于app image文件选择</h4>
-<p>在Build完成后，会生成三个 <code>.bin</code> 文件，如果选择错误，会提示 <code>MD5 check error!Image type doesn't match IC type.</code> ，选择正确的话会提示 <code>File check OK</code> 。</p>
+<p>在Build完成后，会生成三个 <code>.bin</code>
+文件，如果选择错误，会提示
+<code>MD5 check error!Image type doesn't match IC type.</code>
+，选择正确的话会提示 <code>File check OK</code> 。</p>
 <figure>
-<img src="https://pic.islet.space/2022/01/image-20220113111301561.png" alt="image-20220113111301561" /><figcaption aria-hidden="true">image-20220113111301561</figcaption>
+<img src="https://pic.islet.space/2022/01/image-20220113111301561.png"
+alt="image-20220113111301561" />
+<figcaption aria-hidden="true">image-20220113111301561</figcaption>
 </figure>
 <h3 id="detect">detect</h3>
 <p>detect 的时候需要注意：</p>
 <ol type="1">
 <li>将 EVB kit上的 <code>J15</code> LOG口接地，否则会检测失败</li>
-<li>如果出现 <code>Failed</code> 字样，则按一下 EVB KIT 上的红色的 <code>RESET</code> 按钮进行复位后再尝试。</li>
+<li>如果出现 <code>Failed</code> 字样，则按一下 EVB KIT 上的红色的
+<code>RESET</code> 按钮进行复位后再尝试。</li>
 </ol>
 <figure>
-<img src="https://pic.islet.space/2022/01/image-20220113111054035.png" alt="image-20220113111054035" /><figcaption aria-hidden="true">image-20220113111054035</figcaption>
+<img src="https://pic.islet.space/2022/01/image-20220113111054035.png"
+alt="image-20220113111054035" />
+<figcaption aria-hidden="true">image-20220113111054035</figcaption>
 </figure>
 <figure>
-<img src="https://pic.islet.space/2022/01/image-20220113103853161.png" alt="image-20220113103853161" /><figcaption aria-hidden="true">image-20220113103853161</figcaption>
+<img src="https://pic.islet.space/2022/01/image-20220113103853161.png"
+alt="image-20220113103853161" />
+<figcaption aria-hidden="true">image-20220113103853161</figcaption>
 </figure>
 <h3 id="download">download</h3>
 <p>最后选择 <code>download</code> 下载即可。</p>
 <figure>
-<img src="https://pic.islet.space/2022/01/image-20220113104047601.png" alt="image-20220113104047601" /><figcaption aria-hidden="true">image-20220113104047601</figcaption>
+<img src="https://pic.islet.space/2022/01/image-20220113104047601.png"
+alt="image-20220113104047601" />
+<figcaption aria-hidden="true">image-20220113104047601</figcaption>
 </figure>
 <h2 id="upperstack-flash">UPPERSTACK FLASH</h2>
-<p>自带的 <code>\sbee2-sdk-v1.0.0\doc\</code> 路径下的教程是，都是有 <code>Bank0 Upperstack Image</code> 需要烧录的。</p>
+<p>自带的 <code>\sbee2-sdk-v1.0.0\doc\</code> 路径下的教程是，都是有
+<code>Bank0 Upperstack Image</code> 需要烧录的。</p>
 <figure>
-<img src="https://pic.islet.space/2022/01/image-20220120140307997.png" alt="image-20220120140307997" /><figcaption aria-hidden="true">image-20220120140307997</figcaption>
+<img src="https://pic.islet.space/2022/01/image-20220120140307997.png"
+alt="image-20220120140307997" />
+<figcaption aria-hidden="true">image-20220120140307997</figcaption>
 </figure>
 <p>步骤如下：</p>
 <ol type="1">
-<li><p>使用 <code>\sbee2_wristband_sdk_upperstack_img\src\app\wristband\firmware\upperstack_img</code> 路径下的 <code>.ini</code> 文件作为 layout 文件。（而之前使用的<code>flash map.ini</code> 地址为 <code>\sbee2_wristband_sdk_upperstack_img\src\app\wristband\firmware\</code>）</p></li>
-<li><p>指定 <code>\sbee2_wristband_sdk_upperstack_img\src\app\wristband\firmware\upperstack_img</code> 路径下的 <code>.bin</code> 文件作为 Upperstack Image 文件。</p></li>
-<li><p>将 <code>\sbee2_wristband_sdk_upperstack_img\board\evb_stack_img\wristband\flash_map.h</code> 文件作为项目工程里的唯一内存映射文件依赖。<code>flash_map.h</code> 被放在 <code>mem_config.h</code> 头文件下，间接被 <code>syetem_rtl876x.h</code> 引用。</p></li>
+<li><p>使用
+<code>\sbee2_wristband_sdk_upperstack_img\src\app\wristband\firmware\upperstack_img</code>
+路径下的 <code>.ini</code> 文件作为 layout
+文件。（而之前使用的<code>flash map.ini</code> 地址为
+<code>\sbee2_wristband_sdk_upperstack_img\src\app\wristband\firmware\</code>）</p></li>
+<li><p>指定
+<code>\sbee2_wristband_sdk_upperstack_img\src\app\wristband\firmware\upperstack_img</code>
+路径下的 <code>.bin</code> 文件作为 Upperstack Image 文件。</p></li>
+<li><p>将
+<code>\sbee2_wristband_sdk_upperstack_img\board\evb_stack_img\wristband\flash_map.h</code>
+文件作为项目工程里的唯一内存映射文件依赖。<code>flash_map.h</code>
+被放在 <code>mem_config.h</code> 头文件下，间接被
+<code>syetem_rtl876x.h</code> 引用。</p></li>
 </ol>
 <h2 id="log">LOG</h2>
-<p>RTL8762D 的 EVB KIT 不支持 JTAG 方式进行观察，（听说是）通信过程容易被打断。</p>
-<p>这里使用 <code>UART</code> 和 EVB KIT 上的 <code>J15</code> 口来观察 LOG数据。</p>
+<p>RTL8762D 的 EVB KIT 不支持 JTAG
+方式进行观察，（听说是）通信过程容易被打断。</p>
+<p>这里使用 <code>UART</code> 和 EVB KIT 上的 <code>J15</code> 口来观察
+LOG数据。</p>
 <h3 id="log软件">LOG软件</h3>
 <p>使用专用工具 <code>DebugAnalyzer</code> 进行日志输出。</p>
 <ol type="1">
-<li>选择合适的串口，即使用 <code>FT232</code> 的UART口，将该芯片口的 <code>RX</code> 连接至 <code>RTL8762D</code> 板子上的 <code>J15</code> 口。并在电脑中选中对应的 <code>FT232</code> 设备。</li>
+<li>选择合适的串口，即使用 <code>FT232</code> 的UART口，将该芯片口的
+<code>RX</code> 连接至 <code>RTL8762D</code> 板子上的 <code>J15</code>
+口。并在电脑中选中对应的 <code>FT232</code> 设备。</li>
 </ol>
 <figure>
-<img src="https://pic.islet.space/2022/01/image-20220113093030488.png" alt="image-20220113093030488" /><figcaption aria-hidden="true">image-20220113093030488</figcaption>
+<img src="https://pic.islet.space/2022/01/image-20220113093030488.png"
+alt="image-20220113093030488" />
+<figcaption aria-hidden="true">image-20220113093030488</figcaption>
 </figure>
 <ol start="2" type="1">
 <li>需要设置 <code>App Trace File</code> 。</li>
 </ol>
 <figure>
-<img src="https://pic.islet.space/2022/01/image-20220113093723962.png" alt="image-20220113093723962" /><figcaption aria-hidden="true">image-20220113093723962</figcaption>
+<img src="https://pic.islet.space/2022/01/image-20220113093723962.png"
+alt="image-20220113093723962" />
+<figcaption aria-hidden="true">image-20220113093723962</figcaption>
 </figure>
 <ol start="3" type="1">
 <li>观察日志输出</li>
 </ol>
 <figure>
-<img src="https://pic.islet.space/2022/01/image-20220113104331739.png" alt="image-20220113104331739" /><figcaption aria-hidden="true">image-20220113104331739</figcaption>
+<img src="https://pic.islet.space/2022/01/image-20220113104331739.png"
+alt="image-20220113104331739" />
+<figcaption aria-hidden="true">image-20220113104331739</figcaption>
 </figure>
 <h1 id="com-setting">COM SETTING</h1>
 <h2 id="uart-setting">UART SETTING</h2>
 <figure>
-<img src="https://pic.islet.space/2022/01/image-20220113111953878.png" alt="image-20220113111953878" /><figcaption aria-hidden="true">image-20220113111953878</figcaption>
+<img src="https://pic.islet.space/2022/01/image-20220113111953878.png"
+alt="image-20220113111953878" />
+<figcaption aria-hidden="true">image-20220113111953878</figcaption>
 </figure>
 <h1 id="peripheral">PERIPHERAL</h1>
 <h1 id="wired-spi">3-WIRED SPI</h1>
@@ -623,15 +773,25 @@
 1s = 1^3ms = 1^6us = 1^9ns\\
 1Hz = 1^{-3}KHz = 1^{-6}MHz = 1^{-9}GHz
 \]</span></p>
-<p>在3线SPI的数据线读取过程中，在前一段地址帧结束且尚未开始读取数据前，会有一段延时。由 <code>spiReadDelay</code> 和 <code>spiWireSpeed</code> 两个参数控制。 <span class="math display">\[
+<p>在3线SPI的数据线读取过程中，在前一段地址帧结束且尚未开始读取数据前，会有一段延时。由
+<code>spiReadDelay</code> 和 <code>spiWireSpeed</code> 两个参数控制。
+<span class="math display">\[
 DelayTime = (spiReadDelay +1) / (2* spiWireSpeed)
 \tag{延时计算公式}
-\]</span> 例如， 当 <code>spiWireSpeed = 8e5</code> 时， 设置 <code>spiReadDelay = 0x03</code> ，此时 可以在中间延时 <code>2.5us</code> 。</p>
+\]</span> 例如， 当 <code>spiWireSpeed = 8e5</code> 时， 设置
+<code>spiReadDelay = 0x03</code> ，此时 可以在中间延时
+<code>2.5us</code> 。</p>
 <h2 id="clock_freq">CLOCK_FREQ</h2>
-<p>将RTL8762D的SPI通信时钟频率从 <code>2E7</code> 更改为 <code>1E6</code> 后可以短时间正常通信，但是稍微过一段时间就出现了不稳定，度数全为 <code>0</code> ，且复位后读取的 <code>chipID</code> 也为 <code>0x00, 0x00</code> 。</p>
+<p>将RTL8762D的SPI通信时钟频率从 <code>2E7</code> 更改为
+<code>1E6</code>
+后可以短时间正常通信，但是稍微过一段时间就出现了不稳定，度数全为
+<code>0</code> ，且复位后读取的 <code>chipID</code> 也为
+<code>0x00, 0x00</code> 。</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// the actual frequency of spi is set by `SPI3_WIRE_SysClock`</span></span><br><span class="line"><span class="comment">// `1E6` means 1MHz, and `2E7` means 20MHz.</span></span><br><span class="line">SPI3WIRE_InitStruct.SPI3WIRE_SysClock       = <span class="number">1E6</span>;</span><br></pre></td></tr></table></figure>
 <figure>
-<img src="https://pic.islet.space/2022/01/image-20220119152741283.png" alt="image-20220119152741283" /><figcaption aria-hidden="true">image-20220119152741283</figcaption>
+<img src="https://pic.islet.space/2022/01/image-20220119152741283.png"
+alt="image-20220119152741283" />
+<figcaption aria-hidden="true">image-20220119152741283</figcaption>
 </figure>
 <h2 id="timing">TIMING</h2>
 <p><span class="math display">\[
@@ -640,74 +800,117 @@ wirespeek = 8e5
 \]</span></p>
 <h1 id="wired-spi-1">2-WIRED SPI</h1>
 <blockquote>
-<p>To recover the correct communication of SPI, the host controller can de-assert the SCLK for at least tRESYNC (1us min), and then keep SCLK asserted for a certain time interval tWDT (1.7ms, min) as shown in below Figure . to force the SPI control circuits of the sensor to reset.</p>
+<p>To recover the correct communication of SPI, the host controller can
+de-assert the SCLK for at least tRESYNC (1us min), and then keep SCLK
+asserted for a certain time interval tWDT (1.7ms, min) as shown in below
+Figure . to force the SPI control circuits of the sensor to reset.</p>
 </blockquote>
 <figure>
-<img src="https://pic.islet.space/2022/01/image-20220120154724619.png" alt="image-20220120154724619" /><figcaption aria-hidden="true">image-20220120154724619</figcaption>
+<img src="https://pic.islet.space/2022/01/image-20220120154724619.png"
+alt="image-20220120154724619" />
+<figcaption aria-hidden="true">image-20220120154724619</figcaption>
 </figure>
 <h1 id="debug-records">DEBUG RECORDS</h1>
 <figure>
-<img src="https://pic.islet.space/2022/01/image-20220112163300158.png" alt="image-20220112163300158" /><figcaption aria-hidden="true">image-20220112163300158</figcaption>
+<img src="https://pic.islet.space/2022/01/image-20220112163300158.png"
+alt="image-20220112163300158" />
+<figcaption aria-hidden="true">image-20220112163300158</figcaption>
 </figure>
 <p>0x05 // 0000 0101</p>
 <p>// 1000 0101</p>
 <h2 id="delta_x-delta_y-unread">DELTA_X &amp; DELTA_Y UNREAD</h2>
-<p><code>Motion</code>  <code>DYOVF</code>  <code>DXOVF</code> 并未读出，未检测到移动。</p>
+<p><code>Motion</code>  <code>DYOVF</code>  <code>DXOVF</code>
+并未读出，未检测到移动。</p>
 <figure>
-<img src="https://pic.islet.space/2022/01/image-20220114110802052.png" alt="image-20220114110802052" /><figcaption aria-hidden="true">image-20220114110802052</figcaption>
+<img src="https://pic.islet.space/2022/01/image-20220114110802052.png"
+alt="image-20220114110802052" />
+<figcaption aria-hidden="true">image-20220114110802052</figcaption>
 </figure>
 <p><code>Operation_Mode = 0xB8, cofiguration = 0x17</code> 均为默认</p>
 <figure>
-<img src="https://pic.islet.space/2022/01/image-20220114111325286.png" alt="image-20220114111325286" /><figcaption aria-hidden="true">image-20220114111325286</figcaption>
+<img src="https://pic.islet.space/2022/01/image-20220114111325286.png"
+alt="image-20220114111325286" />
+<figcaption aria-hidden="true">image-20220114111325286</figcaption>
 </figure>
 <figure>
-<img src="https://pic.islet.space/2022/01/image-20220114111114776.png" alt="image-20220114111114776" /><figcaption aria-hidden="true">image-20220114111114776</figcaption>
+<img src="https://pic.islet.space/2022/01/image-20220114111114776.png"
+alt="image-20220114111114776" />
+<figcaption aria-hidden="true">image-20220114111114776</figcaption>
 </figure>
-<p><code>0xB8</code> 使 设备处于睡眠模式，<code>configuration = 0x17</code> 使设备未处于 <code>sleep3</code> 且 <code>powerDown</code> 为正常模式，即未断电。</p>
+<p><code>0xB8</code> 使
+设备处于睡眠模式，<code>configuration = 0x17</code> 使设备未处于
+<code>sleep3</code> 且 <code>powerDown</code> 为正常模式，即未断电。</p>
 <p>所以需要修改 <code>Operation_Mode</code> 为 <code>0x01</code> 。</p>
-<p>在设置了下方的语句之后，LOG记录传送回来的 <code>OperationMode</code> 对应的数据为 <code>0xFC</code> 或 <code>0xB8</code> （ <code>1111 1100</code> 和 <code>1011 1000</code>） 。</p>
-<p>默认情况下 <code>OperationMode</code> 为 <code>0xB8</code> 即 <code>1011 1000</code> 。</p>
-<p>异常情况下 <code>OperationMode</code> 为 <code>0xFC</code> 即 <code>1111 1100</code> 。</p>
-<p>即第 <code>2</code> 位和 第 <code>6</code> 位会变，查数据手册，<mark>只有第 <code>2</code> 位（<code>Slp2mu_Enh</code>）有影响，该位控制芯片强制进入 <code>睡眠2</code> 模式。</mark></p>
+<p>在设置了下方的语句之后，LOG记录传送回来的 <code>OperationMode</code>
+对应的数据为 <code>0xFC</code> 或 <code>0xB8</code> （
+<code>1111 1100</code> 和 <code>1011 1000</code>） 。</p>
+<p>默认情况下 <code>OperationMode</code> 为 <code>0xB8</code> 即
+<code>1011 1000</code> 。</p>
+<p>异常情况下 <code>OperationMode</code> 为 <code>0xFC</code> 即
+<code>1111 1100</code> 。</p>
+<p>即第 <code>2</code> 位和 第 <code>6</code>
+位会变，查数据手册，<mark>只有第 <code>2</code>
+位（<code>Slp2mu_Enh</code>）有影响，该位控制芯片强制进入
+<code>睡眠2</code> 模式。</mark></p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">spi3wire_writebyte(REG_KA8G2_OPERATION_MODE, KA8G2_OM_RUN);  <span class="comment">// edited by liew in 20211114</span></span><br></pre></td></tr></table></figure>
 <figure>
-<img src="https://pic.islet.space/2022/01/image-20220114135400211.png" alt="image-20220114135400211" /><figcaption aria-hidden="true">image-20220114135400211</figcaption>
+<img src="https://pic.islet.space/2022/01/image-20220114135400211.png"
+alt="image-20220114135400211" />
+<figcaption aria-hidden="true">image-20220114135400211</figcaption>
 </figure>
 <figure>
-<img src="https://pic.islet.space/2022/01/image-20220114135647079.png" alt="image-20220114135647079" /><figcaption aria-hidden="true">image-20220114135647079</figcaption>
+<img src="https://pic.islet.space/2022/01/image-20220114135647079.png"
+alt="image-20220114135647079" />
+<figcaption aria-hidden="true">image-20220114135647079</figcaption>
 </figure>
-<p>从《KA8G2 optical mouse sensor》中的 <strong>MOTION Pin Function</strong> 可以看出，<code>Motion</code> 寄存器即运动检测标志相关寄存器。</p>
+<p>从《KA8G2 optical mouse sensor》中的 <strong>MOTION Pin
+Function</strong> 可以看出，<code>Motion</code>
+寄存器即运动检测标志相关寄存器。</p>
 <p><img src="https://pic.islet.space/2022/01/image-20220114142319440.png" alt="image-20220114142319440" style="zoom:50%;" /></p>
 <h2 id="主控板io口数据异常">主控板IO口数据异常</h2>
 <p>下方为利用SDK进行 <strong>读数据</strong> 的相关操作：</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span></span>&#123;</span><br><span class="line">    <span class="keyword">extern</span> <span class="keyword">uint32_t</span> random_seed_value;</span><br><span class="line">    srand(random_seed_value);</span><br><span class="line">    spi3wire_demo();</span><br><span class="line">	DBG_DIRECT(<span class="string">&quot;TEST_20220120&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> (<span class="number">1</span>)&#123;</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">uint8_t</span> i = <span class="number">0</span>; i&lt; <span class="number">0xFF</span>; i++)&#123;	</span><br><span class="line">			spi3wire_writebyte(<span class="number">0x7F</span>, i);</span><br><span class="line">			delaySys(<span class="number">0xF</span>);</span><br><span class="line">		&#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>并用逻辑分析仪进行捕获和分析，发现数据异常：</p>
 <figure>
-<img src="https://pic.islet.space/2022/01/image-20220120151632286.png" alt="image-20220120151632286" /><figcaption aria-hidden="true">image-20220120151632286</figcaption>
+<img src="https://pic.islet.space/2022/01/image-20220120151632286.png"
+alt="image-20220120151632286" />
+<figcaption aria-hidden="true">image-20220120151632286</figcaption>
 </figure>
 <p>经过检查，发现时序解码无误，所有波形的高低和解码结果一致。</p>
 <figure>
-<img src="https://pic.islet.space/2022/01/image-20220120151645002.png" alt="image-20220120151645002" /><figcaption aria-hidden="true">image-20220120151645002</figcaption>
+<img src="https://pic.islet.space/2022/01/image-20220120151645002.png"
+alt="image-20220120151645002" />
+<figcaption aria-hidden="true">image-20220120151645002</figcaption>
 </figure>
 <p>但是相连的数据之间数据差异较大。</p>
 <figure>
-<img src="https://pic.islet.space/2022/01/image-20220120151638254.png" alt="image-20220120151638254" /><figcaption aria-hidden="true">image-20220120151638254</figcaption>
+<img src="https://pic.islet.space/2022/01/image-20220120151638254.png"
+alt="image-20220120151638254" />
+<figcaption aria-hidden="true">image-20220120151638254</figcaption>
 </figure>
 <p>查看LOG也发现数据的确有按照预定的逻辑进行循环：</p>
 <figure>
-<img src="https://pic.islet.space/2022/01/20220120.png" alt="20220120" /><figcaption aria-hidden="true">20220120</figcaption>
+<img src="https://pic.islet.space/2022/01/20220120.png"
+alt="20220120" />
+<figcaption aria-hidden="true">20220120</figcaption>
 </figure>
 <p>但是逻辑分析仪采出来的数据就是异常。</p>
-<p>经过分析，是因为逻辑分析仪的采样率为 <code>1MHz</code> ，与SPI外设的频率 <code>1e6</code> 一致。</p>
-<p>修改了逻辑分析仪的采样率为 <code>2MHz</code> ，提高了1倍，采样出来的逻辑就正常了。</p>
+<p>经过分析，是因为逻辑分析仪的采样率为 <code>1MHz</code>
+，与SPI外设的频率 <code>1e6</code> 一致。</p>
+<p>修改了逻辑分析仪的采样率为 <code>2MHz</code>
+，提高了1倍，采样出来的逻辑就正常了。</p>
 <figure>
-<img src="https://pic.islet.space/2022/01/image-20220120162227888.png" alt="image-20220120162227888" /><figcaption aria-hidden="true">image-20220120162227888</figcaption>
+<img src="https://pic.islet.space/2022/01/image-20220120162227888.png"
+alt="image-20220120162227888" />
+<figcaption aria-hidden="true">image-20220120162227888</figcaption>
 </figure>
 <p>但是之前的项目只用了写数据的函数。示波器波形和逻辑分析仪都能正常。</p>
 <p>改了项目主循环中的语句为读数据之后，就出现异常了。</p>
 <h3 id="问题推断">问题推断</h3>
 <p>通过注释部分语句，进行间歇性测试和波形观察。</p>
-<p>发现，spi读取语句 <code>uint8_t spi3wire_readbyte(uint8_t address)</code> 可能是波形不正常的原因。</p>
+<p>发现，spi读取语句
+<code>uint8_t spi3wire_readbyte(uint8_t address)</code>
+可能是波形不正常的原因。</p>
 <p>硬件查找主控板和底板的引脚问题：</p>
 <ol type="1">
 <li>找到扩展板上的GPIO口对应核心板上的哪个口</li>

@@ -30,7 +30,7 @@
 <meta property="og:description" content="存储类别 即 stroage class，C语言提供了多种不同的模型和存储类别在内存中存储数据。  从硬件方面看， 被存储的每个值都占有一定的物理内存，C语言称之为对象（object）。 与面向对象编程中的对象不同，面向对象编程的对象指的是“类对象”。  1int entity &#x3D; 3; 该声明创造了一个名为 entity 的 标识符（identifier）。标识符可以用来 指定（desingat">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2021-06-21T13:50:00.000Z">
-<meta property="article:modified_time" content="2021-06-21T14:12:11.240Z">
+<meta property="article:modified_time" content="2021-06-21T14:12:11.000Z">
 <meta property="article:author" content="Liewzheng">
 <meta property="article:tag" content="stroage class">
 <meta property="article:tag" content="linkage">
@@ -169,7 +169,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">119</span>
+          <span class="site-state-item-count">124</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -180,7 +180,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">222</span>
+        <span class="site-state-item-count">230</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -275,22 +275,32 @@
     
     <div class="post-body" itemprop="articleBody">
         <h1 id="存储类别">存储类别</h1>
-<p>即 stroage class，C语言提供了多种不同的模型和存储类别在内存中存储数据。</p>
+<p>即 stroage
+class，C语言提供了多种不同的模型和存储类别在内存中存储数据。</p>
 <blockquote>
-<p>从硬件方面看， 被存储的每个值都占有一定的物理内存，C语言称之为对象（object）。</p>
+<p>从硬件方面看，
+被存储的每个值都占有一定的物理内存，C语言称之为对象（object）。</p>
 <p>与面向对象编程中的对象不同，面向对象编程的对象指的是“类对象”。</p>
 </blockquote>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> entity = <span class="number">3</span>;</span><br></pre></td></tr></table></figure>
-<p>该声明创造了一个名为 entity 的 <strong>标识符</strong>（identifier）。标识符可以用来 <strong>指定</strong>（desingate）特定对象的内容，且须遵循变量的命名规则。</p>
+<p>该声明创造了一个名为 entity 的
+<strong>标识符</strong>（identifier）。标识符可以用来
+<strong>指定</strong>（desingate）特定对象的内容，且须遵循变量的命名规则。</p>
 <p>标识符即 软件（C语言）指定硬件内存中的对象（内存区块）的方式。</p>
 <p>同时，那些指定对象的表达式被称为 <strong>左值</strong>。</p>
-<p>左值可以被理解为是 “有具体存储位置的 <strong>对象</strong> ”，区别于 “仅有值而没有具体存储位置” 的数据。</p>
-<p>另，左值中也有可修改的 <strong>普通左值</strong>， 和不能支持修改的 <strong>常量左值</strong>。</p>
+<p>左值可以被理解为是 “有具体存储位置的 <strong>对象</strong> ”，区别于
+“仅有值而没有具体存储位置” 的数据。</p>
+<p>另，左值中也有可修改的 <strong>普通左值</strong>， 和不能支持修改的
+<strong>常量左值</strong>。</p>
 <blockquote>
-<p><em>“左”(left)的原意是指可以放在赋值符号“=”的左边，但其实也表示能作为&amp;和++等操作符的操作数（B语言中已经如此）。而且，现代C/C++中的含义已经不局限于此。lvalue的 <code>l</code> 被重新解释为location。这也对应于ISO C11/ISO C++11的 <strong>内存位置</strong>(memory location)。</em></p>
+<p><em>“左”(left)的原意是指可以放在赋值符号“=”的左边，但其实也表示能作为&amp;和++等操作符的操作数（B语言中已经如此）。而且，现代C/C++中的含义已经不局限于此。lvalue的
+<code>l</code> 被重新解释为location。这也对应于ISO C11/ISO C++11的
+<strong>内存位置</strong>(memory location)。</em></p>
 <p>——百度百科</p>
 </blockquote>
-<p>从一个左值中必定可以解析出对应对象的地址，除非该对象是位字段（bit-field）或者被声明为寄存器存储类。生成左值的运算符包括下标运算符（subscript operator）[]和间接运算符（indirection operator）*，如下表所示（如果 array 已被声明为数组，而 ptr 被声明为指针变量）。</p>
+<p>从一个左值中必定可以解析出对应对象的地址，除非该对象是位字段（bit-field）或者被声明为寄存器存储类。生成左值的运算符包括下标运算符（subscript
+operator）[]和间接运算符（indirection operator）*，如下表所示（如果
+array 已被声明为数组，而 ptr 被声明为指针变量）。</p>
 <table>
 <thead>
 <tr class="header">
@@ -328,8 +338,10 @@
 <h1 id="参考">参考</h1>
 <ol type="1">
 <li>《C Primer Plus》, Stephen Prata</li>
-<li><a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E5%B7%A6%E5%80%BC">左值</a></li>
-<li><a target="_blank" rel="noopener" href="http://c.biancheng.net/view/281.html">C语言左值与右值详解</a></li>
+<li><a
+target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E5%B7%A6%E5%80%BC">左值</a></li>
+<li><a
+target="_blank" rel="noopener" href="http://c.biancheng.net/view/281.html">C语言左值与右值详解</a></li>
 </ol>
 
     </div>

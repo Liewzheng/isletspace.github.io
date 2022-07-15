@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://code.islet.space/font//css?family=/CascadiaCode/CascadiaCode:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/themes/blue/pace-theme-minimal.css">
+  <script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"islet.space","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.7.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/db.json","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":true}}</script><script src="/js/config.js"></script>
+<meta name="description" content="通常的按键所用开关为机械弹性开关，当机械触点断开、闭合时，由于机械触点的弹性作用，一个按键开关在闭合时不会马上稳定地接通，在断开时也不会一下子断开。因而在闭合及断开的瞬间均伴随有一连串的抖动，为了不产生这种现象而作的措施就是按键消抖。   image-20210927010622456  抖动时间 抖动时间的长短由按键的机械特性决定，一般为5ms～10ms。这是一个很重要的时间参数，在很多场合都要">
+<meta property="og:type" content="article">
+<meta property="og:title" content="嵌入式芯片引脚的按键消抖">
+<meta property="og:url" content="http://islet.space/2021/09/27/Hardware/Circuit/2021-09-27-%E5%B5%8C%E5%85%A5%E5%BC%8F%E8%8A%AF%E7%89%87%E5%BC%95%E8%84%9A%E7%9A%84%E6%8C%89%E9%94%AE%E6%B6%88%E6%8A%96/index.html">
+<meta property="og:site_name" content="Coder的孤岛">
+<meta property="og:description" content="通常的按键所用开关为机械弹性开关，当机械触点断开、闭合时，由于机械触点的弹性作用，一个按键开关在闭合时不会马上稳定地接通，在断开时也不会一下子断开。因而在闭合及断开的瞬间均伴随有一连串的抖动，为了不产生这种现象而作的措施就是按键消抖。   image-20210927010622456  抖动时间 抖动时间的长短由按键的机械特性决定，一般为5ms～10ms。这是一个很重要的时间参数，在很多场合都要">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://pic.islet.space/2021/09/202109270106942.png">
+<meta property="og:image" content="https://pic.islet.space/2021/09/202109270105540.png">
+<meta property="og:image" content="https://pic.islet.space/2021/09/202109270105228.png">
+<meta property="article:published_time" content="2021-09-26T16:50:00.000Z">
+<meta property="article:modified_time" content="2022-07-15T04:03:56.000Z">
+<meta property="article:author" content="Liewzheng">
+<meta property="article:tag" content="按键消抖">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://pic.islet.space/2021/09/202109270106942.png">
+
+
+<link rel="canonical" href="http://islet.space/2021/09/27/Hardware/Circuit/2021-09-27-%E5%B5%8C%E5%85%A5%E5%BC%8F%E8%8A%AF%E7%89%87%E5%BC%95%E8%84%9A%E7%9A%84%E6%8C%89%E9%94%AE%E6%B6%88%E6%8A%96/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://islet.space/2021/09/27/Hardware/Circuit/2021-09-27-%E5%B5%8C%E5%85%A5%E5%BC%8F%E8%8A%AF%E7%89%87%E5%BC%95%E8%84%9A%E7%9A%84%E6%8C%89%E9%94%AE%E6%B6%88%E6%8A%96/","path":"2021/09/27/Hardware/Circuit/2021-09-27-嵌入式芯片引脚的按键消抖/","title":"嵌入式芯片引脚的按键消抖"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>嵌入式芯片引脚的按键消抖 | Coder的孤岛</title>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<!-- hexo injector head_end end --></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Coder的孤岛</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">islet of the coder</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-首页"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-文章"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>文章</a></li>
+        <li class="menu-item menu-item-目录"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>目录</a></li>
+        <li class="menu-item menu-item-标签"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-简历"><a href="/resume/" rel="section"><i class="fa fa-address-card fa-fw"></i>简历</a></li>
+        <li class="menu-item menu-item-友链"><a href="/friends/" rel="section"><i class="fa fa-heartbeat fa-fw"></i>友链</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%8A%96%E5%8A%A8%E6%97%B6%E9%97%B4"><span class="nav-number">1.</span> <span class="nav-text">抖动时间</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%B6%88%E6%8A%96%E6%96%B9%E6%B3%95"><span class="nav-number">2.</span> <span class="nav-text">消抖方法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A1%AC%E4%BB%B6%E6%B6%88%E6%8A%96"><span class="nav-number">2.1.</span> <span class="nav-text">硬件消抖</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BD%AF%E4%BB%B6%E6%B6%88%E6%8A%96"><span class="nav-number">2.2.</span> <span class="nav-text">软件消抖</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">3.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">4.</span> <span class="nav-text">参考</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Liewzheng</p>
+  <div class="site-description" itemprop="description">笔记分享的旮旯孤岛而已</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">124</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">230</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="mailto:liewzheng@foxmail.com" title="E-Mail → mailto:liewzheng@foxmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://islet.space/2021/09/27/Hardware/Circuit/2021-09-27-%E5%B5%8C%E5%85%A5%E5%BC%8F%E8%8A%AF%E7%89%87%E5%BC%95%E8%84%9A%E7%9A%84%E6%8C%89%E9%94%AE%E6%B6%88%E6%8A%96/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Liewzheng">
+      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coder的孤岛">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          嵌入式芯片引脚的按键消抖
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-09-27 00:50:00" itemprop="dateCreated datePublished" datetime="2021-09-27T00:50:00+08:00">2021-09-27</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2022-07-15 12:03:56" itemprop="dateModified" datetime="2022-07-15T12:03:56+08:00">2022-07-15</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>通常的按键所用开关为机械弹性开关，当机械触点断开、闭合时，由于机械触点的弹性作用，一个按键开关在闭合时不会马上稳定地接通，在断开时也不会一下子断开。因而在闭合及断开的瞬间均伴随有一连串的抖动，为了不产生这种现象而作的措施就是按键消抖。</p>
+<figure>
+<img src="https://pic.islet.space/2021/09/202109270106942.png"
+alt="image-20210927010622456" />
+<figcaption aria-hidden="true">image-20210927010622456</figcaption>
+</figure>
+<h1 id="抖动时间">抖动时间</h1>
+<p>抖动时间的长短由按键的机械特性决定，一般为5ms～10ms。这是一个很重要的时间参数，在很多场合都要用到。</p>
+<p>按键稳定闭合时间的长短则是由操作人员的按键动作决定的，一般为零点几秒至数秒，大家可以用示波器测试一下。键抖动会引起一次按键被误读多次。为确保CPU对键的一次闭合仅作一次处理，必须去除键抖动。在键闭合稳定时读取键的状态，并且必须判别到键释放稳定后再作处理。</p>
+<h1 id="消抖方法">消抖方法</h1>
+<p>按键的消抖，可用硬件或软件两种方法。</p>
+<h2 id="硬件消抖">硬件消抖</h2>
+<p>在键数较少时可用硬件方法消除键抖动。下图所示的RS触发器为常用的硬件去抖。</p>
+<figure>
+<img src="https://pic.islet.space/2021/09/202109270105540.png"
+alt="image-20210927010535868" />
+<figcaption aria-hidden="true">image-20210927010535868</figcaption>
+</figure>
+<p>图中两个“与非”门构成一个RS触发器。当按键未按下时，输出为1;当键按下时，输出为0。此时即使用按键的机械性能，使按键因弹性抖动而产生瞬时断开（抖动跳开B），中要按键不返回原始状态A，双稳态电路的状态不改变，输出保持为0，不会产生抖动的波形。也就是说，即使B点的电压波形是抖动的，但经双稳态电路之后，其输出为正规的矩形波。这一点通过分析RS触发器的工作过程很容易得到验证。</p>
+<p>另一种硬件消抖的方法利用电容的放电延时，采用并联电容法，也可以实现硬件消抖，如图3所示：</p>
+<figure>
+<img src="https://pic.islet.space/2021/09/202109270105228.png"
+alt="image-20210927010459327" />
+<figcaption aria-hidden="true">image-20210927010459327</figcaption>
+</figure>
+<h2 id="软件消抖">软件消抖</h2>
+<p>如果按键较多，常用软件方法去抖，即检测出键闭合后执行一个延时程序，5ms～10ms的延时，让前沿抖动消失后再一次检测键的状态，如果仍保持闭合状态电平，则确认为真正有键按下。当检测到按键释放后，也要给5ms～10ms的延时，待后沿抖动消失后才能转入该键的处理程序。还可以利用定时器中断来消抖。</p>
+<p>消抖是为了避免在按键按下或是抬起时电平剧烈抖动带来的影响。一般来说，软件消抖的方法是不断检测按键值，直到按键值稳定。实现方法：假设未按键时输入1，按键后输入为0，抖动时不定。可以做以下检测：检测到按键输入为0之后，延时20ms，再次检测，如果按键还为0，那么就认为有按键输入。延时的20ms恰好避开了抖动期。</p>
+<p>下面再介绍一种按键消抖的方法：利用switch()结构，程序设计如下：</p>
+<p>无延时的软件消抖</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*********************************************</span></span><br><span class="line"><span class="comment">名称：键盘扫描子函数</span></span><br><span class="line"><span class="comment">功能：在按键稳定期内判断键值，并返回键值</span></span><br><span class="line"><span class="comment">**********************************************/</span></span><br><span class="line"><span class="function">uchar <span class="title">keyscan</span><span class="params">(<span class="keyword">void</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line"><span class="keyword">static</span> <span class="keyword">char</span> key_state = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">static</span> <span class="keyword">char</span> key_value = <span class="number">0</span>;</span><br><span class="line">uchar key_press, key_return = <span class="number">0</span>;</span><br><span class="line">key_press=turn_left&amp;turn_right;   <span class="comment">//读按键I/O电平</span></span><br><span class="line"><span class="keyword">switch</span> (key_state) </span><br><span class="line">&#123;</span><br><span class="line">  <span class="keyword">case</span> <span class="number">0</span> :  <span class="comment">// 按键初始态</span></span><br><span class="line">  <span class="keyword">if</span> (key_press==<span class="number">0</span>) key_state = <span class="number">1</span>; <span class="comment">// 键被按下，但需要确认是否是干扰</span></span><br><span class="line">  <span class="keyword">break</span>;</span><br><span class="line">  <span class="keyword">case</span> <span class="number">1</span> : <span class="comment">// 按键确认态</span></span><br><span class="line">  <span class="keyword">if</span> (key_press==<span class="number">0</span>)</span><br><span class="line"><span class="comment">//如有键按下则不是干扰，判断键值</span></span><br><span class="line">  &#123;    <span class="keyword">if</span>(turn_left==<span class="number">0</span>)  <span class="comment">//判断是哪一个按键被按下</span></span><br><span class="line">         key_value=<span class="number">1</span>;    <span class="comment">//按键较多时可采用switch选择结构</span></span><br><span class="line">       <span class="keyword">else</span> <span class="keyword">if</span>(turn_right==<span class="number">0</span>)</span><br><span class="line">         key_value=<span class="number">2</span>;</span><br><span class="line">       <span class="keyword">else</span> key_value=<span class="number">0</span>;</span><br><span class="line">      key_state = <span class="number">2</span>; <span class="comment">// 状态转换到键释放态</span></span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">else</span> key_state = <span class="number">0</span>; <span class="comment">// 按键已抬起，属于干扰，转换到按键初始态</span></span><br><span class="line">  <span class="keyword">break</span>;</span><br><span class="line">  <span class="keyword">case</span> <span class="number">2</span> :</span><br><span class="line">  <span class="keyword">if</span> (key_press==<span class="number">1</span>) </span><br><span class="line">  &#123;</span><br><span class="line">    key_return=key_value;<span class="comment">//按键释放后再输出键值 </span></span><br><span class="line">    key_value=<span class="number">0</span>;</span><br><span class="line">    key_state = <span class="number">0</span>; <span class="comment">//如果按键释放，转换到按键初始态</span></span><br><span class="line">  &#125; <span class="keyword">break</span>;</span><br><span class="line">&#125;<span class="keyword">return</span> key_return; <span class="comment">//返回键值</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/*********************************************</span></span><br><span class="line"><span class="comment">名称：按键处理子函数</span></span><br><span class="line"><span class="comment">功能：</span></span><br><span class="line"><span class="comment">**********************************************/</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">key_operation</span><span class="params">(<span class="keyword">void</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;  </span><br><span class="line">  <span class="keyword">switch</span> (keyscan())   <span class="comment">//根据键值不同，执行不同的内容</span></span><br><span class="line">  &#123; <span class="keyword">case</span> <span class="number">1</span>:</span><br><span class="line">  hight_votage-=<span class="number">1</span>;</span><br><span class="line">  <span class="keyword">if</span>(hight_votage&lt;<span class="number">5</span>)</span><br><span class="line">   hight_votage=<span class="number">5</span>; <span class="keyword">break</span>;</span><br><span class="line">   <span class="keyword">case</span> <span class="number">2</span>:</span><br><span class="line">  hight_votage+=<span class="number">1</span>;</span><br><span class="line">  <span class="keyword">if</span>(hight_votage&gt;<span class="number">25</span>)</span><br><span class="line">   hight_votage=<span class="number">25</span>; <span class="keyword">break</span>;</span><br><span class="line">  <span class="keyword">default</span> :<span class="keyword">break</span>;</span><br><span class="line">  &#125; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="总结">总结</h1>
+<p>只要有按键就一定要想到消抖，总之不管是硬件消抖还是软件消抖，在脑海里始终要想到按键按下时出现图一的情景，然后再进行相应的设计。</p>
+<p>对于多个按键的设计常用思路是：按照面向过程的编程方式，将数据与过程分离。把和按键状态相关的东西比如按键功能统统塞到结构里,
+把消抖的代码放在一个函数中。这里介绍按键设计的几种方法：</p>
+<ol type="1">
+<li><p><a
+target="_blank" rel="noopener" href="http://www.51hei.com/f/jzjpcx.rar">矩阵键盘</a>，（这个文档里放了几个矩阵键盘的程序，个人觉得这几个程序比较精简，大家可以参看一下）</p></li>
+<li><p><a
+target="_blank" rel="noopener" href="http://www.ceet.hbnu.edu.cn/bbs/viewthread.php?tid=7641&amp;extra=&amp;highlight=%CA%FD%D7%D6%CA%BE%B2%A8%C6%F7&amp;page=2">ADC按键</a>，ADC按键的优点是节省IO口，但是需要调配好电阻值，个人觉得有点麻烦。</p></li>
+<li><p><a
+target="_blank" rel="noopener" href="http://www.ceet.hbnu.edu.cn/bbs/redirect.php?tid=8059&amp;goto=lastpost#lastpost">并入串出按键</a></p></li>
+<li><p><a target="_blank" rel="noopener" href="http://www.51hei.com/mcu/1316.html">4*3键盘</a>，
+并且复用端口很牛</p></li>
+</ol>
+<h1 id="参考">参考</h1>
+<ol type="1">
+<li><a
+target="_blank" rel="noopener" href="http://news.eeworld.com.cn/mcu/2012/0806/article_9776.html">浅谈如何按键消抖</a></li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>感谢您的支持和鼓励</div>
+  <button>
+    Donate
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="https://photo.islet.space/2021/00/IMG_4588.JPG" alt="Liewzheng WeChat Pay">
+        <span>WeChat Pay</span>
+      </div>
+      <div>
+        <img src="https://photo.islet.space/2021/00/IMG_4590.JPG" alt="Liewzheng Alipay">
+        <span>Alipay</span>
+      </div>
+
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/%E6%8C%89%E9%94%AE%E6%B6%88%E6%8A%96/" rel="tag"># 按键消抖</a>
+          </div>
+
+        
+
+  <div id="vcomments" style="margin: 1rem 0 0 0;"></div>
+  <script>
+    new Valine({
+      el: '#vcomments',
+      appId: 'vRGM12EcYxDSM2lat5qjjSeY-gzGzoHsz',
+      appKey: 'WBgAb6NTAFQ7DYtgH0uOPNNh'
+    })
+  </script>
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/09/20/Communication/2021-09-20-%E6%97%A0%E7%BA%BF%E9%80%9A%E4%BF%A1%E7%BD%91%E7%BB%9C/" rel="prev" title="无线通信网络">
+                  <i class="fa fa-chevron-left"></i> 无线通信网络
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/10/02/Communication/2021-10-02-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%8E%B0%E5%9C%BA%E6%80%BB%E7%BA%BF/" rel="next" title="计算机网络体系结构与现场总线">
+                  计算机网络体系结构与现场总线 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">粤ICP备19004822号 </a>
+  </div>
+
+<div class="copyright">
+  &copy; 2019 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">liewzheng</span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdn.jsdelivr.net/npm/mermaid@8.12.0/dist/mermaid.min.js","integrity":"sha256-0dD7vUjUCTGJjeLnPotQQJIcSzug5fO6WDMYYyNIX4c="}}</script>
+  <script src="/js/third-party/tags/mermaid.js"></script>
+
+
+  <script src="/js/third-party/pace.js"></script>
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":"enable","tags":"all","js":{"url":"https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js","integrity":"sha256-r+3itOMtGGjap0x+10hu6jW/gZCzxHsoKrOd7gyRSGY="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>

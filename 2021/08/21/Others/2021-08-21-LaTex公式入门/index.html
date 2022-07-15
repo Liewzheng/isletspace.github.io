@@ -32,7 +32,7 @@
 <meta property="og:image" content="https://pic.islet.space/2021/09/image-20210904111919668.png">
 <meta property="og:image" content="https://pic.islet.space/2021/09/image-20210904113516554.png">
 <meta property="article:published_time" content="2021-08-21T01:50:00.000Z">
-<meta property="article:modified_time" content="2021-10-05T06:36:56.630Z">
+<meta property="article:modified_time" content="2021-10-05T06:36:56.000Z">
 <meta property="article:author" content="Liewzheng">
 <meta property="article:tag" content="LaTex">
 <meta name="twitter:card" content="summary">
@@ -169,7 +169,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">119</span>
+          <span class="site-state-item-count">124</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -180,7 +180,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">222</span>
+        <span class="site-state-item-count">230</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -285,24 +285,36 @@
 <p>Typora虽然是支持Markdown出名，但是也支持LaTex公式，需要在Typora的设置中打开相关选项</p>
 <h2 id="typora设置">Typora设置</h2>
 <ol type="1">
-<li><p>在Typora的偏好设置 下，选择 Markdown 选项，勾选 <code>內联公式（例：$\LaTeX$）</code> 选项和 <code>自动添加序号</code> 选项（此项可不选）</p></li>
-<li><p>在 “<strong>当复制或导出为无格式的HTML时</strong>” 选择 “<strong>使用LaTeX代码</strong>”</p></li>
+<li><p>在Typora的偏好设置 下，选择 Markdown 选项，勾选
+<code>內联公式（例：$\LaTeX$）</code> 选项和 <code>自动添加序号</code>
+选项（此项可不选）</p></li>
+<li><p>在 “<strong>当复制或导出为无格式的HTML时</strong>” 选择
+“<strong>使用LaTeX代码</strong>”</p></li>
 </ol>
 <p><img src="https://pic.islet.space/2021/09/image-20210904111919668.png" alt="image-20210904111919668" style="zoom:80%;" /></p>
 <h2 id="书写方法">书写方法</h2>
 <p>设置完毕后，即可进入公式书写。</p>
 <p>在使用Typora的Markdown语法来编辑LaTex公式，本身LaTex就与Markdown语法存在一定的冲突，但在Pandoc（Typora使用的效果渲染器）的加持下，显示效果较好，但公式写得多了或者书写过程中可能仍会存在一定的显示延迟（解决办法是：暂时没有）。</p>
 <p>以下全程默认使用Typora编辑器。</p>
-<p>使用LaTex支持两种书写方式，<strong>行模式</strong> 和 <strong>块模式</strong> ，对应的通用叫法是 <strong>内联公式</strong>（行内公式，inline） 和 <strong>块公式</strong>（block）。这里需要一点HTML5的知识，就是该公式是可以被存放在文字中间的，还是独占一行的，存放在文字中间的叫 <strong>内联</strong>，如 <span class="math inline">\(f(x)=x^2\)</span> ，独占一行的叫 <strong>块</strong>，如： <span class="math display">\[
+<p>使用LaTex支持两种书写方式，<strong>行模式</strong> 和
+<strong>块模式</strong> ，对应的通用叫法是
+<strong>内联公式</strong>（行内公式，inline） 和
+<strong>块公式</strong>（block）。这里需要一点HTML5的知识，就是该公式是可以被存放在文字中间的，还是独占一行的，存放在文字中间的叫
+<strong>内联</strong>，如 <span class="math inline">\(f(x)=x^2\)</span>
+，独占一行的叫 <strong>块</strong>，如： <span class="math display">\[
 f(x)= \lambda e^{-\lambda x} \tag{样例公式}
 \]</span></p>
 <h3 id="内联公式">内联公式</h3>
-<p>书写内联公式时，只需要在同一行文字内书写两个美元符号 <code>$$</code> ，然后再两个美元符号中间书写内容即可。</p>
+<p>书写内联公式时，只需要在同一行文字内书写两个美元符号 <code>$$</code>
+，然后再两个美元符号中间书写内容即可。</p>
 <p>尝试复制粘贴右侧文字到typora吧： <code>$f(x)= x^2$</code>​</p>
 <h3 id="块公式">块公式</h3>
-<p>块公式需要在独占一行时书写 <code>$$</code>，然后按回车键，即可进入块编辑模式，编辑框如下：</p>
+<p>块公式需要在独占一行时书写
+<code>$$</code>，然后按回车键，即可进入块编辑模式，编辑框如下：</p>
 <figure>
-<img src="https://pic.islet.space/2021/09/image-20210904113516554.png" alt="image-20210904113516554" /><figcaption aria-hidden="true">image-20210904113516554</figcaption>
+<img src="https://pic.islet.space/2021/09/image-20210904113516554.png"
+alt="image-20210904113516554" />
+<figcaption aria-hidden="true">image-20210904113516554</figcaption>
 </figure>
 <p>不管是内联公式还是快公式都是支持实时编辑和实时显示的。</p>
 <h1 id="基础符号">基础符号</h1>
@@ -317,12 +329,14 @@ f(x)= \lambda e^{-\lambda x} \tag{样例公式}
 <tbody>
 <tr class="odd">
 <td>上标</td>
-<td><span class="math inline">\(X^2\)</span><br><span class="math inline">\(X^{log(10)}\)</span></td>
+<td><span class="math inline">\(X^2\)</span><br><span
+class="math inline">\(X^{log(10)}\)</span></td>
 <td>X<sup>2<br>X</sup>{log(10)}</td>
 </tr>
 <tr class="even">
 <td>下标</td>
-<td><span class="math inline">\(X_i\)</span><br><span class="math inline">\(X_{a-b}\)</span></td>
+<td><span class="math inline">\(X_i\)</span><br><span
+class="math inline">\(X_{a-b}\)</span></td>
 <td><code>X_i</code> 和 <code>X_&#123;a-b&#125;</code></td>
 </tr>
 <tr class="odd">
@@ -436,27 +450,41 @@ f(x)= \lambda e^{-\lambda x} \tag{样例公式}
 <p>直接复制代码框中的内容到typora即可。</p>
 <h2 id="样例1">样例1</h2>
 <p><span class="math display">\[
-f(x) = \left\{ 
-\displaylines{\lambda e^{-\lambda x}, x ≥ 0\\ 0,x &lt; 0} 
+f(x) = \left\{
+\displaylines{\lambda e^{-\lambda x}, x ≥ 0\\ 0,x &lt; 0}
 \right. \tag{指数分布密度函数}
 \]</span></p>
 <figure class="highlight latex"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">$</span><span class="built_in">$</span></span><br><span class="line">f(x) = <span class="keyword">\left</span><span class="keyword">\&#123;</span> </span><br><span class="line"><span class="keyword">\displaylines</span>&#123;<span class="keyword">\lambda</span> e<span class="built_in">^</span>&#123;-<span class="keyword">\lambda</span> x&#125;, x ≥ 0<span class="keyword">\\</span> 0,x &lt; 0&#125; </span><br><span class="line"><span class="keyword">\right</span>. <span class="keyword">\tag</span>&#123;指数分布密度函数&#125;</span><br><span class="line"><span class="built_in">$</span><span class="built_in">$</span></span><br></pre></td></tr></table></figure>
 <h2 id="样例2">样例2</h2>
 <p><span class="math display">\[
-F(x) = \frac{1}{\sigma \sqrt{2\pi}} \int^x_0 \frac{1}{t} e^{-{(lnt-\mu)^2}/{2\sigma^2}} \ dt \tag{对数正态累积分布函数}
+F(x) = \frac{1}{\sigma \sqrt{2\pi}} \int^x_0 \frac{1}{t}
+e^{-{(lnt-\mu)^2}/{2\sigma^2}} \ dt \tag{对数正态累积分布函数}
 \]</span></p>
 <figure class="highlight latex"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">$</span><span class="built_in">$</span></span><br><span class="line">F(x) = <span class="keyword">\frac</span>&#123;1&#125;&#123;<span class="keyword">\sigma</span> <span class="keyword">\sqrt</span>&#123;2<span class="keyword">\pi</span>&#125;&#125; <span class="keyword">\int</span><span class="built_in">^</span>x<span class="built_in">_</span>0 <span class="keyword">\frac</span>&#123;1&#125;&#123;t&#125; e<span class="built_in">^</span>&#123;-&#123;(lnt-<span class="keyword">\mu</span>)<span class="built_in">^</span>2&#125;/&#123;2<span class="keyword">\sigma</span><span class="built_in">^</span>2&#125;&#125; <span class="keyword">\ </span>dt <span class="keyword">\tag</span>&#123;对数正态累积分布函数&#125;</span><br><span class="line"><span class="built_in">$</span><span class="built_in">$</span></span><br></pre></td></tr></table></figure>
 <h2 id="样例3">样例3</h2>
 <p><span class="math display">\[
-\varphi(x) = \frac{1}{\sigma\sqrt{2\pi}}e^{-{(x-\mu)^2}/{2\sigma^2}} \tag{正态密度函数}
+\varphi(x) = \frac{1}{\sigma\sqrt{2\pi}}e^{-{(x-\mu)^2}/{2\sigma^2}}
+\tag{正态密度函数}
 \]</span></p>
 <figure class="highlight latex"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">$</span><span class="built_in">$</span></span><br><span class="line"><span class="keyword">\varphi</span>(x) = <span class="keyword">\frac</span>&#123;1&#125;&#123;<span class="keyword">\sigma</span><span class="keyword">\sqrt</span>&#123;2<span class="keyword">\pi</span>&#125;&#125;e<span class="built_in">^</span>&#123;-&#123;(x-<span class="keyword">\mu</span>)<span class="built_in">^</span>2&#125;/&#123;2<span class="keyword">\sigma</span><span class="built_in">^</span>2&#125;&#125; <span class="keyword">\tag</span>&#123;正态密度函数&#125;</span><br><span class="line"><span class="built_in">$</span><span class="built_in">$</span></span><br></pre></td></tr></table></figure>
 <h1 id="希腊字母">希腊字母</h1>
 <p>整理了常用的希腊字母及其Latex书写方式。</p>
-<p>LaTex书写希腊字母时都是使用 <strong>转义字符</strong> 进行的，即 <code>\</code> + <code>对应的英文</code> 。</p>
+<p>LaTex书写希腊字母时都是使用 <strong>转义字符</strong> 进行的，即
+<code>\</code> + <code>对应的英文</code> 。</p>
 <p>如果需要表现大写希腊字母，则对应英文的首字母大写，否则就用小写。</p>
-<p>需要注意的是，<em>epsilon</em> 和 <em>phi</em> 有额外的符号，所以会有额外的写法，如下方表格所示。</p>
+<p>需要注意的是，<em>epsilon</em> 和 <em>phi</em>
+有额外的符号，所以会有额外的写法，如下方表格所示。</p>
 <table>
+<colgroup>
+<col style="width: 4%" />
+<col style="width: 4%" />
+<col style="width: 12%" />
+<col style="width: 4%" />
+<col style="width: 16%" />
+<col style="width: 8%" />
+<col style="width: 34%" />
+<col style="width: 14%" />
+</colgroup>
 <thead>
 <tr class="header">
 <th>序号</th>

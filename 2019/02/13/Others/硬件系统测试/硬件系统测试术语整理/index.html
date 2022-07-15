@@ -167,7 +167,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">119</span>
+          <span class="site-state-item-count">124</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -178,7 +178,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">222</span>
+        <span class="site-state-item-count">230</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -280,30 +280,52 @@
     <div class="post-body" itemprop="articleBody">
         <h1 id="关于测试">关于测试</h1>
 <p>测试的目的决定了如何去组织测试。如果测试的目的是为了尽可能多的找出错误，那么测试就应该直接针对设计比较复杂的部分，或是以前出错比较多的位置。如果测试的目的是为了给最终用户提供具有一定可信度的质量评价，那么测试就应该直接针对在实际应用中经常用到的商业假设。</p>
-<p>测试并不仅仅是为了要找出错误。通过分析错误产生的原因和错误的分布特征，可以帮助项目管理者发现当前设计过程的缺陷，以便改进。同时，这种分析也能帮助测试人员 设计出有针对性的检测方法，改善测试的有效性。</p>
+<p>测试并不仅仅是为了要找出错误。通过分析错误产生的原因和错误的分布特征，可以帮助项目管理者发现当前设计过程的缺陷，以便改进。同时，这种分析也能帮助测试人员
+设计出有针对性的检测方法，改善测试的有效性。</p>
 <p>没有发现错误的测试也是有价值的，完整的测试时评定测试质量的一种方法。</p>
-<p>硬件系统测试分为 <strong>软件测试</strong> 及 <strong>硬件测试</strong> 两部分。</p>
+<p>硬件系统测试分为 <strong>软件测试</strong> 及
+<strong>硬件测试</strong> 两部分。</p>
 <p>软件部分可以依据现行软件测试的流行办法来测试。</p>
-<p>硬件测试部分分为 <strong>硬件基础测试</strong> 和 <strong>硬件功能级以上测试</strong> 两部分。即除了测试各项硬件参数性能是否符合设计要求以外，仍需要测量硬件功能及联动特性是否符合要求。</p>
+<p>硬件测试部分分为 <strong>硬件基础测试</strong> 和
+<strong>硬件功能级以上测试</strong>
+两部分。即除了测试各项硬件参数性能是否符合设计要求以外，仍需要测量硬件功能及联动特性是否符合要求。</p>
 <h1 id="术语">术语</h1>
 <h2 id="单元测试">单元测试</h2>
-<p>Unit testing，也称为Module testing（模块测试）。是指对软件中的最小可测试单元进行检查和验证。对于单元测试中单元的含义，一般来说，要根据实际情况去判定其具体含义，如C语言中单元指一个函数，Java里单元指一个类，图形化的软件中可以指一个窗口或一个菜单等。总的来说，单元就是人为规定的最小的被测功能模块。</p>
+<p>Unit testing，也称为Module
+testing（模块测试）。是指对软件中的最小可测试单元进行检查和验证。对于单元测试中单元的含义，一般来说，要根据实际情况去判定其具体含义，如C语言中单元指一个函数，Java里单元指一个类，图形化的软件中可以指一个窗口或一个菜单等。总的来说，单元就是人为规定的最小的被测功能模块。</p>
 <p>单元测试是在软件开发过程中要进行的最低级别的测试活动，软件的独立单元将在与程序的其他部分相隔离的情况下进行测试。</p>
-<p>经常与单元测试联系起来的另外一些开发活动包括代码走读（Code review)，<strong>静态分析</strong>（Static analysis)和<strong>动态分析</strong>（Dynamic analysis)。 <strong>静态分析</strong> 就是对软件的源代码进行研读，查找错误或收集一些度量数据，并不需要对代码进行编译和执行。 <strong>动态分析</strong> 就是通过观察软件运行时的动作，来提供执行跟踪，时间分析，以及测试覆盖度方面的信息。</p>
+<p>经常与单元测试联系起来的另外一些开发活动包括代码走读（Code
+review)，<strong>静态分析</strong>（Static
+analysis)和<strong>动态分析</strong>（Dynamic analysis)。
+<strong>静态分析</strong>
+就是对软件的源代码进行研读，查找错误或收集一些度量数据，并不需要对代码进行编译和执行。
+<strong>动态分析</strong>
+就是通过观察软件运行时的动作，来提供执行跟踪，时间分析，以及测试覆盖度方面的信息。</p>
 <h2 id="集成测试">集成测试</h2>
-<p>Assemble testing，也叫 <strong>组装测试</strong> 或 <strong>联合测试</strong> 。在单元测试的基础上，将所有模块按照设计要求（如根据结构图）组装成为子系统或系统，进行集成测试。</p>
+<p>Assemble testing，也叫 <strong>组装测试</strong> 或
+<strong>联合测试</strong>
+。在单元测试的基础上，将所有模块按照设计要求（如根据结构图）组装成为子系统或系统，进行集成测试。</p>
 <p>实践表明，一些模块虽然能够单独地工作，但并不能保证连接起来也能正常的工作。一些局部反映不出来的问题，在全局上很可能暴露出来。</p>
 <h2 id="功能测试">功能测试</h2>
-<p>Functional testing，也称为Behavioral testing（行为测试）和Black Box testing（黑盒测试），根据产品特性、操作描述和用户方案，测试一个产品的特性和可操作行为以确定它们满足设计需求。</p>
+<p>Functional testing，也称为Behavioral testing（行为测试）和Black Box
+testing（黑盒测试），根据产品特性、操作描述和用户方案，测试一个产品的特性和可操作行为以确定它们满足设计需求。</p>
 <h2 id="系统测试">系统测试</h2>
-<p>System Testing，是对整个系统的测试，将硬件、软件、操作人员看作一个整体，检验它是否有不符合系统说明书的地方。这种测试可以发现系统分析和设计中的错误。如安全测试是测试安全措施是否完善，能不能保证系统不受非法侵入。再例如，压力测试是测试系统在正常数据量以及超负荷量(如多个用户同时存取) 等情况下是否还能正常地工作。</p>
+<p>System
+Testing，是对整个系统的测试，将硬件、软件、操作人员看作一个整体，检验它是否有不符合系统说明书的地方。这种测试可以发现系统分析和设计中的错误。如安全测试是测试安全措施是否完善，能不能保证系统不受非法侵入。再例如，压力测试是测试系统在正常数据量以及超负荷量(如多个用户同时存取)
+等情况下是否还能正常地工作。</p>
 <h2 id="冒烟测试">冒烟测试</h2>
-<p>Smoke testing，对一个硬件或硬件组件进行更改或修复后，直接给设备加电。如果没有冒烟，则该组件就通过了测试。在软件中，“冒烟测试”这一术语描述的是在将代码更改嵌入到产品的源树中之前对这些更改进行验证的过程。在检查了代码后，冒烟测试是确定和修复软件缺陷的最经济有效的方法。冒烟测试设计用于确认代码中的更改会按预期运行，且不会破坏整个版本的稳定性。</p>
+<p>Smoke
+testing，对一个硬件或硬件组件进行更改或修复后，直接给设备加电。如果没有冒烟，则该组件就通过了测试。在软件中，“冒烟测试”这一术语描述的是在将代码更改嵌入到产品的源树中之前对这些更改进行验证的过程。在检查了代码后，冒烟测试是确定和修复软件缺陷的最经济有效的方法。冒烟测试设计用于确认代码中的更改会按预期运行，且不会破坏整个版本的稳定性。</p>
 <h2 id="验收测试">验收测试</h2>
 <p>验收测试是部署软件之前的最后一个测试操作。在软件产品完成了单元测试、集成测试和系统测试之后，产品发布之前所进行的软件测试活动。它是技术测试的最后一个阶段，也称为交付测试。验收测试的目的是确保软件准备就绪，并且可以让最终用户将其用于执行软件的既定功能和任务。</p>
 <p>检验系统说明书的各项功能与性能是否实现和满足要求。常见的有α测试、β测试，都是由用户进行的。</p>
 <h1 id="参考链接">参考链接</h1>
-<p>1.《<a target="_blank" rel="noopener" href="https://zhidao.baidu.com/question/294458045.html">集成测试与联调测试的区别</a>》 2.《<a target="_blank" rel="noopener" href="https://blog.csdn.net/u012426327/article/details/78400045">软件测试方法——单元测试、集成测试、系统测试、确认测试</a>》 3.《<a target="_blank" rel="noopener" href="http://www.cqvip.com/read/read.aspx?id=32762184">浅谈电子产品的硬件测试技术</a>》</p>
+<p>1.《<a
+target="_blank" rel="noopener" href="https://zhidao.baidu.com/question/294458045.html">集成测试与联调测试的区别</a>》
+2.《<a
+target="_blank" rel="noopener" href="https://blog.csdn.net/u012426327/article/details/78400045">软件测试方法——单元测试、集成测试、系统测试、确认测试</a>》
+3.《<a
+target="_blank" rel="noopener" href="http://www.cqvip.com/read/read.aspx?id=32762184">浅谈电子产品的硬件测试技术</a>》</p>
 
     </div>
 
@@ -352,8 +374,8 @@
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/2019/03/03/Linux/SSH/%E4%BF%9D%E6%8A%A4%E6%9C%8D%E5%8A%A1%E5%99%A8%EF%BC%8C%E4%B8%BASSH%E6%9C%8D%E5%8A%A1%E4%BF%AE%E6%94%B9%E7%AB%AF%E5%8F%A3%E5%8F%B7/" rel="next" title="保护服务器，为SSH服务修改端口号">
-                  保护服务器，为SSH服务修改端口号 <i class="fa fa-chevron-right"></i>
+                <a href="/2019/03/03/Linux/SSH/%E4%BD%BF%E7%94%A8SELinux%E5%BC%80%E6%94%BESSH%E7%AB%AF%E5%8F%A3/" rel="next" title="使用SELinux开放SSH端口">
+                  使用SELinux开放SSH端口 <i class="fa fa-chevron-right"></i>
                 </a>
             </div>
           </div>

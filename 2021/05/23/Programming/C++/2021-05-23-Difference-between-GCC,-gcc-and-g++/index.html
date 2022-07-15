@@ -170,7 +170,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">119</span>
+          <span class="site-state-item-count">124</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -181,7 +181,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">222</span>
+        <span class="site-state-item-count">230</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -277,7 +277,8 @@
     <div class="post-body" itemprop="articleBody">
         <p>gcc 和 GCC 是两个不同的东西。</p>
 <blockquote>
-<p><strong>GCC</strong>：GNU Compiler Collection(GUN 编译器集合)，它可以编译C、C++、JAV、Fortran、Pascal、Object-C、Ada等语言。</p>
+<p><strong>GCC</strong>：GNU Compiler Collection(GUN
+编译器集合)，它可以编译C、C++、JAV、Fortran、Pascal、Object-C、Ada等语言。</p>
 <p><strong>gcc</strong>：GCC中的GUN C Compiler（C 编译器）</p>
 <p><strong>g++</strong>：GCC中的GUN C++ Compiler（C++编译器）</p>
 </blockquote>
@@ -289,10 +290,12 @@
 <p>Step4：Call a linker, like ld</p>
 </blockquote>
 <p>由于编译器是可以更换的，所以gcc不仅仅可以编译C文件</p>
-<p>所以，更准确的说法是：gcc调用了C compiler，而g++调用了C++ compiler</p>
+<p>所以，更准确的说法是：gcc调用了C compiler，而g++调用了C++
+compiler</p>
 <h1 id="gcc和g的主要区别">gcc和g++的主要区别</h1>
 <ol type="1">
-<li><p>对于 <em>.c和</em>.cpp文件，gcc分别当做c和cpp文件编译（c和cpp的语法强度是不一样的）</p></li>
+<li><p>对于
+<em>.c和</em>.cpp文件，gcc分别当做c和cpp文件编译（c和cpp的语法强度是不一样的）</p></li>
 <li><p>对于 <em>.c和</em>.cpp文件，g++则统一当做cpp文件编译</p></li>
 <li><p>使用g++编译文件时，<strong>g++会自动链接标准库STL，而gcc不会自动链接STL</strong></p></li>
 <li><p>gcc在编译C文件时，可使用的预定义宏是比较少的</p></li>
@@ -300,7 +303,8 @@
 </ol>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> __GXX_WEAK__ 1</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> __cplusplus 1</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> __DEPRECATED 1</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> __GNUG__ 4</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> __EXCEPTIONS 1</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> __private_extern__ extern</span></span><br></pre></td></tr></table></figure>
 <ol start="6" type="1">
-<li>在用gcc编译c++文件时，为了能够使用STL，需要加参数 –lstdc++ ，但这并不代表 gcc –lstdc++ 和 g++等价，它们的区别不仅仅是这个</li>
+<li>在用gcc编译c++文件时，为了能够使用STL，需要加参数 –lstdc++
+，但这并不代表 gcc –lstdc++ 和 g++等价，它们的区别不仅仅是这个</li>
 </ol>
 <p>其主要参数：</p>
 <blockquote>

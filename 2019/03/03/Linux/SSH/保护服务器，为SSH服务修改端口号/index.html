@@ -167,7 +167,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">119</span>
+          <span class="site-state-item-count">124</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -178,7 +178,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">222</span>
+        <span class="site-state-item-count">230</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -284,25 +284,31 @@
 <p>找到<code>#Port 22</code>，去掉<code>#</code>并在下一行添加<code>Port 22222</code>。</p>
 <ul>
 <li>注意是<code>sshd_config</code>而不是<code>ssh_config</code>，多了个<code>d</code>。</li>
-<li>SSH服务的默认监听端口是22，如果不强制说明别的端口，”Port 22”注不注释都是开放22访问端口的。保留了22端口，是防止之后因为各种权限和配置问题，避免连22端口都不能访问的尴尬。</li>
+<li>SSH服务的默认监听端口是22，如果不强制说明别的端口，”Port
+22”注不注释都是开放22访问端口的。保留了22端口，是防止之后因为各种权限和配置问题，避免连22端口都不能访问的尴尬。</li>
 <li>如果设置10000以下的端口号，容易被系统或一些特殊软件占用，或是以后新应用准备占用该端口的时候，却被你先占用了，导致软件无法运行。因此，请选择10000~65535之间的任意端口号。</li>
-<li>到时候需要禁用22号端口的时候，重新修改此文件，给 <code>Port22</code> 前面加上 <code>#</code>，并重新启动服务即可。</li>
+<li>到时候需要禁用22号端口的时候，重新修改此文件，给 <code>Port22</code>
+前面加上 <code>#</code>，并重新启动服务即可。</li>
 </ul>
 <h1 id="二查看selinux开放情况">二、查看SELinux开放情况</h1>
-<p>见文章《<a target="_blank" rel="noopener" href="https://blog.liewzheng.cn/2019/03/03/Linux/SSH/%E4%BD%BF%E7%94%A8SELinux%E5%BC%80%E6%94%BESSH%E7%AB%AF%E5%8F%A3/">使用SELinux开放SSH端口</a>》</p>
+<p>见文章《<a
+target="_blank" rel="noopener" href="https://blog.liewzheng.cn/2019/03/03/Linux/SSH/%E4%BD%BF%E7%94%A8SELinux%E5%BC%80%E6%94%BESSH%E7%AB%AF%E5%8F%A3/">使用SELinux开放SSH端口</a>》</p>
 <p>如果没有安装SELinux或已关闭则略过。</p>
 <h1 id="三开启防火墙对应的端口">三、开启防火墙对应的端口</h1>
-<p>见文章《<a target="_blank" rel="noopener" href="https://blog.liewzheng.cn/2019/03/05/Linux/SSH/CentOS7%E5%AE%89%E8%A3%85iptables%E9%98%B2%E7%81%AB%E5%A2%99/">CentOS7安装iptables防火墙</a>》</p>
+<p>见文章《<a
+target="_blank" rel="noopener" href="https://blog.liewzheng.cn/2019/03/05/Linux/SSH/CentOS7%E5%AE%89%E8%A3%85iptables%E9%98%B2%E7%81%AB%E5%A2%99/">CentOS7安装iptables防火墙</a>》</p>
 <p>直接下载里面的脚本（或者复制粘贴），然后提升权限并运行。</p>
 <h1 id="四-重启服务">四、 重启服务</h1>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">service sshd restart</span><br><span class="line">service iptables restart</span><br><span class="line">reboot</span><br></pre></td></tr></table></figure>
-<p>此步骤如果使用了第三步骤的脚本之后，便可忽略，而 <code>reboot</code> 则可以看情况使用。</p>
+<p>此步骤如果使用了第三步骤的脚本之后，便可忽略，而 <code>reboot</code>
+则可以看情况使用。</p>
 <h1 id="五-尝试用新端口登陆ssh服务">五、 尝试用新端口登陆SSH服务</h1>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh -P 22222 root@******</span><br></pre></td></tr></table></figure>
 <p>更多防护技术请看参考链接里的文章。</p>
 <h1 id="参考链接">参考链接</h1>
 <ol type="1">
-<li>《<a target="_blank" rel="noopener" href="https://blog.phpgao.com/vps_ssh.html">VPS安全之SSH设置</a>》</li>
+<li>《<a
+target="_blank" rel="noopener" href="https://blog.phpgao.com/vps_ssh.html">VPS安全之SSH设置</a>》</li>
 </ol>
 
     </div>
@@ -347,13 +353,13 @@
   </script>
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/2019/02/13/Others/%E7%A1%AC%E4%BB%B6%E7%B3%BB%E7%BB%9F%E6%B5%8B%E8%AF%95/%E7%A1%AC%E4%BB%B6%E7%B3%BB%E7%BB%9F%E6%B5%8B%E8%AF%95%E6%9C%AF%E8%AF%AD%E6%95%B4%E7%90%86/" rel="prev" title="硬件系统测试术语整理">
-                  <i class="fa fa-chevron-left"></i> 硬件系统测试术语整理
+                <a href="/2019/03/03/Linux/SSH/%E4%BD%BF%E7%94%A8SELinux%E5%BC%80%E6%94%BESSH%E7%AB%AF%E5%8F%A3/" rel="prev" title="使用SELinux开放SSH端口">
+                  <i class="fa fa-chevron-left"></i> 使用SELinux开放SSH端口
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/2019/03/03/Linux/SSH/%E4%BD%BF%E7%94%A8SELinux%E5%BC%80%E6%94%BESSH%E7%AB%AF%E5%8F%A3/" rel="next" title="使用SELinux开放SSH端口">
-                  使用SELinux开放SSH端口 <i class="fa fa-chevron-right"></i>
+                <a href="/2019/03/05/Linux/SSH/CentOS7%E5%AE%89%E8%A3%85iptables%E9%98%B2%E7%81%AB%E5%A2%99/" rel="next" title="CentOS7安装iptables防火墙">
+                  CentOS7安装iptables防火墙 <i class="fa fa-chevron-right"></i>
                 </a>
             </div>
           </div>

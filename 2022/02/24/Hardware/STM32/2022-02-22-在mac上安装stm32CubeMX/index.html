@@ -22,12 +22,12 @@
   <script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"islet.space","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.7.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/db.json","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":true}}</script><script src="/js/config.js"></script>
-<meta name="description" content="TOOLS DOWNLOAD AND SETUP 在 ST 官网下载了 CubeMX 的 Mac 版软件，然后会发现关闭安全相关的限制也没办法打开该软件包。  image-20220222205346872  通过 tree 命令查看目录可以找到一个叫 SetupSTM32CubeMX-6_3_0 的应用程序，运行该文件即可进行安装。  image-20220222205452868  Mac 系">
+<meta name="description" content="TOOLS DOWNLOAD AND SETUP 在 ST 官网下载了 CubeMX 的 Mac 版软件，然后会发现关闭安全相关的限制也没办法打开该软件包。   image-20220222205346872  通过 tree 命令查看目录可以找到一个叫 SetupSTM32CubeMX-6_3_0 的应用程序，运行该文件即可进行安装。   image-20220222205452868  Mac">
 <meta property="og:type" content="article">
 <meta property="og:title" content="在mac上安装stm32CubeMX">
 <meta property="og:url" content="http://islet.space/2022/02/24/Hardware/STM32/2022-02-22-%E5%9C%A8mac%E4%B8%8A%E5%AE%89%E8%A3%85stm32CubeMX/index.html">
 <meta property="og:site_name" content="Coder的孤岛">
-<meta property="og:description" content="TOOLS DOWNLOAD AND SETUP 在 ST 官网下载了 CubeMX 的 Mac 版软件，然后会发现关闭安全相关的限制也没办法打开该软件包。  image-20220222205346872  通过 tree 命令查看目录可以找到一个叫 SetupSTM32CubeMX-6_3_0 的应用程序，运行该文件即可进行安装。  image-20220222205452868  Mac 系">
+<meta property="og:description" content="TOOLS DOWNLOAD AND SETUP 在 ST 官网下载了 CubeMX 的 Mac 版软件，然后会发现关闭安全相关的限制也没办法打开该软件包。   image-20220222205346872  通过 tree 命令查看目录可以找到一个叫 SetupSTM32CubeMX-6_3_0 的应用程序，运行该文件即可进行安装。   image-20220222205452868  Mac">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://pic.islet.space/2022/02/image-20220222205346872.png">
 <meta property="og:image" content="https://pic.islet.space/2022/02/image-20220222205452868.png">
@@ -43,7 +43,7 @@
 <meta property="og:image" content="https://pic.islet.space/2022/02/image-20220222230947465.png">
 <meta property="og:image" content="https://pic.islet.space/2022/02/image-20220222235232398.png">
 <meta property="article:published_time" content="2022-02-23T18:00:00.000Z">
-<meta property="article:modified_time" content="2022-02-22T16:06:22.014Z">
+<meta property="article:modified_time" content="2022-02-22T16:06:22.000Z">
 <meta property="article:author" content="Liewzheng">
 <meta property="article:tag" content="stm32">
 <meta property="article:tag" content="mac">
@@ -169,7 +169,9 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#tools-download-and-setup"><span class="nav-number">1.</span> <span class="nav-text">TOOLS DOWNLOAD AND SETUP</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#new-project"><span class="nav-number">2.</span> <span class="nav-text">NEW PROJECT</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#debug-records"><span class="nav-number">3.</span> <span class="nav-text">DEBUG RECORDS</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#attempt-to-rename-spec-link-to-already-defined-spec-nano_link"><span class="nav-number">3.1.</span> <span class="nav-text">ATTEMPT TO RENAME SPEC &#39;LINK&#39; TO ALREADY DEFINED SPEC &#39;NANO_LINK&#39;</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95"><span class="nav-number">3.1.1.</span> <span class="nav-text">解决方法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#warning-cannot-find-entry-symbol-arch_paths_first"><span class="nav-number">3.2.</span> <span class="nav-text">WARNING: CANNOT FIND ENTRY SYMBOL ARCH_PATHS_FIRST</span></a></li></ol></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#tools-download-and-setup"><span class="nav-number">1.</span> <span class="nav-text">TOOLS DOWNLOAD AND SETUP</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#new-project"><span class="nav-number">2.</span> <span class="nav-text">NEW PROJECT</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#debug-records"><span class="nav-number">3.</span> <span class="nav-text">DEBUG RECORDS</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#attempt-to-rename-spec-link-to-already-defined-spec-nano_link"><span class="nav-number">3.1.</span> <span class="nav-text">ATTEMPT
+TO RENAME SPEC &#39;LINK&#39; TO ALREADY DEFINED SPEC &#39;NANO_LINK&#39;</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95"><span class="nav-number">3.1.1.</span> <span class="nav-text">解决方法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#warning-cannot-find-entry-symbol-arch_paths_first"><span class="nav-number">3.2.</span> <span class="nav-text">WARNING:
+CANNOT FIND ENTRY SYMBOL ARCH_PATHS_FIRST</span></a></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -182,7 +184,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">119</span>
+          <span class="site-state-item-count">124</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -193,7 +195,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">222</span>
+        <span class="site-state-item-count">230</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -294,62 +296,108 @@
     
     <div class="post-body" itemprop="articleBody">
         <h1 id="tools-download-and-setup">TOOLS DOWNLOAD AND SETUP</h1>
-<p>在 ST 官网下载了 CubeMX 的 Mac 版软件，然后会发现关闭安全相关的限制也没办法打开该软件包。</p>
+<p>在 ST 官网下载了 CubeMX 的 Mac
+版软件，然后会发现关闭安全相关的限制也没办法打开该软件包。</p>
 <figure>
-<img src="https://pic.islet.space/2022/02/image-20220222205346872.png" alt="image-20220222205346872" /><figcaption aria-hidden="true">image-20220222205346872</figcaption>
+<img src="https://pic.islet.space/2022/02/image-20220222205346872.png"
+alt="image-20220222205346872" />
+<figcaption aria-hidden="true">image-20220222205346872</figcaption>
 </figure>
-<p>通过 <code>tree</code> 命令查看目录可以找到一个叫 <code>SetupSTM32CubeMX-6_3_0</code> 的应用程序，运行该文件即可进行安装。</p>
+<p>通过 <code>tree</code> 命令查看目录可以找到一个叫
+<code>SetupSTM32CubeMX-6_3_0</code>
+的应用程序，运行该文件即可进行安装。</p>
 <figure>
-<img src="https://pic.islet.space/2022/02/image-20220222205452868.png" alt="image-20220222205452868" /><figcaption aria-hidden="true">image-20220222205452868</figcaption>
+<img src="https://pic.islet.space/2022/02/image-20220222205452868.png"
+alt="image-20220222205452868" />
+<figcaption aria-hidden="true">image-20220222205452868</figcaption>
 </figure>
-<p>Mac 系统上可运行的程序都是 <code>.App</code> 结尾的文件夹，直接点击右键的 <code>显示包内容</code> 即可进入查看。</p>
+<p>Mac 系统上可运行的程序都是 <code>.App</code>
+结尾的文件夹，直接点击右键的 <code>显示包内容</code> 即可进入查看。</p>
 <figure>
-<img src="https://pic.islet.space/2022/02/image-20220222205524560.png" alt="image-20220222205524560" /><figcaption aria-hidden="true">image-20220222205524560</figcaption>
+<img src="https://pic.islet.space/2022/02/image-20220222205524560.png"
+alt="image-20220222205524560" />
+<figcaption aria-hidden="true">image-20220222205524560</figcaption>
 </figure>
 <p>双击 <code>SetupSTM32CubeMX-6_3_0</code> 即可运行安装程序。</p>
 <figure>
-<img src="https://pic.islet.space/2022/02/image-20220222205545346.png" alt="image-20220222205545346" /><figcaption aria-hidden="true">image-20220222205545346</figcaption>
+<img src="https://pic.islet.space/2022/02/image-20220222205545346.png"
+alt="image-20220222205545346" />
+<figcaption aria-hidden="true">image-20220222205545346</figcaption>
 </figure>
 <h1 id="new-project">NEW PROJECT</h1>
-<p>在 CubeMX 的 Home 界面，可以 <strong>根据芯片型号新建项目</strong>，也可以 <strong>根据ST板子型号新建项目</strong>。</p>
+<p>在 CubeMX 的 Home 界面，可以
+<strong>根据芯片型号新建项目</strong>，也可以
+<strong>根据ST板子型号新建项目</strong>。</p>
 <figure>
-<img src="https://pic.islet.space/2022/02/image-20220222213510204.png" alt="image-20220222213510204" /><figcaption aria-hidden="true">image-20220222213510204</figcaption>
+<img src="https://pic.islet.space/2022/02/image-20220222213510204.png"
+alt="image-20220222213510204" />
+<figcaption aria-hidden="true">image-20220222213510204</figcaption>
 </figure>
 <p>只需要在对应需要的 MCU 或者 板子上双击即可。</p>
 <figure>
-<img src="https://pic.islet.space/2022/02/image-20220222213140557.png" alt="image-20220222213140557" /><figcaption aria-hidden="true">image-20220222213140557</figcaption>
+<img src="https://pic.islet.space/2022/02/image-20220222213140557.png"
+alt="image-20220222213140557" />
+<figcaption aria-hidden="true">image-20220222213140557</figcaption>
 </figure>
-<p>如果使用ST自家的评估板，新建项目时建议直接选择 <code>ACCESS TO BOARD SELECTOR</code> 。</p>
+<p>如果使用ST自家的评估板，新建项目时建议直接选择
+<code>ACCESS TO BOARD SELECTOR</code> 。</p>
 <figure>
-<img src="https://pic.islet.space/2022/02/image-20220222212802407.png" alt="image-20220222212802407" /><figcaption aria-hidden="true">image-20220222212802407</figcaption>
+<img src="https://pic.islet.space/2022/02/image-20220222212802407.png"
+alt="image-20220222212802407" />
+<figcaption aria-hidden="true">image-20220222212802407</figcaption>
 </figure>
-<p>它会帮助默认设置一些板子上的外设（它会提示 <code>Initialize all peripherals with their default Mode?</code> ），就不用用户自己去设置，否则选择 <code>ACCESS TO MCU SELECTOR</code> 就会在某些地方上产生默认配置差异，如 GPIO。</p>
+<p>它会帮助默认设置一些板子上的外设（它会提示
+<code>Initialize all peripherals with their default Mode?</code>
+），就不用用户自己去设置，否则选择 <code>ACCESS TO MCU SELECTOR</code>
+就会在某些地方上产生默认配置差异，如 GPIO。</p>
 <figure>
-<img src="https://pic.islet.space/2022/02/image-20220222213201459.png" alt="image-20220222213201459" /><figcaption aria-hidden="true">image-20220222213201459</figcaption>
+<img src="https://pic.islet.space/2022/02/image-20220222213201459.png"
+alt="image-20220222213201459" />
+<figcaption aria-hidden="true">image-20220222213201459</figcaption>
 </figure>
-<p>下图为根据 ST 板子型号生成项目时默认配置的一些外设引脚。当然，还需要自行设置各个需要使用到的引脚的具体配置，如输入/输出、拉高/拉低等等。</p>
+<p>下图为根据 ST
+板子型号生成项目时默认配置的一些外设引脚。当然，还需要自行设置各个需要使用到的引脚的具体配置，如输入/输出、拉高/拉低等等。</p>
 <p><img src="https://pic.islet.space/2022/02/image-20220222213417943.png" alt="image-20220222213417943" style="zoom:33%;" /></p>
 <p>下图为根据 ST 芯片信号生成项目时默认不配置任何引脚：</p>
 <p><img src="https://pic.islet.space/2022/02/image-20220222213744404.png" alt="image-20220222213744404" style="zoom:33%;" /></p>
 <h1 id="debug-records">DEBUG RECORDS</h1>
-<h2 id="attempt-to-rename-spec-link-to-already-defined-spec-nano_link">ATTEMPT TO RENAME SPEC 'LINK' TO ALREADY DEFINED SPEC 'NANO_LINK'</h2>
-<p><code>cmake .. ; make</code> 时发现 <code>cmake</code> 无误，而 <code>make</code> 报错，提示 <code>attempt to rename sepc 'link' to already defined spec 'nano_link'</code>。</p>
+<h2
+id="attempt-to-rename-spec-link-to-already-defined-spec-nano_link">ATTEMPT
+TO RENAME SPEC 'LINK' TO ALREADY DEFINED SPEC 'NANO_LINK'</h2>
+<p><code>cmake .. ; make</code> 时发现 <code>cmake</code> 无误，而
+<code>make</code> 报错，提示
+<code>attempt to rename sepc 'link' to already defined spec 'nano_link'</code>。</p>
 <figure>
-<img src="https://pic.islet.space/2022/02/image-20220222224906371.png" alt="image-20220222224906371" /><figcaption aria-hidden="true">image-20220222224906371</figcaption>
+<img src="https://pic.islet.space/2022/02/image-20220222224906371.png"
+alt="image-20220222224906371" />
+<figcaption aria-hidden="true">image-20220222224906371</figcaption>
 </figure>
 <p>具体报错信息如下：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">fatal error: &#x2F;Users&#x2F;liewzheng&#x2F;bin&#x2F;gcc-arm-none-eabi-5_4-2016q3&#x2F;bin&#x2F;..&#x2F;lib&#x2F;gcc&#x2F;arm-none-eabi&#x2F;5.4.1&#x2F;..&#x2F;..&#x2F;..&#x2F;..&#x2F;arm-none-eabi&#x2F;lib&#x2F;nano.specs: attempt to rename spec &#39;link&#39; to already defined spec &#39;nano_link&#39;</span><br><span class="line">compilation terminated.</span><br><span class="line">make[2]: *** [led_blink.elf] Error 1</span><br><span class="line">make[1]: *** [CMakeFiles&#x2F;led_blink.elf.dir&#x2F;all] Error 2</span><br><span class="line">make: *** [all] Error 2</span><br></pre></td></tr></table></figure>
-<p>而 <code>CMakeLists.txt</code> 文件中只有以下此句设计 <code>spec</code> 和 <code>nano</code> 关键字（下方注释是后来加上去的），此配置在 linux 平台上是运行正常的。</p>
+<p>而 <code>CMakeLists.txt</code> 文件中只有以下此句设计
+<code>spec</code> 和 <code>nano</code>
+关键字（下方注释是后来加上去的），此配置在 linux
+平台上是运行正常的。</p>
 <figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 如果提示 linker 相关的错误，请删除  `-specs=nosys.specs` 和 `-specs=nano.specs` 这两个标志及所在临时文件夹并再次 `cmake .. ; make` 进行尝试</span></span><br><span class="line"><span class="keyword">SET</span>(CPU <span class="string">&quot;-mcpu=cortex-m4&quot;</span>)</span><br><span class="line"><span class="keyword">SET</span>(FPU <span class="string">&quot;-mfpu=fpv4-sp-d16&quot;</span>)</span><br><span class="line"><span class="keyword">SET</span>(FLOAT_ABI <span class="string">&quot;-mfloat-abi=hard&quot;</span>)</span><br><span class="line"><span class="keyword">SET</span>(MCU <span class="string">&quot;$&#123;CPU&#125; -mthumb $&#123;FPU&#125; $&#123;FLOAT_ABI&#125;&quot;</span> --specs=nosys.specs -specs=nano.specs)</span><br></pre></td></tr></table></figure>
 <h3 id="解决方法">解决方法</h3>
-<p>根据 <a target="_blank" rel="noopener" href="https://community.st.com/s/question/0D50X00009XkWJiSAN/building-error-from-imported-stm32cubemx-project">Building Error from imported STM32CubeMX project</a> 的解决方法，删除 <code>-specs=nosys.specs</code> 和 <code>-specs=nano.specs</code> 这两个连接器的标志即可编译通过。</p>
+<p>根据 <a
+target="_blank" rel="noopener" href="https://community.st.com/s/question/0D50X00009XkWJiSAN/building-error-from-imported-stm32cubemx-project">Building
+Error from imported STM32CubeMX project</a> 的解决方法，删除
+<code>-specs=nosys.specs</code> 和 <code>-specs=nano.specs</code>
+这两个连接器的标志即可编译通过。</p>
 <figure>
-<img src="https://pic.islet.space/2022/02/image-20220222230947465.png" alt="image-20220222230947465" /><figcaption aria-hidden="true">image-20220222230947465</figcaption>
+<img src="https://pic.islet.space/2022/02/image-20220222230947465.png"
+alt="image-20220222230947465" />
+<figcaption aria-hidden="true">image-20220222230947465</figcaption>
 </figure>
-<p>删除该两个标志后，<code>MCU</code> 变量为 <code>SET(MCU "$&#123;CPU&#125; -mthumb $&#123;FPU&#125; $&#123;FLOAT_ABI&#125;"</code>。</p>
-<h2 id="warning-cannot-find-entry-symbol-arch_paths_first">WARNING: CANNOT FIND ENTRY SYMBOL ARCH_PATHS_FIRST</h2>
+<p>删除该两个标志后，<code>MCU</code> 变量为
+<code>SET(MCU "$&#123;CPU&#125; -mthumb $&#123;FPU&#125; $&#123;FLOAT_ABI&#125;"</code>。</p>
+<h2 id="warning-cannot-find-entry-symbol-arch_paths_first">WARNING:
+CANNOT FIND ENTRY SYMBOL ARCH_PATHS_FIRST</h2>
 <figure>
-<img src="https://pic.islet.space/2022/02/image-20220222235232398.png" alt="image-20220222235232398" /><figcaption aria-hidden="true">image-20220222235232398</figcaption>
+<img src="https://pic.islet.space/2022/02/image-20220222235232398.png"
+alt="image-20220222235232398" />
+<figcaption aria-hidden="true">image-20220222235232398</figcaption>
 </figure>
 
     </div>
@@ -400,7 +448,7 @@
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/2022/03/26/Programming/2022-03-26-matplotlib%E5%9B%BE%E5%BD%A2%E7%BB%98%E5%88%B6/" rel="next" title="matplotlib图形绘制">
+                <a href="/2022/03/26/Programming/Python/2022-03-26-matplotlib%E5%9B%BE%E5%BD%A2%E7%BB%98%E5%88%B6/" rel="next" title="matplotlib图形绘制">
                   matplotlib图形绘制 <i class="fa fa-chevron-right"></i>
                 </a>
             </div>

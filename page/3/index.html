@@ -162,7 +162,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">119</span>
+          <span class="site-state-item-count">124</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -173,7 +173,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">222</span>
+        <span class="site-state-item-count">230</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -207,6 +207,1126 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://islet.space/2022/01/23/Computer/2022-01-23-%E7%BB%99Mac-Big-Sur%E4%BF%AE%E6%94%B9%E5%A4%96%E6%8E%A5%E6%98%BE%E7%A4%BA%E5%99%A8%E7%9A%84%E5%88%86%E8%BE%A8%E7%8E%87/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Liewzheng">
+      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coder的孤岛">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/01/23/Computer/2022-01-23-%E7%BB%99Mac-Big-Sur%E4%BF%AE%E6%94%B9%E5%A4%96%E6%8E%A5%E6%98%BE%E7%A4%BA%E5%99%A8%E7%9A%84%E5%88%86%E8%BE%A8%E7%8E%87/" class="post-title-link" itemprop="url">给Mac Big Sur修改外接显示器的分辨率</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2022-01-23 17:30:00 / Modified: 18:11:59" itemprop="dateCreated datePublished" datetime="2022-01-23T17:30:00+08:00">2022-01-23</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Computer/" itemprop="url" rel="index"><span itemprop="name">Computer</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>本文参考 《<a target="_blank" rel="noopener" href="https://zhangzi.life/articles/1605255382000">Mac
+外接显示器色彩问题</a>》和 《<a target="_blank" rel="noopener" href="https://sspai.com/post/57549#!">为
+macOS 10.15 开启 HiDPI，让 2K 显示器更舒适</a>》两篇文章。</p>
+<p>刚买来新的 HUAWEI Mateview 无线版，显示器分辨率为
+<code>3840*2560</code> ，该死的 <code>3:2</code>
+屏幕啊，我图啥......</p>
+<p>外接2015年的Macbook Air的MiniDP口输出准4K分辨率。</p>
+<p>但是，但是，但是~~Air只能输出 <code>16:9</code> 和 <code>16:10</code>
+的分辨率，让我搞了整整一下午来调整这个分辨率，4个小时啊。</p>
+<p>算了，总结一下吧。</p>
+<h1 id="关闭sip">关闭SIP</h1>
+<p>Big sur 和之前版本不同，需要的操作如下：</p>
+<ol type="1">
+<li>关机</li>
+<li>长按 <code>Command</code> 键 和 <code>R</code>
+键（都不要松开），短按 开机电源键，直到出现进度条才能松开。</li>
+<li>找到终端，然后输入 <code>csrutil authenticated-root disable</code>
+，出现 <code>successfully</code> 字样就算是成功了。（之前的版本是
+<code>csrutil disable</code> ）</li>
+</ol>
+<h1 id="查询设备号">查询设备号</h1>
+<ol type="1">
+<li>先断开显示器，输入如下代码：</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ioreg -l | grep <span class="string">&quot;DisplayVendorID&quot;</span></span><br><span class="line">ioreg -l | grep <span class="string">&quot;DisplayProductID&quot;</span></span><br></pre></td></tr></table></figure>
+<ol start="2" type="1">
+<li>再插上显示器，再次运行上方代码。</li>
+<li>两次得出来的不同的设备号就可以区分哪个 <code>VendorID</code> 和
+<code>ProductID</code> 是外接显示器的。</li>
+</ol>
+<figure>
+<img src="https://pic.islet.space/2022/01/image-20220123175000229.png"
+alt="image-20220123175000229" />
+<figcaption aria-hidden="true">image-20220123175000229</figcaption>
+</figure>
+<ol start="4" type="1">
+<li>记下那串代码，并将外接显示器的两个ID转换成对应的十六进制数， 如
+<code>8950</code> 即 <code>22f6</code> , <code>28194</code> 即
+<code>66e2</code></li>
+</ol>
+<h1 id="生成配置参数">生成配置参数</h1>
+<ol type="1">
+<li>在用户目录 ，即 <code>~</code> 下，使用
+<code>DisplayVendorID-xxxx</code> （<code>xxxx</code> 即对应外接显示器
+Vendor 号的16进制 ）创建一个文件夹。</li>
+<li>然后在对应文件夹下创建一个 使用 <code>DisplayProductID-yyyy</code>
+（ yyyy` 即对应外接显示器 Product 号的16进制
+）创建一个无后缀名的文件。</li>
+<li>到 <a
+target="_blank" rel="noopener" href="https://codeclou.github.io/Display-Override-PropertyList-File-Parser-and-Generator-with-HiDPI-Support-For-Scaled-Resolutions/">Scaled
+Resolution for your Mac</a>
+网站生成配置参数，在红色框中分别填入你外接显示器的对应参数，和你想使你的显示器所呈现的分辨率参数。</li>
+</ol>
+<figure>
+<img src="https://pic.islet.space/2022/01/image-20220123175609151.png"
+alt="image-20220123175609151" />
+<figcaption aria-hidden="true">image-20220123175609151</figcaption>
+</figure>
+<ol start="4" type="1">
+<li>复制右侧的 xml 代码至刚刚的 <code>DisplayProductID-yyyy</code>
+文件中，并保存。</li>
+</ol>
+<h1 id="导入系统">导入系统</h1>
+<p>在Big Sur系统下，根目录 <code>/</code>
+是禁止写入的，需要稍微用点技巧（走点弯路）。</p>
+<ol type="1">
+<li>新建一个文件夹，将解除SIP之后的 <code>/</code>
+挂载到某个地方，如下方所示：</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mkdir ~/nvme</span><br><span class="line">sudo mount -o nobrowse -t apfs /dev/disk1s5 ~/nvme/</span><br></pre></td></tr></table></figure>
+<p>其中，<code>/dev/disk1s5</code> 中的 <code>/disk1s5</code> 要通过
+<strong>磁盘工具</strong> 各自查看自己的 <strong>设备</strong>
+，最后面的 <code>s1</code> 去掉不写。</p>
+<figure>
+<img src="https://pic.islet.space/2022/01/image-20220123173550666.png"
+alt="image-20220123173550666" />
+<figcaption aria-hidden="true">image-20220123173550666</figcaption>
+</figure>
+<ol start="2" type="1">
+<li>然后就可以 <code>cd</code>
+进去查看对应目录下的文件内容，但是所有读写操作都需要加上
+<code>sudo</code> 才可以。</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> ~/nvme/System/Library/Displays/Contents/Resources/Overrides</span><br><span class="line">ls</span><br></pre></td></tr></table></figure>
+<figure>
+<img src="https://pic.islet.space/2022/01/image-20220123173806535.png"
+alt="image-20220123173806535" />
+<figcaption aria-hidden="true">image-20220123173806535</figcaption>
+</figure>
+<ol start="3" type="1">
+<li>把 <code>~/DisplayVendorID-xxxx</code> 复制到
+<code>~/nvme/System/Library/Displays/Contents/Resources/Overrides</code>
+里面：</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo cp -r ~/DisplayVendorID-22f6 ~/nvme/System/Library/Displays/Contents/Resources/Overrides/DisplayVendorID-22f6</span><br></pre></td></tr></table></figure>
+<p>复制完毕之后可以再 <code>ls</code> 查看，就存在了。</p>
+<ol start="4" type="1">
+<li>但是这种复制只是一种暂时的，重启之后就会被镜像文件所覆盖，所以要重新
+snapshot
+一下。<mark style="font-weight: 900;">注意，这一步一定要做，否则重启就失效了。</mark></li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo bless --folder ~/nvme/System/Library/Displays/Contents/Resources/Overrides --bootefi --create-snapshot</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://islet.space/2022/01/22/Hardware/STM32/2022-01-22-STM32-NUCLEOL476RG-DEVELOP/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Liewzheng">
+      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coder的孤岛">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/01/22/Hardware/STM32/2022-01-22-STM32-NUCLEOL476RG-DEVELOP/" class="post-title-link" itemprop="url">STM32-NUCLEOL476RG DEVELOP</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2022-01-22 19:30:00" itemprop="dateCreated datePublished" datetime="2022-01-22T19:30:00+08:00">2022-01-22</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2022-01-24 08:38:28" itemprop="dateModified" datetime="2022-01-24T08:38:28+08:00">2022-01-24</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/InternetOfThings/" itemprop="url" rel="index"><span itemprop="name">InternetOfThings</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>截止2022年1月23日，以下是ST公司的产品线，下图通过Flash大小和Nucleo类型对产品进行了一定划分。</p>
+<p><img src="https://pic.islet.space/2022/01/en.ln1847_stm32_nucleo.jpg" alt="img" style="zoom: 67%;" /></p>
+<h1 id="necleo-l476rg-data-brief">NECLEO-L476RG DATA BRIEF</h1>
+<p>Necleo系列开发板下面有很多型号，且每个型号的板子（除开芯片以外）设计应该都是大同小异的，所以最底层板子也就有了自己的型号。</p>
+<p>而 NecleoL476RG 开发板的底板型号为 <code>MB1136</code>
+。且下方所有Necleo的产品都自带 ST-LINK/V2-1 调试器。</p>
+<figure>
+<img src="https://pic.islet.space/2022/01/image-20220122193806691.png"
+alt="image-20220122193806691" />
+<figcaption aria-hidden="true">image-20220122193806691</figcaption>
+</figure>
+<h2 id="st-linkv2-1">ST-LINK/V2-1</h2>
+<p>支持USB软件 <strong>重新检查</strong>（re-enumeration）
+、支持虚拟COM口、支持大容量储存、支持超过 <code>100mA</code>
+电流的电源管理，但是不支持 <strong><em>SWIM</em></strong>
+接口且最小输入电压为 <code>3V</code> 。</p>
+<p>注意：一旦激活了 ST-LINK/V2-1
+的目标读出保护功能，就会阻止目标应用运行事后运行（prevents the target
+application from running afterward.）目标读出保护必须被关闭（must be
+kept disabled on board）。</p>
+<p>可以根据跳线帽的两种状态来使用 ST-LINK/V2-1:</p>
+<ul>
+<li>在线编程和调试STM32（Program/debug the on-board STM32），此时
+<code>CN2</code> 的两个跳线帽都连接着，处于在线编程状态（默认）。</li>
+<li>使用连接到SWD连接器CN4的电缆对外部应用板中的MCU进行编程/调试，此时
+<code>CN2</code> 的两个跳线帽都不连接，以允许 <code>CN4</code> （即
+<code>SWD</code> 接口）连接至外部连接器。</li>
+</ul>
+<figure>
+<img src="https://pic.islet.space/2022/01/image-20220123183857115.png"
+alt="image-20220123183857115" />
+<figcaption aria-hidden="true">image-20220123183857115</figcaption>
+</figure>
+<h2 id="layout">LAYOUT</h2>
+<p><img src="https://pic.islet.space/2022/01/image-20220123182028068.png" alt="image-20220123182028068" style="zoom:50%;" /></p>
+<p><img src="https://pic.islet.space/2022/01/image-20220123182139437.png" alt="image-20220123182139437" style="zoom:50%;" /></p>
+<h1 id="chip-breief">CHIP BREIEF</h1>
+<p>STM32 Nucleo L476RG 所使用的芯片是 <code>STM32L476RGT6U</code>，其中
+<code>L4</code> 是系列号，<code>76</code> 是产线，<code>R</code>
+是指64pin，<code>C</code> 是指 256Kbytes 的 Flash内存大小。</p>
+<p>下方为《<a
+target="_blank" rel="noopener" href="https://www.st.com/resource/en/data_brief/nucleo-l476rg.pdf">STM32
+Nucleo-64 boards data brief</a>》提供的
+<strong>产品芯片命名方法</strong>：</p>
+<figure>
+<img src="https://pic.islet.space/2022/01/image-20220122195540612.png"
+alt="image-20220122195540612" />
+<figcaption aria-hidden="true">image-20220122195540612</figcaption>
+</figure>
+<h1 id="reference">REFERENCE</h1>
+<ol type="1">
+<li><a
+target="_blank" rel="noopener" href="https://www.st.com/en/evaluation-tools/nucleo-l476rg.html">NUCLEO-L476RG</a></li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://islet.space/2022/01/22/Linux/2022-01-22-customize-vscode-font-in-debian-linux/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Liewzheng">
+      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coder的孤岛">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/01/22/Linux/2022-01-22-customize-vscode-font-in-debian-linux/" class="post-title-link" itemprop="url">customize vscode font in debian linux</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2022-01-22 15:20:00 / Modified: 16:19:33" itemprop="dateCreated datePublished" datetime="2022-01-22T15:20:00+08:00">2022-01-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="install-fonts-on-debian-linux">INSTALL FONTS ON DEBIAN
+LINUX</h1>
+<p>We can install <strong><em>True Type</em></strong> or
+<strong><em>Open Type</em></strong> fonts(<code>.ttf</code> /
+<code>.otf</code> / <code>.ttc</code>) in <em>DEBIAN LINUX</em>, like
+ubuntu or kali.</p>
+<h2 id="download-font-from-website">DOWNLOAD FONT FROM WEBSITE</h2>
+<ol type="1">
+<li>Download <code>Cascadia Code</code> from
+<code>https://github.com/microsoft/cascadia-code/releases</code> and
+unzip it.</li>
+<li>We got 3 folders here: <code>/otf/</code> , <code>/ttf/</code> and
+<code>woff2</code> , and we only need `ttf</li>
+</ol>
+<h2 id="copy-files-to-system-font-directory">COPY FILES TO SYSTEM FONT
+DIRECTORY</h2>
+<p>Font fils are generally installed in either the system font directory
+on the path <code>/usr/share/fonts/</code> or in a user font directory
+that is frequently on one of the following paths:</p>
+<ul>
+<li><code>~/.local/share/fonts/</code></li>
+<li><code>~/usr/local/share/fonts/</code></li>
+</ul>
+<ol type="1">
+<li>Execute the following command to copy the fonts to system path</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo cp -r ttf /usr/share/fonts/CascadiaCode</span><br></pre></td></tr></table></figure>
+<h2 id="generate-font-chache">GENERATE FONT CHACHE</h2>
+<p>We need to build font infomation caches for apps using fontconfig for
+their font handling.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> /usr/share/fonts/CascadiaCode</span><br><span class="line">fc-cache -f -v</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p><strong><em>NOTE</em></strong></p>
+<p>If you cannot execute <code>fc-cache</code> command , copy and
+execute the following command in terminal.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install fontconfig</span><br></pre></td></tr></table></figure>
+</blockquote>
+<h2 id="verify-the-font-installation">VERIFY THE FONT INSTALLATION</h2>
+<p>Confirm that the fonts are installed by displaying the paths and
+style definitions with <code>fc-list</code> command filtered on the font
+family name with <code>grep</code> .</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">fc-list | grep <span class="string">&quot;Cascadia Code&quot;</span></span><br></pre></td></tr></table></figure>
+<h1 id="customize-vscode">CUSTOMIZE VSCODE</h1>
+<ol type="1">
+<li>Get to <code>Setting</code></li>
+</ol>
+<figure>
+<img src="https://pic.islet.space/2022/01/image-20220122161611892.png"
+alt="image-20220122161611892" />
+<figcaption aria-hidden="true">image-20220122161611892</figcaption>
+</figure>
+<ol start="2" type="1">
+<li>Search <code>font</code> in the bar</li>
+</ol>
+<figure>
+<img src="https://pic.islet.space/2022/01/image-20220122161750043.png"
+alt="image-20220122161750043" />
+<figcaption aria-hidden="true">image-20220122161750043</figcaption>
+</figure>
+<ol start="3" type="1">
+<li>Add <code>'Cascadia Code',</code> to the
+<code>Editor: Font Family</code> .</li>
+<li>Restart vscode.</li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://islet.space/2022/01/11/Hardware/STM32/2022-01-11-%E5%85%89%E7%94%B5%E4%BC%A0%E6%84%9F%E5%99%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Liewzheng">
+      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coder的孤岛">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/01/11/Hardware/STM32/2022-01-11-%E5%85%89%E7%94%B5%E4%BC%A0%E6%84%9F%E5%99%A8/" class="post-title-link" itemprop="url">Optical Sensor Development</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2022-01-11 14:30:00" itemprop="dateCreated datePublished" datetime="2022-01-11T14:30:00+08:00">2022-01-11</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2022-01-23 19:37:19" itemprop="dateModified" datetime="2022-01-23T19:37:19+08:00">2022-01-23</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/InternetOfThings/" itemprop="url" rel="index"><span itemprop="name">InternetOfThings</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="基础技能">基础技能</h1>
+<ol type="1">
+<li>ARM架构芯片的样例代码加载、编译、烧录、调试工作熟悉。</li>
+<li>bitbucket
+如何使用（是否需要配置SSH、repository如何pull和push、add、commit等）
+√</li>
+<li>confluence 如何使用（任务的查看、提交、文章的发布、协作等等）</li>
+</ol>
+<h1 id="ide-for-realtek">IDE for Realtek</h1>
+<h2 id="vscode-arm">VSCODE ARM</h2>
+<figure>
+<img src="https://pic.islet.space/2022/01/image-20220112105541195.png"
+alt="image-20220112105541195" />
+<figcaption aria-hidden="true">image-20220112105541195</figcaption>
+</figure>
+<figure>
+<img src="https://pic.islet.space/2022/01/image-20220112110410253.png"
+alt="image-20220112110410253" />
+<figcaption aria-hidden="true">image-20220112110410253</figcaption>
+</figure>
+<figure>
+<img src="https://pic.islet.space/2022/01/image-20220112110533598.png"
+alt="image-20220112110533598" />
+<figcaption aria-hidden="true">image-20220112110533598</figcaption>
+</figure>
+<figure>
+<img src="https://pic.islet.space/2022/01/image-20220112110507665.png"
+alt="image-20220112110507665" />
+<figcaption aria-hidden="true">image-20220112110507665</figcaption>
+</figure>
+<figure>
+<img src="https://pic.islet.space/2022/01/image-20220112105734831.png"
+alt="image-20220112105734831" />
+<figcaption aria-hidden="true">image-20220112105734831</figcaption>
+</figure>
+<h2 id="keil-arm">KEIL ARM</h2>
+<p>将Realtek RTL8762D
+SDK中的项目单独摘出来，放到某个文件夹下进行管理时，需要单独更改好几处内容：</p>
+<ol type="1">
+<li>C/C++的Include Path</li>
+<li>源文件的Source Path</li>
+<li>APP Image（<code>.bin</code> 生成文件），即
+<code>after_build_common.bat</code> 的路径和内容。</li>
+</ol>
+<p>如下所示，把单独某个Project摘出来时会产生很多感叹号。</p>
+<figure>
+<img src="https://pic.islet.space/2022/01/image-20220112111951120.png"
+alt="image-20220112111951120" />
+<figcaption aria-hidden="true">image-20220112111951120</figcaption>
+</figure>
+<h3 id="头文件路径修改">头文件路径修改</h3>
+<p>此时需要进入设置中进行头文件路径修改</p>
+<figure>
+<img src="https://pic.islet.space/2022/01/image-20220112133356533.png"
+alt="image-20220112133356533" />
+<figcaption aria-hidden="true">image-20220112133356533</figcaption>
+</figure>
+<p>选择 <code>C/C++</code> 选项卡下的 <code>Include Paths</code>
+进行修改。</p>
+<figure>
+<img src="https://pic.islet.space/2022/01/image-20220112133505056.png"
+alt="image-20220112133505056" />
+<figcaption aria-hidden="true">image-20220112133505056</figcaption>
+</figure>
+<p>原来的路径设置都是使用相对路径进行的，此时需要将
+<code>sbee2-sdk-v1.0.0</code>
+文件夹放到与你项目文件同盘的某个文件夹下，最好不要相距太远。</p>
+<figure>
+<img src="https://pic.islet.space/2022/01/image-20220112133731688.png"
+alt="image-20220112133731688" />
+<figcaption aria-hidden="true">image-20220112133731688</figcaption>
+</figure>
+<p>可以使用 VS Code将 <code>.uvprojx</code>
+文件打开，使用搜索和替换工具对相关头文件的路径进行替换。</p>
+<h3 id="源文件路径修改">源文件路径修改</h3>
+<p>修改方法同头文件，</p>
+<figure>
+<img src="https://pic.islet.space/2022/01/image-20220117094508419.png"
+alt="image-20220117094508419" />
+<figcaption aria-hidden="true">image-20220117094508419</figcaption>
+</figure>
+<h3 id="bat文件路径修改">bat文件路径修改</h3>
+<p><code>.bat</code> 文件是用于在 <code>.o</code>
+文件生成后的链接脚本。所以如果该脚本自身路径和脚本内的包含路径出错，可能会导致无法编译出对应的
+<code>app_MP_adk#####</code> 文件。</p>
+<figure>
+<img src="https://pic.islet.space/2022/01/image-20220117095506866.png"
+alt="image-20220117095506866" />
+<figcaption aria-hidden="true">image-20220117095506866</figcaption>
+</figure>
+<p>下方为样例代码原来的设置情况：</p>
+<figure>
+<img src="https://pic.islet.space/2022/01/image-20220120134642405.png"
+alt="image-20220120134642405" />
+<figcaption aria-hidden="true">image-20220120134642405</figcaption>
+</figure>
+<p>在 <code>Option-User</code> 设置中，可以查看到
+<code>After Build/Rebuild</code> 相关的设置，其中 <code>Run #1</code>
+则是 Realtek MP Tools 需要烧录 EVB开发板相关的脚本文件。</p>
+<figure>
+<img src="https://pic.islet.space/2022/01/image-20220117095438927.png"
+alt="image-20220117095438927" />
+<figcaption aria-hidden="true">image-20220117095438927</figcaption>
+</figure>
+<p>将单独摘放出来的项目文件夹 <code>pixart_i2c</code> 与
+<code>sbee2-sdk-v1.0.0</code> 和
+<code>sbee2_wristband_sdk_upperstack_img</code> 放到同一个文件夹下。</p>
+<figure>
+<img src="https://pic.islet.space/2022/01/image-20220117110446703.png"
+alt="image-20220117110446703" />
+<figcaption aria-hidden="true">image-20220117110446703</figcaption>
+</figure>
+<p>因此修改 <code>.uvprojx</code> 文件内容下
+<code>after_build_common.bat</code>
+的路径时，将该路径修改为如下的相对路径即可：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">..\sbee2-sdk-v1.0.0\tool\after_build_common.bat <span class="variable">$J</span> <span class="comment">#L @L</span></span><br></pre></td></tr></table></figure>
+<figure>
+<img src="https://pic.islet.space/2022/01/image-20220117104943624.png"
+alt="image-20220117104943624" />
+<figcaption aria-hidden="true">image-20220117104943624</figcaption>
+</figure>
+<p>保存修改后的 <code>.uvprojx</code> 文件，可以看到 Keil V5
+自动更新了相关设置。如下：</p>
+<figure>
+<img src="https://pic.islet.space/2022/01/image-20220117104955125.png"
+alt="image-20220117104955125" />
+<figcaption aria-hidden="true">image-20220117104955125</figcaption>
+</figure>
+<p><code>after_build_common.bat</code> 控制着自动生成Realtek 的 MP Tool
+需要使用的 APP Bin文件，如果该 <code>Run #1</code>
+没有启用，则无法生产该文件。</p>
+<figure>
+<img src="https://pic.islet.space/2022/01/image-20220117105247314.png"
+alt="image-20220117105247314" />
+<figcaption aria-hidden="true">image-20220117105247314</figcaption>
+</figure>
+<p>该<code>.bat</code> 文件下所有的 <code>..\..\..\tool\</code>
+都要修改成
+<code>..\sbee2-sdk-v1.0.0\tool\</code>，如果项目文件夹和SDK文件夹路径有异，则需要适当修改。</p>
+<figure>
+<img src="https://pic.islet.space/2022/01/image-20220117105040885.png"
+alt="image-20220117105040885" />
+<figcaption aria-hidden="true">image-20220117105040885</figcaption>
+</figure>
+<p>启用完成之后即可生成对应 <code>app_MP_adk#####</code> 文件</p>
+<figure>
+<img src="https://pic.islet.space/2022/01/image-20220117105414578.png"
+alt="image-20220117105414578" />
+<figcaption aria-hidden="true">image-20220117105414578</figcaption>
+</figure>
+<h1 id="hardwares">HARDWARES</h1>
+<h2 id="adapter">ADAPTER</h2>
+<h3 id="specification">SPECIFICATION</h3>
+<p>A4芯片，即KA8G2芯片用的转接板需要接入5V电压，LDO会转换电压。</p>
+<p>而PAT9126JA芯片则使用两个3.3V进行接入。</p>
+<h2 id="chip-board">CHIP &amp; BOARD</h2>
+<p>开发测试板为 Realtek RTL8762D EVB KIT。</p>
+<p>型号： RTL8762DW</p>
+<h2 id="sensor---ka8g2">SENSOR - KA8G2</h2>
+<blockquote>
+<p><strong><em>KAG2</em></strong> is a high performance and ultra low
+power <strong><em>CMOS-processed optical image sensor</em></strong> with
+<em>integrated digital image process circuits</em>. It is based on an
+optical navigation technology which measures changes in position by
+optically acquiring sequential surface images(frames) and mathematically
+determining the speed, the direction and the magnitude of motion.
+<strong><em>The displacement delta_X and delta_Y information are
+available in registers which are accessible through SPI serial
+interface.</em></strong> A host controller reads and translates the data
+from the SPI serial interface into RF signals before sending them to the
+host PC.</p>
+</blockquote>
+<h3 id="specification-1">SPECIFICATION</h3>
+<p><img src="https://pic.islet.space/2022/01/image-20220113150323525.png" alt="image-20220113150323525" style="zoom:50%;" /></p>
+<h3 id="hardware-linking">HARDWARE LINKING</h3>
+<figure>
+<img src="https://pic.islet.space/2022/01/image-20220112172532934.png"
+alt="image-20220112172532934" />
+<figcaption aria-hidden="true">image-20220112172532934</figcaption>
+</figure>
+<figure>
+<img
+src="https://pic.islet.space/2022/01/%E4%BC%81%E4%B8%9A%E5%BE%AE%E4%BF%A1%E6%88%AA%E5%9B%BE_16391255852712.png"
+alt="企业微信截图_16391255852712" />
+<figcaption aria-hidden="true">企业微信截图_16391255852712</figcaption>
+</figure>
+<h3 id="chip-initiate">CHIP INITIATE</h3>
+<p>这个芯片启动时，需要对一些寄存器进行写入以初始化。下方为二维数组，<code>sensor_init_regs[][0]</code>
+为寄存器地址，<code>sensor_init_regs[][1]</code>
+为寄存器需要写入的数据。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">uint8_t</span> sensor_init_regs[<span class="number">7</span>][<span class="number">2</span>] = &#123;</span><br><span class="line">	&#123;<span class="number">0X09</span>, <span class="number">0XA5</span>&#125;,</span><br><span class="line">	&#123;<span class="number">0X26</span>, <span class="number">0X34</span>&#125;,</span><br><span class="line">	&#123;<span class="number">0X19</span>, <span class="number">0X04</span>&#125;,</span><br><span class="line">	&#123;<span class="number">0X6D</span>, <span class="number">0X39</span>&#125;,</span><br><span class="line">	&#123;<span class="number">0X0D</span>, <span class="number">0X20</span>&#125;,</span><br><span class="line">	&#123;<span class="number">0X0E</span>, <span class="number">0X20</span>&#125;,</span><br><span class="line">	&#123;<span class="number">0X09</span>, <span class="number">0X00</span>&#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>初始化时，需要注意以下问题：</p>
+<ol type="1">
+<li>某些主控芯片在使用两线SPI进行数据写入时，会有要求使用
+<code>7bit</code> 地址，且 MSB 为 <code>1</code>
+。此时需要判断是否需要认为修改地址的 MSB为 <code>1</code> ，例如 Realtek
+的 RTL8762DW
+芯片就不需要人为修改，人为修改会导致波形异常。而某些芯片需要人为写入MSB。</li>
+<li>在每一次写入寄存器之后，<mark style="font-weight: 900;">强烈建议进行延时</mark>，可以使用
+<code>delay(0xFFFF)</code>，（尝试过 <code>0xFF</code>
+太短，不能完成初始化写入）。</li>
+</ol>
+<h2 id="sensor---pat9126ja">SENSOR - PAT9126JA</h2>
+<ol type="1">
+<li>需要确定 <code>ID_SEL</code>
+引脚的连接情况，是拉高、接地还是悬空。分别对应的 <code>CHIP ID</code>
+都是不一样的，可能是<code>0x73</code>  <code>0x75</code>
+ <code>0x79</code> 三者之一。</li>
+</ol>
+<p>transformer 上的 <code>VCC</code> 为 <code>3.3V</code></p>
+<h3 id="specification-2">SPECIFICATION</h3>
+<p>这个芯片有两种电压要求，默认为高电压版本 <code>3.3V</code>
+，可以通过SPI写入寄存器和硬件并线来达到降低至 <code>1.8V</code>
+低电压的模式。</p>
+<h3 id="hadware-linking">HADWARE LINKING</h3>
+<figure>
+<img src="https://pic.islet.space/2022/01/OpticalSensorTransfer_I2C.png"
+alt="OpticalSensorTransfer_I2C" />
+<figcaption aria-hidden="true">OpticalSensorTransfer_I2C</figcaption>
+</figure>
+<h1 id="sdk-tools">SDK &amp; Tools</h1>
+<p>此处有 2个SDK包 和 3个tool包，分别是：</p>
+<ol type="1">
+<li><a
+target="_blank" rel="noopener" href="https://storage.islet.space/07_Mixosense/01_Realtek/RTL8762D/SDK/sbee2-sdk-v1.0.0.zip">sbee2-sdk-v1.0.0.zip</a></li>
+<li><a
+target="_blank" rel="noopener" href="https://storage.islet.space/07_Mixosense/01_Realtek/RTL8762D/SDK/sbee2_wristband_sdk_upperstack_img.zip">sbee2_wristband_sdk_upperstack_img.zip</a></li>
+<li><a
+target="_blank" rel="noopener" href="https://storage.islet.space/07_Mixosense/01_Realtek/RTL8762D/SDK/MPPackTool_v2.0.5.2.zip">MPPackTool_v2.0.5.2.zip</a></li>
+<li>日志输出软件：<a
+target="_blank" rel="noopener" href="https://storage.islet.space/07_Mixosense/01_Realtek/RTL8762D/SDK/DebugAnalyzer-v4.0.0.14.zip">DebugAnalyzer-v4.0.0.14.zip</a></li>
+<li>代码烧录软件：<a
+target="_blank" rel="noopener" href="https://storage.islet.space/07_Mixosense/01_Realtek/RTL8762D/SDK/BeeMPTool_kits_v1.0.5.0.zip">BeeMPTool_kits_v1.0.5.0.zip</a></li>
+</ol>
+<h1 id="build-flash-log">BUILD / FLASH / LOG</h1>
+<h2 id="build">BUILD</h2>
+<p>点击 <code>build</code> 按钮即可进行代码构建。</p>
+<figure>
+<img src="https://pic.islet.space/2022/01/image-20220113090856565.png"
+alt="image-20220113090856565" />
+<figcaption aria-hidden="true">image-20220113090856565</figcaption>
+</figure>
+<p><code>build</code> 完毕之后可以看到下方的成功提示
+<code>0 Error(s), 0 Warning(s)</code>。</p>
+<figure>
+<img src="https://pic.islet.space/2022/01/image-20220113091008941.png"
+alt="image-20220113091008941" />
+<figcaption aria-hidden="true">image-20220113091008941</figcaption>
+</figure>
+<h2 id="flash">FLASH</h2>
+<p>FLAHS需要经过 configuration 、 detect 和 download 三步</p>
+<h3 id="configuration">configuration</h3>
+<p>根据《RTL8762D SDK User Guide CN》文件，RTL8762D 的 EVB KIT
+是可以支持 JLINK 的（如下图所示）。</p>
+<p><img src="https://pic.islet.space/2022/01/image-20220113095321215.png" alt="image-20220113095321215" style="zoom:50%;" /></p>
+<p>但这里并未使用 JLINK，而是使用 Realtek 专门的工具
+<code>BeeMPTool_kits</code>， 通过 <code>UART</code> 进行烧录。</p>
+<figure>
+<img src="https://pic.islet.space/2022/01/image-20220113095804076.png"
+alt="image-20220113095804076" />
+<figcaption aria-hidden="true">image-20220113095804076</figcaption>
+</figure>
+<p>打开 <code>MPTool.exe</code> ，并选中对应的芯片型号
+<code>RTL8762D</code> ：</p>
+<figure>
+<img src="https://pic.islet.space/2022/01/image-20220113095854784.png"
+alt="image-20220113095854784" />
+<figcaption aria-hidden="true">image-20220113095854784</figcaption>
+</figure>
+<p>在这里选择 <code>调试</code> 模式进行烧录</p>
+<figure>
+<img src="https://pic.islet.space/2022/01/image-20220113095949881.png"
+alt="image-20220113095949881" />
+<figcaption aria-hidden="true">image-20220113095949881</figcaption>
+</figure>
+<p>在 <code>Config Set</code> 中选择 <code>Confirm</code>
+，不需要修改什么东西。</p>
+<p><img src="https://pic.islet.space/2022/01/image-20220113100100098.png" alt="image-20220113100100098" style="zoom:50%;" /></p>
+<p>此处需要设置 Flash 地址映射文件 <code>flash map.ini</code> 。</p>
+<figure>
+<img src="https://pic.islet.space/2022/01/image-20220113100324900.png"
+alt="image-20220113100324900" />
+<figcaption aria-hidden="true">image-20220113100324900</figcaption>
+</figure>
+<figure>
+<img src="https://pic.islet.space/2022/01/image-20220113101953154.png"
+alt="image-20220113101953154" />
+<figcaption aria-hidden="true">image-20220113101953154</figcaption>
+</figure>
+<p>下方为 《RTL8762D SDK User Guide
+CN》文件中，9.1章节对五个images文件进行了描述。</p>
+<p><img src="https://pic.islet.space/2022/01/image-20220113102036834.png" alt="image-20220113102036834" style="zoom:67%;" /></p>
+<table>
+<colgroup>
+<col style="width: 22%" />
+<col style="width: 32%" />
+<col style="width: 45%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>FILE TYPE</th>
+<th>DESCRIPTION</th>
+<th>FILE PATH</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>System Config File</td>
+<td>- 来自 <code>BeeMPTool_kits</code></td>
+<td><code>\BeeMPTool_kits_v1.0.5.0\BeeMPTool\ConfigFile\</code></td>
+</tr>
+<tr class="even">
+<td>Bank0 OTA Header File</td>
+<td>- 来自 <code>sbee2_wristband_sdk_upperstack_img</code></td>
+<td><code>\sbee2_wristband_sdk_upperstack_img\src\app\wristband\firmware\</code></td>
+</tr>
+<tr class="odd">
+<td>Bank0 Secure Boot Loader Image</td>
+<td>- 来自 <code>sbee2_wristband_sdk_upperstack_img</code></td>
+<td><code>\sbee2_wristband_sdk_upperstack_img\src\app\wristband\firmware\</code></td>
+</tr>
+<tr class="even">
+<td>Bank0 ROM Patch Image</td>
+<td>- 来自 <code>sbee2_wristband_sdk_upperstack_img</code></td>
+<td><code>\sbee2_wristband_sdk_upperstack_img\src\app\wristband\firmware\</code></td>
+</tr>
+<tr class="odd">
+<td>Bank0 APP Image</td>
+<td>- 来自 <code>sbee2-sdk-v1.0.0</code></td>
+<td><code>sbee2-sdk-v1.0.0\board\evb\io_sample\SPI3WIRE\spi3wire_polling\bin</code></td>
+</tr>
+</tbody>
+</table>
+<h4 id="关于app-image文件选择">关于app image文件选择</h4>
+<p>在Build完成后，会生成三个 <code>.bin</code>
+文件，如果选择错误，会提示
+<code>MD5 check error!Image type doesn't match IC type.</code>
+，选择正确的话会提示 <code>File check OK</code> 。</p>
+<figure>
+<img src="https://pic.islet.space/2022/01/image-20220113111301561.png"
+alt="image-20220113111301561" />
+<figcaption aria-hidden="true">image-20220113111301561</figcaption>
+</figure>
+<h3 id="detect">detect</h3>
+<p>detect 的时候需要注意：</p>
+<ol type="1">
+<li>将 EVB kit上的 <code>J15</code> LOG口接地，否则会检测失败</li>
+<li>如果出现 <code>Failed</code> 字样，则按一下 EVB KIT 上的红色的
+<code>RESET</code> 按钮进行复位后再尝试。</li>
+</ol>
+<figure>
+<img src="https://pic.islet.space/2022/01/image-20220113111054035.png"
+alt="image-20220113111054035" />
+<figcaption aria-hidden="true">image-20220113111054035</figcaption>
+</figure>
+<figure>
+<img src="https://pic.islet.space/2022/01/image-20220113103853161.png"
+alt="image-20220113103853161" />
+<figcaption aria-hidden="true">image-20220113103853161</figcaption>
+</figure>
+<h3 id="download">download</h3>
+<p>最后选择 <code>download</code> 下载即可。</p>
+<figure>
+<img src="https://pic.islet.space/2022/01/image-20220113104047601.png"
+alt="image-20220113104047601" />
+<figcaption aria-hidden="true">image-20220113104047601</figcaption>
+</figure>
+<h2 id="upperstack-flash">UPPERSTACK FLASH</h2>
+<p>自带的 <code>\sbee2-sdk-v1.0.0\doc\</code> 路径下的教程是，都是有
+<code>Bank0 Upperstack Image</code> 需要烧录的。</p>
+<figure>
+<img src="https://pic.islet.space/2022/01/image-20220120140307997.png"
+alt="image-20220120140307997" />
+<figcaption aria-hidden="true">image-20220120140307997</figcaption>
+</figure>
+<p>步骤如下：</p>
+<ol type="1">
+<li><p>使用
+<code>\sbee2_wristband_sdk_upperstack_img\src\app\wristband\firmware\upperstack_img</code>
+路径下的 <code>.ini</code> 文件作为 layout
+文件。（而之前使用的<code>flash map.ini</code> 地址为
+<code>\sbee2_wristband_sdk_upperstack_img\src\app\wristband\firmware\</code>）</p></li>
+<li><p>指定
+<code>\sbee2_wristband_sdk_upperstack_img\src\app\wristband\firmware\upperstack_img</code>
+路径下的 <code>.bin</code> 文件作为 Upperstack Image 文件。</p></li>
+<li><p>将
+<code>\sbee2_wristband_sdk_upperstack_img\board\evb_stack_img\wristband\flash_map.h</code>
+文件作为项目工程里的唯一内存映射文件依赖。<code>flash_map.h</code>
+被放在 <code>mem_config.h</code> 头文件下，间接被
+<code>syetem_rtl876x.h</code> 引用。</p></li>
+</ol>
+<h2 id="log">LOG</h2>
+<p>RTL8762D 的 EVB KIT 不支持 JTAG
+方式进行观察，（听说是）通信过程容易被打断。</p>
+<p>这里使用 <code>UART</code> 和 EVB KIT 上的 <code>J15</code> 口来观察
+LOG数据。</p>
+<h3 id="log软件">LOG软件</h3>
+<p>使用专用工具 <code>DebugAnalyzer</code> 进行日志输出。</p>
+<ol type="1">
+<li>选择合适的串口，即使用 <code>FT232</code> 的UART口，将该芯片口的
+<code>RX</code> 连接至 <code>RTL8762D</code> 板子上的 <code>J15</code>
+口。并在电脑中选中对应的 <code>FT232</code> 设备。</li>
+</ol>
+<figure>
+<img src="https://pic.islet.space/2022/01/image-20220113093030488.png"
+alt="image-20220113093030488" />
+<figcaption aria-hidden="true">image-20220113093030488</figcaption>
+</figure>
+<ol start="2" type="1">
+<li>需要设置 <code>App Trace File</code> 。</li>
+</ol>
+<figure>
+<img src="https://pic.islet.space/2022/01/image-20220113093723962.png"
+alt="image-20220113093723962" />
+<figcaption aria-hidden="true">image-20220113093723962</figcaption>
+</figure>
+<ol start="3" type="1">
+<li>观察日志输出</li>
+</ol>
+<figure>
+<img src="https://pic.islet.space/2022/01/image-20220113104331739.png"
+alt="image-20220113104331739" />
+<figcaption aria-hidden="true">image-20220113104331739</figcaption>
+</figure>
+<h1 id="com-setting">COM SETTING</h1>
+<h2 id="uart-setting">UART SETTING</h2>
+<figure>
+<img src="https://pic.islet.space/2022/01/image-20220113111953878.png"
+alt="image-20220113111953878" />
+<figcaption aria-hidden="true">image-20220113111953878</figcaption>
+</figure>
+<h1 id="peripheral">PERIPHERAL</h1>
+<h1 id="wired-spi">3-WIRED SPI</h1>
+<p>以下是主控板 RTL8762D 的SDK对3线SPI的相关设置结构体。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    <span class="keyword">uint32_t</span> SPI3WIRE_SysClock;     <span class="comment">/*!&lt; Specifies system clock */</span></span><br><span class="line">    <span class="keyword">uint32_t</span> SPI3WIRE_Speed;        <span class="comment">/*!&lt; Specifies SPI clock. */</span></span><br><span class="line">    <span class="keyword">uint32_t</span> SPI3WIRE_Mode;         <span class="comment">/*!&lt; Specifies SPI operation mode.</span></span><br><span class="line"><span class="comment">                                This parameter can be a value of @ref THREE_WIRE_SPI_mode */</span></span><br><span class="line">    <span class="keyword">uint32_t</span> SPI3WIRE_ReadDelay;    <span class="comment">/*!&lt; Specifies the delay time from the end of address phase to the start of read data phase.</span></span><br><span class="line"><span class="comment">                                    This parameter can be a value of 0x0 to 0x1f, delay time = (SPI3WIRE_ReadDelay+1)/(2*SPI3WIRE_Speed) */</span></span><br><span class="line">    <span class="keyword">uint32_t</span> SPI3WIRE_OutputDelay;  <span class="comment">/*!&lt; Specifies SPI output delay 1T or not.</span></span><br><span class="line"><span class="comment">                                 This parameter can be a value of @ref THREE_WIRE_SPI_OE_delay_config */</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">uint32_t</span> SPI3WIRE_ExtMode;      <span class="comment">/*!&lt; Specifies extended timing window for SPI output enable = 0. */</span></span><br><span class="line">&#125; SPI3WIRE_InitTypeDef;</span><br></pre></td></tr></table></figure>
+<h2 id="writing-delay">WRITING-DELAY</h2>
+<p><span class="math display">\[
+1s = 1^3ms = 1^6us = 1^9ns\\
+1Hz = 1^{-3}KHz = 1^{-6}MHz = 1^{-9}GHz
+\]</span></p>
+<p>在3线SPI的数据线读取过程中，在前一段地址帧结束且尚未开始读取数据前，会有一段延时。由
+<code>spiReadDelay</code> 和 <code>spiWireSpeed</code> 两个参数控制。
+<span class="math display">\[
+DelayTime = (spiReadDelay +1) / (2* spiWireSpeed)
+\tag{延时计算公式}
+\]</span> 例如， 当 <code>spiWireSpeed = 8e5</code> 时， 设置
+<code>spiReadDelay = 0x03</code> ，此时 可以在中间延时
+<code>2.5us</code> 。</p>
+<h2 id="clock_freq">CLOCK_FREQ</h2>
+<p>将RTL8762D的SPI通信时钟频率从 <code>2E7</code> 更改为
+<code>1E6</code>
+后可以短时间正常通信，但是稍微过一段时间就出现了不稳定，度数全为
+<code>0</code> ，且复位后读取的 <code>chipID</code> 也为
+<code>0x00, 0x00</code> 。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// the actual frequency of spi is set by `SPI3_WIRE_SysClock`</span></span><br><span class="line"><span class="comment">// `1E6` means 1MHz, and `2E7` means 20MHz.</span></span><br><span class="line">SPI3WIRE_InitStruct.SPI3WIRE_SysClock       = <span class="number">1E6</span>;</span><br></pre></td></tr></table></figure>
+<figure>
+<img src="https://pic.islet.space/2022/01/image-20220119152741283.png"
+alt="image-20220119152741283" />
+<figcaption aria-hidden="true">image-20220119152741283</figcaption>
+</figure>
+<h2 id="timing">TIMING</h2>
+<p><span class="math display">\[
+Sysclk = 1e7 \\
+wirespeek = 8e5
+\]</span></p>
+<h1 id="wired-spi-1">2-WIRED SPI</h1>
+<blockquote>
+<p>To recover the correct communication of SPI, the host controller can
+de-assert the SCLK for at least tRESYNC (1us min), and then keep SCLK
+asserted for a certain time interval tWDT (1.7ms, min) as shown in below
+Figure . to force the SPI control circuits of the sensor to reset.</p>
+</blockquote>
+<figure>
+<img src="https://pic.islet.space/2022/01/image-20220120154724619.png"
+alt="image-20220120154724619" />
+<figcaption aria-hidden="true">image-20220120154724619</figcaption>
+</figure>
+<h1 id="debug-records">DEBUG RECORDS</h1>
+<figure>
+<img src="https://pic.islet.space/2022/01/image-20220112163300158.png"
+alt="image-20220112163300158" />
+<figcaption aria-hidden="true">image-20220112163300158</figcaption>
+</figure>
+<p>0x05 // 0000 0101</p>
+<p>// 1000 0101</p>
+<h2 id="delta_x-delta_y-unread">DELTA_X &amp; DELTA_Y UNREAD</h2>
+<p><code>Motion</code>  <code>DYOVF</code>  <code>DXOVF</code>
+并未读出，未检测到移动。</p>
+<figure>
+<img src="https://pic.islet.space/2022/01/image-20220114110802052.png"
+alt="image-20220114110802052" />
+<figcaption aria-hidden="true">image-20220114110802052</figcaption>
+</figure>
+<p><code>Operation_Mode = 0xB8, cofiguration = 0x17</code> 均为默认</p>
+<figure>
+<img src="https://pic.islet.space/2022/01/image-20220114111325286.png"
+alt="image-20220114111325286" />
+<figcaption aria-hidden="true">image-20220114111325286</figcaption>
+</figure>
+<figure>
+<img src="https://pic.islet.space/2022/01/image-20220114111114776.png"
+alt="image-20220114111114776" />
+<figcaption aria-hidden="true">image-20220114111114776</figcaption>
+</figure>
+<p><code>0xB8</code> 使
+设备处于睡眠模式，<code>configuration = 0x17</code> 使设备未处于
+<code>sleep3</code> 且 <code>powerDown</code> 为正常模式，即未断电。</p>
+<p>所以需要修改 <code>Operation_Mode</code> 为 <code>0x01</code> 。</p>
+<p>在设置了下方的语句之后，LOG记录传送回来的 <code>OperationMode</code>
+对应的数据为 <code>0xFC</code> 或 <code>0xB8</code> （
+<code>1111 1100</code> 和 <code>1011 1000</code>） 。</p>
+<p>默认情况下 <code>OperationMode</code> 为 <code>0xB8</code> 即
+<code>1011 1000</code> 。</p>
+<p>异常情况下 <code>OperationMode</code> 为 <code>0xFC</code> 即
+<code>1111 1100</code> 。</p>
+<p>即第 <code>2</code> 位和 第 <code>6</code>
+位会变，查数据手册，<mark>只有第 <code>2</code>
+位（<code>Slp2mu_Enh</code>）有影响，该位控制芯片强制进入
+<code>睡眠2</code> 模式。</mark></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">spi3wire_writebyte(REG_KA8G2_OPERATION_MODE, KA8G2_OM_RUN);  <span class="comment">// edited by liew in 20211114</span></span><br></pre></td></tr></table></figure>
+<figure>
+<img src="https://pic.islet.space/2022/01/image-20220114135400211.png"
+alt="image-20220114135400211" />
+<figcaption aria-hidden="true">image-20220114135400211</figcaption>
+</figure>
+<figure>
+<img src="https://pic.islet.space/2022/01/image-20220114135647079.png"
+alt="image-20220114135647079" />
+<figcaption aria-hidden="true">image-20220114135647079</figcaption>
+</figure>
+<p>从《KA8G2 optical mouse sensor》中的 <strong>MOTION Pin
+Function</strong> 可以看出，<code>Motion</code>
+寄存器即运动检测标志相关寄存器。</p>
+<p><img src="https://pic.islet.space/2022/01/image-20220114142319440.png" alt="image-20220114142319440" style="zoom:50%;" /></p>
+<h2 id="主控板io口数据异常">主控板IO口数据异常</h2>
+<p>下方为利用SDK进行 <strong>读数据</strong> 的相关操作：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span></span>&#123;</span><br><span class="line">    <span class="keyword">extern</span> <span class="keyword">uint32_t</span> random_seed_value;</span><br><span class="line">    srand(random_seed_value);</span><br><span class="line">    spi3wire_demo();</span><br><span class="line">	DBG_DIRECT(<span class="string">&quot;TEST_20220120&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> (<span class="number">1</span>)&#123;</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">uint8_t</span> i = <span class="number">0</span>; i&lt; <span class="number">0xFF</span>; i++)&#123;	</span><br><span class="line">			spi3wire_writebyte(<span class="number">0x7F</span>, i);</span><br><span class="line">			delaySys(<span class="number">0xF</span>);</span><br><span class="line">		&#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>并用逻辑分析仪进行捕获和分析，发现数据异常：</p>
+<figure>
+<img src="https://pic.islet.space/2022/01/image-20220120151632286.png"
+alt="image-20220120151632286" />
+<figcaption aria-hidden="true">image-20220120151632286</figcaption>
+</figure>
+<p>经过检查，发现时序解码无误，所有波形的高低和解码结果一致。</p>
+<figure>
+<img src="https://pic.islet.space/2022/01/image-20220120151645002.png"
+alt="image-20220120151645002" />
+<figcaption aria-hidden="true">image-20220120151645002</figcaption>
+</figure>
+<p>但是相连的数据之间数据差异较大。</p>
+<figure>
+<img src="https://pic.islet.space/2022/01/image-20220120151638254.png"
+alt="image-20220120151638254" />
+<figcaption aria-hidden="true">image-20220120151638254</figcaption>
+</figure>
+<p>查看LOG也发现数据的确有按照预定的逻辑进行循环：</p>
+<figure>
+<img src="https://pic.islet.space/2022/01/20220120.png"
+alt="20220120" />
+<figcaption aria-hidden="true">20220120</figcaption>
+</figure>
+<p>但是逻辑分析仪采出来的数据就是异常。</p>
+<p>经过分析，是因为逻辑分析仪的采样率为 <code>1MHz</code>
+，与SPI外设的频率 <code>1e6</code> 一致。</p>
+<p>修改了逻辑分析仪的采样率为 <code>2MHz</code>
+，提高了1倍，采样出来的逻辑就正常了。</p>
+<figure>
+<img src="https://pic.islet.space/2022/01/image-20220120162227888.png"
+alt="image-20220120162227888" />
+<figcaption aria-hidden="true">image-20220120162227888</figcaption>
+</figure>
+<p>但是之前的项目只用了写数据的函数。示波器波形和逻辑分析仪都能正常。</p>
+<p>改了项目主循环中的语句为读数据之后，就出现异常了。</p>
+<h3 id="问题推断">问题推断</h3>
+<p>通过注释部分语句，进行间歇性测试和波形观察。</p>
+<p>发现，spi读取语句
+<code>uint8_t spi3wire_readbyte(uint8_t address)</code>
+可能是波形不正常的原因。</p>
+<p>硬件查找主控板和底板的引脚问题：</p>
+<ol type="1">
+<li>找到扩展板上的GPIO口对应核心板上的哪个口</li>
+<li>使用示波器探头直接接触对应的GPIO口并查看波形，查看主控板和底板之间是否存在问题。</li>
+</ol>
+<p>发现示波器探头从底板更换至主控板之后，示波器所显示波形并无差异。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -273,7 +1393,11 @@
     
     <div class="post-body" itemprop="articleBody">
           <p><strong>GITEE</strong>: https://gitee.com/isletspace/esp32iot</p>
-<p>本项目是使用 <strong>微信小程序</strong>+<strong>腾讯云</strong>+<strong>乐鑫开发板</strong>+<strong>5V-多路-继电器</strong>+<strong>220V-AC-电器</strong> 的模式对家庭中的硬件进行检测和控制，本项目涉及到 <strong>网络前端</strong>、<strong>服务器后端</strong>、<strong>网络通信</strong> 和 <strong>物联网硬件控制</strong> 方面的相关知识。</p>
+<p>本项目是使用
+<strong>微信小程序</strong>+<strong>腾讯云</strong>+<strong>乐鑫开发板</strong>+<strong>5V-多路-继电器</strong>+<strong>220V-AC-电器</strong>
+的模式对家庭中的硬件进行检测和控制，本项目涉及到
+<strong>网络前端</strong>、<strong>服务器后端</strong>、<strong>网络通信</strong>
+和 <strong>物联网硬件控制</strong> 方面的相关知识。</p>
 <p><strong>需要实现的功能</strong>：</p>
 <ol type="1">
 <li>开发板能够自动连接家庭WiFi</li>
@@ -301,320 +1425,537 @@
 <li>面包板</li>
 </ol>
 <h2 id="芯片模组比对选型">芯片模组比对选型</h2>
-<p>ESP32-WROOM-32X（此处 <code>X</code> 代表不确定） 和 ESP32-WROVER-X（此处 <code>X</code> 代表不确定） 在性能上基本一模一样，包括核心数、最大时钟频率、Flash大小、支持的接口类型 和 特殊传感器等等。除了在 PSRAM、工作温度范围、天线、WiFi最高频率 和 模组尺寸上有所区别外。 ESP32-WROVER-X 则具有PSRAM 和 最大的面积（18mm × 31.4mm × 3.3mm）。</p>
+<p>ESP32-WROOM-32X（此处 <code>X</code> 代表不确定） 和
+ESP32-WROVER-X（此处 <code>X</code> 代表不确定）
+在性能上基本一模一样，包括核心数、最大时钟频率、Flash大小、支持的接口类型
+和 特殊传感器等等。除了在 PSRAM、工作温度范围、天线、WiFi最高频率 和
+模组尺寸上有所区别外。 ESP32-WROVER-X 则具有PSRAM 和 最大的面积（18mm ×
+31.4mm × 3.3mm）。</p>
 <figure>
-<img src="https://pic.islet.space/2021/12/image-20211228014701607.png" alt="官方展示的ESP32模组性能参数对比" /><figcaption aria-hidden="true">官方展示的ESP32模组性能参数对比</figcaption>
+<img src="https://pic.islet.space/2021/12/image-20211228014701607.png"
+alt="官方展示的ESP32模组性能参数对比" />
+<figcaption
+aria-hidden="true">官方展示的ESP32模组性能参数对比</figcaption>
 </figure>
 <h2 id="芯片选型">芯片选型</h2>
 <p>无脑选了ESP32-WROOM-32SE，反正自己用，而且便宜（￥21.5包邮）。</p>
 <h2 id="芯片基本信息">芯片基本信息</h2>
 <figure>
-<img src="https://pic.islet.space/2021/12/image-20211228012555509.png" alt="Arduino所展示的开发板可调参数" /><figcaption aria-hidden="true">Arduino所展示的开发板可调参数</figcaption>
+<img src="https://pic.islet.space/2021/12/image-20211228012555509.png"
+alt="Arduino所展示的开发板可调参数" />
+<figcaption
+aria-hidden="true">Arduino所展示的开发板可调参数</figcaption>
 </figure>
 <h1 id="arduino-ide准备">Arduino IDE准备</h1>
-<p>使用 Arduino IDE 进行开发，但开发配置相关的 <code>.json</code> 文件 及其安装包都在 <code>github.com</code> 上，但因为加速器的加速层级可能和IDE拉取资源包所用的数据层级不在同一个上面，无法代理，就白天基本上无法下载，凌晨（正经程序员谁tm熬夜）才有机会下载东西。</p>
+<p>使用 Arduino IDE 进行开发，但开发配置相关的 <code>.json</code> 文件
+及其安装包都在 <code>github.com</code>
+上，但因为加速器的加速层级可能和IDE拉取资源包所用的数据层级不在同一个上面，无法代理，就白天基本上无法下载，凌晨（正经程序员谁tm熬夜）才有机会下载东西。</p>
 <blockquote>
 <p>英文版下的 <code>首选项</code> 是 <code>Preferences</code> 。</p>
 </blockquote>
 <figure>
-<img src="https://pic.islet.space/2021/12/image-20211228011905234.png" alt="修改附加开发板管理网址" /><figcaption aria-hidden="true">修改附加开发板管理网址</figcaption>
+<img src="https://pic.islet.space/2021/12/image-20211228011905234.png"
+alt="修改附加开发板管理网址" />
+<figcaption aria-hidden="true">修改附加开发板管理网址</figcaption>
 </figure>
-<p>然后去 <code>开发板管理器</code> 中搜索 <code>esp32</code> 进行安装。</p>
+<p>然后去 <code>开发板管理器</code> 中搜索 <code>esp32</code>
+进行安装。</p>
 <figure>
-<img src="https://pic.islet.space/2021/12/image-20211228012156101.png" alt="目录-开发板-开发板管理器" /><figcaption aria-hidden="true">目录-开发板-开发板管理器</figcaption>
+<img src="https://pic.islet.space/2021/12/image-20211228012156101.png"
+alt="目录-开发板-开发板管理器" />
+<figcaption aria-hidden="true">目录-开发板-开发板管理器</figcaption>
 </figure>
 <figure>
-<img src="https://pic.islet.space/2021/12/image-20211228012244049.png" alt="搜索关键词“esp32”" /><figcaption aria-hidden="true">搜索关键词“esp32”</figcaption>
+<img src="https://pic.islet.space/2021/12/image-20211228012244049.png"
+alt="搜索关键词“esp32”" />
+<figcaption aria-hidden="true">搜索关键词“esp32”</figcaption>
 </figure>
 <h2 id="解决github问题">解决github问题</h2>
 <h3 id="方法一">方法一</h3>
 <p>本来应该用如下链接进行配置的：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://dl.espressif.com/dl/package_esp32_index.json </span><br></pre></td></tr></table></figure>
-<p>自己扒拉了一遍该文件中可能包含的所有资源包（主要是 <code>github.com</code> 上的），然后修改了 <code>.json</code> 文件，放到自己的桶里，然后放出来使用，还好这个文件里有明确提到要哪些资源不然也没法扒拉。</p>
+<p>自己扒拉了一遍该文件中可能包含的所有资源包（主要是
+<code>github.com</code> 上的），然后修改了 <code>.json</code>
+文件，放到自己的桶里，然后放出来使用，还好这个文件里有明确提到要哪些资源不然也没法扒拉。</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://code.islet.space/espressif/dl/package_esp32_index.json</span><br></pre></td></tr></table></figure>
-<p><strong>注意</strong>：Mac系统下可能会因为曾经下载过的缓存文件无法生效（如果自行修改了网站上的 <code>.json</code> 文件的话），需要自行清除缓存，打开 <code>~/Library/ArduinoXX/cache/</code> 并对应删除该网站的文件夹即可，如 <code>code.islet.space</code> 。（这里的 <code>ArduinoXX</code> 中的 <code>XX</code> 需要自己去看自己的文件夹，应该是受版本控制的）</p>
+<p><strong>注意</strong>：Mac系统下可能会因为曾经下载过的缓存文件无法生效（如果自行修改了网站上的
+<code>.json</code> 文件的话），需要自行清除缓存，打开
+<code>~/Library/ArduinoXX/cache/</code> 并对应删除该网站的文件夹即可，如
+<code>code.islet.space</code> 。（这里的 <code>ArduinoXX</code> 中的
+<code>XX</code> 需要自己去看自己的文件夹，应该是受版本控制的）</p>
 <figure>
-<img src="https://pic.islet.space/2021/12/image-20211228005455101.png" alt="修改链接后可以正常下载" /><figcaption aria-hidden="true">修改链接后可以正常下载</figcaption>
+<img src="https://pic.islet.space/2021/12/image-20211228005455101.png"
+alt="修改链接后可以正常下载" />
+<figcaption aria-hidden="true">修改链接后可以正常下载</figcaption>
 </figure>
 <h3 id="方法二">方法二</h3>
-<p>自己去github，用浏览器或者下载器下好了以后放到 <code>用户目录--资源库--程序缓存--指定位置</code>（如下）。</p>
+<p>自己去github，用浏览器或者下载器下好了以后放到
+<code>用户目录--资源库--程序缓存--指定位置</code>（如下）。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">~&#x2F;Library&#x2F;ArduinoXX&#x2F;staging&#x2F;packages&#x2F;</span><br></pre></td></tr></table></figure>
 <p>这个文件夹也就需要放这么多文件吧。</p>
 <figure>
-<img src="https://pic.islet.space/2021/12/image-20211228012028024.png" alt="资源库缓存指定位置下的文件" /><figcaption aria-hidden="true">资源库缓存指定位置下的文件</figcaption>
+<img src="https://pic.islet.space/2021/12/image-20211228012028024.png"
+alt="资源库缓存指定位置下的文件" />
+<figcaption aria-hidden="true">资源库缓存指定位置下的文件</figcaption>
 </figure>
 <p>亲测，第二种方法更好用。</p>
 <figure>
-<img src="https://pic.islet.space/2021/12/image-20211228011814461.png" alt="提示安装成功" /><figcaption aria-hidden="true">提示安装成功</figcaption>
+<img src="https://pic.islet.space/2021/12/image-20211228011814461.png"
+alt="提示安装成功" />
+<figcaption aria-hidden="true">提示安装成功</figcaption>
 </figure>
 <h1 id="visual-studio-code-ide准备">Visual Studio Code IDE准备</h1>
-<p>总的来说，VS Code的IDE配置会比Arduino更为复杂，VS Code下载毫无压力，且VS Code使用习惯之后更加方便。</p>
+<p>总的来说，VS Code的IDE配置会比Arduino更为复杂，VS
+Code下载毫无压力，且VS Code使用习惯之后更加方便。</p>
 <p>至少前期配置工作来说，VS Code更为友好。</p>
 <h2 id="espressif-idf插件安装">Espressif IDF插件安装</h2>
-<p>首先去插件市场搜索 <code>Espressif IDF</code> 插件进行安装，然后点击 <code>查看</code> -&gt; <code>命令面板</code>。</p>
+<p>首先去插件市场搜索 <code>Espressif IDF</code> 插件进行安装，然后点击
+<code>查看</code> -&gt; <code>命令面板</code>。</p>
 <figure>
-<img src="https://pic.islet.space/2021/12/image-20211228182209737.png" alt="image-20211228182209737" /><figcaption aria-hidden="true">image-20211228182209737</figcaption>
+<img src="https://pic.islet.space/2021/12/image-20211228182209737.png"
+alt="image-20211228182209737" />
+<figcaption aria-hidden="true">image-20211228182209737</figcaption>
 </figure>
-<p>到这里需要输入 <code>configure esp-idf extension</code> 以进入该插件的配置页面。</p>
+<p>到这里需要输入 <code>configure esp-idf extension</code>
+以进入该插件的配置页面。</p>
 <figure>
-<img src="https://pic.islet.space/2021/12/image-20211228182314161.png" alt="image-20211228182314161" /><figcaption aria-hidden="true">image-20211228182314161</figcaption>
+<img src="https://pic.islet.space/2021/12/image-20211228182314161.png"
+alt="image-20211228182314161" />
+<figcaption aria-hidden="true">image-20211228182314161</figcaption>
 </figure>
 <h2 id="必要工具安装">必要工具安装</h2>
-<p>然后它就会提示你需要安装几个必要插件，有 Git / Python / CMake 和 Ninja。这些都可以从Espressif的 <a target="_blank" rel="noopener" href="https://docs.espressif.com/projects/esp-idf/zh_CN/latest/esp32/get-started/index.html">官方文档</a> 中获取到安装步骤。</p>
+<p>然后它就会提示你需要安装几个必要插件，有 Git / Python / CMake 和
+Ninja。这些都可以从Espressif的 <a
+target="_blank" rel="noopener" href="https://docs.espressif.com/projects/esp-idf/zh_CN/latest/esp32/get-started/index.html">官方文档</a>
+中获取到安装步骤。</p>
 <figure>
-<img src="https://pic.islet.space/2021/12/image-20211228182508965.png" alt="image-20211228182508965" /><figcaption aria-hidden="true">image-20211228182508965</figcaption>
+<img src="https://pic.islet.space/2021/12/image-20211228182508965.png"
+alt="image-20211228182508965" />
+<figcaption aria-hidden="true">image-20211228182508965</figcaption>
 </figure>
-<p>下方为四个工具的官方下载链接，前三个都可以通过官方下载软件包进行安装，第四个 Ninja 我安装不成功，是通过 Mac Ports 进行安装的。</p>
+<p>下方为四个工具的官方下载链接，前三个都可以通过官方下载软件包进行安装，第四个
+Ninja 我安装不成功，是通过 Mac Ports 进行安装的。</p>
 <p>GIT : https://git-scm.com/</p>
 <p>PYTHON : https://www.python.org/downloads/</p>
 <p>CMAKE : https://cmake.org/download/</p>
 <p>NINJA : https://github.com/ninja-build/ninja/releases</p>
-<p>需要注意的是，CMAKE 和 Ninja 安装完还需要加入到系统环境变量 <code>PATH</code> 中去，Windows系统下的系统环境变量添加比较方便，下方为 Mac 系统下 CMake 的系统环境变量添加方法。</p>
+<p>需要注意的是，CMAKE 和 Ninja 安装完还需要加入到系统环境变量
+<code>PATH</code> 中去，Windows系统下的系统环境变量添加比较方便，下方为
+Mac 系统下 CMake 的系统环境变量添加方法。</p>
 <h3 id="cmake命令行">CMAKE命令行</h3>
-<p>打开Mac系统下的 CMake GUI，点击 <code>Tools</code> --&gt; <code>How to Install For Command Line Use</code> ，可以查看到三种将 CMake 添加到命令行中去运行的方法。</p>
+<p>打开Mac系统下的 CMake GUI，点击 <code>Tools</code> --&gt;
+<code>How to Install For Command Line Use</code> ，可以查看到三种将
+CMake 添加到命令行中去运行的方法。</p>
 <figure>
-<img src="https://pic.islet.space/2021/12/image-20211228183126458.png" alt="点击“工具”菜单中的“如何为命令行使用进行安装”" /><figcaption aria-hidden="true">点击“工具”菜单中的“如何为命令行使用进行安装”</figcaption>
+<img src="https://pic.islet.space/2021/12/image-20211228183126458.png"
+alt="点击“工具”菜单中的“如何为命令行使用进行安装”" />
+<figcaption
+aria-hidden="true">点击“工具”菜单中的“如何为命令行使用进行安装”</figcaption>
 </figure>
 <figure>
-<img src="https://pic.islet.space/2021/12/image-20211228183411724.png" alt="可以查看到三种安装方法" /><figcaption aria-hidden="true">可以查看到三种安装方法</figcaption>
+<img src="https://pic.islet.space/2021/12/image-20211228183411724.png"
+alt="可以查看到三种安装方法" />
+<figcaption aria-hidden="true">可以查看到三种安装方法</figcaption>
 </figure>
-<p>使用的是第二种方法，向命令行输入 <code>sudo "/Applications/CMake.app/Contents/bin/cmake-gui" --install</code> 并输入管理员密码即可。</p>
-<p>然后通过 <code>cmake --version</code> 可以查看到版本号说明安装成功，但需要注意的是 <code>whereis cmake</code> 还是没有用。</p>
+<p>使用的是第二种方法，向命令行输入
+<code>sudo "/Applications/CMake.app/Contents/bin/cmake-gui" --install</code>
+并输入管理员密码即可。</p>
+<p>然后通过 <code>cmake --version</code>
+可以查看到版本号说明安装成功，但需要注意的是 <code>whereis cmake</code>
+还是没有用。</p>
 <figure>
-<img src="https://pic.islet.space/2021/12/image-20211228183403876.png" alt="操作结果" /><figcaption aria-hidden="true">操作结果</figcaption>
+<img src="https://pic.islet.space/2021/12/image-20211228183403876.png"
+alt="操作结果" />
+<figcaption aria-hidden="true">操作结果</figcaption>
 </figure>
 <h3 id="工具安装验证">工具安装验证</h3>
-<p>四个必须要安装的软件都已经安装完毕，通过 <code>--version</code> 可以查看版本号。</p>
+<p>四个必须要安装的软件都已经安装完毕，通过 <code>--version</code>
+可以查看版本号。</p>
 <figure>
-<img src="https://pic.islet.space/2021/12/image-20211228184801497.png" alt="安装验证" /><figcaption aria-hidden="true">安装验证</figcaption>
+<img src="https://pic.islet.space/2021/12/image-20211228184801497.png"
+alt="安装验证" />
+<figcaption aria-hidden="true">安装验证</figcaption>
 </figure>
 <h2 id="配置继续">配置继续</h2>
-<p>四个必要工具安装完毕之后，关闭 <code>ESP-IDF Setup</code> 页面，然后重新在 <strong>命令面板</strong> 输入 <code>configure esp-idf extension</code> 以进入该插件的配置页面。</p>
+<p>四个必要工具安装完毕之后，关闭 <code>ESP-IDF Setup</code>
+页面，然后重新在 <strong>命令面板</strong> 输入
+<code>configure esp-idf extension</code> 以进入该插件的配置页面。</p>
 <figure>
-<img src="https://pic.islet.space/2021/12/image-20211228184938407.png" alt="再次进入配置页面" /><figcaption aria-hidden="true">再次进入配置页面</figcaption>
+<img src="https://pic.islet.space/2021/12/image-20211228184938407.png"
+alt="再次进入配置页面" />
+<figcaption aria-hidden="true">再次进入配置页面</figcaption>
 </figure>
-<p>此处选择 <code>EXPRESS</code> 即可，里面会要求选择从哪个服务器下载（自己看情况选择<code>Github</code> / <code>Espressif</code>）、IDF版本（默认选最新）、IDF放置路径、工具路径、使用的Python3路径 等几个信息，选完了就进入下一界面，会自动下载安装 ESP-IDF。</p>
+<p>此处选择 <code>EXPRESS</code>
+即可，里面会要求选择从哪个服务器下载（自己看情况选择<code>Github</code>
+/
+<code>Espressif</code>）、IDF版本（默认选最新）、IDF放置路径、工具路径、使用的Python3路径
+等几个信息，选完了就进入下一界面，会自动下载安装 ESP-IDF。</p>
 <figure>
-<img src="https://pic.islet.space/2021/12/image-20211228185458736.png" alt="详细配置页面" /><figcaption aria-hidden="true">详细配置页面</figcaption>
+<img src="https://pic.islet.space/2021/12/image-20211228185458736.png"
+alt="详细配置页面" />
+<figcaption aria-hidden="true">详细配置页面</figcaption>
 </figure>
-<p>耐心等待下载完毕即可，我用 <code>Espressif</code> 服务器下载不下来，然后改用 <code>Github</code> 进行下载的。</p>
+<p>耐心等待下载完毕即可，我用 <code>Espressif</code>
+服务器下载不下来，然后改用 <code>Github</code> 进行下载的。</p>
 <figure>
-<img src="https://pic.islet.space/2021/12/image-20211228185748221.png" alt="image-20211228185748221" /><figcaption aria-hidden="true">image-20211228185748221</figcaption>
+<img src="https://pic.islet.space/2021/12/image-20211228185748221.png"
+alt="image-20211228185748221" />
+<figcaption aria-hidden="true">image-20211228185748221</figcaption>
 </figure>
 <p>下载过程页面如下：</p>
 <figure>
-<img src="https://pic.islet.space/2021/12/image-20211228190058612.png" alt="image-20211228190058612" /><figcaption aria-hidden="true">image-20211228190058612</figcaption>
+<img src="https://pic.islet.space/2021/12/image-20211228190058612.png"
+alt="image-20211228190058612" />
+<figcaption aria-hidden="true">image-20211228190058612</figcaption>
 </figure>
 <figure>
-<img src="https://pic.islet.space/2021/12/image-20211228190027057.png" alt="image-20211228190027057" /><figcaption aria-hidden="true">image-20211228190027057</figcaption>
+<img src="https://pic.islet.space/2021/12/image-20211228190027057.png"
+alt="image-20211228190027057" />
+<figcaption aria-hidden="true">image-20211228190027057</figcaption>
 </figure>
 <p>最后提示的安装成功：</p>
 <figure>
-<img src="https://pic.islet.space/2021/12/image-20211228190438498.png" alt="image-20211228190438498" /><figcaption aria-hidden="true">image-20211228190438498</figcaption>
+<img src="https://pic.islet.space/2021/12/image-20211228190438498.png"
+alt="image-20211228190438498" />
+<figcaption aria-hidden="true">image-20211228190438498</figcaption>
 </figure>
 <h1 id="示例项目载入">示例项目载入</h1>
-<p>在 <strong>命令面板</strong> 中输入 <code>show examples projects</code> 。</p>
+<p>在 <strong>命令面板</strong> 中输入
+<code>show examples projects</code> 。</p>
 <figure>
-<img src="https://pic.islet.space/2021/12/image-20211228190651117.png" alt="image-20211228190651117" /><figcaption aria-hidden="true">image-20211228190651117</figcaption>
+<img src="https://pic.islet.space/2021/12/image-20211228190651117.png"
+alt="image-20211228190651117" />
+<figcaption aria-hidden="true">image-20211228190651117</figcaption>
 </figure>
 <p>即可调出 ESP-IDF的示例代码项目列表。</p>
 <figure>
-<img src="https://pic.islet.space/2021/12/image-20211228190738993.png" alt="image-20211228190738993" /><figcaption aria-hidden="true">image-20211228190738993</figcaption>
+<img src="https://pic.islet.space/2021/12/image-20211228190738993.png"
+alt="image-20211228190738993" />
+<figcaption aria-hidden="true">image-20211228190738993</figcaption>
 </figure>
 <p>选择 <code>blink</code> 作为测试代码。</p>
 <figure>
-<img src="https://pic.islet.space/2021/12/image-20211228190839371.png" alt="image-20211228190839371" /><figcaption aria-hidden="true">image-20211228190839371</figcaption>
+<img src="https://pic.islet.space/2021/12/image-20211228190839371.png"
+alt="image-20211228190839371" />
+<figcaption aria-hidden="true">image-20211228190839371</figcaption>
 </figure>
 <h2 id="项目构建">项目构建</h2>
-<p>这里可以用命令面板输入 <code>esp build your project</code> ，也可以点击GUI下方的 <img src="https://pic.islet.space/2021/12/image-20211231124940242.png" alt="image-20211231124940242" />进行构建。</p>
+<p>这里可以用命令面板输入 <code>esp build your project</code>
+，也可以点击GUI下方的 <img
+src="https://pic.islet.space/2021/12/image-20211231124940242.png"
+alt="image-20211231124940242" />进行构建。</p>
 <figure>
-<img src="https://pic.islet.space/2021/12/image-20211228191057987.png" alt="命令面板构建" /><figcaption aria-hidden="true">命令面板构建</figcaption>
+<img src="https://pic.islet.space/2021/12/image-20211228191057987.png"
+alt="命令面板构建" />
+<figcaption aria-hidden="true">命令面板构建</figcaption>
 </figure>
-<p>构建完成后，会生成 <code>build</code> 文件夹，下次构建时CMake会查看变动的文件然后只编译变动过的代码。</p>
-<p>也可以删除该 <code>build</code> 文件夹，使其全部重新构建，会比较费时。</p>
+<p>构建完成后，会生成 <code>build</code>
+文件夹，下次构建时CMake会查看变动的文件然后只编译变动过的代码。</p>
+<p>也可以删除该 <code>build</code>
+文件夹，使其全部重新构建，会比较费时。</p>
 <figure>
-<img src="https://pic.islet.space/2021/12/image-20211228191156613.png" alt="build过程" /><figcaption aria-hidden="true">build过程</figcaption>
+<img src="https://pic.islet.space/2021/12/image-20211228191156613.png"
+alt="build过程" />
+<figcaption aria-hidden="true">build过程</figcaption>
 </figure>
-<p>点击下方的闪电按钮<img src="https://pic.islet.space/2021/12/image-20211231125445685.png" alt="烧录按钮" />即可烧录，烧录成功提示如下：</p>
+<p>点击下方的闪电按钮<img
+src="https://pic.islet.space/2021/12/image-20211231125445685.png"
+alt="烧录按钮" />即可烧录，烧录成功提示如下：</p>
 <figure>
-<img src="https://pic.islet.space/2021/12/image-20211228221323556.png" alt="烧录过程" /><figcaption aria-hidden="true">烧录过程</figcaption>
+<img src="https://pic.islet.space/2021/12/image-20211228221323556.png"
+alt="烧录过程" />
+<figcaption aria-hidden="true">烧录过程</figcaption>
 </figure>
 <h1 id="连接wifi">连接WiFi</h1>
 <p>下图为使用示例代码更改的项目代码文件内容：</p>
 <figure>
-<img src="https://pic.islet.space/2021/12/image-20211228222302314.png" alt="项目文件内容示例" /><figcaption aria-hidden="true">项目文件内容示例</figcaption>
+<img src="https://pic.islet.space/2021/12/image-20211228222302314.png"
+alt="项目文件内容示例" />
+<figcaption aria-hidden="true">项目文件内容示例</figcaption>
 </figure>
-<p>利用ESP自带的示例代码<code>station</code> 进行调试和更改，需要注意以下几点：</p>
+<p>利用ESP自带的示例代码<code>station</code>
+进行调试和更改，需要注意以下几点：</p>
 <ol type="1">
-<li><p>不用去更改 <code>isletSpaceIotMain.c</code> 中的 <code>SSID</code> 和 <code>PASS</code> ，只需要在 <code>sdkconfig</code> 文件中进行更改即可（如下图）。</p></li>
-<li><p>所有的 WiFi设置参数 都可以在 <code>sdkconfig</code> 文件中进行修改，如需要连接 AP 的 名称和密码，还有自身设备所显示的名称。</p></li>
-<li><p>修改文件名之后，需要对两个 <code>CMakeList.txt</code>文件 和 一个<code>Makefile</code> 文件中的项目和文件名进行修改（如下图）。</p></li>
+<li><p>不用去更改 <code>isletSpaceIotMain.c</code> 中的
+<code>SSID</code> 和 <code>PASS</code> ，只需要在 <code>sdkconfig</code>
+文件中进行更改即可（如下图）。</p></li>
+<li><p>所有的 WiFi设置参数 都可以在 <code>sdkconfig</code>
+文件中进行修改，如需要连接 AP 的
+名称和密码，还有自身设备所显示的名称。</p></li>
+<li><p>修改文件名之后，需要对两个 <code>CMakeList.txt</code>文件 和
+一个<code>Makefile</code>
+文件中的项目和文件名进行修改（如下图）。</p></li>
 </ol>
 <figure>
-<img src="https://pic.islet.space/2021/12/image-20211228222645861.png" alt="如果修改代码名称需要修改main文件夹下的CMakeList文件" /><figcaption aria-hidden="true">如果修改代码名称需要修改main文件夹下的CMakeList文件</figcaption>
+<img src="https://pic.islet.space/2021/12/image-20211228222645861.png"
+alt="如果修改代码名称需要修改main文件夹下的CMakeList文件" />
+<figcaption
+aria-hidden="true">如果修改代码名称需要修改main文件夹下的CMakeList文件</figcaption>
 </figure>
 <figure>
-<img src="https://pic.islet.space/2021/12/image-20211228222717269.png" alt="如果修改项目名称需要修改根目录下的CMakeList" /><figcaption aria-hidden="true">如果修改项目名称需要修改根目录下的CMakeList</figcaption>
+<img src="https://pic.islet.space/2021/12/image-20211228222717269.png"
+alt="如果修改项目名称需要修改根目录下的CMakeList" />
+<figcaption
+aria-hidden="true">如果修改项目名称需要修改根目录下的CMakeList</figcaption>
 </figure>
 <figure>
-<img src="https://pic.islet.space/2021/12/image-20211228222733903.png" alt="如果修改项目名称需要修改根目录下的Makefile" /><figcaption aria-hidden="true">如果修改项目名称需要修改根目录下的Makefile</figcaption>
+<img src="https://pic.islet.space/2021/12/image-20211228222733903.png"
+alt="如果修改项目名称需要修改根目录下的Makefile" />
+<figcaption
+aria-hidden="true">如果修改项目名称需要修改根目录下的Makefile</figcaption>
 </figure>
 <h2 id="menuconfig">MENUCONFIG</h2>
-<p>MENUCONFIG 或者说 <code>sdkconfig</code> ，一个是图形界面的，一个是纯文本形式的。</p>
+<p>MENUCONFIG 或者说 <code>sdkconfig</code>
+，一个是图形界面的，一个是纯文本形式的。</p>
 <p>用menuconfig的话只需要找到下方的齿轮按钮即可。</p>
 <figure>
-<img src="https://pic.islet.space/2021/12/image-20211231130402110.png" alt="image-20211231130402110" /><figcaption aria-hidden="true">image-20211231130402110</figcaption>
+<img src="https://pic.islet.space/2021/12/image-20211231130402110.png"
+alt="image-20211231130402110" />
+<figcaption aria-hidden="true">image-20211231130402110</figcaption>
 </figure>
 <p>可以找到WiFi相关的配置位置：</p>
 <figure>
-<img src="https://pic.islet.space/2021/12/image-20211231130507316.png" alt="image-20211231130507316" /><figcaption aria-hidden="true">image-20211231130507316</figcaption>
+<img src="https://pic.islet.space/2021/12/image-20211231130507316.png"
+alt="image-20211231130507316" />
+<figcaption aria-hidden="true">image-20211231130507316</figcaption>
 </figure>
 <p>对 <code>sdkconfig</code> 文件中的设备名称进行修改。</p>
 <figure>
-<img src="https://pic.islet.space/2021/12/image-20211228223040901.png" alt="image-20211228223040901" /><figcaption aria-hidden="true">image-20211228223040901</figcaption>
+<img src="https://pic.islet.space/2021/12/image-20211228223040901.png"
+alt="image-20211228223040901" />
+<figcaption aria-hidden="true">image-20211228223040901</figcaption>
 </figure>
-<p>修改完毕后可以在路由器 AP 的后台查看到已经连接的设备的名称，如下。</p>
+<p>修改完毕后可以在路由器 AP
+的后台查看到已经连接的设备的名称，如下。</p>
 <figure>
-<img src="https://pic.islet.space/2021/12/image-20211228223134009.png" alt="image-20211228223134009" /><figcaption aria-hidden="true">image-20211228223134009</figcaption>
+<img src="https://pic.islet.space/2021/12/image-20211228223134009.png"
+alt="image-20211228223134009" />
+<figcaption aria-hidden="true">image-20211228223134009</figcaption>
 </figure>
 <h1 id="mqtt协议">MQTT协议</h1>
-<p>根据 Espressif 官网的 <a target="_blank" rel="noopener" href="https://docs.espressif.com/projects/esp-idf/zh_CN/latest/esp32/api-reference/protocols/mqtt.html">ESP-MQTT</a> 开发文档可知，MQTT 协议支持以下几种形式：</p>
+<p>根据 Espressif 官网的 <a
+target="_blank" rel="noopener" href="https://docs.espressif.com/projects/esp-idf/zh_CN/latest/esp32/api-reference/protocols/mqtt.html">ESP-MQTT</a>
+开发文档可知，MQTT 协议支持以下几种形式：</p>
 <ul>
 <li><p>MQTT over TCP</p></li>
 <li><p>MQTT over SSL with mbedtls</p></li>
 <li><p>MQTT over Websocket</p></li>
 <li><p>MQTT over Websocket Secure.</p></li>
 </ul>
-<p>各MQTT协议形式（与对应SDK里的 <a href="##MQTT相关示例代码">MQTT示例代码</a>）及其所使用的端口号不同：</p>
+<p>各MQTT协议形式（与对应SDK里的 <a
+href="##MQTT相关示例代码">MQTT示例代码</a>）及其所使用的端口号不同：</p>
 <ul>
-<li><code>protocols/mqtt/tcp</code>: MQTT over tcp, default port 1883</li>
-<li><code>protocols/mqtt/ssl</code>: MQTT over tcp, default port 8883</li>
-<li><code>protocols/mqtt/ssl_psk</code>: MQTT over tcp using pre-shared keys for authentication, default port 8883</li>
-<li><code>protocols/mqtt/ws</code>: MQTT over Websocket, default port 80</li>
-<li><code>protocols/mqtt/wss</code>: MQTT over Websocket Secure, default port 443</li>
+<li><code>protocols/mqtt/tcp</code>: MQTT over tcp, default port
+1883</li>
+<li><code>protocols/mqtt/ssl</code>: MQTT over tcp, default port
+8883</li>
+<li><code>protocols/mqtt/ssl_psk</code>: MQTT over tcp using pre-shared
+keys for authentication, default port 8883</li>
+<li><code>protocols/mqtt/ws</code>: MQTT over Websocket, default port
+80</li>
+<li><code>protocols/mqtt/wss</code>: MQTT over Websocket Secure, default
+port 443</li>
 </ul>
 <h2 id="mqtt事件结构体">MQTT事件结构体</h2>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * MQTT event configuration structure</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> &#123;</span></span><br><span class="line">    <span class="keyword">esp_mqtt_event_id_t</span> event_id;       <span class="comment">/*!&lt; MQTT event type */</span></span><br><span class="line">    <span class="keyword">esp_mqtt_client_handle_t</span> client;    <span class="comment">/*!&lt; MQTT client handle for this event */</span></span><br><span class="line">    <span class="keyword">void</span> *user_context;                 <span class="comment">/*!&lt; User context passed from MQTT client config */</span></span><br><span class="line">    <span class="keyword">char</span> *data;                         <span class="comment">/*!&lt; Data associated with this event */</span></span><br><span class="line">    <span class="keyword">int</span> data_len;                       <span class="comment">/*!&lt; Length of the data for this event */</span></span><br><span class="line">    <span class="keyword">int</span> total_data_len;                 <span class="comment">/*!&lt; Total length of the data (longer data are supplied with multiple events) */</span></span><br><span class="line">    <span class="keyword">int</span> current_data_offset;            <span class="comment">/*!&lt; Actual offset for the data associated with this event */</span></span><br><span class="line">    <span class="keyword">char</span> *topic;                        <span class="comment">/*!&lt; Topic associated with this event */</span></span><br><span class="line">    <span class="keyword">int</span> topic_len;                      <span class="comment">/*!&lt; Length of the topic for this event associated with this event */</span></span><br><span class="line">    <span class="keyword">int</span> msg_id;                         <span class="comment">/*!&lt; MQTT messaged id of message */</span></span><br><span class="line">    <span class="keyword">int</span> session_present;                <span class="comment">/*!&lt; MQTT session_present flag for connection event */</span></span><br><span class="line">    <span class="keyword">esp_mqtt_error_codes_t</span> *error_handle; <span class="comment">/*!&lt; esp-mqtt error handle including esp-tls errors as well as internal mqtt errors */</span></span><br><span class="line">    <span class="keyword">bool</span> retain;                        <span class="comment">/*!&lt; Retained flag of the message associated with this event */</span></span><br><span class="line">&#125; <span class="keyword">esp_mqtt_event_t</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">esp_mqtt_event_t</span> *<span class="keyword">esp_mqtt_event_handle_t</span>;</span><br></pre></td></tr></table></figure>
 <h2 id="mqtt相关示例代码">MQTT相关示例代码</h2>
 <p>了解完官方开发文档中的信息，就可以知道MQTT示例代码里的这些文件夹命名含义，以及自己需要打开哪个示例代码了。</p>
 <figure>
-<img src="https://pic.islet.space/2021/12/image-20211228223617579.png" alt="image-20211228223617579" /><figcaption aria-hidden="true">image-20211228223617579</figcaption>
+<img src="https://pic.islet.space/2021/12/image-20211228223617579.png"
+alt="image-20211228223617579" />
+<figcaption aria-hidden="true">image-20211228223617579</figcaption>
 </figure>
 <h2 id="menuconfig-1">MENUCONFIG</h2>
 <p>MENUCONFIG 页面可以看到MQTT的相关配置信息。</p>
 <figure>
-<img src="https://pic.islet.space/2021/12/image-20211229011902429.png" alt="image-20211229011902429" /><figcaption aria-hidden="true">image-20211229011902429</figcaption>
+<img src="https://pic.islet.space/2021/12/image-20211229011902429.png"
+alt="image-20211229011902429" />
+<figcaption aria-hidden="true">image-20211229011902429</figcaption>
 </figure>
 <h1 id="mqtt服务器开发">MQTT服务器开发</h1>
 <p>自行购买了腾讯云的服务器，然后完成了配置（步骤略），发现自测“主题订阅”不成功。</p>
 <figure>
-<img src="https://pic.islet.space/2021/12/image-20211229033019004.png" alt="image-20211229033019004" /><figcaption aria-hidden="true">image-20211229033019004</figcaption>
+<img src="https://pic.islet.space/2021/12/image-20211229033019004.png"
+alt="image-20211229033019004" />
+<figcaption aria-hidden="true">image-20211229033019004</figcaption>
 </figure>
-<p>然后刚好发现服务器的 Ubuntu 20 系统使用的防火墙是 <code>iptables</code> ，顺利打开 <code>1883</code> 端口。</p>
+<p>然后刚好发现服务器的 Ubuntu 20 系统使用的防火墙是
+<code>iptables</code> ，顺利打开 <code>1883</code> 端口。</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo iptables -A INPUT -p tcp --dport 1883 -j ACCEPT</span><br></pre></td></tr></table></figure>
 <p>然后查看打开情况。</p>
 <figure>
-<img src="https://pic.islet.space/2021/12/image-20211229032825212.png" alt="image-20211229032825212" /><figcaption aria-hidden="true">image-20211229032825212</figcaption>
+<img src="https://pic.islet.space/2021/12/image-20211229032825212.png"
+alt="image-20211229032825212" />
+<figcaption aria-hidden="true">image-20211229032825212</figcaption>
 </figure>
 <p>顺便在服务器页面也打开相关配置。</p>
 <figure>
-<img src="https://pic.islet.space/2021/12/image-20211229032753559.png" alt="image-20211229032753559" /><figcaption aria-hidden="true">image-20211229032753559</figcaption>
+<img src="https://pic.islet.space/2021/12/image-20211229032753559.png"
+alt="image-20211229032753559" />
+<figcaption aria-hidden="true">image-20211229032753559</figcaption>
 </figure>
 <p>最后自测成功：</p>
 <figure>
-<img src="https://pic.islet.space/2021/12/image-20211229032920902.png" alt="image-20211229032920902" /><figcaption aria-hidden="true">image-20211229032920902</figcaption>
+<img src="https://pic.islet.space/2021/12/image-20211229032920902.png"
+alt="image-20211229032920902" />
+<figcaption aria-hidden="true">image-20211229032920902</figcaption>
 </figure>
 <figure>
-<img src="https://pic.islet.space/2021/12/image-20211229032953396.png" alt="image-20211229032953396" /><figcaption aria-hidden="true">image-20211229032953396</figcaption>
+<img src="https://pic.islet.space/2021/12/image-20211229032953396.png"
+alt="image-20211229032953396" />
+<figcaption aria-hidden="true">image-20211229032953396</figcaption>
 </figure>
 <h1 id="小程序开发未完">小程序开发（未完）</h1>
-<p>因为个人使用腾讯云注册了自己的域名 islet.space，且小程序也属于腾讯自家产品，为了后续开发的兼容性和便利性，就同步参阅了腾讯云的 <a target="_blank" rel="noopener" href="https://cloud.tencent.com/document/product/1081/47684">物联网自主品牌小程序开发文档</a> 。</p>
+<p>因为个人使用腾讯云注册了自己的域名
+islet.space，且小程序也属于腾讯自家产品，为了后续开发的兼容性和便利性，就同步参阅了腾讯云的
+<a
+target="_blank" rel="noopener" href="https://cloud.tencent.com/document/product/1081/47684">物联网自主品牌小程序开发文档</a>
+。</p>
 <figure>
-<img src="https://pic.islet.space/2021/12/image-20211227202550338.png" alt="image-20211227202550338" /><figcaption aria-hidden="true">image-20211227202550338</figcaption>
+<img src="https://pic.islet.space/2021/12/image-20211227202550338.png"
+alt="image-20211227202550338" />
+<figcaption aria-hidden="true">image-20211227202550338</figcaption>
 </figure>
 <h2 id="微信开发者工具">微信开发者工具</h2>
 <p>微信开发者工具下载页面：https://cloud.tencent.com/document/product/1081/47685</p>
 <figure>
-<img src="https://pic.islet.space/2021/12/image-20211227202759080.png" alt="image-20211227202759080" /><figcaption aria-hidden="true">image-20211227202759080</figcaption>
+<img src="https://pic.islet.space/2021/12/image-20211227202759080.png"
+alt="image-20211227202759080" />
+<figcaption aria-hidden="true">image-20211227202759080</figcaption>
 </figure>
 <figure>
-<img src="https://pic.islet.space/2021/12/image-20211227203058077.png" alt="image-20211227203058077" /><figcaption aria-hidden="true">image-20211227203058077</figcaption>
+<img src="https://pic.islet.space/2021/12/image-20211227203058077.png"
+alt="image-20211227203058077" />
+<figcaption aria-hidden="true">image-20211227203058077</figcaption>
 </figure>
 <h2 id="后台设置">后台设置</h2>
-<p><a target="_blank" rel="noopener" href="https://cloud.tencent.com/document/product/1081/34738">物联网开发平台</a></p>
+<p><a
+target="_blank" rel="noopener" href="https://cloud.tencent.com/document/product/1081/34738">物联网开发平台</a></p>
 <h1 id="debug">DEBUG</h1>
 <h2 id="烧录和调试过程报错">烧录和调试过程报错</h2>
 <p>出现这种情况，可能是所选芯片不正确导致。</p>
 <figure>
-<img src="https://pic.islet.space/2021/12/image-20211228214645589.png" alt="烧录错误提示" /><figcaption aria-hidden="true">烧录错误提示</figcaption>
+<img src="https://pic.islet.space/2021/12/image-20211228214645589.png"
+alt="烧录错误提示" />
+<figcaption aria-hidden="true">烧录错误提示</figcaption>
 </figure>
 <h3 id="解决过程">解决过程</h3>
-<p>重新选择了芯片，然后将烧录方法改为 <code>UART</code> ，重新烧录即可成功。</p>
+<p>重新选择了芯片，然后将烧录方法改为 <code>UART</code>
+，重新烧录即可成功。</p>
 <figure>
-<img src="https://pic.islet.space/2021/12/image-20211228215715687.png" alt="在插件中选择”扩展设置“" /><figcaption aria-hidden="true">在插件中选择”扩展设置“</figcaption>
+<img src="https://pic.islet.space/2021/12/image-20211228215715687.png"
+alt="在插件中选择”扩展设置“" />
+<figcaption aria-hidden="true">在插件中选择”扩展设置“</figcaption>
 </figure>
 <figure>
-<img src="https://pic.islet.space/2021/12/image-20211228215826153.png" alt="选择需要调试的设备类型" /><figcaption aria-hidden="true">选择需要调试的设备类型</figcaption>
+<img src="https://pic.islet.space/2021/12/image-20211228215826153.png"
+alt="选择需要调试的设备类型" />
+<figcaption aria-hidden="true">选择需要调试的设备类型</figcaption>
 </figure>
 <figure>
-<img src="https://pic.islet.space/2021/12/image-20211228215747432.png" alt="选择烧录方式" /><figcaption aria-hidden="true">选择烧录方式</figcaption>
+<img src="https://pic.islet.space/2021/12/image-20211228215747432.png"
+alt="选择烧录方式" />
+<figcaption aria-hidden="true">选择烧录方式</figcaption>
 </figure>
 <figure>
-<img src="https://pic.islet.space/2021/12/image-20211228215518196.png" alt="烧录成功提示" /><figcaption aria-hidden="true">烧录成功提示</figcaption>
+<img src="https://pic.islet.space/2021/12/image-20211228215518196.png"
+alt="烧录成功提示" />
+<figcaption aria-hidden="true">烧录成功提示</figcaption>
 </figure>
 <h2 id="头文件查找错误">头文件查找错误</h2>
 <p>这个bug始终没有解决，之后再说吧。。。</p>
 <figure>
-<img src="https://pic.islet.space/2021/12/image-20211228232022467.png" alt="提示无该文件" /><figcaption aria-hidden="true">提示无该文件</figcaption>
+<img src="https://pic.islet.space/2021/12/image-20211228232022467.png"
+alt="提示无该文件" />
+<figcaption aria-hidden="true">提示无该文件</figcaption>
 </figure>
 <h2 id="wifi初始化出错">WIFI初始化出错</h2>
-<p>将WiFi-station的代码搬到 MQTT-TCP中，发现 <code>wifiStationInit()</code> 函数初始化错误，报错的行数是 <code>117</code> 。</p>
+<p>将WiFi-station的代码搬到 MQTT-TCP中，发现
+<code>wifiStationInit()</code> 函数初始化错误，报错的行数是
+<code>117</code> 。</p>
 <figure>
-<img src="https://pic.islet.space/2021/12/image-20211229143428551.png" alt="wifi初始化函数出错" /><figcaption aria-hidden="true">wifi初始化函数出错</figcaption>
+<img src="https://pic.islet.space/2021/12/image-20211229143428551.png"
+alt="wifi初始化函数出错" />
+<figcaption aria-hidden="true">wifi初始化函数出错</figcaption>
 </figure>
-<p>经检查，发现该函数示例代码的一部分，并未改动，且未添加其他自定义的 <code>.h</code> 或 <code>.c</code> 文件进行编译，应该不存在人为修改错误。</p>
+<p>经检查，发现该函数示例代码的一部分，并未改动，且未添加其他自定义的
+<code>.h</code> 或 <code>.c</code>
+文件进行编译，应该不存在人为修改错误。</p>
 <figure>
-<img src="https://pic.islet.space/2021/12/image-20211229150011594.png" alt="检查函数定义" /><figcaption aria-hidden="true">检查函数定义</figcaption>
+<img src="https://pic.islet.space/2021/12/image-20211229150011594.png"
+alt="检查函数定义" />
+<figcaption aria-hidden="true">检查函数定义</figcaption>
 </figure>
-<p>因为仅修改了本 <code>isletSpaceIotMain.c</code> 文件，就在本文件中搜索 <code>esp_event_loop_create_default</code> 关键字，发现在 <code>app_main()</code> 中也有该语句，初步判断可能是两次调用导致错误，就注释了 <code>298</code> 行 和 <code>299</code> 行进行重新编译和烧录，问题解决，设备可以正常连接到路由器。</p>
+<p>因为仅修改了本 <code>isletSpaceIotMain.c</code>
+文件，就在本文件中搜索 <code>esp_event_loop_create_default</code>
+关键字，发现在 <code>app_main()</code>
+中也有该语句，初步判断可能是两次调用导致错误，就注释了 <code>298</code>
+行 和 <code>299</code>
+行进行重新编译和烧录，问题解决，设备可以正常连接到路由器。</p>
 <figure>
-<img src="https://pic.islet.space/2021/12/image-20211229150054429.png" alt="注释重复语句" /><figcaption aria-hidden="true">注释重复语句</figcaption>
+<img src="https://pic.islet.space/2021/12/image-20211229150054429.png"
+alt="注释重复语句" />
+<figcaption aria-hidden="true">注释重复语句</figcaption>
 </figure>
 <h2 id="mqtt服务器连接错误">MQTT服务器连接错误</h2>
-<p>在设备成功接入WiFi后，发现MQTT客户端无法连接至服务器。给出的错误提示是 <code>There are no transports valid</code> ，大致意思即连接不可用。</p>
+<p>在设备成功接入WiFi后，发现MQTT客户端无法连接至服务器。给出的错误提示是
+<code>There are no transports valid</code> ，大致意思即连接不可用。</p>
 <figure>
-<img src="https://pic.islet.space/2021/12/image-20211229150744192.png" alt="Monitor提示无可用传输" /><figcaption aria-hidden="true">Monitor提示无可用传输</figcaption>
+<img src="https://pic.islet.space/2021/12/image-20211229150744192.png"
+alt="Monitor提示无可用传输" />
+<figcaption aria-hidden="true">Monitor提示无可用传输</figcaption>
 </figure>
-<p>经过检查，发现原来填写在 <code>sdkconfig</code> 文件中的 <code>Broker URL</code> 链接为 <code>https://iot.islet.space</code> ，而实际上，官网给出的配置方式如下：</p>
+<p>经过检查，发现原来填写在 <code>sdkconfig</code> 文件中的
+<code>Broker URL</code> 链接为 <code>https://iot.islet.space</code>
+，而实际上，官网给出的配置方式如下：</p>
 <figure>
-<img src="https://pic.islet.space/2021/12/image-20211229152435708.png" alt="查看官方URI定义" /><figcaption aria-hidden="true">查看官方URI定义</figcaption>
+<img src="https://pic.islet.space/2021/12/image-20211229152435708.png"
+alt="查看官方URI定义" />
+<figcaption aria-hidden="true">查看官方URI定义</figcaption>
 </figure>
-<p>打开项目配置菜单，修改为 <code>mqtt://iot.islet.space</code> ，并重新 Build 和 Flash。</p>
+<p>打开项目配置菜单，修改为 <code>mqtt://iot.islet.space</code> ，并重新
+Build 和 Flash。</p>
 <figure>
-<img src="https://pic.islet.space/2021/12/image-20211229151252895.png" alt="修改URL" /><figcaption aria-hidden="true">修改URL</figcaption>
+<img src="https://pic.islet.space/2021/12/image-20211229151252895.png"
+alt="修改URL" />
+<figcaption aria-hidden="true">修改URL</figcaption>
 </figure>
 <p>可以发现错误已解决，设备已经正常连接至服务器。</p>
 <figure>
-<img src="https://pic.islet.space/2021/12/image-20211229152118764.png" alt="Monitor提示成功" /><figcaption aria-hidden="true">Monitor提示成功</figcaption>
+<img src="https://pic.islet.space/2021/12/image-20211229152118764.png"
+alt="Monitor提示成功" />
+<figcaption aria-hidden="true">Monitor提示成功</figcaption>
 </figure>
 <p>尝试在对应主题下发布信息进行测试：</p>
 <figure>
-<img src="https://pic.islet.space/2021/12/image-20211229152036214.png" alt="尝试发布信息" /><figcaption aria-hidden="true">尝试发布信息</figcaption>
+<img src="https://pic.islet.space/2021/12/image-20211229152036214.png"
+alt="尝试发布信息" />
+<figcaption aria-hidden="true">尝试发布信息</figcaption>
 </figure>
 <p>通过终端Monitor可以观察到，设备正常接收到数据：</p>
 <figure>
-<img src="https://pic.islet.space/2021/12/image-20211229152141547.png" alt="设备接收成功" /><figcaption aria-hidden="true">设备接收成功</figcaption>
+<img src="https://pic.islet.space/2021/12/image-20211229152141547.png"
+alt="设备接收成功" />
+<figcaption aria-hidden="true">设备接收成功</figcaption>
 </figure>
 <h2 id="eventhandler未进入">eventHandler未进入</h2>
 <figure>
-<img src="https://pic.islet.space/2021/12/image-20211229182911935.png" alt="image-20211229182911935" /><figcaption aria-hidden="true">image-20211229182911935</figcaption>
+<img src="https://pic.islet.space/2021/12/image-20211229182911935.png"
+alt="image-20211229182911935" />
+<figcaption aria-hidden="true">image-20211229182911935</figcaption>
 </figure>
 <h1 id="参考">参考</h1>
 <ol type="1">
-<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/xujiuba/article/details/107234040">Mac 安装 CMake 配置及环境配置</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=Lc6ausiKvQM">Quick User Guide for the ESP-IDF VS Code Extension</a></li>
-<li><a target="_blank" rel="noopener" href="https://docs.espressif.com/projects/esp-idf/zh_CN/latest/esp32/get-started/index.html#id2">ESP-IDF 编程指南</a></li>
-<li><a target="_blank" rel="noopener" href="https://docs.espressif.com/projects/esp-idf/en/latest/esp32/api-reference/protocols/mqtt.html">ESP-MQTT</a></li>
+<li><a
+target="_blank" rel="noopener" href="https://blog.csdn.net/xujiuba/article/details/107234040">Mac 安装
+CMake 配置及环境配置</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=Lc6ausiKvQM">Quick User
+Guide for the ESP-IDF VS Code Extension</a></li>
+<li><a
+target="_blank" rel="noopener" href="https://docs.espressif.com/projects/esp-idf/zh_CN/latest/esp32/get-started/index.html#id2">ESP-IDF
+编程指南</a></li>
+<li><a
+target="_blank" rel="noopener" href="https://docs.espressif.com/projects/esp-idf/en/latest/esp32/api-reference/protocols/mqtt.html">ESP-MQTT</a></li>
 </ol>
 
       
@@ -692,37 +2033,66 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <p>请先确保电脑上已经安装了必须的软件，如 <code>node.js</code> 和 <code>git</code> ，因为日常需要使用 <strong>代码</strong>、<strong>数学公式</strong>、<strong>流程图</strong>、<strong>搜索</strong> 等工具，所以下方的插件安装也主要是与此相关的。</p>
+          <p>请先确保电脑上已经安装了必须的软件，如 <code>node.js</code> 和
+<code>git</code> ，因为日常需要使用
+<strong>代码</strong>、<strong>数学公式</strong>、<strong>流程图</strong>、<strong>搜索</strong>
+等工具，所以下方的插件安装也主要是与此相关的。</p>
 <p><strong>注意</strong>：以下仅适用于 <code>hexo-next</code> 主题。</p>
 <h1 id="插件安装">插件安装</h1>
-<p>先放一个博客 islet.space 需要使用到的插件，都需要使用 <code>npm</code> 进行安装。</p>
+<p>先放一个博客 islet.space 需要使用到的插件，都需要使用
+<code>npm</code> 进行安装。</p>
 <figure>
-<img src="https://pic.islet.space/2021/12/image-20211227103125833.png" alt="本博客使用到的一些插件" /><figcaption aria-hidden="true">本博客使用到的一些插件</figcaption>
+<img src="https://pic.islet.space/2021/12/image-20211227103125833.png"
+alt="本博客使用到的一些插件" />
+<figcaption aria-hidden="true">本博客使用到的一些插件</figcaption>
 </figure>
-<p>将下方这段脚本保存至 <code>hexo_install.sh</code> 文件中，并使用 <code>chmod +x hexo_install.sh</code> 命令为其添加执行权限，并使用 <code>./hexo_install.sh</code> 进行执行即可。</p>
+<p>将下方这段脚本保存至 <code>hexo_install.sh</code> 文件中，并使用
+<code>chmod +x hexo_install.sh</code> 命令为其添加执行权限，并使用
+<code>./hexo_install.sh</code> 进行执行即可。</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> uninstall the unnecessary renderer,like marked and kramed</span></span><br><span class="line">sudo npm uninstall hexo-renderer-marked --save</span><br><span class="line">sudo npm uninstall hexo-renderer-kramed --save</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> install the necessary plugins <span class="keyword">for</span> hexo</span></span><br><span class="line">sudo npm install @fancyapps/fancybox --save</span><br><span class="line">sudo npm install @fortawesome/fontawesome-free --save</span><br><span class="line">sudo npm install @next-theme/pjax --save</span><br><span class="line">sudo npm install @next-theme/plugins --save</span><br><span class="line">sudo npm install hexo-deployer-git --save</span><br><span class="line">sudo npm install hexo-filter-mermaid-diagrams --save</span><br><span class="line">sudo npm install hexo-generator-searchdb --save</span><br><span class="line">sudo npm install hexo-math --save</span><br><span class="line">sudo npm install hexo-renderer-ejs --save</span><br><span class="line">sudo npm install hexo-renderer-pandoc --save</span><br><span class="line">sudo npm install hexo-renderer-stylus --save</span><br></pre></td></tr></table></figure>
 <h1 id="插件启用">插件启用</h1>
 <h2 id="pandoc">pandoc</h2>
-<p>若要启用pandoc进行渲染，除了之前必须要卸载旧的渲染器（如 <code>marked</code> 和 <code>kramed</code> 外），还需要去github页面下载一个pandoc的渲染器软件并进行安装。</p>
+<p>若要启用pandoc进行渲染，除了之前必须要卸载旧的渲染器（如
+<code>marked</code> 和 <code>kramed</code>
+外），还需要去github页面下载一个pandoc的渲染器软件并进行安装。</p>
 <p><strong>pandoc下载链接</strong>：https://github.com/jgm/pandoc/releases</p>
 <h2 id="mermaid">mermaid</h2>
-<p>mermaid需要显示的话也需要安装插件，需要在hexo-next主题文件夹下的 <code>_config.yml</code> 文件中进行启用，如下：</p>
+<p>mermaid需要显示的话也需要安装插件，需要在hexo-next主题文件夹下的
+<code>_config.yml</code> 文件中进行启用，如下：</p>
 <figure>
-<img src="https://pic.islet.space/2021/12/image-20211227105005422.png" alt="mermaid在主题配置文件中的启用" /><figcaption aria-hidden="true">mermaid在主题配置文件中的启用</figcaption>
+<img src="https://pic.islet.space/2021/12/image-20211227105005422.png"
+alt="mermaid在主题配置文件中的启用" />
+<figcaption
+aria-hidden="true">mermaid在主题配置文件中的启用</figcaption>
 </figure>
 <h2 id="latex">latex</h2>
-<p>latex数学公式可以由 <code>pandoc</code> 渲染器进行渲染，只需要在hexo-next主题文件夹下的 <code>_config.yml</code> 文件中启用 <code>mathjax</code> ，如下：</p>
+<p>latex数学公式可以由 <code>pandoc</code>
+渲染器进行渲染，只需要在hexo-next主题文件夹下的 <code>_config.yml</code>
+文件中启用 <code>mathjax</code> ，如下：</p>
 <figure>
-<img src="https://pic.islet.space/2021/12/image-20211227104717614.png" alt="数学公式在主题配置文件中的启用" /><figcaption aria-hidden="true">数学公式在主题配置文件中的启用</figcaption>
+<img src="https://pic.islet.space/2021/12/image-20211227104717614.png"
+alt="数学公式在主题配置文件中的启用" />
+<figcaption
+aria-hidden="true">数学公式在主题配置文件中的启用</figcaption>
 </figure>
 <h2 id="search">search</h2>
-<p>搜索功能功能不仅需要安装插件，还需要分别在博客文件夹根目录中的 <code>_config.yml</code> 和 hexo-next主题文件夹下的 <code>_config.yml</code> 文件中进行启用，如下：</p>
+<p>搜索功能功能不仅需要安装插件，还需要分别在博客文件夹根目录中的
+<code>_config.yml</code> 和 hexo-next主题文件夹下的
+<code>_config.yml</code> 文件中进行启用，如下：</p>
 <figure>
-<img src="https://pic.islet.space/2021/12/image-20211227105545754.png" alt="博客根目录配置文件下的启用" /><figcaption aria-hidden="true">博客根目录配置文件下的启用</figcaption>
+<img src="https://pic.islet.space/2021/12/image-20211227105545754.png"
+alt="博客根目录配置文件下的启用" />
+<figcaption aria-hidden="true">博客根目录配置文件下的启用</figcaption>
 </figure>
-<p><strong>注意</strong>：此处的 <code>db.json</code> 需要在 <code>public</code> 文件夹中也有一份的时候启用；如果 <code>db.json</code> 无法使用，则更换为 <code>search.xml</code> 。因为 <code>db.json</code> 或 <code>search.xml</code> 是由插件生成的搜索数据库（可以这么看）。</p>
+<p><strong>注意</strong>：此处的 <code>db.json</code> 需要在
+<code>public</code> 文件夹中也有一份的时候启用；如果
+<code>db.json</code> 无法使用，则更换为 <code>search.xml</code> 。因为
+<code>db.json</code> 或 <code>search.xml</code>
+是由插件生成的搜索数据库（可以这么看）。</p>
 <figure>
-<img src="https://pic.islet.space/2021/12/image-20211227105510478.png" alt="hexo主题配置文件下的启用" /><figcaption aria-hidden="true">hexo主题配置文件下的启用</figcaption>
+<img src="https://pic.islet.space/2021/12/image-20211227105510478.png"
+alt="hexo主题配置文件下的启用" />
+<figcaption aria-hidden="true">hexo主题配置文件下的启用</figcaption>
 </figure>
 
       
@@ -801,16 +2171,19 @@
     
     <div class="post-body" itemprop="articleBody">
           <p>因为也是人力资源管理专业出身，所以基于面试者（员工）角度来写这篇文章的时候，其实是左右手互博的感觉。</p>
-<p>特殊性说明，本文所描述的岗位背景其实是 <strong>嵌入式DSP裸机软件（驱动）开发</strong> 。</p>
+<p>特殊性说明，本文所描述的岗位背景其实是
+<strong>嵌入式DSP裸机软件（驱动）开发</strong> 。</p>
 <p><strong>注意</strong>：下面标灰色的部分都是跟HR工作相关的概念，如果看不太懂可以跳过。</p>
 <h1 id="面试流程">面试流程</h1>
-<p>技术类岗位招聘通常会遇到 <strong>2~3轮面试</strong> 和一次 <strong>HR提供Offer</strong> 的环节，最经典的流程如下：</p>
+<p>技术类岗位招聘通常会遇到 <strong>2~3轮面试</strong> 和一次
+<strong>HR提供Offer</strong> 的环节，最经典的流程如下：</p>
 <pre class="mermaid">graph LR
 简历投送 --> ID1((HR面)) --> ID2((项目面)) --> ID3((技术面)) --> 拿Offer</pre>
 <h2 id="面试原则">面试原则</h2>
 <p>面试者需要在面试过程中适当包装和美化一下自己的工作经历，但是还是需要秉承着相对诚实的原则。</p>
 <h3 id="为什么说是相对诚实的原则">为什么说是相对诚实的原则</h3>
-<p>你可以说“自己的工作很难但按时完成”，“自己独立完成”，“自主编写代码” 等等他人较难去鉴别的工作，这些都是一个人工作能力不错的表现。但假如把自己没做过的项目放进去，一旦被问技术面的时候问到细节就会露馅。即使面试时没有露馅，工作时露馅了，大概率也会被面试官知道的。</p>
+<p>你可以说“自己的工作很难但按时完成”，“自己独立完成”，“自主编写代码”
+等等他人较难去鉴别的工作，这些都是一个人工作能力不错的表现。但假如把自己没做过的项目放进去，一旦被问技术面的时候问到细节就会露馅。即使面试时没有露馅，工作时露馅了，大概率也会被面试官知道的。</p>
 <blockquote>
 <p>一个HR有可能是在一家公司专门从事招聘的专员，也有可能是为多家公司做招聘的猎头（专门从事招聘工作的人员，通常是成立一个猎头公司，专门帮其他公司找人才）。一旦技术面的时候夸大自己的工作经验，技术面也会跟HR反馈你的夸大情况，然后你就再也不能通过该猎头或者专员找到其他的工作了，相当于自己白白损失了一个资源口。</p>
 </blockquote>
@@ -856,7 +2229,8 @@
 </blockquote>
 <p>面试者首先需要了解（或者说准备好）几点信息：</p>
 <ol type="1">
-<li>该行业该岗位在某个地区的 <strong>普遍薪资范围</strong> 是如何（当然不能拿最高薪资来当做普遍薪资，得看自己的能力和对应岗位的工作难度）</li>
+<li>该行业该岗位在某个地区的 <strong>普遍薪资范围</strong>
+是如何（当然不能拿最高薪资来当做普遍薪资，得看自己的能力和对应岗位的工作难度）</li>
 <li>所面试的公司提供的薪酬范围</li>
 <li>自己所期待的薪资底线</li>
 <li>自己目前薪资</li>
@@ -873,7 +2247,8 @@
 <li><strong>岗位基本信息</strong> （任职要求和工作职责等）</li>
 </ol>
 <h1 id="项目面和技术面">项目面和技术面</h1>
-<p>普遍情况下，二轮/三轮面试都会问你一些技术和项目上的东西，根据所闻内容的不同，将其分别称呼为 <strong>技术面</strong> 和 <strong>项目面</strong>。</p>
+<p>普遍情况下，二轮/三轮面试都会问你一些技术和项目上的东西，根据所闻内容的不同，将其分别称呼为
+<strong>技术面</strong> 和 <strong>项目面</strong>。</p>
 <p>有些公司会将这两轮分开，面试的先后顺序不一，总得占比是项目经历会问得更多一些，技术面的占比较少。</p>
 <p>有些公司也会将项目面和技术面合在一起（就是同一次面试里就有技术面和项目面），夹杂交替着问。</p>
 <h2 id="项目面">项目面</h2>
@@ -893,12 +2268,15 @@
 <p>有很大概率（不一定是所有公司都会问的），会问你一些“发现问题解决问题”的经验。这里面试官主要是想知道以下几点情况：</p>
 <ol type="1">
 <li><strong>面试者对工作问题的解决思路</strong>。是否足够清晰，有什么角度可以去考虑，需要面试者自己去总结，然后可以清晰地向他人阐述。</li>
-<li><strong>面试者在解决问题时的耐心</strong>。面试者需要介绍一个以上的案例，向面试官说明问题现象，自己的思考方式、检查方法、解决方法、过程 和 结果 等等。</li>
+<li><strong>面试者在解决问题时的耐心</strong>。面试者需要介绍一个以上的案例，向面试官说明问题现象，自己的思考方式、检查方法、解决方法、过程
+和 结果 等等。</li>
 <li><strong>面试者的经验</strong>。你能说出自己在遇到一些问题（比如调试问题）时的解决思路，或者看待问题（较为全面）的角度时，就说明了你已经具有足够经验了。</li>
 </ol>
 </blockquote>
 <p>如果面试官问你“发现问题解决问题”的经验，你回答自己不知道，不太记得，忘记了这些话，就妥妥失败了。</p>
-<p>因为这些工作问题的发现、解决和记录工作，在日常工作过程中其实都是可以稍微花点时间去完成的（这并不难，只是你有没有耐心而已），如果面试者自己没有做这部分 <strong>经验积累工作</strong>，那就很吃亏，大部分人都有相关的工作经验，自己不会去 <strong>总结</strong> 而已。</p>
+<p>因为这些工作问题的发现、解决和记录工作，在日常工作过程中其实都是可以稍微花点时间去完成的（这并不难，只是你有没有耐心而已），如果面试者自己没有做这部分
+<strong>经验积累工作</strong>，那就很吃亏，大部分人都有相关的工作经验，自己不会去
+<strong>总结</strong> 而已。</p>
 <h3 id="情景假设提问">情景假设提问</h3>
 <p>面试官可能会抛出情景题，例如问你给你一个芯片，2周之内完成开发，你需要怎么准备，有什么计划。其实就是一个经验问题，或者思路问题。回答方法我就不详细说了。</p>
 <h2 id="技术面">技术面</h2>
@@ -1008,65 +2386,108 @@
     
     <div class="post-body" itemprop="articleBody">
           <p>双十一豪豪酱买了群晖DS220j家用NAS服务器，为了方便工作文件的备份传输，让电脑（PC、Mac）能用上远程网络驱动，就需要让服务器穿透内网，并申请一个独立域名，想着就用腾讯云和家里的小米路由器AX3600来干吧。下方是对硬件上需要的一些要求：</p>
-<p><strong>光猫</strong>：使用 <strong>桥接模式</strong>，具有 <strong>独立公网IP</strong></p>
-<p><strong>路由器</strong>：使用 <strong>PPPoE模式</strong> 进行拨号、支持 <strong>端口映射</strong>、 <strong>端口转发</strong> 和 <strong>DMZ</strong></p>
-<p><strong>群晖NAS</strong>：支持 <strong>DDNS</strong>、<strong>UPnP</strong> 协议、支持 <strong>证书使用范围管理</strong></p>
+<p><strong>光猫</strong>：使用 <strong>桥接模式</strong>，具有
+<strong>独立公网IP</strong></p>
+<p><strong>路由器</strong>：使用 <strong>PPPoE模式</strong>
+进行拨号、支持 <strong>端口映射</strong>、 <strong>端口转发</strong> 和
+<strong>DMZ</strong></p>
+<p><strong>群晖NAS</strong>：支持
+<strong>DDNS</strong>、<strong>UPnP</strong> 协议、支持
+<strong>证书使用范围管理</strong></p>
 <h1 id="前期准备工作">前期准备工作</h1>
 <h2 id="更改工作模式">更改工作模式</h2>
-<p><strong>光猫</strong> 和 <strong>路由器</strong> 都支持 <strong>路由模式</strong> 和 <strong>桥接模式</strong>，都支持多个无线接入和有线接入，但因为自己购买的路由器具有更多不一样的功能，例如支持UPnP等，而且光猫是连接物理光纤进行上网的，而自己购买的路由器不能直接连接光纤上网，还得依赖于光猫，所以可以认为是两种不一样的工作硬件。</p>
-<p>如果光猫已经工作在桥接模式（通过查看路由器后台的 <strong>上网方式</strong> 是否为PPPoE，如果是则说明自己购买的路由器工作在路由模式，电信光猫工作在桥接模式）。一般没有此类服务器需求的家庭网络，都是让光猫工作在路由拨号模式（即路由模式）的，而路由器则工作在桥接模式，此情况则需要将两个硬件设备的工作模式进行互换，参考以下步骤：</p>
+<p><strong>光猫</strong> 和 <strong>路由器</strong> 都支持
+<strong>路由模式</strong> 和
+<strong>桥接模式</strong>，都支持多个无线接入和有线接入，但因为自己购买的路由器具有更多不一样的功能，例如支持UPnP等，而且光猫是连接物理光纤进行上网的，而自己购买的路由器不能直接连接光纤上网，还得依赖于光猫，所以可以认为是两种不一样的工作硬件。</p>
+<p>如果光猫已经工作在桥接模式（通过查看路由器后台的
+<strong>上网方式</strong>
+是否为PPPoE，如果是则说明自己购买的路由器工作在路由模式，电信光猫工作在桥接模式）。一般没有此类服务器需求的家庭网络，都是让光猫工作在路由拨号模式（即路由模式）的，而路由器则工作在桥接模式，此情况则需要将两个硬件设备的工作模式进行互换，参考以下步骤：</p>
 <ol type="1">
-<li>打电话给电信营业厅 <code>(0000)10000</code> （前方的 <code>(0000)</code> 是自己的市区号），确认一下光猫是路由模式还是桥接模式，如果是路由模式，则将其改成桥接模式。</li>
+<li>打电话给电信营业厅 <code>(0000)10000</code> （前方的
+<code>(0000)</code>
+是自己的市区号），确认一下光猫是路由模式还是桥接模式，如果是路由模式，则将其改成桥接模式。</li>
 <li>确认改成桥接模式后，询问宽带的账户和密码，在路由器后台输入账户密码并连接测试，确保路由器工作在拨号模式，而光猫工作在桥接模式。</li>
 </ol>
 <blockquote>
 <p>目前国内家庭宽带都是默认内网IP，想要公网IP就只能向运营商申请了，这并不需要额外的收费。电信手上的IP资源最多，也最大方。我也是照着别人的说法，打电话给电信客服，说装监控需要公网IP，客服登记之后，过几个小时就打电话说已经换好了，干净利落，服务好。目前好像还没见到过电信要不到公网IP的情况。</p>
-<p>——《<a target="_blank" rel="noopener" href="https://post.smzdm.com/p/awxqqwkg/">BT下载教程 篇一：BT下载大提速！ 获取公网IP和端口映射转发简单教程</a> 》</p>
+<p>——《<a target="_blank" rel="noopener" href="https://post.smzdm.com/p/awxqqwkg/">BT下载教程
+篇一：BT下载大提速！ 获取公网IP和端口映射转发简单教程</a> 》</p>
 </blockquote>
 <figure>
-<img src="https://pic.islet.space/2021/11/202111130020050.png" alt="image-20211113000614809" /><figcaption aria-hidden="true">image-20211113000614809</figcaption>
+<img src="https://pic.islet.space/2021/11/202111130020050.png"
+alt="image-20211113000614809" />
+<figcaption aria-hidden="true">image-20211113000614809</figcaption>
 </figure>
 <h2 id="多重nat改成公网ip">多重NAT改成公网IP</h2>
 <p>同样是打给电信，然后申请公网IP，电信客服专员一般会在一个小时内处理完毕，然后就可以得到公网IP了。</p>
-<p>“谁拨号，谁就有公网IP” ——即此时如果路由器已经成功设置了路由模式（使用PPPoE拨号上网），则可以在路由器后台查看到其公网IP地址，如：</p>
+<p>“谁拨号，谁就有公网IP”
+——即此时如果路由器已经成功设置了路由模式（使用PPPoE拨号上网），则可以在路由器后台查看到其公网IP地址，如：</p>
 <figure>
-<img src="https://pic.islet.space/2021/11/202111130020200.png" alt="image-20211113001927548" /><figcaption aria-hidden="true">image-20211113001927548</figcaption>
+<img src="https://pic.islet.space/2021/11/202111130020200.png"
+alt="image-20211113001927548" />
+<figcaption aria-hidden="true">image-20211113001927548</figcaption>
 </figure>
 <h2 id="ddns域名绑定">DDNS域名绑定</h2>
 <p>虽然已经获得公网IP，但是该IP还是会随机变动，还会需要使用DDNS服务将公网IP映射到对应域名上，而群辉服务器则提供此功能，此处需要自己申请一个域名（此步骤省略）。进入群辉服务器后台，开启DDNS功能，将域名和随机公网IP绑定和更新。</p>
-<p>另外，需要自己上所用的服务器上开启API Token，并提供给群辉DDNS服务（类似于授权，可以由DDNS服务自己检测家庭网络的公网IP，并自动绑定最新的公网IP）。</p>
+<p>另外，需要自己上所用的服务器上开启API
+Token，并提供给群辉DDNS服务（类似于授权，可以由DDNS服务自己检测家庭网络的公网IP，并自动绑定最新的公网IP）。</p>
 <h3 id="api-token申请">API Token申请</h3>
-<p>下方以腾讯云的DNSPOD为例，点击DNSPOD中的 <strong>API密钥</strong>，进行 <strong>新建密钥</strong> 即可，将对应的 <strong>SecretId</strong> 和 <strong>SecretKey</strong> 复制下来。</p>
+<p>下方以腾讯云的DNSPOD为例，点击DNSPOD中的
+<strong>API密钥</strong>，进行 <strong>新建密钥</strong> 即可，将对应的
+<strong>SecretId</strong> 和 <strong>SecretKey</strong> 复制下来。</p>
 <figure>
-<img src="https://pic.islet.space/2021/11/202111130022335.png" alt="image-20211113002208036" /><figcaption aria-hidden="true">image-20211113002208036</figcaption>
+<img src="https://pic.islet.space/2021/11/202111130022335.png"
+alt="image-20211113002208036" />
+<figcaption aria-hidden="true">image-20211113002208036</figcaption>
 </figure>
 <figure>
-<img src="https://pic.islet.space/2021/11/202111130022186.png" alt="image-20211113001142315" /><figcaption aria-hidden="true">image-20211113001142315</figcaption>
+<img src="https://pic.islet.space/2021/11/202111130022186.png"
+alt="image-20211113001142315" />
+<figcaption aria-hidden="true">image-20211113001142315</figcaption>
 </figure>
 <h3 id="ddns添加">DDNS添加</h3>
-<p>将获取到的 <strong>SecretId</strong> 填写到 <strong>用户名/电子邮件</strong> 中， 将 <strong>SecretKey</strong> 填写到 <strong>密码/密钥</strong> 中。</p>
+<p>将获取到的 <strong>SecretId</strong> 填写到
+<strong>用户名/电子邮件</strong> 中， 将 <strong>SecretKey</strong>
+填写到 <strong>密码/密钥</strong> 中。</p>
 <figure>
-<img src="https://pic.islet.space/2021/11/202111130022727.png" alt="image-20211113001623814" /><figcaption aria-hidden="true">image-20211113001623814</figcaption>
+<img src="https://pic.islet.space/2021/11/202111130022727.png"
+alt="image-20211113001623814" />
+<figcaption aria-hidden="true">image-20211113001623814</figcaption>
 </figure>
-<p>经过前面的步骤，可以看到群晖NAS服务器自动测试的 <strong>DDNS状态</strong> 为 <strong>正常</strong> 即可。</p>
+<p>经过前面的步骤，可以看到群晖NAS服务器自动测试的
+<strong>DDNS状态</strong> 为 <strong>正常</strong> 即可。</p>
 <figure>
-<img src="https://pic.islet.space/2021/11/202111130022986.png" alt="image-20211112175853513" /><figcaption aria-hidden="true">image-20211112175853513</figcaption>
+<img src="https://pic.islet.space/2021/11/202111130022986.png"
+alt="image-20211112175853513" />
+<figcaption aria-hidden="true">image-20211112175853513</figcaption>
 </figure>
 <h2 id="端口映射和转发">端口映射和转发</h2>
-<p><strong>端口映射</strong>：Port Mapping， 即将内网中的主机的一个端口映射到外网主机的一个端口，以提供相应的服务。当用户访问外网IP的这个端口时，服务器自动将请求映射到对应局域网内部的机器上。</p>
-<p><strong>端口转发</strong>：Port Forwarding， 即将外网对应 EA 端口上收到的数据转发到内网某个主机对应的某个 IA 端口上，或者反过来将内网某个主机 IB 端口的数据转发到对应外网的 EB端口 上。</p>
-<p><strong>UPnP协议</strong>：Universal Plug and Play，即 即插即用。主要是微软在推行的一个标准，适用于家庭网络，用于设备间的发现和连接。UPnP 最大的愿景就是希望实现任何设备只要一接入网络就能被网络中的所有其它设备发现，做到完全的即插即用。UPnP是一个多层协议构成的框架体系，每一层都以相邻的下层为基础，同时又是相邻上层的基础。直至达到应用层为止。</p>
+<p><strong>端口映射</strong>：Port Mapping，
+即将内网中的主机的一个端口映射到外网主机的一个端口，以提供相应的服务。当用户访问外网IP的这个端口时，服务器自动将请求映射到对应局域网内部的机器上。</p>
+<p><strong>端口转发</strong>：Port Forwarding， 即将外网对应 EA
+端口上收到的数据转发到内网某个主机对应的某个 IA
+端口上，或者反过来将内网某个主机 IB 端口的数据转发到对应外网的 EB端口
+上。</p>
+<p><strong>UPnP协议</strong>：Universal Plug and Play，即
+即插即用。主要是微软在推行的一个标准，适用于家庭网络，用于设备间的发现和连接。UPnP
+最大的愿景就是希望实现任何设备只要一接入网络就能被网络中的所有其它设备发现，做到完全的即插即用。UPnP是一个多层协议构成的框架体系，每一层都以相邻的下层为基础，同时又是相邻上层的基础。直至达到应用层为止。</p>
 <h3 id="手动端口转发或自动端口转发">手动端口转发或自动端口转发</h3>
 <p>手动端口转发：</p>
 <p>自动端口转发：</p>
 <figure>
-<img src="https://pic.islet.space/2021/11/202111130022401.png" alt="image-20211112180357037" /><figcaption aria-hidden="true">image-20211112180357037</figcaption>
+<img src="https://pic.islet.space/2021/11/202111130022401.png"
+alt="image-20211112180357037" />
+<figcaption aria-hidden="true">image-20211112180357037</figcaption>
 </figure>
 <figure>
-<img src="https://pic.islet.space/2021/11/202111211632483.png" alt="image-20211112175632036" /><figcaption aria-hidden="true">image-20211112175632036</figcaption>
+<img src="https://pic.islet.space/2021/11/202111211632483.png"
+alt="image-20211112175632036" />
+<figcaption aria-hidden="true">image-20211112175632036</figcaption>
 </figure>
 <figure>
-<img src="https://pic.islet.space/2021/11/202111130022536.png" alt="image-20211112180450097" /><figcaption aria-hidden="true">image-20211112180450097</figcaption>
+<img src="https://pic.islet.space/2021/11/202111130022536.png"
+alt="image-20211112180450097" />
+<figcaption aria-hidden="true">image-20211112180450097</figcaption>
 </figure>
 <h2 id="配置dmz">配置DMZ</h2>
 <blockquote>
@@ -1074,28 +2495,40 @@
 <p>DMZ使包含重要数据的内部系统免于直接暴露给外部网络而受到攻击，攻击者即使初步入侵成功，还要面临DMZ设置的新的障碍。</p>
 </blockquote>
 <figure>
-<img src="https://pic.islet.space/2021/11/202111130022178.png" alt="image-20211112172411026" /><figcaption aria-hidden="true">image-20211112172411026</figcaption>
+<img src="https://pic.islet.space/2021/11/202111130022178.png"
+alt="image-20211112172411026" />
+<figcaption aria-hidden="true">image-20211112172411026</figcaption>
 </figure>
 <h3 id="dmz开启前">DMZ开启前</h3>
 <figure>
-<img src="https://pic.islet.space/2021/11/202111130022255.png" alt="image-20211112172343953" /><figcaption aria-hidden="true">image-20211112172343953</figcaption>
+<img src="https://pic.islet.space/2021/11/202111130022255.png"
+alt="image-20211112172343953" />
+<figcaption aria-hidden="true">image-20211112172343953</figcaption>
 </figure>
 <h3 id="dmz开启后">DMZ开启后</h3>
 <p>虽然也是随机公网IP，但是可以使用DMZ将连接到路由器的设备映射到外网上。</p>
 <figure>
-<img src="https://pic.islet.space/2021/11/202111130022517.png" alt="image-20211112175925384" /><figcaption aria-hidden="true">image-20211112175925384</figcaption>
+<img src="https://pic.islet.space/2021/11/202111130022517.png"
+alt="image-20211112175925384" />
+<figcaption aria-hidden="true">image-20211112175925384</figcaption>
 </figure>
 <h2 id="安全证书设置">安全证书设置</h2>
 <p>设置安全证书及其使用范围，<mark style="font-weight: 900;">不要使用自我签名的证书，所有浏览器都会识别和阻止你访问的</mark>。</p>
-<p>经过前面DDNS的 API token 配置之后，群晖NAS能够获取到对应域名的免费证书，并提供页面进行管理，将所有使用到的应用安全验证证书都设置为对应云服务提供商提供的证书即可。</p>
+<p>经过前面DDNS的 API token
+配置之后，群晖NAS能够获取到对应域名的免费证书，并提供页面进行管理，将所有使用到的应用安全验证证书都设置为对应云服务提供商提供的证书即可。</p>
 <figure>
-<img src="https://pic.islet.space/2021/11/202111130022177.png" alt="image-20211112180133874" /><figcaption aria-hidden="true">image-20211112180133874</figcaption>
+<img src="https://pic.islet.space/2021/11/202111130022177.png"
+alt="image-20211112180133874" />
+<figcaption aria-hidden="true">image-20211112180133874</figcaption>
 </figure>
 <h1 id="后台服务器访问">后台服务器访问</h1>
 <p>经过上面复杂的折腾之后，就可以使用自定义的域名进行后台登录和管理了。</p>
-<p>输入 <code>https://nax.xxx.xxx:5000</code> 即可进行后台服务器的访问，也可以使用 ping 进行测试，如下：</p>
+<p>输入 <code>https://nax.xxx.xxx:5000</code>
+即可进行后台服务器的访问，也可以使用 ping 进行测试，如下：</p>
 <figure>
-<img src="https://pic.islet.space/2021/11/202111130029734.png" alt="image-20211113002928045" /><figcaption aria-hidden="true">image-20211113002928045</figcaption>
+<img src="https://pic.islet.space/2021/11/202111130029734.png"
+alt="image-20211113002928045" />
+<figcaption aria-hidden="true">image-20211113002928045</figcaption>
 </figure>
 <h1 id="远程驱动器设置">远程驱动器设置</h1>
 <ol type="1">
@@ -1103,32 +2536,43 @@
 <li>然后点击 <strong>映射网络驱动器</strong></li>
 </ol>
 <figure>
-<img src="https://pic.islet.space/2021/11/202111130022518.png" alt="image-20211112174837538" /><figcaption aria-hidden="true">image-20211112174837538</figcaption>
+<img src="https://pic.islet.space/2021/11/202111130022518.png"
+alt="image-20211112174837538" />
+<figcaption aria-hidden="true">image-20211112174837538</figcaption>
 </figure>
 <ol start="3" type="1">
 <li>选择本地的 <strong>虚拟驱动号</strong> 进行设置</li>
-<li>输入 <strong>网络地址</strong> 和 <strong>端口号</strong>，格式如 <code>https://nas.xxx.xxx:5006</code></li>
+<li>输入 <strong>网络地址</strong> 和 <strong>端口号</strong>，格式如
+<code>https://nas.xxx.xxx:5006</code></li>
 </ol>
 <figure>
-<img src="https://pic.islet.space/2021/11/202111130022793.png" alt="image-20211112175022321" /><figcaption aria-hidden="true">image-20211112175022321</figcaption>
+<img src="https://pic.islet.space/2021/11/202111130022793.png"
+alt="image-20211112175022321" />
+<figcaption aria-hidden="true">image-20211112175022321</figcaption>
 </figure>
 <ol start="5" type="1">
 <li>按照提示输入群晖提供的账户名和密码即可进行连接</li>
 </ol>
 <figure>
-<img src="https://pic.islet.space/2021/11/202111130022607.png" alt="image-20211112174513370" /><figcaption aria-hidden="true">image-20211112174513370</figcaption>
+<img src="https://pic.islet.space/2021/11/202111130022607.png"
+alt="image-20211112174513370" />
+<figcaption aria-hidden="true">image-20211112174513370</figcaption>
 </figure>
 <ol start="6" type="1">
 <li>连接完毕即可查看到对应的网络驱动器</li>
 </ol>
 <figure>
-<img src="https://pic.islet.space/2021/11/202111130022504.png" alt="image-20211112174559989" /><figcaption aria-hidden="true">image-20211112174559989</figcaption>
+<img src="https://pic.islet.space/2021/11/202111130022504.png"
+alt="image-20211112174559989" />
+<figcaption aria-hidden="true">image-20211112174559989</figcaption>
 </figure>
 <h1 id="参考">参考</h1>
 <ol type="1">
-<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/75648110">【干货】什么是端口转发？什么是端口映射？如何设置端口映射？</a></li>
+<li><a
+target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/75648110">【干货】什么是端口转发？什么是端口映射？如何设置端口映射？</a></li>
 <li><a target="_blank" rel="noopener" href="https://baike.baidu.com/item/DMZ/631225#6">DMZ</a></li>
-<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/braddoris/article/details/41646789">upnp协议简介（一）</a></li>
+<li><a
+target="_blank" rel="noopener" href="https://blog.csdn.net/braddoris/article/details/41646789">upnp协议简介（一）</a></li>
 </ol>
 
       
@@ -1213,8 +2657,11 @@
     
     <div class="post-body" itemprop="articleBody">
           <p>本笔记不是全面的C++学习笔记，而是基于个人在原有的C语言基础和浅薄的C++的开发经验上的补足笔记。</p>
-<p>本笔记仅供个人学习记录，不提供完整学习指导，如有需要请自行阅读《<a target="_blank" rel="noopener" href="https://storage.islet.space/01_Learning/02_CPP/C%2B%2B_Primer_Plus.pdf">C++ Primer Plus</a>》。</p>
-<p>本文会参考 GNU C++ 进行代码调试，部分文档内容会参考 MS C++ 进行理解。</p>
+<p>本笔记仅供个人学习记录，不提供完整学习指导，如有需要请自行阅读《<a
+target="_blank" rel="noopener" href="https://storage.islet.space/01_Learning/02_CPP/C%2B%2B_Primer_Plus.pdf">C++
+Primer Plus</a>》。</p>
+<p>本文会参考 GNU C++ 进行代码调试，部分文档内容会参考 MS C++
+进行理解。</p>
 <h1 id="简介">简介</h1>
 <p>C++融合了三种不同的编程方式：</p>
 <ul>
@@ -1223,18 +2670,29 @@
 <li>泛型编程（Generic Programming），即C++模板（Template）</li>
 </ul>
 <h2 id="过程-vs-对象">过程 VS 对象</h2>
-<p><strong>面向过程编程</strong>（Process Oriented Programming），即 <strong>结构化编程</strong> 或 <strong>过程结构化编程</strong>，是指根据执行的操作来构思一个程序。程序任务需要解决的问题按照 “1、2、3、4” 这样的顺序一一编写，如果程序任务过大，则将较大的任务拆解成较小的可以理清结构逻辑的小任务去完成。C语言的编程开发思路就是使用程序模块（函数）来表示各个任务模块。</p>
-<p><strong>面向对象编程</strong>（Object Oriented Programming），简称 OOP。</p>
+<p><strong>面向过程编程</strong>（Process Oriented Programming），即
+<strong>结构化编程</strong> 或
+<strong>过程结构化编程</strong>，是指根据执行的操作来构思一个程序。程序任务需要解决的问题按照
+“1、2、3、4”
+这样的顺序一一编写，如果程序任务过大，则将较大的任务拆解成较小的可以理清结构逻辑的小任务去完成。C语言的编程开发思路就是使用程序模块（函数）来表示各个任务模块。</p>
+<p><strong>面向对象编程</strong>（Object Oriented Programming），简称
+OOP。</p>
 <p>结构化编程在程序逻辑的清晰度和可靠性上占据优势，但是在代码量上和面向对象相比不占优势</p>
 <blockquote>
 <p>为了应付代码量的挑战，与强调算法的过程性编程不同，OOP强调数据。过程性编程试图使问题满足语言要求，OOP则是使语言满足问题的要求。</p>
 </blockquote>
-<p><strong>类</strong>（Class） 是规定了 <strong>数据</strong> 和 <strong>操作</strong> 的 <strong>数据类型</strong>（Data Type）。类所创建的实体称为对象。</p>
+<p><strong>类</strong>（Class） 是规定了 <strong>数据</strong> 和
+<strong>操作</strong> 的 <strong>数据类型</strong>（Data
+Type）。类所创建的实体称为对象。</p>
 <blockquote>
-<p>OOP 强调的是编程的数据方面，GP编程强调的是 <mark style="font-weight: 900;">独立于特定数据类型</mark>，即强调 <strong>通用</strong> 和 <strong>非特定</strong> 类型。</p>
+<p>OOP 强调的是编程的数据方面，GP编程强调的是
+<mark style="font-weight: 900;">独立于特定数据类型</mark>，即强调
+<strong>通用</strong> 和 <strong>非特定</strong> 类型。</p>
 </blockquote>
 <figure>
-<img src="https://pic.islet.space/2021/10/20211030171646.png" alt="image-20211027135117490" /><figcaption aria-hidden="true">image-20211027135117490</figcaption>
+<img src="https://pic.islet.space/2021/10/20211030171646.png"
+alt="image-20211027135117490" />
+<figcaption aria-hidden="true">image-20211027135117490</figcaption>
 </figure>
 <h2 id="系统的位数">系统的位数</h2>
 <ul>
@@ -1249,7 +2707,12 @@
 </ul>
 <p>C语言的变量声明通常都应位于函数或过程开始位置（Pascal也是），而C++并没有该限制，因此这点可以说是C++的优点也可以是缺点。</p>
 <h3 id="range-based-for">Range-based for</h3>
-<p>C++11 引入了一种崭新的 <code>for()</code> 循环形式，可以逐一迭代某个给定的 <strong>区间</strong>、<strong>数组</strong> 或 <strong>集合</strong>（range, array or collection） 内的每一个元素。而其他语言可能称之为 <code>foreach</code> 循环，其一般性用法如下：</p>
+<p>C++11 引入了一种崭新的 <code>for()</code>
+循环形式，可以逐一迭代某个给定的
+<strong>区间</strong>、<strong>数组</strong> 或
+<strong>集合</strong>（range, array or collection）
+内的每一个元素。而其他语言可能称之为 <code>foreach</code>
+循环，其一般性用法如下：</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span>(decl:coll)&#123;</span><br><span class="line">    statement</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <blockquote>
 <p>其中：</p>
@@ -1260,23 +2723,41 @@
 </blockquote>
 <p>使用样例（下左）及其输出结果（下右）如：</p>
 <figure>
-<img src="https://pic.islet.space/2021/10/20211030171650.png" alt="image-20211030084723644" /><figcaption aria-hidden="true">image-20211030084723644</figcaption>
+<img src="https://pic.islet.space/2021/10/20211030171650.png"
+alt="image-20211030084723644" />
+<figcaption aria-hidden="true">image-20211030084723644</figcaption>
 </figure>
-<p>而且上面这种是基于 C-style array 的新旧语法搭配的 C++，实际上如果 <em>coll</em> 集合提供成员函数 <code>begin()</code> 和 <code>end()</code> ，那么使用 <code>for(decl:coll)</code> 时便等同于使用 <code>for(auto _pos=coll.begin(), _end=coll.end(); _pos!=_end;++_pos)</code></p>
+<p>而且上面这种是基于 C-style array 的新旧语法搭配的 C++，实际上如果
+<em>coll</em> 集合提供成员函数 <code>begin()</code> 和
+<code>end()</code> ，那么使用 <code>for(decl:coll)</code> 时便等同于使用
+<code>for(auto _pos=coll.begin(), _end=coll.end(); _pos!=_end;++_pos)</code></p>
 <h2 id="data-type">Data Type</h2>
 <ul>
 <li>数据类型的大小由什么决定？数据类型大小（即占空内存空间）与系统位数、编译器的关联性？</li>
 <li>嵌入式系统与通用系统的数据类型大小差异在哪？</li>
 <li>double 和 float 在内存上的差异？</li>
 </ul>
-<p>在 C++ 中， <strong>变量</strong>（Variable） 一词通常用于 引用 <strong>标量数据类型</strong> 的 实例，而 <strong>其他类型</strong>（class / struct）的实例通常称为 <strong>对象</strong>（Object）。</p>
-<p>C++ 是 <strong>强类型语言</strong> ，也是 <strong>静态类型</strong>。</p>
-<p>在代码中声明变量时，必须 <mark>显式指定其类型</mark>，或使用 关键字指示编译器从初始值表达式 <strong><code>auto</code></strong> 推断类型。 在代码中声明函数时，必须指定每个参数的类型及其返回值；如果函数未返回任何 <strong><code>void</code></strong> 值，则必须指定 。当使用允许任意类型参数的函数模板时例外。</p>
+<p>在 C++ 中， <strong>变量</strong>（Variable） 一词通常用于 引用
+<strong>标量数据类型</strong> 的 实例，而
+<strong>其他类型</strong>（class / struct）的实例通常称为
+<strong>对象</strong>（Object）。</p>
+<p>C++ 是 <strong>强类型语言</strong> ，也是
+<strong>静态类型</strong>。</p>
+<p>在代码中声明变量时，必须 <mark>显式指定其类型</mark>，或使用
+关键字指示编译器从初始值表达式 <strong><code>auto</code></strong>
+推断类型。
+在代码中声明函数时，必须指定每个参数的类型及其返回值；如果函数未返回任何
+<strong><code>void</code></strong> 值，则必须指定
+。当使用允许任意类型参数的函数模板时例外。</p>
 <h3 id="基本内置类型">基本（内置）类型</h3>
-<p><strong>基本数据类型</strong>，简称 <strong>基本类型</strong> 或 <strong>基类型</strong>。</p>
+<p><strong>基本数据类型</strong>，简称 <strong>基本类型</strong> 或
+<strong>基类型</strong>。</p>
 <p>下图显示了 Microsoft C++ 实现中的内置类型的相对大小：</p>
 <figure>
-<img src="https://pic.islet.space/2021/10/20211030171653.png" alt="多个内置类型的相对大小（以字节为单位）的关系图。" /><figcaption aria-hidden="true">多个内置类型的相对大小（以字节为单位）的关系图。</figcaption>
+<img src="https://pic.islet.space/2021/10/20211030171653.png"
+alt="多个内置类型的相对大小（以字节为单位）的关系图。" />
+<figcaption
+aria-hidden="true">多个内置类型的相对大小（以字节为单位）的关系图。</figcaption>
 </figure>
 <p>下表列出了最常用的基本类型及其在 Microsoft C++ 实现中的大小：</p>
 <table>
@@ -1311,17 +2792,21 @@
 <tr class="even">
 <td><strong><code>char</code></strong></td>
 <td>1 个字节</td>
-<td>用于早期 C 样式字符串或 std:: 字符串对象中无需转换为 UNICODE 的 ASCII 字符。</td>
+<td>用于早期 C 样式字符串或 std:: 字符串对象中无需转换为 UNICODE 的
+ASCII 字符。</td>
 </tr>
 <tr class="odd">
 <td><strong><code>wchar_t</code></strong></td>
 <td>2 个字节</td>
-<td>表示可能以 UNICODE 格式进行编码的“宽”字符值（Windows 上为 UTF-16，其他操作系统上可能不同）。 这是用于 <code>std::wstring</code> 类型字符串的字符类型。</td>
+<td>表示可能以 UNICODE 格式进行编码的“宽”字符值（Windows 上为
+UTF-16，其他操作系统上可能不同）。 这是用于 <code>std::wstring</code>
+类型字符串的字符类型。</td>
 </tr>
 <tr class="even">
 <td><strong><code>unsigned char</code></strong></td>
 <td>1 个字节</td>
-<td>C++ 没有内置字节类型。 使用 <strong><code>unsigned char</code></strong> 表示字节值。</td>
+<td>C++ 没有内置字节类型。 使用
+<strong><code>unsigned char</code></strong> 表示字节值。</td>
 </tr>
 <tr class="odd">
 <td><strong><code>unsigned int</code></strong></td>
@@ -1335,8 +2820,12 @@
 </tr>
 </tbody>
 </table>
-<p>类型数据的宽度（Width），即占用内存大小是由 <strong>计算机字长</strong> 和 <strong>编译程序</strong> 决定的。计算机字长提供了硬件计算精度的支持，编译程序则提供了源程序到机器码的转换。</p>
-<p>下方为C/C++ 在通用系统或嵌入式系统中的常见数据类型的大小，所有值的单位均为 <em>bit</em> 。</p>
+<p>类型数据的宽度（Width），即占用内存大小是由
+<strong>计算机字长</strong> 和 <strong>编译程序</strong>
+决定的。计算机字长提供了硬件计算精度的支持，编译程序则提供了源程序到机器码的转换。</p>
+<p>下方为C/C++
+在通用系统或嵌入式系统中的常见数据类型的大小，所有值的单位均为
+<em>bit</em> 。</p>
 <table>
 <colgroup>
 <col style="width: 9%" />
@@ -1445,27 +2934,53 @@
 </table>
 <p>下方内容转自网络，待验证。</p>
 <blockquote>
-<p>（x86平台下）<code>long int</code> 即 <code>long</code>，给人的感觉好像是长整型，但实际上，它和 <code>int</code> 一样，只有32位。cppreference 给出的定义如下，但在实际的使用中，<code>long</code> 与 <code>int</code> 几乎没有区别。</p>
+<p>（x86平台下）<code>long int</code> 即
+<code>long</code>，给人的感觉好像是长整型，但实际上，它和
+<code>int</code> 一样，只有32位。cppreference
+给出的定义如下，但在实际的使用中，<code>long</code> 与 <code>int</code>
+几乎没有区别。</p>
 <blockquote>
-<p><strong><em>int</em></strong> - basic integer type. The keyword int may be omitted if any of the modifiers listed below are used. If no length modifiers are present, it’s guaranteed to have a width of at least 16 bits. However, on 32/64 bit systems it is almost exclusively guaranteed to have width of at least 32 bits. <strong><em>long</em></strong> - target type will have width of at least 32 bits.</p>
+<p><strong><em>int</em></strong> - basic integer type. The keyword int
+may be omitted if any of the modifiers listed below are used. If no
+length modifiers are present, it’s guaranteed to have a width of at
+least 16 bits. However, on 32/64 bit systems it is almost exclusively
+guaranteed to have width of at least 32 bits.
+<strong><em>long</em></strong> - target type will have width of at least
+32 bits.</p>
 </blockquote>
 </blockquote>
-<p><strong>实际上经过测试</strong>：在 x86_64 平台下，C 和 C++ 中的 <code>long</code> 长度都是要比 <code>int</code> 更长的，即 <code>int</code> 默认为 <code>32bit</code> 宽度，<code>long</code> 为 <code>64bit</code> 宽度。</p>
+<p><strong>实际上经过测试</strong>：在 x86_64 平台下，C 和 C++ 中的
+<code>long</code> 长度都是要比 <code>int</code> 更长的，即
+<code>int</code> 默认为 <code>32bit</code> 宽度，<code>long</code> 为
+<code>64bit</code> 宽度。</p>
 <figure>
-<img src="https://pic.islet.space/2021/10/20211030171657.png" alt="image-20211028101248341" /><figcaption aria-hidden="true">image-20211028101248341</figcaption>
+<img src="https://pic.islet.space/2021/10/20211030171657.png"
+alt="image-20211028101248341" />
+<figcaption aria-hidden="true">image-20211028101248341</figcaption>
 </figure>
 <h3 id="embedded-system">Embedded System</h3>
 <p>嵌入式C语言中常用的数据类型如下图所示，而不同的</p>
 <p><img src="https://pic.islet.space/2021/10/20211030171712.png" alt="image-20211027155153218" style="zoom: 67%;" /></p>
 <h3 id="double-float">double / float</h3>
-<p><strong>IEEE二进制浮点数算术标准</strong>（<strong>IEEE 754</strong>）是20世纪80年代以来最广泛使用的浮点数运算标准，为许多CPU与浮点运算器所采用。这个标准定义了表示浮点数的格式（包括负零-0）与反常值（denormal number）），一些特殊数值（无穷（Inf）与非数值（NaN）），以及这些数值的“浮点数运算符”；它也指明了四种数值舍入规则和五种例外状况（包括例外发生的时机与处理方式）。</p>
-<p>IEEE 754规定了四种表示浮点数值的方式：单精确度（32位）、双精确度（64位）、延伸单精确度（43比特以上，很少使用）与延伸双精确度（79比特以上，通常以80比特实做）。只有32位模式有强制要求，其他都是选择性的。大部分编程语言都有提供IEEE浮点数格式与算术，但有些将其列为非必需的。例如，IEEE 754问世之前就有的C语言，现在有包括IEEE算术，但不算作强制要求（C语言的<code>float</code>通常是指IEEE单精确度，而<code>double</code>是指双精确度）。</p>
-<p>该标准的全称为<strong>IEEE二进制浮点数算术标准（ANSI/IEEE Std 754-1985）</strong>，又称<strong>IEC 60559:1989，微处理器系统的二进制浮点数算术</strong>（本来的编号是IEC 559:1989）。后来还有“与基数无关的浮点数”的“IEEE 854-1987标准”，有规定基数为2跟10的状况。现在最新标准是“IEEE 854-2008标准”。</p>
+<p><strong>IEEE二进制浮点数算术标准</strong>（<strong>IEEE
+754</strong>）是20世纪80年代以来最广泛使用的浮点数运算标准，为许多CPU与浮点运算器所采用。这个标准定义了表示浮点数的格式（包括负零-0）与反常值（denormal
+number）），一些特殊数值（无穷（Inf）与非数值（NaN）），以及这些数值的“浮点数运算符”；它也指明了四种数值舍入规则和五种例外状况（包括例外发生的时机与处理方式）。</p>
+<p>IEEE
+754规定了四种表示浮点数值的方式：单精确度（32位）、双精确度（64位）、延伸单精确度（43比特以上，很少使用）与延伸双精确度（79比特以上，通常以80比特实做）。只有32位模式有强制要求，其他都是选择性的。大部分编程语言都有提供IEEE浮点数格式与算术，但有些将其列为非必需的。例如，IEEE
+754问世之前就有的C语言，现在有包括IEEE算术，但不算作强制要求（C语言的<code>float</code>通常是指IEEE单精确度，而<code>double</code>是指双精确度）。</p>
+<p>该标准的全称为<strong>IEEE二进制浮点数算术标准（ANSI/IEEE Std
+754-1985）</strong>，又称<strong>IEC
+60559:1989，微处理器系统的二进制浮点数算术</strong>（本来的编号是IEC
+559:1989）。后来还有“与基数无关的浮点数”的“IEEE
+854-1987标准”，有规定基数为2跟10的状况。现在最新标准是“IEEE
+854-2008标准”。</p>
 <h2 id="variable">Variable</h2>
-<p>C++ 与 ANSI C（C99标准）不同之处，在于后者只保证名称中的前63个字符有意义，即使第64个字符不同，但是只要前63个字符相同的变量则被认为是相同的。</p>
+<p>C++ 与 ANSI
+C（C99标准）不同之处，在于后者只保证名称中的前63个字符有意义，即使第64个字符不同，但是只要前63个字符相同的变量则被认为是相同的。</p>
 <p>在某些情况下，其他程序员会使用的变量命名风格及其意义：</p>
 <ul>
-<li><code>str</code> 或 <code>sz</code> 前缀：表示以空字符结束的字符串</li>
+<li><code>str</code> 或 <code>sz</code>
+前缀：表示以空字符结束的字符串</li>
 <li><code>b</code> 前缀：表示布尔值</li>
 <li><code>p</code> 前缀：表示指针</li>
 <li><code>c</code> 前缀：表示单个字符</li>
@@ -1473,53 +2988,88 @@
 <h2 id="class">Class</h2>
 <p><strong>类</strong>：（用户定义/标准的）数据类型规范，详细描述了如何表示信息以及对数据执行的操作。</p>
 <p><strong>对象</strong>：是根据类规范创建的实体（好似之于变量和基本数据类型）。</p>
-<p>就像函数可以来自函数库一样，类也可以来自 <strong>类库</strong>。从技术上说，大部分类库都没有被内置到C++语言中，而是语言标准指定的类。<strong>类定义</strong> 位于类库文件中，并没有被内置到编译器里（有需要可以修改，虽然不建议）。</p>
-<p>C++之所以如此有吸引力，很大程度上是由于存在大量支持UNIX、Macintosh 和 Windows 编程的类库。</p>
-<p><strong>类描述</strong> 指定了可以对类对象执行的所有操作。要对特定对象执行这些允许的操作有两种方法，一是直接使用类方法（本质即函数调用），二是重定义运算符（如 <code>cin</code> 和 <code>cout</code> 使用的 <code>&gt;&gt;</code> 和 <code>&lt;&lt;</code> ）</p>
+<p>就像函数可以来自函数库一样，类也可以来自
+<strong>类库</strong>。从技术上说，大部分类库都没有被内置到C++语言中，而是语言标准指定的类。<strong>类定义</strong>
+位于类库文件中，并没有被内置到编译器里（有需要可以修改，虽然不建议）。</p>
+<p>C++之所以如此有吸引力，很大程度上是由于存在大量支持UNIX、Macintosh 和
+Windows 编程的类库。</p>
+<p><strong>类描述</strong>
+指定了可以对类对象执行的所有操作。要对特定对象执行这些允许的操作有两种方法，一是直接使用类方法（本质即函数调用），二是重定义运算符（如
+<code>cin</code> 和 <code>cout</code> 使用的 <code>&gt;&gt;</code> 和
+<code>&lt;&lt;</code> ）</p>
 <h2 id="function">Function</h2>
-<p>被调用的函数称为 <strong>被调用函数</strong>（called function），包含函数调用的函数称为 <strong>调用函数</strong>（calling function）。</p>
-<p><strong>函数原型</strong>：即 <strong>函数声明</strong>，函数原型或声明只描述函数接口，指仅有函数头和分号 <code>;</code> 而没有函数体的语句。函数原型定义了需要传递给函数的参数以及函数本身需要返回的值的类型。</p>
+<p>被调用的函数称为 <strong>被调用函数</strong>（called
+function），包含函数调用的函数称为 <strong>调用函数</strong>（calling
+function）。</p>
+<p><strong>函数原型</strong>：即
+<strong>函数声明</strong>，函数原型或声明只描述函数接口，指仅有函数头和分号
+<code>;</code>
+而没有函数体的语句。函数原型定义了需要传递给函数的参数以及函数本身需要返回的值的类型。</p>
 <p><strong>库文件</strong>：存放了函数编译代码的文件。</p>
 <p><strong>头文件</strong>：包含了函数原型的文件。</p>
 <figure>
-<img src="https://pic.islet.space/2021/10/20211030171703.png" alt="image-20211028085847535" /><figcaption aria-hidden="true">image-20211028085847535</figcaption>
+<img src="https://pic.islet.space/2021/10/20211030171703.png"
+alt="image-20211028085847535" />
+<figcaption aria-hidden="true">image-20211028085847535</figcaption>
 </figure>
 <blockquote>
-<p>在有些语言中，有返回值的函数被称为 <strong>函数</strong>（function），无返回值的函数被称为 <strong>过程</strong>（procedure） 或 子程序（subroutine）。</p>
+<p>在有些语言中，有返回值的函数被称为
+<strong>函数</strong>（function），无返回值的函数被称为
+<strong>过程</strong>（procedure） 或 子程序（subroutine）。</p>
 <p>但在C/C++中，都被称为 <strong>函数</strong>。</p>
 </blockquote>
 <h3 id="main-function">Main Function</h3>
 <ul>
 <li>有什么有些IDE中的main函数的括号里是带参数的？</li>
 </ul>
-<p>是否在 主函数<code>main()</code> 参数括号 <code>()</code> 中使用关键字 <code>void</code> ，在C++和C中有明显的区别：</p>
+<p>是否在 主函数<code>main()</code> 参数括号 <code>()</code>
+中使用关键字 <code>void</code> ，在C++和C中有明显的区别：</p>
 <ul>
 <li>在C++中，让括号空着和在括号中写 <code>void</code> 等效。</li>
 <li>而在C中，让括号空着意味着对是否接受参数保持沉默。</li>
 </ul>
 <blockquote>
-<p><code>int main(int argc, const char * argv[])</code> 是UNIX和linux中的标准写法。<code>int main()</code> 只是默许的用法。</p>
-<p>使用main函数时经常都是不带参数的，因此main 后的括号都是空括号。实际上，main函数可以带参数，这个参数可以认为是 main函数的 <strong>形式参数</strong>。</p>
+<p><code>int main(int argc, const char * argv[])</code>
+是UNIX和linux中的标准写法。<code>int main()</code> 只是默许的用法。</p>
+<p>使用main函数时经常都是不带参数的，因此main
+后的括号都是空括号。实际上，main函数可以带参数，这个参数可以认为是
+main函数的 <strong>形式参数</strong>。</p>
 <p>Ｃ语言规定</p>
 <ol type="1">
-<li>main函数的参数只能有两个，习惯上这两个参数写为 <code>argc</code> 和 <code>argv</code>。因此，main函数的函数头可写为：<code>main (argc,argv)</code> 。</li>
-<li><code>argc</code> （第一个形参）必须是 <strong>整型变量</strong> ，<code>argv</code> （第二个形参）必须是指向字符串的 <strong>指针数组</strong>。</li>
+<li>main函数的参数只能有两个，习惯上这两个参数写为 <code>argc</code> 和
+<code>argv</code>。因此，main函数的函数头可写为：<code>main (argc,argv)</code>
+。</li>
+<li><code>argc</code> （第一个形参）必须是 <strong>整型变量</strong>
+，<code>argv</code> （第二个形参）必须是指向字符串的
+<strong>指针数组</strong>。</li>
 </ol>
 <p>由于main函数不能被其它函数调用，因此不可能在程序内部取得实际值。那么，在何处把实参值赋予main函数的形参呢?</p>
-<p>实际上，main函数的参数值是从 <strong>操作系统命令行</strong>/Terminal 上获得的。当我们要运行一个可执行文件时，输入空格，输入文件名，再输入实际参数即可把这些实参传送到main的形参中去。</p>
+<p>实际上，main函数的参数值是从 <strong>操作系统命令行</strong>/Terminal
+上获得的。当我们要运行一个可执行文件时，输入空格，输入文件名，再输入实际参数即可把这些实参传送到main的形参中去。</p>
 </blockquote>
-<p><code>argc</code> 的数值会随着通过命令行传递给可执行文件的参数的增加而增加，即 <code>argc</code> 其实是代表着 <strong>参数的数量</strong>。</p>
+<p><code>argc</code>
+的数值会随着通过命令行传递给可执行文件的参数的增加而增加，即
+<code>argc</code> 其实是代表着 <strong>参数的数量</strong>。</p>
 <figure>
-<img src="https://pic.islet.space/2021/10/20211030171706.png" alt="image-20211027144512641" /><figcaption aria-hidden="true">image-20211027144512641</figcaption>
+<img src="https://pic.islet.space/2021/10/20211030171706.png"
+alt="image-20211027144512641" />
+<figcaption aria-hidden="true">image-20211027144512641</figcaption>
 </figure>
 <h2 id="编译指令">编译指令</h2>
 <p><code>using</code> 是编译指令的关键字，</p>
 <h1 id="参考">参考</h1>
 <ol type="1">
-<li>《<a target="_blank" rel="noopener" href="https://storage.islet.space/01_Learning/02_CPP/C%2B%2B_Primer_Plus.pdf">C++ Primer Plus</a>》</li>
-<li><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/ab21bfe6a5b2">int main(int argc, const char * argv[])</a></li>
-<li><a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/cpp/cpp/cpp-type-system-modern-cpp?view=msvc-160">C++ 类型系统</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.cnblogs.com/noble/p/4144120.html">IEEE二进制浮点数算术标准（IEEE 754）</a></li>
+<li>《<a
+target="_blank" rel="noopener" href="https://storage.islet.space/01_Learning/02_CPP/C%2B%2B_Primer_Plus.pdf">C++
+Primer Plus</a>》</li>
+<li><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/ab21bfe6a5b2">int main(int argc,
+const char * argv[])</a></li>
+<li><a
+target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/cpp/cpp/cpp-type-system-modern-cpp?view=msvc-160">C++
+类型系统</a></li>
+<li><a
+target="_blank" rel="noopener" href="https://www.cnblogs.com/noble/p/4144120.html">IEEE二进制浮点数算术标准（IEEE
+754）</a></li>
 </ol>
 
       
@@ -1604,903 +3154,41 @@
     
     <div class="post-body" itemprop="articleBody">
           <h1 id="wsl">WSL</h1>
-<p>在windows的 linux子系统下安装的具有图形界面的软件都可以在windows上打开，但是如果直接在MS商店安装的 kali linux 子系统是最精简版本，很多开发者需要用的软件（如 gcc / make / vim 等）都不存在，需要使用官方提供的完整安装命令去安装一些必须程序。</p>
-<p>按照官方指示安装完必要程序后，可以在文件管理器里看到 linux 子系统的根目录，一定程度上很方便windows的用户使用linux系统并用图形化界面管理其文件。</p>
+<p>在windows的
+linux子系统下安装的具有图形界面的软件都可以在windows上打开，但是如果直接在MS商店安装的
+kali linux 子系统是最精简版本，很多开发者需要用的软件（如 gcc / make /
+vim 等）都不存在，需要使用官方提供的完整安装命令去安装一些必须程序。</p>
+<p>按照官方指示安装完必要程序后，可以在文件管理器里看到 linux
+子系统的根目录，一定程度上很方便windows的用户使用linux系统并用图形化界面管理其文件。</p>
 <figure>
-<img src="https://pic.islet.space/2021/10/20211027104148.png" alt="image-20211027103100831" /><figcaption aria-hidden="true">image-20211027103100831</figcaption>
+<img src="https://pic.islet.space/2021/10/20211027104148.png"
+alt="image-20211027103100831" />
+<figcaption aria-hidden="true">image-20211027103100831</figcaption>
 </figure>
 <h1 id="百度云盘安装">百度云盘安装</h1>
 <p>百度云盘是个人经常使用到的工具，在linux系统上也会安装，但wsl系统的话，多少可能会因为某些依赖文件缺失导致安装失败。</p>
 <p>缺失的文件可以通过先更新源库（<code>sudo apt update</code>）再进行安装的方式解决，但有些时候可能是源库的问题，导致该依赖的包不存在（如下）。</p>
 <figure>
-<img src="https://pic.islet.space/2021/10/20211027104146.png" alt="image-20211027104129827" /><figcaption aria-hidden="true">image-20211027104129827</figcaption>
+<img src="https://pic.islet.space/2021/10/20211027104146.png"
+alt="image-20211027104129827" />
+<figcaption aria-hidden="true">image-20211027104129827</figcaption>
 </figure>
-<p>因此需要通过手动下载（利用 <code>wget</code> ）该依赖包，然后自行安装（利用 <code>sudo dpkg -i</code> ）的方式来解决，其中百度云盘缺失的依赖文件及其包连接如下：</p>
+<p>因此需要通过手动下载（利用 <code>wget</code>
+）该依赖包，然后自行安装（利用 <code>sudo dpkg -i</code>
+）的方式来解决，其中百度云盘缺失的依赖文件及其包连接如下：</p>
 <ul>
 <li><code>libappindicator3-1</code>：http://mirrors.ustc.edu.cn/debian/pool/main/liba/libappindicator/libappindicator3-1_0.4.92-3.1_amd64.deb</li>
 <li><code>libindicator3-7</code>：http://mirrors.ustc.edu.cn/debian/pool/main/libi/libindicator/libindicator3-7_0.5.0-2_amd64.deb</li>
 <li><code>libdbusmenu-glib4</code>：http://ftp.br.debian.org/debian/pool/main/libd/libdbusmenu/libdbusmenu-glib4_18.10.20180917~bzr490+repack1-1_amd64.deb</li>
 <li><code>libdbusmenu-gtk3-4</code>：http://ftp.br.debian.org/debian/pool/main/libd/libdbusmenu/libdbusmenu-gtk3-4_18.10.20180917~bzr490+repack1-1_amd64.deb</li>
 </ul>
-<p>安装完毕之后即可正常进行软件使用了，虽然 wsl 的界面还是差强人意了些，哈哈。</p>
+<p>安装完毕之后即可正常进行软件使用了，虽然 wsl
+的界面还是差强人意了些，哈哈。</p>
 <figure>
-<img src="https://pic.islet.space/2021/10/20211027104142.png" alt="image-20211027104032244" /><figcaption aria-hidden="true">image-20211027104032244</figcaption>
+<img src="https://pic.islet.space/2021/10/20211027104142.png"
+alt="image-20211027104032244" />
+<figcaption aria-hidden="true">image-20211027104032244</figcaption>
 </figure>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://islet.space/2021/10/22/Networking/2021-10-22-traceroute-&-tracert/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Liewzheng">
-      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Coder的孤岛">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/10/22/Networking/2021-10-22-traceroute-&-tracert/" class="post-title-link" itemprop="url">traceroute & tracert</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-
-    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
-    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2021-10-22 08:30:00" itemprop="dateCreated datePublished" datetime="2021-10-22T08:30:00+08:00">2021-10-22</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-12-10 22:29:39" itemprop="dateModified" datetime="2021-12-10T22:29:39+08:00">2021-12-10</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Networking/" itemprop="url" rel="index"><span itemprop="name">Networking</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/75a5822d0eec">Traceroute（路由追踪）的原理及实现</a></p>
-<p>traceroute 和 tracert 是Linux和Windows平台下用于追踪网络设备距离远近的工具，向目标设备发包，从 <code>TTL=1</code> 开始向外发包，逐渐增加 <code>TTL</code> 的值，直到目标主机。在介绍traceroute和tracert的原理之前，需要了解几个技术名词：</p>
-<blockquote>
-<p><strong>IP</strong>，协议是TCP/IP协议族中最核心的部分，它的作用是在两台主机之间传输数据，所有上层协议的数据（HTTP、TCP、UDP等）都会被封装在一个个的IP数据包中被发送到网络上。</p>
-</blockquote>
-<blockquote>
-<p><strong>ICMP</strong>，即 <em>Internet Control Message Protocol</em>，互联网控制报文协议，它常用于传递错误信息，ICMP协议是IP层的一部分，它的报文也是通过IP数据包来传输的。</p>
-</blockquote>
-<blockquote>
-<p><strong>TTL</strong>，即 <em>time-to-live</em>，是IP数据包中的一个字段，它指定了数据包最多能经过几次路由器。从我们源主机发出去的数据包在到达目的主机的路上要经过许多个路由器的转发，在发送数据包的时候源主机会设置一个TTL的值，每经过一个路由器TTL就会被减去一，当TTL为0的时候该数据包会被直接丢弃（不再继续转发），并发送一个超时ICMP报文给源主机。</p>
-</blockquote>
-<h1 id="实现方案">实现方案</h1>
-<p>tracert （windows）只支持基于 ICMP 报文发送，而 traceroute（Linux/Mac） 支持多种报文协议（UDP、ICMP、TCP）的发送，但不带任何选项（Options）时默认使用的是UDP。（具体参数和选项自行请自行 <code>man</code> 以查看手册）</p>
-<p>下方所示图片分别为 tracert （windows）的帮助手册，以及在traceroute（Linux）上分别使用三种协议追踪 <code>baidu.com</code> 的结果截图。后续仅对UDP及ICMP追踪做较为详细的说明。</p>
-<figure>
-<img src="https://pic.islet.space/2021/10/20211022084346.png" alt="tracert的帮助说明" /><figcaption aria-hidden="true">tracert的帮助说明</figcaption>
-</figure>
-<p>使用 TCP 报文的 traceroute：</p>
-<figure>
-<img src="https://pic.islet.space/2021/10/20211022085430.png" alt="基于TCP报文的traceroute" /><figcaption aria-hidden="true">基于TCP报文的traceroute</figcaption>
-</figure>
-<p>使用 ICMP 报文的 traceroute：</p>
-<figure>
-<img src="https://pic.islet.space/2021/10/20211022085432.png" alt="基于ICMP报文的traceroute" /><figcaption aria-hidden="true">基于ICMP报文的traceroute</figcaption>
-</figure>
-<p>使用 UDP 报文的 traceroute：</p>
-<figure>
-<img src="https://pic.islet.space/2021/10/20211022085433.png" alt="基于UDP报文的traceroute" /><figcaption aria-hidden="true">基于UDP报文的traceroute</figcaption>
-</figure>
-<h2 id="基于udp实现">基于UDP实现</h2>
-<p>在基于UDP的实现中，客户端发送的数据包是通过UDP协议来传输的，使用了一个大于 <code>30000</code> 的端口号，服务器在收到这个数据包的时候会返回一个<strong>端口不可达</strong>的ICMP错误信息，客户端通过判断收到的错误信息是TTL超时还是端口不可达来判断数据包是否到达目标主机，具体的流程如图：</p>
-<figure>
-<img src="https://pic.islet.space/2021/10/20211022085956.png" alt="image-20211022085752243" /><figcaption aria-hidden="true">image-20211022085752243</figcaption>
-</figure>
-<h3 id="实现流程">实现流程</h3>
-<ol type="1">
-<li>客户端发送一个TTL为 <code>1</code> ，端口号大于 <code>30000</code> 的UDP数据包，到达第一站路由器之后TTL被减去 <code>1</code> ，返回了一个超时的ICMP数据包，客户端得到第一跳路由器的地址。</li>
-<li>客户端发送一个TTL为 <code>2</code> 的数据包，在第二跳的路由器节点处超时，得到第二跳路由器的地址。</li>
-<li>客户端发送一个TTL为 <code>3</code> 的数据包，数据包成功到达目标主机，返回一个<strong>端口不可达</strong>错误，traceroute结束。</li>
-</ol>
-<p>Linux和macOS系统自带了一个<code>traceroute</code>指令，可以结合Wireshark抓包来看看它的实现原理。首先对百度的域名进行traceroute：<code>traceroute www.baidu.com</code>，每一跳默认发送三个数据包，我们会看到下面这样的输出：</p>
-<figure>
-<img src="https://pic.islet.space/2021/10/20211022092354.png" alt="image-20211022085720428" /><figcaption aria-hidden="true">image-20211022085720428</figcaption>
-</figure>
-<p>对该域名的IP：<code>115.239.210.27</code>进行traceroute，此时Wireshark抓包的结果如下：</p>
-<figure>
-<img src="https://pic.islet.space/2021/10/20211022092351.png" alt="image-20211022085739900" /><figcaption aria-hidden="true">image-20211022085739900</figcaption>
-</figure>
-<h3 id="抓包结果">抓包结果</h3>
-<p>注意看红框处的内容，跟第一张图对比，可以看到<code>traceroute</code>程序首先通过UDP协议向目标地址115.239.210.27发送了一个<strong>TTL为1</strong>的数据包，然后在第一个路由器中TTL超时，返回一个错误类型为<code>Time-to-live exceeded</code>的ICMP数据包，此时我们通过该数据包的源地址可知第一站路由器的地址为<code>10.242.0.1</code>。之后只需要不停增加TTL的值就能得到每一跳的地址了。</p>
-<p>然而一直跑下去会发现，traceroute并不能到达目的地，当TTL增加到一定大小之后就一直拿不到返回的数据包了：</p>
-<figure>
-<img src="https://pic.islet.space/2021/10/20211022092302.png" alt="image-20211022085834275" /><figcaption aria-hidden="true">image-20211022085834275</figcaption>
-</figure>
-<p>结果全是丢失，其实这个时候数据包已经到达目标服务器了，但是因为安全问题大部分的应用服务器都不提供UDP服务（或者被防火墙挡掉），所以我们拿不到服务器的任何返回，程序就理所当然的认为还没有结束，一直尝试增加数据包的TTL。</p>
-<p>目前在网上找到许多开源iOS traceroute实现大多都是基于UDP的方案，实际用起来并不能达到想要的效果，所以我们需要采用另一种方案来实现。</p>
-<h2 id="基于icmp实现">基于ICMP实现</h2>
-<p>上述方案失败的原因是由于服务器对于UDP数据包的处理，所以在这一种实现中我们不使用UDP协议，而是直接发送一个<strong>ICMP回显请求（echo request）</strong>数据包，服务器在收到回显请求的时候会向客户端发送一个<strong>ICMP回显应答（echo reply）</strong>数据包，在这之后的流程还是跟第一种方案一样。这样就避免了我们的traceroute数据包被服务器的防火墙策略墙掉。</p>
-<p>采用这种方案的实现流程如下：</p>
-<figure>
-<img src="https://pic.islet.space/2021/10/20211022085956.png" alt="image-20211022085752243" /><figcaption aria-hidden="true">image-20211022085752243</figcaption>
-</figure>
-<h3 id="实现流程-1">实现流程</h3>
-<ol type="1">
-<li>客户端发送一个TTL为1的<strong>ICMP请求回显</strong>数据包，在第一跳的时候超时并返回一个ICMP超时数据包，得到第一跳的地址。</li>
-<li>客户端发送一个TTL为2的ICMP请求回显数据包，得到第二跳的地址。</li>
-<li>客户端发送一个TTL为3的ICMP请求回显数据包，到达目标主机，目标主机返回一个<strong>ICMP回显应答</strong>，traceroute结束。</li>
-</ol>
-<p>可以看出与第一种实现相比，区别主要在发送的数据包类型以及对于结束的判断上，大体的流程还是一致的。</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://islet.space/2021/10/12/Programming/C++/2021-10-12-C++%E5%A4%B4%E6%96%87%E4%BB%B6%E5%92%8C%E7%BC%96%E8%AF%91/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Liewzheng">
-      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Coder的孤岛">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/10/12/Programming/C++/2021-10-12-C++%E5%A4%B4%E6%96%87%E4%BB%B6%E5%92%8C%E7%BC%96%E8%AF%91/" class="post-title-link" itemprop="url">C++头文件和编译</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-
-    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
-    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2021-10-12 08:15:00" itemprop="dateCreated datePublished" datetime="2021-10-12T08:15:00+08:00">2021-10-12</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-10-14 23:58:13" itemprop="dateModified" datetime="2021-10-14T23:58:13+08:00">2021-10-14</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Programming/" itemprop="url" rel="index"><span itemprop="name">Programming</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="hpp头文件">HPP头文件</h1>
-<p><code>.hpp</code>，其实质就是将 <code>.cpp</code> 的实现代码混入 <code>.h</code> 头文件当中，定义与实现都包含在同一文件，则该类的使用只需要调用 <code>#include&lt;xxx.hpp&gt;</code> 以引用该文件即可，无需再将 <code>.cpp</code> 加入到project中进行编译。</p>
-<p>而实现代码将直接编译到调用者的 <code>.obj</code> 文件中，不再生成单独的 <code>.obj</code>，采用 <code>.hpp</code> 将大幅度减少调用 project中的 <code>.cpp</code> 文件数与编译次数，也不用再发布烦人的 <code>.lib</code> 与 <code>.dll</code> 文件，因此非常适合用来编写公用的开源库。</p>
-<h2 id="使用注意">使用注意</h2>
-<p><code>.hpp</code> 头文件的优点不少，但是编写中有以下几点要注意：</p>
-<ol type="1">
-<li><p>与 <code>.h</code> 类似，但 <code>.hpp</code> 是 <strong>Header Plus Plus</strong> 的简写，是 C++程序头文件 。</p></li>
-<li><p>是<a target="_blank" rel="noopener" href="http://www.huarw.com/program/vc/Index.html">VC</a>L专用的头文件，已预编译。</p></li>
-<li><p>是一般 <strong>模板类</strong> 的头文件。</p></li>
-<li><p>一般来说，<code>.h</code> 里面只有声明，没有实现，而 <code>.hpp</code> 里声明实现都有，后者可以减少 <code>.cpp</code> 的数量。</p></li>
-<li><p><code>.h</code> 里面可以有 <code>using namespace std;</code>，而 <code>.hpp</code> 里则无。</p></li>
-<li><p>不可包含 <strong>全局对象</strong> 和 <strong>全局函数</strong> 。由于 <code>.hpp</code> 本质上是作为 <code>.h</code> 被调用者所include，所以当 <code>.hpp</code> 文件中存在全局对象或者全局函数，而该 <code>.hpp</code> 被多个调用者include时，<mark>将在链接时导致符号重定义错误</mark>。<mark>要避免这种情况，需要去除全局对象，将全局函数封装为类的静态方法</mark>。</p></li>
-<li><p><strong>类之间不可循环调用</strong></p></li>
-</ol>
-<p>在.h和.cpp的场景中，当两个类或者多个类之间有循环调用关系时，只要预先在头文件做被调用类的声明即可，如下：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">B</span>;</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span>&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">someMethod</span><span class="params">(B b)</span></span>;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">B</span>&#123;</span></span><br><span class="line"><span class="keyword">public</span> :</span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">someMethod</span><span class="params">(A a)</span></span>;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<p>在 <code>.hpp</code> 场景中，由于定义与实现都已经存在于一个文件，调用者必需明确知道被调用者的所有定义，而不能等到 <code>.cpp</code> 中去编译。因此hpp中必须整理类之间调用关系，不可产生循环调用。同理，对于当两个类A和B分别定义在各自的 <code>.hpp</code> 文件中，形如以下的循环调用也将导致编译错误：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//a.hpp</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&quot;b.hpp&quot;</span></span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span>&#123;</span></span><br><span class="line"><span class="keyword">public</span> :</span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">someMethod</span><span class="params">(B b)</span></span>;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">//b.hpp</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&quot;a.hpp&quot;</span></span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">B</span>&#123;</span></span><br><span class="line"><span class="keyword">public</span> :</span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">someMethod</span><span class="params">(A a)</span></span>;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<ol start="9" type="1">
-<li><strong>不可使用静态成员</strong></li>
-</ol>
-<p>静态成员的使用限制在于如果类含有静态成员，则在 <code>.hpp</code> 中必需加入静态成员初始化代码，当该 <code>.hpp</code> 被多个文档include时，将产生符号重定义错误。唯一的例外是 <code>const static</code> 整型成员，因为在vs2003中，该类型允许在定义时初始化，如：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span>&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="keyword">const</span> <span class="keyword">static</span> <span class="keyword">int</span> intValue = <span class="number">123</span>;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<p>由于静态成员的使用是很常见的场景，无法强制清除，因此可以考虑以下几种方式（以下示例均为同一类中方法）</p>
-<ol type="1">
-<li>类中仅有一个静态成员时，且仅有一个调用者时，可以通过 <strong>局域静态变量模拟</strong></li>
-</ol>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//方法模拟获取静态成员</span></span><br><span class="line"><span class="function">someType <span class="title">getMember</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">static</span> someType <span class="title">value</span><span class="params">(xxx)</span></span>;<span class="comment">//作用域内静态变量</span></span><br><span class="line">    <span class="keyword">return</span> value;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<ol start="2" type="1">
-<li>类中有多个方法需要调用静态成员，而且可能存在多个静态成员时，<mark style="font-weight: 900;">可以将每个静态成员封装一个模拟方法，供其他方法调用</mark>。</li>
-</ol>
-<p><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">someType <span class="title">getMemberA</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">static</span> someType <span class="title">value</span><span class="params">(xxx)</span></span>;<span class="comment">//作用域内静态变量</span></span><br><span class="line">    <span class="keyword">return</span> value;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function">someType <span class="title">getMemberB</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">static</span> someType <span class="title">value</span><span class="params">(xxx)</span></span>;<span class="comment">//作用域内静态变量</span></span><br><span class="line">    <span class="keyword">return</span> value;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">accessMemberA</span><span class="params">()</span></span>&#123;</span><br><span class="line">    someType member = <span class="built_in">getMemberA</span>();<span class="comment">//获取静态成员</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">//获取两个静态成员</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">accessStaticMember</span><span class="params">()</span></span>&#123;</span><br><span class="line">    someType a = <span class="built_in">getMemberA</span>();<span class="comment">//获取静态成员</span></span><br><span class="line">    someType b = <span class="built_in">getMemberB</span>();</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
-<ol start="3" type="1">
-<li>第二种方法对于大部分情况是通用的，但是当所需的静态成员过多时，编写封装方法的工作量将非常巨大，在此种情况下，建议使用 <strong>Singleton模式</strong>，将被调用类定义成普通类，然后使用Singleton将其变为全局唯一的对象进行调用。</li>
-</ol>
-<p>如原 <code>.h</code> 和 <code>.cpp</code> 中的定义如下：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span>&#123;</span></span><br><span class="line"><span class="keyword">public</span> :</span><br><span class="line">    <span class="function">type <span class="title">getMember</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> member;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">static</span> type member;<span class="comment">//静态成员</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>采用singleton方式，实现代码可能如下（singleton实现请自行查阅相关文档）</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//实际实现类</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Aprovider</span>&#123;</span></span><br><span class="line"><span class="keyword">public</span> :</span><br><span class="line">    <span class="function">type <span class="title">getMember</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> member;</span><br><span class="line">    &#125;</span><br><span class="line">    type member;<span class="comment">//变为普通成员</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//提供给调用者的接口类</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span>&#123;</span></span><br><span class="line"><span class="keyword">public</span> :</span><br><span class="line">    <span class="function">type <span class="title">getMember</span><span class="params">()</span></span>&#123;</span><br><span class="line">    	<span class="keyword">return</span> Singleton&lt;AProvider &gt;::<span class="built_in">getInstance</span>()-&gt;<span class="built_in">getMember</span>();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h1 id="分离式编译">分离式编译</h1>
-<p>在介绍分离式编译之前需要先介绍一下 <strong>分离式代码</strong>，在C++代码中，声明和定义是可以分开写在多个文件中，当然也可以写在同一个文件里面的，如 <code>.hpp</code> 。</p>
-<p>往往是为了逻辑条理的清晰而分开书写，但使用 g++ 和 Terminal 直接编译 <code>main.cpp</code> 时，都是使用的 <code>g++ main.cpp -o main</code> 的命令，也就是只能编译该 <code>main.cpp</code> 一个文件，以生成 <code>main</code> 为名的二进制可运行文件，实际上，书写在其他 <code>.cpp</code> 文件中的代码也需要一同编译，这些书写在其他 <code>.cpp</code> 文件中的代码被称为 <strong>分离式代码</strong>，只编译 <code>main.cpp</code> 就会出现 <code>undefined reference</code> 之类的错误。</p>
-<h2 id="命令行g">命令行G++</h2>
-<p>在 Windows / Linux / Mac 的 Terminal 下都可以使用 <code>g++</code> 命令进行编译，格式如下：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">g++ -c main.cpp xxx1.cpp xxx2.cpp</span><br></pre></td></tr></table></figure>
-<p>使用 <code>-c</code> 选项，将包含 <code>main()</code> 的 <code>main.cpp</code> 与 其他分离式代码文件 <code>xxx1.cpp</code> 和 <code>xxx2.cpp</code> 一同编译，然后生成一个个对象文件（ <code>.o</code> 或 <code>.obj</code> ）。上面这种方法会生成三个文件 <code>main.o</code> 、<code>xxx1.o</code> 和 <code>xxx2.o</code> ，每个 <code>.o</code> 都是一个对象文件，但不一定可执行（因为缺少 <code>main()</code> 函数），仍需要通过进一步 <strong>链接</strong> 成可执行文件：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">g++ -o main main.o xxx1.o xxx2.o</span><br></pre></td></tr></table></figure>
-<p>通过上面这一行代码可以生成名为 <code>main</code> 的可执行二进制文件。</p>
-<p>以上两句命令也可以通过下面这句命令替代：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">g++ -o main main.cpp xxx1.cpp xxx2.cpp</span><br></pre></td></tr></table></figure>
-<h2 id="makefile">Makefile</h2>
-<p>Makefile 文件描述了 Linux 系统下 C/C++ 工程的编译规则，它用来自动化编译 C/C++ 项目。一旦写编写好 Makefile 文件，只需要一个 make 命令，整个工程就开始自动编译，不再需要手动执行 GCC 命令。</p>
-<p>一个中大型 C/C++ 工程的源文件有成百上千个，它们按照功能、模块、类型分别放在不同的目录中，Makefile 文件定义了一系列规则，指明了源文件的编译顺序、依赖关系、是否需要重新编译等。</p>
-<p>如果是在 Windows 下作开发的话不需要去考虑这个问题，因为 Windows 下的集成开发环境（IDE）。当然，Windows 下的 Visual Studio Code如果没配置好，也只是个编辑器而已，不算是个IDE。一般的MVS（Microsoft Visual Studio）都已经内置了 Makefile，或者说会自动生成 Makefile，不用去手动编写。</p>
-<p>Linux 中却不能这样，需要去手动的完成这项工作。Linux 下可以学习的开发语言有很多，常见的有 C/C++语言、python、java 等等。在 Linux(Unix) 下做开发的话，不了解 Makefile 是一件非常失败的事情。不懂 Makefile，就操作不了多文件编程，就完成不了相对于大的工程项目的操作。Makefile 可以说是必须掌握的一项技能。</p>
-<p>Makefile 可以简单的认为是一个工程文件的编译规则，描述了整个工程的 <strong>编译</strong> 和 <strong>链接</strong> 等规则。其中包含了那些文件需要编译，那些文件不需要编译，那些文件需要 <strong>先编译</strong>，那些文件需要 <strong>后编译</strong>，那些文件需要 <strong>重建</strong> 等等。编译整个工程需要涉及到的，在 Makefile 中都可以进行描述。换句话说，<mark style="font-weight: 900;">Makefile 可以使得我们的项目工程的编译变得自动化，不需要每次都手动输入一堆源文件和参数。</mark></p>
-<p>Makefile 可以彻底简化编译的操作。把要链接的库文件放在 Makefile 中，制定相应的规则和对应的链接顺序。这样只需要执行 make 命令，工程就会自动编译。每次想要编译工程的时候就执行 <code>make</code> 命令，省略掉手动编译中的参数选项和命令，非常的方便。</p>
-<p>Makefile 支持多线程并发操作，会极大的缩短编译时间，并且当修改了源文件之后，编译整个工程的时候，make 命令只会编译修改过的文件，没有修改的文件不用重新编译，也极大的解决了耗费时间的问题。</p>
-<h3 id="makefile-格式">Makefile 格式</h3>
-<figure>
-<img src="https://pic.islet.space/2021/10/20211012135030.png" alt="image-20211012134610578" /><figcaption aria-hidden="true">image-20211012134610578</figcaption>
-</figure>
-<blockquote>
-<ul>
-<li>targets：规则的目标，可以是 Object File（一般称它为中间文件），也可以是可执行文件，还可以是一个标签；</li>
-<li>prerequisites：是我们的依赖文件，要生成 targets 需要的文件或者是目标。可以是多个，也可以是没有；</li>
-<li>command：make 需要执行的命令（任意的 shell 命令）。可以有多条命令，每一条命令占一行。</li>
-</ul>
-</blockquote>
-<blockquote>
-<p>注意：我们的 <strong>目标</strong>（target） 和 <strong>依赖文件</strong>（prerequisite） 之间要使用 <strong>冒号</strong> <code>:</code> 分隔开，<strong>命令的开始</strong>（before the command） 一定要使用 <code>Tab</code> 键。</p>
-</blockquote>
-<h1 id="reference">Reference</h1>
-<ol type="1">
-<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/liuzhanchen1987/article/details/7270005">hpp.h与.h的区别</a></li>
-<li><a target="_blank" rel="noopener" href="http://c.biancheng.net/makefile/">Makefile教程：Makefile文件编写1天入门 (biancheng.net)</a></li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://islet.space/2021/10/05/Programming/C++/2021-10-05-C++-Templates/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Liewzheng">
-      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Coder的孤岛">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/10/05/Programming/C++/2021-10-05-C++-Templates/" class="post-title-link" itemprop="url">C++ Templates</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-
-    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
-    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2021-10-05 15:00:00" itemprop="dateCreated datePublished" datetime="2021-10-05T15:00:00+08:00">2021-10-05</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-11-21 16:38:34" itemprop="dateModified" datetime="2021-11-21T16:38:34+08:00">2021-11-21</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Programming/" itemprop="url" rel="index"><span itemprop="name">Programming</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="part-1-the-basics">PART 1 THE BASICS</h1>
-<div style="background-color: #555; color: #eeeeee; font-weight: 900;">
-WHY TEMPLATES?
-</div>
-<p>C++ 要求我们使用指定的类型来声明变量、函数 和 大部分其他实体。然而，很多代码对于不同的类型看起来都是一样的。比如，对于不同的数据结构，如 <code>int</code> 数组或 <code>string</code> 字符串向量，只要包含的类型可以相互比较，快速排序算法的实现在结构上看起来是一样的。</p>
-<p>如果使用的编程语言不支持 <strong>通用性</strong>（genericity）的 <strong>特殊语言功能</strong>（special language feature），将不得不面临如下选择，坏的选择（bad alternatives）：</p>
-<ul>
-<li>你可以为不同的数据类型一遍又一遍地进行着相同的行为声明；</li>
-<li>你可以为常见的基本类型（common base type）编写一段代码，例如 <code>object</code> 或 <code>void*</code> ；</li>
-<li>你可以使用特殊的预处理器。</li>
-</ul>
-<p>如果使用其他语言，可能以前就做过一些或者所有上方所述的内容了。然而，这些方法的每一种都有其缺点：</p>
-<ul>
-<li>如果你一遍又一遍地实现着这些行为，毫无疑问是叠矩重规（reinvent the wheel）。你犯了相同的错误，并且你试图寻找避免复杂但能更好的算法，因为它们会制造出更多的错误。</li>
-<li>如果你为常见基本类编写代码，你会失去类型检查的好处。另外，类可能要求继承于（be derived from）能够使代码更加难以维护的特殊基础类。</li>
-<li>如果你使用特殊的预处理器，代码会被一些没有 <strong>作用范围</strong>（scope）和类型且能够造成 <strong>奇怪语义错误</strong>（strange semantic errors）的 ”愚蠢的文本替换机制“ 替代掉。</li>
-</ul>
-<p>模板是能够解决重复代码编写问题且不会造成上述这些短板的方案。模板是为一种或更多尚未声明类型的函数或者类。当使用模板时，可以隐式或显式地将类型当做参数传递过去。因为模板是语言的特点，可以拥有全部的类型检查和作用范围的支持（full support of type checking and scope）。</p>
-<p>在C++标准库中，几乎所有的代码都是模板代码。该库提供排序算法以对 对象、指定类型的值、数据结构（也叫做 <strong>容器类</strong>（Container Classes）） 进行排序，以管理指定类型的元素 和 字符串（被参数化的字符串类型）等等。</p>
-<p>然而，以上仅是模板的使用入门，模板还允许 <strong>参数化行为</strong>（parameterize behavior） 以 <strong>优化代码</strong>（optimize code） 和 <strong>参数化信息</strong>（parameterize infomation）。</p>
-<h2 id="function-templates">FUNCTION TEMPLATES</h2>
-<p><strong>函数模板</strong>（function templates），即 <strong>参数化的函数</strong>（functions that are parameterized），因此代表了 <strong>一个函数系列</strong>（a family of functions）。</p>
-<p>函数模板为不同的数据类型提供了相同的功能行为调用，或换句话说，代表了一个函数系列。该函数系列看起来就像个普通函数，除了函数的某些元素未被确定，因为这些元素被参数化了。</p>
-<h3 id="templates-delaration-and-definition">TEMPLATES DELARATION AND DEFINITION</h3>
-<div style="background-color: #555; color: #eeeeee; font-size: 1.25rem; font-weight: 900;">
-EXAMPLE
-</div>
-<p>以下样例 <strong>声明</strong> 了一个函数系列，且下面参数的类型被空置（is left open），如参数 <code>T</code> ，</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line"><span class="function">T <span class="title">max</span><span class="params">(T a, T b)</span></span>&#123;</span><br><span class="line">  <span class="comment">// if b &lt; a then yield a else yield b</span></span><br><span class="line">  <span class="keyword">return</span> b &lt; a ? a : b;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>在上述样例中，模板参数必须使用 <code>template &lt;comma-separated-list-of-parameters&gt;</code> 的格式进行声明。</p>
-<p>此处的关键字 <code>typename</code> 代表着类型参数，这是迄今为止C++程序中最常见的一种模板参数，当然其他参数也可以，后续介绍。此处的类型参数是 <code>T</code> ，可以使用任意标识符当做参数名称，但使用 <code>T</code> 就是惯例而已。类型参数代表着 <strong>任意类型</strong>（arbitrary type），当函数调用时，由调用的函数决定具体数据类型。开发者可以调用任何类型，只要其提供模板使用的操作。</p>
-<p>在上述样例中，类型 <code>T</code> 必须支持 <strong>操作符</strong>（operator） <code>&lt;</code> ，因为 <code>a</code> 和 <code>b</code> 使用该操作符进行比较，也许在 <code>max()</code> 的定义中很难发现，但要说明的是，<code>T</code> 类型必须是可复制的才能够被返回（T must be copyable in order to be returned）。</p>
-<p>由于历史遗留原因，仍可以使用关键词 <code>class</code> 来定义类型参数。<code>typename</code> 关键字是在 C++98 标准之后才出现的，在那之前，<code>class</code> 是引入类型参数的唯一方法，至今仍可以使用。因此，上述模板也可以用下面的代码平替（在语义上没有区别）。</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">temelate&lt;<span class="class"><span class="keyword">class</span> <span class="title">T</span>&gt;</span></span><br><span class="line">  <span class="function">T <span class="title">max</span><span class="params">(T a, T b)</span></span>&#123;</span><br><span class="line">  <span class="keyword">return</span> b&lt;a?a:b;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>但因为 <code>class</code> 也是 <strong>类</strong> 的关键字，可能导致二义性，最好在声明模板时使用关键字 <code>typename</code> 。需要注意的是，与类声明不同，当声明类型参数时，关键字 <code>struct</code> 不能用来代替 <code>typename</code> 。</p>
-<p>在C++17之前，类型 <code>T</code> 也必须是可复制的，以确保能够传递参数。但C++17之后，可以传递临时数（temporary），即使没有一个备份或者一个构造器可用（even if neither a copy nor a move constructor is valid）。</p>
-<div style="background-color: #555; color: #eeeeee; font-weight: 900;">
-如何编写多个函数模板，需要注意什么？
-</div>
-<p>同一个文件内可以编写多个不同的模板函数，如下：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line"><span class="function">T <span class="title">Max</span><span class="params">(T a, T b)</span></span>&#123;</span><br><span class="line">	<span class="keyword">return</span> b&lt;a?a:b;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> t2&gt;</span><br><span class="line"><span class="function">t2 <span class="title">foo</span><span class="params">(t2*)</span></span>&#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>上面两个模板函数就在同一个文件下，<code>typename</code> 关键字后面的 <code>T</code> 或者 <code>t2</code> 需要具有唯一性。</p>
-<h3 id="using-templates">USING TEMPLATES</h3>
-<p>需要注意的是，在使用该函数模板时，要在该函数前加上双冒号 <code>::</code> ，以确保函数模板能够在全局命名空间中被查找到。如果出现下方的 <code>call to ’sth.’ is ambiguous</code> 错误， 即是说需要调用的函数模糊不清，因为标准库中也有一个 <code>std::max()</code>，编译器查找不到该函数具体是在哪个函数文件中。</p>
-<figure>
-<img src="https://pic.islet.space/2021/10/image-20211005171952999.png" alt="image-20211005171952999" /><figcaption aria-hidden="true">image-20211005171952999</figcaption>
-</figure>
-<p>当然，以上错误也可以通过写不同的函数名称来避免。</p>
-<p><mark style="font-weight: 900;">模板并不是被编译成一个可以处理所有数据类型的实体，而是被编译成了所有不同数据类型的实体。</mark> 即，<code>int max()</code>、 <code>short max()</code> 、<code>string max()</code> 等等。单实体多适应 的模板虽然好像可行，但是实际上并不存在。所有的语言规则都遵循 ” <strong>不同的模板参数生成不同的实体</strong>“ 的原则。</p>
-<p>上面这种用具体类型取代模板参数的过程被称为 <strong>实体化</strong>（instantiation）。需要注意的是，仅仅是对函数模板的使用就可以触发该实体化过程，因此开发者就没有必要要求实体化过程单独进行（request the instantiation separately）。</p>
-<p>另外，只要产生的代码是有效的，<code>void</code> 型也是可用的模板参数，例如：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line"><span class="function">T <span class="title">foo</span><span class="params">(T*)</span></span>&#123;</span><br><span class="line">  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>和</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">void</span>* vp = <span class="literal">nullptr</span>;  <span class="comment">// 引出 void foo(void*)</span></span><br><span class="line"><span class="built_in"><span class="keyword">void</span></span>(vp);</span><br></pre></td></tr></table></figure>
-<h3 id="two-phase-translation">TWO-PHASE TRANSLATION</h3>
-<p><strong>两段式编译</strong>，即Two-phase translation。</p>
-<p>如果试图为一个不支持所有操作的模板进行实例化，将会导致编译时错误。</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">std::complex&lt;<span class="keyword">float</span>&gt; c1, c2;  <span class="comment">//doesn&#x27;t provide operator &lt;</span></span><br><span class="line"></span><br><span class="line">::<span class="built_in">max</span>(c1, c2);  <span class="comment">//ERROR at compile time</span></span><br></pre></td></tr></table></figure>
-<p>因此，模板在被编译时会经过如下两个阶段：</p>
-<ol type="1">
-<li>在定义且没有实例化时，忽略模板参数来检查自身代码的正确性：
-<ul>
-<li>标点符号错误被发现，例如缺少分号 <code>;</code> ；</li>
-<li>使用不依赖已知模板参数的未知命名（类型名，函数名等）；</li>
-<li>不依赖于已检查模板参数的 <strong>静态断言</strong>（static assertions）</li>
-</ul></li>
-<li>在实例化时，模板代码会被再次检查以确保可用，特别是依赖于模板参数的都会被二次检查（double-checked），例如：</li>
-</ol>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">foo</span><span class="params">(T t)</span></span>&#123;</span><br><span class="line">  <span class="built_in">undeclared</span>();</span><br><span class="line">  <span class="built_in">undeclared</span>(t);</span><br><span class="line">  <span class="built_in"><span class="keyword">static_assert</span></span>(<span class="built_in"><span class="keyword">sizeof</span></span>(<span class="keyword">int</span>&gt;<span class="number">10</span>, <span class="string">&quot;int too small&quot;</span>);</span><br><span class="line">  <span class="built_in"><span class="keyword">static_assert</span></span>(<span class="built_in"><span class="keyword">sizeof</span></span>(T&gt;<span class="number">10</span>, <span class="string">&quot;T too small&quot;</span>);         </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>注意到某些编译器在第一阶段没有进行全面检查（don’t perform the full checks），所以直到在最后一阶段的模板代码实例化之前都没办法看到问题。</p>
-<div style="background-color: #555; color: #eeeeee; font-weight: 900;">
-COMPILE AND LINK
-</div>
-<p>在实际处理模板时，两段式编译会导致很多重要的问题：当函数模板被用于触发其实例化时，编译器（在某些点）需要查看模板定义。当一个函数的声明足以编译它时，就打破了普通函数通常的编译和连接的区别。</p>
-<h3 id="template-argument-deduction">TEMPLATE ARGUMENT DEDUCTION</h3>
-<p><strong>模板实参推断</strong>，即 Template argument deduction。</p>
-<p>当给函数模板传递实参时，模板参数由我们传递过去的实参决定。如果传递的是两个 <code>int</code> 型实参给 参数类型 <code>T</code> ，则C++编译器就能推断出此时的 <code>T</code> 一定是 <code>int</code> 。</p>
-<p>然而 <code>T</code> 可能只是该参数类型的一部分。例如，声明 <code>max()</code> 可以使用 <strong>常参</strong>（constant references）。</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line"><span class="function">T <span class="title">max</span><span class="params">(T <span class="keyword">const</span>&amp; a, T <span class="keyword">const</span>&amp; b)</span></span>&#123;</span><br><span class="line">  <span class="keyword">return</span> b&lt;a?a:b;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>如上方代码所示，传递 整型 <code>int</code> 参数，<code>T</code> 又会被推断为 <code>int</code> ，因为函数参数和 <code>int const&amp;</code> 匹配。</p>
-<h4 id="类型推导过程中的类型转换">类型推导过程中的类型转换</h4>
-<p>注意，自动类型转换被限制在类型推导期间：</p>
-<ul>
-<li><strong>引用传递</strong>：当通过引用声明来调用参数（declaring call parameters by reference）时，即使是 微不足道的转换（trivial conersion） 也不适用于类型推导。用同一个模板参数 <code>T</code> 声明的两个参数类型必须完全匹配。</li>
-<li><strong>按值传递</strong>：当按数值声明调用参数时，只支持 <code>decay</code> 的琐碎转换。带有const或volatile的限定被忽略，引用转换为被引用的类型，而原始数组或函数转换为相应的指针类型。对于用同一模板参数T声明的两个参数，<code>decayed</code> 的类型必须匹配。</li>
-</ul>
-<p><strong>错误提示</strong>：对int类型的非恒定值引用不能与int类型的临时值绑定</p>
-<figure>
-<img src="https://pic.islet.space/2021/11/image-20211007035818560.png" alt="image-20211007035818560" /><figcaption aria-hidden="true">image-20211007035818560</figcaption>
-</figure>
-<p>前方已经说了，类型的自动转换相关注意事项，同一模板参数的两个参数类型必须完全匹配。如果在同一个 <code>.cpp</code> 文件中书写下面下面代码，则会出现下方报错提示 “<strong>推导类型冲突</strong>（deduced conflicting types for parameter ’T’）”。</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Max</span>(<span class="number">4</span>, <span class="number">7.2</span>);</span><br><span class="line"><span class="built_in">Max</span>(<span class="string">&quot;Hello&quot;</span>,s);</span><br></pre></td></tr></table></figure>
-<p>错误提示如下：</p>
-<figure>
-<img src="https://pic.islet.space/2021/10/image-20211007040416472.png" alt="image-20211007040416472" /><figcaption aria-hidden="true">image-20211007040416472</figcaption>
-</figure>
-<p>但是如果非要使用不一样的数据类型的两个参数来套用同一模板，以下有三种解决方法：</p>
-<ol type="1">
-<li>在 <code>.cpp</code> 文件中进行参数传递时，使用参数类型强制转换。如 <code>Max(static_cast&lt;double&gt;(4), 7.2);</code> 。</li>
-<li>在</li>
-</ol>
-<h1 id="terminology">TERMINOLOGY</h1>
-<ol type="1">
-<li>按值传递 passing by value</li>
-<li>引用传递 passing by reference</li>
-</ol>
-<h1 id="reference">REFERENCE</h1>
-<ol type="1">
-<li>&lt;C++ Templates&gt; David Vandecoorde</li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://islet.space/2021/10/02/Communication/2021-10-02-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%8E%B0%E5%9C%BA%E6%80%BB%E7%BA%BF/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Liewzheng">
-      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Coder的孤岛">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/10/02/Communication/2021-10-02-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%8E%B0%E5%9C%BA%E6%80%BB%E7%BA%BF/" class="post-title-link" itemprop="url">计算机网络体系结构与现场总线</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-
-    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
-    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2021-10-02 13:20:00" itemprop="dateCreated datePublished" datetime="2021-10-02T13:20:00+08:00">2021-10-02</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-10-05 14:33:52" itemprop="dateModified" datetime="2021-10-05T14:33:52+08:00">2021-10-05</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Communication/" itemprop="url" rel="index"><span itemprop="name">Communication</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="计算机网络体系结构">计算机网络体系结构</h1>
-<p>计算机网络是计算机技术和通信技术相结合的技术领域。由若干计算机用通信信道连接至一起，互相交换信息共享资源，形成计算机网络。</p>
-<h2 id="osi-五层模型">OSI 五层模型</h2>
-<p>在国际标准化组织（ISO）提出 <strong>开放系统互联</strong>（OSI，Open System Interconnection）参考模型中，网络系统结构划分为7层。</p>
-<p>该OSI模型由上至下分别是 <strong>应用层</strong>、<strong>表示层</strong>、<strong>会话层</strong>、<strong>传输层</strong>、<strong>网络层</strong>、<strong>数据链路层</strong> 和 <strong>物理层</strong>。</p>
-<p><img src="https://pic.islet.space/2021/10/17849411-6cad6d1b0aafdd22.png" alt="img" style="zoom:67%;" /></p>
-<p>在本模型中，<strong>物理层</strong>、<strong>数据链路层</strong> 和 <strong>网络层</strong> 是 <strong>面向网络通信</strong> 的层级；<strong>会话层</strong>、<strong>表示层</strong> 和 <strong>应用层</strong> 是 <strong>面向信息处理</strong> 的层级。</p>
-<h3 id="应用层">应用层</h3>
-<p><strong>应用层</strong>，即Application Layer。OSI参考模型中最靠近用户的一层，是为计算机用户提供应用接口，也为用户直接提供各种网络服务。我们常见应用层的网络服务协议有：HTTP，HTTPS，FTP，POP3、SMTP等。</p>
-<blockquote>
-<p>实际公司A的老板就是我们所述的用户，而他要发送的商业报价单，就是应用层提供的一种网络服务，当然，老板也可以选择其他服务，比如说，发一份商业合同，发一份询价单，等等。</p>
-</blockquote>
-<p>OSI七层模型中，除了应用层以外，其他功能层级都与用户实际应用没有什么直接联系，能够直接为用户提供各种应用服务的是应用层。应用层可以包含各种应用程序，有些由于使用普遍而实行了标准化，进而形成了应用层上的各种应用协议，诸如SMTP、POP3、WWW、TELNET、FTP、HTTP、HTTPS等。</p>
-<h3 id="表示层">表示层</h3>
-<p><strong>表示层</strong>，即 Presentation Layer。其提供各种用于应用层数据的编码和转换功能，确保一个系统的应用层发送的数据能被另一个系统的应用层识别。如果必要，该层可提供一种标准表示形式，用于将计算机内部的多种数据格式转换成通信中采用的标准表示形式。数据压缩和加密也是表示层可提供的转换功能之一。</p>
-<blockquote>
-<p>由于公司A和公司B是不同国家的公司，他们之间的商定统一用英语作为交流的语言，所以此时表示层（公司的文秘），就是将应用层的传递信息转翻译成英语。同时为了防止别的公司看到，公司A的人也会对这份报价单做一些加密的处理。这就是表示的作用，将应用层的数据转换翻译等。</p>
-</blockquote>
-<h3 id="会话层">会话层</h3>
-<p><strong>会话层</strong>，即 Section Layer。负责建立、管理和终止表示层实体之间的通信会话。该层的通信由不同设备中的应用程序之间的服务请求和响应组成。</p>
-<blockquote>
-<p>会话层的同事拿到表示层的同事转换后资料，（会话层的同事类似公司的外联部），会话层的同事那里可能会掌握本公司与其他好多公司的联系方式，这里公司就是实际传递过程中的实体。他们要管理本公司与外界好多公司的联系会话。当接收到表示层的数据后，会话层将会建立并记录本次会话，他首先要找到公司B的地址信息，然后将整份资料放进信封，并写上地址和联系方式。准备将资料寄出。等到确定公司B接收到此份报价单后，此次会话就算结束了，外联部的同事就会终止此次会话。</p>
-</blockquote>
-<h3 id="传输层">传输层</h3>
-<p><strong>传输层</strong>，即 Transport Layer。负责建立了主机端到端的链接，传输层的作用是为上层协议提供端到端的可靠和透明的数据传输服务，包括 <strong>处理差错控制</strong> 和 <strong>流量控制</strong> 等问题。该层向高层屏蔽了下层数据通信的细节，使高层用户看到的只是在两个传输实体间的一条主机到主机的、可由用户控制和设定的、可靠的数据通路。我们通常说的，TCP/UDP就是在这一层。端口号既是这里的“端”。</p>
-<blockquote>
-<p>传输层就相当于公司中的负责快递邮件收发的人，公司自己的投递员，他们负责将上一层的要寄出的资料投递到快递公司或邮局。</p>
-</blockquote>
-<p>传输层位于第三层和高三层之间，也是 <strong>面向网路通信</strong> 和 <strong>面向信息处理</strong> 之间的重要层级，是整个协议层次的核心。</p>
-<p>传输层的任务是为高层从源端机到目的机提供可靠、经济的数据传输服务，而与具体网络无关。</p>
-<p>为了向用户提供经济有效的服务，传输层还提供多路复用和分流的功能。</p>
-<h3 id="网络层">网络层</h3>
-<p><strong>网络层</strong>，即 Network Layer。负责通过IP寻址来建立两个节点之间的连接，为源端的运输层送来的分组，选择合适的路由和交换节点，正确无误地按照地址传送给目的端的运输层。就是通常说的IP层。这一层就是我们经常说的IP协议层。IP协议是Internet的基础。</p>
-<blockquote>
-<p>网络层就相当于快递公司庞大的快递网络，全国不同的集散中心，比如说，从深圳发往北京的顺丰快递（陆运为例啊，空运好像直接就飞到北京了），首先要到顺丰的深圳集散中心，从深圳集散中心再送到武汉集散中心，从武汉集散中心再寄到北京顺义集散中心。这个每个集散中心，就相当于网络中的一个IP节点。</p>
-</blockquote>
-<h3 id="数据链路层">数据链路层</h3>
-<p><strong>数据链路层</strong>，即 Data Linker Layer。负责将比特组合成字节,再将字节组合成帧,使用链路层地址 (以太网使用MAC地址)来访问介质,并进行差错检测。数据链路层又分为2个子层：逻辑链路控制子层（LLC）和媒体访问控制子层（MAC）。MAC子层处理CSMA/CD算法、数据出错校验、成帧等；LLC子层定义了一些字段使上次协议能共享数据链路层。 在实际使用中，LLC子层并非必需的。</p>
-<p>这个没找到合适的例子</p>
-<p>在物理线路上，由于噪声干扰、信号衰减畸变等原因，传输过程中常常出现差错，物理层只负责透明传输无结构的原始比特流，不能进行任何差错控制。</p>
-<p>因此，在一条线路上传输数据时，除了必须有一条物理线路外，还需要必要规程来控制数据传输。把这些规程的软件/硬件加到链路上，就构成了数据链路层（Data Linker Layer）。</p>
-<p><strong>作用</strong>：通过一系列数据链路层协议，在不可靠的物理链路上实现可靠的数据传输。</p>
-<p>为此，通常将原始数据分割成一定长度的数据单元（帧），一帧内包含 <strong>同步信号</strong>、<strong>差错控制</strong>、<strong>流量控制</strong>、<strong>控制信息</strong>、<strong>数据信息</strong>、<strong>寻址</strong> 等。</p>
-<h4 id="差错控制">差错控制</h4>
-<p>差错控制涉及两方面的问题，即 <strong>如何检测错误</strong> 和 <strong>如何纠正错误</strong>。</p>
-<p><strong>检查错误</strong>：要判断一个数据块是否存在错误，发送端必须在数据块中加入冗余信息，使得数据块和冗余信息间存在某种关联，接收端通过验证其关联性来判断数据是否出错。<mark>在数据块中加入冗余信息的过程称为 <strong>差错编码</strong>。</mark></p>
-<p>差错编码有两种策略，即 <strong>仅带有检错能力的检错码</strong> 和 <strong>带有纠错能力的检错码/纠错码</strong>。但任何一种检/纠错码的能力都是有限的，即 <strong>不能检/纠出所有的错误</strong>。一般检错码的能力越强，所需的冗余信息就会越多，编码效率会随之降低。</p>
-<p>常见的差错编码有：</p>
-<ol type="1">
-<li><strong>海明码</strong>，即 Hamming Code。由 Richard Hamming 于1950年提出，可纠正一个 bit 错误的编码。</li>
-<li><strong>循环冗余码</strong>，即 Cyclic Redundancy Code，又名 多项式码。最广泛使用的编码，但 <strong>漏检率很低</strong>，只需要简单电路即可实现。</li>
-<li><strong>奇偶校验码</strong>，即 Parity Check Code。 最常见也最简单的编码，只需要一个比特，但只能检出奇数个错误，<strong>漏检率达50%</strong>。</li>
-<li><strong>校验和码</strong>，即 Checksum Code。也是最常见的检错方式，是传输的数据块中 <strong>各字节累加</strong> 后得到的 一个字节 或 按字“异或”运算 的结果。</li>
-</ol>
-<h3 id="物理层">物理层</h3>
-<p><strong>物理层</strong>，即 Physical Layer。实际最终信号的传输是通过物理层实现的。通过物理介质传输比特流。规定了电平、速度和电缆针脚。常用设备有（各种物理设备）集线器、中继器、调制解调器、网线、双绞线、同轴电缆。这些都是物理层的传输介质。</p>
-<blockquote>
-<p>快递寄送过程中的交通工具，就相当于我们的物理层，例如汽车，火车，飞机，船。</p>
-</blockquote>
-<p>其中物理层有几个概念需要了解和区分，包括 <strong>传输速率</strong>、<strong>信道容量</strong>、<strong>传输媒体</strong>、<strong>调制解调</strong>、<strong>交换技术</strong>、<strong>网络拓扑</strong> 和 <strong>多路复用</strong>。</p>
-<h4 id="传输速率">传输速率</h4>
-<p><strong>比特率</strong>：每秒传输的二进制位数。</p>
-<p><strong>波特率</strong>：每秒传输的码元率。</p>
-<p><strong>码元</strong>：单位携带的比特信息量。</p>
-<blockquote>
-<p>如果码元率为1比特，则波特率和比特率数值上相等。</p>
-</blockquote>
-<h4 id="信道容量">信道容量</h4>
-<p>信道容量，即信道能支持的最大数据传输速率，由信道带宽和信噪比决定。</p>
-<h4 id="传输媒体">传输媒体</h4>
-<p>传输媒体，即传输电信号的物理介质。可以是有线、无线、双绞线、同轴电缆 或 光纤 等。</p>
-<h4 id="调制解调">调制解调</h4>
-<p>调制解调，即一种数据转换成适合在信道上传输的某种电信号形式。</p>
-<p>数字信号转换为模拟信号有 <strong>调幅</strong>、<strong>调频</strong>、<strong>调相</strong> 等方式。</p>
-<p>数字信号的信道编码方式有 <strong>单极型脉冲</strong> 和 <strong>双极性脉冲编码</strong> （有归零码 和 不归零码 之分）及 <strong>曼彻斯特编码</strong> 等（信道编码）。</p>
-<h4 id="交换技术">交换技术</h4>
-<p>物理层的交换技术有三种：<strong>电路交换</strong>、<strong>报文交换</strong> 和 <strong>分组交换</strong>。</p>
-<table>
-<colgroup>
-<col style="width: 4%" />
-<col style="width: 32%" />
-<col style="width: 32%" />
-<col style="width: 30%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th>TYPE</th>
-<th>PRINCIPLE</th>
-<th>ADVANTAGES</th>
-<th>DISADVANTAGES</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>电路交换</td>
-<td>要求通信双方之间建立一条实际的物理通道，并在整个通信过程中 <strong>通路独占</strong>。</td>
-<td>数据在中间环节无停留，传输可靠，实时效应好；</td>
-<td>电路不共享，资源浪费大，同时电路的建立和撤出的时间较长。</td>
-</tr>
-<tr class="even">
-<td>报文交换</td>
-<td>一个 <strong>大报文</strong>（长度无限制的数据块）在通过从源站到目的站之间的中间站时采用 <strong>存储-转发</strong> 方式（有缓冲区）。</td>
-<td>提高线路利用率</td>
-<td>大报文延迟时间长，出错率高。</td>
-</tr>
-<tr class="odd">
-<td>分组交换</td>
-<td>将一个大报文分割成一定长度的信息单元（分组），各单元以此编号，以分组为单位进行 <strong>存储-转发</strong>。</td>
-<td>除了线路共享外，要求中间环节的缓存区减少，也减少了分组在网络中的延迟时间。<br/>由于各分组在网络中可以走不同路径，该并行传输降低了报文的传输时间。分组长度变短同时降低了出错率（发现出错时重发数据所需时间也缩短）。</td>
-<td></td>
-</tr>
-</tbody>
-</table>
-<h4 id="网络拓扑">网络拓扑</h4>
-<p><strong>网络拓扑</strong>（Network Topology）即网络中节点的互联结构形式，主要分为 <strong>星型结构</strong>、<strong>总线型结构</strong>、<strong>树型结构</strong>、<strong>环型结构</strong> 和 <strong>网型结构</strong>。（网络上很多文章都有 <strong>混合型结构</strong> 这一拓扑类型）</p>
-<p><img src="https://pic.islet.space/2021/10/1002_1.jpg" alt="1002_1" style="zoom: 25%;" /></p>
-<table style="width:100%;">
-<colgroup>
-<col style="width: 5%" />
-<col style="width: 30%" />
-<col style="width: 4%" />
-<col style="width: 30%" />
-<col style="width: 30%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th>TYPE</th>
-<th>PRINCIPLE</th>
-<th>SWITCHING</th>
-<th>ADVANTAGES</th>
-<th>DISADVANTAGES</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>星型结构</td>
-<td>通过点对点连接至中央节点，任意两点的通信都依赖中央节点。</td>
-<td>电路交换</td>
-<td>任意节点故障都只会影响本站，而不影响全网。</td>
-<td>极大以来中央节点，对中央节点的可靠性和容量要求很高，同时因为需要中央节点连接，耗费大量电缆。</td>
-</tr>
-<tr class="even">
-<td>总线型结构</td>
-<td>采用单一信道作为传输介质，所有站点通过相应硬件结构接到公共信道（总线）上，任意站点发送的信息，所有其他站都能收到。</td>
-<td>分组交换</td>
-<td>所需电缆长度短，布线容易。<br>且总线仅仅是传输信道，无任何处理功能，属于无源器件，可靠性高，增加或减少站点都相对方便。</td>
-<td>由于所有节点共享一条公共信道，当多点同时发送信号时，信号会因相互碰撞而造成传输失败，称之为 <strong>冲突</strong>。<br>系统范围受到限制（传输速率和传输距离相互制约）。<mark>一个站点的故障可能影响整个网络，故障检测需要在各站点上进行。（待考究）</mark></td>
-</tr>
-<tr class="odd">
-<td>树形结构</td>
-<td>由总线型结构演化而来，从树根开始，每一个节点向下都可以由许多分支。</td>
-<td></td>
-<td>故障比较容易隔离和检查。</td>
-<td></td>
-</tr>
-<tr class="even">
-<td>环型结构</td>
-<td>站点和连接站点的点-点链路组成一个闭合环路，每个站点从一条链路上接受数据，然后以相同的速率从另一条链路上发送出去。<br>链路大多数是单方向的，即数据沿一个方向在网上环行。</td>
-<td></td>
-<td>所需介质长度较短，由于链路单方向性，可以用光纤作为传输介质；</td>
-<td>与总线型结构一样存在冲突问题，一个站点故障会引起全网故障。</td>
-</tr>
-<tr class="odd">
-<td>网型结构</td>
-<td>每个站点都有一条或几条链路同其他站点连接。</td>
-<td></td>
-<td>由于站点间存在多条路径，数据传输时可以选择空闲站点或绕开故障点，因而 <strong>网络资源利用较为充分</strong>；<br>但站点或线路故障对网络整体影响较小，<strong>可靠性较高</strong>。</td>
-<td>结构较为复杂，成本较高。</td>
-</tr>
-</tbody>
-</table>
-<h4 id="多路复用技术">多路复用技术</h4>
-<p>传输媒体的能力（频带宽）往往很强，对传输资源能力的应用（复用）是指将多路信号组合在一条物理信道上进行传输，然后接收端再将各路信号分离开。常见的多路复用技术如 <strong>频分多路复用</strong>（FDM）、<strong>时分多路复用</strong>（TDM） 和 <strong>码分多址</strong>（CDMA）等。</p>
-<table>
-<thead>
-<tr class="header">
-<th>TYPE</th>
-<th>PRINCIPLE</th>
-<th>ADVANTAGES</th>
-<th>DISADVANTAGES</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>频分多路复用</td>
-<td>将信道带宽按频率分割为若干子信道，每个子信道用来传输一路信号。</td>
-<td></td>
-<td></td>
-</tr>
-<tr class="even">
-<td>时分多路复用</td>
-<td>将使用信道的时间分成一个个时间片，按一定规律将时间片分配给各路信号，每路信号只能在自己的时间片内独占信道进行传输。</td>
-<td></td>
-<td></td>
-</tr>
-<tr class="odd">
-<td>码分多址</td>
-<td>允许所有站点在同一时间使用整个信道进行数据传输。</td>
-<td></td>
-<td></td>
-</tr>
-</tbody>
-</table>
-<blockquote>
-<p>以上三类多路复用技术可以形象地比喻为多个人要发言讨论不同问题时，如何使用同一个会议厅（信道）。</p>
-<ul>
-<li><p>可以把会议厅分成几个小厅（好比频分多路复用），各小厅同时进行各自不同的发言，互不干扰；</p></li>
-<li><p>可以在一个厅内让各议题在固定的时间片内轮流发言（好比时分多路复用）；</p></li>
-<li><p>可以在一个厅内让各自议题同时发言，但是要用不同的语言（好比码分多址），对某个议题的人来说只能听懂自己的语言，而其他语言被视为随机噪音，可以排除。</p></li>
-</ul>
-</blockquote>
-<h2 id="tcpip-五层模型">TCP/IP 五层模型</h2>
-<p>实际TCP/IP使用的是5层模型，其中OSI模型中的 应用层、表示层 和 会话层 都用一层 应用层 进行表示，如下图。在每一层都工作着不同的设备，比如我们常用的交换机就工作在数据链路层的，一般的路由器是工作在网络层的。</p>
-<p><img src="https://pic.islet.space/2021/10/202110021438076.webp" alt="img" style="zoom:67%;" /></p>
-<p>在每一层实现的协议也各不同，即每一层的服务也不同，下图列出了每层主要的协议。</p>
-<p><img src="https://pic.islet.space/2021/10/202110021438379.webp" alt="img" style="zoom:67%;" /></p>
-<h1 id="现场总线">现场总线</h1>
-<p>在工业数据通信领域，<strong>总线</strong> 是指由导线组成的传输线束，连接多个传感器和执行器，实现各部件之间传送信息的公共通信干线。</p>
-<p>然后再来看国际电工技术委员会（IEC）在IEC 61158中对现场总线的标准定义：<mark><strong>现场总线</strong> 是安装在制造或过程区域的现场装置与控制室内的自动控制装置之间的数字式、串行、多点通信的数据总线。</mark></p>
-<p>从定义中可以看到，现场总线是一种数据总线技术，是一种通信协议，且该通信是数字式、串行、多节点的。</p>
-<p>目前，在工控领域，车间现场应用最广泛的是 <strong>工业以太网</strong> 技术和 <strong>工业现场总线</strong> 技术，为工厂实现自动化带来有力推动。</p>
-<p>现场总线应当是应用在生产最底层的一种总线型拓扑网络，即该总线是用于现场控制系统，直接与所有受控（设备）节点串行相连的通信网络。</p>
-<p>工业自动化控制的现场一般可以从一台家电设备到一个车间、一个工厂。控制设备和网络所处的环境以及报文结构都有其特殊性，对信号的干扰往往是多方面的，而要求控制必须实时性很强。</p>
-<h2 id="现场总线技术">现场总线技术</h2>
-<p><strong>现场总线</strong>（Fieldbus）是电气工程及其自动化领域发展起来的一种工业数据总线，它主要解决工业现场的智能化仪器仪表、控制器、执行机构等现场设备间的数字通信以及这些现场控制设备和高级控制系统之间的信息传递问题。由于现场总线简单、可靠、经济实用等一系列突出的优点，因而受到了许多标准团体和计算机厂商的高度重视</p>
-<p>传统控制系统难以实现设备之间 以及 系统与外界之间的信息交换，是一个“信息孤岛”。要满足自动化控制技术现代化的要求，同时实现整个企业的信息集成，实施综合自动化，就必须设计出一种能在工业设备之间的多点数字通信，实现底层现场设备之间以及生产现场与外界的信息交换。</p>
-<p>现场总线控制系统（Field Control System，FCS）既是一个开放通信网络，又是一种全分布控制系统。作为智能设备的联系纽带，把挂接在总线上、作为网络节点的智能设备连接为网络系统，并进一步构成合成系统，实现基本控制、补偿计算、参数修改、报警、显示、监控、优化 及 管控一体化的综合自动化功能。</p>
-<p><mark style="font-weight: 900;">现场总线技术是一项集嵌入式系统、控制、计算机、数字通信、网络为一体的综合技术。</mark></p>
-<h3 id="局限性">局限性</h3>
-<p>也可以说现场总线是工业控制和计算机网络两者的边缘产物。从纯理论的角度看，它应属于网络范畴。但是现有的网络技术不能完全适应工业现场控制系统的要求，无论是从网络的结构、协议、实时性，还是从适应性、灵活性、可靠性 乃至 成本 上进行考虑，工业控制的底层都有它的特殊性。</p>
-<p>现场总线其规模应属于局域网、总线型结构，简单但能满足现场使用需求，所传输信息短小且实时性很强、可靠性高（网络结构层次少，信息帧短小有利于提高实时性和降低受干扰的概率）。然而现场的环境干扰因数众多，有些很强烈且带突发性。</p>
-<h2 id="现场总线发展">现场总线发展</h2>
-<p>一般把50年代前的气动信号控制系统PCS称作 <strong>第一代</strong>，把4～20mA等电动模拟信号控制系统称为 <strong>第二代</strong>，把数字计算机集中式控制系统称为 <strong>第三代</strong>，而把70年代中期以来的集散式分布控制系统DCS称作 <strong>第四代</strong>。</p>
-<p>现场总线控制系统FCS作为新一代控制系统，一方面，突破了DCS系统采用通信专用网络的局限，采用了基于公开化、标准化的解决方案，克服了封闭系统所造成的缺陷；另一方面把DCS的集中与分散相结合的集散系统结构，变成了新型全分布式结构，把控制功能彻底下放到现场。可以说，开放性、分散性与数字通讯是现场总线系统最显著的特征。</p>
-<ul>
-<li>1984年美国Intel公司提出一种 <strong>计算机分布式控制系统-位总线</strong>（BITBUS），它主要是将低速的面向过程的 <strong>输入输出通道与高速的计算机多总线</strong>（MULTIBUS）分离，形成了现场总线的最初概念。</li>
-<li>80年代中期，美国Rosemount 公司开发了一种可寻址的远程传感器（HART）通信协议。采用在4～20mA模拟量叠加了一种频率信号，用双绞线实现数字信号传输。HART协议已是现场总线的雏形。</li>
-<li>1985年由Honeywell和Bailey等大公司发起，成立了World FIP制定了FIP协议。</li>
-<li>1987年，以Siemens，Rosemount，横河等几家著名公司为首也成立了一个专门委员会互操作系统协议（ISP）并制定了PROFIBUS协议。后来美国仪器仪表学会也制定了现场总线标准IEC/ISA SP50。</li>
-<li>随着时间的推移，世界逐渐形成了两个针锋相对的互相竞争的现场总线集团：一个是以Siemens、Rosemount，横河为首的ISP集团；另一个是由Honeywell、Bailey等公司牵头的WorldFIP集团。1994年，两大集团宣布合并，融合成现场总线基金会（Fieldbus Foundation）简称FF。对于现场总线的技术发展和制定标准，基金委员会取得以下共识：共同制定遵循IEC/ISA SP50协议标准；商定现场总线技术发展阶段时间表。</li>
-</ul>
-<h2 id="现场总线能力">现场总线能力</h2>
-<p>部分应用场景或产品开发时，会对现场总线的能力提出如下要求：</p>
-<p><strong>本质安全防爆</strong>：<strong>本质安全</strong> 是指通过设计等手段使生产设备或生产系统本身具有安全性，即使在误操作或发生故障的情况下也不会造成事故的功能。具体包括 <strong>失误—安全</strong>（误操作不会导致事故发生或自动阻止误操作）和 <strong>故障—安全</strong> 功能（设备、工艺发生故障时还能暂时正常工作或自动转变安全状态）。</p>
-<blockquote>
-<p>本质安全型电气设备的防爆原理：通过限制电气设备电路的各种参数，或采取保护措施来限制电路的火花放电能量和热能，使其在正常工作和规定的故障状态下产生的电火花和热效应均不能点燃周围环境的爆炸性混合物，从而实现了电气防爆，这种电气设备的电路本身就具有防爆性能，也就是从“本质”上就是安全的。</p>
-</blockquote>
-<h2 id="现场总线分类">现场总线分类</h2>
-<p>国际上有40多种现场总线，但没有任何一种现场总线能覆盖所有的应用面，按其传输数据的大小可分为3类：</p>
-<ol type="1">
-<li><strong>传感器总线</strong>（sensor bus），属于位传输；</li>
-<li><strong>设备总线</strong>（device bus），属于字节传输；</li>
-<li><strong>现场总线</strong>，属于数据流传输。</li>
-</ol>
-<h3 id="ff">FF</h3>
-<p>FF，即 Foundation Field bus，基金会现场总线。</p>
-<p>是以美国Fisher-Rouse mount公司为首的联合了横河、ABB、西门子、英维斯等80家公司制定的ISP协议和以Honeywell公司为首的联合欧洲等地150余家公司制定的World FIP协议于1994年9月合并的。该总线在过程自动化领域得到了广泛的应用，具有良好的发展前景。</p>
-<p>FF 总线采用国际标准化组织ISO的开放化系统互联OSI的简化模型(1，2，7层)，即物理层、数据链路层、应用层，另外增加了用户层。</p>
-<p>FF 分低速H1和高速H2两种通信速率，前者传输速率为31.25Kbit/秒，通信距离可达1900m，可支持总线供电和本质安全防爆环境。后者传输速率为1Mbit/秒和2.5Mbit/秒，通信距离为750m和500m，支持双绞线、光缆和无线发射，协议符号IEC1158-2标准。</p>
-<p>FF 的物理媒介的传输信号采用曼切斯特编码。</p>
-<h3 id="can">CAN</h3>
-<p>CAN，即Controller Area Network，控制器局域网络。</p>
-<p>最早由德国BOSCH公司推出，它广泛用于离散控制领域，其总线规范已被ISO国际标准组织制定为国际标准，得到了Intel、Motorola、NEC等公司的支持。CAN协议分为二层：物理层和数据链路层。CAN的信号传输采用短帧结构，传输时间短，具有自动关闭功能，具有较强的抗干扰能力。CAN支持多主工作方式，并采用了非破坏性总线仲裁技术，通过设置优先级来避免冲突，通讯距离最远可达10KM/5Kbps/s，通讯速率最高可达40M/1Mbp/s，网络节点数实际可达110个。目前已有多家公司开发了符合CAN协议的通信芯片。</p>
-<h3 id="lonworks">LonWorks</h3>
-<p>由美国Echelon公司推出，并由Motorola、Toshiba公司共同倡导。它采用ISO/OSI模型的全部7层通讯协议，采用面向对象的设计方法，通过网络变量把网络通信设计简化为参数设置。支持双绞线、同轴电缆、光缆和红外线等多种通信介质，通讯速率从300bit/s至1.5M/s不等，直接通信距离可达2700m(78Kbit/s)，被誉为通用控制网络。Lonworks技术采用的Lon Talk协议被封装到Neuron(神经元)的芯片中，并得以实现。采用LonWorks技术和神经元芯片的产品，被广泛应用在楼宇自动化、家庭自动化、保安系统、办公设备、交通运输、工业过程控制等行业。</p>
-<h3 id="device-net">Device Net</h3>
-<p>Device Net是一种低成本的通信连接也是一种简单的网络解决方案，有着开放的网络标准。Device Net具有的直接互联性不仅改善了设备间的通信而且提供了相当重要的设备级阵地功能。Device Net基于CAN技术，传输率为125Kbit/s至500Kbit/s，每个网络的最大节点为64个，其通信模式为：生产者/客户(Producer/Consumer)，采用多信道广播信息发送方式。位于Device Net网络上的设备可以自由连接或断开，不影响网上的其他设备，而且其设备的安装布线成本也较低。Device Net总线的组织结构是Open Device Net Vendor Association(开放式设备网络供应商协会，简称“ODVA”)。</p>
-<h3 id="profibus">PROFIBUS</h3>
-<p>PROFIBUS是德国标准(DIN19245)和欧洲标准(EN50170)的现场总线标准。由PROFIBUS--DP、PROFIBUS-FMS、PROFIBUS-PA系列组成。DP用于分散外设间高速数据传输，适用于加工自动化领域。FMS适用于纺织、楼宇自动化、可编程控制器、低压开关等。PA用于过程自动化的总线类型，服从IEC1158-2标准。PROFIBUS支持主-从系统、纯主站系统、多主多从混合系统等几种传输方式。PROFIBUS的传输速率为9.6Kbit/s至12Mbit/s，最大传输距离在9.6Kbit/s下为1200m，在12Mbit/s小为200m，可采用中继器延长至10km，传输介质为双绞线或者光缆，最多可挂接127个站点。</p>
-<h3 id="hart">HART</h3>
-<p>HART，即 Highway Addressable Remote Transducer，高速可寻址远程传感器。</p>
-<p>最早由Rosemount公司开发。其特点是在现有模拟信号传输线上实现数字信号通信，属于模拟系统向数字系统转变的过渡产品。其通信模型采用物理层、数据链路层和应用层三层，支持点对点主从应答方式和多点广播方式。由于它采用模拟数字信号混和，难以开发通用的通信接口芯片。</p>
-<p>HART能利用总线供电，可满足本质安全防爆的要求，并可用于由手持编程器与管理系统主机作为主设备的双主设备系统。</p>
-<h3 id="cc-link">CC-Link</h3>
-<p>CC-Link是Control&amp;Communication Link(控制与通信链路系统)的缩写，在1996年11月，由三菱电机为主导的多家公司推出，其增长势头迅猛，在亚洲占有较大份额。在其系统中，可以将控制和信息数据同是以10Mbit/s高速传送至现场网络，具有性能卓越、使用简单、应用广泛、节省成本等优点。其不仅解决了工业现场配线复杂的问题，同时具有优异的抗噪性能和兼容性。CC-Link是一个以设备层为主的网络，同时也可覆盖较高层次的控制层和较低层次的传感层。2005年7月CC-Link被中国国家标准委员会批准为中国国家标准指导性技术文件。</p>
-<h3 id="world-fip">World FIP</h3>
-<p>World FIP的北美部分与ISP合并为FF以后，World FIP的欧洲部分仍保持独立，总部设在法国。其在欧洲市场占有重要地位，特别是在法国占有率大约为60%。World FIP的特点是具有单一的总线结构来适用不同的应用领域的需求，而且没有任何网关或网桥，用软件的办法来解决高速和低速的衔接。World FIP与FFHSE可以实现“透明联接”，并对FF的H1进行了技术拓展，如速率等。在与IEC61158第一类型的连接方面，World FIP做得最好，走在世界前列。</p>
-<p>此外较有影响的现场总线还有丹麦公司Process-Data A/S提出的P-Net，该总线主要应用于农业、林业、水利、食品等行业；Swift Net现场总线主要使用在航空航天等领域，还有一些其他的现场总线这里就不再赘述了。</p>
-<h3 id="interbus">INTERBUS</h3>
-<p>INTERBUS是德国Phoenix公司推出的较早的现场总线，2000年2月成为国际标准IEC61158。INTERBUS采用国际标准化组织ISO的开放化系统互联OSI的简化模型(1，2，7层)，即物理层、数据链路层、应用层，具有强大的可靠性、可诊断性和易维护性。其采用集总帧型的数据环通信，具有低速度、高效率的特点，并严格保证了数据传输的同步性和周期性;该总线的实时性、抗干扰性和可维护性也非常出色。INTERBUS广泛地应用到汽车、烟草、仓储、造纸、包装、食品等工业，成为国际现场总线的领先者。</p>
-<h2 id="其他">其他</h2>
-<p>RS-485和现场总线同属于总线；ModBus和现场总线同属于通信协议；</p>
-<p>严格来讲，RS-485≠现场总线，ModBus≠现场总线，RS-485+ModBus（还有其他什么的）才构成现场总线，其中RS-485工作在现场总线的物理层，ModBus工作在现场总线的应用层；</p>
-<h1 id="参考">参考</h1>
-<ol type="1">
-<li>《现场总线CAN原理与技术应用》第二版，北京航空航天大学出版社，饶运涛、邹继军、王进宏、郑勇芸 编著</li>
-<li><a target="_blank" rel="noopener" href="https://baike.baidu.com/item/现场总线/304020">现场总线</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/f32cfd6c208b">OSI网络模型</a></li>
-<li><a target="_blank" rel="noopener" href="https://baike.baidu.com/item/本质安全/1078274">本质安全</a></li>
-<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/87868499">本质安全型电气设备防爆原理</a></li>
-</ol>
 
       
     </div>
@@ -2520,7 +3208,7 @@ COMPILE AND LINK
 
 
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/2/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/12/">12</a><a class="extend next" rel="next" href="/page/4/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <a class="extend prev" rel="prev" href="/page/2/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/13/">13</a><a class="extend next" rel="next" href="/page/4/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 

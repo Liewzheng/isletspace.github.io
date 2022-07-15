@@ -37,7 +37,7 @@
 <meta property="og:image" content="https://pic.islet.space/2021/07/60935d4fc9c96-thumb.png">
 <meta property="og:image" content="https://pic.islet.space/2021/07/60935d503580c-thumb.png">
 <meta property="article:published_time" content="2021-07-17T02:40:00.000Z">
-<meta property="article:modified_time" content="2021-07-17T03:42:40.040Z">
+<meta property="article:modified_time" content="2021-07-17T03:42:40.000Z">
 <meta property="article:author" content="Liewzheng">
 <meta property="article:tag" content="circuit">
 <meta property="article:tag" content="隔离">
@@ -175,7 +175,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">119</span>
+          <span class="site-state-item-count">124</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -186,7 +186,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">222</span>
+        <span class="site-state-item-count">230</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -294,9 +294,12 @@
 </div>
 <p><img src="https://pic.islet.space/2021/07/60935d5048313-thumb.png" alt="img" style="zoom:50%;" /></p>
 <h1 id="优缺点对比">优缺点对比</h1>
-<p>由上述概念可知，对于常用的电源拓扑而言，非隔离电源主要有：<strong><em>Buck</em></strong>、<strong><em>Boost</em></strong>、<strong><em>Buck-Boost</em></strong>等。而隔离电源主要有各种带隔离变压器的 <strong><em>反激</em></strong>、<strong><em>正激</em></strong>、<strong><em>半桥</em></strong>、<strong><em>LLC</em></strong> 等拓扑。</p>
+<p>由上述概念可知，对于常用的电源拓扑而言，非隔离电源主要有：<strong><em>Buck</em></strong>、<strong><em>Boost</em></strong>、<strong><em>Buck-Boost</em></strong>等。而隔离电源主要有各种带隔离变压器的
+<strong><em>反激</em></strong>、<strong><em>正激</em></strong>、<strong><em>半桥</em></strong>、<strong><em>LLC</em></strong>
+等拓扑。</p>
 <p>结合常用的隔离与非隔离电源，我们从直观上就可得出它们的一些优缺点，两者的优缺点几乎是相反的。使用隔离或非隔离的电源，需了解实际项目对电源的需求是怎样的。</p>
-<p>隔离和非隔离电源的主要差别在于 隔离模块的可靠性高，但成本高，效率差点。非隔离模块的结构很简单，成本低，效率高，安全性能差。因此，在如下几个场合，建议用隔离电源：</p>
+<p>隔离和非隔离电源的主要差别在于
+隔离模块的可靠性高，但成本高，效率差点。非隔离模块的结构很简单，成本低，效率高，安全性能差。因此，在如下几个场合，建议用隔离电源：</p>
 <ol type="1">
 <li></li>
 </ol>
@@ -306,7 +309,10 @@
 </div>
 <p><img src="https://pic.islet.space/2021/07/60935d504e874-thumb.png" alt="img" style="zoom:80%;" /></p>
 <h1 id="适用场景">适用场景</h1>
-<p>一般场合使用对模块电源隔离电压要求不是很高，但是 <mark> 更高的隔离电压可以保证模块电源具有更小的漏电流，更高的安全性和可靠性，并且 <strong><em>EMC特性</em></strong> 也更好一些</mark>，因此目前业界普遍的隔离电压水平为1500VDC以上。</p>
+<p>一般场合使用对模块电源隔离电压要求不是很高，但是 <mark>
+更高的隔离电压可以保证模块电源具有更小的漏电流，更高的安全性和可靠性，并且
+<strong><em>EMC特性</em></strong>
+也更好一些</mark>，因此目前业界普遍的隔离电压水平为1500VDC以上。</p>
 <p>了解了隔离与非隔离电源的优缺点，对于一些常用的嵌入式供电，其对应的场景及推荐隔离方案如下：</p>
 <ol type="1">
 <li>系统前级的电源，为提高抗干扰性能，保证可靠性，一般用隔离电源。</li>
@@ -318,7 +324,8 @@
 <h3 id="隔离电源">隔离电源</h3>
 <ol type="1">
 <li><p>涉及可能触电的场合，如从电网取电，转成低压直流的场合，需用隔离的AC-DC电源；</p></li>
-<li><p>串行通信总线通过RS-232、RS-485和控制器局域网(CAN)等物理网络传送数据，这些相互连接的系统每个都配备有自己的电源，而且各系统之间往往间隔较远，因此，我们通常需要隔离电源进行电气隔离来确保系统的物理安全，且通过隔离 <mark style="font-style: Italic; font-weight: 900;">切断接地回路</mark>，来保护系统免受瞬态高电压冲击，同时减少信号失真；</p></li>
+<li><p>串行通信总线通过RS-232、RS-485和控制器局域网(CAN)等物理网络传送数据，这些相互连接的系统每个都配备有自己的电源，而且各系统之间往往间隔较远，因此，我们通常需要隔离电源进行电气隔离来确保系统的物理安全，且通过隔离
+<mark style="font-style: Italic; font-weight: 900;">切断接地回路</mark>，来保护系统免受瞬态高电压冲击，同时减少信号失真；</p></li>
 <li><p>对外的I/O端口，为保证系统的可靠运行，也建议对I/O端口做电源隔离。</p></li>
 </ol>
 <h3 id="非隔离电源">非隔离电源</h3>
@@ -332,7 +339,9 @@
 </div>
 <p>作为模块电源的重要指标，标准中也规定了隔离耐压相关测试方法，简单的测试时一般采用等电位连接测试，连接示意图如下：</p>
 <figure>
-<img src="https://pic.islet.space/2021/07/60935d4fc9c96-thumb.png" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+<img src="https://pic.islet.space/2021/07/60935d4fc9c96-thumb.png"
+alt="img" />
+<figcaption aria-hidden="true">img</figcaption>
 </figure>
 <div style="text-align: center; font-weight: 900;">
 图 隔离耐压测试示意
@@ -347,12 +356,15 @@
 <li>要注意是AC-DC还是DC-DC。</li>
 <li>隔离电源模块的隔离耐压。例如隔离1000V DC 是否满足绝缘要求。</li>
 <li>隔离电源模块是否有进行全面的可靠性测试。电源模块要经过性能测试、容差测试、瞬态条件测试、可靠性测试、EMC电磁兼容测试、高低温测试、极限测试、寿命测试、安规测试等。</li>
-<li>隔离电源模块的生产工厂产线是否规范。电源模块生产线需要通过ISO9001, ISO14001，OHSAS18001等多项国际认证，如下图3所示。</li>
+<li>隔离电源模块的生产工厂产线是否规范。电源模块生产线需要通过ISO9001,
+ISO14001，OHSAS18001等多项国际认证，如下图3所示。</li>
 <li>隔离电源模块是否有应用在工业、汽车等恶劣环境。电源模块不仅仅大量应用与恶劣的工业环境，同时在新能源汽车的BMS管理系统中也游刃有余。</li>
 </ol></li>
 </ol>
 <figure>
-<img src="https://pic.islet.space/2021/07/60935d503580c-thumb.png" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+<img src="https://pic.islet.space/2021/07/60935d503580c-thumb.png"
+alt="img" />
+<figcaption aria-hidden="true">img</figcaption>
 </figure>
 <div style="text-align: center; font-weight: 900;">
 图 ISO认证
@@ -360,7 +372,8 @@
 <h1 id="总结">总结</h1>
 <p>很多人认为非隔离电源不如隔离电源好，因为隔离电源贵，所以肯定贵的就好。前几年非隔离的稳定性确实没有隔离稳定，但随着研发技术的更新，现如今非隔离已经非常成熟，日渐稳定。说到安全性，其实现在非隔离电源也是很安全的，只要在结构稍微做下改动，对人体还是很安全的，同样的道理，非隔离电源也是可以过很多安规标准，例如:ULTUVSAACE等。</p>
 <p>实际上非隔离电源损坏的根源就是电源AC线两端的浪涌电压所致，也可以这么说，雷击浪涌吧，这种电压是加在电压AC线两端的瞬间高压，有时高达三千伏，但时间很短，能量却极强，在打雷时会发生，或是在同一条AC线上，当一个大的负载断开瞬间，因为电流惯性的原因也会发生，这个电压进入电源，对于非隔离BUCK电路，会瞬间传达到输出，击坏恒流检测环，或是进一步击坏芯片，造成300v直通，而烧掉整条灯管。对于隔离反激电源，会击坏MOS,现象就是保管，芯片，MOS管全烧坏。现在LED驱动电源，在使用过程中坏的，80%以上都是这两种类似现象。而且，小型开关电源，就算是电源适配器，也经常损坏的是这个现象，均是浪涌电压所致，而在LED电源里，表现的更加普遍，这是因为LED的负载特性是特别的怕浪涌电压的。</p>
-<p>如果按照一般的理论来讲，电子电路里，元器件越少，可靠性越高，相应越多的元件的电路板可靠性则越低。实际上非隔离电路的元件是比隔离电路要少的，为什么隔离电路可靠性高。其实说白了，不是什么可靠性，而是 <mark>非隔离电路对于浪涌太敏感，抑制能力差</mark>，隔离电路，因为能量是先进入变压器，然后从变压器再输送到LED负载的。BUCK电路是输入电源一部分直接加在了LED负载上，故前者对浪涌抑制和衰减能力强，所以浪涌来时损坏的机率小而已。实际上，非隔离电源的问题主要是在于浪涌问题，目前这个问题，因为只有LED灯具在大批量应用时，从概率上才能看出其解决的程度，所以很多人没有提出好的防治办法，更多的人则是不知道浪涌电压为何物。LED灯具坏了，很多人也找不到原因，最后只能一句，什么此电源不稳定就了结了，具体哪里不稳定，他不知道。</p>
+<p>如果按照一般的理论来讲，电子电路里，元器件越少，可靠性越高，相应越多的元件的电路板可靠性则越低。实际上非隔离电路的元件是比隔离电路要少的，为什么隔离电路可靠性高。其实说白了，不是什么可靠性，而是
+<mark>非隔离电路对于浪涌太敏感，抑制能力差</mark>，隔离电路，因为能量是先进入变压器，然后从变压器再输送到LED负载的。BUCK电路是输入电源一部分直接加在了LED负载上，故前者对浪涌抑制和衰减能力强，所以浪涌来时损坏的机率小而已。实际上，非隔离电源的问题主要是在于浪涌问题，目前这个问题，因为只有LED灯具在大批量应用时，从概率上才能看出其解决的程度，所以很多人没有提出好的防治办法，更多的人则是不知道浪涌电压为何物。LED灯具坏了，很多人也找不到原因，最后只能一句，什么此电源不稳定就了结了，具体哪里不稳定，他不知道。</p>
 <p>非隔离电源的优势一是效率，二是成本。</p>
 <p>非隔离电源适合的场合：首先，是室内的灯具，这种室内用电环境较好，浪涌影响小。第二，使用的场合是高压小电流，低压大电流用非隔离没有意义，因为低压大电流非隔离的效率并不比隔离的高，成本也低不到多少去。第三，电压相对较稳定的环境中使用非隔离电源。当然，如果有办法解决掉抑制浪涌的问题，那么非隔离电源的应用范围将大大拓宽！</p>
 <p>隔离电源因为浪涌的问题，损坏率也不可小觑，一般那种返修回来，击坏保险，芯片，MOS的第一个应该想到是浪涌问题。为了减少损坏率，在设计时就行要考虑到浪涌的因素进去，或是在使用时要告戒用户，尽量避免浪涌发生。（如室内灯具，打雷时暂时先关掉）</p>

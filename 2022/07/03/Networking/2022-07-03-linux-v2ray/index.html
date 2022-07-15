@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://code.islet.space/font//css?family=/CascadiaCode/CascadiaCode:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/themes/blue/pace-theme-minimal.css">
+  <script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"islet.space","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.7.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/db.json","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":true}}</script><script src="/js/config.js"></script>
+<meta name="description" content="首先要说明的一点，linux 上的 v2ray 分为两部分：  使用QT 制作的 qv2ray GUI界面 v2ray 的运行核心  这两部分需要分别安装和下载。 Github 上的项目路径：https:&#x2F;&#x2F;github.com&#x2F;v2fly&#x2F; qv2ray 安装 GUI 界面的安装可以参考：新手起步 安装、配置完毕之后的使用界面如下。   image-20220703213806263  如果使用">
+<meta property="og:type" content="article">
+<meta property="og:title" content="linux-v2ray">
+<meta property="og:url" content="http://islet.space/2022/07/03/Networking/2022-07-03-linux-v2ray/index.html">
+<meta property="og:site_name" content="Coder的孤岛">
+<meta property="og:description" content="首先要说明的一点，linux 上的 v2ray 分为两部分：  使用QT 制作的 qv2ray GUI界面 v2ray 的运行核心  这两部分需要分别安装和下载。 Github 上的项目路径：https:&#x2F;&#x2F;github.com&#x2F;v2fly&#x2F; qv2ray 安装 GUI 界面的安装可以参考：新手起步 安装、配置完毕之后的使用界面如下。   image-20220703213806263  如果使用">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://pic.islet.space/2022/07/image-20220703213806263.png">
+<meta property="og:image" content="https://pic.islet.space/2022/07/image-20220703214344707.png">
+<meta property="og:image" content="https://pic.islet.space/2022/07/image-20220703212715215.png">
+<meta property="og:image" content="https://pic.islet.space/2022/07/image-20220703212900206.png">
+<meta property="og:image" content="https://pic.islet.space/2022/07/image-20220703212931436.png">
+<meta property="og:image" content="https://pic.islet.space/2022/07/image-20220703213204330.png">
+<meta property="og:image" content="https://pic.islet.space/2022/07/image-20220706185814369.png">
+<meta property="article:published_time" content="2022-07-03T13:15:00.000Z">
+<meta property="article:modified_time" content="2022-07-15T04:06:06.000Z">
+<meta property="article:author" content="Liewzheng">
+<meta property="article:tag" content="linux">
+<meta property="article:tag" content="v2ray">
+<meta property="article:tag" content="proxy">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://pic.islet.space/2022/07/image-20220703213806263.png">
+
+
+<link rel="canonical" href="http://islet.space/2022/07/03/Networking/2022-07-03-linux-v2ray/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://islet.space/2022/07/03/Networking/2022-07-03-linux-v2ray/","path":"2022/07/03/Networking/2022-07-03-linux-v2ray/","title":"linux-v2ray"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>linux-v2ray | Coder的孤岛</title>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<!-- hexo injector head_end end --></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Coder的孤岛</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">islet of the coder</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-首页"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-文章"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>文章</a></li>
+        <li class="menu-item menu-item-目录"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>目录</a></li>
+        <li class="menu-item menu-item-标签"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-简历"><a href="/resume/" rel="section"><i class="fa fa-address-card fa-fw"></i>简历</a></li>
+        <li class="menu-item menu-item-友链"><a href="/friends/" rel="section"><i class="fa fa-heartbeat fa-fw"></i>友链</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#qv2ray-%E5%AE%89%E8%A3%85"><span class="nav-number">1.</span> <span class="nav-text">qv2ray 安装</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#v2ray-%E6%A0%B8%E5%BF%83%E5%AE%89%E8%A3%85"><span class="nav-number">2.</span> <span class="nav-text">v2ray 核心安装</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%B5%8F%E8%A7%88%E5%99%A8%E4%BB%A3%E7%90%86"><span class="nav-number">3.</span> <span class="nav-text">浏览器代理</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%91%BD%E4%BB%A4%E8%A1%8C%E4%BB%A3%E7%90%86"><span class="nav-number">4.</span> <span class="nav-text">命令行代理</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Liewzheng</p>
+  <div class="site-description" itemprop="description">笔记分享的旮旯孤岛而已</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">124</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">230</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="mailto:liewzheng@foxmail.com" title="E-Mail → mailto:liewzheng@foxmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://islet.space/2022/07/03/Networking/2022-07-03-linux-v2ray/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Liewzheng">
+      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coder的孤岛">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          linux-v2ray
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2022-07-03 21:15:00" itemprop="dateCreated datePublished" datetime="2022-07-03T21:15:00+08:00">2022-07-03</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2022-07-15 12:06:06" itemprop="dateModified" datetime="2022-07-15T12:06:06+08:00">2022-07-15</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Networking/" itemprop="url" rel="index"><span itemprop="name">Networking</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>首先要说明的一点，linux 上的 v2ray 分为两部分：</p>
+<ul>
+<li><p>使用QT 制作的 qv2ray GUI界面</p></li>
+<li><p>v2ray 的运行核心</p></li>
+</ul>
+<p>这两部分需要分别安装和下载。</p>
+<p>Github 上的项目路径：https://github.com/v2fly/</p>
+<h1 id="qv2ray-安装">qv2ray 安装</h1>
+<p>GUI 界面的安装可以参考：<a
+target="_blank" rel="noopener" href="https://qv2ray.net/lang/zh/getting-started/step1.html#%E6%9D%A5%E8%87%AA%E8%BD%AF%E4%BB%B6%E5%8C%85%E7%AE%A1%E7%90%86%E5%99%A8">新手起步</a></p>
+<p>安装、配置完毕之后的使用界面如下。</p>
+<figure>
+<img src="https://pic.islet.space/2022/07/image-20220703213806263.png"
+alt="image-20220703213806263" />
+<figcaption aria-hidden="true">image-20220703213806263</figcaption>
+</figure>
+<p>如果使用 ubuntu 或者 kali 等系统的稳定版本，则可以参考以下命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 安装必要工具</span></span><br><span class="line">sudo apt install -y gnupg ca-certificates curl</span><br><span class="line"><span class="comment"># 添加软件源公钥</span></span><br><span class="line">curl https://qv2ray.net/debian/pubkey.gpg | sudo gpg --dearmor -o /etc/apt/trusted.gpg.d/qv2ray-stable-archive.gpg</span><br><span class="line"><span class="comment"># 添加软件源</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;deb [arch=amd64] https://qv2ray.net/debian/ stable main&quot;</span> | sudo tee /etc/apt/sources.list.d/qv2ray.list</span><br><span class="line"><span class="comment"># 更新软件源</span></span><br><span class="line">sudo apt update</span><br><span class="line"><span class="comment"># 安装 qv2ray GUI界面</span></span><br><span class="line">sudo apt install -y qv2ray</span><br></pre></td></tr></table></figure>
+<h1 id="v2ray-核心安装">v2ray 核心安装</h1>
+<p>注意：这个一定要和 qv2ray 安装统一个时期的版本，github上有个
+pre-release 的 <code>v5.0.7</code>
+版本，里面缺少了组件（<code>v2ctl</code>），是不能跟 qv2ray
+一起使用的。</p>
+<figure>
+<img src="https://pic.islet.space/2022/07/image-20220703214344707.png"
+alt="image-20220703214344707" />
+<figcaption aria-hidden="true">image-20220703214344707</figcaption>
+</figure>
+<p>可以参考 neworld.space 的教程《<a
+target="_blank" rel="noopener" href="https://support.neworld.tv/qv2ray/">Linux Qv2ray 使用教程</a>》
+进行安装。</p>
+<figure>
+<img src="https://pic.islet.space/2022/07/image-20220703212715215.png"
+alt="image-20220703212715215" />
+<figcaption aria-hidden="true">image-20220703212715215</figcaption>
+</figure>
+<p>如果安装版本不正确，会报
+<code>v2ray core faied with an exit code: 2</code> 的错误。</p>
+<h1 id="浏览器代理">浏览器代理</h1>
+<p>设置完之后，还不能马上使用，需要在浏览器中进行代理设置。</p>
+<p>例如，火狐浏览器的设置中，找到 “网络代理” 。</p>
+<figure>
+<img src="https://pic.islet.space/2022/07/image-20220703212900206.png"
+alt="image-20220703212900206" />
+<figcaption aria-hidden="true">image-20220703212900206</figcaption>
+</figure>
+<p>可以选择 “使用系统代理设置” 和 “手动配置代理”两种。</p>
+<figure>
+<img src="https://pic.islet.space/2022/07/image-20220703212931436.png"
+alt="image-20220703212931436" />
+<figcaption aria-hidden="true">image-20220703212931436</figcaption>
+</figure>
+<p>其中手动配置代理就需要对照着 qv2ray 的设置信息来配置即可。</p>
+<figure>
+<img src="https://pic.islet.space/2022/07/image-20220703213204330.png"
+alt="image-20220703213204330" />
+<figcaption aria-hidden="true">image-20220703213204330</figcaption>
+</figure>
+<h1 id="命令行代理">命令行代理</h1>
+<p>命令行如果需要代理，则需要安装 <code>proxychains</code></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install -y proxychians</span><br></pre></td></tr></table></figure>
+<p>安装完之后用 <code>sudo</code> 权限去配置
+<code>/etc/proxychains.conf</code> 文件，将文件最后面的
+<code>sock4  127.0.0.1 9095</code> 改成 和 qv2ray 图形配置中的
+<code>sock5</code> 一样的配置信息，如 <code>sock5 127.0.0.1 1089</code>
+即可。</p>
+<p>如果是在mac系统下，则配置文件的路径为 <code>/usr/local/etc</code>
+。</p>
+<p>如下所示，则是OK的。</p>
+<figure>
+<img src="https://pic.islet.space/2022/07/image-20220706185814369.png"
+alt="image-20220706185814369" />
+<figcaption aria-hidden="true">image-20220706185814369</figcaption>
+</figure>
+<p>使用的时候，直接在命令前面加 <code>proxychains</code> 或者
+<code>proxychains4</code> 即可，如：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">proxychains ping google.com</span><br></pre></td></tr></table></figure>
+<p>搞定 v2ray 和 proxychains ，下次拉代码再也不痛苦了。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>感谢您的支持和鼓励</div>
+  <button>
+    Donate
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="https://photo.islet.space/2021/00/IMG_4588.JPG" alt="Liewzheng WeChat Pay">
+        <span>WeChat Pay</span>
+      </div>
+      <div>
+        <img src="https://photo.islet.space/2021/00/IMG_4590.JPG" alt="Liewzheng Alipay">
+        <span>Alipay</span>
+      </div>
+
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/linux/" rel="tag"># linux</a>
+              <a href="/tags/v2ray/" rel="tag"># v2ray</a>
+              <a href="/tags/proxy/" rel="tag"># proxy</a>
+          </div>
+
+        
+
+  <div id="vcomments" style="margin: 1rem 0 0 0;"></div>
+  <script>
+    new Valine({
+      el: '#vcomments',
+      appId: 'vRGM12EcYxDSM2lat5qjjSeY-gzGzoHsz',
+      appKey: 'WBgAb6NTAFQ7DYtgH0uOPNNh'
+    })
+  </script>
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/06/27/Linux/Shell/2022-06-27-%E4%BE%BF%E6%8D%B7%E8%84%9A%E6%9C%AC/" rel="prev" title="便捷脚本">
+                  <i class="fa fa-chevron-left"></i> 便捷脚本
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2022/07/11/Networking/2022-07-11-smb-%E6%9C%8D%E5%8A%A1%E5%BC%80%E5%90%AF/" rel="next" title="smb 服务开启">
+                  smb 服务开启 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">粤ICP备19004822号 </a>
+  </div>
+
+<div class="copyright">
+  &copy; 2019 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">liewzheng</span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdn.jsdelivr.net/npm/mermaid@8.12.0/dist/mermaid.min.js","integrity":"sha256-0dD7vUjUCTGJjeLnPotQQJIcSzug5fO6WDMYYyNIX4c="}}</script>
+  <script src="/js/third-party/tags/mermaid.js"></script>
+
+
+  <script src="/js/third-party/pace.js"></script>
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":"enable","tags":"all","js":{"url":"https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js","integrity":"sha256-r+3itOMtGGjap0x+10hu6jW/gZCzxHsoKrOd7gyRSGY="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>

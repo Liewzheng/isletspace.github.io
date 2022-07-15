@@ -25,14 +25,14 @@
 <meta name="description" content="本文是介绍嵌入式工程师的CLI编译工具部署方法，所用编译器是 ARM GCC，即 gcc-arm-none-eabi ，案例也是使用 STM32 CubeMX 生成的文件。中间涉及到一些 单元测试 相关的插件安装可以视情况选择或弃用。 下方的操作需要提前安装好 Windows子系统Linux（WSL，Windows Subsystem Linux）或者 虚拟机，且确保使用的是 shell 是 zs">
 <meta property="og:type" content="article">
 <meta property="og:title" content="wsl下编译stm32平台的软件">
-<meta property="og:url" content="http://islet.space/2022/05/11/Programming/2022-05-11-wsl%E4%B8%8B%E7%BC%96%E8%AF%91stm32%E5%B9%B3%E5%8F%B0%E7%9A%84%E8%BD%AF%E4%BB%B6/index.html">
+<meta property="og:url" content="http://islet.space/2022/05/11/Programming/Compiling/2022-05-11-wsl%E4%B8%8B%E7%BC%96%E8%AF%91stm32%E5%B9%B3%E5%8F%B0%E7%9A%84%E8%BD%AF%E4%BB%B6/index.html">
 <meta property="og:site_name" content="Coder的孤岛">
 <meta property="og:description" content="本文是介绍嵌入式工程师的CLI编译工具部署方法，所用编译器是 ARM GCC，即 gcc-arm-none-eabi ，案例也是使用 STM32 CubeMX 生成的文件。中间涉及到一些 单元测试 相关的插件安装可以视情况选择或弃用。 下方的操作需要提前安装好 Windows子系统Linux（WSL，Windows Subsystem Linux）或者 虚拟机，且确保使用的是 shell 是 zs">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://pic.islet.space/2022/05/image-20220507181341683.png">
 <meta property="og:image" content="https://pic.islet.space/2022/05/image-20220511154414265.png">
 <meta property="article:published_time" content="2022-05-11T07:19:00.000Z">
-<meta property="article:modified_time" content="2022-06-09T13:53:32.351Z">
+<meta property="article:modified_time" content="2022-06-09T13:53:32.000Z">
 <meta property="article:author" content="Liewzheng">
 <meta property="article:tag" content="stm32">
 <meta property="article:tag" content="wsl">
@@ -42,11 +42,11 @@
 <meta name="twitter:image" content="https://pic.islet.space/2022/05/image-20220507181341683.png">
 
 
-<link rel="canonical" href="http://islet.space/2022/05/11/Programming/2022-05-11-wsl%E4%B8%8B%E7%BC%96%E8%AF%91stm32%E5%B9%B3%E5%8F%B0%E7%9A%84%E8%BD%AF%E4%BB%B6/">
+<link rel="canonical" href="http://islet.space/2022/05/11/Programming/Compiling/2022-05-11-wsl%E4%B8%8B%E7%BC%96%E8%AF%91stm32%E5%B9%B3%E5%8F%B0%E7%9A%84%E8%BD%AF%E4%BB%B6/">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://islet.space/2022/05/11/Programming/2022-05-11-wsl%E4%B8%8B%E7%BC%96%E8%AF%91stm32%E5%B9%B3%E5%8F%B0%E7%9A%84%E8%BD%AF%E4%BB%B6/","path":"2022/05/11/Programming/2022-05-11-wsl下编译stm32平台的软件/","title":"wsl下编译stm32平台的软件"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://islet.space/2022/05/11/Programming/Compiling/2022-05-11-wsl%E4%B8%8B%E7%BC%96%E8%AF%91stm32%E5%B9%B3%E5%8F%B0%E7%9A%84%E8%BD%AF%E4%BB%B6/","path":"2022/05/11/Programming/Compiling/2022-05-11-wsl下编译stm32平台的软件/","title":"wsl下编译stm32平台的软件"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
 <title>wsl下编译stm32平台的软件 | Coder的孤岛</title>
@@ -172,7 +172,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">119</span>
+          <span class="site-state-item-count">124</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -183,7 +183,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">222</span>
+        <span class="site-state-item-count">230</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -227,7 +227,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://islet.space/2022/05/11/Programming/2022-05-11-wsl%E4%B8%8B%E7%BC%96%E8%AF%91stm32%E5%B9%B3%E5%8F%B0%E7%9A%84%E8%BD%AF%E4%BB%B6/">
+    <link itemprop="mainEntityOfPage" href="http://islet.space/2022/05/11/Programming/Compiling/2022-05-11-wsl%E4%B8%8B%E7%BC%96%E8%AF%91stm32%E5%B9%B3%E5%8F%B0%E7%9A%84%E8%BD%AF%E4%BB%B6/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -283,19 +283,30 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <p>本文是介绍嵌入式工程师的CLI编译工具部署方法，所用编译器是 ARM GCC，即 <code>gcc-arm-none-eabi</code> ，案例也是使用 STM32 CubeMX 生成的文件。中间涉及到一些 <strong>单元测试</strong> 相关的插件安装可以视情况选择或弃用。</p>
-<p>下方的操作需要提前安装好 Windows子系统Linux（<strong>WSL</strong>，Windows Subsystem Linux）或者 <strong>虚拟机</strong>，且确保使用的是 shell 是 <code>zsh</code>，否则下方的一些配置文件（如 <code>~/.zshrc</code> ）需要手动改成对应 shell 的配置文件。</p>
+        <p>本文是介绍嵌入式工程师的CLI编译工具部署方法，所用编译器是 ARM GCC，即
+<code>gcc-arm-none-eabi</code> ，案例也是使用 STM32 CubeMX
+生成的文件。中间涉及到一些 <strong>单元测试</strong>
+相关的插件安装可以视情况选择或弃用。</p>
+<p>下方的操作需要提前安装好
+Windows子系统Linux（<strong>WSL</strong>，Windows Subsystem Linux）或者
+<strong>虚拟机</strong>，且确保使用的是 shell 是
+<code>zsh</code>，否则下方的一些配置文件（如 <code>~/.zshrc</code>
+）需要手动改成对应 shell 的配置文件。</p>
 <h1 id="安装软件">安装软件</h1>
 <figure>
-<img src="https://pic.islet.space/2022/05/image-20220507181341683.png" alt="image-20220507181341683" /><figcaption aria-hidden="true">image-20220507181341683</figcaption>
+<img src="https://pic.islet.space/2022/05/image-20220507181341683.png"
+alt="image-20220507181341683" />
+<figcaption aria-hidden="true">image-20220507181341683</figcaption>
 </figure>
 <h2 id="安装git">安装git</h2>
 <p>仅实例安装，配置 用户名 和 邮箱 那些的操作请自行搜索。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install git</span><br></pre></td></tr></table></figure>
 <h2 id="安装工具链编译器">安装工具链/编译器</h2>
 <ol type="1">
-<li>到 <a target="_blank" rel="noopener" href="https://developer.arm.com/downloads/-/gnu-rm">官网</a> 去下载自己需要的编译器。</li>
-<li>然后进行解压到与 repo 相同位置的 <code>~/bin</code> （放其他位置也可以）。</li>
+<li>到 <a target="_blank" rel="noopener" href="https://developer.arm.com/downloads/-/gnu-rm">官网</a>
+去下载自己需要的编译器。</li>
+<li>然后进行解压到与 repo 相同位置的 <code>~/bin</code>
+（放其他位置也可以）。</li>
 <li>设置系统变量</li>
 </ol>
 <p>下方以 <code>gcc-arm-none-eabi-5_4-2016q3</code> 为例：</p>
@@ -306,7 +317,8 @@
 <h2 id="安装单元测试工具">安装单元测试工具</h2>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install lcov valgrind</span><br></pre></td></tr></table></figure>
 <h2 id="安装repo">安装repo</h2>
-<p><code>git</code> 和 <code>python2</code> 是 <code>repo</code> 的依赖，记得先安装。</p>
+<p><code>git</code> 和 <code>python2</code> 是 <code>repo</code>
+的依赖，记得先安装。</p>
 <ol type="1">
 <li>创建 <code>~/bin</code> 路径。</li>
 <li>选择国内源安装repo。</li>
@@ -315,14 +327,18 @@
 <li>将 <code>~/bin</code> 放到 <code>PATH</code> 环境变量中。</li>
 <li>使配置生效。。</li>
 </ol>
-<p>这一步简化成下面这些操作，对照着执行即可。（千万不要直接用 <code>apt install repo</code> 进行安装，国内大部分情况用不了）</p>
+<p>这一步简化成下面这些操作，对照着执行即可。（千万不要直接用
+<code>apt install repo</code> 进行安装，国内大部分情况用不了）</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">mkdir ~/bin</span><br><span class="line">curl https://mirrors.tuna.tsinghua.edu.cn/git/git-repo &gt; ~/bin/repo</span><br><span class="line">chmod a+x ~/bin/repo</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;export REPO_URL=&#x27;https://mirrors.tuna.tsinghua.edu.cn/git/git-repo&#x27;&quot;</span> &gt;&gt; ~/.zshrc</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;export PATH=~/bin:<span class="variable">$PATH</span>&quot;</span> &gt;&gt; ~/.zshrc</span><br><span class="line"><span class="built_in">source</span> ~/.zshrc</span><br></pre></td></tr></table></figure>
 <h1 id="拉代码">拉代码</h1>
 <p>下方仅实例 repo 工具的代码拉取指令</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">repo init -u git@github.com:xxx/xxxxxx.git -b dev</span><br><span class="line">repo sync -j8</span><br></pre></td></tr></table></figure>
-<p>拉下来之后会有下面这些文件，其中 <code>out</code> 、 <code>tmp</code> 是之后才生成的。</p>
+<p>拉下来之后会有下面这些文件，其中 <code>out</code> 、 <code>tmp</code>
+是之后才生成的。</p>
 <figure>
-<img src="https://pic.islet.space/2022/05/image-20220511154414265.png" alt="image-20220511154414265" /><figcaption aria-hidden="true">image-20220511154414265</figcaption>
+<img src="https://pic.islet.space/2022/05/image-20220511154414265.png"
+alt="image-20220511154414265" />
+<figcaption aria-hidden="true">image-20220511154414265</figcaption>
 </figure>
 <h1 id="编译命令">编译命令</h1>
 <p>使用编写的脚本进行单元测试、编译和其他操作：</p>

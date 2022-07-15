@@ -29,21 +29,15 @@
 <meta property="og:site_name" content="Coder的孤岛">
 <meta property="og:description" content="cnblogs.com 对齐定义 内存地址对齐，是一种在计算机内存中排列数据、访问数据的一种方式。 对齐分类 内存地址对齐包含了两种相互独立又相互关联的部分：基本数据对齐 和 结构体数据对齐。 当今的计算机在计算机内存中读写数据时都是 按字(word)大小块来进行操作 的。在32位系统中，数据总线宽度为32位，每次能读取4bytes，地址总线宽度为32，因此最大的寻址空间为232bits&#x3D;4GB，">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://pic.islet.space/2021/05/1231881-20190917224404418-1265388453.png">
-<meta property="og:image" content="https://pic.islet.space/2021/05/1231881-20190917224631323-2009020349.png">
-<meta property="og:image" content="https://pic.islet.space/2021/05/1231881-20190917224653471-2076639760.png">
 <meta property="og:image" content="https://common.cnblogs.com/images/copycode.gif">
 <meta property="og:image" content="https://common.cnblogs.com/images/copycode.gif">
-<meta property="og:image" content="https://pic.islet.space/2021/05/1231881-20190917225512389-1581088258.png">
-<meta property="og:image" content="https://pic.islet.space/2021/05/1231881-20190917225534651-684741719.png">
-<meta property="og:image" content="https://pic.islet.space/2021/05/1231881-20190917225553591-1418591054.png">
 <meta property="article:published_time" content="2021-05-17T12:10:00.000Z">
-<meta property="article:modified_time" content="2021-05-17T12:32:07.920Z">
+<meta property="article:modified_time" content="2021-05-17T12:32:07.000Z">
 <meta property="article:author" content="Liewzheng">
 <meta property="article:tag" content="address">
 <meta property="article:tag" content="align">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://pic.islet.space/2021/05/1231881-20190917224404418-1265388453.png">
+<meta name="twitter:image" content="https://common.cnblogs.com/images/copycode.gif">
 
 
 <link rel="canonical" href="http://islet.space/2021/05/17/Computer/2021-05-17-%E5%86%85%E5%AD%98%E5%9C%B0%E5%9D%80%E5%AF%B9%E9%BD%90/">
@@ -176,7 +170,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">119</span>
+          <span class="site-state-item-count">124</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -187,7 +181,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">222</span>
+        <span class="site-state-item-count">230</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -281,31 +275,48 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/mhq-martin/p/11537873.html">cnblogs.com</a></p>
+        <p><a
+target="_blank" rel="noopener" href="https://www.cnblogs.com/mhq-martin/p/11537873.html">cnblogs.com</a></p>
 <h1 id="对齐定义">对齐定义</h1>
 <p>内存地址对齐，是一种在计算机内存中排列数据、访问数据的一种方式。</p>
 <h1 id="对齐分类">对齐分类</h1>
-<p>内存地址对齐包含了两种相互独立又相互关联的部分：<strong>基本数据对齐</strong> 和 <strong>结构体数据对齐</strong>。</p>
-<p>当今的计算机在计算机内存中读写数据时都是 <mark>按字(word)大小块来进行操作</mark> 的。在32位系统中，数据总线宽度为32位，每次能读取4bytes，地址总线宽度为32，因此最大的寻址空间为2<sup>32</sup>bits=4GB，但是最低2位A[0]、A[1]是不用于寻址，A[2-31]才能存储器相连，因此只能访问4的倍数地址空间，但是总的寻址空间还是2<sup>30</sup>bits字长=4GB，因此在 <mark>内存中所有存放的基本类型数据的首地址的最低两位都是0，除结构体中的成员变量</mark> 。</p>
+<p>内存地址对齐包含了两种相互独立又相互关联的部分：<strong>基本数据对齐</strong>
+和 <strong>结构体数据对齐</strong>。</p>
+<p>当今的计算机在计算机内存中读写数据时都是
+<mark>按字(word)大小块来进行操作</mark>
+的。在32位系统中，数据总线宽度为32位，每次能读取4bytes，地址总线宽度为32，因此最大的寻址空间为2<sup>32</sup>bits=4GB，但是最低2位A[0]、A[1]是不用于寻址，A[2-31]才能存储器相连，因此只能访问4的倍数地址空间，但是总的寻址空间还是2<sup>30</sup>bits字长=4GB，因此在
+<mark>内存中所有存放的基本类型数据的首地址的最低两位都是0，除结构体中的成员变量</mark>
+。</p>
 <blockquote>
-<p>基本类型数据对齐就是数据在内存中的 <mark>偏移地址必须等于一个字的倍数</mark>，按这种存储数据的方式，可以提升系统在读取数据时的性能。<mark>为了对齐数据，可能必须在上一个数据结束和下一个数据开始的地方插入一些没有用处字节，这就是结构体数据对齐</mark>。</p>
+<p>基本类型数据对齐就是数据在内存中的
+<mark>偏移地址必须等于一个字的倍数</mark>，按这种存储数据的方式，可以提升系统在读取数据时的性能。<mark>为了对齐数据，可能必须在上一个数据结束和下一个数据开始的地方插入一些没有用处字节，这就是结构体数据对齐</mark>。</p>
 </blockquote>
 <h2 id="基本数据对齐示例">基本数据对齐示例</h2>
 <p>例如，假设计算机的字大小为4bytes，因此变量在内存中的首地址都是满足4地址对齐，CPU只能对4的倍数的地址进行读取，而每次能读取4个字节大小的数据。</p>
-<p>假设有一个整型的数据a的首地址不是4的倍数(如下图所示)，不妨设为 <code>0X00FFFFF3</code>，则该整型数据存储在地址范围为<code>0X00FFFFF3</code> ~<code>0X00FFFFF6</code>的存储空间中，而CPU每次只能对4的倍数内存地址进行读取，因此想读取a的数据，CPU要分别在 <code>0X00FFFFF0</code> 和 <code>0X00FFFFF4</code> 进行两次内存读取，而且还要对两次读取的数据进行处理才能得到a的数据，而一个程序的瓶颈往往不是CPU的速度，而是取决于内存的带宽，因为CPU得处理速度要远大于从内存中读取数据的速度，因此减少对内存空间的访问是提高程序性能的关键。从上例可以看出，采取内存地址对齐策略是提高程序性能的关键。</p>
+<p>假设有一个整型的数据a的首地址不是4的倍数(如下图所示)，不妨设为
+<code>0X00FFFFF3</code>，则该整型数据存储在地址范围为<code>0X00FFFFF3</code>
+~<code>0X00FFFFF6</code>的存储空间中，而CPU每次只能对4的倍数内存地址进行读取，因此想读取a的数据，CPU要分别在
+<code>0X00FFFFF0</code> 和 <code>0X00FFFFF4</code>
+进行两次内存读取，而且还要对两次读取的数据进行处理才能得到a的数据，而一个程序的瓶颈往往不是CPU的速度，而是取决于内存的带宽，因为CPU得处理速度要远大于从内存中读取数据的速度，因此减少对内存空间的访问是提高程序性能的关键。从上例可以看出，采取内存地址对齐策略是提高程序性能的关键。</p>
 <p><mark>也就是说，不对齐内存地址的话会造成CPU对内存中数据访问范围的增大，造成性能浪费。</mark></p>
 <h2 id="结构体对齐示例">结构体对齐示例</h2>
 <p>首先我们先看看下面的C语言的结构体：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">typedef struct MemAlign</span><br><span class="line">&#123;</span><br><span class="line">    int a;</span><br><span class="line">    char b[3];</span><br><span class="line">    int c;</span><br><span class="line">&#125;MemAlign;</span><br></pre></td></tr></table></figure>
 <p>以上这个结构体占用内存多少空间呢？</p>
-<p>也许你会说，这个简单，计算每个类型的大小，将它们相加就行了，以32bit平台为例，int类型占4bytes，char占用1byte，所以：4 + 3 + 4 = 11bytes，那么这个结构体一共占用11字节空间。</p>
+<p>也许你会说，这个简单，计算每个类型的大小，将它们相加就行了，以32bit平台为例，int类型占4bytes，char占用1byte，所以：4
++ 3 + 4 = 11bytes，那么这个结构体一共占用11字节空间。</p>
 <p>实际上用sizeof运算符来求出这个结构体占用内存空间大小，sizeof(MemAlign)，出乎意料的是，结果居然为12？</p>
 <p>是因为这个结构体被优化了，这个优化有个另外一个名字叫“对齐”，那么这个对齐到底做了什么样的优化呢。</p>
 <figure>
-<img src="https://pic.islet.space/2021/05/1231881-20190917224404418-1265388453.png" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+<img
+src="https://pic.islet.space/2021/05/1231881-20190917224404418-1265388453.png"
+alt="img" />
+<figcaption aria-hidden="true">img</figcaption>
 </figure>
 <p>相信学过汇编的朋友都很熟悉这张图，这张图就是CPU与内存如何进行数据交换的模型，其中，左边蓝色的方框是CPU，右边绿色的方框是内存，内存上面的0～3是内存地址。</p>
-<p>上图以32位CPU作为代表，<mark>32位CPU是以双字（DWORD）为单位进行数据传输的</mark>，因此 <mark>在32位系统中，无论是8位、16位还是32位都是以双字进行数据传输</mark> 。</p>
+<p>上图以32位CPU作为代表，<mark>32位CPU是以双字（DWORD）为单位进行数据传输的</mark>，因此
+<mark>在32位系统中，无论是8位、16位还是32位都是以双字进行数据传输</mark>
+。</p>
 <h2 id="非32位数据非对齐传输示例">非32位数据非对齐传输示例</h2>
 <p>8位或16位一样可以传输，但是事情并非像我们想象的那么简单。</p>
 <p>一个int类型4字节的数据如果放在上图内存地址1开始的位置，那么这个数据占用的内存地址为1～4，那么这个数据就被分为了2个部分，一个部分在地址0～3中，另外一部分在地址4～7中，又由于32位CPU以双字进行传输，所以，CPU会分2次进行读取，一次先读取地址0～3中内容，再一次读取地址4～7中数据，最后CPU提取并组合出正确的int类型数据，舍弃掉无关数据。那么反过来，如果我们把这个int类型4字节的数据放在上图从地址0开始的位置会怎样呢？读到这里，也许你明白了，CPU只要进行一次读取就可以得到这个int类型数据了。没错，就是这样，这次CPU只用了一个周期就得到了数据，由此可见，对内存数据的摆放是多么重要啊，<mark>摆放正确位置可以减少CPU的使用资源</mark>。</p>
@@ -326,37 +337,62 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">#pragma pack(4)</span><br><span class="line">typedef struct MemAlign</span><br><span class="line">&#123;</span><br><span class="line">    char a[18];</span><br><span class="line">    double b;    </span><br><span class="line">    char c;</span><br><span class="line">    int d;    </span><br><span class="line">    short e;    </span><br><span class="line">&#125;MemAlign;</span><br></pre></td></tr></table></figure>
 <p>下图为对齐后结构如下：</p>
 <figure>
-<img src="https://pic.islet.space/2021/05/1231881-20190917224631323-2009020349.png" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+<img
+src="https://pic.islet.space/2021/05/1231881-20190917224631323-2009020349.png"
+alt="img" />
+<figcaption aria-hidden="true">img</figcaption>
 </figure>
 <p>我们就以这个图来讲解是如何对齐的：</p>
-<p>第一个成员（char a[18]）：首先，假设我们把它放到内存开始地址为0的位置，由于第一个成员占18个字节，所以第一个成员占用内存地址范围为0～18。</p>
-<p>第二个成员（double b）：由于double类型占8字节，又因为8字节大于4字节，所以就以4字节对齐为基准。由于第一个成员结束地址为18，那么地址18并不是4的整数倍，我们需要再加2个字节，也就是从地址20开始摆放第二个成员。</p>
-<p>第三个成员（char c）：由于char类型占1字节，任意地址是1字节的整数倍，所以我们就直接将其摆放到紧接第二个成员之后即可。</p>
-<p>第四个成员（int d）：由于int类型占4字节，但是地址29并不是4的整数倍，所以我们需要再加3个字节，也就是从地址32开始摆放这个成员。</p>
-<p>第五个成员（short e）：由于short类型占2字节，地址36正好是2的整数倍，这样我们就可以直接摆放，无需填充字节,紧跟其后即可。</p>
-<p>这样我们内存对齐就完成了。但是离成功还差那么一步，那是什么呢？对，是对整个结构体补齐，接下来我们就补齐整个结构体。那么，先让我们回顾一下补齐的原则：“以4字节对齐为例，取结构体中最大成员类型倍数，如果超过4字节，都以4字节整数倍为基准对齐。”在这个结构体中最大类型为double类型（占8字节），又由于8字节大于4字 节，所以我们还是以4字节补齐为基准，整个结构体结束地址为38，而地址38并不是4的整数倍，所以我们还需要加额外2个字节来填充结构体，如下图红色的就是补齐出来的空间：</p>
+<p>第一个成员（char
+a[18]）：首先，假设我们把它放到内存开始地址为0的位置，由于第一个成员占18个字节，所以第一个成员占用内存地址范围为0～18。</p>
+<p>第二个成员（double
+b）：由于double类型占8字节，又因为8字节大于4字节，所以就以4字节对齐为基准。由于第一个成员结束地址为18，那么地址18并不是4的整数倍，我们需要再加2个字节，也就是从地址20开始摆放第二个成员。</p>
+<p>第三个成员（char
+c）：由于char类型占1字节，任意地址是1字节的整数倍，所以我们就直接将其摆放到紧接第二个成员之后即可。</p>
+<p>第四个成员（int
+d）：由于int类型占4字节，但是地址29并不是4的整数倍，所以我们需要再加3个字节，也就是从地址32开始摆放这个成员。</p>
+<p>第五个成员（short
+e）：由于short类型占2字节，地址36正好是2的整数倍，这样我们就可以直接摆放，无需填充字节,紧跟其后即可。</p>
+<p>这样我们内存对齐就完成了。但是离成功还差那么一步，那是什么呢？对，是对整个结构体补齐，接下来我们就补齐整个结构体。那么，先让我们回顾一下补齐的原则：“以4字节对齐为例，取结构体中最大成员类型倍数，如果超过4字节，都以4字节整数倍为基准对齐。”在这个结构体中最大类型为double类型（占8字节），又由于8字节大于4字
+节，所以我们还是以4字节补齐为基准，整个结构体结束地址为38，而地址38并不是4的整数倍，所以我们还需要加额外2个字节来填充结构体，如下图红色的就是补齐出来的空间：</p>
 <figure>
-<img src="https://pic.islet.space/2021/05/1231881-20190917224653471-2076639760.png" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+<img
+src="https://pic.islet.space/2021/05/1231881-20190917224653471-2076639760.png"
+alt="img" />
+<figcaption aria-hidden="true">img</figcaption>
 </figure>
 <p>到此为止，我们内存对齐与补齐就完毕了！接下来我们用实验来证明真理，程序如下：</p>
 <figure>
-<img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码" /><figcaption aria-hidden="true">复制代码</figcaption>
+<img src="https://common.cnblogs.com/images/copycode.gif"
+alt="复制代码" />
+<figcaption aria-hidden="true">复制代码</figcaption>
 </figure>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;stdio.h&gt;</span><br><span class="line">#include &lt;memory.h&gt;</span><br><span class="line"> </span><br><span class="line">&#x2F;&#x2F; 由于VS2010默认是8字节对齐，我们</span><br><span class="line">&#x2F;&#x2F; 通过预编译来通知编译器我们以4字节对齐</span><br><span class="line">#pragma pack(4)</span><br><span class="line"> </span><br><span class="line">&#x2F;&#x2F; 用于测试的结构体</span><br><span class="line">typedef struct MemAlign</span><br><span class="line">&#123;</span><br><span class="line">    char a[18];    &#x2F;&#x2F; 18 bytes</span><br><span class="line">    double b;    &#x2F;&#x2F; 08 bytes    </span><br><span class="line">    char c;        &#x2F;&#x2F; 01 bytes</span><br><span class="line">    int d;        &#x2F;&#x2F; 04 bytes</span><br><span class="line">    short e;    &#x2F;&#x2F; 02 bytes</span><br><span class="line">&#125;MemAlign;</span><br><span class="line"> </span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    &#x2F;&#x2F; 定义一个结构体变量</span><br><span class="line">    MemAlign m;</span><br><span class="line">    &#x2F;&#x2F; 定义个以指向结构体指针</span><br><span class="line">    MemAlign *p &#x3D; &amp;m;</span><br><span class="line">    &#x2F;&#x2F; 依次对各个成员进行填充，这样我们可以</span><br><span class="line">    &#x2F;&#x2F; 动态观察内存变化情况</span><br><span class="line">    memset( &amp;m.a, 0x11, sizeof(m.a) );</span><br><span class="line">    memset( &amp;m.b, 0x22, sizeof(m.b) );</span><br><span class="line">    memset( &amp;m.c, 0x33, sizeof(m.c) );</span><br><span class="line">    memset( &amp;m.d, 0x44, sizeof(m.d) );</span><br><span class="line">    memset( &amp;m.e, 0x55, sizeof(m.e) );</span><br><span class="line">    &#x2F;&#x2F; 由于有补齐原因，所以我们需要对整个</span><br><span class="line">    &#x2F;&#x2F; 结构体进行填充，补齐对齐剩下的字节</span><br><span class="line">    &#x2F;&#x2F; 以便我们可以观察到变化</span><br><span class="line">    memset( &amp;m, 0x66, sizeof(m) );</span><br><span class="line">    &#x2F;&#x2F; 输出结构体大小</span><br><span class="line">    printf( &quot;sizeof(MemAlign) &#x3D; %d&quot;, sizeof(m) );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <figure>
-<img src="https://common.cnblogs.com/images/copycode.gif" alt="复制代码" /><figcaption aria-hidden="true">复制代码</figcaption>
+<img src="https://common.cnblogs.com/images/copycode.gif"
+alt="复制代码" />
+<figcaption aria-hidden="true">复制代码</figcaption>
 </figure>
 <p>程序运行过程中，查看内存如下：</p>
 <figure>
-<img src="https://pic.islet.space/2021/05/1231881-20190917225512389-1581088258.png" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+<img
+src="https://pic.islet.space/2021/05/1231881-20190917225512389-1581088258.png"
+alt="img" />
+<figcaption aria-hidden="true">img</figcaption>
 </figure>
 <p>其中，各种颜色带下划线的代表各个成员变量，蓝色方框的代表为内存对齐时候填补的多余字节，由于这里看不到补齐效果，我们接下来看下图，下图篮框包围的字节就是与上图的交集以外的部分就是补齐所填充的字节。</p>
 <figure>
-<img src="https://pic.islet.space/2021/05/1231881-20190917225534651-684741719.png" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+<img
+src="https://pic.islet.space/2021/05/1231881-20190917225534651-684741719.png"
+alt="img" />
+<figcaption aria-hidden="true">img</figcaption>
 </figure>
 <p>在最后，我在谈一谈关于补齐的作用，<mark>补齐其实就是为了让这个结构体定义的数组变量时候，数组内部，也同样满足内存对齐的要求</mark>，为了更好的理解这点，我做了一个跟本例子相对照的图：</p>
 <figure>
-<img src="https://pic.islet.space/2021/05/1231881-20190917225553591-1418591054.png" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+<img
+src="https://pic.islet.space/2021/05/1231881-20190917225553591-1418591054.png"
+alt="img" />
+<figcaption aria-hidden="true">img</figcaption>
 </figure>
 <h1 id="参考链接">参考链接</h1>
 <p>https://blog.csdn.net/donkeylong/article/details/4909720</p>

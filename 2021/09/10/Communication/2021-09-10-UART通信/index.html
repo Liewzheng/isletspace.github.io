@@ -49,7 +49,7 @@
 <meta property="og:image" content="https://pic.islet.space/2021/09/20210915210526.png">
 <meta property="og:image" content="https://pic.islet.space/2021/09/20210915210528.png">
 <meta property="article:published_time" content="2021-09-10T01:30:00.000Z">
-<meta property="article:modified_time" content="2021-09-15T16:30:01.150Z">
+<meta property="article:modified_time" content="2021-09-15T16:30:01.000Z">
 <meta property="article:author" content="Liewzheng">
 <meta property="article:tag" content="serial">
 <meta property="article:tag" content="Communication">
@@ -187,7 +187,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">119</span>
+          <span class="site-state-item-count">124</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -198,7 +198,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">222</span>
+        <span class="site-state-item-count">230</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -299,35 +299,62 @@
     
     <div class="post-body" itemprop="articleBody">
         <h1 id="rs-serial-port">RS Serial Port</h1>
-<p>RS系列（RS-232/RS-422/RS-485）标准（RS，即Recommend Standard，<strong>推荐标准</strong> 之意 ）是常用的（异步）串行通信接口标准，该系列标准由美国电子工业协会（EIA）牵头开发。</p>
-<p>RS系列标准只对 <strong>接口</strong> 的 <strong>电气特性</strong>（Electric Specification of Interface）进行规定，并不涉及插件、电缆或协议，再次基础上，用户可以建立自己的接头、插座形状 以及 高层通信协议 。</p>
+<p>RS系列（RS-232/RS-422/RS-485）标准（RS，即Recommend
+Standard，<strong>推荐标准</strong> 之意
+）是常用的（异步）串行通信接口标准，该系列标准由美国电子工业协会（EIA）牵头开发。</p>
+<p>RS系列标准只对 <strong>接口</strong> 的
+<strong>电气特性</strong>（Electric Specification of
+Interface）进行规定，并不涉及插件、电缆或协议，再次基础上，用户可以建立自己的接头、插座形状
+以及 高层通信协议 。</p>
 <h2 id="rs-232">RS-232</h2>
-<p>RS-232标准接口（又称EIA RS-232）是由美国电子工业协会(EIA)联合贝尔系统公司、调制解调器厂家及计算机终端生产厂家于1970年共同制定，其全名是“数据终端设备( DTE)和数据通信设备(DCE)之间串行二进制数据交换接口技术标准”。</p>
-<p>RS232协议 和 TTL协议更多是电气特性（如电平标准和电压），二者在软件协议层面是一样的，如对于同样传输 <code>0b01010101</code> 来说，RS232 和 TTL的时序对比如下图所示：</p>
+<p>RS-232标准接口（又称EIA
+RS-232）是由美国电子工业协会(EIA)联合贝尔系统公司、调制解调器厂家及计算机终端生产厂家于1970年共同制定，其全名是“数据终端设备(
+DTE)和数据通信设备(DCE)之间串行二进制数据交换接口技术标准”。</p>
+<p>RS232协议 和
+TTL协议更多是电气特性（如电平标准和电压），二者在软件协议层面是一样的，如对于同样传输
+<code>0b01010101</code> 来说，RS232 和 TTL的时序对比如下图所示：</p>
 <p><img src="https://pic.islet.space/2021/09/20210915110402.png" alt="img" style="zoom:67%;" /></p>
 <div style="font-size: 0.8rem; text-align: center; font-weight: 900;">
 图 RS232标准和TTL标准的时序对比
 </div>
-<p>当然，RS232和TTL/CMOS之间的转换，不仅仅是简单的电平转换，还要考虑到其他一些因素，比如 <strong>调节</strong> 和 <strong>矫正</strong> 一些电平（提高或降低对应的电平），确保可能的有害的RS232电压不会破坏微控制器的串口针脚。较为成熟的方案是通过MAX3232之类的芯片，把TTL电平转为RS232电平，或者在淘宝购买TTL转RS232电缆即可。</p>
-<p>由于RS-232采取 <strong>不平衡传输</strong> 方式，即所谓 <strong>单端通讯</strong>。收（RX）、发（TX） 端的数据信号是相对于信号地（GND）。典型的RS-232信号在正负电平之间摆动，</p>
+<p>当然，RS232和TTL/CMOS之间的转换，不仅仅是简单的电平转换，还要考虑到其他一些因素，比如
+<strong>调节</strong> 和 <strong>矫正</strong>
+一些电平（提高或降低对应的电平），确保可能的有害的RS232电压不会破坏微控制器的串口针脚。较为成熟的方案是通过MAX3232之类的芯片，把TTL电平转为RS232电平，或者在淘宝购买TTL转RS232电缆即可。</p>
+<p>由于RS-232采取 <strong>不平衡传输</strong> 方式，即所谓
+<strong>单端通讯</strong>。收（RX）、发（TX）
+端的数据信号是相对于信号地（GND）。典型的RS-232信号在正负电平之间摆动，</p>
 <ul>
 <li>在发送数据时，发送端驱动器输出正电平在+5<sub>+15V，负电平在-5</sub>-15V电平。</li>
 <li>当无数据传输时，线上为TTL，从开始传送数据到结束，线上电平从TTL电平到RS-232电平再返回TTL电平。</li>
 </ul>
-<p>接收器典型的工作电平在 <code>+3~+12V</code> 与 <code>-3~-12V</code> 。<mark>由于发送电平与接收电平的差仅为2V至3V左右，所以其共模抑制能力差</mark>，再加上双绞线上的分布电容，其传送距离最大为约15米，最高速率为20Kbps。RS-232是为 <strong>单节点通讯</strong>（即点对点，用一对收、发设备）而设计的，其驱动器负载为3kΩ~7kΩ。所以RS-232适合本地设备之间的通信。</p>
+<p>接收器典型的工作电平在 <code>+3~+12V</code> 与 <code>-3~-12V</code>
+。<mark>由于发送电平与接收电平的差仅为2V至3V左右，所以其共模抑制能力差</mark>，再加上双绞线上的分布电容，其传送距离最大为约15米，最高速率为20Kbps。RS-232是为
+<strong>单节点通讯</strong>（即点对点，用一对收、发设备）而设计的，其驱动器负载为3kΩ~7kΩ。所以RS-232适合本地设备之间的通信。</p>
 <h2 id="rs-422">RS-422</h2>
-<p>RS-422、RS-485与RS-232不一样，数据信号采用差分传输方式，也称作 <strong>平衡传输</strong>，它使用一对双绞线，将其中一线定义为A，另一线定义为B。通常情况下，发送驱动器A、B之间的正电平在+2<sub>+6V，是一个逻辑状态，负电平在-2V</sub>6V，是另一个逻辑状态。另有一个信号地C，在RS-485中还有一“使能”端，而在RS-422中这是可用可不用的。“使能”端是用于控制发送驱动器与传输线的切断与连接。当“使能”端起作用时，发送驱动器处于高阻状态，称作“第三态”，即它是有别于逻辑“1”与“0”的第三态。</p>
+<p>RS-422、RS-485与RS-232不一样，数据信号采用差分传输方式，也称作
+<strong>平衡传输</strong>，它使用一对双绞线，将其中一线定义为A，另一线定义为B。通常情况下，发送驱动器A、B之间的正电平在+2<sub>+6V，是一个逻辑状态，负电平在-2V</sub>6V，是另一个逻辑状态。另有一个信号地C，在RS-485中还有一“使能”端，而在RS-422中这是可用可不用的。“使能”端是用于控制发送驱动器与传输线的切断与连接。当“使能”端起作用时，发送驱动器处于高阻状态，称作“第三态”，即它是有别于逻辑“1”与“0”的第三态。</p>
 <p>由于接收器采用高输入阻抗和发送驱动器比RS232更强的驱动能力，故允许在相同传输线上连接多个接收节点，<strong>最多可接10个节点</strong>。即一个主设备（Master），其余为从设备（Salve），从设备之间不能通信，所以RS-422支持点对多的双向通信。RS-422四线接口由于采用单独的发送和接收通道，因此不必控制数据方向，各装置之间任何必须的信号交换均可以按软件方式（XON/XOFF握手）或硬件方式（一对单独的双绞线）实现。RS-422的最大传输距离为4000英尺（约1219米），最大传输速率为10Mbps。其平衡双绞线的长度与传输速率成反比，在100Kbps速率以下，才可能达到最大传输距离。只有在很短的距离下才能获得最高速率传输。一般100米长的双绞线上所能获得的最大传输速率仅为1Mbps。RS-422需要一终接电阻，要求其阻值约等于传输电缆的特性阻抗。在矩距离传输时可不需终接电阻，即一般在300米以下不需终接电阻。终接电阻接在传输电缆的最远端。</p>
 <h2 id="rs-485">RS-485</h2>
-<p>RS-485 标准只对 <strong>接口</strong> 的 <strong>电气特性</strong>（Electric Specification of Interface）进行规定，并不涉及插件、电缆或协议，再次基础上，用户可以建立自己的接头、插座形状 以及 高层通信协议 。</p>
-<p>RS-485 的 <strong>通信距离</strong> 和 <strong>通信速率</strong> 是负相关的，</p>
-<p>RS485有 <strong>两线制</strong> 和 <strong>四线制</strong>，四线制只能实现点对点的通信方式，现很少采用。</p>
+<p>RS-485 标准只对 <strong>接口</strong> 的
+<strong>电气特性</strong>（Electric Specification of
+Interface）进行规定，并不涉及插件、电缆或协议，再次基础上，用户可以建立自己的接头、插座形状
+以及 高层通信协议 。</p>
+<p>RS-485 的 <strong>通信距离</strong> 和 <strong>通信速率</strong>
+是负相关的，</p>
+<p>RS485有 <strong>两线制</strong> 和
+<strong>四线制</strong>，四线制只能实现点对点的通信方式，现很少采用。</p>
 <h2 id="接口标准对比">接口（标准）对比</h2>
 <p>以下仅从RS的硬件要求进行横向对比：</p>
 <div style="font-size: 0.8rem; text-align: center; font-weight: 900;">
 表 RS系列标准对比
 </div>
 <table>
+<colgroup>
+<col style="width: 46%" />
+<col style="width: 33%" />
+<col style="width: 10%" />
+<col style="width: 10%" />
+</colgroup>
 <thead>
 <tr class="header">
 <th></th>
@@ -401,18 +428,30 @@
 </table>
 <p>使用RS422协议的设备间的引脚互相连接示意图：</p>
 <figure>
-<img src="https://pic.islet.space/2021/09/20210915110408.png" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+<img src="https://pic.islet.space/2021/09/20210915110408.png"
+alt="img" />
+<figcaption aria-hidden="true">img</figcaption>
 </figure>
 <h1 id="uart-protocol">UART Protocol</h1>
-<p><strong>UART</strong>，即Universal Asynchronous Receiver/Transmitter，<strong>通用异步收发</strong>。</p>
-<p>在通信和计算机科学中，Serial communication是一个通用概念，泛指所有的串行的通信协议，如RS232、USB、I2C、SPI、1-Wire、Ethernet等。这里的串行（serial），是相对并行通信（parallel communication）来说的，如下图：</p>
+<p><strong>UART</strong>，即Universal Asynchronous
+Receiver/Transmitter，<strong>通用异步收发</strong>。</p>
+<p>在通信和计算机科学中，Serial
+communication是一个通用概念，泛指所有的串行的通信协议，如RS232、USB、I2C、SPI、1-Wire、Ethernet等。这里的串行（serial），是相对并行通信（parallel
+communication）来说的，如下图：</p>
 <figure>
-<img src="https://pic.islet.space/2021/09/20210915110411.jpeg" alt="img" /><figcaption aria-hidden="true">img</figcaption>
+<img src="https://pic.islet.space/2021/09/20210915110411.jpeg"
+alt="img" />
+<figcaption aria-hidden="true">img</figcaption>
 </figure>
-<p>广义上讲，UART是指 支持RS系列（物理接口）标准和TLL电平 的 <strong>通信协议</strong>。</p>
-<p>因为UART更多关注规定编码格式的标准，如 <strong>波特率</strong>（baud rate）、<strong>帧格式</strong> 和 <strong>波特率误差</strong> 等等，所以了解UART时，不可避免需要先在电气特性上区分几个常用的概念，如 <strong>TLL电平</strong> 和 <strong>CMOS电平</strong>。</p>
+<p>广义上讲，UART是指 支持RS系列（物理接口）标准和TLL电平 的
+<strong>通信协议</strong>。</p>
+<p>因为UART更多关注规定编码格式的标准，如 <strong>波特率</strong>（baud
+rate）、<strong>帧格式</strong> 和 <strong>波特率误差</strong>
+等等，所以了解UART时，不可避免需要先在电气特性上区分几个常用的概念，如
+<strong>TLL电平</strong> 和 <strong>CMOS电平</strong>。</p>
 <blockquote>
-<p>TTL集成电路的主要型式为晶体管-晶体管逻辑门(transistor-transistor logic gate)，TTL大部分都采用5V电源。</p>
+<p>TTL集成电路的主要型式为晶体管-晶体管逻辑门(transistor-transistor
+logic gate)，TTL大部分都采用5V电源。</p>
 <table>
 <thead>
 <tr class="header">
@@ -444,7 +483,8 @@
 </tr>
 </tbody>
 </table>
-<p><strong>注</strong>：VCC的概念可以参考文章《<a href="https://islet.space/2021/07/10/Hardware/Circuit/2021-07-10-VCC%E3%80%81VDD%E3%80%81VEE%E3%80%81VSS%E7%9A%84%E5%8C%BA%E5%88%AB/">VCC、VDD、VEE、VSS的区别</a>》，具体输入输出的高低电平范围需要参考芯片及电路的手册。</p>
+<p><strong>注</strong>：VCC的概念可以参考文章《<a
+href="https://islet.space/2021/07/10/Hardware/Circuit/2021-07-10-VCC%E3%80%81VDD%E3%80%81VEE%E3%80%81VSS%E7%9A%84%E5%8C%BA%E5%88%AB/">VCC、VDD、VEE、VSS的区别</a>》，具体输入输出的高低电平范围需要参考芯片及电路的手册。</p>
 </blockquote>
 <h1 id="接口">接口</h1>
 <p>以下介绍均为UART常用的物理接口。</p>
@@ -453,9 +493,12 @@
 <p>由于早期的计算机的串口与并口都是使用DB25针连接器，而人们则习惯把字母B与D合在一起记了下来，当作D型接口的共同名字，以至于后来计算机串口改用9针接口以后，人们更多的使用DB9而不是DE9来称呼9针的接口。这一习惯进一步推广的结果就是如今人们使用DBxx来代表D型接口，数字xx则为接口的针数。</p>
 <h2 id="db9">DB9</h2>
 <p>COM口是指针对串行通信协议的一种端口，是PC上异步串行通信口的简写，大部分为9针孔D型。</p>
-<p>因此 <strong>DB9</strong> 就和 <strong>COM口</strong> 混用了，但是COM口里又进一步区分RS232，RS422和RS485，传输功能依次递增。</p>
+<p>因此 <strong>DB9</strong> 就和 <strong>COM口</strong>
+混用了，但是COM口里又进一步区分RS232，RS422和RS485，传输功能依次递增。</p>
 <figure>
-<img src="https://pic.islet.space/2021/09/20210915110415.png" alt="image-20210915103057209" /><figcaption aria-hidden="true">image-20210915103057209</figcaption>
+<img src="https://pic.islet.space/2021/09/20210915110415.png"
+alt="image-20210915103057209" />
+<figcaption aria-hidden="true">image-20210915103057209</figcaption>
 </figure>
 <div style="font-size: 0.8rem; text-align: center; font-weight: 900;">
 图 DB9/COM口在各RS标准下的引脚使用和定义
@@ -468,14 +511,18 @@
 图 DB9/COM口的公头（左）和母头（右）外观
 </div>
 <h2 id="端子">端子</h2>
-<p>端子，Terminal，也称为 <strong>接线终端</strong> / <strong>接线端子</strong>。</p>
+<p>端子，Terminal，也称为 <strong>接线终端</strong> /
+<strong>接线端子</strong>。</p>
 <p>种类分单孔，双孔，插口，挂钩等，从材料分，铜镀银，铜镀锌，铜，铝，铁等。它们的作用主要传递电信号或导电用。</p>
 <figure>
-<img src="https://pic.islet.space/2021/09/20210915212912.jpeg" alt="端子排型号" /><figcaption aria-hidden="true">端子排型号</figcaption>
+<img src="https://pic.islet.space/2021/09/20210915212912.jpeg"
+alt="端子排型号" />
+<figcaption aria-hidden="true">端子排型号</figcaption>
 </figure>
 <h1 id="转换器">转换器</h1>
 <h2 id="usb转ttl">USB转TTL</h2>
-<p>常见的USB转TTL的芯片，如CP2101 / CP2102 / CH340 / CH341 / FT232BM / FT232RL / PL2303 / PV8651等，尤其CH340和CP2102 的转换器最为常见。</p>
+<p>常见的USB转TTL的芯片，如CP2101 / CP2102 / CH340 / CH341 / FT232BM /
+FT232RL / PL2303 / PV8651等，尤其CH340和CP2102 的转换器最为常见。</p>
 <p><img src="https://pic.islet.space/2021/09/20210915113927.png" alt="image-20210915113729086" style="zoom:50%;" /></p>
 <div style="font-size: 0.8rem; text-align: center; font-weight: 900;">
 图 USB转TTL（CH340G芯片）转换器
@@ -492,7 +539,9 @@
 <h2 id="rj45和db9">RJ45和DB9</h2>
 <p>这种转换器通常用在交换器和路由器的调试工作上，</p>
 <figure>
-<img src="https://pic.islet.space/2021/09/20210915110424.png" alt="image-20210915105657103" /><figcaption aria-hidden="true">image-20210915105657103</figcaption>
+<img src="https://pic.islet.space/2021/09/20210915110424.png"
+alt="image-20210915105657103" />
+<figcaption aria-hidden="true">image-20210915105657103</figcaption>
 </figure>
 <div style="font-size: 0.8rem; text-align: center; font-weight: 900;">
 图 RJ45母 转 DB9公
@@ -509,9 +558,14 @@
 图 RJ45公 转 2/3/4引脚端子
 </div>
 <h2 id="rs-232转rs-485">RS-232转RS-485</h2>
-<p>目前主流的家用台式机上已经逐渐取消DB9接口，在某些旧台式电脑主机或者商用台式电脑主机上可能仍有DB9端口可以适配 RS-232（DB9公/母）/RS-485（端子） 转换器，然后再利用一根双绞线（可以用网线制作）连接转换器的 <code>A+</code> / <code>B-</code> 端子 和 通信设备。如下图所示：</p>
+<p>目前主流的家用台式机上已经逐渐取消DB9接口，在某些旧台式电脑主机或者商用台式电脑主机上可能仍有DB9端口可以适配
+RS-232（DB9公/母）/RS-485（端子）
+转换器，然后再利用一根双绞线（可以用网线制作）连接转换器的
+<code>A+</code> / <code>B-</code> 端子 和 通信设备。如下图所示：</p>
 <figure>
-<img src="https://pic.islet.space/2021/09/20210915210514.png" alt="image-20210915091142748" /><figcaption aria-hidden="true">image-20210915091142748</figcaption>
+<img src="https://pic.islet.space/2021/09/20210915210514.png"
+alt="image-20210915091142748" />
+<figcaption aria-hidden="true">image-20210915091142748</figcaption>
 </figure>
 <div style="font-size: 0.8rem; text-align: center; font-weight: 900;">
 图 DB9公（RS232）转3引脚端子(RS485)
@@ -525,18 +579,31 @@
 <p><img src="https://pic.islet.space/2021/09/20210915210528.png" alt="image-20210915141728889" style="zoom:50%;" /></p>
 <h1 id="参考">参考</h1>
 <ol type="1">
-<li>《串行通信技术 面向嵌入式系统开发》 周云波 著 中国工信出版集团 电子工业出版社</li>
-<li><a target="_blank" rel="noopener" href="http://www.farnell.com/datasheets/2254540.pdf">《ANALOG DEVICE-5 V Low PowerEIA RS-485 Transceiver》</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.ti.com/lit/an/slla036d/slla036d.pdf">《InterfaceCircuitsforTIA/EIA-485(RS-485)》</a></li>
-<li><a target="_blank" rel="noopener" href="https://item.taobao.com/item.htm?id=546418892634">聚英JY-CON503 RS232转RS485/RS422 宽压DC7-30V供电 全隔离设计</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.cnblogs.com/yeshenmeng/p/10729070.html">DB9针和DB25针串口的引脚定义</a></li>
-<li><a target="_blank" rel="noopener" href="http://www.360doc.com/content/20/0803/20/44130189_928354146.shtml">为什么越来越多人使用RS232接口，却还分不清DB9、DB25的引脚定义？</a></li>
-<li><a target="_blank" rel="noopener" href="https://baike.baidu.com/item/RS-232/2022036?fromtitle=rs232&amp;fromid=3555506&amp;fr=aladdin">RS-232</a></li>
-<li><a target="_blank" rel="noopener" href="https://baike.baidu.com/item/DB9/1360191?fr=aladdin">DB9</a></li>
-<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/89240672">串口、COM口、UART口, TTL、RS-232、RS-485区别详解</a></li>
-<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/25893717">UART、RS232、TTL关系浅析</a></li>
-<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/shuziluoji1988/article/details/22413497">RS232、RS422、RS485、TTL电平</a></li>
-<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/66241216">一文搞懂Modbus与RS485通信协议</a></li>
+<li>《串行通信技术 面向嵌入式系统开发》 周云波 著 中国工信出版集团
+电子工业出版社</li>
+<li><a target="_blank" rel="noopener" href="http://www.farnell.com/datasheets/2254540.pdf">《ANALOG
+DEVICE-5 V Low PowerEIA RS-485 Transceiver》</a></li>
+<li><a
+target="_blank" rel="noopener" href="https://www.ti.com/lit/an/slla036d/slla036d.pdf">《InterfaceCircuitsforTIA/EIA-485(RS-485)》</a></li>
+<li><a
+target="_blank" rel="noopener" href="https://item.taobao.com/item.htm?id=546418892634">聚英JY-CON503
+RS232转RS485/RS422 宽压DC7-30V供电 全隔离设计</a></li>
+<li><a
+target="_blank" rel="noopener" href="https://www.cnblogs.com/yeshenmeng/p/10729070.html">DB9针和DB25针串口的引脚定义</a></li>
+<li><a
+target="_blank" rel="noopener" href="http://www.360doc.com/content/20/0803/20/44130189_928354146.shtml">为什么越来越多人使用RS232接口，却还分不清DB9、DB25的引脚定义？</a></li>
+<li><a
+target="_blank" rel="noopener" href="https://baike.baidu.com/item/RS-232/2022036?fromtitle=rs232&amp;fromid=3555506&amp;fr=aladdin">RS-232</a></li>
+<li><a
+target="_blank" rel="noopener" href="https://baike.baidu.com/item/DB9/1360191?fr=aladdin">DB9</a></li>
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/89240672">串口、COM口、UART口,
+TTL、RS-232、RS-485区别详解</a></li>
+<li><a
+target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/25893717">UART、RS232、TTL关系浅析</a></li>
+<li><a
+target="_blank" rel="noopener" href="https://blog.csdn.net/shuziluoji1988/article/details/22413497">RS232、RS422、RS485、TTL电平</a></li>
+<li><a
+target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/66241216">一文搞懂Modbus与RS485通信协议</a></li>
 </ol>
 
     </div>

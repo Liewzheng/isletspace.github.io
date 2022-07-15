@@ -45,12 +45,12 @@
 <meta property="og:image" content="https://pic.islet.space/2021/05/image-20210515172958184.png">
 <meta property="og:image" content="https://pic.islet.space/2021/05/image-20210515152141963.png">
 <meta property="article:published_time" content="2021-05-14T02:55:00.000Z">
-<meta property="article:modified_time" content="2021-07-15T13:12:20.790Z">
+<meta property="article:modified_time" content="2021-07-15T13:12:20.000Z">
 <meta property="article:author" content="Liewzheng">
+<meta property="article:tag" content="I2S">
 <meta property="article:tag" content="I^2^C">
 <meta property="article:tag" content="SPI">
 <meta property="article:tag" content="TDM">
-<meta property="article:tag" content="I2S">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://pic.islet.space/2021/05/image-20210514111033910.png">
 
@@ -185,7 +185,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">119</span>
+          <span class="site-state-item-count">124</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -196,7 +196,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">222</span>
+        <span class="site-state-item-count">230</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -297,7 +297,9 @@
     
     <div class="post-body" itemprop="articleBody">
         <h1 id="i2c">I<sup>2</sup>C</h1>
-<p><strong>标准</strong>：<a target="_blank" rel="noopener" href="https://www.nxp.com/docs/en/user-guide/UM10204.pdf">《NXP_UM10204_I<sup>2</sup>C-bus specification and user manual》</a></p>
+<p><strong>标准</strong>：<a
+target="_blank" rel="noopener" href="https://www.nxp.com/docs/en/user-guide/UM10204.pdf">《NXP_UM10204_I<sup>2</sup>C-bus
+specification and user manual》</a></p>
 <blockquote>
 <p><em>I<sup>2</sup>C总线是一个事实上的世界标准，现在已经在50多家公司生产的1000多种不同的IC中实施。</em></p>
 <p><em>此外，多功能的I<sup>2</sup>C总线被用于各种控制架构，如系统管理总线（SMBus）、电源管理总线（PMBus）、智能平台管理接口（IPMI）、显示数据通道（DDC）和高级电信计算架构（ATCA）。</em></p>
@@ -305,11 +307,16 @@
 <p><em>I<sup>2</sup>C兼容芯片的设计者应将该文件作为参考，并确保新设备满足该文件中规定的所有限制。包含I<sup>2</sup>C器件的系统的设计者应审查本文件，并参考各个组件的数据表。</em></p>
 <p>——翻译自标准文件</p>
 </blockquote>
-<p>I<sup>2</sup>C(Inter－Integrated Circuit)是一种通用的总线协议。它是由Philips(飞利浦)公司，现NXP(恩智浦)半导体开发的一种简单的双向两线制总线协议标准。</p>
+<p>I<sup>2</sup>C(Inter－Integrated
+Circuit)是一种通用的总线协议。它是由Philips(飞利浦)公司，现NXP(恩智浦)半导体开发的一种简单的双向两线制总线协议标准。</p>
 <p>对于硬件设计人员来说，只需要2个管脚，极少的连接线和面积，就可以实现芯片间的通讯，对于软件开发者来说，可以使用同一个I<sup>2</sup>C驱动库，来实现实现不同器件的驱动，大大减少了软件的开发时间。极低的工作电流，降低了系统的功耗，完善的应答机制大大增强通讯的可靠性。</p>
 <h2 id="术语">术语</h2>
 <p><img src="https://pic.islet.space/2021/05/image-20210514111033910.png" alt="image-20210514111033910" style="zoom: 67%;" /></p>
 <table>
+<colgroup>
+<col style="width: 14%" />
+<col style="width: 85%" />
+</colgroup>
 <thead>
 <tr class="header">
 <th>术语</th>
@@ -355,14 +362,25 @@
 <p><img src="https://pic.islet.space/2021/05/image-20210514112114667.png" alt="image-20210514112114667" style="zoom:67%;" /></p>
 <h2 id="总线特征">总线特征</h2>
 <h3 id="总线硬件要求">总线硬件要求</h3>
-<p>通过 <strong>串行数据</strong>（SDA，Serial Data）和 <strong>串行时钟</strong>（SCL，Serial Clock）两条线路对设备进行连接。</p>
+<p>通过 <strong>串行数据</strong>（SDA，Serial Data）和
+<strong>串行时钟</strong>（SCL，Serial
+Clock）两条线路对设备进行连接。</p>
 <p>每个设备都通过自身的通信设备地址进行互相辨别，且每个设备都可以当发送者或接收者，取决于设备自身的功能定义。</p>
 <h3 id="标准传输速率">标准传输速率</h3>
 <p>各模式、速率及其传输方向见下方表格。</p>
 <blockquote>
-<p>Data on the I<sup>2</sup>C-bus can be transferred at rates of up to 100 kbit/s in the Standard-mode, up to 400 kbit/s in the Fast-mode, up to 1 Mbit/s in Fast-mode Plus, or up to 3.4 Mbit/s in the High-speed mode.</p>
+<p>Data on the I<sup>2</sup>C-bus can be transferred at rates of up to
+100 kbit/s in the Standard-mode, up to 400 kbit/s in the Fast-mode, up
+to 1 Mbit/s in Fast-mode Plus, or up to 3.4 Mbit/s in the High-speed
+mode.</p>
 </blockquote>
 <table>
+<colgroup>
+<col style="width: 15%" />
+<col style="width: 15%" />
+<col style="width: 27%" />
+<col style="width: 41%" />
+</colgroup>
 <thead>
 <tr class="header">
 <th>MODE</th>
@@ -405,18 +423,32 @@
 </tbody>
 </table>
 <figure>
-<img src="https://pic.islet.space/2021/05/image-20210522182927364.png" alt="image-20210522182927364" /><figcaption aria-hidden="true">image-20210522182927364</figcaption>
+<img src="https://pic.islet.space/2021/05/image-20210522182927364.png"
+alt="image-20210522182927364" />
+<figcaption aria-hidden="true">image-20210522182927364</figcaption>
 </figure>
 <h2 id="协议要求">协议要求</h2>
 <p>以下协议要求适用于双向通信模式（不包括ULTRA-FAST模式下的单向通信）</p>
 <h3 id="逻辑电平规定">逻辑电平规定</h3>
 <p>由于I<sup>2</sup>C的接入设备众多（如CMOS、NMOS、Bipolar等），因此逻辑电平0和逻辑电平1（的电压）并不是固定不变的，这取决于VDD的电平。</p>
-<p>输入参考电平会被控制在VDD电平的30%~70%之间。 V<sub>IL</sub> = 0.3 * V<sub>DD</sub>；V<sub>IH</sub> = 0.7 * V<sub>DD</sub> 。</p>
-<p>某些传统设备的输入电平会被固定在1.5V（V<sub>IL</sub>）和3.0V（V<sub>IH</sub>），但新设备都要求是 30%V<sub>DD</sub> 及 70%V<sub>DD</sub> 。</p>
-<p><strong>注意</strong>：V<sub>IL</sub>、V<sub>IH</sub>、V<sub>OL</sub>、V<sub>OH</sub>都是以参考电压作为基准的，即要达到某个电压的百分之多少时，才能够被认为是 <strong>逻辑电平0</strong> 或 <strong>逻辑电平1</strong> 。例如，可将V<sub>IL</sub> 视作当V<sub>DD</sub>下降到只有30%及以下时，为逻辑电平0，30%V<sub>DD</sub>是其逻辑电平的最高阈值；同理可得 V<sub>IH</sub> ；超过这个值而未到达70%的中间态则为不确定态。</p>
+<p>输入参考电平会被控制在VDD电平的30%~70%之间。 V<sub>IL</sub> = 0.3 *
+V<sub>DD</sub>；V<sub>IH</sub> = 0.7 * V<sub>DD</sub> 。</p>
+<p>某些传统设备的输入电平会被固定在1.5V（V<sub>IL</sub>）和3.0V（V<sub>IH</sub>），但新设备都要求是
+30%V<sub>DD</sub> 及 70%V<sub>DD</sub> 。</p>
+<p><strong>注意</strong>：V<sub>IL</sub>、V<sub>IH</sub>、V<sub>OL</sub>、V<sub>OH</sub>都是以参考电压作为基准的，即要达到某个电压的百分之多少时，才能够被认为是
+<strong>逻辑电平0</strong> 或 <strong>逻辑电平1</strong>
+。例如，可将V<sub>IL</sub>
+视作当V<sub>DD</sub>下降到只有30%及以下时，为逻辑电平0，30%V<sub>DD</sub>是其逻辑电平的最高阈值；同理可得
+V<sub>IH</sub> ；超过这个值而未到达70%的中间态则为不确定态。</p>
 <blockquote>
-<p>Due to the variety of different technology devices (CMOS, NMOS, bipolar) that can be connected to the I<sup>2</sup>C-bus, the levels of the logical ‘0’ (LOW) and ‘1’ (HIGH) are not fixed and depend on the associated level of VDD . Input reference levels are set as 30 % and 70 % of VDD ; VIL is 0.3VDD and VIH is 0.7V DD .</p>
-<p>See Figure 38, timing diagram. Some legacy device input levels were fixed at V<sub>IL</sub> = 1.5 V and V<sub>IH</sub> = 3.0 V, but all new devices require this 30 %/70 % specification.</p>
+<p>Due to the variety of different technology devices (CMOS, NMOS,
+bipolar) that can be connected to the I<sup>2</sup>C-bus, the levels of
+the logical ‘0’ (LOW) and ‘1’ (HIGH) are not fixed and depend on the
+associated level of VDD . Input reference levels are set as 30 % and 70
+% of VDD ; VIL is 0.3VDD and VIH is 0.7V DD .</p>
+<p>See Figure 38, timing diagram. Some legacy device input levels were
+fixed at V<sub>IL</sub> = 1.5 V and V<sub>IH</sub> = 3.0 V, but all new
+devices require this 30 %/70 % specification.</p>
 </blockquote>
 <p><img src="https://pic.islet.space/2021/05/image-20210514134830615.png" alt="image-20210514134830615" style="zoom: 67%;" /></p>
 <h3 id="时序正确性">时序正确性</h3>
@@ -425,17 +457,27 @@
 <li>时钟脉冲信号生成要先于数据传送。</li>
 </ul>
 <blockquote>
-<p>The data on the SDA line must be stable during the HIGH period of the clock. The HIGH or LOW state of the data line can only change when the clock signal on the SCL line is LOW (see Figure 4). One clock pulse is generated for each data bit transferred.</p>
+<p>The data on the SDA line must be stable during the HIGH period of the
+clock. The HIGH or LOW state of the data line can only change when the
+clock signal on the SCL line is LOW (see Figure 4). One clock pulse is
+generated for each data bit transferred.</p>
 </blockquote>
 <p><img src="https://pic.islet.space/2021/05/image-20210514141512136.png" alt="image-20210514141512136" style="zoom: 80%;" /></p>
 <h3 id="开始及结束标志">开始及结束标志</h3>
 <ul>
-<li><p>传输开始时必须以一个 <strong>开始</strong> 信号作为标志，结束时必须以一个 <strong>结束</strong> 信号作为标志。</p></li>
-<li><p><strong>开始信号 </strong>是以SCL为高电平时的 <strong>SDA电平的由高转低</strong> 作为标志，<strong>结束信号</strong> 是以SCL高电平时的 <strong>SDA电平的由低转高</strong> 作为标志。</p></li>
+<li><p>传输开始时必须以一个 <strong>开始</strong>
+信号作为标志，结束时必须以一个 <strong>结束</strong>
+信号作为标志。</p></li>
+<li><p><strong>开始信号 </strong>是以SCL为高电平时的
+<strong>SDA电平的由高转低</strong> 作为标志，<strong>结束信号</strong>
+是以SCL高电平时的 <strong>SDA电平的由低转高</strong> 作为标志。</p></li>
 <li><p>开始和结束标志必须由主设备控制。</p></li>
 </ul>
 <blockquote>
-<p>All transactions begin with a START (S) and are terminated by a STOP (P) (see Figure 5). A HIGH to LOW transition on the SDA line while SCL is HIGH defines a START condition. A LOW to HIGH transition on the SDA line while SCL is HIGH defines a STOP condition.</p>
+<p>All transactions begin with a START (S) and are terminated by a STOP
+(P) (see Figure 5). A HIGH to LOW transition on the SDA line while SCL
+is HIGH defines a START condition. A LOW to HIGH transition on the SDA
+line while SCL is HIGH defines a STOP condition.</p>
 </blockquote>
 <p><img src="https://pic.islet.space/2021/05/image-20210514142116674.png" alt="image-20210514142116674" style="zoom: 80%;" /></p>
 <h4 id="开始字节">开始字节</h4>
@@ -444,21 +486,39 @@
 <p>dummy acknowledge (HIGH) : 无声确认？？？</p>
 </blockquote>
 <h3 id="总线状态">总线状态</h3>
-<p>总线具有两种状态，<strong>繁忙</strong>（Busy）和 <strong>空闲</strong>（Free），即 SDA电平 “开始” 后，总线进入繁忙状态， SDA电平 “结束” 后，总线进入空闲状态。</p>
-<p><strong>注意</strong>：在总线繁忙期间，发生重复的“开始”状态（而不是“结束”状态），由于“重复开始”和 “开始” 功能相同，为了方便，统称为 “开始”，除非特殊说明为 “重复开始”。</p>
+<p>总线具有两种状态，<strong>繁忙</strong>（Busy）和
+<strong>空闲</strong>（Free），即 SDA电平 “开始” 后，总线进入繁忙状态，
+SDA电平 “结束” 后，总线进入空闲状态。</p>
+<p><strong>注意</strong>：在总线繁忙期间，发生重复的“开始”状态（而不是“结束”状态），由于“重复开始”和
+“开始” 功能相同，为了方便，统称为 “开始”，除非特殊说明为
+“重复开始”。</p>
 <blockquote>
-<p>The bus stays busy if a repeated START (Sr) is generated instead of a STOP condition. In this respect, the START (S) and repeated START (Sr) conditions are functionally identical. For the remainder of this document, therefore, the S symbol is used as a generic term to represent both the START and repeated START conditions, unless Sr is particularly relevant.</p>
+<p>The bus stays busy if a repeated START (Sr) is generated instead of a
+STOP condition. In this respect, the START (S) and repeated START (Sr)
+conditions are functionally identical. For the remainder of this
+document, therefore, the S symbol is used as a generic term to represent
+both the START and repeated START conditions, unless Sr is particularly
+relevant.</p>
 </blockquote>
 <h3 id="传输比特位">传输比特位</h3>
 <ul>
 <li>SDA线上的字节传输必须满足8位长度。</li>
 <li>每次传输数据的字节数不受限制。</li>
-<li>每个字节数后都需要跟一个<strong>确认位（Acknowledge bit）</strong>。</li>
+<li>每个字节数后都需要跟一个<strong>确认位（Acknowledge
+bit）</strong>。</li>
 <li>当从机无法完整接收或传输一个完整的数据字节时，例如正在产生内部中断等，除非其完成内部的某些功能，否则该从机将能够一直拉低SCL的电平，<strong>强制让主机一直处于等待状态</strong>。只有当从机准备好接收下一个完整的字节并释放SCL时，数据传输才会继续。</li>
 </ul>
 <blockquote>
-<p>Every byte put on the SDA line must be eight bits long. The number of bytes that can be transmitted per transfer is unrestricted. Each byte must be followed by an Acknowledge bit.</p>
-<p><strong>Data is transferred with the Most Significant Bit (MSB) first</strong> (see Figure 6). If a slave cannot receive or transmit another complete byte of data until it has performed some other function, for example servicing an internal interrupt, it can hold the clock line SCL LOW to force the master into a wait state. Data transfer then continues when the slave is ready for another byte of data and releases clock line SCL.</p>
+<p>Every byte put on the SDA line must be eight bits long. The number of
+bytes that can be transmitted per transfer is unrestricted. Each byte
+must be followed by an Acknowledge bit.</p>
+<p><strong>Data is transferred with the Most Significant Bit (MSB)
+first</strong> (see Figure 6). If a slave cannot receive or transmit
+another complete byte of data until it has performed some other
+function, for example servicing an internal interrupt, it can hold the
+clock line SCL LOW to force the master into a wait state. Data transfer
+then continues when the slave is ready for another byte of data and
+releases clock line SCL.</p>
 </blockquote>
 <p><img src="https://pic.islet.space/2021/05/image-20210514144620803.png" alt="image-20210514144620803" style="zoom:80%;" /></p>
 <h3 id="确认标志">确认标志</h3>
@@ -468,31 +528,69 @@
 <li>SDA线并不是由主机一直占有的，每发送完一个完整字节后，主机都会释放SDA线，由从机进行数据确认。</li>
 <li>发送者在确认时钟脉冲期间释放SDA线，以便接收者可以将SDA线拉低，并且在该时钟脉冲的高电平期间保持稳定的低电平（见图4）。</li>
 <li>对于设置（set-up）和保持（Hold）的时间，都应该依照表10中只针对各种不同模式的要求进行设置。</li>
-<li>如果SDA电平在第九个时钟脉冲时仍保持高电平，则被定义为 “未确认状态”。则此时主机可以发送一个“结束”标志来结束当前连接，或发送一个“开始”标志来开启一次新的传送。</li>
+<li>如果SDA电平在第九个时钟脉冲时仍保持高电平，则被定义为
+“未确认状态”。则此时主机可以发送一个“结束”标志来结束当前连接，或发送一个“开始”标志来开启一次新的传送。</li>
 </ul>
 <p><img src="/home/kali/.config/Typora/typora-user-images/image-20210514154506246.png" alt="image-20210514154506246" style="zoom: 80%;" /></p>
 <blockquote>
-<p>The acknowledge takes place after every byte. The acknowledge bit allows the receiver to signal the transmitter that the byte was successfully received and another byte may be sent. The master generates all clock pulses, including the acknowledge ninth clock pulse.</p>
-<p>The Acknowledge signal is defined as follows: the transmitter releases the SDA line during the acknowledge clock pulse so the <strong><em>receiver can pull the SDA line LOW</em></strong> and it remains stable LOW during the HIGH period of this clock pulse (see Figure 4). Set-up and hold times (specified in Section 6) must also be taken into account.</p>
-<p>When SDA remains HIGH during this ninth clock pulse, this is defined as the Not Acknowledge signal. The master can then generate either a STOP condition to abort the transfer, or a repeated START condition to start a new transfer.</p>
+<p>The acknowledge takes place after every byte. The acknowledge bit
+allows the receiver to signal the transmitter that the byte was
+successfully received and another byte may be sent. The master generates
+all clock pulses, including the acknowledge ninth clock pulse.</p>
+<p>The Acknowledge signal is defined as follows: the transmitter
+releases the SDA line during the acknowledge clock pulse so the
+<strong><em>receiver can pull the SDA line LOW</em></strong> and it
+remains stable LOW during the HIGH period of this clock pulse (see
+Figure 4). Set-up and hold times (specified in Section 6) must also be
+taken into account.</p>
+<p>When SDA remains HIGH during this ninth clock pulse, this is defined
+as the Not Acknowledge signal. The master can then generate either a
+STOP condition to abort the transfer, or a repeated START condition to
+start a new transfer.</p>
 </blockquote>
-<p><strong>以下为五种“未确认/未应答”的可能情况</strong>：There are five conditions that lead to the generation of a NACK:</p>
+<p><strong>以下为五种“未确认/未应答”的可能情况</strong>：There are five
+conditions that lead to the generation of a NACK:</p>
 <ol type="1">
-<li><strong>传输地址错误</strong>：No receiver is present on the bus with the transmitted address so there is no device to respond with an acknowledge.</li>
-<li><strong>实时处理中</strong>：The receiver is unable to receive or transmit because it is performing some real-time function and is not ready to start communication with the master.</li>
-<li><strong>数据/代码未定义</strong>：During the transfer, the receiver <strong>gets data or commands that it does not understand.</strong></li>
-<li><strong>正在传输中</strong>：During the transfer, the receiver <strong>cannot receive any more data bytes</strong>.</li>
-<li><strong>未收到结束信号（收发身份未转换）</strong>：A master-receiver must signal the end of the transfer to the slave transmitter.</li>
+<li><strong>传输地址错误</strong>：No receiver is present on the bus
+with the transmitted address so there is no device to respond with an
+acknowledge.</li>
+<li><strong>实时处理中</strong>：The receiver is unable to receive or
+transmit because it is performing some real-time function and is not
+ready to start communication with the master.</li>
+<li><strong>数据/代码未定义</strong>：During the transfer, the receiver
+<strong>gets data or commands that it does not understand.</strong></li>
+<li><strong>正在传输中</strong>：During the transfer, the receiver
+<strong>cannot receive any more data bytes</strong>.</li>
+<li><strong>未收到结束信号（收发身份未转换）</strong>：A master-receiver
+must signal the end of the transfer to the slave transmitter.</li>
 </ol>
 <h3 id="时钟同步">时钟同步</h3>
-<p>任意几个主机都可能同时发起数据传输请求，此时只有一个主机和一个从机可以掌握总线进行通信，此时需要通过 <strong>时间同步</strong> 和 <strong>仲裁</strong> 完成对总线的调配。</p>
-<p><strong>在单机系统（Single Master System）中，不需要时钟同步和仲裁。</strong></p>
+<p>任意几个主机都可能同时发起数据传输请求，此时只有一个主机和一个从机可以掌握总线进行通信，此时需要通过
+<strong>时间同步</strong> 和 <strong>仲裁</strong>
+完成对总线的调配。</p>
+<p><strong>在单机系统（Single Master
+System）中，不需要时钟同步和仲裁。</strong></p>
 <p>时钟同步是通过I<sup>2</sup>C接口与SCL线的有线-AND连接进行的。</p>
-<p>这意味着SCL线上的高电平到低电平的转换会导致相关的主站开始对其低电平周期进行计数（如图7的CLK<sub>2</sub>），一旦一个主站时钟 CLK<sub>1</sub> 变为低电平，它就会将SCL线电平拉低，并保持在这个状态，直到另一个时钟 CLK<sub>2</sub> 达到高电平状态。</p>
-<p>然而，如果时钟 CLK<sub>2</sub> 仍在其低电平周期内，CLK<sub>1</sub> 的低电平到高电平转换可能不会改变SCL线的状态。</p>
-<p>因为SCL线被具有最长的低电平周期的主站 CLK<sub>2</sub> 保持为低电平，而在这段时间内，低电平周期较短的主站 CLK<sub>1</sub> 进入高电平等待状态。</p>
+<p>这意味着SCL线上的高电平到低电平的转换会导致相关的主站开始对其低电平周期进行计数（如图7的CLK<sub>2</sub>），一旦一个主站时钟
+CLK<sub>1</sub>
+变为低电平，它就会将SCL线电平拉低，并保持在这个状态，直到另一个时钟
+CLK<sub>2</sub> 达到高电平状态。</p>
+<p>然而，如果时钟 CLK<sub>2</sub> 仍在其低电平周期内，CLK<sub>1</sub>
+的低电平到高电平转换可能不会改变SCL线的状态。</p>
+<p>因为SCL线被具有最长的低电平周期的主站 CLK<sub>2</sub>
+保持为低电平，而在这段时间内，低电平周期较短的主站 CLK<sub>1</sub>
+进入高电平等待状态。</p>
 <blockquote>
-<p>Clock synchronization is performed using the wired-AND connection of I<sup>2</sup>C interfaces to the SCL line. This means that a HIGH to LOW transition on the SCL line causes the masters concerned to start counting off their LOW period and, once a master clock has gone LOW, it holds the SCL line in that state until the clock HIGH state is reached (see Figure 7). However, if another clock is still within its LOW period, the LOW to HIGH transition of this clock may not change the state of the SCL line. The SCL line is therefore held LOW by the master with the longest LOW period. Masters with shorter LOW periods enter a HIGH wait-state during this time.</p>
+<p>Clock synchronization is performed using the wired-AND connection of
+I<sup>2</sup>C interfaces to the SCL line. This means that a HIGH to LOW
+transition on the SCL line causes the masters concerned to start
+counting off their LOW period and, once a master clock has gone LOW, it
+holds the SCL line in that state until the clock HIGH state is reached
+(see Figure 7). However, if another clock is still within its LOW
+period, the LOW to HIGH transition of this clock may not change the
+state of the SCL line. The SCL line is therefore held LOW by the master
+with the longest LOW period. Masters with shorter LOW periods enter a
+HIGH wait-state during this time.</p>
 </blockquote>
 <p>当所有相关的主控器都结束了他们的低电平周期，时钟线被释放并变成高电平。</p>
 <p>然后，在主站时钟和SCL线的状态之间没有差异，所有的主站开始计算他们的高电平周期。</p>
@@ -514,20 +612,29 @@
 <h3 id="反转地址">反转地址</h3>
 <h3 id="通用寻址">通用寻址</h3>
 <figure>
-<img src="https://pic.islet.space/2021/05/image-20210515172907284.png" alt="image-20210515172907284" /><figcaption aria-hidden="true">image-20210515172907284</figcaption>
+<img src="https://pic.islet.space/2021/05/image-20210515172907284.png"
+alt="image-20210515172907284" />
+<figcaption aria-hidden="true">image-20210515172907284</figcaption>
 </figure>
 <figure>
-<img src="https://pic.islet.space/2021/05/image-20210515172945861.png" alt="image-20210515172945861" /><figcaption aria-hidden="true">image-20210515172945861</figcaption>
+<img src="https://pic.islet.space/2021/05/image-20210515172945861.png"
+alt="image-20210515172945861" />
+<figcaption aria-hidden="true">image-20210515172945861</figcaption>
 </figure>
 <figure>
-<img src="https://pic.islet.space/2021/05/image-20210515172958184.png" alt="image-20210515172958184" /><figcaption aria-hidden="true">image-20210515172958184</figcaption>
+<img src="https://pic.islet.space/2021/05/image-20210515172958184.png"
+alt="image-20210515172958184" />
+<figcaption aria-hidden="true">image-20210515172958184</figcaption>
 </figure>
 <h3 id="软复位">软复位</h3>
-<p>在发送general call (0000 0000)后，再发送一个 0000 0110 (06h) ，这样两个具有先后顺序的字节来定义软复位。</p>
+<p>在发送general call (0000 0000)后，再发送一个 0000 0110 (06h)
+，这样两个具有先后顺序的字节来定义软复位。</p>
 <p>首先，这种软复位是可选 ，并不是所有设备都会对软复位指令进行响应。</p>
 <p>在收到这2个字节的序列时，所有被设计为响应一般调用地址的设备都会复位，并接收其地址的可编程部分。</p>
 <blockquote>
-<p>On receiving this 2-byte sequence, all devices designed to respond to the general call address reset and take in the programmable part of their address.</p>
+<p>On receiving this 2-byte sequence, all devices designed to respond to
+the general call address reset and take in the programmable part of
+their address.</p>
 </blockquote>
 <p>必须采取预防措施，确保设备在施加电源电压后没有拉低SDA或SCL线，因为这些低电平会阻断总线。</p>
 <h3 id="总线复位">总线复位</h3>
@@ -551,27 +658,41 @@
 <p><img src="https://pic.islet.space/2021/05/image-20210515152141963.png" alt="image-20210515152141963" style="zoom:67%;" /></p>
 <ol type="1">
 <li><p>启动条件</p></li>
-<li><p>主站发送保留设备ID的 I<sup>2</sup>C 总线地址，后面的R/W位设置为<code>0</code>（写）：<code>1111 1000</code>。</p></li>
-<li><p>主站发送从属地址。LSB是一个 "不关心"的值，只有一个设备必须确认这个字节（拥有I<sup>2</sup>C总线从属地址的设备）。</p></li>
+<li><p>主站发送保留设备ID的 I<sup>2</sup>C
+总线地址，后面的R/W位设置为<code>0</code>（写）：<code>1111 1000</code>。</p></li>
+<li><p>主站发送从属地址。LSB是一个
+"不关心"的值，只有一个设备必须确认这个字节（拥有I<sup>2</sup>C总线从属地址的设备）。</p></li>
 <li><p>主站发送一个 Re-START 条件。</p></li>
 </ol>
 <blockquote>
-<p>备注：在 STOP 条件之后，再加上一个 START 条件，就会重置从属状态机，无法进行设备ID读取。另外，在 STOP 条件或 Re-START 条件之后，对另一个从属设备的访问也会重置从属状态机，无法执行Device ID读取。</p>
+<p>备注：在 STOP 条件之后，再加上一个 START
+条件，就会重置从属状态机，无法进行设备ID读取。另外，在 STOP 条件或
+Re-START
+条件之后，对另一个从属设备的访问也会重置从属状态机，无法执行Device
+ID读取。</p>
 </blockquote>
 <ol start="5" type="1">
-<li><p>主站发送保留设备ID的 I<sup>2</sup>C 总线地址，后面的R/W位设置为 <code>1</code>（读）：<code>1111 1001</code>。</p></li>
+<li><p>主站发送保留设备ID的 I<sup>2</sup>C 总线地址，后面的R/W位设置为
+<code>1</code>（读）：<code>1111 1001</code>。</p></li>
 <li><p>可以进行设备ID读取，从12个制造商位开始（第一个字节+第二个字节的4个MSB），然后是9个部件识别位（第二个字节的4个LSB+第三个字节的5个MSB），然后是三个芯片修订位（第三个字节的3个LSB）。</p></li>
-<li><p>主站通过NACKing最后一个字节来结束读取序列，从而重置从属设备的状态机，允许主站发送 STOP 条件。</p>
+<li><p>主站通过NACKing最后一个字节来结束读取序列，从而重置从属设备的状态机，允许主站发送
+STOP 条件。</p>
 <blockquote>
 <p>备注：设备ID的读取可以随时通过发送NACK来停止。</p>
 </blockquote></li>
 </ol>
-<p>如果主站在第三个字节之后继续ACK，从站就会滚回第一个字节，并继续发送设备ID序列，直到检测到 NACK。</p>
+<p>如果主站在第三个字节之后继续ACK，从站就会滚回第一个字节，并继续发送设备ID序列，直到检测到
+NACK。</p>
 <h1 id="spi">SPI</h1>
 <p>标准：</p>
 <h2 id="术语-1">术语</h2>
 <h2 id="spi和i2c的对比">SPI和I<sup>2</sup>C的对比</h2>
 <table>
+<colgroup>
+<col style="width: 6%" />
+<col style="width: 49%" />
+<col style="width: 44%" />
+</colgroup>
 <thead>
 <tr class="header">
 <th></th>
@@ -655,10 +776,10 @@
 </div>
 
           <div class="post-tags">
+              <a href="/tags/I2S/" rel="tag"># I2S</a>
               <a href="/tags/I-2-C/" rel="tag"># I^2^C</a>
               <a href="/tags/SPI/" rel="tag"># SPI</a>
               <a href="/tags/TDM/" rel="tag"># TDM</a>
-              <a href="/tags/I2S/" rel="tag"># I2S</a>
           </div>
 
         

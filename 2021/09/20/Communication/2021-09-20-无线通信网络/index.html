@@ -22,16 +22,16 @@
   <script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"islet.space","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.7.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/db.json","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":true}}</script><script src="/js/config.js"></script>
-<meta name="description" content="前置知识  带宽及传输速率转换 TCP&#x2F;IP网络协议 硬件功耗计算和测量  概述 将从通信速率、通信距离、通信功耗、组网能力&#x2F;网路容量、 应用场景 及 安全性 等各方面来区分无线通信各种技术。 通信距离和通信速率     超近距离10公分以内 近距离1米以内 近距离20米以内 中距离20至100米 远距离1公里以内 超远距离1公里以上     超高速率&gt; 100Mbps  RFID WiFi">
+<meta name="description" content="前置知识  带宽及传输速率转换 TCP&#x2F;IP网络协议 硬件功耗计算和测量  概述 将从通信速率、通信距离、通信功耗、组网能力&#x2F;网路容量、 应用场景 及 安全性 等各方面来区分无线通信各种技术。 通信距离和通信速率              超近距离10公分以内 近距离1米以内 近距离20米以内 中距离20至100米 远距离1公里以内 超远距离1公里以上     超高速率&gt; 100Mbps">
 <meta property="og:type" content="article">
 <meta property="og:title" content="无线通信网络">
 <meta property="og:url" content="http://islet.space/2021/09/20/Communication/2021-09-20-%E6%97%A0%E7%BA%BF%E9%80%9A%E4%BF%A1%E7%BD%91%E7%BB%9C/index.html">
 <meta property="og:site_name" content="Coder的孤岛">
-<meta property="og:description" content="前置知识  带宽及传输速率转换 TCP&#x2F;IP网络协议 硬件功耗计算和测量  概述 将从通信速率、通信距离、通信功耗、组网能力&#x2F;网路容量、 应用场景 及 安全性 等各方面来区分无线通信各种技术。 通信距离和通信速率     超近距离10公分以内 近距离1米以内 近距离20米以内 中距离20至100米 远距离1公里以内 超远距离1公里以上     超高速率&gt; 100Mbps  RFID WiFi">
+<meta property="og:description" content="前置知识  带宽及传输速率转换 TCP&#x2F;IP网络协议 硬件功耗计算和测量  概述 将从通信速率、通信距离、通信功耗、组网能力&#x2F;网路容量、 应用场景 及 安全性 等各方面来区分无线通信各种技术。 通信距离和通信速率              超近距离10公分以内 近距离1米以内 近距离20米以内 中距离20至100米 远距离1公里以内 超远距离1公里以上     超高速率&gt; 100Mbps">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://pic.islet.space/2021/09/image-20210920171429124.png">
 <meta property="article:published_time" content="2021-09-20T06:45:00.000Z">
-<meta property="article:modified_time" content="2021-09-23T23:23:21.070Z">
+<meta property="article:modified_time" content="2021-09-23T23:23:21.000Z">
 <meta property="article:author" content="Liewzheng">
 <meta property="article:tag" content="Lora">
 <meta property="article:tag" content="Wireless">
@@ -169,7 +169,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">119</span>
+          <span class="site-state-item-count">124</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -180,7 +180,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">222</span>
+        <span class="site-state-item-count">230</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -287,9 +287,19 @@
 <li>硬件功耗计算和测量</li>
 </ul>
 <h1 id="概述">概述</h1>
-<p>将从通信速率、通信距离、通信功耗、组网能力/网路容量、 应用场景 及 安全性 等各方面来区分无线通信各种技术。</p>
+<p>将从通信速率、通信距离、通信功耗、组网能力/网路容量、 应用场景 及
+安全性 等各方面来区分无线通信各种技术。</p>
 <h2 id="通信距离和通信速率">通信距离和通信速率</h2>
 <table>
+<colgroup>
+<col style="width: 16%" />
+<col style="width: 14%" />
+<col style="width: 11%" />
+<col style="width: 11%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 21%" />
+</colgroup>
 <thead>
 <tr class="header">
 <th></th>
@@ -349,7 +359,8 @@
 </tr>
 </tbody>
 </table>
-<p>还有很多躺在历史垃圾堆角落里，没有得到使用和普及的通信协议，如 WiMax（IEEE 802.16），</p>
+<p>还有很多躺在历史垃圾堆角落里，没有得到使用和普及的通信协议，如
+WiMax（IEEE 802.16），</p>
 <h2 id="通信功耗">通信功耗</h2>
 <p><strong>超高功耗</strong>：&gt; 100mA</p>
 <p><strong>高功耗</strong>：30~100mA</p>
@@ -377,13 +388,24 @@
 <h2 id="组网能力网路容量">组网能力/网路容量</h2>
 <h2 id="应用场景">应用场景</h2>
 <h2 id="lpwanlpwa">LPWAN/LPWA</h2>
-<p><strong>LPWAN</strong>， Low Power Wide Area Network，低功耗广域网络，也可以缩写为LPWA。</p>
-<p>LPWAN 不是指任何一种特定技术，而是作为任何网络的通用术语，这些网络旨在以比其他网络（如蜂窝、卫星或 WiFi）更低的功率进行无线通信。此外，与其他使用蓝牙或 NFC 的低功耗网络相比，LPWAN 的通信距离更远。</p>
-<p>LPWA 网络非常有限的带宽不适合大多数消费者和商业应用，例如语音、视频、音频甚至文本消息。因此，LPWA 网络几乎完全由物联网 (IoT) 和 M2M（机器对机器）通信中的设备使用。</p>
-<p>虽然冰箱、灯泡或 Nest 温度计等家用或商用设备都可以轻松搭载家庭或办公室 WiFi 连接，但某些设备不能依赖这种连接。</p>
-<p>LoRa、SigFox、NB-IoT 都属于 LPWA 的范畴，LoRa 不需要 SIM 卡，NB-IoT 需要 SIM 卡。</p>
+<p><strong>LPWAN</strong>， Low Power Wide Area
+Network，低功耗广域网络，也可以缩写为LPWA。</p>
+<p>LPWAN
+不是指任何一种特定技术，而是作为任何网络的通用术语，这些网络旨在以比其他网络（如蜂窝、卫星或
+WiFi）更低的功率进行无线通信。此外，与其他使用蓝牙或 NFC
+的低功耗网络相比，LPWAN 的通信距离更远。</p>
+<p>LPWA
+网络非常有限的带宽不适合大多数消费者和商业应用，例如语音、视频、音频甚至文本消息。因此，LPWA
+网络几乎完全由物联网 (IoT) 和 M2M（机器对机器）通信中的设备使用。</p>
+<p>虽然冰箱、灯泡或 Nest
+温度计等家用或商用设备都可以轻松搭载家庭或办公室 WiFi
+连接，但某些设备不能依赖这种连接。</p>
+<p>LoRa、SigFox、NB-IoT 都属于 LPWA 的范畴，LoRa 不需要 SIM 卡，NB-IoT
+需要 SIM 卡。</p>
 <figure>
-<img src="https://pic.islet.space/2021/09/image-20210920171429124.png" alt="image-20210920171429124" /><figcaption aria-hidden="true">image-20210920171429124</figcaption>
+<img src="https://pic.islet.space/2021/09/image-20210920171429124.png"
+alt="image-20210920171429124" />
+<figcaption aria-hidden="true">image-20210920171429124</figcaption>
 </figure>
 <h1 id="lora">LoRa</h1>
 <p>LoRa是美国Semtech公司的专有技术，实际是一种采用扩频方案的无线调制解调技术。Semtech在2012年通过并购法国Cycleo公司获得LoRa的IP产权，以此设计制造射频芯片并进行市场销售，是一家纯半导体公司，垄断LoRa芯片的供货。目前Semtech虽然也进行少量LoRa的IP授权，如国内的阿里，但IP是Semtech专有，没有授权任何公司无法设计制造LoRa芯片，所以客户的选择余地很小。</p>
@@ -391,17 +413,30 @@
 <p>LoRa通过扩频技术实现高灵敏度，从而能够进行远距离传输，但是网络容量有限，无法高效实现大批量设备信息的并行接收和处理，这对于大面积或全国性的部署是个巨大挑战。</p>
 <h1 id="术语">术语</h1>
 <h2 id="link-budget">Link Budget</h2>
-<p>A link budget is used to compute cell coverage by accounting for all the factors that determine the cell coverage to balance the system cost against the required cell capacity. Link budget factors controlled by the RF engineer include transmitter-radiated power, antenna gain, noise figures, and co-channel interference (i.e., reuse factor <em>N</em>). Factors that cannot be controlled directly, but must be considered in the link budget, include propagation path loss and system bandwidth.</p>
+<p>A link budget is used to compute cell coverage by accounting for all
+the factors that determine the cell coverage to balance the system cost
+against the required cell capacity. Link budget factors controlled by
+the RF engineer include transmitter-radiated power, antenna gain, noise
+figures, and co-channel interference (i.e., reuse factor <em>N</em>).
+Factors that cannot be controlled directly, but must be considered in
+the link budget, include propagation path loss and system bandwidth.</p>
 <p>链路预算是用来计算小区覆盖率的，它考虑了决定小区覆盖率的所有因素，以平衡系统成本和所需小区容量。由射频工程师控制的链路预算因素包括发射器辐射功率、天线增益、噪声数字和同信道干扰（即重用系数N）。不能直接控制，但必须在链路预算中考虑的因素包括传播路径损耗和系统带宽。</p>
 <h1 id="参考">参考</h1>
 <ol type="1">
 <li>《无线传感网络》杨博雄/倪玉华</li>
-<li><a target="_blank" rel="noopener" href="http://www.elecfans.com/iot/631444_a.html">物联网通信标准分类 谁最有优势？</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.zhihu.com/question/19687054/answer/632679689">为什么WIMAX没有普及？</a></li>
+<li><a
+target="_blank" rel="noopener" href="http://www.elecfans.com/iot/631444_a.html">物联网通信标准分类
+谁最有优势？</a></li>
+<li><a
+target="_blank" rel="noopener" href="https://www.zhihu.com/question/19687054/answer/632679689">为什么WIMAX没有普及？</a></li>
 <li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/79948173">什么是LPWA</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.hisilicon.com/cn/techtalk/nb-iot">NB-IoT 通往智能世界的基础联接技术</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.sciencedirect.com/topics/engineering/link-budget">Link Budget - an overview | ScienceDirect Topics</a></li>
-<li><a target="_blank" rel="noopener" href="https://cloud.tencent.com/product/lpwa">LPWA 物联网络</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.hisilicon.com/cn/techtalk/nb-iot">NB-IoT
+通往智能世界的基础联接技术</a></li>
+<li><a
+target="_blank" rel="noopener" href="https://www.sciencedirect.com/topics/engineering/link-budget">Link
+Budget - an overview | ScienceDirect Topics</a></li>
+<li><a target="_blank" rel="noopener" href="https://cloud.tencent.com/product/lpwa">LPWA
+物联网络</a></li>
 </ol>
 
     </div>
@@ -451,8 +486,8 @@
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/2021/10/02/Communication/2021-10-02-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%8E%B0%E5%9C%BA%E6%80%BB%E7%BA%BF/" rel="next" title="计算机网络体系结构与现场总线">
-                  计算机网络体系结构与现场总线 <i class="fa fa-chevron-right"></i>
+                <a href="/2021/09/27/Hardware/Circuit/2021-09-27-%E5%B5%8C%E5%85%A5%E5%BC%8F%E8%8A%AF%E7%89%87%E5%BC%95%E8%84%9A%E7%9A%84%E6%8C%89%E9%94%AE%E6%B6%88%E6%8A%96/" rel="next" title="嵌入式芯片引脚的按键消抖">
+                  嵌入式芯片引脚的按键消抖 <i class="fa fa-chevron-right"></i>
                 </a>
             </div>
           </div>
