@@ -22,12 +22,12 @@
   <script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"islet.space","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.7.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/db.json","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":true}}</script><script src="/js/config.js"></script>
-<meta name="description" content="I2C基本通信规则 标准：《NXP_UM10204_I2C-bus specification and user manual》  I2C总线是一个事实上的世界标准，现在已经在50多家公司生产的1000多种不同的IC中实施。 此外，多功能的I2C总线被用于各种控制架构，如系统管理总线（SMBus）、电源管理总线（PMBus）、智能平台管理接口（IPMI）、显示数据通道（DDC）和高级电信计算架构（">
+<meta name="description" content="I2C基本通信规则 标准：《NXP_UM10204_I2C-bus specification and user manual》  IIC总线是一个事实上的世界标准，现在已经在50多家公司生产的1000多种不同的IC中实施。 此外，多功能的IIC总线被用于各种控制架构，如系统管理总线（SMBus）、电源管理总线（PMBus）、智能平台管理接口（IPMI）、显示数据通道（DDC）和高级电信计算架构（">
 <meta property="og:type" content="article">
 <meta property="og:title" content="I2C通信">
 <meta property="og:url" content="http://islet.space/2021/05/14/Communication/2021-05-14-I2C%E9%80%9A%E4%BF%A1/index.html">
 <meta property="og:site_name" content="Coder的孤岛">
-<meta property="og:description" content="I2C基本通信规则 标准：《NXP_UM10204_I2C-bus specification and user manual》  I2C总线是一个事实上的世界标准，现在已经在50多家公司生产的1000多种不同的IC中实施。 此外，多功能的I2C总线被用于各种控制架构，如系统管理总线（SMBus）、电源管理总线（PMBus）、智能平台管理接口（IPMI）、显示数据通道（DDC）和高级电信计算架构（">
+<meta property="og:description" content="I2C基本通信规则 标准：《NXP_UM10204_I2C-bus specification and user manual》  IIC总线是一个事实上的世界标准，现在已经在50多家公司生产的1000多种不同的IC中实施。 此外，多功能的IIC总线被用于各种控制架构，如系统管理总线（SMBus）、电源管理总线（PMBus）、智能平台管理接口（IPMI）、显示数据通道（DDC）和高级电信计算架构（">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://pic.islet.space/2021/05/image-20210514111033910.png">
 <meta property="og:image" content="https://pic.islet.space/2021/05/image-20210514112114667.png">
@@ -64,7 +64,7 @@
 <meta property="og:image" content="https://pic.islet.space/2021/06/20210601105537.png">
 <meta property="og:image" content="https://pic.islet.space/2021/06/20210601105628.png">
 <meta property="article:published_time" content="2021-05-14T02:55:00.000Z">
-<meta property="article:modified_time" content="2021-07-15T13:12:07.000Z">
+<meta property="article:modified_time" content="2022-08-02T14:12:06.077Z">
 <meta property="article:author" content="Liewzheng">
 <meta property="article:tag" content="I2C">
 <meta name="twitter:card" content="summary">
@@ -201,7 +201,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">124</span>
+          <span class="site-state-item-count">125</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -290,7 +290,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-07-15 21:12:07" itemprop="dateModified" datetime="2021-07-15T21:12:07+08:00">2021-07-15</time>
+        <time title="Modified: 2022-08-02 22:12:06" itemprop="dateModified" datetime="2022-08-02T22:12:06+08:00">2022-08-02</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -317,15 +317,15 @@
 target="_blank" rel="noopener" href="https://www.nxp.com/docs/en/user-guide/UM10204.pdf">《NXP_UM10204_I2C-bus
 specification and user manual》</a></p>
 <blockquote>
-<p><em>I<sup>2</sup>C总线是一个事实上的世界标准，现在已经在50多家公司生产的1000多种不同的IC中实施。</em></p>
-<p><em>此外，多功能的I<sup>2</sup>C总线被用于各种控制架构，如系统管理总线（SMBus）、电源管理总线（PMBus）、智能平台管理接口（IPMI）、显示数据通道（DDC）和高级电信计算架构（ATCA）。</em></p>
-<p><em>本文件帮助设备和系统设计者了解I<sup>2</sup>C总线的工作原理并实现工作应用。描述了各种操作模式。它包含了对I<sup>2</sup>C<strong>总线数据传输</strong>、握手和总线仲裁方案的全面介绍。详细的章节涵盖了I<sup>2</sup>C总线在每种工作模式下的时序和电气规范。</em></p>
-<p><em>I<sup>2</sup>C兼容芯片的设计者应将该文件作为参考，并确保新设备满足该文件中规定的所有限制。包含I<sup>2</sup>C器件的系统的设计者应审查本文件，并参考各个组件的数据表。</em></p>
+<p><em>IIC总线是一个事实上的世界标准，现在已经在50多家公司生产的1000多种不同的IC中实施。</em></p>
+<p><em>此外，多功能的IIC总线被用于各种控制架构，如系统管理总线（SMBus）、电源管理总线（PMBus）、智能平台管理接口（IPMI）、显示数据通道（DDC）和高级电信计算架构（ATCA）。</em></p>
+<p><em>本文件帮助设备和系统设计者了解IIC总线的工作原理并实现工作应用。描述了各种操作模式。它包含了对IIC<strong>总线数据传输</strong>、握手和总线仲裁方案的全面介绍。详细的章节涵盖了IIC总线在每种工作模式下的时序和电气规范。</em></p>
+<p><em>IIC兼容芯片的设计者应将该文件作为参考，并确保新设备满足该文件中规定的所有限制。包含IIC器件的系统的设计者应审查本文件，并参考各个组件的数据表。</em></p>
 <p>——翻译自标准文件</p>
 </blockquote>
-<p>I<sup>2</sup>C(Inter－Integrated
+<p>IIC(Inter－Integrated
 Circuit)是一种通用的总线协议。它是由Philips(飞利浦)公司，现NXP(恩智浦)半导体开发的一种简单的双向两线制总线协议标准。</p>
-<p>对于硬件设计人员来说，只需要2个管脚，极少的连接线和面积，就可以实现芯片间的通讯，对于软件开发者来说，可以使用同一个I<sup>2</sup>C驱动库，来实现实现不同器件的驱动，大大减少了软件的开发时间。极低的工作电流，降低了系统的功耗，完善的应答机制大大增强通讯的可靠性。</p>
+<p>对于硬件设计人员来说，只需要2个管脚，极少的连接线和面积，就可以实现芯片间的通讯，对于软件开发者来说，可以使用同一个IIC驱动库，来实现实现不同器件的驱动，大大减少了软件的开发时间。极低的工作电流，降低了系统的功耗，完善的应答机制大大增强通讯的可靠性。</p>
 <h2 id="术语">术语</h2>
 <p><img src="https://pic.islet.space/2021/05/image-20210514111033910.png" alt="image-20210514111033910" style="zoom: 67%;" /></p>
 <table>
@@ -374,7 +374,7 @@ Circuit)是一种通用的总线协议。它是由Philips(飞利浦)公司，现
 </tr>
 </tbody>
 </table>
-<p>以下这个图应该可以较好地解释“多主机”的概念，多个主机可以同时向外发出传输数据的申请，也可以主动结束其数据传输。虽然，I<sup>2</sup>C降低了总线复用的成本，但仍需要“仲裁”机制来解决多个主机之间的无序竞争状态。</p>
+<p>以下这个图应该可以较好地解释“多主机”的概念，多个主机可以同时向外发出传输数据的申请，也可以主动结束其数据传输。虽然，IIC降低了总线复用的成本，但仍需要“仲裁”机制来解决多个主机之间的无序竞争状态。</p>
 <p><img src="https://pic.islet.space/2021/05/image-20210514112114667.png" alt="image-20210514112114667" style="zoom:67%;" /></p>
 <h2 id="硬件要求">硬件要求</h2>
 <h3 id="电气特性">电气特性</h3>
@@ -392,10 +392,9 @@ Clock）两条线路对设备进行连接。</p>
 <h3 id="标准传输速率">标准传输速率</h3>
 <p>各模式、速率及其传输方向见下方表格。</p>
 <blockquote>
-<p>Data on the I<sup>2</sup>C-bus can be transferred at rates of up to
-100 kbit/s in the Standard-mode, up to 400 kbit/s in the Fast-mode, up
-to 1 Mbit/s in Fast-mode Plus, or up to 3.4 Mbit/s in the High-speed
-mode.</p>
+<p>Data on the IIC-bus can be transferred at rates of up to 100 kbit/s
+in the Standard-mode, up to 400 kbit/s in the Fast-mode, up to 1 Mbit/s
+in Fast-mode Plus, or up to 3.4 Mbit/s in the High-speed mode.</p>
 </blockquote>
 <table>
 <colgroup>
@@ -448,7 +447,7 @@ mode.</p>
 <h2 id="编码协议">编码协议</h2>
 <p>以下协议要求适用于双向通信模式（不包括ULTRA-FAST模式下的单向通信）</p>
 <h3 id="逻辑电平规定">逻辑电平规定</h3>
-<p>由于I<sup>2</sup>C的接入设备众多（如CMOS、NMOS、Bipolar等），因此逻辑电平0和逻辑电平1（的电压）并不是固定不变的，这取决于VDD的电平。</p>
+<p>由于IIC的接入设备众多（如CMOS、NMOS、Bipolar等），因此逻辑电平0和逻辑电平1（的电压）并不是固定不变的，这取决于VDD的电平。</p>
 <p>输入参考电平会被控制在VDD电平的30%~70%之间。 V<sub>IL</sub> = 0.3 *
 V<sub>DD</sub>；V<sub>IH</sub> = 0.7 * V<sub>DD</sub> 。</p>
 <p>某些传统设备的输入电平会被固定在1.5V（V<sub>IL</sub>）和3.0V（V<sub>IH</sub>），但新设备都要求是
@@ -460,10 +459,10 @@ V<sub>DD</sub>；V<sub>IH</sub> = 0.7 * V<sub>DD</sub> 。</p>
 V<sub>IH</sub> ；超过这个值而未到达70%的中间态则为不确定态。</p>
 <blockquote>
 <p>Due to the variety of different technology devices (CMOS, NMOS,
-bipolar) that can be connected to the I<sup>2</sup>C-bus, the levels of
-the logical ‘0’ (LOW) and ‘1’ (HIGH) are not fixed and depend on the
-associated level of VDD . Input reference levels are set as 30 % and 70
-% of VDD ; VIL is 0.3VDD and VIH is 0.7V DD .</p>
+bipolar) that can be connected to the IIC-bus, the levels of the logical
+‘0’ (LOW) and ‘1’ (HIGH) are not fixed and depend on the associated
+level of VDD . Input reference levels are set as 30 % and 70 % of VDD ;
+VIL is 0.3VDD and VIH is 0.7V DD .</p>
 <p>See Figure 38, timing diagram. Some legacy device input levels were
 fixed at V<sub>IL</sub> = 1.5 V and V<sub>IH</sub> = 3.0 V, but all new
 devices require this 30 %/70 % specification.</p>
@@ -593,7 +592,7 @@ must signal the end of the transfer to the slave transmitter.</li>
 完成对总线的调配。</p>
 <p><strong>在单机系统（Single Master
 System）中，不需要时钟同步和仲裁。</strong></p>
-<p>时钟同步是通过I<sup>2</sup>C接口与SCL线的有线-AND连接进行的。</p>
+<p>时钟同步是通过IIC接口与SCL线的有线-AND连接进行的。</p>
 <p>这意味着SCL线上的高电平到低电平的转换会导致相关的主站开始对其低电平周期进行计数（如图7的CLK<sub>2</sub>），一旦一个主站时钟
 CLK<sub>1</sub>
 变为低电平，它就会将SCL线电平拉低，并保持在这个状态，直到另一个时钟
@@ -605,15 +604,15 @@ CLK<sub>2</sub> 达到高电平状态。</p>
 进入高电平等待状态。</p>
 <blockquote>
 <p>Clock synchronization is performed using the wired-AND connection of
-I<sup>2</sup>C interfaces to the SCL line. This means that a HIGH to LOW
-transition on the SCL line causes the masters concerned to start
-counting off their LOW period and, once a master clock has gone LOW, it
-holds the SCL line in that state until the clock HIGH state is reached
-(see Figure 7). However, if another clock is still within its LOW
-period, the LOW to HIGH transition of this clock may not change the
-state of the SCL line. The SCL line is therefore held LOW by the master
-with the longest LOW period. Masters with shorter LOW periods enter a
-HIGH wait-state during this time.</p>
+IIC interfaces to the SCL line. This means that a HIGH to LOW transition
+on the SCL line causes the masters concerned to start counting off their
+LOW period and, once a master clock has gone LOW, it holds the SCL line
+in that state until the clock HIGH state is reached (see Figure 7).
+However, if another clock is still within its LOW period, the LOW to
+HIGH transition of this clock may not change the state of the SCL line.
+The SCL line is therefore held LOW by the master with the longest LOW
+period. Masters with shorter LOW periods enter a HIGH wait-state during
+this time.</p>
 </blockquote>
 <p>当所有相关的主控器都结束了他们的低电平周期，时钟线被释放并变成高电平。</p>
 <p>然后，在主站时钟和SCL线的状态之间没有差异，所有的主站开始计算他们的高电平周期。</p>
@@ -659,7 +658,7 @@ their address.</p>
 <h3 id="总线复位">总线复位</h3>
 <p>SCK信号一直卡在低电平的事件较少发生。</p>
 <ul>
-<li>如果I<sup>2</sup>C总线设备拥有硬件复位输入，则可以通过优先程序启用硬件中断复位来重置总线。</li>
+<li>如果IIC总线设备拥有硬件复位输入，则可以通过优先程序启用硬件中断复位来重置总线。</li>
 <li>如果没有硬件复位输入，则通过给设备循环供电，激活强制性的内部开机复位（POR）电路。</li>
 </ul>
 <p>SDA信号如果一直卡在低电平。</p>
@@ -677,10 +676,10 @@ their address.</p>
 <p><img src="https://pic.islet.space/2021/05/image-20210515152141963.png" alt="image-20210515152141963" style="zoom:67%;" /></p>
 <ol type="1">
 <li><p>启动条件</p></li>
-<li><p>主站发送保留设备ID的 I<sup>2</sup>C
+<li><p>主站发送保留设备ID的 IIC
 总线地址，后面的R/W位设置为<code>0</code>（写）：<code>1111 1000</code>。</p></li>
 <li><p>主站发送从属地址。LSB是一个
-"不关心"的值，只有一个设备必须确认这个字节（拥有I<sup>2</sup>C总线从属地址的设备）。</p></li>
+"不关心"的值，只有一个设备必须确认这个字节（拥有IIC总线从属地址的设备）。</p></li>
 <li><p>主站发送一个 Re-START 条件。</p></li>
 </ol>
 <blockquote>
@@ -691,7 +690,7 @@ Re-START
 ID读取。</p>
 </blockquote>
 <ol start="5" type="1">
-<li><p>主站发送保留设备ID的 I<sup>2</sup>C 总线地址，后面的R/W位设置为
+<li><p>主站发送保留设备ID的 IIC 总线地址，后面的R/W位设置为
 <code>1</code>（读）：<code>1111 1001</code>。</p></li>
 <li><p>可以进行设备ID读取，从12个制造商位开始（第一个字节+第二个字节的4个MSB），然后是9个部件识别位（第二个字节的4个LSB+第三个字节的5个MSB），然后是三个芯片修订位（第三个字节的3个LSB）。</p></li>
 <li><p>主站通过NACKing最后一个字节来结束读取序列，从而重置从属设备的状态机，允许主站发送
@@ -1007,8 +1006,8 @@ specification and user manual》</a></li>
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/2021/05/14/Communication/2021-05-14-I2C%E3%80%81SPI%E3%80%81TDM%E5%8F%8AI2S/" rel="next" title="I^2^C、SPI、TDM及I2S">
-                  I^2^C、SPI、TDM及I2S <i class="fa fa-chevron-right"></i>
+                <a href="/2021/05/17/Computer/2021-05-17-%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80/" rel="next" title="汇编语言">
+                  汇编语言 <i class="fa fa-chevron-right"></i>
                 </a>
             </div>
           </div>

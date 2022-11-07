@@ -162,7 +162,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">124</span>
+          <span class="site-state-item-count">125</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -207,6 +207,1877 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://islet.space/2021/09/02/Programming/2021-09-02-%E4%BD%BF%E7%94%A8VS-Code%E5%90%8C%E6%AD%A5Gitee%E9%A1%B9%E7%9B%AE/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Liewzheng">
+      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coder的孤岛">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/09/02/Programming/2021-09-02-%E4%BD%BF%E7%94%A8VS-Code%E5%90%8C%E6%AD%A5Gitee%E9%A1%B9%E7%9B%AE/" class="post-title-link" itemprop="url">使用VS Code同步Gitee项目</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-09-02 21:50:00" itemprop="dateCreated datePublished" datetime="2021-09-02T21:50:00+08:00">2021-09-02</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2021-09-16 00:33:06" itemprop="dateModified" datetime="2021-09-16T00:33:06+08:00">2021-09-16</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Programming/" itemprop="url" rel="index"><span itemprop="name">Programming</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>自从Github被微软收购，除了Copilot这个AI代码写作助手，大家开源贡献的代码都被拿来用了之后，就不想在Github上贡献代码了。</p>
+<p>转而使用Gitee，感觉也挺好。</p>
+<h1 id="生成并绑定公钥">生成并绑定公钥</h1>
+<p>使用terminal生成公钥：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen</span><br></pre></td></tr></table></figure>
+<p>遇到选择就按回车，不用管就好。然后使用以下命令进行查看：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat ~/.ssh/id_rsa.pub</span><br></pre></td></tr></table></figure>
+<p>公钥样例（千万不要复制下面的模板）如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh-rsa BBBBA3NzaC1yc2EBBBBDAQBABBBABQCoLmvwKsFETfy0Lj8VN0QwDj/fu2J1msoM+kWCLTj64zXXXXXXXXXSKQxj30zjVO4tZ9PsO/jaItdev1uV7a9lk9MiemLLAxc1LSYsBdki81tx+7941rl9y/XXXXXXXXXXDjNpPCMq6xH8ZSRoRLcgCz+gRaDfnQALWBcavEO0uVqYGn4I4KRFPup7gm+3j5gRpdm1uKtkrqHxqykErCwXXXXXXXXXX6+okRt/TN5jjq6zV44D6tRYAK6oCOFpwO/RTqTIUU//w/XXXXXXXXXXXXXXXXXXXXdPCqs8Zax9cH/31FJqltQzsRbGDLTFFXqyICK7QKVgFXGhrzM3AVvD xxxx@xxxx.local</span><br></pre></td></tr></table></figure>
+<h1 id="绑定到gitee配置">绑定到Gitee配置</h1>
+<p>这里就不延时注册Gitee账户了。</p>
+<p>在Gitee头像下点击 <strong>设置</strong> ，然后在左侧选择
+<strong>SSH公钥</strong>，将生成的公钥粘贴进去，标题会自动识别和生成，使用默认标题即可，最后点击
+<strong>确定</strong> 进行保存。</p>
+<figure>
+<img src="https://pic.islet.space/2021/09/image-20210902220637986.png"
+alt="image-20210902220637986" />
+<figcaption aria-hidden="true">image-20210902220637986</figcaption>
+</figure>
+<h1 id="在gitee上生成项目">在Gitee上生成项目</h1>
+<p>在gitee页面右上角选择那个 <code>+</code> 号，选择里面的
+<strong>新建仓库</strong>。</p>
+<figure>
+<img src="https://pic.islet.space/2021/09/image-20210902222312335.png"
+alt="image-20210902222312335" />
+<figcaption aria-hidden="true">image-20210902222312335</figcaption>
+</figure>
+<p>跳转到 <strong>新建仓库</strong> 仓库页面，填写相关信息即可。</p>
+<figure>
+<img src="https://pic.islet.space/2021/09/image-20210902222413221.png"
+alt="image-20210902222413221" />
+<figcaption aria-hidden="true">image-20210902222413221</figcaption>
+</figure>
+<p>然后在仓库页面的 <strong>克隆/下载</strong> 处选择
+<strong>HTTPS</strong> 源 并 <strong>复制</strong>。</p>
+<figure>
+<img src="https://pic.islet.space/2021/09/image-20210902222531450.png"
+alt="image-20210902222531450" />
+<figcaption aria-hidden="true">image-20210902222531450</figcaption>
+</figure>
+<h1 id="绑定vscode">绑定VSCode</h1>
+<p>在本地新建文件夹，命名和存储路径随意。</p>
+<figure>
+<img src="https://pic.islet.space/2021/09/image-20210902222116108.png"
+alt="image-20210902222116108" />
+<figcaption aria-hidden="true">image-20210902222116108</figcaption>
+</figure>
+<p>然后使用VSCode打开该文件夹，如下：</p>
+<figure>
+<img src="https://pic.islet.space/2021/09/image-20210902222631177.png"
+alt="image-20210902222631177" />
+<figcaption aria-hidden="true">image-20210902222631177</figcaption>
+</figure>
+<p>点选左侧树杈型图标，选择 <strong>初始化存储库</strong>。</p>
+<figure>
+<img src="https://pic.islet.space/2021/09/image-20210902222655162.png"
+alt="image-20210902222655162" />
+<figcaption aria-hidden="true">image-20210902222655162</figcaption>
+</figure>
+<p>在上方 <code>...</code> 处选择
+<strong>远程</strong>，<strong>添加远程仓库</strong>。</p>
+<figure>
+<img src="https://pic.islet.space/2021/09/image-20210902223026835.png"
+alt="image-20210902223026835" />
+<figcaption aria-hidden="true">image-20210902223026835</figcaption>
+</figure>
+<p>粘贴刚刚复制过来的仓库地址。</p>
+<figure>
+<img src="https://pic.islet.space/2021/09/image-20210902223107646.png"
+alt="image-20210902223107646" />
+<figcaption aria-hidden="true">image-20210902223107646</figcaption>
+</figure>
+<p>填写远程存储库名称，就是仓库名称。</p>
+<figure>
+<img src="https://pic.islet.space/2021/09/image-20210902223222009.png"
+alt="image-20210902223222009" />
+<figcaption aria-hidden="true">image-20210902223222009</figcaption>
+</figure>
+<p>VSCode右下角会出现如下提示，选择 <strong>是</strong>。</p>
+<figure>
+<img src="https://pic.islet.space/2021/09/image-20210902223253826.png"
+alt="image-20210902223253826" />
+<figcaption aria-hidden="true">image-20210902223253826</figcaption>
+</figure>
+<p>正常来说点选 <strong>拉取</strong>
+也是直接可以拉取到远程数据的，但是也可能因为配置错误导致拉取失败，出现如下提示。</p>
+<figure>
+<img src="https://pic.islet.space/2021/09/image-20210902223319460.png"
+alt="image-20210902223319460" />
+<figcaption aria-hidden="true">image-20210902223319460</figcaption>
+</figure>
+<figure>
+<img src="https://pic.islet.space/2021/09/image-20210902224720818.png"
+alt="image-20210902224720818" />
+<figcaption aria-hidden="true">image-20210902224720818</figcaption>
+</figure>
+<h1 id="配置本地git参数">配置本地git参数</h1>
+<p>如果拉取不成功，仍需要配置以下信息：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git config --global user.name <span class="string">&quot;xxxx&quot;</span></span><br><span class="line">git config --global user.email xxxx@xxx.com</span><br></pre></td></tr></table></figure>
+<p>其中xxxx需要替换成个人在gitee网站的用户名和对应的邮箱，如下：</p>
+<figure>
+<img src="https://pic.islet.space/2021/09/image-20210902224904264.png"
+alt="image-20210902224904264" />
+<figcaption aria-hidden="true">image-20210902224904264</figcaption>
+</figure>
+<h1 id="拉取仓库文件">拉取仓库文件</h1>
+<p>如果仍然无法拉取仓库文件，可以在VSCode下按 <code>CTRL</code> +
+<code>J</code> 或 <code>COMMAND</code> + <code>J</code>
+来打开，然后输入如下命令进行 拉取，命令中对应的源需要替换。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git pull https://gitee.com/xxxx/xxxx.git master</span><br></pre></td></tr></table></figure>
+<p>拉取完后如下所示：</p>
+<figure>
+<img src="https://pic.islet.space/2021/09/image-20210902225228260.png"
+alt="image-20210902225228260" />
+<figcaption aria-hidden="true">image-20210902225228260</figcaption>
+</figure>
+<figure>
+<img src="https://pic.islet.space/2021/09/image-20210902225338842.png"
+alt="image-20210902225338842" />
+<figcaption aria-hidden="true">image-20210902225338842</figcaption>
+</figure>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://islet.space/2021/08/31/Others/2021-08-31-%E5%8F%AF%E9%9D%A0%E6%80%A7%E5%B7%A5%E7%A8%8B%E5%B8%88%E7%AC%94%E8%AE%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Liewzheng">
+      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coder的孤岛">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/08/31/Others/2021-08-31-%E5%8F%AF%E9%9D%A0%E6%80%A7%E5%B7%A5%E7%A8%8B%E5%B8%88%E7%AC%94%E8%AE%B0/" class="post-title-link" itemprop="url">可靠性工程师笔记</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-08-31 08:40:00" itemprop="dateCreated datePublished" datetime="2021-08-31T08:40:00+08:00">2021-08-31</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2021-10-15 00:00:27" itemprop="dateModified" datetime="2021-10-15T00:00:27+08:00">2021-10-15</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Others/" itemprop="url" rel="index"><span itemprop="name">Others</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="可靠性概论">可靠性概论</h1>
+<p>只有在图纸设计阶段就考虑到使用场景时遇到的问题，再按图生产，才能制造出合格的产品。</p>
+<blockquote>
+<ul>
+<li>1950年12月7日，美国电子设备可靠性专门委员会成立。</li>
+<li>1952年8月21日，电子设备可靠性咨询组（AGREE）成立。</li>
+<li>1953年，美国兰德公司给出衡量武器系统优劣的七项参数：性能、可靠性、精度、易损性、可操作性、维修性和可用性。</li>
+<li>1957年6月，AGREE发表《军用电子设备可靠性》研究报告。</li>
+</ul>
+</blockquote>
+<p>可靠性工程这门学科被认为是自1957年问世的。</p>
+<p>1957年6月，AGREE发表的《军用电子设备可靠性》研究报告中，提出一套可靠性设计、试验及管理方法，形成了一套完善的可靠性设计、试验和管理标准。并在新一代产品的研制中，逐渐制定了较为完善的可靠性大纲，规定了定量的可靠性要求，进行了可靠性分配及预计、故障模式及影响分析（FMEA）和故障树分析（FTA），采用了冗余设计，开展了可靠性鉴定试验、验收试验和老炼试验，进行了可靠性评审等。</p>
+<blockquote>
+<ul>
+<li>1970年代，可靠性发展步入成熟阶段。</li>
+<li>1980年，美国国防部颁布《（D0DD 5000.40）可靠性及维修性》。</li>
+<li>1985年，美国空军推行“可靠性及维修性2000年行动计划”（R&amp;M2000），提出了“可靠性翻一番，维修性减半”的目标。</li>
+</ul>
+</blockquote>
+<h2 id="可靠性定义">可靠性定义</h2>
+<p><strong>可靠性</strong> 是指产品在 <strong>规定条件下</strong> 和
+<strong>规定时间内</strong>，<mark>完成规定功能</mark> 的能力。</p>
+<p><strong>维修性</strong> 是指产品在 <strong>规定条件下</strong> 和
+<strong>规定时间内</strong>，按规定的程序和方法维修时，<mark>保持或恢复到规定功能</mark>
+的能力。</p>
+<h3 id="三个时间点">三个时间点</h3>
+<p>如果将产品比作人，那么产品从被研发、生产、出厂、使用到寿命终结的阶段，就好比人受精、怀胎、分娩、成长到死亡的阶段。将整个过程看做一个时间轴
+$ t $ ， 那么其中的产品出厂（人的分娩）的时间就为 $ t=0
+$，产品被研发和生产（人的受精、怀胎）的阶段，其时间被视为 <span
+class="math inline">\(t&lt;0\)</span>​，
+产品被使用到寿命终结（人的成长到死亡）的阶段，其时间被视为 <span
+class="math inline">\(t&gt;0\)</span>​
+。这种方法是将产品简单划为三个时间点，例如在 <span
+class="math inline">\(t&lt;0\)</span>​
+时，研发和预制是两个不同的工作内容或阶段。</p>
+<h3 id="三个阶段">三个阶段</h3>
+<p>实际上，<span class="math inline">\(t=0\)</span>​
+仅仅是个时间点，在可靠性研究过程中，产品寿命周期通常是按以下三个阶段进行研究：<strong>研发阶段</strong>（<span
+class="math inline">\(t&lt;0\)</span>​）、<strong>生产制造阶段</strong>（<span
+class="math inline">\(t&lt;0\)</span>​）和
+<strong>使用至报废阶段</strong> （<span
+class="math inline">\(t&gt;0\)</span>​）。</p>
+<div
+style="font-size: 0.8rem; color: #222222; font-weight: 900; text-align: center;">
+图1-1 质量与可靠性关系示意图
+</div>
+<div
+style="font-size: 0.8rem; color: #222222; font-weight: 900; text-align: center;">
+表 质量、可靠性与时间三者的关系
+</div>
+<table>
+<colgroup>
+<col style="width: 24%" />
+<col style="width: 75%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th>质量的度量</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>t = 0<br>出厂时间</td>
+<td>使用产品合格率进行度量</td>
+</tr>
+<tr class="even">
+<td>t &lt; 0<br>研制阶段</td>
+<td>提高 <strong>制造过程</strong>
+中的一致性和稳定性，以降低不合格率</td>
+</tr>
+<tr class="odd">
+<td>t &gt; 0<br>使用阶段</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h1 id="可靠性数学基础">可靠性数学基础</h1>
+<p>所有可观测的现象包括 <strong>自然现象</strong> 和
+<strong>社会现象</strong>，按照结果的确定性对此类现象进行分类可以分为：<strong>确定现象</strong>
+和 <strong>不确定现象</strong>。</p>
+<pre class="mermaid">graph LR
+现象 --结果确定--> 确定现象
+现象 --结果不确定--> 不确定现象 --具有统计规律--> 随机现象
+不确定现象 --不具有统计规律--> 未知</pre>
+<h2 id="随机">随机</h2>
+<table>
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 38%" />
+<col style="width: 51%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>概念</th>
+<th>定义</th>
+<th>特点</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>随机现象</strong></td>
+<td>具有统计规律性的 <strong>不确定现象</strong>。</td>
+<td>- 描述 <strong>过程/现象可能性</strong></td>
+</tr>
+<tr class="even">
+<td><strong>随机事件</strong></td>
+<td>随机现象的某种 <strong>可能结果</strong>。</td>
+<td>- 描述 <strong>结果可能性</strong><br>-
+具有不可确定性，即事件真正发生之前不能确定其是否出现。</td>
+</tr>
+<tr class="odd">
+<td><strong>随机试验</strong></td>
+<td>研究随机现象中各种 <strong>可能发生的结果的过程</strong>。</td>
+<td>- 描述 <strong>研究结果可能性的过程</strong><br>-
+试验全部可能结果的集合可确定<br>-
+试验条件不变的情况下，试验可以无限重复<br>-
+试验的结果以随机的形式发生（实验条件相同，结果可能不同）</td>
+</tr>
+</tbody>
+</table>
+<p>随机现象之所以称之为随机现象，是因为现象发生后具有1个以上的可能结果，如果仅有1种结果，则可以称之现象和事件为
+<strong>确定现象</strong> 和 <strong>确定事件</strong>。</p>
+<p>例如：</p>
+<blockquote>
+<p>小球会落入某个洞口，小球的总数为2，小球落入洞口的现象是可观察可统计的，但小球确实地落在哪个洞口中具有不确定性，称之为现象。</p>
+<p>但小球落入到洞口A或者洞口B，是可以预测到的结果，落入洞口A则称之为事件A，落入洞口B则称之为事件B，总称之为事件。</p>
+</blockquote>
+<h2 id="频率概率">频率/概率</h2>
+<p>每一种随机现象的试验结果用 <strong>事件</strong>
+一词来描述，则随机事件有可能在一次试验中可能发生，也可能不发生，其事件的发生可能性使用
+<strong>频率</strong> 或 <strong>概率</strong> 来度量。</p>
+<p>在相同试验条件下，进行 <span class="math inline">\(n\)</span>
+次试验，事件A的出现次数 <span class="math inline">\(m\)</span> 称之为
+<strong>频数</strong> ，使用 <strong>试验总次数</strong> <span
+class="math inline">\(n\)</span> 和 <strong>事件A的频数</strong> <span
+class="math inline">\(m\)</span>​ 来表示 事件A在所有试验下的
+<strong>频率</strong> <span class="math inline">\(P^*(A)\)</span> ：
+<span class="math display">\[
+P^*(A)={m\over n} \tag{频率公式}
+\]</span></p>
+<p><strong>频率</strong>、<strong>频数</strong>、<strong>频次</strong>
+等术语在描述或者度量事件发生的可能性大小时，会因试验总次数太低 或
+某个随机事件出现的次数具有波动性而导致不合理，就连以上三个词汇本身在描述时含有一定的随机性。</p>
+<p>但在 <strong>大量重复</strong>
+某一试验时，频率趋于稳定，此时该稳定值可以称之为随机事件的
+<strong>概率</strong> 或 <strong>统计概率</strong>，使用 <span
+class="math inline">\(P(A)\)</span> 表示。</p>
+<p>即，<strong>概率</strong> 和 <strong>频率</strong>
+两个词汇在描述随机试验中的事件时，<mark>最大的区别在于该事件频率值是否趋于
+<strong>稳定</strong>，或者试验本身的总次数是否已经
+<strong>足够大</strong></mark>。</p>
+<table>
+<colgroup>
+<col style="width: 9%" />
+<col style="width: 45%" />
+<col style="width: 45%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th>频率</th>
+<th>概率</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>数学符号</strong></td>
+<td><span class="math inline">\(P^*(A)\)</span></td>
+<td><span class="math inline">\(P(A)\)</span></td>
+</tr>
+<tr class="even">
+<td><strong>特点</strong></td>
+<td>- <strong>试验值</strong>，具有波动性<br>- <strong>近似反映</strong>
+事件发生的可能性大小</td>
+<td>- <strong>理论值</strong>，由事件的本质属性决定<br>-
+<strong>精确反映</strong> 事件的可能性大小</td>
+</tr>
+</tbody>
+</table>
+<h2 id="概率分布">概率分布</h2>
+<p>常用的分布函数由：两点分布、<strong>二项分布</strong>、<strong>泊松分布</strong>、均匀分布、<strong>正态分布</strong>、<strong>对数正态分布</strong>、<strong>指数分布</strong>
+和 <strong>威布尔分布</strong> 等。</p>
+<p>随机变量按照试验结果的值是否有限或连续可以分为：<strong>离散型随机变量</strong>
+和
+<strong>连续型随机变量</strong>，其中离散型随机变量在可靠性工程中常见的统计分布类型有
+<strong>二项分布</strong> 和
+<strong>泊松分布</strong>；连续型随机变量在可靠性工程中常见的统计分布类型有：
+<strong>指数分布</strong>、<strong>正态分布</strong>、<strong>对数正态分布</strong>
+和 <strong>威布尔分布</strong>。</p>
+<pre class="mermaid">graph LR
+id1[随机变量] --试验结果的值有限--> id2[离散型随机变量]
+id1 --试验结果的值连续--> id3[连续型随机变量]
+id2 --> 二项分布
+id2 --> 泊松分布
+id3 --> 正态分布
+id3 --> 对数正态分布
+id3 --> 指数分布
+id3 --> 威布尔分布γ=0</pre>
+<table>
+<colgroup>
+<col style="width: 35%" />
+<col style="width: 39%" />
+<col style="width: 24%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;"></th>
+<th style="text-align: left;">离散型随机变量</th>
+<th style="text-align: left;">连续型随机变量</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong>可能取值范围</strong></td>
+<td style="text-align: left;">可能取值有限</td>
+<td
+style="text-align: left;">给定区间（或无限区间）内可取得任意数值</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>可能取值符号</strong></td>
+<td style="text-align: left;"><span class="math inline">\(x_1,
+x_2,x_3...x_n\)</span></td>
+<td style="text-align: left;">[0,∞)</td>
+</tr>
+<tr class="odd">
+<td
+style="text-align: left;"><strong>概率函数</strong>/<strong>分布律</strong><br><em>某点的概率</em></td>
+<td style="text-align: left;"><span
+class="math inline">\(P(X=x_i)=p_i,(i=1,2,3 ... n)\)</span>​</td>
+<td style="text-align: left;">/</td>
+</tr>
+<tr class="even">
+<td
+style="text-align: left;"><strong>概率密度函数</strong><br><em>概率在点的变化率</em></td>
+<td style="text-align: left;">/</td>
+<td style="text-align: left;"><span
+class="math inline">\(f(x)=F&#39;(x)={dF(x)\over dx}\)</span></td>
+</tr>
+<tr class="odd">
+<td
+style="text-align: left;"><strong>概率分布函数</strong>/<strong>累积概率函数</strong><br><em>区间内的概率之和</em></td>
+<td style="text-align: left;"><span
+class="math inline">\(F(x)=P(X≤x)=\sum_{x_k≤x}p_k\)</span>​​​</td>
+<td style="text-align: left;"><span
+class="math inline">\(F(x)=P(X≤x)\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>性质</strong></td>
+<td style="text-align: left;">- 任意取值变量的概率都在
+<code>[0,1)</code> 之间：<span
+class="math inline">\(0≤P(X=x_i)=p_i＜1\)</span>​​<br>- 所有事件概率总和为
+<code>1</code> ：<span
+class="math inline">\(\sum^n_{i=1}p_i=1\)</span>​</td>
+<td style="text-align: left;"></td>
+</tr>
+</tbody>
+</table>
+<p><strong>概率密度函数</strong> 或 <strong>概率分布</strong>
+<mark>反映了随机变量的统计规律</mark>。概率密度函数值反映了概率在该点的变化率，而非该点的概率。</p>
+<p>以下需要区分几个概念，什么是
+<strong>故障概率函数</strong>、<strong>故障率函数</strong>、<strong>故障概率密度函数</strong>、<strong>故障密度函数</strong>、<strong>可靠度函数</strong>？</p>
+<p><strong>故障概率函数</strong>，也称为 <strong>故障率函数</strong>，即
+<strong>失败概率函数</strong>，用事件的失败概率进行求解。</p>
+<p><strong>故障概率密度函数</strong>，即适用于
+连续型随机变量的故障概率函数。</p>
+<p>在连续型统计分布中，<code>故障密度函数 = 可靠度函数 * 故障率函数</code>。</p>
+<h3 id="离散型随机变量分布">离散型随机变量分布</h3>
+<table>
+<colgroup>
+<col style="width: 7%" />
+<col style="width: 31%" />
+<col style="width: 35%" />
+<col style="width: 16%" />
+<col style="width: 8%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th>（故障）概率函数</th>
+<th>（故障）（累积）概率分布函数</th>
+<th>均值 <span class="math inline">\(\mu\)</span></th>
+<th>方差 <span class="math inline">\(\sigma^2\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>二项分布</strong></td>
+<td><span class="math inline">\(P(x)=C^x_np^xq^{n-x}\)</span>​​<br><span
+class="math inline">\(C^x_n = {n!\over x!(n-x)!}\)</span>​</td>
+<td><span class="math inline">\(F(x)=\sum ^r_{x=0} C^x_n p^x
+q^{n-x}\)</span>​<br><span class="math inline">\(C^x_n = {n!\over
+x!(n-x)!}\)</span></td>
+<td><span class="math inline">\(np\)</span></td>
+<td><span class="math inline">\(npq\)</span></td>
+</tr>
+<tr class="even">
+<td><strong>泊松分布</strong></td>
+<td><span class="math inline">\(P(x)={(np)^x \over
+x!}e^{-np}\)</span></td>
+<td><span class="math inline">\(F(x) = \sum ^r_{x=0} {(np)^x \over
+x!}e^{-np}\)</span></td>
+<td><span class="math inline">\(\lambda\)</span> <br><span
+class="math inline">\(\lambda = np\)</span></td>
+<td><span class="math inline">\(\lambda\)</span></td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<ul>
+<li><span class="math inline">\(n\)</span>​ 为
+样本量，即抽取样本总数</li>
+<li><span class="math inline">\(x\)</span> 或 <span
+class="math inline">\(r\)</span>
+​均为失败数，即抽取样本总数下失败的数量</li>
+<li><span class="math inline">\(p\)</span> 为 失败概率</li>
+<li><span class="math inline">\(q\)</span> 为 成功概率</li>
+</ul>
+</blockquote>
+<p><strong>需要注意</strong>： <span class="math inline">\(C^x_n =
+{n!\over x!(n-x)!}\)</span>​​​ ，是为
+<strong>总试验次数的累乘</strong>（阶乘）与
+（<strong>成功次数的累乘</strong> 和 <strong>失败次数的累乘</strong>
+之积） 的商。</p>
+<h4 id="二项分布">二项分布</h4>
+<p><strong>贝努力试验</strong>：随机变量的基本结果只有两种（成功/失败）的试验。</p>
+<p><strong>N重贝努力试验</strong>：随机现象是由N次相同的贝努力试验组成，每次试验结果
+<strong>只有两种</strong> 且 <strong>互不影响</strong>。</p>
+<p><strong>例题 2-1</strong></p>
+<blockquote>
+<p>某新产品在规定的生产条件下废品率为 <code>0.2</code>
+，从批量较大的产品中随机抽取出 <code>20</code> 个，有 <span
+class="math inline">\(r\)</span>（<span
+class="math inline">\(r=0,1,2...,10\)</span>）个废品的概率是多少？</p>
+</blockquote>
+<p><strong>解</strong>：已知某新产品的的废品与否，可以分为两种独立事件：<strong>成功</strong>
+或
+<strong>失败</strong>（废品）。且单个产品是否成功或失败不影响下一个产品，即符合N重贝努力试验的要求。使用二项分布概率公式
+<span class="math inline">\(P(x)=C^x_np^xq^{n-x}\)</span>​
+代入，随机抽取的20个产品即为 <span class="math inline">\(n\)</span>
+，<span class="math inline">\(p\)</span> 为失败的概率，即题目中的
+<code>0.2</code> 或 <code>20%</code>，<span
+class="math inline">\(x\)</span> 则为抽取总数 <code>20</code>
+下的失败产品数量，代入可得： <span class="math display">\[
+P(X=r)=C^r_{20}0.2^r(1-0.2)^{20-r},r=0,1,2,3...10 \tag{例2-1}
+\]</span></p>
+<h4 id="泊松分布">泊松分布</h4>
+<p>二项分布和泊松分布是不一样的。虽然都是离散型随机变量的分布类型，但是
+<mark>二项分布适用于抽样总数小于 <code>20</code> 且 失败概率大于
+<code>0.05</code>
+的情况</mark>，当抽样数无限大时，使用二项分布公式进行求解计算不了，代码中会出现
+<code>-nan</code>
+关键字，此时泊松分布可以轻松计算，因此，<mark style="font-weight: 900;">泊松分布被认为是二项分布在大抽样数下的扩展</mark>。</p>
+<p>反之，如果将适用于二项分布的数据代入泊松分布公式，虽然能够计算，但是可能会获得异常数据。</p>
+<p>即，虽然人为泊松分布是二项分布的在大抽样数下的扩展，但是毕竟公式和理念都不一样，不能够用来互相验证。</p>
+<figure>
+<img src="https://pic.islet.space/2021/08/image-20210902105513439.png"
+alt="image-20210902105513439" />
+<figcaption aria-hidden="true">image-20210902105513439</figcaption>
+</figure>
+<figure>
+<img src="https://pic.islet.space/2021/08/image-20210902105540683.png"
+alt="image-20210902105540683" />
+<figcaption aria-hidden="true">image-20210902105540683</figcaption>
+</figure>
+<p><strong>例题 2-2</strong></p>
+<blockquote>
+<p>控制台指示灯平均失效率为每小时 <code>0.001</code>
+次。如果指示灯的失效数不能超过 <code>2</code> 个，该控制台指示灯工作
+<code>500</code> 小时的可靠度是多少？</p>
+</blockquote>
+<p><strong>解</strong>：结合上方题目和泊松分布的概率公式 <span
+class="math inline">\(P(x)={(np)^x \over x!}e^{-np}\)</span>
+可知，每小时平均失效率即为 失败概率 <span
+class="math inline">\(p\)</span> ，工作时长500个小时即为抽样总数 <span
+class="math inline">\(n\)</span> ，而失效灯数不能超过 <code>2</code>
+个即为失败数 <code>x</code> ，代入公式可得： <span
+class="math display">\[
+P(x) = {(500·0.001)^x \over x!} ·e^{-500*0.001} = {0.5^x \over x!}
+·e^{-0.5} \tag{例2-2 概率函数}
+\]</span> 然后求的其 <span class="math inline">\(P(0) + P(1)
++P(2)\)</span> 之和： <span class="math display">\[
+F(2) = \sum^2_{0}P(x) = {0.5^0 \over 0!} ·e^{-0.5} + {0.5^1 \over 1!}
+·e^{-0.5} +{0.5^2 \over 2!} ·e^{-0.5} = 1.625*0.606530 = 0.9856
+\tag{例2-2 累积概率分布函数}
+\]</span></p>
+<h3 id="连续型随机变量分布">连续型随机变量分布</h3>
+<table>
+<colgroup>
+<col style="width: 6%" />
+<col style="width: 30%" />
+<col style="width: 31%" />
+<col style="width: 31%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>分布形式</th>
+<th>故障密度函数 <span class="math inline">\(f(x)\)</span>​</th>
+<th>可靠度函数 <span class="math inline">\(R(x)\)</span>​</th>
+<th>故障率函数 <span class="math inline">\(\lambda(x)\)</span>​​</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>正态分布</td>
+<td><span
+class="math inline">\(\frac{1}{\sigma\sqrt{2\pi}}e^{-{(x-\mu)^2}/{2\sigma^2}}\)</span>​​</td>
+<td><span class="math inline">\(\frac{1}{\sigma\sqrt{2\pi}}\int_x^\infin
+e^{-{(x-\mu)^2}/{2\sigma^2}} dt\)</span>​</td>
+<td><span class="math inline">\(e^{-(x-\mu)^2/(2\sigma)^2} / \int
+^\infin _x e^{-(x-\mu)^2/(2\sigma)^2} dt\)</span>​</td>
+</tr>
+<tr class="even">
+<td>对数正态分布</td>
+<td><span
+class="math inline">\(\frac{1}{x\sigma\sqrt{2\pi}}e^{-(lnx-\mu)^2/2\sigma^2}\)</span></td>
+<td><span class="math inline">\(\frac{1}{\sigma\sqrt{2\pi}}\int_x^\infin
+\frac{1}{t}e^{-(lnt-\mu)^2/2\sigma^2} dt\)</span>​​</td>
+<td><span class="math inline">\(\frac{1}{x}e^{-(lnt-\mu)^2/(2\sigma)^2}/
+\int_x^\infin \frac{1}{t}e^{-(lnt-\mu)^2/(2\sigma)^2} dt\)</span>​​</td>
+</tr>
+<tr class="odd">
+<td>指数分布</td>
+<td><span class="math inline">\(λe^{-λx}\)</span></td>
+<td><span class="math inline">\(e^{-λx}\)</span></td>
+<td><span class="math inline">\(λ\)</span></td>
+</tr>
+<tr class="even">
+<td>威布尔分布</td>
+<td>$()<sup>{m-1}e</sup>{-(x/)^m} $​​</td>
+<td><span class="math inline">\(e^{-(x/\eta)^m}\)</span></td>
+<td><span
+class="math inline">\(\frac{m}{\eta}(\frac{x}{\eta})^{m-1}\)</span></td>
+</tr>
+</tbody>
+</table>
+<h4 id="正态分布">正态分布</h4>
+<p>在数学上，<strong>正态分布</strong>（Normal Distribution）利用
+<strong>均值</strong> <span class="math inline">\(\mu\)</span>​ 和
+<strong>方差</strong> <span class="math inline">\(\sigma^2\)</span>​ 记为
+<span class="math inline">\(\Nu(\mu, \sigma^2)\)</span>​​ 。</p>
+<p><strong>标准正态分布</strong>：正态分布曲线的 <strong>均值</strong>
+为0，<strong>标准差</strong> 为1的正态分布，即 <span
+class="math inline">\(\mu = 0, \sigma = 1\)</span>​。</p>
+<p><strong>一般正态分布</strong>：除标准正态分布以外的正态分布。任何正态分布都可以使用标准正态分布来计算。</p>
+<h5 id="一般正态分布">一般正态分布</h5>
+<p>正态分布的密度函数 <span class="math inline">\(f(x)\)</span> 为：
+<span class="math display">\[
+\varphi(x) = \frac{1}{\sigma\sqrt{2\pi}}e^{-{(x-\mu)^2}/{2\sigma^2}}
+\tag{正态密度函数}
+\]</span> 正态分布的可靠度函数 <span class="math inline">\(R(x)\)</span>
+为： <span class="math display">\[
+R(x) = \frac{1}{\sigma\sqrt{2\pi}}\int_x^\infin
+e^{-{(x-\mu)^2}/{2\sigma^2}} dt \tag{正态可靠度函数}
+\]</span></p>
+<h5 id="标准正态分布">标准正态分布</h5>
+<p>标准正态分布以下简称标正，由于标正的均值为0，标准差为1，即 <span
+class="math inline">\(\mu = 0, \sigma = 1\)</span> ，代入对应公式可得
+<strong>标正密度函数</strong> 记为 <span
+class="math inline">\(\varphi(z)\)</span>
+，<strong>标正累积分布函数</strong> 记为 <span
+class="math inline">\(\Phi(z)\)</span>​ ，分别如下： <span
+class="math display">\[
+\varphi(z) = \frac{1}{\sqrt{2\pi}} e^{-z^2/2} \tag{标正密度函数}
+\]</span></p>
+<p><span class="math display">\[
+\Phi(z) = \int^z_{-\infin} \varphi(z) \ dz = \frac{1}{\sqrt{2\pi}}
+\int^z_{-\infin} e^{-z^2/2} \ dz \tag{标正累积分布函数}
+\]</span></p>
+<div style="text-align: center;">
+<img src="https://pic.islet.space/2021/09/image-20210903143312170.png" alt="image-20210903143312170" style="zoom:80%;" /><img src="https://pic.islet.space/2021/09/image-20210903144047691.png" alt="image-20210903144047691" style="zoom:80%;" />
+</div>
+<div
+style="font-size: 0.8rem; color: #222222; font-weight: 900; text-align: center;">
+图 标准正态分布密度函数曲线 及 累积曲线
+</div>
+<p>正态分布的 <strong>可靠度函数</strong> 为： <span
+class="math display">\[
+R(t) = 1-\Phi(\frac{t-\mu}{\sigma}) \tag{正态可靠度函数}
+\]</span></p>
+<figure>
+<img src="https://pic.islet.space/2021/09/image-20210903145950111.png"
+alt="image-20210903145950111" />
+<figcaption aria-hidden="true">image-20210903145950111</figcaption>
+</figure>
+<div
+style="font-size: 0.8rem; color: #222222; font-weight: 900; text-align: center;">
+图 标准正态分布可靠度函数曲线
+</div>
+<p>总结成下表：</p>
+<table>
+<colgroup>
+<col style="width: 6%" />
+<col style="width: 31%" />
+<col style="width: 31%" />
+<col style="width: 31%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th>密度函数</th>
+<th>累积分布函数</th>
+<th>可靠度函数</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>一般正态</strong></td>
+<td><span class="math inline">\(\varphi(x) =
+\frac{1}{\sigma\sqrt{2\pi}}e^{-{(x-\mu)^2}/{2\sigma^2}}\)</span></td>
+<td><span class="math inline">\(\Phi(x) = \frac{1}{\sigma\sqrt{2\pi}}
+\int^x_{-\infin} e^{-{(x-\mu)^2}/{2\sigma^2}} \ dx\)</span>​​</td>
+<td><span class="math inline">\(R(x) =
+\frac{1}{\sigma\sqrt{2\pi}}\int_x^\infin
+e^{-{(x-\mu)^2}/{2\sigma^2}}\)</span></td>
+</tr>
+<tr class="even">
+<td><strong>标准正态</strong></td>
+<td><span class="math inline">\(\varphi(z) = \frac{1}{\sqrt{2\pi}}
+e^{-z^2/2}\)</span></td>
+<td><span class="math inline">\(\Phi(z) = \int^z_{-\infin} \varphi(z) \
+dz = \frac{1}{\sqrt{2\pi}} \int^z_{-\infin} e^{-z^2/2}
+\  dz\)</span>​</td>
+<td><span class="math inline">\(R(t) =
+1-\Phi(\frac{t-\mu}{\sigma})\)</span></td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>正态分布的重要参数有以下几个：</p>
+<ol type="1">
+<li>工作时长 <span class="math inline">\(x\)</span></li>
+<li>均值 <span class="math inline">\(\mu\)</span></li>
+<li>标准差 <span class="math inline">\(\sigma\)</span></li>
+</ol>
+</blockquote>
+<p><strong>需要注意的是</strong>：</p>
+<ul>
+<li><strong>一般正态密度函数</strong> 的符号记为 <span
+class="math inline">\(f(x)\)</span>​ ，<strong>标准正态密度函数</strong>
+的符号记为小写的希腊字母 <span
+class="math inline">\(\varphi(z)\)</span>​。</li>
+<li>一般其他分布的 <strong>累积分布函数</strong> 为 大写的 <span
+class="math inline">\(F(x)\)</span> 。</li>
+<li><strong>标正累积分布函数</strong> 的符号记为大写的希腊字母 <span
+class="math inline">\(\Phi(z)\)</span>​​​​ ，与
+<strong>标正密度函数</strong>
+的符号发音一致，<mark style="font-weight: 900;">标正累积分布函数的值计算较为麻烦，可以通过查表获得</mark>。</li>
+<li><mark>就标正比较特殊，需要全部用希腊字母</mark>。</li>
+<li>因为 <strong>标正累积分布函数</strong> 和
+<strong>标正可靠度函数</strong> 的曲线互为水平翻转。</li>
+</ul>
+<p><strong>例题 2-3</strong></p>
+<blockquote>
+<p>假设发电机的寿命服从正态分布，其均值为300小时，标准差为40小时。试求当工作时间为250小时时，发电机的可靠度是多少？</p>
+</blockquote>
+<p><strong>解</strong>：已知均值 <span class="math inline">\(u =
+300\)</span> ，标准差 <span class="math inline">\(\sigma = 40\)</span>
+且 工作时长为 <code>250</code>
+小时，可代入正态可靠度函数进行求解，如下： <span class="math display">\[
+R(t) = 1- \Phi(\frac{t-\mu}{\sigma}) = 1-\Phi(\frac{250-300}{40}) = 1 -
+\Phi(-1.25) \tag{例2-3 正态分布可靠度函数}
+\]</span> 其中，<span class="math inline">\(\Phi(-1.25)\)</span>​​ 和
+<span class="math inline">\(\Phi(1.25)\)</span>​​ 互补（和为
+<code>1</code>），可以通过查询标准正态累积分布表 或使用
+自行编写的函数进行计算，可得 <span class="math inline">\(\Phi(1.25) =
+0.89\)</span>​​ ，则发电机的可靠度为: <span class="math display">\[
+R(250) = 1-(1-\Phi(1.25)) = 1 - (1-0.89) = 0.89 \tag{例2-3 可靠度计算}
+\]</span></p>
+<h5 id="正态分布的特性">正态分布的特性</h5>
+<ol type="1">
+<li><span class="math inline">\(\Phi(x)\)</span> 和 <span
+class="math inline">\(\Phi(-x)\)</span> 为 <strong>互补关系</strong>，即
+<span class="math inline">\(\Phi(x) + \Phi(-x) =1\)</span>​</li>
+<li>在 <strong>标准正态分布</strong> 下，<strong>可靠度</strong> 和
+<strong>累积分布值</strong> 互补为1， <span class="math inline">\(R(t) =
+1-\Phi(t)\)</span>​，在 <strong>一般正态分布</strong> 下，需要注意加入
+<strong>均值</strong> <span class="math inline">\(\mu\)</span> 和
+<strong>标准差</strong>​ <span class="math inline">\(\sigma\)</span>​​
+。</li>
+</ol>
+<h5 id="正态分布的用途">正态分布的用途</h5>
+<p>在可靠性工程中，正态分布具有以下三种用途：</p>
+<ol type="1">
+<li>分析由于磨损发生故障的产品，如机械装置。</li>
+<li>对制造的产品及其性能是否符合规范进行分析。</li>
+<li>用于机械可靠性概率设计。</li>
+</ol>
+<h4 id="对数正态分布">对数正态分布</h4>
+<p><strong>对数正态分布</strong>（Logarithmic Normal Distribution） 是
+正态分布随机变量的 <strong>自然对数</strong> <span
+class="math inline">\(y = ln(x)\)</span>​​​​ ，记为 <span
+class="math inline">\(LN(\mu, \sigma^2)\)</span>​​​​​​。</p>
+<p><strong>特点</strong>：使用 对数正态分布 的对数变换
+可以使得较大的数缩小为较小的数，且越大的数缩小的越明显。好处是使得较为分散的数据通过对数变换后，可以相对地集中起来，所以常把
+<mark style="font-weight: 900;">跨几个数量级的数据用对数正态分布区拟合</mark>（如下方例题2-4）。</p>
+<p><strong>适用产品/场景</strong>：<strong>半导体器件</strong>
+的可靠性分析、<strong>机械零件</strong> 的疲劳寿命分析 或 在
+<strong>维修性分析</strong> 中对维修时间数据的分析。</p>
+<p>对数正态分布的密度函数如下，需要注意，该函数的取值范围为 <span
+class="math inline">\([0,\infin)\)</span>​ <span class="math display">\[
+f(x)=\frac{1}{x\sigma\sqrt{2\pi}}e^{-(lnx-\mu)^2/2\sigma^2}\tag{对数正态分布密度函数}
+\]</span></p>
+<div style="text-align: center;">
+<img src="https://pic.islet.space/2021/09/image-20210903171208666.png" alt="image-20210903171208666" style="zoom: 80%;" /><img src="https://pic.islet.space/2021/09/image-20210903170823326.png" alt="image-20210903170823326" style="zoom:80%;" />
+</div>
+<div
+style="font-size: 0.8rem; color: #222222; font-weight: 900; text-align: center;">
+图 标准对数正态分布密度函数曲线 及 累积曲线
+</div>
+<blockquote>
+<p><strong>注意</strong>：应该是没有标准对数正态分布的吧，就代入 <span
+class="math inline">\(\mu = 0, \sigma = 1\)</span>​ 进行计算求得图像</p>
+</blockquote>
+<p>对数正态累积分布函数如下： <span class="math display">\[
+F(x) = \frac{1}{\sigma \sqrt{2\pi}} \int^x_0 \frac{1}{t}
+e^{-{(lnt-\mu)^2}/{2\sigma^2}} \ dt \tag{对数正态累积分布函数}
+\]</span> 其可靠度函数如下： <span class="math display">\[
+R(x) = 1 - \Phi(\frac{ln(x)-\mu}{\sigma}) \tag{对数正态分布可靠度函数}
+\]</span> 其中，<span class="math inline">\(ln(x)\)</span>​​ 和 <span
+class="math inline">\(x\)</span>​​ 的均值和方差如下：</p>
+<table>
+<colgroup>
+<col style="width: 7%" />
+<col style="width: 39%" />
+<col style="width: 53%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th>均值</th>
+<th>方差</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="math inline">\(ln(x)\)</span></td>
+<td><span class="math inline">\(\mu\)</span></td>
+<td><span class="math inline">\(\sigma^2\)</span></td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(x\)</span></td>
+<td><span class="math inline">\(E(x)=exp(\mu +
+\frac{\sigma^2}{2})\)</span>​</td>
+<td><span class="math inline">\(Var(x)=exp(2\mu + \sigma^2) ·
+[exp(\sigma^2)-1]\)</span></td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>对数正态分布的重要参数有以下几个：</p>
+<ol type="1">
+<li>工作时长 <span class="math inline">\(x\)</span></li>
+<li>均值 <span class="math inline">\(\mu\)</span></li>
+<li>标准差 <span class="math inline">\(\sigma\)</span></li>
+</ol>
+</blockquote>
+<p><strong>例题 2-4</strong></p>
+<blockquote>
+<p>假设人们观察到炮管寿命服从对数正态分布，<span
+class="math inline">\(\mu = 9,\sigma = 2\)</span>。（注意，<span
+class="math inline">\(\mu\)</span> 和 <span
+class="math inline">\(\sigma\)</span> 是 <span
+class="math inline">\(ln(x)\)</span>
+的均值和标准差）求发射1000发炮弹时的可靠度。</p>
+</blockquote>
+<p><strong>解</strong>：</p>
+<p><strong>情况一</strong>：已知对数正态分布可靠度表格</p>
+<p>在已知表格时，直接代入公式，然后查表计算即可。 <span
+class="math display">\[
+R(1000)=1-\Phi(\frac{ln1000-9}{2}) = 1-\Phi(-1.046) = 1-0.15 = 0.85
+\tag{例2-4 可靠度计算}
+\]</span> <strong>情况二</strong>：未知对数正态分布可靠度表格</p>
+<p>在没有对数正态分布可靠度值表格可查询的情况下，是没有办法直接得出答案的。正常的思路如下：</p>
+<ol type="1">
+<li>将 <span class="math inline">\(\mu=9, \sigma=2\)</span> 代入密度公式
+<span class="math inline">\(f(x)\)</span></li>
+<li>然后在区间 <span class="math inline">\((0,1000]\)</span>​
+内进行积分，通过累计分布函数 <span
+class="math inline">\(\Phi(1000)\)</span>
+，可以得到其特定区间内的累积分布值。</li>
+<li>然后使用 <code>1</code> 减去该累积分布值即可获得该可靠度值 <span
+class="math inline">\(R(1000)\)</span>。</li>
+</ol>
+<div style="text-align: center;">
+<img src="https://pic.islet.space/2021/09/image-20210903165737856.png" alt="image-20210903165737856" style="zoom:80%;" /><img src="https://pic.islet.space/2021/09/image-20210903165632407.png" alt="image-20210903165632407" style="zoom:80%;" />
+</div>
+<div
+style="font-size: 0.8rem; color: #222222; font-weight: 900; text-align: center;">
+图 例题的对数正态累积分布曲线和可靠度曲线
+</div>
+<p>上面两个图片是经由C++函数计算并使用gnuplot进行绘制的，实际计算得到本例题的
+<span class="math inline">\(\Phi(1000) = 0.14781, R(1000)=
+0.85219\)</span>​</p>
+<p>无聊着又稍微拟合了该产品在工作到 <code>100,000</code> 小时时的
+<strong>可靠度曲线</strong> 和 工作到 <code>10,000</code> 小时时的
+<strong>密度曲线</strong>。</p>
+<div style="text-align: center;">
+<img src="https://pic.islet.space/2021/09/image-20210903172937541.png" alt="image-20210903172937541" style="zoom:80%;" /><img src="https://pic.islet.space/2021/09/image-20210903195121209.png" alt="image-20210903195121209" style="zoom:80%;" />
+</div>
+<div
+style="font-size: 0.8rem; color: #222222; font-weight: 900; text-align: center;">
+图 工作到10万小时的炮管的可靠度曲线 和 工作到1万小时的炮管的密度曲线
+</div>
+<h4 id="指数分布">指数分布</h4>
+<p><strong>指数分布</strong>（Exponential Distribution）
+是可靠性工程中最重要的一种分布。</p>
+<p>当产品工作进入浴盆曲线的偶然故障期后，产品的故障率基本接近常数，其对应的故障分布函数就是指数分布。</p>
+<p><strong>优点</strong>：</p>
+<ul>
+<li>参数估计简单容易，只有一个变量；</li>
+<li>在数学上非常容易处理；</li>
+<li>适用范围非常广；</li>
+<li>大量指数分布的独立变量之和还是指数分布，具有可加性。</li>
+</ul>
+<p><strong>性质</strong>：</p>
+<ul>
+<li>指数分布的失效率 <span class="math inline">\(\lambda\)</span> 等于
+<strong>常数</strong>；</li>
+<li>指数分布的 <strong>平均寿命</strong> <span
+class="math inline">\(\theta\)</span> 和 <strong>失效率</strong> <span
+class="math inline">\(\lambda\)</span> 互为倒数，即 <span
+class="math inline">\(\theta = 1/\lambda\)</span> ；</li>
+<li>指数分布“无记忆性”。（<strong>无记忆性</strong>
+是指故障分布为指数分布的系统的失效率，在任何时刻都与系统已工作过的时间长短没有关系。）</li>
+</ul>
+<p>指数分布的密度函数如下： <span class="math display">\[
+f(x) = \left\{
+\displaylines{\lambda e^{-\lambda x}, x ≥ 0\\ 0,x &lt; 0}
+\right. \tag{指数分布密度函数}
+\]</span> 其累积失效分布函数为： <span class="math display">\[
+F(x) = 1 - e^{-\lambda x} \tag{指数累积分布函数}
+\]</span> 其可靠度函数为： <span class="math display">\[
+R(x)=e^{-\lambda x} \tag{指数分布可靠度函数}
+\]</span></p>
+<div style="text-align: center;">
+<img src="https://pic.islet.space/2021/09/image-20210903190717009.png" alt="image-20210903190717009" style="zoom:80%;" /><img src="https://pic.islet.space/2021/09/image-20210903191446082.png" alt="image-20210903191446082" style="zoom:80%;" />
+</div>
+<div
+style="font-size: 0.8rem; color: #222222; font-weight: 900; text-align: center;">
+图 故障率为100 和 故障率为0.01的指数分布密度函数曲线
+</div>
+<blockquote>
+<p>上图为错误例子啊，因为故障率 <span class="math inline">\(\lambda =
+100\)</span>​​​ 时已经高得离谱，且故障率和平均工作时长是呈反比的，故障率为
+<code>100</code> 的话，就是说大概只能工作 <code>0.01</code> 小时（大概
+<code>36</code> s），所以会看到该 <strong>密度曲线</strong>
+在x轴没到0.1就飞降。把故障率修改为
+<code>0.01</code>，即大概能工作100个小时，就可以看到较为
+<strong><em>正常</em></strong> 的密度曲线了。</p>
+</blockquote>
+<p>如果要求其可靠度曲线，则用 <strong>密度值</strong> <span
+class="math inline">\(F(x)\)</span> 除以 <strong>故障率</strong> <span
+class="math inline">\(\lambda\)</span>​ 即可，曲线如下：</p>
+<figure>
+<img src="https://pic.islet.space/2021/09/image-20210903193144464.png"
+alt="image-20210903193144464" />
+<figcaption aria-hidden="true">image-20210903193144464</figcaption>
+</figure>
+<div
+style="font-size: 0.8rem; color: #222222; font-weight: 900; text-align: center;">
+图 故障率为0.01的指数分布可靠度函数曲线
+</div>
+<p><strong>例题 2-5</strong></p>
+<blockquote>
+<p>机载火控系统的平均故障间隔时间是 <code>100</code> 小时，即 <span
+class="math inline">\(\theta = 100\)</span>​
+小时，工作5小时不发生故障的概率是多少？</p>
+</blockquote>
+<p><strong>解</strong>：由题目已知 <span class="math inline">\(\theta =
+100\)</span> ， 即 <span class="math inline">\(\lambda = 0.01\)</span>
+，要求的是工作5小时不发生故障的概率，即求可靠度。</p>
+<p>代入指数分布可靠度公式 <span class="math inline">\(R(x)=e^{-\lambda
+x}\)</span> 即可求得 <code>0.951229</code>，即 <code>95.12%</code>
+。</p>
+<h4 id="威布尔分布">威布尔分布</h4>
+<p><strong>威布尔分布</strong>（Weibull Distribution）是由
+<strong>最弱环节模型</strong> 导出的，如链条的寿命就服从威布尔分布。</p>
+<p>威布尔分布 是 <strong>通用分布</strong>
+，通过调整分布参数可以构成各种不同的分布，可以为各种不同类型的产品的寿命特性建立模型。</p>
+<p>威布尔分布既包括 故障率 为常数的模型，也包括故障率随时间变化的
+<strong>递减</strong>（早期故障）和
+<strong>递增</strong>（损耗故障）模型，因而可以描述更为复杂的失效过程。许多产品的故障率是单调递增的，威布尔分布可以很好地描述产品疲劳、磨损等损耗故障。</p>
+<table>
+<colgroup>
+<col style="width: 9%" />
+<col style="width: 45%" />
+<col style="width: 45%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th>两参数公式</th>
+<th>三参数公式</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>概率密度函数</td>
+<td><span
+class="math inline">\(f(t)=\frac{m}{\eta}(\frac{t}{\eta})^{m-1}exp[-(\frac{t}{\eta})^m]\)</span></td>
+<td><span
+class="math inline">\(f(t)=\frac{m}{\eta}(\frac{t-\gamma}{\eta})^{m-1}exp[-(\frac{t-\gamma}{\eta})^m]\)</span></td>
+</tr>
+<tr class="even">
+<td>累积分布函数</td>
+<td><span
+class="math inline">\(F(t)=1-exp[-(\frac{t}{\eta})^m]\)</span>​</td>
+<td><span
+class="math inline">\(F(t)=1-exp[-(\frac{t-\gamma}{\eta})^m]\)</span></td>
+</tr>
+<tr class="odd">
+<td>可靠度函数</td>
+<td><span
+class="math inline">\(R(t)=exp[-(\frac{t}{\eta})^m]\)</span></td>
+<td><span
+class="math inline">\(R(t)=exp[-(\frac{t-\gamma}{\eta})^m]\)</span></td>
+</tr>
+<tr class="even">
+<td>故障率函数</td>
+<td><span
+class="math inline">\(\lambda(t)=\frac{m}{\eta}(\frac{t}{\eta})^{m-1}\)</span></td>
+<td><span
+class="math inline">\(\lambda(t)=\frac{m}{\eta}(\frac{t-\gamma}{\eta})^{m-1}\)</span></td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>威布尔分布的重要参数有以下几个：</p>
+<ol type="1">
+<li>随机变量 <span class="math inline">\(t\)</span> ，<span
+class="math inline">\(t≥0\)</span>（两参数），<span
+class="math inline">\(t≥\gamma\)</span>​（三参数）</li>
+<li>无量纲 形状参数 <span class="math inline">\(m,\ m&gt;0\)</span>​​</li>
+<li>尺度参数 <span class="math inline">\(\eta,\ \eta&gt;0\)</span>​​</li>
+<li>位置参数 <span class="math inline">\(\gamma, \
+\gamma&gt;0\)</span></li>
+</ol>
+<p>除形状参数 <span class="math inline">\(m\)</span>
+以外，其他参数单位相同。</p>
+</blockquote>
+<p><strong>例题 2-6</strong></p>
+<blockquote>
+<p>人们发现某种特定的发射管的失效时间服从威布尔分布，其中 <span
+class="math inline">\(m=2, \eta = 1000\)</span>
+小时，试确定当任务时间为100小时时这种发射管的可靠度。</p>
+</blockquote>
+<p><strong>解</strong>：</p>
+<p>威布尔分布除了时间 <span class="math inline">\(t\)</span>
+以外，就只剩下三个参数，而题目中并无使用位置参数 <span
+class="math inline">\(\gamma\)</span>
+，因此直接代入可靠度公式进行求解即可： <span class="math display">\[
+R(x) =exp[-(\frac{t-\gamma}{\eta})^m] = e^{-(t/\eta)^m}  \tag{例2-6
+可靠度求解}
+\]</span> 得到该产品在工作时长为100小时时的可靠度为： <span
+class="math display">\[
+R(100) = e^{-(100/1000)^2} = e^{-0.01} = 0.990049 ≈ 99\%
+\]</span></p>
+<p>使用C++驱动GNUPLOT拟合该曲线至 <span
+class="math inline">\(t=3000\)</span>​​ 时的 <strong>可靠度曲线</strong>
+和 <strong>累积曲线</strong> 如下：</p>
+<div style="text-align: center;">
+<img src="https://pic.islet.space/2021/09/image-20210903201848206.png" alt="image-20210903201848206" style="zoom:80%;" /><img src="https://pic.islet.space/2021/09/image-20210903203111178.png" alt="image-20210903203111178" style="zoom:80%;" />
+</div>
+<div
+style="font-size: 0.8rem; color: #222222; font-weight: 900; text-align: center;">
+图 例题2-6 威布尔分布的 可靠度曲线 和 累积曲线
+</div>
+<h2 id="参数估计">参数估计</h2>
+<p>可靠性工程中，<strong>数理统计</strong>
+是进行数据整理和分析的基础，<mark>其基本内容是统计推断</mark>。</p>
+<p><mark>随机变量的概率分布虽然能很好地描述随机分布，但是通常不能对研究对象的总体都进行观测和试验</mark>，只能从中随机地抽取一部分子样进行观察和试验，获得必要的数据，对齐进行分析处理，然后对总体的
+<strong>分布类型</strong> 和 <strong>参数</strong> 进行推断。</p>
+<h3 id="抽样相关概念">抽样相关概念</h3>
+<p><strong>总体</strong>：也称为
+<strong>母体</strong>，研究对象的全体。</p>
+<p><strong>个体</strong>：组成总体的每个基本单元。</p>
+<p><strong>样本</strong>：也称为
+<strong>子样</strong>，在总体中随机抽取的部分个体。</p>
+<p><strong>样本值</strong>：在每次抽样后测得的具体数值（记为 <span
+class="math inline">\(x_1, x_2, x_3 ... x_n\)</span>）。</p>
+<p><strong>样本容量</strong>：样本所包含的个体数目（记为 <span
+class="math inline">\(n\)</span>）。</p>
+<p><strong>随机抽样</strong>：不掺入人为主观因素而具有随机性的抽样，即具有
+<strong>代表性</strong> 和 <strong>独立性</strong> 的抽样。</p>
+<p><strong>样本统计量</strong>：是指子样 <span
+class="math inline">\(x_1, x_2, ..., x_n\)</span> 是从母体 <span
+class="math inline">\(X\)</span>
+中随机抽取出来后，进一步提炼和加工后的统计量，如 <strong>均值</strong>
+<span class="math inline">\(\overline x\)</span> 、<strong>方差</strong>
+<span class="math inline">\(S^2\)</span>、<strong>极差</strong> <span
+class="math inline">\(R\)</span>​​</p>
+<p>子样之所以很宝贵，是因为包含了母体的各种信息，尚未对子样进一步提炼和加工处理前，母体的各种信息仍分散在子样中，子样经过加工成一些统计量之后可以反映出一些信息，如：<strong>均值</strong>
+反映了母体数学期望信息，<strong>方差</strong>
+反映了母体方差信息，<strong>极差</strong>
+粗略地反映了母体分散程度，但不能直接用于估计母体的方差。下方为统计量的一些概念。</p>
+<h3 id="统计量相关概念">统计量相关概念</h3>
+<p><strong>均值</strong>：反映了母体数学期望的信息，表示为 <span
+class="math inline">\(\overline x =\frac{1}{n}
+\sum^n_{i=1}x_i\)</span>​​</p>
+<p><strong>平均差</strong>：平均差是表示各个变量值之间差异程度的数值之一。指各个变量值同平均数的离差绝对值的算术平均数。</p>
+<p><strong>方差</strong>：方差是在概率论和统计方差衡量随机变量或一组数据时离散程度的度量。概率论中方差用来度量随机变量和其数学期望（即均值）之间的偏离程度。统计中的方差（样本方差）是每个样本值与全体样本值的平均数之差的平方值的平均数，表示为
+<span class="math inline">\(S^2=\frac{1}{n-1}\sum ^n_{i=1}(x_i-\overline
+x)^2\)</span>​ 。</p>
+<p><strong>标准差</strong>：是离均差平方的算术平均数的平方根，是方差的算术平方根，表示为
+<span class="math inline">\(\sigma=\sqrt{S^2}\)</span> 。</p>
+<p><strong>极差</strong>：极差又称范围误差或全距(Range)，以 <span
+class="math inline">\(R\)</span>​
+表示，是用来表示统计资料中的变异量数(measures of
+variation)，其最大值与最小值之间的差距，即最大值减最小值后所得之数据。是指一组数据内的最大值和最小值之间的差异，表示为
+<span class="math inline">\(R=max(x_1,x_2, ..., x_n)-min(x1, x2, ...,
+xn)\)</span> 。</p>
+<h4 id="分布参数的点估计">分布参数的点估计</h4>
+<p>如果 <span class="math inline">\(X\)</span> 是一个具有概率分布 <span
+class="math inline">\(f(x)\)</span> 的随机变量，样本容量为 <span
+class="math inline">\(n\)</span>，样本值为 <span
+class="math inline">\(x_1, x_2, ..., x_n\)</span> ，则与其位置参数 <span
+class="math inline">\(\theta\)</span> 相应的统计量 <span
+class="math inline">\(\hat{\theta }\)</span> 的估计值。</p>
+<p>此处，<span class="math inline">\(\hat{\theta}\)</span>
+是一个随机变量，因为它是样本数据的函数。在样本已经选好之后，就能得到一个确定的
+<span class="math inline">\(\hat{\theta}\)</span> 值，就是 <span
+class="math inline">\(\theta\)</span> 的点估计。</p>
+<h5 id="点估计的解析法">点估计的解析法</h5>
+<p>在点估计的解析法中，有很多方法可以选择，如
+矩法、最小二乘法、极大似然法、最好线性无偏估计、最好线性不变估计、简单线性无偏估计
+和 不变估计。以上方法的特点如下：</p>
+<ul>
+<li>矩法只适用于完全样本；</li>
+<li>最好线性无偏估计 和 不变估计 已有国家标准《GB 2689.4-1981
+寿命试验和加速寿命试验的最好线性无偏估计法（用于威布尔分布）》，但只适用于定数截尾情况，在一定样本量下有专用表格；</li>
+<li>极大似然法和最小二乘法适用于所有情况，极大似然法是精度最好的方法。</li>
+</ul>
+<h5 id="极大似然法">极大似然法</h5>
+<p>极大似然估计（Maximum Likelihood Estimate,
+MLE）是一种重要的估计方法，利用总体分布函数表达式及样本数据两种信息来建立似然函数。</p>
+<p><strong>特点</strong>：具有一致性、有效性 和 渐近无偏性
+等优良性质。</p>
+<p><strong>缺点</strong>：求解方法最为复杂，需要用迭代法并借助计算机求解。</p>
+<h4 id="分布参数的区间估计">分布参数的区间估计</h4>
+<p><strong>区间估计</strong>：在实际问题中，对于未知参数 <span
+class="math inline">\(\theta\)</span> ，并不一定求出其点估计值 <span
+class="math inline">\(\hat{\theta}\)</span>
+为满足，仍希望求出其范围，并希望知道该范围包含未制参数 <span
+class="math inline">\(\theta\)</span> 真值的置信概率的估计。</p>
+<p><strong>置信区间</strong>：表示计算估计的精确程度</p>
+<p><strong>置信度</strong>：是样品的试验结果在母体的概率分布参数（如均值或标准差）的某个区间内出现的概率，表示结果的可信性。</p>
+<p>与置信度不同，可靠度 是指
+样品在规定条件下和规定时间内正常工作的概率，反映的是产品本身的质量状况。</p>
+<h1 id="可靠性设计与分析">可靠性设计与分析</h1>
+<h1 id="gitee项目分享">Gitee项目分享</h1>
+<p>适用于《可靠性工程师手册》的数学函数已经开源共享至Gitee，依托于
+GNUPLOT 的图形绘制能力，可以轻松查看各种函数的曲线形状，十分方便。</p>
+<h1 id="math-for-reliability">Math-For-Reliability</h1>
+<p>在Gitee上的开源项目，开放给所有学习可靠性的人使用。</p>
+<p>Gitee项目地址：https://gitee.com/tonyliew/math-for-reliability</p>
+<h1 id="debug_records">DEBUG_RECORDS</h1>
+<h2 id="section">20210902-01</h2>
+<p>在Linux上运行标准正态累积分布计算函数，其计算结果与标准正态分布表方向相反了。<span
+class="math inline">\(x = 0\)</span>​​ 时的 <span
+class="math inline">\(\Phi(x)\)</span>​​ 值本应为0.5，结果和 <span
+class="math inline">\(x = 5\)</span>​​ 时的 <span
+class="math inline">\(\Phi(x)\)</span>​​​​ 值相反。</p>
+<figure>
+<img src="https://pic.islet.space/2021/08/image-20210902193634846.png"
+alt="image-20210902193634846" />
+<figcaption aria-hidden="true">image-20210902193634846</figcaption>
+</figure>
+<p>一番检查发现积分函数可能不适用</p>
+<figure>
+<img src="https://pic.islet.space/2021/08/image-20210902194119411.png"
+alt="image-20210902194119411" />
+<figcaption aria-hidden="true">image-20210902194119411</figcaption>
+</figure>
+<p>经过“校准”一番，终于修改好了，不知道还会不会卡Bug。</p>
+<figure>
+<img src="https://pic.islet.space/2021/08/image-20210902194157770.png"
+alt="image-20210902194157770" />
+<figcaption aria-hidden="true">image-20210902194157770</figcaption>
+</figure>
+<p>目前可以计算x值为正时的累积分布值，结果与标准正态分布表一致。</p>
+<figure>
+<img src="https://pic.islet.space/2021/08/image-20210902194241093.png"
+alt="image-20210902194241093" />
+<figcaption aria-hidden="true">image-20210902194241093</figcaption>
+</figure>
+<p>重新解答完
+2-3例题，发现知道了修改bug的方法，也只是补上了而已，哈哈哈哈。</p>
+<figure>
+<img src="https://pic.islet.space/2021/08/image-20210902200537224.png"
+alt="image-20210902200537224" />
+<figcaption aria-hidden="true">image-20210902200537224</figcaption>
+</figure>
+<p>经过验证，结果正确。</p>
+<figure>
+<img src="https://pic.islet.space/2021/08/image-20210902200910935.png"
+alt="image-20210902200910935" />
+<figcaption aria-hidden="true">image-20210902200910935</figcaption>
+</figure>
+<p>9月3日订正，为了生成标准正态累积分布的图形，发现带负号的
+<code>integral()</code> 函数生成曲线时是 <strong>水平翻转</strong>
+的。</p>
+<div style="text-align: center;">
+<img src="https://pic.islet.space/2021/09/image-20210903144047691.png" alt="image-20210903144047691" style="zoom:80%;" /><img src="https://pic.islet.space/2021/09/image-20210903145950111.png" alt="image-20210903145950111" style="zoom:80%;" />
+</div>
+<div
+style="font-size: 0.8rem; color: #222222; font-weight: 900; text-align: center;">
+图 标准正态分布的 累积（故障）函数曲线 和 可靠度函数曲线 互为水平翻转
+</div>
+<p>仔细思考后发现，标准正态函数下，<strong>可靠度曲线值</strong> 是和
+<strong>累积分布函数曲线</strong> 值各点互补为 <code>1</code>
+的，很容易将累积分布函数和可靠度函数互相搞混，因此其图像才会互为
+<strong>水平翻转</strong>，修改后的标正累积分布函数代码如下：</p>
+<figure>
+<img src="https://pic.islet.space/2021/09/image-20210903144813581.png"
+alt="image-20210903144813581" />
+<figcaption aria-hidden="true">image-20210903144813581</figcaption>
+</figure>
+<h1 id="参考">参考</h1>
+<ol type="1">
+<li>《可靠性工程师手册（第二版）》中国人名大学出版社 李良巧主编</li>
+<li><a
+target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/266435689">概率分布函数、概率密度函数</a></li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://islet.space/2021/08/21/Others/2021-08-21-LaTex%E5%85%AC%E5%BC%8F%E5%85%A5%E9%97%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Liewzheng">
+      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coder的孤岛">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/08/21/Others/2021-08-21-LaTex%E5%85%AC%E5%BC%8F%E5%85%A5%E9%97%A8/" class="post-title-link" itemprop="url">LaTex公式入门</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-08-21 09:50:00" itemprop="dateCreated datePublished" datetime="2021-08-21T09:50:00+08:00">2021-08-21</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2021-10-05 14:36:56" itemprop="dateModified" datetime="2021-10-05T14:36:56+08:00">2021-10-05</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Others/" itemprop="url" rel="index"><span itemprop="name">Others</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>[TOC]</p>
+<h1 id="公式书写">公式书写</h1>
+<p>Typora虽然是支持Markdown出名，但是也支持LaTex公式，需要在Typora的设置中打开相关选项</p>
+<h2 id="typora设置">Typora设置</h2>
+<ol type="1">
+<li><p>在Typora的偏好设置 下，选择 Markdown 选项，勾选
+<code>內联公式（例：$\LaTeX$）</code> 选项和 <code>自动添加序号</code>
+选项（此项可不选）</p></li>
+<li><p>在 “<strong>当复制或导出为无格式的HTML时</strong>” 选择
+“<strong>使用LaTeX代码</strong>”</p></li>
+</ol>
+<p><img src="https://pic.islet.space/2021/09/image-20210904111919668.png" alt="image-20210904111919668" style="zoom:80%;" /></p>
+<h2 id="书写方法">书写方法</h2>
+<p>设置完毕后，即可进入公式书写。</p>
+<p>在使用Typora的Markdown语法来编辑LaTex公式，本身LaTex就与Markdown语法存在一定的冲突，但在Pandoc（Typora使用的效果渲染器）的加持下，显示效果较好，但公式写得多了或者书写过程中可能仍会存在一定的显示延迟（解决办法是：暂时没有）。</p>
+<p>以下全程默认使用Typora编辑器。</p>
+<p>使用LaTex支持两种书写方式，<strong>行模式</strong> 和
+<strong>块模式</strong> ，对应的通用叫法是
+<strong>内联公式</strong>（行内公式，inline） 和
+<strong>块公式</strong>（block）。这里需要一点HTML5的知识，就是该公式是可以被存放在文字中间的，还是独占一行的，存放在文字中间的叫
+<strong>内联</strong>，如 <span class="math inline">\(f(x)=x^2\)</span>
+，独占一行的叫 <strong>块</strong>，如： <span class="math display">\[
+f(x)= \lambda e^{-\lambda x} \tag{样例公式}
+\]</span></p>
+<h3 id="内联公式">内联公式</h3>
+<p>书写内联公式时，只需要在同一行文字内书写两个美元符号 <code>$$</code>
+，然后再两个美元符号中间书写内容即可。</p>
+<p>尝试复制粘贴右侧文字到typora吧： <code>$f(x)= x^2$</code>​</p>
+<h3 id="块公式">块公式</h3>
+<p>块公式需要在独占一行时书写
+<code>$$</code>，然后按回车键，即可进入块编辑模式，编辑框如下：</p>
+<figure>
+<img src="https://pic.islet.space/2021/09/image-20210904113516554.png"
+alt="image-20210904113516554" />
+<figcaption aria-hidden="true">image-20210904113516554</figcaption>
+</figure>
+<p>不管是内联公式还是快公式都是支持实时编辑和实时显示的。</p>
+<h1 id="基础符号">基础符号</h1>
+<table>
+<thead>
+<tr class="header">
+<th>中文</th>
+<th>样式</th>
+<th>语法</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>上标</td>
+<td><span class="math inline">\(X^2\)</span><br><span
+class="math inline">\(X^{log(10)}\)</span></td>
+<td>X<sup>2<br>X</sup>{log(10)}</td>
+</tr>
+<tr class="even">
+<td>下标</td>
+<td><span class="math inline">\(X_i\)</span><br><span
+class="math inline">\(X_{a-b}\)</span></td>
+<td><code>X_i</code> 和 <code>X_&#123;a-b&#125;</code></td>
+</tr>
+<tr class="odd">
+<td>积分符号</td>
+<td><span class="math inline">\(\int\)</span></td>
+<td><code>\int</code></td>
+</tr>
+<tr class="even">
+<td>无限</td>
+<td><span class="math inline">\(\infin\)</span></td>
+<td><code>\infin</code></td>
+</tr>
+<tr class="odd">
+<td>平均值符号</td>
+<td><span class="math inline">\(\overline x\)</span></td>
+<td><code>\overline x</code></td>
+</tr>
+<tr class="even">
+<td>帽子符号</td>
+<td><span class="math inline">\(\hat{a}\)</span></td>
+<td><code>\hat&#123;a&#125;</code></td>
+</tr>
+<tr class="odd">
+<td></td>
+<td><span class="math inline">\(\widehat{a}\)</span></td>
+<td><code>\widehat&#123;a&#125;</code></td>
+</tr>
+<tr class="even">
+<td></td>
+<td><span class="math inline">\(\acute{a}\)</span></td>
+<td><code>\acute&#123;a&#125;</code></td>
+</tr>
+<tr class="odd">
+<td></td>
+<td><span class="math inline">\(\grave{a}\)</span></td>
+<td><code>\grave&#123;a&#125;</code></td>
+</tr>
+<tr class="even">
+<td></td>
+<td><span class="math inline">\(\bar{a}\)</span></td>
+<td><code>\bar&#123;a&#125;</code></td>
+</tr>
+<tr class="odd">
+<td></td>
+<td><span class="math inline">\(\dot{a}\)</span></td>
+<td><code>\dot&#123;a&#125;</code></td>
+</tr>
+<tr class="even">
+<td></td>
+<td><span class="math inline">\(\ddot{a}\)</span></td>
+<td><code>\ddot&#123;a&#125;</code></td>
+</tr>
+<tr class="odd">
+<td>短波浪号</td>
+<td><span class="math inline">\(\tilde{A_2}\)</span></td>
+<td><code>\tilde&#123;A_2&#125;</code></td>
+</tr>
+<tr class="even">
+<td>长波浪号</td>
+<td><span class="math inline">\(\widetilde{A_2}\)</span></td>
+<td><code>\widetilde&#123;A_2&#125;</code></td>
+</tr>
+<tr class="odd">
+<td>上左箭头</td>
+<td><span class="math inline">\(\overleftarrow{N}\)</span></td>
+<td><code>\overleftarrow&#123;N&#125;</code></td>
+</tr>
+<tr class="even">
+<td>上右箭头</td>
+<td><span class="math inline">\(\overrightarrow{N}\)</span></td>
+<td><code>\overrightarrow&#123;N&#125;</code></td>
+</tr>
+<tr class="odd">
+<td>下左箭头</td>
+<td><span class="math inline">\(\underleftarrow{N}\)</span>​</td>
+<td><code>\underleftarrow&#123;N&#125;</code></td>
+</tr>
+<tr class="even">
+<td>下右箭头</td>
+<td><span class="math inline">\(\underrightarrow{N}\)</span>​</td>
+<td><code>\underrightarrow&#123;N&#125;</code></td>
+</tr>
+<tr class="odd">
+<td>限制下标</td>
+<td><span class="math inline">\(\mathop{a}\limits_{i=1}\)</span></td>
+<td><code>\mathop&#123;a&#125;\limits_&#123;i=1&#125;</code></td>
+</tr>
+<tr class="even">
+<td>分子式</td>
+<td><span class="math inline">\(\frac{1}{2}\)</span></td>
+<td><code>\frac&#123;1&#125;&#123;2&#125;</code></td>
+</tr>
+<tr class="odd">
+<td>根号</td>
+<td><span class="math inline">\(\sqrt{2\pi}\)</span></td>
+<td><code>\sqrt&#123;2\pi&#125;</code></td>
+</tr>
+<tr class="even">
+<td>求和符号</td>
+<td><span class="math inline">\(\sum\)</span></td>
+<td><code>\sum</code></td>
+</tr>
+<tr class="odd">
+<td>三角符号</td>
+<td><span class="math inline">\(\triangle\)</span></td>
+<td><code>\triangle</code></td>
+</tr>
+</tbody>
+</table>
+<h1 id="块公式样例">块公式样例</h1>
+<p>直接复制代码框中的内容到typora即可。</p>
+<h2 id="样例1">样例1</h2>
+<p><span class="math display">\[
+f(x) = \left\{
+\displaylines{\lambda e^{-\lambda x}, x ≥ 0\\ 0,x &lt; 0}
+\right. \tag{指数分布密度函数}
+\]</span></p>
+<figure class="highlight latex"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">$</span><span class="built_in">$</span></span><br><span class="line">f(x) = <span class="keyword">\left</span><span class="keyword">\&#123;</span> </span><br><span class="line"><span class="keyword">\displaylines</span>&#123;<span class="keyword">\lambda</span> e<span class="built_in">^</span>&#123;-<span class="keyword">\lambda</span> x&#125;, x ≥ 0<span class="keyword">\\</span> 0,x &lt; 0&#125; </span><br><span class="line"><span class="keyword">\right</span>. <span class="keyword">\tag</span>&#123;指数分布密度函数&#125;</span><br><span class="line"><span class="built_in">$</span><span class="built_in">$</span></span><br></pre></td></tr></table></figure>
+<h2 id="样例2">样例2</h2>
+<p><span class="math display">\[
+F(x) = \frac{1}{\sigma \sqrt{2\pi}} \int^x_0 \frac{1}{t}
+e^{-{(lnt-\mu)^2}/{2\sigma^2}} \ dt \tag{对数正态累积分布函数}
+\]</span></p>
+<figure class="highlight latex"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">$</span><span class="built_in">$</span></span><br><span class="line">F(x) = <span class="keyword">\frac</span>&#123;1&#125;&#123;<span class="keyword">\sigma</span> <span class="keyword">\sqrt</span>&#123;2<span class="keyword">\pi</span>&#125;&#125; <span class="keyword">\int</span><span class="built_in">^</span>x<span class="built_in">_</span>0 <span class="keyword">\frac</span>&#123;1&#125;&#123;t&#125; e<span class="built_in">^</span>&#123;-&#123;(lnt-<span class="keyword">\mu</span>)<span class="built_in">^</span>2&#125;/&#123;2<span class="keyword">\sigma</span><span class="built_in">^</span>2&#125;&#125; <span class="keyword">\ </span>dt <span class="keyword">\tag</span>&#123;对数正态累积分布函数&#125;</span><br><span class="line"><span class="built_in">$</span><span class="built_in">$</span></span><br></pre></td></tr></table></figure>
+<h2 id="样例3">样例3</h2>
+<p><span class="math display">\[
+\varphi(x) = \frac{1}{\sigma\sqrt{2\pi}}e^{-{(x-\mu)^2}/{2\sigma^2}}
+\tag{正态密度函数}
+\]</span></p>
+<figure class="highlight latex"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">$</span><span class="built_in">$</span></span><br><span class="line"><span class="keyword">\varphi</span>(x) = <span class="keyword">\frac</span>&#123;1&#125;&#123;<span class="keyword">\sigma</span><span class="keyword">\sqrt</span>&#123;2<span class="keyword">\pi</span>&#125;&#125;e<span class="built_in">^</span>&#123;-&#123;(x-<span class="keyword">\mu</span>)<span class="built_in">^</span>2&#125;/&#123;2<span class="keyword">\sigma</span><span class="built_in">^</span>2&#125;&#125; <span class="keyword">\tag</span>&#123;正态密度函数&#125;</span><br><span class="line"><span class="built_in">$</span><span class="built_in">$</span></span><br></pre></td></tr></table></figure>
+<h1 id="希腊字母">希腊字母</h1>
+<p>整理了常用的希腊字母及其Latex书写方式。</p>
+<p>LaTex书写希腊字母时都是使用 <strong>转义字符</strong> 进行的，即
+<code>\</code> + <code>对应的英文</code> 。</p>
+<p>如果需要表现大写希腊字母，则对应英文的首字母大写，否则就用小写。</p>
+<p>需要注意的是，<em>epsilon</em> 和 <em>phi</em>
+有额外的符号，所以会有额外的写法，如下方表格所示。</p>
+<table>
+<colgroup>
+<col style="width: 4%" />
+<col style="width: 4%" />
+<col style="width: 12%" />
+<col style="width: 4%" />
+<col style="width: 16%" />
+<col style="width: 8%" />
+<col style="width: 34%" />
+<col style="width: 14%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>序号</th>
+<th>大写</th>
+<th>LATEX</th>
+<th>小写</th>
+<th>LATEX</th>
+<th>英文</th>
+<th>国际音标[推荐]</th>
+<th>汉字注音</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>Α</td>
+<td><code>$Alpha$</code></td>
+<td>α</td>
+<td><code>$alpha$</code></td>
+<td>alpha</td>
+<td>/'ælfə/</td>
+<td>阿尔法</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>Β</td>
+<td><code>$Beta$</code></td>
+<td>β</td>
+<td><code>$beta$</code></td>
+<td>beta</td>
+<td>/'bi:tə/或/'beɪtə/</td>
+<td>贝塔/毕塔</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>Γ</td>
+<td><code>$Gamma$</code></td>
+<td>γ</td>
+<td><code>$gamma$</code></td>
+<td>gamma</td>
+<td>/'gæmə/</td>
+<td>伽玛/甘玛</td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td>Δ</td>
+<td><code>$Delta$</code></td>
+<td>δ</td>
+<td><code>$delta$</code></td>
+<td>delta</td>
+<td>/'deltə/</td>
+<td>德尔塔/岱欧塔</td>
+</tr>
+<tr class="odd">
+<td>5</td>
+<td>Ε</td>
+<td><code>$Epsilon$</code></td>
+<td>ε</td>
+<td><code>$epsilon$</code></td>
+<td>epsilon</td>
+<td>/'epsɪlɒn/</td>
+<td>艾普西龙</td>
+</tr>
+<tr class="even">
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td><code>$varepsilon$</code></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>6</td>
+<td>Ζ</td>
+<td><code>$Zeta$</code></td>
+<td>ζ</td>
+<td><code>$zeta$</code></td>
+<td>zeta</td>
+<td>/'zi:tə/</td>
+<td>泽塔</td>
+</tr>
+<tr class="even">
+<td>7</td>
+<td>Η</td>
+<td><code>$Eta$</code></td>
+<td>η</td>
+<td><code>$eta$</code></td>
+<td>eta</td>
+<td>/'i:tə/</td>
+<td>伊塔/诶塔</td>
+</tr>
+<tr class="odd">
+<td>8</td>
+<td>Θ</td>
+<td><code>$Theta$</code></td>
+<td>θ</td>
+<td><code>$theta$</code></td>
+<td>theta</td>
+<td>/'θi:tə/</td>
+<td>西塔</td>
+</tr>
+<tr class="even">
+<td>9</td>
+<td>Ι</td>
+<td><code>$Iota$</code></td>
+<td>ι</td>
+<td><code>$iota$</code></td>
+<td>iota</td>
+<td>/aɪ'əʊtə/</td>
+<td>埃欧塔</td>
+</tr>
+<tr class="odd">
+<td>10</td>
+<td>Κ</td>
+<td><code>$Kappa$</code></td>
+<td>κ</td>
+<td><code>$kappa$</code></td>
+<td>kappa</td>
+<td>/'kæpə/</td>
+<td>堪帕</td>
+</tr>
+<tr class="even">
+<td>11</td>
+<td>∧</td>
+<td><code>$Lambda$</code></td>
+<td>λ</td>
+<td><code>$lambda$</code></td>
+<td>lambda</td>
+<td>/'læmdə/</td>
+<td>兰姆达</td>
+</tr>
+<tr class="odd">
+<td>12</td>
+<td>Μ</td>
+<td><code>$Mu$</code></td>
+<td>μ</td>
+<td><code>$mu$</code></td>
+<td>mu</td>
+<td>/mju:/</td>
+<td>谬/穆</td>
+</tr>
+<tr class="even">
+<td>13</td>
+<td>Ν</td>
+<td><code>$Nu$</code></td>
+<td>ν</td>
+<td><code>$nu$</code></td>
+<td>nu</td>
+<td>/nju:/</td>
+<td>拗/奴</td>
+</tr>
+<tr class="odd">
+<td>14</td>
+<td>Ξ</td>
+<td><code>$Xi$</code></td>
+<td>ξ</td>
+<td><code>$xi$</code></td>
+<td>xi</td>
+<td>希腊:/ksi/英美:/ˈzaɪ/或/ˈksaɪ/</td>
+<td>可西/赛</td>
+</tr>
+<tr class="even">
+<td>15</td>
+<td>Ο</td>
+<td><code>$Omicron$</code></td>
+<td>ο</td>
+<td><code>$omicron$</code></td>
+<td>omicron</td>
+<td>/əuˈmaikrən/或/ˈɑmɪˌkrɑn/</td>
+<td>欧(阿~)米可荣</td>
+</tr>
+<tr class="odd">
+<td>16</td>
+<td>∏</td>
+<td><code>$Pi$</code></td>
+<td>π</td>
+<td><code>$pi$</code></td>
+<td>pi</td>
+<td>/paɪ/</td>
+<td>派</td>
+</tr>
+<tr class="even">
+<td>17</td>
+<td>Ρ</td>
+<td><code>$Rho$</code></td>
+<td>ρ</td>
+<td><code>$rho$</code></td>
+<td>rho</td>
+<td>/rəʊ/</td>
+<td>柔/若</td>
+</tr>
+<tr class="odd">
+<td>18</td>
+<td>∑</td>
+<td><code>$Sigma$</code></td>
+<td>σ</td>
+<td><code>$sigma$</code></td>
+<td>sigma</td>
+<td>/'sɪɡmə/</td>
+<td>西格玛</td>
+</tr>
+<tr class="even">
+<td>19</td>
+<td>Τ</td>
+<td><code>$Tau$</code></td>
+<td>τ</td>
+<td><code>$tau$</code></td>
+<td>tau</td>
+<td>/tɔ:/或/taʊ/</td>
+<td>套/驼</td>
+</tr>
+<tr class="odd">
+<td>20</td>
+<td>Υ</td>
+<td><code>$Upsilon$</code></td>
+<td>υ</td>
+<td><code>$upsilon$</code></td>
+<td>upsilon</td>
+<td>/ˈipsilon/或/ˈʌpsɨlɒn/</td>
+<td>宇(阿~)普西龙</td>
+</tr>
+<tr class="even">
+<td>21</td>
+<td>Φ</td>
+<td><code>$Phi$</code></td>
+<td>φ</td>
+<td><code>$varphi$</code></td>
+<td>phi</td>
+<td>/faɪ/</td>
+<td>弗爱/弗忆</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td><code>$phi$</code></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td>22</td>
+<td>Χ</td>
+<td><code>$chi$</code></td>
+<td>χ</td>
+<td><code>$chi$</code></td>
+<td>chi</td>
+<td>/kaɪ/</td>
+<td>凯/柯义</td>
+</tr>
+<tr class="odd">
+<td>23</td>
+<td>Ψ</td>
+<td><code>$Psi$</code></td>
+<td>ψ</td>
+<td><code>$psi$</code></td>
+<td>psi</td>
+<td>/psaɪ/</td>
+<td>赛/普赛/普西</td>
+</tr>
+<tr class="even">
+<td>24</td>
+<td>Ω</td>
+<td><code>$Omega$</code></td>
+<td>ω</td>
+<td><code>$omega$</code></td>
+<td>omega</td>
+<td>/'əʊmɪɡə/或/oʊ'meɡə/</td>
+<td>欧米伽/欧枚嘎</td>
+</tr>
+</tbody>
+</table>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -384,288 +2255,6 @@ alt="image-20210821095249164" />
 <li><a
 target="_blank" rel="noopener" href="http://www.elecfans.com/yuanqijian/ptc/202001031148953.htm">热敏电阻应用与参数详解</a></li>
 <li><a target="_blank" rel="noopener" href="https://baike.baidu.com/item/NTC/16035">NTC</a></li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://islet.space/2021/08/18/Communication/2021-08-18-SPI%E9%80%9A%E4%BF%A1/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Liewzheng">
-      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Coder的孤岛">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/08/18/Communication/2021-08-18-SPI%E9%80%9A%E4%BF%A1/" class="post-title-link" itemprop="url">SPI通信</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-
-    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
-    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2021-08-18 07:50:00" itemprop="dateCreated datePublished" datetime="2021-08-18T07:50:00+08:00">2021-08-18</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-09-16 00:29:44" itemprop="dateModified" datetime="2021-09-16T00:29:44+08:00">2021-09-16</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Communication/" itemprop="url" rel="index"><span itemprop="name">Communication</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="串行外设接口">串行外设接口</h1>
-<p><strong>串行外设接口</strong>（Serial Peripheral
-Interface，SPI）是微控制器和外围IC（如传感器、ADC、DAC、移位寄存器、SRAM等）之间使用最广泛的接口之一。</p>
-<p>SPI是一种同步、全双工、主从式接口。来自主机或从机的数据在时钟<mark>上升沿或下降沿同步</mark>。主机和从机可以同时传输数据。SPI接口可以是
-<strong>3线式</strong> 或
-<strong>4线式</strong>。后述中重点介绍常用的4线SPI接口。</p>
-<p>与I2C的 <strong>多主多从</strong> 模式不同，SPI协议为
-<strong>一主多从</strong> 模式。SPI所消耗的接口数也大大提升。</p>
-<h2 id="接口介绍">接口介绍</h2>
-<p><img src="https://pic.islet.space/2021/08/image-20210819075248043.png" alt="image-20210819075248043" style="zoom: 33%;" /></p>
-<div style="font-weight: 900; text-align: center;">
-图1. 含主机和从机的SPI配置
-</div>
-<p>4线SPI器件有四个信号：</p>
-<ul>
-<li>时钟(SPI CLK, SCLK)</li>
-<li>片选(CS)</li>
-<li>主机输出、从机输入(MOSI)</li>
-<li>主机输入、从机输出(MISO)</li>
-</ul>
-<p>产生时钟信号的器件称为主机。主机和从机之间传输的数据与主机产生的时钟同步。同I2C接口相比，SPI器件支持更高的时钟频率。查阅相关产品数据手册以了解SPI接口的时钟频率规格。</p>
-<p><mark style="font-weight: 900;">SPI接口只能有一个主机，但可以有一个或多个从机。</mark>图1显示了主机和从机之间的SPI连接。</p>
-<p>来自主机的片选信号用于选择从机。这
-<mark style="font-weight: 900;">通常是一个低电平有效信号，拉高时从机与SPI总线断开连接</mark>。当使用多个从机时，主机需要为每个从机提供单独的片选信号。<u>本文中</u>
-的片选信号始终是低电平有效信号。</p>
-<p>MOSI和MISO是数据线。MOSI将数据从主机发送到从机，MISO将数据从从机发送到主机。</p>
-<h2 id="数据传输">数据传输</h2>
-<p>要开始SPI通信，主机必须发送时钟信号，并通过使能CS信号选择从机。片选通常是低电平有效信号。因此，主机必须在该信号上发送逻辑0以选择从机。SPI是全双工接口，主机和从机可以分别通过MOSI和MISO线路同时发送数据。在SPI通信期间，数据的发送（串行移出到MOSI/SDO总线上）和接收（采样或读入总线(MISO/SDI)上的数据）同时进行。串行时钟沿同步数据的移位和采样。SPI接口允许用户灵活选择时钟的上升沿或下降沿来采样和/或移位数据。</p>
-<p><strong>需要注意</strong>：SPI接口传输的 <strong>数据位数</strong>
-仍需查阅器件数据手册。</p>
-<h2 id="时钟极性和时钟相位">时钟极性和时钟相位</h2>
-<p>在SPI中，主机可以选择 <strong>时钟极性</strong>（Clock
-Polarity，<strong>CPOL</strong>）和 <strong>时钟相位</strong>（Clock
-Phase，<strong>CPHA</strong>）。</p>
-<p>在空闲状态期间，CPOL 控制
-时钟极性。空闲状态是指传输开始时CS为高电平且在向低电平转变的期间，以及传输结束时CS为低电平且在向高电平转变的期间。</p>
-<p>CPHA 控制
-时钟相位。<mark>根据CPHA位的状态，使用时钟上升沿或下降沿来采样和/或移位数据</mark>。主机必须
-<mark>根据从机的要求选择时钟极性和时钟相位</mark>。根据CPOL和CPHA位的选择，有四种SPI模式可用，如下表：</p>
-<table>
-<colgroup>
-<col style="width: 11%" />
-<col style="width: 5%" />
-<col style="width: 5%" />
-<col style="width: 29%" />
-<col style="width: 46%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th>SPI 模式</th>
-<th>CPOL</th>
-<th>CPHA</th>
-<th>空闲状态下的时钟极性</th>
-<th>用于采样和/或移位数据的时钟相应</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>逻辑低电平</td>
-<td>数据在上升沿采样，在下降沿移出</td>
-</tr>
-<tr class="even">
-<td>1</td>
-<td>0</td>
-<td>1</td>
-<td>逻辑低电平</td>
-<td>数据在下降沿采样，在上升沿移出</td>
-</tr>
-<tr class="odd">
-<td>2</td>
-<td>1</td>
-<td>1</td>
-<td>逻辑低电平</td>
-<td>数据在下降沿采样，在上升沿移出</td>
-</tr>
-<tr class="even">
-<td>3</td>
-<td>1</td>
-<td>0</td>
-<td>逻辑低电平</td>
-<td>数据在上升沿采样，在下降沿移出</td>
-</tr>
-</tbody>
-</table>
-<p>下图为TI公司F280049芯片的SPI时钟模式：</p>
-<figure>
-<img src="https://pic.islet.space/2021/08/image-20210819084200284.png"
-alt="image-20210819084200284" />
-<figcaption aria-hidden="true">image-20210819084200284</figcaption>
-</figure>
-<p>下图为ADI公司ADSP21479芯片的SPI时钟模式：</p>
-<figure>
-<img src="https://pic.islet.space/2021/08/image-20210819084447672.png"
-alt="image-20210819084447672" />
-<figcaption aria-hidden="true">image-20210819084447672</figcaption>
-</figure>
-<p>后述 图2 至 图5 显示了四种SPI模式下的通信示例。</p>
-<p>在这些示例中，数据显示在MOSI和MISO线上。传输的开始和结束用绿色虚线表示，采样边沿用橙色虚线表示，移位边沿用蓝色虚线表示。请注意，这些图形仅供参考。要成功进行SPI通信，用户须参阅产品数据手册并确保满足器件的时序规格。</p>
-<p><img src="https://pic.islet.space/2021/08/205973_fig_02.png" alt="图2. SPI模式0，CPOL = 0，CPHA = 0：CLK空闲状态 = 低电平，数据在上升沿采样，并在下降沿移出" style="zoom: 60%;" /></p>
-<div style="font-weight: 900; text-align: center;">
-图2. SPI模式0，CPOL = 0，CPHA = 0：CLK空闲状态 =
-低电平，数据在上升沿采样，并在下降沿移出
-</div>
-<p>图3给出了SPI模式1的时序图。在此模式下，时钟极性为0，表示时钟信号的空闲状态为低电平。此模式下的时钟相位为1，表示数据在下降沿采样（由橙色虚线显示），并且数据在时钟信号的上升沿移出（由蓝色虚线显示）。</p>
-<p><img src="https://www.analog.com/-/media/images/analog-dialogue/en/volume-52/number-3/articles/introduction-to-spi-interface/205973_fig_03.png?la=en&vs=1" alt="图3. SPI模式1，CPOL = 0，CPHA = 1：CLK空闲状态 = 低电平，数据在下降沿采样，并在上升沿移出" style="zoom:50%;" /></p>
-<div style="font-weight: 900; text-align: center;">
-图3. SPI模式1，CPOL = 0，CPHA = 1：CLK空闲状态 =
-低电平，数据在下降沿采样，并在上升沿移出
-</div>
-<p>图4给出了SPI模式2的时序图。在此模式下，时钟极性为1，表示时钟信号的空闲状态为高电平。此模式下的时钟相位为1，表示数据在下降沿采样（由橙色虚线显示），并且数据在时钟信号的上升沿移出（由蓝色虚线显示）。</p>
-<p><img src="https://www.analog.com/-/media/images/analog-dialogue/en/volume-52/number-3/articles/introduction-to-spi-interface/205973_fig_04.png?la=en&vs=1" alt="图4. SPI模式2，CPOL = 1，CPHA = 1：CLK空闲状态 = 高电平，数据在下降沿采样，并在上升沿移出" style="zoom:50%;" /></p>
-<div style="font-weight: 900; text-align: center;">
-图4. SPI模式2，CPOL = 1，CPHA = 1：CLK空闲状态 =
-高电平，数据在下降沿采样，并在上升沿移出。
-</div>
-<p>图5给出了SPI模式3的时序图。在此模式下，时钟极性为1，表示时钟信号的空闲状态为高电平。此模式下的时钟相位为0，表示数据在上升沿采样（由橙色虚线显示），并且数据在时钟信号的下降沿移出（由蓝色虚线显示）。</p>
-<p><img src="https://www.analog.com/-/media/images/analog-dialogue/en/volume-52/number-3/articles/introduction-to-spi-interface/205973_fig_05.png?la=en&vs=1" alt="图5. SPI模式3，CPOL = 1，CPHA = 0：CLK空闲状态 = 高电平，数据在上升沿采样，并在下降沿移出" style="zoom:50%;" /></p>
-<div style="font-weight: 900; text-align: center;">
-图5. SPI模式3，CPOL = 1，CPHA = 0：CLK空闲状态 =
-高电平，数据在上升沿采样，并在下降沿移出
-</div>
-<h2 id="多从机配置">多从机配置</h2>
-<p>多个从机可与单个SPI主机一起使用。从机可以采用常规模式连接，或采用菊花链模式连接。</p>
-<h3 id="常规spi模式">常规SPI模式</h3>
-<figure>
-<img src="https://pic.islet.space/2021/08/image-20210819075431419.png"
-alt="image-20210819075431419" />
-<figcaption aria-hidden="true">image-20210819075431419</figcaption>
-</figure>
-<div style="font-weight: 900; text-align: center;">
-图6. 多从机SPI配置
-</div>
-<p>在常规模式下，主机需要为每个从机提供单独的片选信号。一旦主机使能（拉低）片选信号，MOSI/MISO线上的时钟和数据便可用于所选的从机。如果使能多个片选信号，则MISO线上的数据会被破坏，因为主机无法识别哪个从机正在传输数据。</p>
-<p>从图6可以看出，随着从机数量的增加，来自主机的片选线的数量也增加。这会快速增加主机需要提供的输入和输出数量，并限制可以使用的从机数量。可以使用其他技术来增加常规模式下的从机数量，例如使用多路复用器产生片选信号。</p>
-<h3 id="菊花链模式">菊花链模式</h3>
-<p><img src="https://pic.islet.space/2021/08/image-20210819075542602.png" alt="image-20210819075542602" style="zoom:67%;" /></p>
-<div style="font-weight: 900; text-align: center;">
-图7. 多从机SPI菊花链配置
-</div>
-<p>在菊花链模式下，所有从机的片选信号连接在一起，数据从一个从机传播到下一个从机。在此配置中，所有从机同时接收同一SPI时钟。来自主机的数据直接送到第一个从机，该从机将数据提供给下一个从机，依此类推。</p>
-<p><mark style="font-weight: 900;">使用该方法时，由于数据是从一个从机传播到下一个从机，所以传输数据所需的时钟周期数与菊花链中的从机位置成比例（成比例倍增）。</mark></p>
-<p>例如在图7所示的8位系统中，<mark>为使第3个从机能够获得数据，需要24个时钟脉冲，而常规SPI模式下只需8个时钟脉冲</mark>。图8显示了时钟周期和通过菊花链的数据传播。并非所有SPI器件都支持菊花链模式。请参阅产品数据手册以确认菊花链是否可用。</p>
-<p><img src="https://www.analog.com/-/media/images/analog-dialogue/en/volume-52/number-3/articles/introduction-to-spi-interface/205973_fig_08.png?la=en&vs=1" alt="图8. 菊花链配置：数据传播" style="zoom: 50%;" /></p>
-<div style="font-weight: 900; text-align: center;">
-图8. 菊花链配置：数据传播
-</div>
-<h1
-id="adi公司支持spi的模拟开关与多路转换器">ADI公司支持SPI的模拟开关与多路转换器</h1>
-<p>ADI公司最新一代支持SPI的开关可在不影响精密开关性能的情况下显著节省空间。本文的这一部分将讨论一个案例研究，说明支持SPI的开关或多路复用器如何能够大大简化系统级设计并减少所需的GPIO数量。</p>
-<p><a target="_blank" rel="noopener" href="https://www.analog.com/cn/products/adg1412.html">ADG1412</a>
-是一款四通道、单刀单掷(SPST)开关，需要四个GPIO连接到每个开关的控制输入。图9显示了微控制器和一个ADG1412之间的连接。</p>
-<p><img src="https://pic.islet.space/2021/08/image-20210819075642098.png" alt="image-20210819075642098" style="zoom: 80%;" /></p>
-<div style="font-weight: 900; text-align: center;">
-图9. 微控制器GPIO用作开关的控制信号
-</div>
-<p>随着电路板上开关数量的增加，所需GPIO的数量也会显著增加。例如，当设计一个测试仪器系统时，会使用大量开关来增加系统中的通道数。在4×4交叉点矩阵配置中，使用四个ADG1412。此系统需要16个GPIO，限制了标准微控制器中的可用GPIO。图10显示了使用微控制器的16个GPIO连接四个ADG1412。</p>
-<p><img src="https://www.analog.com/-/media/images/analog-dialogue/en/volume-52/number-3/articles/introduction-to-spi-interface/205973_fig_10.png?la=en&vs=1" alt="图10. 在多从机配置中，所需GPIO的数量大幅增加" style="zoom:50%;" /></p>
-<div style="font-weight: 900; text-align: center;">
-图10. 在多从机配置中，所需GPIO的数量大幅增加
-</div>
-<p>为了减少GPIO数量，一种方法是使用串行转并行转换器，如图11所示。该器件输出的并行信号可连接到开关控制输入，器件可通过串行接口SPI配置。此方法的缺点是外加器件会导致物料清单增加。</p>
-<p><img src="https://pic.islet.space/2021/08/image-20210819075735043.png" alt="image-20210819075735043" style="zoom:67%;" /></p>
-<div style="font-weight: 900; text-align: center;">
-图11. 使用串行转并行转换器的多从机开关
-</div>
-<p>另一种方法是使用SPI控制的开关。此方法的优点是可减少所需GPIO的数量，并且还能消除外加串行转并行转换器的开销。如图12所示，不需要16个微控制器GPIO，只需要7个微控制器GPIO就可以向4个ADGS1412提供SPI信号。</p>
-<p><img src="https://pic.islet.space/2021/08/image-20210819080000988.png" alt="image-20210819080000988" style="zoom: 67%;" /></p>
-<div style="font-weight: 900; text-align: center;">
-图12. 支持SPI的开关节省微控制器GPIO
-</div>
-<p>开关可采用菊花链配置，以进一步优化GPIO数量。在菊花链配置中，无论系统使用多少开关，都只使用主机（微控制器）的四个GPIO。</p>
-<p><img src="https://pic.islet.space/2021/08/image-20210819080021307.png" alt="image-20210819080021307" style="zoom:67%;" /></p>
-<div style="font-weight: 900; text-align: center;">
-图13. 菊花链配置的SPI开关可进一步优化GPIO
-</div>
-<p>图13用于说明目的。ADGS1412数据手册建议在SDO引脚上使用一个上拉电阻。有关菊花链模式的更多信息，请参阅ADGS1412数据手册。为简单起见，此示例使用了四个开关。随着系统中开关数量的增加，电路板简单和节省空间的优点很重要。在6层电路板上放置8个四通道SPST开关，采用4×8交叉点配置时，ADI公司支持SPI的开关可节省20%的总电路板空间。文章《<a
-target="_blank" rel="noopener" href="https://www.analog.com/cn/analog-dialogue/articles/precision-spi-switch-configuration-increases-channel-density.html">精密SPI开关配置提高通道密度</a>》详细说明了精密SPI开关配置如何提高通道密度。</p>
-<h1 id="术语">术语</h1>
-<p><strong>MISO</strong> / <strong>SOMI</strong> /
-<strong>SDO</strong>： Master Input and Slaver Output / Slaver Output
-and Master Input / Slaver Data Output</p>
-<p><strong>MOSI</strong> / <strong>SIMO</strong> /
-<strong>SDI</strong>： Master Output and Slaver Input / Salver Input and
-Master Output / Slaver Data Input</p>
-<p><strong>SCLK</strong>： Serial Clock</p>
-<p><strong>CS</strong> / <strong>STE</strong>： Chip Select / Slaver
-Transmit Enable</p>
-<h1 id="参考">参考</h1>
-<ol type="1">
-<li><a
-target="_blank" rel="noopener" href="https://www.analog.com/cn/analog-dialogue/articles/introduction-to-spi-interface.html">SPI接口简介</a></li>
-<li><a
-target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/150121520">SPI通信协议详解（spi总线）</a></li>
-<li><a
-target="_blank" rel="noopener" href="http://www.microchip.com.cn/community/Uploads/Download/Library/39699a_cn.pdf">第23
-章 串行外设接口(SPI)</a></li>
 </ol>
 
       
@@ -2564,193 +4153,6 @@ target="_blank" rel="noopener" href="https://blog.csdn.net/whyorwhnt/article/det
 target="_blank" rel="noopener" href="https://www.ti.com/lit/an/sloa101b/sloa101b.pdf">《Introduction to
 the Controller Area Network(CAN)》</a></li>
 </ol>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://islet.space/2021/07/10/Communication/2021-07-10-JTAG%E9%80%9A%E4%BF%A1/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Liewzheng">
-      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Coder的孤岛">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/07/10/Communication/2021-07-10-JTAG%E9%80%9A%E4%BF%A1/" class="post-title-link" itemprop="url">JTAG通信</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-
-    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
-    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-      
-
-      <time title="Created: 2021-07-10 21:00:00 / Modified: 21:28:00" itemprop="dateCreated datePublished" datetime="2021-07-10T21:00:00+08:00">2021-07-10</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Communication/" itemprop="url" rel="index"><span itemprop="name">Communication</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="入门">入门</h1>
-<p>以下为 B站up主——“蛋饼的爹地” 制作上传的JTAG科普视频。</p>
-<iframe src="//player.bilibili.com/player.html?aid=503270942&amp;bvid=BV1iN411Z7jk&amp;cid=346887915&amp;page=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true">
-</iframe>
-<h1 id="参考">参考</h1>
-<ol type="1">
-<li><a
-target="_blank" rel="noopener" href="https://xploreqa.ieee.org/stampPDF/getPDF.jsp?tp=&amp;arnumber=6515989&amp;ref=aHR0cHM6Ly94cGxvcmVxYS5pZWVlLm9yZy9kb2N1bWVudC82NTE1OTg5">《IEEE
-1149.1-2013 Test Access Port and Boundary Scan Architecture》</a></li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://islet.space/2021/07/10/Hardware/Circuit/2021-07-10-VCC%E3%80%81VDD%E3%80%81VEE%E3%80%81VSS%E7%9A%84%E5%8C%BA%E5%88%AB/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Liewzheng">
-      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Coder的孤岛">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/07/10/Hardware/Circuit/2021-07-10-VCC%E3%80%81VDD%E3%80%81VEE%E3%80%81VSS%E7%9A%84%E5%8C%BA%E5%88%AB/" class="post-title-link" itemprop="url">VCC、VDD、VEE、VSS的区别</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-
-    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
-    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2021-07-10 15:00:00" itemprop="dateCreated datePublished" datetime="2021-07-10T15:00:00+08:00">2021-07-10</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-07-15 21:10:58" itemprop="dateModified" datetime="2021-07-15T21:10:58+08:00">2021-07-15</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Hardware/" itemprop="url" rel="index"><span itemprop="name">Hardware</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="对于晶体管">对于晶体管</h2>
-<p><strong><em>Vcc</em></strong>：来源于集电极电源电压， <em>Collector
-Voltage</em>， 一般用于双极型晶体管， PNP 管时为负电源电压， 有时也标成
--Vcc， NPN 管时为正电压</p>
-<p><strong><em>Vdd</em></strong>：来源于漏极电源电压， <em>Drain
-Voltage</em>， 用于 MOS 晶体管电路， 一般指正电源。 因为很少单独用 PMOS
-晶体管， 所以在 CMOS 电路中 Vdd 经常接在 PMOS 管的源极上。</p>
-<p><strong><em>Vss</em></strong>：源极电源电压， 在 CMOS
-电路中指负电源， 在单电源时指零伏或接地。</p>
-<p><strong><em>Vee</em></strong>：发射极电源电压， <em>Emitter
-Voltage</em>， 一般用于 ECL 电路的负电源电压。</p>
-<p><strong><em>Vbb</em></strong>：基极电源电压，
-用于双极晶体管的共基电路。</p>
-<h2 id="对于电路及芯片">对于电路及芯片</h2>
-<p><strong><em>VDD</em></strong>：电源电压(单极器件)；芯片电源电压。（Device）</p>
-<p><strong><em>VCC</em></strong>：电源电压(双极器件)；电路电源电压。（Circuit）</p>
-<p><strong><em>VSS</em></strong>：接地端、负极。（Series）</p>
-<p><strong><em>VEE</em></strong>：负电压供电；</p>
-<p><strong><em>VPP</em></strong>：编程/擦除电压。</p>
 
       
     </div>

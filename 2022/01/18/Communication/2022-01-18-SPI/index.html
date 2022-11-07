@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://code.islet.space/font//css?family=/CascadiaCode/CascadiaCode:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/themes/blue/pace-theme-minimal.css">
+  <script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"islet.space","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.7.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/db.json","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":true}}</script><script src="/js/config.js"></script>
+<meta name="description" content="SPI Introdution SPI， Serial Peripheral Interface， 即串行设备接口，微控制器和外围IC（如传感器、ADC、DAC、移位寄存器、SRAM等）之间使用最广泛的接口之一。 SPI是一种同步的主从式接口，支持全部通信制式（单工、半双工、全双工）。与I2C的 多主多从 模式不同，SPI协议为 一主多从 模式。SPI所消耗的接口数也有所提升。 接线 SPI 的物">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HALF DUPLEX SPI">
+<meta property="og:url" content="http://islet.space/2022/01/18/Communication/2022-01-18-SPI/index.html">
+<meta property="og:site_name" content="Coder的孤岛">
+<meta property="og:description" content="SPI Introdution SPI， Serial Peripheral Interface， 即串行设备接口，微控制器和外围IC（如传感器、ADC、DAC、移位寄存器、SRAM等）之间使用最广泛的接口之一。 SPI是一种同步的主从式接口，支持全部通信制式（单工、半双工、全双工）。与I2C的 多主多从 模式不同，SPI协议为 一主多从 模式。SPI所消耗的接口数也有所提升。 接线 SPI 的物">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://pic.islet.space/2021/08/image-20210819075248043.png">
+<meta property="og:image" content="https://pic.islet.space/2021/08/image-20210819084200284.png">
+<meta property="og:image" content="https://pic.islet.space/2021/08/image-20210819084447672.png">
+<meta property="og:image" content="https://pic.islet.space/2021/08/205973_fig_02.png">
+<meta property="og:image" content="https://www.analog.com/-/media/images/analog-dialogue/en/volume-52/number-3/articles/introduction-to-spi-interface/205973_fig_03.png?la=en&vs=1">
+<meta property="og:image" content="https://www.analog.com/-/media/images/analog-dialogue/en/volume-52/number-3/articles/introduction-to-spi-interface/205973_fig_04.png?la=en&vs=1">
+<meta property="og:image" content="https://www.analog.com/-/media/images/analog-dialogue/en/volume-52/number-3/articles/introduction-to-spi-interface/205973_fig_05.png?la=en&vs=1">
+<meta property="og:image" content="https://pic.islet.space/2021/08/image-20210819075431419.png">
+<meta property="og:image" content="https://pic.islet.space/2021/08/image-20210819075542602.png">
+<meta property="og:image" content="https://www.analog.com/-/media/images/analog-dialogue/en/volume-52/number-3/articles/introduction-to-spi-interface/205973_fig_08.png?la=en&vs=1">
+<meta property="og:image" content="https://pic.islet.space/2022/04/image-20220118135819247.png">
+<meta property="og:image" content="https://pic.islet.space/2022/04/image-20220419235450360.png">
+<meta property="og:image" content="https://pic.islet.space/2022/04/image-20220118140526017.png">
+<meta property="og:image" content="https://pic.islet.space/2022/04/image-20220118141033005.png">
+<meta property="og:image" content="https://pic.islet.space/2022/04/image-20220423193121090.png">
+<meta property="og:image" content="https://pic.islet.space/2022/04/image-20220419210753902.png">
+<meta property="og:image" content="https://pic.islet.space/2022/08/202208241758385.png">
+<meta property="og:image" content="https://pic.islet.space/2022/08/202208241800048.png">
+<meta property="og:image" content="https://pic.islet.space/2022/08/202208241759416.png">
+<meta property="og:image" content="https://pic.islet.space/2022/08/202208241800029.png">
+<meta property="article:published_time" content="2022-01-18T05:40:00.000Z">
+<meta property="article:modified_time" content="2022-08-26T12:41:09.839Z">
+<meta property="article:author" content="Liewzheng">
+<meta property="article:tag" content="spi">
+<meta property="article:tag" content="3wire">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://pic.islet.space/2021/08/image-20210819075248043.png">
+
+
+<link rel="canonical" href="http://islet.space/2022/01/18/Communication/2022-01-18-SPI/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://islet.space/2022/01/18/Communication/2022-01-18-SPI/","path":"2022/01/18/Communication/2022-01-18-SPI/","title":"HALF DUPLEX SPI"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>HALF DUPLEX SPI | Coder的孤岛</title>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<!-- hexo injector head_end end --></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Coder的孤岛</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">islet of the coder</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-首页"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-文章"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>文章</a></li>
+        <li class="menu-item menu-item-目录"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>目录</a></li>
+        <li class="menu-item menu-item-标签"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-简历"><a href="/resume/" rel="section"><i class="fa fa-address-card fa-fw"></i>简历</a></li>
+        <li class="menu-item menu-item-友链"><a href="/friends/" rel="section"><i class="fa fa-heartbeat fa-fw"></i>友链</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#spi-introdution"><span class="nav-number">1.</span> <span class="nav-text">SPI Introdution</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8E%A5%E7%BA%BF"><span class="nav-number">1.1.</span> <span class="nav-text">接线</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%86%E7%B1%BB"><span class="nav-number">1.2.</span> <span class="nav-text">分类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E4%BC%A0%E8%BE%93"><span class="nav-number">1.3.</span> <span class="nav-text">数据传输</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%97%B6%E9%92%9F%E6%9E%81%E6%80%A7%E5%92%8C%E6%97%B6%E9%92%9F%E7%9B%B8%E4%BD%8D"><span class="nav-number">1.4.</span> <span class="nav-text">时钟极性和时钟相位</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%9A%E4%BB%8E%E6%9C%BA%E9%85%8D%E7%BD%AE"><span class="nav-number">1.5.</span> <span class="nav-text">多从机配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B8%B8%E8%A7%84spi%E6%A8%A1%E5%BC%8F"><span class="nav-number">1.5.1.</span> <span class="nav-text">常规SPI模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%8F%8A%E8%8A%B1%E9%93%BE%E6%A8%A1%E5%BC%8F"><span class="nav-number">1.5.2.</span> <span class="nav-text">菊花链模式</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#half-duplex-spi"><span class="nav-number">2.</span> <span class="nav-text">HALF DUPLEX SPI</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#pin-definition"><span class="nav-number">2.1.</span> <span class="nav-text">PIN DEFINITION</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#transmission-protocol"><span class="nav-number">2.2.</span> <span class="nav-text">TRANSMISSION PROTOCOL</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B3%E4%BA%8E%E6%95%B0%E6%8D%AE%E6%96%B9%E5%90%91%E6%8E%A7%E5%88%B6%E4%BD%8D"><span class="nav-number">2.2.1.</span> <span class="nav-text">关于数据方向&#x2F;控制位</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%86%99%E6%93%8D%E4%BD%9C"><span class="nav-number">2.2.2.</span> <span class="nav-text">写操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AF%BB%E5%8F%96%E6%93%8D%E4%BD%9C"><span class="nav-number">2.2.3.</span> <span class="nav-text">读取操作</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#timing-serial"><span class="nav-number">3.</span> <span class="nav-text">Timing Serial</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#debug-records"><span class="nav-number">4.</span> <span class="nav-text">DEBUG RECORDS</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%97%B6%E5%BA%8F%E5%9B%BE%E9%94%99%E8%AF%AF"><span class="nav-number">4.1.</span> <span class="nav-text">时序图错误</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AF%BB%E5%86%99%E5%8D%95%E4%B8%AA%E5%AD%97%E7%AC%A6"><span class="nav-number">4.2.</span> <span class="nav-text">读写单个字符</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#stm32-spi-%E9%85%8D%E7%BD%AE"><span class="nav-number">4.3.</span> <span class="nav-text">STM32 SPI 配置</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#source-code"><span class="nav-number">5.</span> <span class="nav-text">SOURCE CODE</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#reference"><span class="nav-number">6.</span> <span class="nav-text">REFERENCE</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Liewzheng</p>
+  <div class="site-description" itemprop="description">笔记分享的旮旯孤岛而已</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">125</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">230</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="mailto:liewzheng@foxmail.com" title="E-Mail → mailto:liewzheng@foxmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://islet.space/2022/01/18/Communication/2022-01-18-SPI/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Liewzheng">
+      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coder的孤岛">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          HALF DUPLEX SPI
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2022-01-18 13:40:00" itemprop="dateCreated datePublished" datetime="2022-01-18T13:40:00+08:00">2022-01-18</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2022-08-26 20:41:09" itemprop="dateModified" datetime="2022-08-26T20:41:09+08:00">2022-08-26</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Communication/" itemprop="url" rel="index"><span itemprop="name">Communication</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="spi-introdution">SPI Introdution</h1>
+<p>SPI， Serial Peripheral Interface，
+即串行设备接口，微控制器和外围IC（如传感器、ADC、DAC、移位寄存器、SRAM等）之间使用最广泛的接口之一。</p>
+<p>SPI是一种同步的主从式接口，支持全部通信制式（单工、半双工、全双工）。与I2C的
+<strong>多主多从</strong> 模式不同，SPI协议为 <strong>一主多从</strong>
+模式。SPI所消耗的接口数也有所提升。</p>
+<h2 id="接线">接线</h2>
+<p>SPI 的物理线支持 <strong>三种类型</strong>：</p>
+<ul>
+<li><strong>片选线</strong>（NCS / CS / SS），某些数据手册会将
+<strong>片选引脚</strong> 称为 <code>NSS</code> /<code>NCS</code> /
+<code>SEL</code> (<strong><em>Sel</em></strong>ect) / <code>CS</code>
+(<strong><em>C</em></strong>hip <strong><em>S</em></strong>elect) /
+<code>STE</code> (<strong><em>S</em></strong>laver
+<strong><em>T</em></strong>ransmit
+<strong><em>E</em></strong>nable)</li>
+<li><strong>时钟线</strong>（CLK / SCK）</li>
+<li><strong>数据线</strong>（DA 或 MOSI 和 MISO ）</li>
+</ul>
+<p><mark>需要注意的是，SPI的通信线有太多的名称，需要自行对照芯片手册进行查询，避免混淆。</mark>下方为标准全双工四线SPI的通信接线示意图</p>
+<p><img src="https://pic.islet.space/2021/08/image-20210819075248043.png" alt="image-20210819075248043" style="zoom: 33%;" /></p>
+<p>SPI 通过对硬件资源的使用修改（禁用片选、禁 / 复用数据线）可以达到
+<strong>全双工</strong> 或 <strong>半双工</strong> 通信的目的。标准SPI为
+四线SPI （CS / CLK / MOSI / MISO）；最低支持2根数据引脚（仅保留 CLK /
+DA，其中DA为分时复用数据线 ）来达到半双工通信的目的，可以增加一 / 多根
+CS
+来达到拓展SPI从设备片选的目的；也可以利用四根独立的半双工数据线，来达到
+标准四线SPI 四倍通信能力 的 六线SPI（一般被称为
+<code>Quad-IO SPI</code>）。</p>
+<h2 id="分类">分类</h2>
+<p>各芯片厂商对SPI的通信协议好像并没有一个较为正式的名称，但都可以从通信制式的类型进行区分，并不能仅从
+<strong>x线SPI</strong> 的数量来判断SPI通信协议的类型。</p>
+<p>较为推荐的称呼方式是：<strong>线数</strong> +
+<strong>有无片选</strong> +<strong>通信制式</strong>。比如：</p>
+<ul>
+<li>两线无片选半双工SPI，即 CLK 和 SDIO 两线，SDIO 支持分时双工。</li>
+<li>三线无片选半双工SPI，即 CLK 和 两根 SDIO，两根SDIO
+都是分时双工。</li>
+<li>三线有片选半双工SPI，即 CLK 、SDIO 和 CS，SDIO 支持分时双工。</li>
+<li>三线无片选全双工SPI，即 CLK、MOSI 和 MISO。</li>
+<li>四线有片选全双工SPI，即 CLK、MOSI、MISO 和 CS。</li>
+<li>......</li>
+</ul>
+<blockquote>
+<p>例如，据STM32L476RG芯片手册《<a
+target="_blank" rel="noopener" href="https://www.st.com/resource/en/reference_manual/rm0351-stm32l47xxx-stm32l48xxx-stm32l49xxx-and-stm32l4axxx-advanced-armbased-32bit-mcus-stmicroelectronics.pdf">RM0351</a>》第1450页所示，SPI外设可以被配置为以下三种模式，即
+<strong>三线全双工</strong>，<strong>两线半双工</strong> 和
+<strong>两线单工</strong>。</p>
+<ul>
+<li>Full-duplex synchronous transfers on three lines</li>
+<li>Half-duplex synchronous transfer on two lines (with bidirectional
+data line)</li>
+<li>Simplex synchronous transfers on two lines (with unidirectional data
+line)</li>
+</ul>
+</blockquote>
+<blockquote>
+<p><strong>SDR 和 DDR 模式</strong></p>
+<p>扩展的 SPI 协议还增加了 <strong>SDR 模式</strong>（单倍速率 Single
+Data Rate）和 <strong>DDR 模式</strong>（双倍 速率 Double Data
+Rate）。例如在标准 SPI 协议的 SDR 模式下，只在 SCK
+的单边沿进行数据传输，即一个 SCK 时钟只传输一位数据；而在它的 DDR
+模式下，会在 SCK 的上升沿和下降沿都进行数据传输，即一个 SCK
+时钟能传输两位数据，传输速率提高一倍。</p>
+</blockquote>
+<h2 id="数据传输">数据传输</h2>
+<p>下以四线有片选全双工SPI为例进行说明。</p>
+<p>要开始SPI通信，主机必须发送时钟信号，并通过使能CS信号选择从机。</p>
+<p>片选 <strong>通常</strong> 是 低电平有效（active-low） 信号。</p>
+<p>主机须在 <code>CS</code> 信号上发送逻辑 <code>0</code>
+以选择从机。主机和从机可以分别通过 MOSI 和 MISO
+引脚同时发送数据。在SPI通信期间，数据的发送（串行移出到MOSI/SDO总线上）和接收（采样或读入总线(MISO/SDI)上的数据）同时进行。串行时钟沿同步数据的移位和采样。</p>
+<p>SPI接口允许用户灵活选择时钟的 上升沿 或 下降沿
+来采样和/或移位数据。</p>
+<p><strong>需要注意</strong>：SPI接口传输的 <strong>数据位数</strong>
+仍需查阅器件数据手册。</p>
+<h2 id="时钟极性和时钟相位">时钟极性和时钟相位</h2>
+<p>在SPI中，主机可以选择 <strong>时钟极性</strong>（Clock
+Polarity，<strong>CPOL</strong>）和 <strong>时钟相位</strong>（Clock
+Phase，<strong>CPHA</strong>）。</p>
+<p>在空闲状态期间，CPOL 控制
+时钟极性。空闲状态是指传输开始时CS为高电平且在向低电平转变的期间，以及传输结束时CS为低电平且在向高电平转变的期间。</p>
+<p>CPHA 控制
+时钟相位。<mark>根据CPHA位的状态，使用时钟上升沿或下降沿来采样和/或移位数据</mark>。主机必须
+<mark>根据从机的要求选择时钟极性和时钟相位</mark>。根据CPOL和CPHA位的选择，有四种SPI模式可用，如下表：</p>
+<table>
+<colgroup>
+<col style="width: 11%" />
+<col style="width: 5%" />
+<col style="width: 5%" />
+<col style="width: 29%" />
+<col style="width: 46%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>SPI 模式</th>
+<th>CPOL</th>
+<th>CPHA</th>
+<th>空闲状态下的时钟极性</th>
+<th>用于采样和/或移位数据的时钟相应</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>逻辑低电平</td>
+<td>数据在上升沿采样，在下降沿移出</td>
+</tr>
+<tr class="even">
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>逻辑低电平</td>
+<td>数据在下降沿采样，在上升沿移出</td>
+</tr>
+<tr class="odd">
+<td>2</td>
+<td>1</td>
+<td>1</td>
+<td>逻辑低电平</td>
+<td>数据在下降沿采样，在上升沿移出</td>
+</tr>
+<tr class="even">
+<td>3</td>
+<td>1</td>
+<td>0</td>
+<td>逻辑低电平</td>
+<td>数据在上升沿采样，在下降沿移出</td>
+</tr>
+</tbody>
+</table>
+<p>下图为TI公司F280049芯片的SPI时钟模式：</p>
+<figure>
+<img src="https://pic.islet.space/2021/08/image-20210819084200284.png"
+alt="image-20210819084200284" />
+<figcaption aria-hidden="true">image-20210819084200284</figcaption>
+</figure>
+<p>下图为ADI公司ADSP21479芯片的SPI时钟模式：</p>
+<figure>
+<img src="https://pic.islet.space/2021/08/image-20210819084447672.png"
+alt="image-20210819084447672" />
+<figcaption aria-hidden="true">image-20210819084447672</figcaption>
+</figure>
+<p>后述 图2 至 图5 显示了四种SPI模式下的通信示例。</p>
+<p>在这些示例中，数据显示在MOSI和MISO线上。传输的开始和结束用绿色虚线表示，采样边沿用橙色虚线表示，移位边沿用蓝色虚线表示。请注意，这些图形仅供参考。要成功进行SPI通信，用户须参阅产品数据手册并确保满足器件的时序规格。</p>
+<p><img src="https://pic.islet.space/2021/08/205973_fig_02.png" alt="图2. SPI模式0，CPOL = 0，CPHA = 0：CLK空闲状态 = 低电平，数据在上升沿采样，并在下降沿移出" style="zoom: 60%;" /></p>
+<div style="font-weight: 900; text-align: center;">
+图2. SPI模式0，CPOL = 0，CPHA = 0：CLK空闲状态 =
+低电平，数据在上升沿采样，并在下降沿移出
+</div>
+<p>图3给出了SPI模式1的时序图。在此模式下，时钟极性为0，表示时钟信号的空闲状态为低电平。此模式下的时钟相位为1，表示数据在下降沿采样（由橙色虚线显示），并且数据在时钟信号的上升沿移出（由蓝色虚线显示）。</p>
+<p><img src="https://www.analog.com/-/media/images/analog-dialogue/en/volume-52/number-3/articles/introduction-to-spi-interface/205973_fig_03.png?la=en&vs=1" alt="图3. SPI模式1，CPOL = 0，CPHA = 1：CLK空闲状态 = 低电平，数据在下降沿采样，并在上升沿移出" style="zoom:50%;" /></p>
+<div style="font-weight: 900; text-align: center;">
+图3. SPI模式1，CPOL = 0，CPHA = 1：CLK空闲状态 =
+低电平，数据在下降沿采样，并在上升沿移出
+</div>
+<p>图4给出了SPI模式2的时序图。在此模式下，时钟极性为1，表示时钟信号的空闲状态为高电平。此模式下的时钟相位为1，表示数据在下降沿采样（由橙色虚线显示），并且数据在时钟信号的上升沿移出（由蓝色虚线显示）。</p>
+<p><img src="https://www.analog.com/-/media/images/analog-dialogue/en/volume-52/number-3/articles/introduction-to-spi-interface/205973_fig_04.png?la=en&vs=1" alt="图4. SPI模式2，CPOL = 1，CPHA = 1：CLK空闲状态 = 高电平，数据在下降沿采样，并在上升沿移出" style="zoom:50%;" /></p>
+<div style="font-weight: 900; text-align: center;">
+图4. SPI模式2，CPOL = 1，CPHA = 1：CLK空闲状态 =
+高电平，数据在下降沿采样，并在上升沿移出。
+</div>
+<p>图5给出了SPI模式3的时序图。在此模式下，时钟极性为1，表示时钟信号的空闲状态为高电平。此模式下的时钟相位为0，表示数据在上升沿采样（由橙色虚线显示），并且数据在时钟信号的下降沿移出（由蓝色虚线显示）。</p>
+<p><img src="https://www.analog.com/-/media/images/analog-dialogue/en/volume-52/number-3/articles/introduction-to-spi-interface/205973_fig_05.png?la=en&vs=1" alt="图5. SPI模式3，CPOL = 1，CPHA = 0：CLK空闲状态 = 高电平，数据在上升沿采样，并在下降沿移出" style="zoom:50%;" /></p>
+<div style="font-weight: 900; text-align: center;">
+图5. SPI模式3，CPOL = 1，CPHA = 0：CLK空闲状态 =
+高电平，数据在上升沿采样，并在下降沿移出
+</div>
+<h2 id="多从机配置">多从机配置</h2>
+<p>多个从机可与单个SPI主机一起使用。从机可以采用常规模式连接，或采用菊花链模式连接。</p>
+<h3 id="常规spi模式">常规SPI模式</h3>
+<figure>
+<img src="https://pic.islet.space/2021/08/image-20210819075431419.png"
+alt="image-20210819075431419" />
+<figcaption aria-hidden="true">image-20210819075431419</figcaption>
+</figure>
+<div style="font-weight: 900; text-align: center;">
+图6. 多从机SPI配置
+</div>
+<p>在常规模式下，主机需要为每个从机提供单独的片选信号。一旦主机使能（拉低）片选信号，MOSI/MISO线上的时钟和数据便可用于所选的从机。如果使能多个片选信号，则MISO线上的数据会被破坏，因为主机无法识别哪个从机正在传输数据。</p>
+<p>从图6可以看出，随着从机数量的增加，来自主机的片选线的数量也增加。这会快速增加主机需要提供的输入和输出数量，并限制可以使用的从机数量。可以使用其他技术来增加常规模式下的从机数量，例如使用多路复用器产生片选信号。</p>
+<h3 id="菊花链模式">菊花链模式</h3>
+<p><img src="https://pic.islet.space/2021/08/image-20210819075542602.png" alt="image-20210819075542602" style="zoom:67%;" /></p>
+<div style="font-weight: 900; text-align: center;">
+图7. 多从机SPI菊花链配置
+</div>
+<p>在菊花链模式下，所有从机的片选信号连接在一起，数据从一个从机传播到下一个从机。在此配置中，所有从机同时接收同一SPI时钟。来自主机的数据直接送到第一个从机，该从机将数据提供给下一个从机，依此类推。</p>
+<p><mark style="font-weight: 900;">使用该方法时，由于数据是从一个从机传播到下一个从机，所以传输数据所需的时钟周期数与菊花链中的从机位置成比例（成比例倍增）。</mark></p>
+<p>例如在图7所示的8位系统中，<mark>为使第3个从机能够获得数据，需要24个时钟脉冲，而常规SPI模式下只需8个时钟脉冲</mark>。图8显示了时钟周期和通过菊花链的数据传播。并非所有SPI器件都支持菊花链模式。请参阅产品数据手册以确认菊花链是否可用。</p>
+<p><img src="https://www.analog.com/-/media/images/analog-dialogue/en/volume-52/number-3/articles/introduction-to-spi-interface/205973_fig_08.png?la=en&vs=1" alt="图8. 菊花链配置：数据传播" style="zoom: 50%;" /></p>
+<div style="font-weight: 900; text-align: center;">
+图8. 菊花链配置：数据传播
+</div>
+<h1 id="half-duplex-spi">HALF DUPLEX SPI</h1>
+<p>半双工通信可以是 两线SPI 或 三线SPI，仅仅是有无片选线的差异而已。</p>
+<h2 id="pin-definition">PIN DEFINITION</h2>
+<p><strong>NCS</strong>：
+SPI控制读写使能信号；<mark style="font-weight: 900;">使用时需要被拉低</mark>，否则SDIO会处在
+HIGH-Z 态，而SCLK信号也会被无视。也可以被用于在通信错误发生时重置SPI
+通信。两线SPI不需要这根线，但个别芯片可能需要这个引脚接地（不能悬空），具体看芯片手册。</p>
+<p><strong>SDIO</strong>：
+SPI的数据读写端口；半双工读写。只有在“从被控设备读出数据”的情况下，<code>SDIO</code>
+才会由被控制设备控制。</p>
+<p><strong>SCLK</strong>：
+SPI接口时钟；<mark style="font-weight: 900;">总是由主控制器生成和控制。</mark></p>
+<h2 id="transmission-protocol">TRANSMISSION PROTOCOL</h2>
+<p>跟其他通信类似，SPI 的 SDIO 需要在 时钟低电平时 进行电平跳变。</p>
+<p>半双工SPI读写操作都包含两个字（byte），第一个字包含1 bit的
+<strong>数据方向（或称 控制位）</strong> 和 7 bit的
+<strong>地址</strong>，第二个字包含 <strong>数据</strong>。</p>
+<h3 id="关于数据方向控制位">关于数据方向/控制位</h3>
+<p>通常定义是，当需要写入数据时，控制位写 <code>1</code>
+。当需要读出数据时，控制位写 <code>0</code> 。</p>
+<p><img src="https://pic.islet.space/2022/04/image-20220118135819247.png" alt="image-20220118135819247" style="zoom: 50%;" /></p>
+<p>但不一定所有支持半双工SPI的通信控制位都是在MSB，有可能是在 LSB 。</p>
+<blockquote>
+<p>如，下方右侧 SL8541E
+的安卓平台主控，支持半双工SPI，但是其控制位就在地址字符的LSB上。</p>
+<figure>
+<img src="https://pic.islet.space/2022/04/image-20220419235450360.png"
+alt="image-20220419235450360" />
+<figcaption aria-hidden="true">image-20220419235450360</figcaption>
+</figure>
+</blockquote>
+<h3 id="写操作">写操作</h3>
+<p><mark style="font-weight:900;">主控制器在SCLK下降沿时改变
+SDIO的电平，被控设备在SCLK上升沿时读取SDIO的电平。</mark></p>
+<p><img src="https://pic.islet.space/2022/04/image-20220118140526017.png" alt="image-20220118140526017" style="zoom:50%;" /></p>
+<h3 id="读取操作">读取操作</h3>
+<blockquote>
+<p>SDIO会在SCLK下降沿时修改，主控制器需要在SCLK的上升沿时读取SDIO的电平信息。</p>
+</blockquote>
+<p><strong>注意</strong>：发送完地址字
+之后需要延长半个周期的时钟低电平。</p>
+<p><img src="https://pic.islet.space/2022/04/image-20220118141033005.png" alt="image-20220118141033005" style="zoom:50%;" /></p>
+<h1 id="timing-serial">Timing Serial</h1>
+<p>因为芯片自带的时序图有些许错误，所以就自己画了一个。</p>
+<p>时序图绘图工具（开源）：<a
+target="_blank" rel="noopener" href="https://wavedrom.com/editor.html">WAVEDROM</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">&#123;signal: [</span><br><span class="line">    [&#39;CPOL&#x3D;1,CPHA&#x3D;1&#39;,</span><br><span class="line">    [&#39;Read&#39;,</span><br><span class="line">        [&#39;Control&#39;,</span><br><span class="line">            &#123;name: &#39;NCS&#39;, wave: &#39;hl................h&#39;&#125;,</span><br><span class="line">            &#123;name: &#39;SCLK&#39;, wave: &#39;hn.......lnn......h&#39;&#125;,</span><br><span class="line">        ],</span><br><span class="line">         &#123;name: &#39;SDIO&#39;, wave: &#39;102222222x222222221&#39;,data: [&quot;A6&quot;,&quot;A5&quot;,&quot;A4&quot;,&quot;A3&quot;,&quot;A2&quot;,&quot;A1&quot;,&quot;A0&quot;,&quot;D7&quot;,&quot;D6&quot;,&quot;D5&quot;,&quot;D4&quot;,&quot;D3&quot;,&quot;D2&quot;,&quot;D1&quot;,&quot;D0&quot;,]&#125;,</span><br><span class="line">	],</span><br><span class="line">    &#123;&#125;,</span><br><span class="line">  	[&#39;Write&#39;,</span><br><span class="line">        [&#39;Control&#39;,</span><br><span class="line">            &#123;name: &#39;NCS&#39;, wave: &#39;hl...............h&#39;&#125;,</span><br><span class="line">            &#123;name: &#39;SCLK&#39;, wave: &#39;hn...............h&#39;&#125;,</span><br><span class="line">        ],</span><br><span class="line">        &#123;name: &#39;SDIO&#39;, wave: &#39;1.2222222222222221&#39;,data: [&quot;A6&quot;,&quot;A5&quot;,&quot;A4&quot;,&quot;A3&quot;,&quot;A2&quot;,&quot;A1&quot;,&quot;A0&quot;,&quot;D7&quot;,&quot;D6&quot;,&quot;D5&quot;,&quot;D4&quot;,&quot;D3&quot;,&quot;D2&quot;,&quot;D1&quot;,&quot;D0&quot;,]&#125;,</span><br><span class="line">	]</span><br><span class="line">],</span><br><span class="line">&#123;&#125;,</span><br><span class="line">    [&#39;CPOL&#x3D;1,CPHA&#x3D;0&#39;,</span><br><span class="line">    [&#39;Read&#39;,</span><br><span class="line">        [&#39;Control&#39;,</span><br><span class="line">            &#123;name: &#39;NCS&#39;, wave: &#39;hl................h&#39;&#125;,</span><br><span class="line">            &#123;name: &#39;SCLK&#39;, wave: &#39;hpp......lpp......h&#39;&#125;,</span><br><span class="line">        ],</span><br><span class="line">         &#123;name: &#39;SDIO&#39;, wave: &#39;102222222x222222221&#39;,data: [&quot;A6&quot;,&quot;A5&quot;,&quot;A4&quot;,&quot;A3&quot;,&quot;A2&quot;,&quot;A1&quot;,&quot;A0&quot;,&quot;D7&quot;,&quot;D6&quot;,&quot;D5&quot;,&quot;D4&quot;,&quot;D3&quot;,&quot;D2&quot;,&quot;D1&quot;,&quot;D0&quot;,],phase: 0.25&#125;,</span><br><span class="line">	],</span><br><span class="line">    &#123;&#125;,</span><br><span class="line">  	[&#39;Write&#39;,</span><br><span class="line">        [&#39;Control&#39;,</span><br><span class="line">            &#123;name: &#39;NCS&#39;, wave: &#39;hl...............h&#39;&#125;,</span><br><span class="line">            &#123;name: &#39;SCLK&#39;, wave: &#39;hpp..............h&#39;&#125;,</span><br><span class="line">        ],</span><br><span class="line">         &#123;name: &#39;SDIO&#39;, wave: &#39;1.2222222222222221&#39;,data: [&quot;A6&quot;,&quot;A5&quot;,&quot;A4&quot;,&quot;A3&quot;,&quot;A2&quot;,&quot;A1&quot;,&quot;A0&quot;,&quot;D7&quot;,&quot;D6&quot;,&quot;D5&quot;,&quot;D4&quot;,&quot;D3&quot;,&quot;D2&quot;,&quot;D1&quot;,&quot;D0&quot;],phase: 0.25&#125;,</span><br><span class="line">	]</span><br><span class="line">],         </span><br><span class="line">     </span><br><span class="line">],</span><br><span class="line">config: &#123; hscale: 1 &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<figure>
+<img src="https://pic.islet.space/2022/04/image-20220423193121090.png"
+alt="image-20220423193121090" />
+<figcaption aria-hidden="true">image-20220423193121090</figcaption>
+</figure>
+<h1 id="debug-records">DEBUG RECORDS</h1>
+<p>下面这个时序图错误的坑是真的大，调了好就才折腾明白。</p>
+<p>某些芯片下，SDIO 的闲置状态可能不能是 <code>Hi-Z</code> 态。</p>
+<h2 id="时序图错误">时序图错误</h2>
+<p>内部调试时发现，SDIO在读取数据前后必须是
+<strong>输出模式</strong>，最好 <strong>强制拉高</strong>，而不是
+<code>Hi-Z</code> 态。</p>
+<figure>
+<img src="https://pic.islet.space/2022/04/image-20220419210753902.png"
+alt="image-20220419210753902" />
+<figcaption aria-hidden="true">image-20220419210753902</figcaption>
+</figure>
+<h2 id="读写单个字符">读写单个字符</h2>
+<p>以下这两个函数中的 <code>for()</code> 使用了 MSB
+发送数据，最好不要自作聪明将 <code>i</code> 的数据类型改为
+<code>uint8_t</code>
+或其他非负型数据，以下这种循环写法会让程序陷入死循环的。</p>
+<p>另外，SPI 和 I2C
+不一样，读取和写入的时序有较大差异。比如，I2C会在时钟高电平时读取电平数据，在低电平时改写电平数据。而
+<code>CPOL = 1, CPHA = 1</code> 的SPI 会在上升沿时读取和写入数据，而
+<code>CPOL = 1, CPHA = 0</code> 的 SPI会在下降沿时读取和写入数据。</p>
+<p>主从设备必须将SPI特性保持一致，才能确保读写的稳定性。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * @brief 写入8bit数据</span></span><br><span class="line"><span class="comment"> * @param &#123;uint8_t&#125; data</span></span><br><span class="line"><span class="comment"> * @return &#123;*&#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">write_byte</span><span class="params">(<span class="keyword">uint8_t</span> data)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">7</span>; i&gt;= <span class="number">0</span>; i--)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span>( (data &gt;&gt; i) &amp; <span class="number">0x01</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            write_high_level();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">        &#123;</span><br><span class="line">            write_low_level();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * @brief 读取8bit数据</span></span><br><span class="line"><span class="comment"> * @param &#123;*&#125;</span></span><br><span class="line"><span class="comment"> * @return &#123;uint8_t&#125; data</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">uint8_t</span> <span class="title">read_byte</span><span class="params">(<span class="keyword">void</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">uint8_t</span> data = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">7</span>; i&gt;= <span class="number">0</span>; i--)</span><br><span class="line">    &#123;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">if</span> (CPHA == 1)</span></span><br><span class="line">        SCLK_SET_LOW;</span><br><span class="line">        data |= HAL_GPIO_ReadPin(SPI_DATA_GPIO_Port, SPI_DATA_Pin) &lt;&lt; i;</span><br><span class="line">        delay_nop(LEVEL_DELAY_SLICES);</span><br><span class="line"></span><br><span class="line">        SCLK_SET_HIGH;</span><br><span class="line">        delay_nop(LEVEL_DELAY_SLICES);</span><br><span class="line"><span class="meta">#<span class="meta-keyword">else</span></span></span><br><span class="line">        </span><br><span class="line">        SCLK_SET_HIGH;</span><br><span class="line">        delay_nop(LEVEL_DELAY_SLICES);</span><br><span class="line">        SCLK_SET_LOW;</span><br><span class="line">        data |= HAL_GPIO_ReadPin(SPI_DATA_GPIO_Port, SPI_DATA_Pin) &lt;&lt; i;</span><br><span class="line">        delay_nop(LEVEL_DELAY_SLICES);</span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> data;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="stm32-spi-配置">STM32 SPI 配置</h2>
+<p><img src="https://pic.islet.space/2022/08/202208241758385.png" alt="image-20220824175804976" style="zoom:50%;" /></p>
+<figure>
+<img src="https://pic.islet.space/2022/08/202208241800048.png"
+alt="image-20220824175908055" />
+<figcaption aria-hidden="true">image-20220824175908055</figcaption>
+</figure>
+<p>由外设SPI控制的 <code>SCLK</code> / <code>SDIO</code>
+波形与手动控制的 <code>SNCS</code> 波形之间的矛盾。</p>
+<figure>
+<img src="https://pic.islet.space/2022/08/202208241759416.png"
+alt="image-20220824175942791" />
+<figcaption aria-hidden="true">image-20220824175942791</figcaption>
+</figure>
+<p><code>write_register(0x09, 0xA5)</code>，对应应该输出数据为
+<code>0x89, 0xA5</code> ，而 <code>SNCS</code>
+在两处地方产生了错误的波形。</p>
+<figure>
+<img src="https://pic.islet.space/2022/08/202208241800029.png"
+alt="image-20220824175951156" />
+<figcaption aria-hidden="true">image-20220824175951156</figcaption>
+</figure>
+<h1 id="source-code">SOURCE CODE</h1>
+<p>以下是适用于 STM32 平台的 <strong>GPIO-模拟</strong>
+<strong>半双工SPI</strong> 代码，利用
+空指令进行延时控制，实现半双工（三线/两线）SPI 的通信。</p>
+<p>需要软件适配以下几个功能：</p>
+<ol type="1">
+<li>控制精细度在 <span
+class="math inline">\([10^{-9}s:10^{-6}s]\)</span> 之间的
+<strong>精准延时</strong>（如果做不到，通信速率就上不去
+<code>1MHz</code> ）。</li>
+<li>控制引脚电平的宏定义（可选）。</li>
+<li><strong>设置数据接口输出</strong> 和
+<strong>设置数据接口输入</strong> 的代码。</li>
+<li><strong>拉高电平</strong> 和 <strong>拉低电平</strong>
+的代码，这里需要根据从设备特性来控制时钟的相位，即 <code>CPHA = 1</code>
+或者 <code>CPHA = 0</code> 。</li>
+<li>对照着 <strong>正确的时序图</strong> 写一遍
+<strong>读单字符</strong> 和 <strong>写单字符</strong>
+的代码，这里需要根据从设备特性来控制时钟的相位，即 <code>CPHA = 1</code>
+或者 <code>CPHA = 0</code> 。</li>
+<li>对照着 <strong>正确的时序图</strong> 写一遍
+<strong>写寄存器</strong> 和 <strong>读寄存器</strong>
+的代码，这里需要根据从设备特性来控制时钟的极性，决定时钟在闲时为高电平还是低电平，即
+<code>CPOL = 1</code> 或者 <code>CPOL = 0</code> 。</li>
+</ol>
+<p><strong>注意</strong>：都是按顺序来完成的，所有后面的功能都需要依托于前面的功能来实现。而且，需要用示波器（有条件）进行测量以校准通信速率，并使用正确的时序图进行编码（如果是错误的，浪费时间，尽快跟厂家确认）。</p>
+<p>代码部分可以参考 <a target="_blank" rel="noopener" href="https://gitee.com/isletspace/gmi">gmi</a>
+中对 spi 的定义和使用。</p>
+<h1 id="reference">REFERENCE</h1>
+<ol type="1">
+<li><a
+target="_blank" rel="noopener" href="https://blog.csdn.net/sishuihuahua/article/details/105047926">实例解析非标准SPI</a></li>
+<li><a
+target="_blank" rel="noopener" href="https://cloud.tencent.com/developer/article/1486642">扩展SPI协议</a></li>
+<li><a
+target="_blank" rel="noopener" href="https://www.analog.com/cn/analog-dialogue/articles/introduction-to-spi-interface.html">SPI接口简介</a></li>
+<li><a
+target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/150121520">SPI通信协议详解（spi总线）</a></li>
+<li><a
+target="_blank" rel="noopener" href="http://www.microchip.com.cn/community/Uploads/Download/Library/39699a_cn.pdf">第23
+章 串行外设接口(SPI)</a></li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>感谢您的支持和鼓励</div>
+  <button>
+    Donate
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="https://photo.islet.space/2021/00/IMG_4588.JPG" alt="Liewzheng WeChat Pay">
+        <span>WeChat Pay</span>
+      </div>
+      <div>
+        <img src="https://photo.islet.space/2021/00/IMG_4590.JPG" alt="Liewzheng Alipay">
+        <span>Alipay</span>
+      </div>
+
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/spi/" rel="tag"># spi</a>
+              <a href="/tags/3wire/" rel="tag"># 3wire</a>
+          </div>
+
+        
+
+  <div id="vcomments" style="margin: 1rem 0 0 0;"></div>
+  <script>
+    new Valine({
+      el: '#vcomments',
+      appId: 'vRGM12EcYxDSM2lat5qjjSeY-gzGzoHsz',
+      appKey: 'WBgAb6NTAFQ7DYtgH0uOPNNh'
+    })
+  </script>
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/01/11/Hardware/STM32/2022-01-11-%E5%85%89%E7%94%B5%E4%BC%A0%E6%84%9F%E5%99%A8/" rel="prev" title="Optical Sensor Development">
+                  <i class="fa fa-chevron-left"></i> Optical Sensor Development
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2022/01/22/Linux/2022-01-22-customize-vscode-font-in-debian-linux/" rel="next" title="customize vscode font in debian linux">
+                  customize vscode font in debian linux <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">粤ICP备19004822号 </a>
+  </div>
+
+<div class="copyright">
+  &copy; 2019 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">liewzheng</span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdn.jsdelivr.net/npm/mermaid@8.12.0/dist/mermaid.min.js","integrity":"sha256-0dD7vUjUCTGJjeLnPotQQJIcSzug5fO6WDMYYyNIX4c="}}</script>
+  <script src="/js/third-party/tags/mermaid.js"></script>
+
+
+  <script src="/js/third-party/pace.js"></script>
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":"enable","tags":"all","js":{"url":"https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js","integrity":"sha256-r+3itOMtGGjap0x+10hu6jW/gZCzxHsoKrOd7gyRSGY="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>

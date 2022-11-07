@@ -162,7 +162,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">124</span>
+          <span class="site-state-item-count">125</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -207,6 +207,368 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://islet.space/2021/05/23/Programming/C++/2021-05-23-Difference-between-GCC,-gcc-and-g++/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Liewzheng">
+      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coder的孤岛">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/05/23/Programming/C++/2021-05-23-Difference-between-GCC,-gcc-and-g++/" class="post-title-link" itemprop="url">Difference between GCC, gcc and g++</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2021-05-23 17:00:00 / Modified: 20:07:33" itemprop="dateCreated datePublished" datetime="2021-05-23T17:00:00+08:00">2021-05-23</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Programming/" itemprop="url" rel="index"><span itemprop="name">Programming</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>gcc 和 GCC 是两个不同的东西。</p>
+<blockquote>
+<p><strong>GCC</strong>：GNU Compiler Collection(GUN
+编译器集合)，它可以编译C、C++、JAV、Fortran、Pascal、Object-C、Ada等语言。</p>
+<p><strong>gcc</strong>：GCC中的GUN C Compiler（C 编译器）</p>
+<p><strong>g++</strong>：GCC中的GUN C++ Compiler（C++编译器）</p>
+</blockquote>
+<p>一个有趣的事实就是，就本质而言，gcc和g++并不是编译器，也不是编译器的集合，它们只是一种驱动器，根据参数中要编译的文件的类型，调用对应的GUN编译器而已，比如，用gcc编译一个c文件的话，会有以下几个步骤：</p>
+<blockquote>
+<p>Step1：Call a preprocessor, like cpp.</p>
+<p>Step2：Call an actual compiler, like cc or cc1.</p>
+<p>Step3：Call an assembler, like as.</p>
+<p>Step4：Call a linker, like ld</p>
+</blockquote>
+<p>由于编译器是可以更换的，所以gcc不仅仅可以编译C文件</p>
+<p>所以，更准确的说法是：gcc调用了C compiler，而g++调用了C++
+compiler</p>
+<h1 id="gcc和g的主要区别">gcc和g++的主要区别</h1>
+<ol type="1">
+<li><p>对于
+<em>.c和</em>.cpp文件，gcc分别当做c和cpp文件编译（c和cpp的语法强度是不一样的）</p></li>
+<li><p>对于 <em>.c和</em>.cpp文件，g++则统一当做cpp文件编译</p></li>
+<li><p>使用g++编译文件时，<strong>g++会自动链接标准库STL，而gcc不会自动链接STL</strong></p></li>
+<li><p>gcc在编译C文件时，可使用的预定义宏是比较少的</p></li>
+<li><p>gcc在编译cpp文件时/g++在编译c文件和cpp文件时（这时候gcc和g++调用的都是cpp文件的编译器），会加入一些额外的宏，这些宏如下：</p></li>
+</ol>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> __GXX_WEAK__ 1</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> __cplusplus 1</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> __DEPRECATED 1</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> __GNUG__ 4</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> __EXCEPTIONS 1</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> __private_extern__ extern</span></span><br></pre></td></tr></table></figure>
+<ol start="6" type="1">
+<li>在用gcc编译c++文件时，为了能够使用STL，需要加参数 –lstdc++
+，但这并不代表 gcc –lstdc++ 和 g++等价，它们的区别不仅仅是这个</li>
+</ol>
+<p>其主要参数：</p>
+<blockquote>
+<p>-g - turn on debugging (so GDB gives morefriendly output)</p>
+<p>-Wall - turns on most warnings</p>
+<p>-O or -O2 - turn on optimizations</p>
+<p>-o - name of the output file</p>
+<p>-c - output an object file (.o)</p>
+<p>-I - specify an includedirectory</p>
+<p>-L - specify a libdirectory</p>
+<p>-l - link with librarylib.a</p>
+</blockquote>
+<p>使用示例：<code>g++ -ohelloworld -I/homes/me/randomplace/include helloworld.C</code></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://islet.space/2021/05/22/Linux/2021-05-21-Equipments_in_debian_linux/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Liewzheng">
+      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coder的孤岛">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/05/22/Linux/2021-05-21-Equipments_in_debian_linux/" class="post-title-link" itemprop="url">Equipments in Debian Linux(KALI)</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-05-22 20:30:00" itemprop="dateCreated datePublished" datetime="2021-05-22T20:30:00+08:00">2021-05-22</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2021-05-23 23:51:40" itemprop="dateModified" datetime="2021-05-23T23:51:40+08:00">2021-05-23</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="介绍">介绍</h1>
+<p>作为一个日常开发的程序员，三大平台都在日常使用的软件（生产力工具及娱乐工具）如下：</p>
+<ul>
+<li>utools</li>
+<li>typora</li>
+<li>visual studio code</li>
+<li>picgo</li>
+<li>sogou pinyin</li>
+<li>snipaste(win) / flameshot(linux) / ishot(mac)</li>
+<li>cosbrowser</li>
+<li>nodejs 及 npm</li>
+<li>hexo</li>
+<li>qqmusic</li>
+</ul>
+<p>win和mac安装软件都相对简单，linux安装需要使用者自身具有一定的耐心和排除困难的经验，为了更好地体验linux的方便，这里对linux装机后的生产力工具安装做个简单记录，以下安装均在
+<strong>KALI</strong> （Kali也属于Debian系Linux）上进行。</p>
+<p>使用Linux系统的最大好处是
+“一个终端即可解决即可开启大部分软件和解决日常事务，最多再开启一个utools”。</p>
+<p>Linux上的软件安装方式通常分为四种方式：</p>
+<ul>
+<li>通过 <code>dpkg</code> 命令安装 <code>.deb</code> 文件</li>
+<li>通过 <code>apt</code> 或其他软件的软件安装命令（如，<code>npm</code>
+和 <code>pip</code>）来安装</li>
+<li>通过 <code>ln</code> 链接将程序绑定至全局变量来 “安装” 和使用</li>
+<li>通过直接调用 <code>AppImage</code>
+的方式直接使用软件，此类方式需要一般需要手动双击执行</li>
+</ul>
+<p>其中前三种方式的困难因系统而异，所说的困难是可能出现所安装的软件依赖不存在，需要使用者自行去定位（包括下载和添加源）和安装，或者链接方式错误等。而Linux源众多，每个节点的速度及其更新情况都不太一样，需要使用者判断。</p>
+<h1 id="utools-flameshot">uTools &amp; Flameshot</h1>
+<p><a
+target="_blank" rel="noopener" href="https://res.u-tools.cn/currentversion/utools_1.3.5_amd64.deb">uTools</a>
+使用的是 <code>.deb</code> 安装包安装，flameshot 使用 <code>apt</code>
+命令进行安装。</p>
+<p><strong>依赖文件</strong>：</p>
+<ol type="1">
+<li><code>libspdlog1-fmt7</code> 是 flameshot所需文件</li>
+<li><code>libappindicator3-1</code> 是 utools所需文件</li>
+</ol>
+<h2 id="libspdlog1">libspdlog1</h2>
+<p>尝试安装utools和flameshot后，apt会提示缺少文件。使用
+<code>sudo apt-get install libspdlog1-fmt7</code> 来安装
+<code>libspdlog1-fmt7</code> 。</p>
+<p>如果触发安装破损修复，使用<code>apt --fix-broken install</code>
+可以让apt自动修复安装错误，自动补全依赖文件。</p>
+<h2 id="libappindicator3">libappindicator3</h2>
+<p><code>libappindicator3-1</code> 文件需要使用者往
+<code>/etc/apt/source.list</code> 中添加debian源，需要使用者掌握基本的
+<code>vim</code> 软件使用方法（包括插入、保存和退出）。</p>
+<ul>
+<li><p>使用 <code>sudo vim /etc/apt/sources.list</code> 命令打开
+<code>source.list</code> 。</p></li>
+<li><p>按 <code>i</code> 进入 <strong>插入模式</strong>，复制粘贴
+<code>deb http://ftp.de.debian.org/debian sid main</code> 至空白处，按
+<code>ESC</code> 键，再依次输入 <code>:wq</code>
+进行保存和退出。</p></li>
+<li><p>在终端输入 <code>sudo apt-get update</code>
+进行源库软件列表更新，再次尝试
+<code>sudo apt-get install libappindicator3</code> 来安装</p>
+<p><code>libappindicator3-1</code> and <code>libappindicator3-7</code>
+。</p></li>
+</ul>
+<p>最后再次尝试以下两条语句即可成功安装 utools 和 flameshot 。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo dpkg -i utools_1.3.5_amd64.deb</span><br><span class="line">sudo apt-get install flameshot</span><br></pre></td></tr></table></figure>
+<h1 id="typora">Typora</h1>
+<p><a target="_blank" rel="noopener" href="https://tyopra.io">TYPORA.IO</a>
+官方提供的安装代码如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys BA300B7755AFCFAE</span><br><span class="line">sudo add-apt-repository <span class="string">&#x27;deb https://typora.io/linux ./&#x27;</span></span><br><span class="line">sudo apt-get update</span><br><span class="line">sudo apt-get install typora</span><br></pre></td></tr></table></figure>
+<p>其中，向apt中添加源的第二条语句 <code>add-apt-repository</code>
+会因缺乏 <code>PPA</code> 而无法执行，可以参考 <a
+target="_blank" rel="noopener" href="https://ywnz.com/linuxjc/7953.html#:~:text=%E6%9C%89%E4%BA%9B%E7%94%A8%E6%88%B7%E5%9C%A8UOS%E3%80%81Deepin%E7%AD%89%E6%9F%90%E4%BA%9BLinux%E5%8F%91%E8%A1%8C%E7%89%88%E7%BB%88%E7%AB%AF%E4%B8%AD%E8%BE%93%E5%85%A5PPA%E5%91%BD%E4%BB%A4%E6%97%B6%E4%BC%9A%E6%8F%90%E7%A4%BA%E2%80%9Csudo%3A%20add-apt-repository%EF%BC%9A%E6%89%BE%E4%B8%8D%E5%88%B0%E5%91%BD%E4%BB%A4%EF%BC%88command,not%20found%EF%BC%89%E2%80%9D%EF%BC%8C%E8%BF%99%E6%98%AF%E5%9B%A0%E4%B8%BA%E6%B2%A1%E6%9C%89%E5%AE%89%E8%A3%85PPA%E6%89%80%E8%87%B4%EF%BC%8C%E6%8A%8A%E5%AE%83%E5%AE%89%E8%A3%85%E4%B8%8A%E5%B0%B1%E5%8F%AF%E4%BB%A5%E4%BA%86%EF%BC%8C%E5%8F%AA%E9%9C%80%E8%A6%81%E5%9C%A8%E7%BB%88%E7%AB%AF%E4%B8%AD%E8%BF%90%E8%A1%8C%E4%B8%89%E6%9D%A1%E5%91%BD%E4%BB%A4%E3%80%82">sudo:
+add-apt-repository：找不到命令的解决方法</a> 进行安装。</p>
+<p>也可以参考 <code>libappindicator3</code> 的源添加方法，往
+<code>source.list</code> 文件中添加
+<code>deb https://typora.io/linux ./</code> 来添加源。</p>
+<p>添加成功后即可成功安装tyopra。</p>
+<h1 id="sogou-pinyin">Sogou Pinyin</h1>
+<p>从搜狗官方下载的 <a
+target="_blank" rel="noopener" href="https://ime.sogoucdn.com/dl/index/1612260778/sogoupinyin_2.4.0.3469_amd64.deb?st=USANnSZV6afzzi2u6c8J-g&amp;e=1621603885&amp;fn=sogoupinyin_2.4.0.3469_amd64.deb">Sogou</a>
+安装包，需要用
+<code>sudo dpkg -i sogoupinyin_2.4.0.3469_amd64.deb</code>
+命令进行安装，会遇到以下缺乏库的提示，主要是因为缺少 <code>fcitx</code>
+的提示。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">dpkg: 依赖关系问题使得 sogoupinyin 的配置工作不能继续：</span><br><span class="line"> sogoupinyin 依赖于 fcitx (&gt;= 1:4.2.8)；然而：</span><br><span class="line">  未安装软件包 fcitx</span><br><span class="line"> sogoupinyin 依赖于 fcitx-frontend-gtk2；然而：</span><br><span class="line">  未安装软件包 fcitx-frontend-gtk2。</span><br><span class="line"> sogoupinyin 依赖于 fcitx-frontend-gtk3；然而：</span><br><span class="line">  未安装软件包 fcitx-frontend-gtk3。</span><br><span class="line"> sogoupinyin 依赖于 fcitx-frontend-qt5；然而：</span><br><span class="line">  未安装软件包 fcitx-frontend-qt5。</span><br><span class="line"> sogoupinyin 依赖于 fcitx-module-kimpanel；然而：</span><br><span class="line">  未安装软件包 fcitx-module-kimpanel。</span><br><span class="line"> sogoupinyin 依赖于 fcitx-module-x11；然而：</span><br><span class="line">  未安装软件包 fcitx-module-x11。</span><br><span class="line"> sogoupinyin 依赖于 im-config；然而：</span><br><span class="line">  未安装软件包 im-config。</span><br><span class="line"> sogoupinyin 依赖于 fcitx-libs | libfcitx-config4；然而：</span><br><span class="line">  未安装软件包 fcitx-libs。</span><br><span class="line">  未安装软件包 libfcitx-config4。</span><br><span class="line"> sogoupinyin 依赖于 fcitx-libs | libfcitx-qt0；然而：</span><br><span class="line">  未安装软件包 fcitx-libs。</span><br><span class="line">  未安装软件包 libfcitx-qt0。</span><br><span class="line"> sogoupinyin 依赖于 fcitx-libs | libfcitx-utils0；然而：</span><br><span class="line">  未安装软件包 fcitx-libs。</span><br><span class="line">  未安装软件包 libfcitx-utils0。</span><br><span class="line"> sogoupinyin 依赖于 fcitx-ui-classic；然而：</span><br><span class="line">  未安装软件包 fcitx-ui-classic。</span><br><span class="line"> sogoupinyin 依赖于 libqt5quickwidgets5；然而：</span><br><span class="line">  未安装软件包 libqt5quickwidgets5。</span><br><span class="line"> sogoupinyin 依赖于 qml-module-qtquick2；然而：</span><br><span class="line">  未安装软件包 qml-module-qtquick2。</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>Fcitx[ˈfaɪtɪks]是 (Free Chinese Input Toy for X)
+的英文缩写，中文名为小企鹅输入法，是一个以 GPL 方式发布的输入法框架，
+编写它的目是为桌面环境提供一个灵活的输入方案，彻底解决在GNU/Linux下没有一个好的中文输入法的问题。</p>
+</blockquote>
+<h2 id="fcitx">FCITX</h2>
+<p>通过输入 <code>sudo apt-get install fcitx</code> 来尝试安装，会触发
+apt fix broken install， 此时只要再次输入
+<code>sudo apt --fix-broken install</code> 来修复。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">下列软件包有未满足的依赖关系：</span><br><span class="line"> fcitx : 依赖: fcitx-bin 但是它将不会被安装</span><br><span class="line">         依赖: fcitx-data 但是它将不会被安装</span><br><span class="line">         依赖: fcitx-modules 但是它将不会被安装</span><br><span class="line">         推荐: fcitx-config-gtk 但是它将不会被安装 或</span><br><span class="line">                 kde-config-fcitx 但是它将不会被安装</span><br><span class="line">         推荐: fcitx-frontend-all 但是它将不会被安装 或</span><br><span class="line">                 fcitx-frontend-fbterm 但是它将不会被安装</span><br><span class="line">         推荐: fcitx-ui-classic 但是它将不会被安装 或</span><br><span class="line">                 fcitx-ui-light 但是它将不会被安装</span><br><span class="line">         推荐: im-config (&gt;= 0.5) 但是它将不会被安装</span><br><span class="line"> sogoupinyin : 依赖: fcitx-frontend-gtk2 但是它将不会被安装</span><br><span class="line">               依赖: fcitx-frontend-gtk3 但是它将不会被安装</span><br><span class="line">               依赖: fcitx-frontend-qt5 但是它将不会被安装</span><br><span class="line">               依赖: fcitx-module-kimpanel 但是它将不会被安装</span><br><span class="line">               依赖: fcitx-module-x11 但是它将不会被安装</span><br><span class="line">               依赖: im-config 但是它将不会被安装</span><br><span class="line">               依赖: fcitx-libs 但是它将不会被安装 或</span><br><span class="line">                       libfcitx-config4 但是它将不会被安装</span><br><span class="line">               依赖: fcitx-libs 但是它将不会被安装 或</span><br><span class="line">                       libfcitx-qt0 但无法安装它</span><br><span class="line">               依赖: fcitx-libs 但是它将不会被安装 或</span><br><span class="line">                       libfcitx-utils0 但是它将不会被安装</span><br><span class="line">               依赖: fcitx-ui-classic 但是它将不会被安装</span><br><span class="line">               依赖: libqt5quickwidgets5 但是它将不会被安装</span><br><span class="line">               依赖: qml-module-qtquick2 但是它将不会被安装</span><br><span class="line">E: 有未能满足的依赖关系。请尝试不指明软件包的名字来运行“apt --fix-broken install”(也可以指定一个解决办法)。</span><br></pre></td></tr></table></figure>
+<h2 id="安装成功">安装成功</h2>
+<p>FIX-BROKEN 成功后，再次尝试安装 FCITX
+就可以提示成功；接着安装sogou即可。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt-get install fcitx                   </span><br><span class="line">正在读取软件包列表... 完成</span><br><span class="line">正在分析软件包的依赖关系树... 完成</span><br><span class="line">正在读取状态信息... 完成                 </span><br><span class="line">fcitx 已经是最新版 (1:4.2.9.8-3)。</span><br><span class="line">fcitx 已设置为手动安装。</span><br><span class="line">升级了 0 个软件包，新安装了 0 个软件包，要卸载 0 个软件包，有 136 个软件包未被升级。</span><br><span class="line"></span><br><span class="line">$ sudo dpkg -i sogoupinyin_2.4.0.3469_amd64.deb</span><br><span class="line">(正在读取数据库 ... 系统当前共安装有 270000 个文件和目录。)</span><br><span class="line">准备解压 sogoupinyin_2.4.0.3469_amd64.deb  ...</span><br><span class="line">正在解压 sogoupinyin (2.4.0.3469) 并覆盖 (2.4.0.3469) ...</span><br><span class="line">正在设置 sogoupinyin (2.4.0.3469) ...</span><br><span class="line">正在处理用于 mailcap (3.69) 的触发器 ...</span><br><span class="line">正在处理用于 desktop-file-utils (0.26-1) 的触发器 ...</span><br><span class="line">正在处理用于 hicolor-icon-theme (0.17-2) 的触发器 ...</span><br></pre></td></tr></table></figure>
+<h2 id="依赖库">依赖库</h2>
+<p>sogou输入法依赖库具体如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">下列【新】软件包将被安装：</span><br><span class="line">  dbus-x11 fcitx fcitx-bin fcitx-config-common fcitx-config-gtk fcitx-data</span><br><span class="line">  fcitx-frontend-all fcitx-frontend-gtk2 fcitx-frontend-gtk3</span><br><span class="line">  fcitx-frontend-qt5 fcitx-libs fcitx-module-dbus fcitx-module-kimpanel</span><br><span class="line">  fcitx-module-lua fcitx-module-x11 fcitx-modules fcitx-ui-classic</span><br><span class="line">  fcitx5-module-quickphrase-editor im-config libfcitx-config4</span><br><span class="line">  libfcitx-core0 libfcitx-gclient1 libfcitx-qt5-1 libfcitx-qt5-data</span><br><span class="line">  libfcitx-utils0 libgettextpo0 libpresage-data libpresage1v5</span><br><span class="line">  libqt5qmlworkerscript5 libqt5quickwidgets5 libtinyxml2.6.2v5 presage</span><br><span class="line">  qml-module-qtquick2</span><br></pre></td></tr></table></figure>
+<h1 id="nodejs-hexo">NodeJS &amp; Hexo</h1>
+<p>使用 <code>sudo apt-get install nodejs</code> 或
+<code>sudo apt-get install node.js</code> 均可以实现node.js
+的安装，但是只能安装V12版。</p>
+<p>可以在官方下载 <a
+target="_blank" rel="noopener" href="https://nodejs.org/dist/v16.2.0/node-v16.2.0-linux-x64.tar.xz">node-v16.2.0-linux-x64.tar.xz</a>
+，并使用以下命令进行解压：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">xz -d node-v16.2.0-linux-x64.tar.xz</span><br><span class="line">tar -xvf node-v16.2.0-linux-x64.tar</span><br></pre></td></tr></table></figure>
+<p>解压完毕之后，以管理员身份将该文件移动至 <code>/usr/local/node</code>
+，以下命令将 <code>node-v16.2.0-linux-x64</code> 拷贝的同时进行了
+<strong>重命名</strong> 操作。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo mv /home/XXX/downloads/node-v16.2.0-linux-x64 /usr/<span class="built_in">local</span>/node</span><br></pre></td></tr></table></figure>
+<p style="color: gray; font-style: italic;">
+注：XXX是用户名
+</p>
+<p>然后进行软连接：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo ln -s /usr/<span class="built_in">local</span>/node/bin/node /usr/<span class="built_in">local</span>/bin</span><br><span class="line">sudo ln -s /usr/<span class="built_in">local</span>/node/bin/npm /usr/<span class="built_in">local</span>/bin</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>Linux ln（英文全拼：link
+files）命令是一个非常重要命令，它的功能是为某一个文件在另外一个位置建立一个同步的链接。</p>
+<p>当我们需要在不同的目录，用到相同的文件时，我们不需要在每一个需要的目录下都放一个必须相同的文件，我们只要在某个固定的目录，放上该文件，然后在
+其它的目录下用ln命令链接（link）它就可以，不必重复的占用磁盘空间。</p>
+</blockquote>
+<p>以上是 <code>ln</code>
+链接命令的解释，实际最重要的作用是将某个已下载的软件及其命令定义至全局，在终端的任意一个目录位置都可以使用该软件。</p>
+<h2 id="安装-成功">“安装” 成功</h2>
+<p>实际上新版的nodejs并不涉及 前述 <code>dpkg</code> 或 <code>apt</code>
+命令的安装，但软连接该文件目录至 <code>/usr/local/bin</code>
+后，能实现安装效果，使用 <code>node -v</code> 及 <code>npm -v</code>
+命令即可进行测试。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ node -v</span><br><span class="line">v16.2.0</span><br><span class="line"></span><br><span class="line">$ npm -v                   </span><br><span class="line">7.14.0</span><br></pre></td></tr></table></figure>
+<h2 id="其他">其他</h2>
+<p>对于使用此类安装方式进行安装的
+依赖于nodejs的应用如果需要在全局进行使用可能也需要进行软连接，如
+hexo。</p>
+<p>使用 <code>npm install hexo-cli -g</code>
+成功安装hexo后提示如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ whereis hexo</span><br><span class="line">hexo:</span><br></pre></td></tr></table></figure>
+<p>此时需要将 <code>/usr/local/node/bin</code>
+文件夹下安装的程序也拉到全局变量中 <code>/usr/local/bin</code>
+中。再次使用 <code>whereis</code> 命令检测时即可成功。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ sudo ln -s /usr/<span class="built_in">local</span>/node/bin/hexo /usr/<span class="built_in">local</span>/bin/hexo</span><br><span class="line">                                                                             </span><br><span class="line">$ whereis hexo</span><br><span class="line">hexo: /usr/<span class="built_in">local</span>/bin/hexo</span><br></pre></td></tr></table></figure>
+<h1 id="visual-studio-code">Visual Studio Code</h1>
+<p>VS code安装使用 <code>dpkg</code>
+命令，最大的问题是微软的源下载太慢，以下提供个人下载点，安装过程不再记录。</p>
+<p>个人下载点： <a
+target="_blank" rel="noopener" href="https://storage.islet.space/02_Softwares/02_Microsoft/VisualStudioCode/Linux/code_1.55.2-1618307277_amd64.deb">Visual
+Studio Code Linux (deb)</a></p>
+<h1 id="picgo">PicGo</h1>
+<p><a
+target="_blank" rel="noopener" href="https://support.typora.io/Upload-Image/#picgo-core-command-line-opensource">Typora_Picgo</a>
+有 command-line 版 和 app 版，参考 <a
+target="_blank" rel="noopener" href="https://picgo.github.io/PicGo-Doc/zh/">PicGo官方文档</a>
+（GFW封锁了<strong><em>github.io</em></strong>域名后缀，需要梯子）进行安装吧。</p>
+<h1 id="qqmusic-cosbrowser">QQmusic &amp; cosbrowser</h1>
+<p>这两个软件都是腾讯家产品，下载、安装和使用都很方便。</p>
+<p>其中，QQMusic使用 <code>dpkg</code> 命令进行安装即可，
+<code>cosbrowser</code> 是 <code>AppImage</code>
+格式文件，直接打开即可使用，无需安装。</p>
+<p><strong>彩蛋</strong>：<code>sudo apt-get install cmatrix</code></p>
+<p>---EOF---</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -992,541 +1354,6 @@ alt="image-20210520090936369" />
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://islet.space/2021/05/14/Communication/2021-05-14-I2C%E3%80%81SPI%E3%80%81TDM%E5%8F%8AI2S/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Liewzheng">
-      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Coder的孤岛">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/05/14/Communication/2021-05-14-I2C%E3%80%81SPI%E3%80%81TDM%E5%8F%8AI2S/" class="post-title-link" itemprop="url">I^2^C、SPI、TDM及I2S</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-
-    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
-    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2021-05-14 10:55:00" itemprop="dateCreated datePublished" datetime="2021-05-14T10:55:00+08:00">2021-05-14</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-07-15 21:12:20" itemprop="dateModified" datetime="2021-07-15T21:12:20+08:00">2021-07-15</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Communication/" itemprop="url" rel="index"><span itemprop="name">Communication</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="i2c">I<sup>2</sup>C</h1>
-<p><strong>标准</strong>：<a
-target="_blank" rel="noopener" href="https://www.nxp.com/docs/en/user-guide/UM10204.pdf">《NXP_UM10204_I<sup>2</sup>C-bus
-specification and user manual》</a></p>
-<blockquote>
-<p><em>I<sup>2</sup>C总线是一个事实上的世界标准，现在已经在50多家公司生产的1000多种不同的IC中实施。</em></p>
-<p><em>此外，多功能的I<sup>2</sup>C总线被用于各种控制架构，如系统管理总线（SMBus）、电源管理总线（PMBus）、智能平台管理接口（IPMI）、显示数据通道（DDC）和高级电信计算架构（ATCA）。</em></p>
-<p><em>本文件帮助设备和系统设计者了解I<sup>2</sup>C总线的工作原理并实现工作应用。描述了各种操作模式。它包含了对I<sup>2</sup>C<strong>总线数据传输</strong>、握手和总线仲裁方案的全面介绍。详细的章节涵盖了I<sup>2</sup>C总线在每种工作模式下的时序和电气规范。</em></p>
-<p><em>I<sup>2</sup>C兼容芯片的设计者应将该文件作为参考，并确保新设备满足该文件中规定的所有限制。包含I<sup>2</sup>C器件的系统的设计者应审查本文件，并参考各个组件的数据表。</em></p>
-<p>——翻译自标准文件</p>
-</blockquote>
-<p>I<sup>2</sup>C(Inter－Integrated
-Circuit)是一种通用的总线协议。它是由Philips(飞利浦)公司，现NXP(恩智浦)半导体开发的一种简单的双向两线制总线协议标准。</p>
-<p>对于硬件设计人员来说，只需要2个管脚，极少的连接线和面积，就可以实现芯片间的通讯，对于软件开发者来说，可以使用同一个I<sup>2</sup>C驱动库，来实现实现不同器件的驱动，大大减少了软件的开发时间。极低的工作电流，降低了系统的功耗，完善的应答机制大大增强通讯的可靠性。</p>
-<h2 id="术语">术语</h2>
-<p><img src="https://pic.islet.space/2021/05/image-20210514111033910.png" alt="image-20210514111033910" style="zoom: 67%;" /></p>
-<table>
-<colgroup>
-<col style="width: 14%" />
-<col style="width: 85%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th>术语</th>
-<th>释义</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>总线</td>
-<td>传输数据的通路</td>
-</tr>
-<tr class="even">
-<td>传送者</td>
-<td>传输数据至总线的设备</td>
-</tr>
-<tr class="odd">
-<td>接收者</td>
-<td>从总线上接受数据的设备</td>
-</tr>
-<tr class="even">
-<td>主（机）</td>
-<td>主动开启传输、生成时钟信号 并 主动结束传输的设备</td>
-</tr>
-<tr class="odd">
-<td>从（机）</td>
-<td>由主机寻址的设备</td>
-</tr>
-<tr class="even">
-<td>多主（机）</td>
-<td>在不损坏数据传输的情况下允许多主机可以试图同时控制总线</td>
-</tr>
-<tr class="odd">
-<td>仲裁</td>
-<td>确保在有多个主机同时试图控制总线的情况下，只允许一个主机这样做，而且仲裁成功的信息不会被（其他设备）破坏的程序。</td>
-</tr>
-<tr class="even">
-<td>同步</td>
-<td>确保两个及以上设备其时钟信号的同步</td>
-</tr>
-</tbody>
-</table>
-<p>以下这个图应该可以较好地解释“多主机”的概念，多个主机可以同时向外发出传输数据的申请，也可以主动结束其数据传输。虽然，I<sup>2</sup>C降低了总线复用的成本，但仍需要“仲裁”机制来解决多个主机之间的无序竞争状态。</p>
-<p><img src="https://pic.islet.space/2021/05/image-20210514112114667.png" alt="image-20210514112114667" style="zoom:67%;" /></p>
-<h2 id="总线特征">总线特征</h2>
-<h3 id="总线硬件要求">总线硬件要求</h3>
-<p>通过 <strong>串行数据</strong>（SDA，Serial Data）和
-<strong>串行时钟</strong>（SCL，Serial
-Clock）两条线路对设备进行连接。</p>
-<p>每个设备都通过自身的通信设备地址进行互相辨别，且每个设备都可以当发送者或接收者，取决于设备自身的功能定义。</p>
-<h3 id="标准传输速率">标准传输速率</h3>
-<p>各模式、速率及其传输方向见下方表格。</p>
-<blockquote>
-<p>Data on the I<sup>2</sup>C-bus can be transferred at rates of up to
-100 kbit/s in the Standard-mode, up to 400 kbit/s in the Fast-mode, up
-to 1 Mbit/s in Fast-mode Plus, or up to 3.4 Mbit/s in the High-speed
-mode.</p>
-</blockquote>
-<table>
-<colgroup>
-<col style="width: 15%" />
-<col style="width: 15%" />
-<col style="width: 27%" />
-<col style="width: 41%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th>MODE</th>
-<th>RATE</th>
-<th>TRANSFER DIRECTION</th>
-<th>DOWNWARD COMPATIBLE WITH</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>STANDARD</td>
-<td>100 Kbit/s</td>
-<td>bidirectional</td>
-<td>/</td>
-</tr>
-<tr class="even">
-<td>FAST</td>
-<td>400 Kbit/s</td>
-<td>bidirectional</td>
-<td>STANDARD</td>
-</tr>
-<tr class="odd">
-<td>FAST-PLUS</td>
-<td>1 Mbit/s</td>
-<td>bidirectional</td>
-<td>STANDARD / FAST</td>
-</tr>
-<tr class="even">
-<td>HIGH-SPEED</td>
-<td>3.4 Mbit/s</td>
-<td>bidirectional</td>
-<td>STANDARD / FAST / FAST-PLUS</td>
-</tr>
-<tr class="odd">
-<td>ULTRA-FAST</td>
-<td>5 Mbit/s</td>
-<td>unidirectional</td>
-<td>/</td>
-</tr>
-</tbody>
-</table>
-<figure>
-<img src="https://pic.islet.space/2021/05/image-20210522182927364.png"
-alt="image-20210522182927364" />
-<figcaption aria-hidden="true">image-20210522182927364</figcaption>
-</figure>
-<h2 id="协议要求">协议要求</h2>
-<p>以下协议要求适用于双向通信模式（不包括ULTRA-FAST模式下的单向通信）</p>
-<h3 id="逻辑电平规定">逻辑电平规定</h3>
-<p>由于I<sup>2</sup>C的接入设备众多（如CMOS、NMOS、Bipolar等），因此逻辑电平0和逻辑电平1（的电压）并不是固定不变的，这取决于VDD的电平。</p>
-<p>输入参考电平会被控制在VDD电平的30%~70%之间。 V<sub>IL</sub> = 0.3 *
-V<sub>DD</sub>；V<sub>IH</sub> = 0.7 * V<sub>DD</sub> 。</p>
-<p>某些传统设备的输入电平会被固定在1.5V（V<sub>IL</sub>）和3.0V（V<sub>IH</sub>），但新设备都要求是
-30%V<sub>DD</sub> 及 70%V<sub>DD</sub> 。</p>
-<p><strong>注意</strong>：V<sub>IL</sub>、V<sub>IH</sub>、V<sub>OL</sub>、V<sub>OH</sub>都是以参考电压作为基准的，即要达到某个电压的百分之多少时，才能够被认为是
-<strong>逻辑电平0</strong> 或 <strong>逻辑电平1</strong>
-。例如，可将V<sub>IL</sub>
-视作当V<sub>DD</sub>下降到只有30%及以下时，为逻辑电平0，30%V<sub>DD</sub>是其逻辑电平的最高阈值；同理可得
-V<sub>IH</sub> ；超过这个值而未到达70%的中间态则为不确定态。</p>
-<blockquote>
-<p>Due to the variety of different technology devices (CMOS, NMOS,
-bipolar) that can be connected to the I<sup>2</sup>C-bus, the levels of
-the logical ‘0’ (LOW) and ‘1’ (HIGH) are not fixed and depend on the
-associated level of VDD . Input reference levels are set as 30 % and 70
-% of VDD ; VIL is 0.3VDD and VIH is 0.7V DD .</p>
-<p>See Figure 38, timing diagram. Some legacy device input levels were
-fixed at V<sub>IL</sub> = 1.5 V and V<sub>IH</sub> = 3.0 V, but all new
-devices require this 30 %/70 % specification.</p>
-</blockquote>
-<p><img src="https://pic.islet.space/2021/05/image-20210514134830615.png" alt="image-20210514134830615" style="zoom: 67%;" /></p>
-<h3 id="时序正确性">时序正确性</h3>
-<ul>
-<li>SDA上的数据必须在SCL高电平期间保持稳定，即不能在SCL高电平期间发生翻转（后见原因），只有在SCL低电平时可以翻转。</li>
-<li>时钟脉冲信号生成要先于数据传送。</li>
-</ul>
-<blockquote>
-<p>The data on the SDA line must be stable during the HIGH period of the
-clock. The HIGH or LOW state of the data line can only change when the
-clock signal on the SCL line is LOW (see Figure 4). One clock pulse is
-generated for each data bit transferred.</p>
-</blockquote>
-<p><img src="https://pic.islet.space/2021/05/image-20210514141512136.png" alt="image-20210514141512136" style="zoom: 80%;" /></p>
-<h3 id="开始及结束标志">开始及结束标志</h3>
-<ul>
-<li><p>传输开始时必须以一个 <strong>开始</strong>
-信号作为标志，结束时必须以一个 <strong>结束</strong>
-信号作为标志。</p></li>
-<li><p><strong>开始信号 </strong>是以SCL为高电平时的
-<strong>SDA电平的由高转低</strong> 作为标志，<strong>结束信号</strong>
-是以SCL高电平时的 <strong>SDA电平的由低转高</strong> 作为标志。</p></li>
-<li><p>开始和结束标志必须由主设备控制。</p></li>
-</ul>
-<blockquote>
-<p>All transactions begin with a START (S) and are terminated by a STOP
-(P) (see Figure 5). A HIGH to LOW transition on the SDA line while SCL
-is HIGH defines a START condition. A LOW to HIGH transition on the SDA
-line while SCL is HIGH defines a STOP condition.</p>
-</blockquote>
-<p><img src="https://pic.islet.space/2021/05/image-20210514142116674.png" alt="image-20210514142116674" style="zoom: 80%;" /></p>
-<h4 id="开始字节">开始字节</h4>
-<p><img src="https://pic.islet.space/2021/05/image-20210515150526897.png" alt="image-20210515150526897" style="zoom:67%;" /></p>
-<blockquote>
-<p>dummy acknowledge (HIGH) : 无声确认？？？</p>
-</blockquote>
-<h3 id="总线状态">总线状态</h3>
-<p>总线具有两种状态，<strong>繁忙</strong>（Busy）和
-<strong>空闲</strong>（Free），即 SDA电平 “开始” 后，总线进入繁忙状态，
-SDA电平 “结束” 后，总线进入空闲状态。</p>
-<p><strong>注意</strong>：在总线繁忙期间，发生重复的“开始”状态（而不是“结束”状态），由于“重复开始”和
-“开始” 功能相同，为了方便，统称为 “开始”，除非特殊说明为
-“重复开始”。</p>
-<blockquote>
-<p>The bus stays busy if a repeated START (Sr) is generated instead of a
-STOP condition. In this respect, the START (S) and repeated START (Sr)
-conditions are functionally identical. For the remainder of this
-document, therefore, the S symbol is used as a generic term to represent
-both the START and repeated START conditions, unless Sr is particularly
-relevant.</p>
-</blockquote>
-<h3 id="传输比特位">传输比特位</h3>
-<ul>
-<li>SDA线上的字节传输必须满足8位长度。</li>
-<li>每次传输数据的字节数不受限制。</li>
-<li>每个字节数后都需要跟一个<strong>确认位（Acknowledge
-bit）</strong>。</li>
-<li>当从机无法完整接收或传输一个完整的数据字节时，例如正在产生内部中断等，除非其完成内部的某些功能，否则该从机将能够一直拉低SCL的电平，<strong>强制让主机一直处于等待状态</strong>。只有当从机准备好接收下一个完整的字节并释放SCL时，数据传输才会继续。</li>
-</ul>
-<blockquote>
-<p>Every byte put on the SDA line must be eight bits long. The number of
-bytes that can be transmitted per transfer is unrestricted. Each byte
-must be followed by an Acknowledge bit.</p>
-<p><strong>Data is transferred with the Most Significant Bit (MSB)
-first</strong> (see Figure 6). If a slave cannot receive or transmit
-another complete byte of data until it has performed some other
-function, for example servicing an internal interrupt, it can hold the
-clock line SCL LOW to force the master into a wait state. Data transfer
-then continues when the slave is ready for another byte of data and
-releases clock line SCL.</p>
-</blockquote>
-<p><img src="https://pic.islet.space/2021/05/image-20210514144620803.png" alt="image-20210514144620803" style="zoom:80%;" /></p>
-<h3 id="确认标志">确认标志</h3>
-<ul>
-<li>每个字节（8比特）后都跟着一个确认位，即前8位数据，第9位确认。</li>
-<li><strong>SCL上的时钟信号由主机产生，包括确认位的的第九个时钟脉冲</strong>。</li>
-<li>SDA线并不是由主机一直占有的，每发送完一个完整字节后，主机都会释放SDA线，由从机进行数据确认。</li>
-<li>发送者在确认时钟脉冲期间释放SDA线，以便接收者可以将SDA线拉低，并且在该时钟脉冲的高电平期间保持稳定的低电平（见图4）。</li>
-<li>对于设置（set-up）和保持（Hold）的时间，都应该依照表10中只针对各种不同模式的要求进行设置。</li>
-<li>如果SDA电平在第九个时钟脉冲时仍保持高电平，则被定义为
-“未确认状态”。则此时主机可以发送一个“结束”标志来结束当前连接，或发送一个“开始”标志来开启一次新的传送。</li>
-</ul>
-<p><img src="/home/kali/.config/Typora/typora-user-images/image-20210514154506246.png" alt="image-20210514154506246" style="zoom: 80%;" /></p>
-<blockquote>
-<p>The acknowledge takes place after every byte. The acknowledge bit
-allows the receiver to signal the transmitter that the byte was
-successfully received and another byte may be sent. The master generates
-all clock pulses, including the acknowledge ninth clock pulse.</p>
-<p>The Acknowledge signal is defined as follows: the transmitter
-releases the SDA line during the acknowledge clock pulse so the
-<strong><em>receiver can pull the SDA line LOW</em></strong> and it
-remains stable LOW during the HIGH period of this clock pulse (see
-Figure 4). Set-up and hold times (specified in Section 6) must also be
-taken into account.</p>
-<p>When SDA remains HIGH during this ninth clock pulse, this is defined
-as the Not Acknowledge signal. The master can then generate either a
-STOP condition to abort the transfer, or a repeated START condition to
-start a new transfer.</p>
-</blockquote>
-<p><strong>以下为五种“未确认/未应答”的可能情况</strong>：There are five
-conditions that lead to the generation of a NACK:</p>
-<ol type="1">
-<li><strong>传输地址错误</strong>：No receiver is present on the bus
-with the transmitted address so there is no device to respond with an
-acknowledge.</li>
-<li><strong>实时处理中</strong>：The receiver is unable to receive or
-transmit because it is performing some real-time function and is not
-ready to start communication with the master.</li>
-<li><strong>数据/代码未定义</strong>：During the transfer, the receiver
-<strong>gets data or commands that it does not understand.</strong></li>
-<li><strong>正在传输中</strong>：During the transfer, the receiver
-<strong>cannot receive any more data bytes</strong>.</li>
-<li><strong>未收到结束信号（收发身份未转换）</strong>：A master-receiver
-must signal the end of the transfer to the slave transmitter.</li>
-</ol>
-<h3 id="时钟同步">时钟同步</h3>
-<p>任意几个主机都可能同时发起数据传输请求，此时只有一个主机和一个从机可以掌握总线进行通信，此时需要通过
-<strong>时间同步</strong> 和 <strong>仲裁</strong>
-完成对总线的调配。</p>
-<p><strong>在单机系统（Single Master
-System）中，不需要时钟同步和仲裁。</strong></p>
-<p>时钟同步是通过I<sup>2</sup>C接口与SCL线的有线-AND连接进行的。</p>
-<p>这意味着SCL线上的高电平到低电平的转换会导致相关的主站开始对其低电平周期进行计数（如图7的CLK<sub>2</sub>），一旦一个主站时钟
-CLK<sub>1</sub>
-变为低电平，它就会将SCL线电平拉低，并保持在这个状态，直到另一个时钟
-CLK<sub>2</sub> 达到高电平状态。</p>
-<p>然而，如果时钟 CLK<sub>2</sub> 仍在其低电平周期内，CLK<sub>1</sub>
-的低电平到高电平转换可能不会改变SCL线的状态。</p>
-<p>因为SCL线被具有最长的低电平周期的主站 CLK<sub>2</sub>
-保持为低电平，而在这段时间内，低电平周期较短的主站 CLK<sub>1</sub>
-进入高电平等待状态。</p>
-<blockquote>
-<p>Clock synchronization is performed using the wired-AND connection of
-I<sup>2</sup>C interfaces to the SCL line. This means that a HIGH to LOW
-transition on the SCL line causes the masters concerned to start
-counting off their LOW period and, once a master clock has gone LOW, it
-holds the SCL line in that state until the clock HIGH state is reached
-(see Figure 7). However, if another clock is still within its LOW
-period, the LOW to HIGH transition of this clock may not change the
-state of the SCL line. The SCL line is therefore held LOW by the master
-with the longest LOW period. Masters with shorter LOW periods enter a
-HIGH wait-state during this time.</p>
-</blockquote>
-<p>当所有相关的主控器都结束了他们的低电平周期，时钟线被释放并变成高电平。</p>
-<p>然后，在主站时钟和SCL线的状态之间没有差异，所有的主站开始计算他们的高电平周期。</p>
-<p><strong>第一个完成其高电平周期的主站再次将SCL线拉到低电平</strong>。这样，就产生了一个<strong>同步的SCL时钟</strong>，<strong>其低电平周期由具有最长时钟低电平周期的主站决定</strong>，<strong>其高电平周期由具有最短时钟高电平周期的主站决定</strong>。</p>
-<p><img src="https://pic.islet.space/2021/05/image-20210514170202184.png" alt="image-20210514170202184" style="zoom: 67%;" /></p>
-<h3 id="竞争仲裁">竞争仲裁</h3>
-<p>仲裁和同步一样，是指只有在系统中使用一个以上的主站时才需要的协议的一个部分。注意，从机不参与仲裁程序。</p>
-<p>一个主站只有在总线空闲时才可以开始传输。两个主站可以在START条件的最小保持时间（tHD;STA）内产生一个START条件，从而在总线上产生一个有效的START条件。然后需要进行仲裁，以确定哪个主站将完成其传输。</p>
-<p>仲裁是逐位进行的。在每个比特期间，当SCL为高电平时，每个主站检查SDA电平是否与其所发送的内容相符，期间可能需要很多比特，只要传输的内容相同，两个主站实际上可以无误地完成整个信息传输过程。</p>
-<p><mark>当一个主站第一次试图发送一个高电平，但检测到SDA电平为低电平时，主站知道它已经失去了仲裁，并关闭其SDA输出驱动器</mark>。在其他主站被仲裁过程中，正在传输其信息的主站将继续其传输，没有信息丢失。</p>
-<p>失去仲裁的主站可以产生时钟脉冲，直到它失去仲裁的字节结束，并且必须在总线空闲时重新尝试传输。</p>
-<p><mark>如果一个主站也包含了一个从站功能，并且它在寻址阶段失去了仲裁，有可能获胜的主站正试图对它进行寻址。因此，失败的主站必须立即切换到其从站模式。</mark></p>
-<p>图8显示了两个主站的仲裁程序。可能涉及更多，这取决于有多少个主站连接到总线上。</p>
-<p><mark>当产生DATA1的主站的内部数据电平与SDA线上的实际电平有差异时，DATA1的输出被关闭。这并不影响由获胜主站发起的数据传输。</mark></p>
-<p><img src="https://pic.islet.space/2021/05/image-20210515142633906.png" alt="image-20210515142633906" style="zoom: 67%;" /></p>
-<h3 id="时间拉伸">时间拉伸</h3>
-<h3 id="从机地址和读取位">从机地址和读取位</h3>
-<h3 id="位寻址">10位寻址</h3>
-<h3 id="反转地址">反转地址</h3>
-<h3 id="通用寻址">通用寻址</h3>
-<figure>
-<img src="https://pic.islet.space/2021/05/image-20210515172907284.png"
-alt="image-20210515172907284" />
-<figcaption aria-hidden="true">image-20210515172907284</figcaption>
-</figure>
-<figure>
-<img src="https://pic.islet.space/2021/05/image-20210515172945861.png"
-alt="image-20210515172945861" />
-<figcaption aria-hidden="true">image-20210515172945861</figcaption>
-</figure>
-<figure>
-<img src="https://pic.islet.space/2021/05/image-20210515172958184.png"
-alt="image-20210515172958184" />
-<figcaption aria-hidden="true">image-20210515172958184</figcaption>
-</figure>
-<h3 id="软复位">软复位</h3>
-<p>在发送general call (0000 0000)后，再发送一个 0000 0110 (06h)
-，这样两个具有先后顺序的字节来定义软复位。</p>
-<p>首先，这种软复位是可选 ，并不是所有设备都会对软复位指令进行响应。</p>
-<p>在收到这2个字节的序列时，所有被设计为响应一般调用地址的设备都会复位，并接收其地址的可编程部分。</p>
-<blockquote>
-<p>On receiving this 2-byte sequence, all devices designed to respond to
-the general call address reset and take in the programmable part of
-their address.</p>
-</blockquote>
-<p>必须采取预防措施，确保设备在施加电源电压后没有拉低SDA或SCL线，因为这些低电平会阻断总线。</p>
-<h3 id="总线复位">总线复位</h3>
-<p>SCK信号一直卡在低电平的事件较少发生。</p>
-<ul>
-<li>如果I<sup>2</sup>C总线设备拥有硬件复位输入，则可以通过优先程序启用硬件中断复位来重置总线。</li>
-<li>如果没有硬件复位输入，则通过给设备循环供电，激活强制性的内部开机复位（POR）电路。</li>
-</ul>
-<p>SDA信号如果一直卡在低电平。</p>
-<ul>
-<li><p>则主机应该发送九次SCL时钟脉冲，此时令SDA保持低电平的设备在收到九次脉冲后应主动释放总线。</p></li>
-<li><p>如果九次脉冲没有用，则启用硬件中断复位或循环供电来清除总线。</p></li>
-</ul>
-<h3 id="设备id">设备ID</h3>
-<p>可选的3字节只读设备ID编码（an optional 3-byte read-only ）：</p>
-<ul>
-<li>12位是设备制造商编号，具有独一无二性</li>
-<li>9位零件ID，由设备制造商写入</li>
-<li>3位模具/晶元版本，由设备制造商写入</li>
-</ul>
-<p><img src="https://pic.islet.space/2021/05/image-20210515152141963.png" alt="image-20210515152141963" style="zoom:67%;" /></p>
-<ol type="1">
-<li><p>启动条件</p></li>
-<li><p>主站发送保留设备ID的 I<sup>2</sup>C
-总线地址，后面的R/W位设置为<code>0</code>（写）：<code>1111 1000</code>。</p></li>
-<li><p>主站发送从属地址。LSB是一个
-"不关心"的值，只有一个设备必须确认这个字节（拥有I<sup>2</sup>C总线从属地址的设备）。</p></li>
-<li><p>主站发送一个 Re-START 条件。</p></li>
-</ol>
-<blockquote>
-<p>备注：在 STOP 条件之后，再加上一个 START
-条件，就会重置从属状态机，无法进行设备ID读取。另外，在 STOP 条件或
-Re-START
-条件之后，对另一个从属设备的访问也会重置从属状态机，无法执行Device
-ID读取。</p>
-</blockquote>
-<ol start="5" type="1">
-<li><p>主站发送保留设备ID的 I<sup>2</sup>C 总线地址，后面的R/W位设置为
-<code>1</code>（读）：<code>1111 1001</code>。</p></li>
-<li><p>可以进行设备ID读取，从12个制造商位开始（第一个字节+第二个字节的4个MSB），然后是9个部件识别位（第二个字节的4个LSB+第三个字节的5个MSB），然后是三个芯片修订位（第三个字节的3个LSB）。</p></li>
-<li><p>主站通过NACKing最后一个字节来结束读取序列，从而重置从属设备的状态机，允许主站发送
-STOP 条件。</p>
-<blockquote>
-<p>备注：设备ID的读取可以随时通过发送NACK来停止。</p>
-</blockquote></li>
-</ol>
-<p>如果主站在第三个字节之后继续ACK，从站就会滚回第一个字节，并继续发送设备ID序列，直到检测到
-NACK。</p>
-<h1 id="spi">SPI</h1>
-<p>标准：</p>
-<h2 id="术语-1">术语</h2>
-<h2 id="spi和i2c的对比">SPI和I<sup>2</sup>C的对比</h2>
-<table>
-<colgroup>
-<col style="width: 6%" />
-<col style="width: 49%" />
-<col style="width: 44%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th></th>
-<th>SPI</th>
-<th>I<sup>2</sup>C</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>通信模式</td>
-<td>全双工<br><em>（是指单主从设备之间的全双工，从设备之间无法进行通信）</em></td>
-<td>半双工<br><em>（任意主从设备可以分时复用同一条通信线路）</em></td>
-</tr>
-<tr class="even">
-<td>主从模式</td>
-<td>一主多从</td>
-<td>多主多从</td>
-</tr>
-<tr class="odd">
-<td>引脚占用</td>
-<td>从设备越多，对主机占用的引脚较多<br>主设备占用引脚：3+n<br>从设备占用引脚：4<br><em>（n为从设备数）</em></td>
-<td>主从设备均占用：2</td>
-</tr>
-<tr class="even">
-<td>应答响应</td>
-<td>无</td>
-<td>有</td>
-</tr>
-<tr class="odd">
-<td>传输速率</td>
-<td>最高：</td>
-<td>最高：3.4Mbps</td>
-</tr>
-<tr class="even">
-<td>从机选择</td>
-<td>通过 <strong>CS(SS)选择引脚</strong> 来选择</td>
-<td>通过 <strong>器件地址</strong> 来选择</td>
-</tr>
-<tr class="odd">
-<td>数据采样</td>
-<td>在SCLK边沿采样</td>
-<td>在SCL高电平采样</td>
-</tr>
-<tr class="even">
-<td>通信距离</td>
-<td>短</td>
-<td>短</td>
-</tr>
-</tbody>
-</table>
-<h1 id="uart">UART</h1>
-<p>标准：</p>
-<h1 id="tdm">TDM</h1>
-<p>标准：</p>
-<h1 id="i2s">I<sup>2</sup>S</h1>
-<p>标准：</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
     <link itemprop="mainEntityOfPage" href="http://islet.space/2021/05/14/Communication/2021-05-14-I2C%E9%80%9A%E4%BF%A1/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1561,7 +1388,7 @@ NACK。</p>
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-07-15 21:12:07" itemprop="dateModified" datetime="2021-07-15T21:12:07+08:00">2021-07-15</time>
+        <time title="Modified: 2022-08-02 22:12:06" itemprop="dateModified" datetime="2022-08-02T22:12:06+08:00">2022-08-02</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -1588,15 +1415,15 @@ NACK。</p>
 target="_blank" rel="noopener" href="https://www.nxp.com/docs/en/user-guide/UM10204.pdf">《NXP_UM10204_I2C-bus
 specification and user manual》</a></p>
 <blockquote>
-<p><em>I<sup>2</sup>C总线是一个事实上的世界标准，现在已经在50多家公司生产的1000多种不同的IC中实施。</em></p>
-<p><em>此外，多功能的I<sup>2</sup>C总线被用于各种控制架构，如系统管理总线（SMBus）、电源管理总线（PMBus）、智能平台管理接口（IPMI）、显示数据通道（DDC）和高级电信计算架构（ATCA）。</em></p>
-<p><em>本文件帮助设备和系统设计者了解I<sup>2</sup>C总线的工作原理并实现工作应用。描述了各种操作模式。它包含了对I<sup>2</sup>C<strong>总线数据传输</strong>、握手和总线仲裁方案的全面介绍。详细的章节涵盖了I<sup>2</sup>C总线在每种工作模式下的时序和电气规范。</em></p>
-<p><em>I<sup>2</sup>C兼容芯片的设计者应将该文件作为参考，并确保新设备满足该文件中规定的所有限制。包含I<sup>2</sup>C器件的系统的设计者应审查本文件，并参考各个组件的数据表。</em></p>
+<p><em>IIC总线是一个事实上的世界标准，现在已经在50多家公司生产的1000多种不同的IC中实施。</em></p>
+<p><em>此外，多功能的IIC总线被用于各种控制架构，如系统管理总线（SMBus）、电源管理总线（PMBus）、智能平台管理接口（IPMI）、显示数据通道（DDC）和高级电信计算架构（ATCA）。</em></p>
+<p><em>本文件帮助设备和系统设计者了解IIC总线的工作原理并实现工作应用。描述了各种操作模式。它包含了对IIC<strong>总线数据传输</strong>、握手和总线仲裁方案的全面介绍。详细的章节涵盖了IIC总线在每种工作模式下的时序和电气规范。</em></p>
+<p><em>IIC兼容芯片的设计者应将该文件作为参考，并确保新设备满足该文件中规定的所有限制。包含IIC器件的系统的设计者应审查本文件，并参考各个组件的数据表。</em></p>
 <p>——翻译自标准文件</p>
 </blockquote>
-<p>I<sup>2</sup>C(Inter－Integrated
+<p>IIC(Inter－Integrated
 Circuit)是一种通用的总线协议。它是由Philips(飞利浦)公司，现NXP(恩智浦)半导体开发的一种简单的双向两线制总线协议标准。</p>
-<p>对于硬件设计人员来说，只需要2个管脚，极少的连接线和面积，就可以实现芯片间的通讯，对于软件开发者来说，可以使用同一个I<sup>2</sup>C驱动库，来实现实现不同器件的驱动，大大减少了软件的开发时间。极低的工作电流，降低了系统的功耗，完善的应答机制大大增强通讯的可靠性。</p>
+<p>对于硬件设计人员来说，只需要2个管脚，极少的连接线和面积，就可以实现芯片间的通讯，对于软件开发者来说，可以使用同一个IIC驱动库，来实现实现不同器件的驱动，大大减少了软件的开发时间。极低的工作电流，降低了系统的功耗，完善的应答机制大大增强通讯的可靠性。</p>
 <h2 id="术语">术语</h2>
 <p><img src="https://pic.islet.space/2021/05/image-20210514111033910.png" alt="image-20210514111033910" style="zoom: 67%;" /></p>
 <table>
@@ -1645,7 +1472,7 @@ Circuit)是一种通用的总线协议。它是由Philips(飞利浦)公司，现
 </tr>
 </tbody>
 </table>
-<p>以下这个图应该可以较好地解释“多主机”的概念，多个主机可以同时向外发出传输数据的申请，也可以主动结束其数据传输。虽然，I<sup>2</sup>C降低了总线复用的成本，但仍需要“仲裁”机制来解决多个主机之间的无序竞争状态。</p>
+<p>以下这个图应该可以较好地解释“多主机”的概念，多个主机可以同时向外发出传输数据的申请，也可以主动结束其数据传输。虽然，IIC降低了总线复用的成本，但仍需要“仲裁”机制来解决多个主机之间的无序竞争状态。</p>
 <p><img src="https://pic.islet.space/2021/05/image-20210514112114667.png" alt="image-20210514112114667" style="zoom:67%;" /></p>
 <h2 id="硬件要求">硬件要求</h2>
 <h3 id="电气特性">电气特性</h3>
@@ -1663,10 +1490,9 @@ Clock）两条线路对设备进行连接。</p>
 <h3 id="标准传输速率">标准传输速率</h3>
 <p>各模式、速率及其传输方向见下方表格。</p>
 <blockquote>
-<p>Data on the I<sup>2</sup>C-bus can be transferred at rates of up to
-100 kbit/s in the Standard-mode, up to 400 kbit/s in the Fast-mode, up
-to 1 Mbit/s in Fast-mode Plus, or up to 3.4 Mbit/s in the High-speed
-mode.</p>
+<p>Data on the IIC-bus can be transferred at rates of up to 100 kbit/s
+in the Standard-mode, up to 400 kbit/s in the Fast-mode, up to 1 Mbit/s
+in Fast-mode Plus, or up to 3.4 Mbit/s in the High-speed mode.</p>
 </blockquote>
 <table>
 <colgroup>
@@ -1719,7 +1545,7 @@ mode.</p>
 <h2 id="编码协议">编码协议</h2>
 <p>以下协议要求适用于双向通信模式（不包括ULTRA-FAST模式下的单向通信）</p>
 <h3 id="逻辑电平规定">逻辑电平规定</h3>
-<p>由于I<sup>2</sup>C的接入设备众多（如CMOS、NMOS、Bipolar等），因此逻辑电平0和逻辑电平1（的电压）并不是固定不变的，这取决于VDD的电平。</p>
+<p>由于IIC的接入设备众多（如CMOS、NMOS、Bipolar等），因此逻辑电平0和逻辑电平1（的电压）并不是固定不变的，这取决于VDD的电平。</p>
 <p>输入参考电平会被控制在VDD电平的30%~70%之间。 V<sub>IL</sub> = 0.3 *
 V<sub>DD</sub>；V<sub>IH</sub> = 0.7 * V<sub>DD</sub> 。</p>
 <p>某些传统设备的输入电平会被固定在1.5V（V<sub>IL</sub>）和3.0V（V<sub>IH</sub>），但新设备都要求是
@@ -1731,10 +1557,10 @@ V<sub>DD</sub>；V<sub>IH</sub> = 0.7 * V<sub>DD</sub> 。</p>
 V<sub>IH</sub> ；超过这个值而未到达70%的中间态则为不确定态。</p>
 <blockquote>
 <p>Due to the variety of different technology devices (CMOS, NMOS,
-bipolar) that can be connected to the I<sup>2</sup>C-bus, the levels of
-the logical ‘0’ (LOW) and ‘1’ (HIGH) are not fixed and depend on the
-associated level of VDD . Input reference levels are set as 30 % and 70
-% of VDD ; VIL is 0.3VDD and VIH is 0.7V DD .</p>
+bipolar) that can be connected to the IIC-bus, the levels of the logical
+‘0’ (LOW) and ‘1’ (HIGH) are not fixed and depend on the associated
+level of VDD . Input reference levels are set as 30 % and 70 % of VDD ;
+VIL is 0.3VDD and VIH is 0.7V DD .</p>
 <p>See Figure 38, timing diagram. Some legacy device input levels were
 fixed at V<sub>IL</sub> = 1.5 V and V<sub>IH</sub> = 3.0 V, but all new
 devices require this 30 %/70 % specification.</p>
@@ -1864,7 +1690,7 @@ must signal the end of the transfer to the slave transmitter.</li>
 完成对总线的调配。</p>
 <p><strong>在单机系统（Single Master
 System）中，不需要时钟同步和仲裁。</strong></p>
-<p>时钟同步是通过I<sup>2</sup>C接口与SCL线的有线-AND连接进行的。</p>
+<p>时钟同步是通过IIC接口与SCL线的有线-AND连接进行的。</p>
 <p>这意味着SCL线上的高电平到低电平的转换会导致相关的主站开始对其低电平周期进行计数（如图7的CLK<sub>2</sub>），一旦一个主站时钟
 CLK<sub>1</sub>
 变为低电平，它就会将SCL线电平拉低，并保持在这个状态，直到另一个时钟
@@ -1876,15 +1702,15 @@ CLK<sub>2</sub> 达到高电平状态。</p>
 进入高电平等待状态。</p>
 <blockquote>
 <p>Clock synchronization is performed using the wired-AND connection of
-I<sup>2</sup>C interfaces to the SCL line. This means that a HIGH to LOW
-transition on the SCL line causes the masters concerned to start
-counting off their LOW period and, once a master clock has gone LOW, it
-holds the SCL line in that state until the clock HIGH state is reached
-(see Figure 7). However, if another clock is still within its LOW
-period, the LOW to HIGH transition of this clock may not change the
-state of the SCL line. The SCL line is therefore held LOW by the master
-with the longest LOW period. Masters with shorter LOW periods enter a
-HIGH wait-state during this time.</p>
+IIC interfaces to the SCL line. This means that a HIGH to LOW transition
+on the SCL line causes the masters concerned to start counting off their
+LOW period and, once a master clock has gone LOW, it holds the SCL line
+in that state until the clock HIGH state is reached (see Figure 7).
+However, if another clock is still within its LOW period, the LOW to
+HIGH transition of this clock may not change the state of the SCL line.
+The SCL line is therefore held LOW by the master with the longest LOW
+period. Masters with shorter LOW periods enter a HIGH wait-state during
+this time.</p>
 </blockquote>
 <p>当所有相关的主控器都结束了他们的低电平周期，时钟线被释放并变成高电平。</p>
 <p>然后，在主站时钟和SCL线的状态之间没有差异，所有的主站开始计算他们的高电平周期。</p>
@@ -1930,7 +1756,7 @@ their address.</p>
 <h3 id="总线复位">总线复位</h3>
 <p>SCK信号一直卡在低电平的事件较少发生。</p>
 <ul>
-<li>如果I<sup>2</sup>C总线设备拥有硬件复位输入，则可以通过优先程序启用硬件中断复位来重置总线。</li>
+<li>如果IIC总线设备拥有硬件复位输入，则可以通过优先程序启用硬件中断复位来重置总线。</li>
 <li>如果没有硬件复位输入，则通过给设备循环供电，激活强制性的内部开机复位（POR）电路。</li>
 </ul>
 <p>SDA信号如果一直卡在低电平。</p>
@@ -1948,10 +1774,10 @@ their address.</p>
 <p><img src="https://pic.islet.space/2021/05/image-20210515152141963.png" alt="image-20210515152141963" style="zoom:67%;" /></p>
 <ol type="1">
 <li><p>启动条件</p></li>
-<li><p>主站发送保留设备ID的 I<sup>2</sup>C
+<li><p>主站发送保留设备ID的 IIC
 总线地址，后面的R/W位设置为<code>0</code>（写）：<code>1111 1000</code>。</p></li>
 <li><p>主站发送从属地址。LSB是一个
-"不关心"的值，只有一个设备必须确认这个字节（拥有I<sup>2</sup>C总线从属地址的设备）。</p></li>
+"不关心"的值，只有一个设备必须确认这个字节（拥有IIC总线从属地址的设备）。</p></li>
 <li><p>主站发送一个 Re-START 条件。</p></li>
 </ol>
 <blockquote>
@@ -1962,7 +1788,7 @@ Re-START
 ID读取。</p>
 </blockquote>
 <ol start="5" type="1">
-<li><p>主站发送保留设备ID的 I<sup>2</sup>C 总线地址，后面的R/W位设置为
+<li><p>主站发送保留设备ID的 IIC 总线地址，后面的R/W位设置为
 <code>1</code>（读）：<code>1111 1001</code>。</p></li>
 <li><p>可以进行设备ID读取，从12个制造商位开始（第一个字节+第二个字节的4个MSB），然后是9个部件识别位（第二个字节的4个LSB+第三个字节的5个MSB），然后是三个芯片修订位（第三个字节的3个LSB）。</p></li>
 <li><p>主站通过NACKing最后一个字节来结束读取序列，从而重置从属设备的状态机，允许主站发送
@@ -3130,166 +2956,6 @@ alt="image-20210512201338050" />
 </ul></li>
 </ul>
 <h4 id="丢弃表格">丢弃表格</h4>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://islet.space/2021/05/11/Signal/2021-05-11-TRS%E7%AB%AF%E5%AD%90%E5%8F%8A%E5%85%B6%E4%BB%96%E9%9F%B3%E9%A2%91%E6%8E%A5%E5%8F%A3/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Liewzheng">
-      <meta itemprop="description" content="笔记分享的旮旯孤岛而已">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Coder的孤岛">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/05/11/Signal/2021-05-11-TRS%E7%AB%AF%E5%AD%90%E5%8F%8A%E5%85%B6%E4%BB%96%E9%9F%B3%E9%A2%91%E6%8E%A5%E5%8F%A3/" class="post-title-link" itemprop="url">TRS端子及其他音频接口</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-
-    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
-    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2021-05-11 16:00:00" itemprop="dateCreated datePublished" datetime="2021-05-11T16:00:00+08:00">2021-05-11</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-05-14 19:47:43" itemprop="dateModified" datetime="2021-05-14T19:47:43+08:00">2021-05-14</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Signal/" itemprop="url" rel="index"><span itemprop="name">Signal</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>接口其实包括对 “<strong>接口</strong>” （interface）和
-“<strong>连接器</strong>”
-（connector）这两个方面的讨论，“连接器”我们通常也称之为“接头”或“插头”。
-“接口”定义了电子设备之间连接的物理特性，包括传输的<strong>信号频率</strong>、<strong>强度</strong>，以及相应<strong>连线的类型</strong>、<strong>数量</strong>，还包括<strong>插头</strong>、<strong>插座</strong>的结构设计；而“连接器”则是在物理上实现设备之间连接的装置。</p>
-<h1 id="trs">TRS</h1>
-<p>TRS端子（TRS
-connector）是一种常用于连接音响设备，用以传递音频信号的连接器。该词是其三个组成部件的首字母缩写：<strong>Tip</strong>（尖）、<strong>Ring</strong>（环）、<strong>Sleeve</strong>（套）。</p>
-<p>由于该种接头一般用于接插耳机和麦克风，因此也称 Phone
-Jack。虽然统称TRS，但也可依据具体的插头/插座的<strong>环（R）数</strong>
-不同而分别称为<strong>TS</strong>（无环，即尖和套各提供一个接触点）、<strong>TRS</strong>（一环，三个接触点）、<strong>TRRS</strong>（两环，四个接触点）等等。</p>
-<p>日常生活中我们见得最多的就是<strong>TRS</strong>接口，它的接头外观是圆柱体形状，通常有三种尺寸<strong>1/4"</strong>（6.3mm）、<strong>1/8"</strong>（3.5mm）、<strong>3/32"</strong>（2.5mm），最常见的是3.5mm尺寸的接头。</p>
-<p><img src="https://pic.islet.space/2021/05/72f082025aafa40fc0dca129a764034f78f0192f" alt="img" style="zoom:50%;" /></p>
-<p><strong>TRS</strong>
-的含义是Tip（signal）、Ring（signal）、Sleeve（ground），分别代表了这种接头的3个触点，我们看到的就是被两段绝缘材料隔离开的三段金属柱。因此，3.5mm接头和6.3mm接头也被人称为“小三芯”和“大三芯”。</p>
-<p><img src="https://pic.islet.space/2021/05/Cg-4WlUQA2qIVD1QAAEWTBx9jskAAAGGAKz658AARZk513.jpg" alt=" " style="zoom: 150%;" /></p>
-<p>TRS接口就是一个圆孔，其内部与接头对应，也有三个触点，彼此之间也被绝缘材料隔开。</p>
-<h2 id="常见设备">常见设备</h2>
-<p>通常，手机上的耳机插口都是TRRS，而电脑上通常是两个TRS，一个传声音的左右声道，一个传话筒的左右声道。</p>
-<p>而为了使得双TRS的耳麦可以插到手机上，产生了转接头，也就是图中的第二个设备。不过我们考虑一下会发现，两个TRS都是3个信号，合并到一个TRRS接口上，信号变成了4个，减少了两个。除去一个共地的GND，还少了一个信号，去哪了呢？其实这是因为它会把LMIC和RMIC合并成一个MIC，而且TRRS本身就是只能传输一个MIC信号的，不存在左右声道。</p>
-<p>当然了，也有反过来将TRRS转接成两个TRS接口的转接头。</p>
-<p>此外，还有TS麦克风，如图中的第四个设备。如果话筒采用的这种接口，就默认了MIC只有一个声道，这种一般是用在小蜜蜂扩音器上。</p>
-<figure>
-<img src="https://pic.islet.space/2021/05/41_2.jpg" alt="img" />
-<figcaption aria-hidden="true">img</figcaption>
-</figure>
-<p>当然，既然能加芯，那也可以减芯。二芯的TRS接头可以用来传送非平衡的单声道音频信号，比如电吉他用的线就是二芯的TRS线。所以，单从TRS接口外观来看，我们不会知道它是否支持平衡传输；单从芯数来看，我们也不能确定四芯及以上的TRS接头是否支持平衡传输，具体情况需要看设备。</p>
-<p>尖和套是一定要有的，但环可以根据需要加，常见的有0-2个环的，也就是TS、TRS和TRRS。环越多，可以传输的信号数量越多。</p>
-<p>因此，普通双声道耳机需要3个信号，即TRS；而如果是带麦克风的耳机，就需要4个信号了，即TRRS。注意，这里除了左声道(L)、右声道(R)以及带麦耳机所需的麦克风(MIC)信号，必须还要有地线(GND)，因为没有绝对电压而只有相对电压。</p>
-<p>在3.5mm接口上传输的是模拟信号，使用电压模拟声波。</p>
-<p>此外，还有一种用于耳机的四芯3.5mm插头则是用来传输平衡信号的。6.3mm的“大三芯”插头可用来传输平衡信号或非平衡立体声信号，也就是说它可以和XLR平衡接口一样，能够传输平衡信号，但因制作这样的平衡线成本比较高，所以一般只用在高档专业音频设备上。</p>
-<p><img src="https://article-fd.zol-img.com.cn/t_s640x2000/g2/M00/01/08/Cg-4WlUQBM2IO7yBAAPH1zKABagAAAGHwBFP9AAA8fv952.jpg" alt="拒绝做小白 你应该知道的常见音频接口 " style="zoom:67%;" /></p>
-<div style="text-align: center; font-weight: 900;">
-二芯6.3mm TRS电吉他线
-</div>
-<h2 id="trs母头">TRS母头</h2>
-<p>ADI公司旗下的 ADAU1772 评估板采用的就是CUI公司旗下型号为
-SJ-3523-SMT-TR 的TRS母头</p>
-<p><img
-src="https://pic.islet.space/2021/05/2021-05-11_16-39.png" /></p>
-<p>说明书如：<a
-target="_blank" rel="noopener" href="https://www.cuidevices.com/product/resource/digikeypdf/sj-352x-smt.pdf">sj-352x-smt.pdf</a>
-，其规格如下：</p>
-<figure>
-<img src="https://pic.islet.space/2021/05/image-20210511164353982.png"
-alt="image-20210511164353982" />
-<figcaption aria-hidden="true">image-20210511164353982</figcaption>
-</figure>
-<h1 id="rca">RCA</h1>
-<p>RCA接口在我们日常生活中也非常常见，音箱、电视、功放、DVD机等设备上基本都有。它得名于美国无线电公司的英文缩写（Radio
-Corporation of
-America），上世纪40年代的时候，该公司将这种接口引入市场，用它来连接留声机和扬声器，也因此，它在欧州又称为PHONO接口。我们对它更熟悉的接头称呼则是“莲花头”。</p>
-<p><img src="https://article-fd.zol-img.com.cn/t_s640x2000/g2/M00/01/08/Cg-4WlUQCFeITgCFAAaVRivfdawAAAGKwBI8wMABpVe851.jpg" alt="拒绝做小白 你应该知道的常见音频接口 " style="zoom:67%;" /></p>
-<div style="text-align: center; font-weight: 900;">
-RCA接口在我们日常生活中非常常见
-</div>
-<p><img src="https://article-fd.zol-img.com.cn/t_s640x2000/g2/M00/01/08/Cg-4WVUQCFyIRm-6AAMW5z_mkQ8AAAGKwB5ZmQAAxb_659.jpg" alt="拒绝做小白 你应该知道的常见音频接口 " style="zoom:67%;" /></p>
-<div style="text-align: center; font-weight: 900;">
-被称为“莲花头”的RCA接头
-</div>
-<p>RCA接口采用同轴传输信号的方式，中轴用来传输信号，外沿一圈的接触层用来接地。每一根RCA线缆负责传输一个声道的音频信号，因此，可以根据对声道的实际需要，使用与之数量相匹配的RCA线缆。比如要组双声道立体声就需要两根RCA线缆。</p>
-<h1 id="xlr">XLR</h1>
-<p>XLR接口又被称为“卡农口”，这是因为James H. Cannon创立的Cannon
-Electric公司是它最初的生产商。它们最早的产品是“cannon
-X”系列，后来改进产品增加了一个锁定装置（Latch），于是在“X”后面增加了一个“L”；再后来又围绕着接头的金属触点增加了橡胶封口（Rubber
-compound），于是又在“L”后面增加了一个“R”。人们就把三个大写字母组合在一起，称这种接头为“XLR
-connector”。</p>
-<p><img
-src="https://article-fd.zol-img.com.cn/t_s640x2000/g2/M00/01/08/Cg-4WVUQChyIbKeoAALaNHpTfMUAAAGMAMweHgAAtpM096.jpg" /></p>
-<div style="text-align: center; font-weight: 900;">
-比较常见的三芯XLR接口
-</div>
-<p><img
-src="https://article-fd.zol-img.com.cn/t_s640x2000/g2/M00/01/08/Cg-4WlUQDLCIUqT0AAHcPS_ygasAAAGOQEvIJQAAdxV227.jpg" /></p>
-<div style="text-align: center; font-weight: 900;">
-有的耳放上面会提供四芯平衡XLR接口
-</div>
-<p>我们通常见到的XLR插头是3脚的，当然也有2脚、4脚、5脚、6脚的，比如在一些高档耳机线上，我们也会看到四芯XLR平衡接头。XLR接口与“大三芯”TRS接口一样，可以用来传输音频平衡信号。这里我们简单说一下平衡信号与非平衡信号。声波转换成电信号后，如果直接传送就是非平衡信号，如果把原始信号反相180度，然后同时传送原始信号和反相信号，这就是平衡信号。平衡传输就是利用相位抵消原理，将音频信号传输过程中受到的其他干扰降至最低。
-当然，XLR接口也跟“大三芯”TRS接口一样，可以传输非平衡信号，因此光从接口看，我们是看不出来它到底传输的是哪种信号。</p>
 
       
     </div>
