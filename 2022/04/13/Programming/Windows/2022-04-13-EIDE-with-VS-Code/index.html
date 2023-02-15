@@ -29,37 +29,29 @@
 <meta property="og:site_name" content="Coder的孤岛">
 <meta property="og:description" content="本文主要是将 在KEIL上能够成功编译的 STM32F103VE 芯片项目转移到 VS Code 的 EIDE 插件中，主要是针对 Keil MDK-ARM 中的 Option 进行参数复制，即 EIDE 的配置。 需要以下两个工具：  Keil MDK-ARM Keil.STM32F1xx_DFP.2.4.0.pack  其实还是依托于 Keil MDK-ARM ，只是换了 VS Code 的皮">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://pic.islet.space/2022/04/image-20220414214014581.png">
-<meta property="og:image" content="https://pic.islet.space/2022/04/image-20220414211312253.png">
-<meta property="og:image" content="https://pic.islet.space/2022/04/image-20220414203531929.png">
-<meta property="og:image" content="https://pic.islet.space/2022/04/image-20220414183859215.png">
-<meta property="og:image" content="https://pic.islet.space/2022/04/image-20220414203709473.png">
-<meta property="og:image" content="https://pic.islet.space/2022/04/image-20220414203744037.png">
-<meta property="og:image" content="https://pic.islet.space/2022/04/image-20220414194711199.png">
-<meta property="og:image" content="https://pic.islet.space/2022/04/image-20220414190916865.png">
-<meta property="og:image" content="https://pic.islet.space/2022/04/image-20220414193428926.png">
-<meta property="og:image" content="https://pic.islet.space/2022/04/image-20220414212238565.png">
-<meta property="og:image" content="https://pic.islet.space/2022/04/image-20220414212220319.png">
-<meta property="og:image" content="https://pic.islet.space/2022/04/image-20220414191124478.png">
-<meta property="og:image" content="https://pic.islet.space/2022/04/image-20220414190706840.png">
-<meta property="og:image" content="https://pic.islet.space/2022/04/image-20220414212732414.png">
-<meta property="og:image" content="https://pic.islet.space/2022/04/image-20220414200627162.png">
-<meta property="og:image" content="https://pic.islet.space/2022/04/image-20220414194229852.png">
-<meta property="og:image" content="https://pic.islet.space/2022/04/image-20220414213239217.png">
-<meta property="og:image" content="https://pic.islet.space/2022/04/image-20220414213257541.png">
-<meta property="og:image" content="https://pic.islet.space/2022/04/image-20220414213503962.png">
-<meta property="og:image" content="https://pic.islet.space/2022/04/image-20220414213732758.png">
-<meta property="og:image" content="https://pic.islet.space/2022/04/image-20220414195358900.png">
-<meta property="og:image" content="https://pic.islet.space/2022/04/image-20220414190748098.png">
-<meta property="og:image" content="https://pic.islet.space/2022/04/image-20220414194044509.png">
+<meta property="og:image" content="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2022/04/image-20220414203531929.png">
+<meta property="og:image" content="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2022/04/image-20220414183859215.png">
+<meta property="og:image" content="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2022/04/image-20220414203709473.png">
+<meta property="og:image" content="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2022/04/image-20220414203744037.png">
+<meta property="og:image" content="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2022/04/image-20220414194711199.png">
+<meta property="og:image" content="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2022/04/image-20220414193428926.png">
+<meta property="og:image" content="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2022/04/image-20220414191124478.png">
+<meta property="og:image" content="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2022/04/image-20220414190706840.png">
+<meta property="og:image" content="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2022/04/image-20220414212732414.png">
+<meta property="og:image" content="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2022/04/image-20220414200627162.png">
+<meta property="og:image" content="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2022/04/image-20220414194229852.png">
+<meta property="og:image" content="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2022/04/image-20220414213732758.png">
+<meta property="og:image" content="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2022/04/image-20220414195358900.png">
+<meta property="og:image" content="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2022/04/image-20220414190748098.png">
+<meta property="og:image" content="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2022/04/image-20220414194044509.png">
 <meta property="article:published_time" content="2022-04-13T10:00:00.000Z">
-<meta property="article:modified_time" content="2022-04-15T14:57:36.000Z">
+<meta property="article:modified_time" content="2023-02-15T13:11:02.054Z">
 <meta property="article:author" content="Liewzheng">
 <meta property="article:tag" content="stm32">
 <meta property="article:tag" content="f103ve">
 <meta property="article:tag" content="EIDE">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://pic.islet.space/2022/04/image-20220414214014581.png">
+<meta name="twitter:image" content="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2022/04/image-20220414203531929.png">
 
 
 <link rel="canonical" href="http://islet.space/2022/04/13/Programming/Windows/2022-04-13-EIDE-with-VS-Code/">
@@ -281,7 +273,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2022-04-15 22:57:36" itemprop="dateModified" datetime="2022-04-15T22:57:36+08:00">2022-04-15</time>
+        <time title="Modified: 2023-02-15 21:11:02" itemprop="dateModified" datetime="2023-02-15T21:11:02+08:00">2023-02-15</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -316,7 +308,8 @@ Option 进行参数复制，即 EIDE 的配置。</p>
 <p>首先需要在 VS Code 中安装 Embedded IDE（如下），官方手册：<a
 target="_blank" rel="noopener" href="https://docs.em-ide.com/">EIDE在线文档</a> 。</p>
 <figure>
-<img src="https://pic.islet.space/2022/04/image-20220414214014581.png"
+<img
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2022/04/image-20220414214014581.png"
 alt="image-20220414214014581" />
 <figcaption aria-hidden="true">image-20220414214014581</figcaption>
 </figure>
@@ -326,7 +319,8 @@ href="##芯片支持包安装">芯片支持包安装</a> 、<a
 href="##构建参数设置">构建参数设置</a> 和 <a
 href="##项目属性设置">项目属性设置</a>。</p>
 <figure>
-<img src="https://pic.islet.space/2022/04/image-20220414211312253.png"
+<img
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2022/04/image-20220414211312253.png"
 alt="image-20220414211312253" />
 <figcaption aria-hidden="true">image-20220414211312253</figcaption>
 </figure>
@@ -334,26 +328,27 @@ alt="image-20220414211312253" />
 <p>可以在 VS Code 的插件中选中 <code>Embedded IDE</code>
 ，在齿轮状设置图标菜单里选择
 <code>扩展设置</code>，在里面配置好编译工具链的路径还有一些可设置选项。</p>
-<p><img src="https://pic.islet.space/2022/04/image-20220414203531929.png" alt="image-20220414203531929" style="zoom:50%;" /></p>
+<p><img src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2022/04/image-20220414203531929.png" alt="image-20220414203531929" style="zoom:50%;" /></p>
 <p>STM32 可以用 ARM CC 和 ARM GCC 进行编译，具体需要看芯片要求，Keil
 的话用的是 ARM CC 5版本或者 ARM CC 6 版本。</p>
 <p>可以到 Keil MDK-ARM 的安装路径下进行查看，例如 在
 <code>D:\Keil_v5\ARM\ARMCC\bin</code> 中，选择右键
 <code>用 Powershell 打开</code>，然后输入 <code>./armcc.exe</code>
 即可查看版本号。</p>
-<p><img src="https://pic.islet.space/2022/04/image-20220414183859215.png" alt="image-20220414183859215" style="zoom:50%;" /></p>
+<p><img src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2022/04/image-20220414183859215.png" alt="image-20220414183859215" style="zoom:50%;" /></p>
 <p>主要配置六个参数即可，需要根据本地的 Keil
 安装路径来进行设置（不要盲目复制粘贴）。</p>
-<p><img src="https://pic.islet.space/2022/04/image-20220414203709473.png" alt="image-20220414203709473" style="zoom:50%;" /></p>
-<p><img src="https://pic.islet.space/2022/04/image-20220414203744037.png" alt="image-20220414203744037" style="zoom:50%;" /></p>
+<p><img src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2022/04/image-20220414203709473.png" alt="image-20220414203709473" style="zoom:50%;" /></p>
+<p><img src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2022/04/image-20220414203744037.png" alt="image-20220414203744037" style="zoom:50%;" /></p>
 <h2 id="芯片支持包安装">芯片支持包安装</h2>
 <p>Keil 的芯片支持包主要看 <code>Option</code> -&gt; <code>Target</code>
 下的 <code>STM32F103xx.svd</code> 。</p>
-<p><img src="https://pic.islet.space/2022/04/image-20220414194711199.png" alt="image-20220414194711199" style="zoom:50%;" /></p>
+<p><img src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2022/04/image-20220414194711199.png" alt="image-20220414194711199" style="zoom:50%;" /></p>
 <p>通过本地搜索可以看到这个文件需要通过安装 <code>.pack</code>
 扩展包得到。</p>
 <figure>
-<img src="https://pic.islet.space/2022/04/image-20220414190916865.png"
+<img
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2022/04/image-20220414190916865.png"
 alt="image-20220414190916865" />
 <figcaption aria-hidden="true">image-20220414190916865</figcaption>
 </figure>
@@ -361,27 +356,29 @@ alt="image-20220414190916865" />
 (keil.com)</a> 中搜索对应芯片的扩展包，如 <a
 target="_blank" rel="noopener" href="https://keilpack.azureedge.net/pack/Keil.STM32F1xx_DFP.2.4.0.pack"><code>Keil.STM32F1xx_DFP.2.4.0.pack</code></a>
 。</p>
-<p><img src="https://pic.islet.space/2022/04/image-20220414193428926.png" alt="image-20220414193428926" style="zoom:33%;" /></p>
+<p><img src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2022/04/image-20220414193428926.png" alt="image-20220414193428926" style="zoom:33%;" /></p>
 <p>点击 芯片支持包 右侧的 加号，即可选择通过
 <strong>在线安装</strong>（From Repo） 或者
 <strong>离线安装</strong>（From Disk）。</p>
 <figure>
-<img src="https://pic.islet.space/2022/04/image-20220414212238565.png"
+<img
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2022/04/image-20220414212238565.png"
 alt="image-20220414212238565" />
 <figcaption aria-hidden="true">image-20220414212238565</figcaption>
 </figure>
 <figure>
-<img src="https://pic.islet.space/2022/04/image-20220414212220319.png"
+<img
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2022/04/image-20220414212220319.png"
 alt="image-20220414212220319" />
 <figcaption aria-hidden="true">image-20220414212220319</figcaption>
 </figure>
 <p>安装完扩展包之后 再点击下图中的加号，输入芯片型号进行进一步选择。</p>
-<p><img src="https://pic.islet.space/2022/04/image-20220414191124478.png" alt="image-20220414191124478" style="zoom: 33%;" /></p>
+<p><img src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2022/04/image-20220414191124478.png" alt="image-20220414191124478" style="zoom: 33%;" /></p>
 <p>即可查看芯片的大致信息：</p>
-<p><img src="https://pic.islet.space/2022/04/image-20220414190706840.png" alt="image-20220414190706840" style="zoom:33%;" /></p>
+<p><img src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2022/04/image-20220414190706840.png" alt="image-20220414190706840" style="zoom:33%;" /></p>
 <h2 id="构建参数设置">构建参数设置</h2>
 <p>构建参数的依据是 Keil 中的这几个参数选项卡：</p>
-<p><img src="https://pic.islet.space/2022/04/image-20220414212732414.png" alt="image-20220414212732414" style="zoom:50%;" /></p>
+<p><img src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2022/04/image-20220414212732414.png" alt="image-20220414212732414" style="zoom:50%;" /></p>
 <p>方法：</p>
 <ol type="1">
 <li>提取 Keil 中的构建参数 （如下 C/C++ 参数设置）</li>
@@ -390,7 +387,7 @@ alt="image-20220414212220319" />
 </ol>
 <h3 id="cc-参数设置">C/C++ 参数设置</h3>
 <p>下方是 Keil 中对 C/C++ 的构建参数管理页面：</p>
-<p><img src="https://pic.islet.space/2022/04/image-20220414200627162.png" alt="image-20220414200627162" style="zoom: 50%;" /></p>
+<p><img src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2022/04/image-20220414200627162.png" alt="image-20220414200627162" style="zoom: 50%;" /></p>
 <p>以下是从 Keil MD5 的 <code>Option</code>
 中扒下来的编译参数，即最后一行的 <code>Compiler Control String</code>
 ：</p>
@@ -399,7 +396,7 @@ alt="image-20220414212220319" />
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">......</span><br><span class="line"></span><br><span class="line">C <span class="built_in">command</span> line (armcc): </span><br><span class="line"></span><br><span class="line">-c --apcs=interwork --cpu Cortex-M3 --li --c99 -D__MICROLIB -O0 --split_sections --diag_suppress=1 --diag_suppress=1295 -g -I.\.. -I.\..\..\..\Libraries\CMSIS\CM3\CoreSupport -I.\..\..\..\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x -I.\..\..\..\Libraries\STM32F10x_StdPeriph_Driver\inc -I.\..\..\..\Utilities\STM32_EVAL -I.\..\..\..\Utilities\STM32_EVAL\STM32100E_EVAL -I.\..\..\..\Utilities\STM32_EVAL\Common -I.\.cmsis\dsp_lib -I.\.cmsis\include -I.\RTE\_STM32100E-EVAL -I.\.eide\deps -I.\include -I.\.eide\deps -DUSE_STDPERIPH_DRIVER -DSTM32F10X_HD_VL -DUSE_STM32100E_EVAL -DGD32F10X_HD</span><br><span class="line"></span><br><span class="line">CPP <span class="built_in">command</span> line (armcc): </span><br><span class="line"></span><br><span class="line">-c --cpp --apcs=interwork --cpu Cortex-M3 --li -D__MICROLIB -O0 --split_sections --diag_suppress=1 --diag_suppress=1295 -g -I.\.. -I.\..\..\..\Libraries\CMSIS\CM3\CoreSupport -I.\..\..\..\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x -I.\..\..\..\Libraries\STM32F10x_StdPeriph_Driver\inc -I.\..\..\..\Utilities\STM32_EVAL -I.\..\..\..\Utilities\STM32_EVAL\STM32100E_EVAL -I.\..\..\..\Utilities\STM32_EVAL\Common -I.\.cmsis\dsp_lib -I.\.cmsis\include -I.\RTE\_STM32100E-EVAL -I.\.eide\deps -I.\include -I.\.eide\deps -DUSE_STDPERIPH_DRIVER -DSTM32F10X_HD_VL -DUSE_STM32100E_EVAL -DGD32F10X_HD</span><br><span class="line"></span><br><span class="line">......</span><br></pre></td></tr></table></figure>
 <p><strong>EIDE 中查看编译命令的方法</strong>：项目名称右键点击
 <code>查看生成的编译器命令行</code> 即可。</p>
-<p><img src="https://pic.islet.space/2022/04/image-20220414194229852.png" alt="image-20220414194229852" style="zoom:33%;" /></p>
+<p><img src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2022/04/image-20220414194229852.png" alt="image-20220414194229852" style="zoom:33%;" /></p>
 <p>互相比对二者之间的编译参数差异，发现以下差异：</p>
 <ol type="1">
 <li>Keil 中的代码优化等级为 <code>3</code> 即参数 <code>-O3</code> ，而
@@ -410,12 +407,14 @@ EIDE 中为 <code>0</code> 即参数 <code>-O0</code> 。</li>
 <h3 id="asm-和-linker-参数设置">ASM 和 Linker 参数设置</h3>
 <p>对比过 Keil 的参数之后，保持如下设置：</p>
 <figure>
-<img src="https://pic.islet.space/2022/04/image-20220414213239217.png"
+<img
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2022/04/image-20220414213239217.png"
 alt="image-20220414213239217" />
 <figcaption aria-hidden="true">image-20220414213239217</figcaption>
 </figure>
 <figure>
-<img src="https://pic.islet.space/2022/04/image-20220414213257541.png"
+<img
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2022/04/image-20220414213257541.png"
 alt="image-20220414213257541" />
 <figcaption aria-hidden="true">image-20220414213257541</figcaption>
 </figure>
@@ -425,24 +424,25 @@ alt="image-20220414213257541" />
 <p>需要注意的是，RTE路径下的 <code>STM32xxx-EVAL</code>
 一定要是正确的，可以多，不要少。</p>
 <figure>
-<img src="https://pic.islet.space/2022/04/image-20220414213503962.png"
+<img
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2022/04/image-20220414213503962.png"
 alt="image-20220414213503962" />
 <figcaption aria-hidden="true">image-20220414213503962</figcaption>
 </figure>
 <h3 id="预处理定义">预处理定义</h3>
 <p>从 EIDE 导入 Keil 项目时，可能回设置很多不需要或者错误的
 <strong>预处理定义</strong>（宏定义），需要跟 Keil 保持一致。</p>
-<p><img src="https://pic.islet.space/2022/04/image-20220414213732758.png" alt="image-20220414213732758" style="zoom:50%;" /></p>
-<p><img src="https://pic.islet.space/2022/04/image-20220414195358900.png" alt="image-20220414195358900" style="zoom:33%;" /></p>
+<p><img src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2022/04/image-20220414213732758.png" alt="image-20220414213732758" style="zoom:50%;" /></p>
+<p><img src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2022/04/image-20220414195358900.png" alt="image-20220414195358900" style="zoom:33%;" /></p>
 <h1 id="debug-records">DEBUG RECORDS</h1>
 <h2 id="expected-a">EXPECTED A }</h2>
 <p>提示 少了 <code>&#125;</code>
 ，该文件是官方文件，应该不会错。经过检查，发现是宏定义过多导致的错误，修改过
 <a href="###预处理定义">预处理定义</a> 中的宏定义设置就解决了。</p>
-<p><img src="https://pic.islet.space/2022/04/image-20220414190748098.png" alt="image-20220414190748098" style="zoom:33%;" /></p>
+<p><img src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2022/04/image-20220414190748098.png" alt="image-20220414190748098" style="zoom:33%;" /></p>
 <p>如下，<code>STM32F10X_HD</code> 和 <code>STM32F10X_HD_VL</code>
 冲突了。</p>
-<p><img src="https://pic.islet.space/2022/04/image-20220414194044509.png" alt="image-20220414194044509" style="zoom:50%;" /></p>
+<p><img src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2022/04/image-20220414194044509.png" alt="image-20220414194044509" style="zoom:50%;" /></p>
 <p>最后，编译结果：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line">[ INFO ] start building at 2022-04-14 20:22:39</span><br><span class="line"></span><br><span class="line">[ TOOL ] ARM Compiler 5.06 update 4 (build 422)</span><br><span class="line"></span><br><span class="line">[ INFO ] file statistics (rebuild mode)</span><br><span class="line"></span><br><span class="line">+---------+-----------+-----------+-----------+--------+</span><br><span class="line">| C Files | Cpp Files | Asm Files | Lib Files | Totals |</span><br><span class="line">+---------+-----------+-----------+-----------+--------+</span><br><span class="line">| 46      | 0         | 1         | 0         | 47     |</span><br><span class="line">+---------+-----------+-----------+-----------+--------+</span><br><span class="line"></span><br><span class="line">[ INFO ] start compilation (<span class="built_in">jobs</span>: 4) ...</span><br><span class="line"></span><br><span class="line">&gt;&gt; [  2%] CC <span class="string">&#x27;../../../Libraries/CMSIS/CM3/CoreSupport/core_cm3.c&#x27;</span></span><br><span class="line">&gt;&gt; [  4%] CC <span class="string">&#x27;main.c&#x27;</span></span><br><span class="line">&gt;&gt; [  6%] CC <span class="string">&#x27;../../../Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_flash.c&#x27;</span></span><br><span class="line">&gt;&gt; [  8%] CC <span class="string">&#x27;../../../Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_usart.c&#x27;</span></span><br><span class="line">......</span><br><span class="line">&gt;&gt; [ 89%] CC <span class="string">&#x27;source/stm32f10x_it.c&#x27;</span></span><br><span class="line">&gt;&gt; [ 91%] CC <span class="string">&#x27;../../../Utilities/STM32_EVAL/STM32100E_EVAL/stm32100e_eval_lcd.c&#x27;</span></span><br><span class="line">&gt;&gt; [ 93%] CC <span class="string">&#x27;source/system_stm32f10x.c&#x27;</span></span><br><span class="line">&gt;&gt; [ 95%] CC <span class="string">&#x27;../../../Utilities/STM32_EVAL/stm32_eval.c&#x27;</span></span><br><span class="line">&gt;&gt; [ 97%] CC <span class="string">&#x27;source/write.c&#x27;</span></span><br><span class="line">&gt;&gt; [100%] AS <span class="string">&#x27;../../../Libraries/CMSIS/CM3/DeviceSupport/ST/STM32F10x/startup/arm/startup_stm32f10x_hd_vl.s&#x27;</span></span><br><span class="line"></span><br><span class="line">[ INFO ] start linking ...</span><br><span class="line"></span><br><span class="line">Program Size: Code=9028 RO-data=340 RW-data=156 ZI-data=1412  </span><br><span class="line"></span><br><span class="line">Total RO  Size (Code + RO Data)                 9368 (   9.15kB)</span><br><span class="line">Total RW  Size (RW Data + ZI Data)              1568 (   1.53kB)</span><br><span class="line">Total ROM Size (Code + RO Data + RW Data)       9524 (   9.30kB)</span><br><span class="line"></span><br><span class="line">RAM  : [          ] 2.4%        1.5KB/64.0KB</span><br><span class="line">FLASH: [          ] 1.8%        9.3KB/512.0KB</span><br><span class="line"></span><br><span class="line">[ INFO ] start outputting file ...</span><br><span class="line"></span><br><span class="line">&gt;&gt; output hex file              [<span class="keyword">done</span>]</span><br><span class="line"></span><br><span class="line">file path: <span class="string">&quot;build/STM32100E-EVAL/FT_Test.hex&quot;</span></span><br><span class="line"></span><br><span class="line">&gt;&gt; output s19 file              [<span class="keyword">done</span>]</span><br><span class="line"></span><br><span class="line">file path: <span class="string">&quot;build/STM32100E-EVAL/FT_Test.s19&quot;</span></span><br><span class="line"></span><br><span class="line">&gt;&gt; output bin file              [<span class="keyword">done</span>]</span><br><span class="line"></span><br><span class="line">file path: <span class="string">&quot;build/STM32100E-EVAL/FT_Test.bin&quot;</span></span><br><span class="line"></span><br><span class="line">[ DONE ] build successfully !, elapsed time 0:0:9</span><br><span class="line"></span><br><span class="line">[ INFO ] run tasks after build ...</span><br><span class="line"></span><br><span class="line">&gt;&gt; axf to elf           [<span class="keyword">done</span>]</span><br></pre></td></tr></table></figure>
 
@@ -520,7 +520,7 @@ alt="image-20220414213503962" />
 
 <div class="copyright">
   &copy; 2019 – 
-  <span itemprop="copyrightYear">2022</span>
+  <span itemprop="copyrightYear">2023</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

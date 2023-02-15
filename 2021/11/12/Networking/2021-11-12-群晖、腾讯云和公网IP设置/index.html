@@ -29,30 +29,11 @@
 <meta property="og:site_name" content="Coder的孤岛">
 <meta property="og:description" content="双十一豪豪酱买了群晖DS220j家用NAS服务器，为了方便工作文件的备份传输，让电脑（PC、Mac）能用上远程网络驱动，就需要让服务器穿透内网，并申请一个独立域名，想着就用腾讯云和家里的小米路由器AX3600来干吧。下方是对硬件上需要的一些要求： 光猫：使用 桥接模式，具有 独立公网IP 路由器：使用 PPPoE模式 进行拨号、支持 端口映射、 端口转发 和 DMZ 群晖NAS：支持 DDNS、U">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://pic.islet.space/2021/11/202111130020050.png">
-<meta property="og:image" content="https://pic.islet.space/2021/11/202111130020200.png">
-<meta property="og:image" content="https://pic.islet.space/2021/11/202111130022335.png">
-<meta property="og:image" content="https://pic.islet.space/2021/11/202111130022186.png">
-<meta property="og:image" content="https://pic.islet.space/2021/11/202111130022727.png">
-<meta property="og:image" content="https://pic.islet.space/2021/11/202111130022986.png">
-<meta property="og:image" content="https://pic.islet.space/2021/11/202111130022401.png">
-<meta property="og:image" content="https://pic.islet.space/2021/11/202111211632483.png">
-<meta property="og:image" content="https://pic.islet.space/2021/11/202111130022536.png">
-<meta property="og:image" content="https://pic.islet.space/2021/11/202111130022178.png">
-<meta property="og:image" content="https://pic.islet.space/2021/11/202111130022255.png">
-<meta property="og:image" content="https://pic.islet.space/2021/11/202111130022517.png">
-<meta property="og:image" content="https://pic.islet.space/2021/11/202111130022177.png">
-<meta property="og:image" content="https://pic.islet.space/2021/11/202111130029734.png">
-<meta property="og:image" content="https://pic.islet.space/2021/11/202111130022518.png">
-<meta property="og:image" content="https://pic.islet.space/2021/11/202111130022793.png">
-<meta property="og:image" content="https://pic.islet.space/2021/11/202111130022607.png">
-<meta property="og:image" content="https://pic.islet.space/2021/11/202111130022504.png">
 <meta property="article:published_time" content="2021-11-12T09:30:00.000Z">
-<meta property="article:modified_time" content="2021-11-21T08:35:30.000Z">
+<meta property="article:modified_time" content="2023-02-15T13:11:02.145Z">
 <meta property="article:author" content="Liewzheng">
 <meta property="article:tag" content="群晖">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://pic.islet.space/2021/11/202111130020050.png">
 
 
 <link rel="canonical" href="http://islet.space/2021/11/12/Networking/2021-11-12-%E7%BE%A4%E6%99%96%E3%80%81%E8%85%BE%E8%AE%AF%E4%BA%91%E5%92%8C%E5%85%AC%E7%BD%91IP%E8%AE%BE%E7%BD%AE/">
@@ -274,7 +255,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-11-21 16:35:30" itemprop="dateModified" datetime="2021-11-21T16:35:30+08:00">2021-11-21</time>
+        <time title="Modified: 2023-02-15 21:11:02" itemprop="dateModified" datetime="2023-02-15T21:11:02+08:00">2023-02-15</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -325,7 +306,8 @@
 篇一：BT下载大提速！ 获取公网IP和端口映射转发简单教程</a> 》</p>
 </blockquote>
 <figure>
-<img src="https://pic.islet.space/2021/11/202111130020050.png"
+<img
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/11/202111130020050.png"
 alt="image-20211113000614809" />
 <figcaption aria-hidden="true">image-20211113000614809</figcaption>
 </figure>
@@ -334,7 +316,8 @@ alt="image-20211113000614809" />
 <p>“谁拨号，谁就有公网IP”
 ——即此时如果路由器已经成功设置了路由模式（使用PPPoE拨号上网），则可以在路由器后台查看到其公网IP地址，如：</p>
 <figure>
-<img src="https://pic.islet.space/2021/11/202111130020200.png"
+<img
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/11/202111130020200.png"
 alt="image-20211113001927548" />
 <figcaption aria-hidden="true">image-20211113001927548</figcaption>
 </figure>
@@ -347,12 +330,14 @@ Token，并提供给群辉DDNS服务（类似于授权，可以由DDNS服务自�
 <strong>API密钥</strong>，进行 <strong>新建密钥</strong> 即可，将对应的
 <strong>SecretId</strong> 和 <strong>SecretKey</strong> 复制下来。</p>
 <figure>
-<img src="https://pic.islet.space/2021/11/202111130022335.png"
+<img
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/11/202111130022335.png"
 alt="image-20211113002208036" />
 <figcaption aria-hidden="true">image-20211113002208036</figcaption>
 </figure>
 <figure>
-<img src="https://pic.islet.space/2021/11/202111130022186.png"
+<img
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/11/202111130022186.png"
 alt="image-20211113001142315" />
 <figcaption aria-hidden="true">image-20211113001142315</figcaption>
 </figure>
@@ -361,14 +346,16 @@ alt="image-20211113001142315" />
 <strong>用户名/电子邮件</strong> 中， 将 <strong>SecretKey</strong>
 填写到 <strong>密码/密钥</strong> 中。</p>
 <figure>
-<img src="https://pic.islet.space/2021/11/202111130022727.png"
+<img
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/11/202111130022727.png"
 alt="image-20211113001623814" />
 <figcaption aria-hidden="true">image-20211113001623814</figcaption>
 </figure>
 <p>经过前面的步骤，可以看到群晖NAS服务器自动测试的
 <strong>DDNS状态</strong> 为 <strong>正常</strong> 即可。</p>
 <figure>
-<img src="https://pic.islet.space/2021/11/202111130022986.png"
+<img
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/11/202111130022986.png"
 alt="image-20211112175853513" />
 <figcaption aria-hidden="true">image-20211112175853513</figcaption>
 </figure>
@@ -386,17 +373,20 @@ alt="image-20211112175853513" />
 <p>手动端口转发：</p>
 <p>自动端口转发：</p>
 <figure>
-<img src="https://pic.islet.space/2021/11/202111130022401.png"
+<img
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/11/202111130022401.png"
 alt="image-20211112180357037" />
 <figcaption aria-hidden="true">image-20211112180357037</figcaption>
 </figure>
 <figure>
-<img src="https://pic.islet.space/2021/11/202111211632483.png"
+<img
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/11/202111211632483.png"
 alt="image-20211112175632036" />
 <figcaption aria-hidden="true">image-20211112175632036</figcaption>
 </figure>
 <figure>
-<img src="https://pic.islet.space/2021/11/202111130022536.png"
+<img
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/11/202111130022536.png"
 alt="image-20211112180450097" />
 <figcaption aria-hidden="true">image-20211112180450097</figcaption>
 </figure>
@@ -406,20 +396,23 @@ alt="image-20211112180450097" />
 <p>DMZ使包含重要数据的内部系统免于直接暴露给外部网络而受到攻击，攻击者即使初步入侵成功，还要面临DMZ设置的新的障碍。</p>
 </blockquote>
 <figure>
-<img src="https://pic.islet.space/2021/11/202111130022178.png"
+<img
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/11/202111130022178.png"
 alt="image-20211112172411026" />
 <figcaption aria-hidden="true">image-20211112172411026</figcaption>
 </figure>
 <h3 id="dmz开启前">DMZ开启前</h3>
 <figure>
-<img src="https://pic.islet.space/2021/11/202111130022255.png"
+<img
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/11/202111130022255.png"
 alt="image-20211112172343953" />
 <figcaption aria-hidden="true">image-20211112172343953</figcaption>
 </figure>
 <h3 id="dmz开启后">DMZ开启后</h3>
 <p>虽然也是随机公网IP，但是可以使用DMZ将连接到路由器的设备映射到外网上。</p>
 <figure>
-<img src="https://pic.islet.space/2021/11/202111130022517.png"
+<img
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/11/202111130022517.png"
 alt="image-20211112175925384" />
 <figcaption aria-hidden="true">image-20211112175925384</figcaption>
 </figure>
@@ -428,7 +421,8 @@ alt="image-20211112175925384" />
 <p>经过前面DDNS的 API token
 配置之后，群晖NAS能够获取到对应域名的免费证书，并提供页面进行管理，将所有使用到的应用安全验证证书都设置为对应云服务提供商提供的证书即可。</p>
 <figure>
-<img src="https://pic.islet.space/2021/11/202111130022177.png"
+<img
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/11/202111130022177.png"
 alt="image-20211112180133874" />
 <figcaption aria-hidden="true">image-20211112180133874</figcaption>
 </figure>
@@ -437,7 +431,8 @@ alt="image-20211112180133874" />
 <p>输入 <code>https://nax.xxx.xxx:5000</code>
 即可进行后台服务器的访问，也可以使用 ping 进行测试，如下：</p>
 <figure>
-<img src="https://pic.islet.space/2021/11/202111130029734.png"
+<img
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/11/202111130029734.png"
 alt="image-20211113002928045" />
 <figcaption aria-hidden="true">image-20211113002928045</figcaption>
 </figure>
@@ -447,7 +442,8 @@ alt="image-20211113002928045" />
 <li>然后点击 <strong>映射网络驱动器</strong></li>
 </ol>
 <figure>
-<img src="https://pic.islet.space/2021/11/202111130022518.png"
+<img
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/11/202111130022518.png"
 alt="image-20211112174837538" />
 <figcaption aria-hidden="true">image-20211112174837538</figcaption>
 </figure>
@@ -457,7 +453,8 @@ alt="image-20211112174837538" />
 <code>https://nas.xxx.xxx:5006</code></li>
 </ol>
 <figure>
-<img src="https://pic.islet.space/2021/11/202111130022793.png"
+<img
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/11/202111130022793.png"
 alt="image-20211112175022321" />
 <figcaption aria-hidden="true">image-20211112175022321</figcaption>
 </figure>
@@ -465,7 +462,8 @@ alt="image-20211112175022321" />
 <li>按照提示输入群晖提供的账户名和密码即可进行连接</li>
 </ol>
 <figure>
-<img src="https://pic.islet.space/2021/11/202111130022607.png"
+<img
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/11/202111130022607.png"
 alt="image-20211112174513370" />
 <figcaption aria-hidden="true">image-20211112174513370</figcaption>
 </figure>
@@ -473,7 +471,8 @@ alt="image-20211112174513370" />
 <li>连接完毕即可查看到对应的网络驱动器</li>
 </ol>
 <figure>
-<img src="https://pic.islet.space/2021/11/202111130022504.png"
+<img
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/11/202111130022504.png"
 alt="image-20211112174559989" />
 <figcaption aria-hidden="true">image-20211112174559989</figcaption>
 </figure>
@@ -558,7 +557,7 @@ target="_blank" rel="noopener" href="https://blog.csdn.net/braddoris/article/det
 
 <div class="copyright">
   &copy; 2019 – 
-  <span itemprop="copyrightYear">2022</span>
+  <span itemprop="copyrightYear">2023</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

@@ -29,15 +29,11 @@
 <meta property="og:site_name" content="Coder的孤岛">
 <meta property="og:description" content="通常的按键所用开关为机械弹性开关，当机械触点断开、闭合时，由于机械触点的弹性作用，一个按键开关在闭合时不会马上稳定地接通，在断开时也不会一下子断开。因而在闭合及断开的瞬间均伴随有一连串的抖动，为了不产生这种现象而作的措施就是按键消抖。   image-20210927010622456  抖动时间 抖动时间的长短由按键的机械特性决定，一般为5ms～10ms。这是一个很重要的时间参数，在很多场合都要">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://pic.islet.space/2021/09/202109270106942.png">
-<meta property="og:image" content="https://pic.islet.space/2021/09/202109270105540.png">
-<meta property="og:image" content="https://pic.islet.space/2021/09/202109270105228.png">
 <meta property="article:published_time" content="2021-09-26T16:50:00.000Z">
-<meta property="article:modified_time" content="2022-07-15T04:03:56.000Z">
+<meta property="article:modified_time" content="2023-02-15T13:11:02.155Z">
 <meta property="article:author" content="Liewzheng">
 <meta property="article:tag" content="按键消抖">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://pic.islet.space/2021/09/202109270106942.png">
 
 
 <link rel="canonical" href="http://islet.space/2021/09/27/Hardware/Circuit/2021-09-27-%E5%B5%8C%E5%85%A5%E5%BC%8F%E8%8A%AF%E7%89%87%E5%BC%95%E8%84%9A%E7%9A%84%E6%8C%89%E9%94%AE%E6%B6%88%E6%8A%96/">
@@ -259,7 +255,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2022-07-15 12:03:56" itemprop="dateModified" datetime="2022-07-15T12:03:56+08:00">2022-07-15</time>
+        <time title="Modified: 2023-02-15 21:11:02" itemprop="dateModified" datetime="2023-02-15T21:11:02+08:00">2023-02-15</time>
       </span>
 
   
@@ -274,7 +270,8 @@
     <div class="post-body" itemprop="articleBody">
         <p>通常的按键所用开关为机械弹性开关，当机械触点断开、闭合时，由于机械触点的弹性作用，一个按键开关在闭合时不会马上稳定地接通，在断开时也不会一下子断开。因而在闭合及断开的瞬间均伴随有一连串的抖动，为了不产生这种现象而作的措施就是按键消抖。</p>
 <figure>
-<img src="https://pic.islet.space/2021/09/202109270106942.png"
+<img
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/09/202109270106942.png"
 alt="image-20210927010622456" />
 <figcaption aria-hidden="true">image-20210927010622456</figcaption>
 </figure>
@@ -286,14 +283,16 @@ alt="image-20210927010622456" />
 <h2 id="硬件消抖">硬件消抖</h2>
 <p>在键数较少时可用硬件方法消除键抖动。下图所示的RS触发器为常用的硬件去抖。</p>
 <figure>
-<img src="https://pic.islet.space/2021/09/202109270105540.png"
+<img
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/09/202109270105540.png"
 alt="image-20210927010535868" />
 <figcaption aria-hidden="true">image-20210927010535868</figcaption>
 </figure>
 <p>图中两个“与非”门构成一个RS触发器。当按键未按下时，输出为1;当键按下时，输出为0。此时即使用按键的机械性能，使按键因弹性抖动而产生瞬时断开（抖动跳开B），中要按键不返回原始状态A，双稳态电路的状态不改变，输出保持为0，不会产生抖动的波形。也就是说，即使B点的电压波形是抖动的，但经双稳态电路之后，其输出为正规的矩形波。这一点通过分析RS触发器的工作过程很容易得到验证。</p>
 <p>另一种硬件消抖的方法利用电容的放电延时，采用并联电容法，也可以实现硬件消抖，如图3所示：</p>
 <figure>
-<img src="https://pic.islet.space/2021/09/202109270105228.png"
+<img
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/09/202109270105228.png"
 alt="image-20210927010459327" />
 <figcaption aria-hidden="true">image-20210927010459327</figcaption>
 </figure>
@@ -395,7 +394,7 @@ target="_blank" rel="noopener" href="http://news.eeworld.com.cn/mcu/2012/0806/ar
 
 <div class="copyright">
   &copy; 2019 – 
-  <span itemprop="copyrightYear">2022</span>
+  <span itemprop="copyrightYear">2023</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

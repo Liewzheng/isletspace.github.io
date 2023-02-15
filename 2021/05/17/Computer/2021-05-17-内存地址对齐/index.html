@@ -32,7 +32,7 @@
 <meta property="og:image" content="https://common.cnblogs.com/images/copycode.gif">
 <meta property="og:image" content="https://common.cnblogs.com/images/copycode.gif">
 <meta property="article:published_time" content="2021-05-17T12:10:00.000Z">
-<meta property="article:modified_time" content="2021-05-17T12:32:07.000Z">
+<meta property="article:modified_time" content="2023-02-15T13:11:02.054Z">
 <meta property="article:author" content="Liewzheng">
 <meta property="article:tag" content="address">
 <meta property="article:tag" content="align">
@@ -251,10 +251,16 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">Posted on</span>
-      
 
-      <time title="Created: 2021-05-17 20:10:00 / Modified: 20:32:07" itemprop="dateCreated datePublished" datetime="2021-05-17T20:10:00+08:00">2021-05-17</time>
+      <time title="Created: 2021-05-17 20:10:00" itemprop="dateCreated datePublished" datetime="2021-05-17T20:10:00+08:00">2021-05-17</time>
     </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2023-02-15 21:11:02" itemprop="dateModified" datetime="2023-02-15T21:11:02+08:00">2023-02-15</time>
+      </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
         <i class="far fa-folder"></i>
@@ -309,7 +315,7 @@ target="_blank" rel="noopener" href="https://www.cnblogs.com/mhq-martin/p/115378
 <p>是因为这个结构体被优化了，这个优化有个另外一个名字叫“对齐”，那么这个对齐到底做了什么样的优化呢。</p>
 <figure>
 <img
-src="https://pic.islet.space/2021/05/1231881-20190917224404418-1265388453.png"
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/1231881-20190917224404418-1265388453.png"
 alt="img" />
 <figcaption aria-hidden="true">img</figcaption>
 </figure>
@@ -338,7 +344,7 @@ alt="img" />
 <p>下图为对齐后结构如下：</p>
 <figure>
 <img
-src="https://pic.islet.space/2021/05/1231881-20190917224631323-2009020349.png"
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/1231881-20190917224631323-2009020349.png"
 alt="img" />
 <figcaption aria-hidden="true">img</figcaption>
 </figure>
@@ -357,7 +363,7 @@ e）：由于short类型占2字节，地址36正好是2的整数倍，这样我�
 节，所以我们还是以4字节补齐为基准，整个结构体结束地址为38，而地址38并不是4的整数倍，所以我们还需要加额外2个字节来填充结构体，如下图红色的就是补齐出来的空间：</p>
 <figure>
 <img
-src="https://pic.islet.space/2021/05/1231881-20190917224653471-2076639760.png"
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/1231881-20190917224653471-2076639760.png"
 alt="img" />
 <figcaption aria-hidden="true">img</figcaption>
 </figure>
@@ -376,21 +382,21 @@ alt="复制代码" />
 <p>程序运行过程中，查看内存如下：</p>
 <figure>
 <img
-src="https://pic.islet.space/2021/05/1231881-20190917225512389-1581088258.png"
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/1231881-20190917225512389-1581088258.png"
 alt="img" />
 <figcaption aria-hidden="true">img</figcaption>
 </figure>
 <p>其中，各种颜色带下划线的代表各个成员变量，蓝色方框的代表为内存对齐时候填补的多余字节，由于这里看不到补齐效果，我们接下来看下图，下图篮框包围的字节就是与上图的交集以外的部分就是补齐所填充的字节。</p>
 <figure>
 <img
-src="https://pic.islet.space/2021/05/1231881-20190917225534651-684741719.png"
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/1231881-20190917225534651-684741719.png"
 alt="img" />
 <figcaption aria-hidden="true">img</figcaption>
 </figure>
 <p>在最后，我在谈一谈关于补齐的作用，<mark>补齐其实就是为了让这个结构体定义的数组变量时候，数组内部，也同样满足内存对齐的要求</mark>，为了更好的理解这点，我做了一个跟本例子相对照的图：</p>
 <figure>
 <img
-src="https://pic.islet.space/2021/05/1231881-20190917225553591-1418591054.png"
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/1231881-20190917225553591-1418591054.png"
 alt="img" />
 <figcaption aria-hidden="true">img</figcaption>
 </figure>
@@ -472,7 +478,7 @@ alt="img" />
 
 <div class="copyright">
   &copy; 2019 – 
-  <span itemprop="copyrightYear">2022</span>
+  <span itemprop="copyrightYear">2023</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

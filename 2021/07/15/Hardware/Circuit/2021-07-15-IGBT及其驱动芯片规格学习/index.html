@@ -29,33 +29,15 @@
 <meta property="og:site_name" content="Coder的孤岛">
 <meta property="og:description" content="[TOC] IGBT和其驱动芯片的电气特性、引脚等参数的开发记录。 IGBT IGBT芯片选型为 IKW50N65WR5。   image-20210715090401339    image-20210715093221500  IGBT有三个极，发射极、集电极 和 栅极。 从其电气性能表格中，可以看出：  集电极到发射极的击穿电压 最小 为650V 在 VGE 完全导通（最高15V）时，集电极">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://pic.islet.space/2021/07/image-20210715090401339.png">
-<meta property="og:image" content="https://pic.islet.space/2021/07/image-20210715093221500.png">
-<meta property="og:image" content="https://pic.islet.space/2021/07/image-20210715094151439.png">
-<meta property="og:image" content="https://pic.islet.space/2021/07/image-20210715095656309.png">
-<meta property="og:image" content="https://pic.islet.space/2021/07/image-20210715102359830.png">
-<meta property="og:image" content="https://pic.islet.space/2021/07/image-20210715102251417.png">
-<meta property="og:image" content="https://pic.islet.space/2021/07/image-20210715095931941.png">
-<meta property="og:image" content="https://pic.islet.space/2021/07/image-20210715105358524.png">
-<meta property="og:image" content="https://pic.islet.space/2021/07/image-20210715105816397.png">
-<meta property="og:image" content="https://pic.islet.space/2021/07/image-20210715103507327.png">
-<meta property="og:image" content="https://pic.islet.space/2021/07/image-20210717130119184.png">
-<meta property="og:image" content="https://pic.islet.space/2021/07/image-20210717115141036.png">
-<meta property="og:image" content="https://pic.islet.space/2021/07/image-20210717113118307.png">
-<meta property="og:image" content="https://pic.islet.space/2021/07/image-20210717114405335.png">
-<meta property="og:image" content="https://pic.islet.space/2021/07/image-20210717115333071.png">
-<meta property="og:image" content="https://pic.islet.space/2021/07/image-20210717122123709.png">
-<meta property="og:image" content="https://pic.islet.space/2021/07/image-20210717125203004.png">
-<meta property="og:image" content="https://pic.islet.space/2021/07/image-20210717125219691.png">
-<meta property="og:image" content="https://pic.islet.space/2021/07/image-20210717125337142.png">
-<meta property="og:image" content="https://pic.islet.space/2021/07/image-20210717120650887.png">
+<meta property="og:image" content="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/07/image-20210717130119184.png">
+<meta property="og:image" content="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/07/image-20210717113118307.png">
 <meta property="article:published_time" content="2021-07-15T00:50:00.000Z">
-<meta property="article:modified_time" content="2021-07-17T06:13:02.000Z">
+<meta property="article:modified_time" content="2023-02-15T13:11:02.155Z">
 <meta property="article:author" content="Liewzheng">
 <meta property="article:tag" content="IGBT">
 <meta property="article:tag" content="MOSFET">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://pic.islet.space/2021/07/image-20210715090401339.png">
+<meta name="twitter:image" content="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/07/image-20210717130119184.png">
 
 
 <link rel="canonical" href="http://islet.space/2021/07/15/Hardware/Circuit/2021-07-15-IGBT%E5%8F%8A%E5%85%B6%E9%A9%B1%E5%8A%A8%E8%8A%AF%E7%89%87%E8%A7%84%E6%A0%BC%E5%AD%A6%E4%B9%A0/">
@@ -277,7 +259,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-07-17 14:13:02" itemprop="dateModified" datetime="2021-07-17T14:13:02+08:00">2021-07-17</time>
+        <time title="Modified: 2023-02-15 21:11:02" itemprop="dateModified" datetime="2023-02-15T21:11:02+08:00">2023-02-15</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -304,12 +286,14 @@
 <h1 id="igbt">IGBT</h1>
 <p>IGBT芯片选型为 IKW50N65WR5。</p>
 <figure>
-<img src="https://pic.islet.space/2021/07/image-20210715090401339.png"
+<img
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/07/image-20210715090401339.png"
 alt="image-20210715090401339" />
 <figcaption aria-hidden="true">image-20210715090401339</figcaption>
 </figure>
 <figure>
-<img src="https://pic.islet.space/2021/07/image-20210715093221500.png"
+<img
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/07/image-20210715093221500.png"
 alt="image-20210715093221500" />
 <figcaption aria-hidden="true">image-20210715093221500</figcaption>
 </figure>
@@ -326,7 +310,8 @@ style="font-size: 0.8rem; font-weight: 500;">CE</span>
 处于导通状态。</mark></li>
 </ul>
 <figure>
-<img src="https://pic.islet.space/2021/07/image-20210715094151439.png"
+<img
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/07/image-20210715094151439.png"
 alt="image-20210715094151439" />
 <figcaption aria-hidden="true">image-20210715094151439</figcaption>
 </figure>
@@ -336,27 +321,31 @@ style="font-size: 0.8rem; font-weight: 500;">GE</span> 的通电情况是 0V
 <p>因此，下图中IGBT器件的电路连接方式为：G 接0/15V方波信号，C
 接最高650V电源，E 接地。</p>
 <figure>
-<img src="https://pic.islet.space/2021/07/image-20210715095656309.png"
+<img
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/07/image-20210715095656309.png"
 alt="image-20210715095656309" />
 <figcaption aria-hidden="true">image-20210715095656309</figcaption>
 </figure>
 <h1 id="driver-ic">DRIVER IC</h1>
 <p>选用芯片型号为 2EDL05I06PF。</p>
 <figure>
-<img src="https://pic.islet.space/2021/07/image-20210715102359830.png"
+<img
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/07/image-20210715102359830.png"
 alt="image-20210715102359830" />
 <figcaption aria-hidden="true">image-20210715102359830</figcaption>
 </figure>
 <p>根据表1索引可得，芯片封装类型为DSO-8，目标驱动芯片是 IGBT，而非
 MOSFET。</p>
 <figure>
-<img src="https://pic.islet.space/2021/07/image-20210715102251417.png"
+<img
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/07/image-20210715102251417.png"
 alt="image-20210715102251417" />
 <figcaption aria-hidden="true">image-20210715102251417</figcaption>
 </figure>
 <p>再根据图3可得芯片引脚分布，根据表2可得所有引脚描述。</p>
 <figure>
-<img src="https://pic.islet.space/2021/07/image-20210715095931941.png"
+<img
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/07/image-20210715095931941.png"
 alt="image-20210715095931941" />
 <figcaption aria-hidden="true">image-20210715095931941</figcaption>
 </figure>
@@ -410,12 +399,14 @@ alt="image-20210715095931941" />
 style="font-size: 0.8rem; font-weight: 500;">DD</span> 和 V<span
 style="font-size: 0.8rem; font-weight: 500;">B</span> 的供电范围：</p>
 <figure>
-<img src="https://pic.islet.space/2021/07/image-20210715105358524.png"
+<img
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/07/image-20210715105358524.png"
 alt="image-20210715105358524" />
 <figcaption aria-hidden="true">image-20210715105358524</figcaption>
 </figure>
 <figure>
-<img src="https://pic.islet.space/2021/07/image-20210715105816397.png"
+<img
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/07/image-20210715105816397.png"
 alt="image-20210715105816397" />
 <figcaption aria-hidden="true">image-20210715105816397</figcaption>
 </figure>
@@ -423,7 +414,8 @@ alt="image-20210715105816397" />
 style="font-size: 0.8rem; font-weight: 500;">IN</span>
 的逻辑电平高低的电压范围，高电平为1.7 ~ 2.4 V， 低电平为0.7 ~ 1.1V。</p>
 <figure>
-<img src="https://pic.islet.space/2021/07/image-20210715103507327.png"
+<img
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/07/image-20210715103507327.png"
 alt="image-20210715103507327" />
 <figcaption aria-hidden="true">image-20210715103507327</figcaption>
 </figure>
@@ -456,18 +448,19 @@ alt="image-20210715103507327" />
 IGBT阻隔电压 U<span style="font-size: 0.6rem;">CES</span> 高至
 <code>1.2kV</code> 时，采用磁感应式 或 光学式信号传送器；在 低压 或 中压
 应用中 或 低于 <code>1.2kV</code> 时，采用光电耦合驱动芯片。</p>
-<p><img src="https://pic.islet.space/2021/07/image-20210717130119184.png" alt="image-20210717130119184" style="zoom:50%;" /></p>
+<p><img src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/07/image-20210717130119184.png" alt="image-20210717130119184" style="zoom:50%;" /></p>
 <div style="text-align: center; font-weight: 900;">
 图 Infineon对电气隔离的定义
 </div>
 <figure>
-<img src="https://pic.islet.space/2021/07/image-20210717115141036.png"
+<img
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/07/image-20210717115141036.png"
 alt="image-20210717115141036" />
 <figcaption aria-hidden="true">image-20210717115141036</figcaption>
 </figure>
 <h3 id="光电耦合器">光电耦合器</h3>
 <p>光电耦合器就是一种可以实现IGBT驱动的同时实现强弱电隔离的器件。由于光电耦合器的结构设计，集成光电耦合器的IGBT只能实现信息传递，不能为任何设备提供充足的能量支撑，需要一个隔离电源为驱动核心和光电耦合器的二次侧（高压侧）提供电能。</p>
-<p><img src="https://pic.islet.space/2021/07/image-20210717113118307.png" alt="image-20210717113118307" style="zoom:80%;" /></p>
+<p><img src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/07/image-20210717113118307.png" alt="image-20210717113118307" style="zoom:80%;" /></p>
 <p>另外有个相当重要的参数需要考虑——<strong><em>传输延迟时间</em></strong>，即
 信号从光电耦合器IGBT输入到控制电流输出的时间。常规而言，传播延迟时间
 <em>t</em><span style="font-size: 0.6rem;">PLH</span> 和 <em>t</em><span
@@ -477,14 +470,16 @@ style="font-size: 0.6rem;">PHL</span>
 <em>t</em><span style="font-size: 0.6rem;">DT</span>
 就越大，加重了逆变器输出电流的失真影响。光电耦合器里信号延迟的误差因为操作使用会发生巨大变化，最终可导致高达1us的偏差。</p>
 <figure>
-<img src="https://pic.islet.space/2021/07/image-20210717114405335.png"
+<img
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/07/image-20210717114405335.png"
 alt="image-20210717114405335" />
 <figcaption aria-hidden="true">image-20210717114405335</figcaption>
 </figure>
 <h3 id="脉冲变压器">脉冲变压器</h3>
 <p>利用脉冲变压器为信号传输的IGBT，可以达到较低的延时水平，但与光电耦合器一样，只能传输信号，提供所需能量仍需由隔离电源提供。</p>
 <figure>
-<img src="https://pic.islet.space/2021/07/image-20210717115333071.png"
+<img
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/07/image-20210717115333071.png"
 alt="image-20210717115333071" />
 <figcaption aria-hidden="true">image-20210717115333071</figcaption>
 </figure>
@@ -499,7 +494,8 @@ SiO2）来为不同的内部电路提供隔离，其反向电压耐压高达较�
 低于 600V 的IGBT，通常一个驱动器有六路输出。但是在驱动 1.2kV
 以上时，其驱动芯片和其他驱动方式相比成本劣势较少采用。</p>
 <figure>
-<img src="https://pic.islet.space/2021/07/image-20210717122123709.png"
+<img
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/07/image-20210717122123709.png"
 alt="image-20210717122123709" />
 <figcaption aria-hidden="true">image-20210717122123709</figcaption>
 </figure>
@@ -512,24 +508,28 @@ alt="image-20210717122123709" />
 和 <strong>六通道</strong>，又进一步划分
 <strong>高边</strong>、<strong>地边</strong>、<strong>高低边</strong>、<strong>半桥</strong>、<strong>全桥</strong>、<strong>三相</strong>。</p>
 <figure>
-<img src="https://pic.islet.space/2021/07/image-20210717125203004.png"
+<img
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/07/image-20210717125203004.png"
 alt="image-20210717125203004" />
 <figcaption aria-hidden="true">image-20210717125203004</figcaption>
 </figure>
 <figure>
-<img src="https://pic.islet.space/2021/07/image-20210717125219691.png"
+<img
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/07/image-20210717125219691.png"
 alt="image-20210717125219691" />
 <figcaption aria-hidden="true">image-20210717125219691</figcaption>
 </figure>
 <figure>
-<img src="https://pic.islet.space/2021/07/image-20210717125337142.png"
+<img
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/07/image-20210717125337142.png"
 alt="image-20210717125337142" />
 <figcaption aria-hidden="true">image-20210717125337142</figcaption>
 </figure>
 <h2 id="eicedriver">EiceDriver</h2>
 <p>下图为Infineon提供的栅极驱动芯片品类示意：</p>
 <figure>
-<img src="https://pic.islet.space/2021/07/image-20210717120650887.png"
+<img
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/07/image-20210717120650887.png"
 alt="image-20210717120650887" />
 <figcaption aria-hidden="true">image-20210717120650887</figcaption>
 </figure>
@@ -619,7 +619,7 @@ target="_blank" rel="noopener" href="https://www.infineon.com/dgdl/Infineon-Eice
 
 <div class="copyright">
   &copy; 2019 – 
-  <span itemprop="copyrightYear">2022</span>
+  <span itemprop="copyrightYear">2023</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

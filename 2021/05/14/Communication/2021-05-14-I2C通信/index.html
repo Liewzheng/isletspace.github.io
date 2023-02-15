@@ -29,46 +29,34 @@
 <meta property="og:site_name" content="Coder的孤岛">
 <meta property="og:description" content="I2C基本通信规则 标准：《NXP_UM10204_I2C-bus specification and user manual》  IIC总线是一个事实上的世界标准，现在已经在50多家公司生产的1000多种不同的IC中实施。 此外，多功能的IIC总线被用于各种控制架构，如系统管理总线（SMBus）、电源管理总线（PMBus）、智能平台管理接口（IPMI）、显示数据通道（DDC）和高级电信计算架构（">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://pic.islet.space/2021/05/image-20210514111033910.png">
-<meta property="og:image" content="https://pic.islet.space/2021/05/image-20210514112114667.png">
-<meta property="og:image" content="https://pic.islet.space/2021/06/20210618143441.png">
-<meta property="og:image" content="https://pic.islet.space/2021/05/image-20210514134830615.png">
-<meta property="og:image" content="https://pic.islet.space/2021/05/image-20210514141512136.png">
-<meta property="og:image" content="https://pic.islet.space/2021/05/image-20210514142116674.png">
-<meta property="og:image" content="https://pic.islet.space/2021/05/image-20210515150526897.png">
-<meta property="og:image" content="https://pic.islet.space/2021/05/image-20210514144620803.png">
-<meta property="og:image" content="https://pic.islet.space/2021/06/image-20210607141115024.png">
-<meta property="og:image" content="https://pic.islet.space/2021/05/image-20210514170202184.png">
-<meta property="og:image" content="https://pic.islet.space/2021/05/image-20210515142633906.png">
-<meta property="og:image" content="https://pic.islet.space/2021/05/image-20210515172907284.png">
-<meta property="og:image" content="https://pic.islet.space/2021/05/image-20210515172945861.png">
-<meta property="og:image" content="https://pic.islet.space/2021/05/image-20210515172958184.png">
-<meta property="og:image" content="https://pic.islet.space/2021/05/image-20210515152141963.png">
-<meta property="og:image" content="https://pic.islet.space/2021/05/20210527144920.png">
-<meta property="og:image" content="https://pic.islet.space/2021/06/20210621154130.png">
-<meta property="og:image" content="https://pic.islet.space/2021/04/image-20210427165847934.png">
-<meta property="og:image" content="https://pic.islet.space/2021/05/image-20210513093158863.png">
-<meta property="og:image" content="https://pic.islet.space/2021/05/image-20210513093047973.png">
-<meta property="og:image" content="https://pic.islet.space/2021/05/image-20210513092007130.png">
-<meta property="og:image" content="https://pic.islet.space/2021/05/image-20210513090414605.png">
-<meta property="og:image" content="https://pic.islet.space/2021/05/image-20210513083636462.png">
-<meta property="og:image" content="https://pic.islet.space/2021/04/image-20210427104818097.png">
-<meta property="og:image" content="https://pic.islet.space/2021/04/image-20210427105655639.png">
-<meta property="og:image" content="https://pic.islet.space/2021/05/image-20210518105918652.png">
-<meta property="og:image" content="https://pic.islet.space/2021/05/image-20210518112823329.png">
-<meta property="og:image" content="https://pic.islet.space/2021/06/20210601105623.png">
-<meta property="og:image" content="https://pic.islet.space/2021/06/20210607150001.png">
-<meta property="og:image" content="https://pic.islet.space/2021/05/image-20210518112823329.png">
-<meta property="og:image" content="https://pic.islet.space/2021/05/image-20210518113240492.png">
-<meta property="og:image" content="https://pic.islet.space/2021/05/20210519114409.png">
-<meta property="og:image" content="https://pic.islet.space/2021/06/20210601105537.png">
-<meta property="og:image" content="https://pic.islet.space/2021/06/20210601105628.png">
+<meta property="og:image" content="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/image-20210514111033910.png">
+<meta property="og:image" content="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/image-20210514112114667.png">
+<meta property="og:image" content="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/image-20210514134830615.png">
+<meta property="og:image" content="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/image-20210514141512136.png">
+<meta property="og:image" content="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/image-20210514142116674.png">
+<meta property="og:image" content="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/image-20210515150526897.png">
+<meta property="og:image" content="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/image-20210514144620803.png">
+<meta property="og:image" content="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/image-20210514170202184.png">
+<meta property="og:image" content="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/image-20210515142633906.png">
+<meta property="og:image" content="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/image-20210515152141963.png">
+<meta property="og:image" content="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/20210527144920.png">
+<meta property="og:image" content="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/04/image-20210427165847934.png">
+<meta property="og:image" content="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/image-20210513093047973.png">
+<meta property="og:image" content="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/image-20210513092007130.png">
+<meta property="og:image" content="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/image-20210513090414605.png">
+<meta property="og:image" content="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/04/image-20210427104818097.png">
+<meta property="og:image" content="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/04/image-20210427105655639.png">
+<meta property="og:image" content="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/image-20210518105918652.png">
+<meta property="og:image" content="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/image-20210518112823329.png">
+<meta property="og:image" content="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/image-20210518112823329.png">
+<meta property="og:image" content="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/image-20210518113240492.png">
+<meta property="og:image" content="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/06/20210601105628.png">
 <meta property="article:published_time" content="2021-05-14T02:55:00.000Z">
-<meta property="article:modified_time" content="2022-08-02T14:12:06.077Z">
+<meta property="article:modified_time" content="2023-02-15T13:11:02.031Z">
 <meta property="article:author" content="Liewzheng">
 <meta property="article:tag" content="I2C">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://pic.islet.space/2021/05/image-20210514111033910.png">
+<meta name="twitter:image" content="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/image-20210514111033910.png">
 
 
 <link rel="canonical" href="http://islet.space/2021/05/14/Communication/2021-05-14-I2C%E9%80%9A%E4%BF%A1/">
@@ -290,7 +278,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2022-08-02 22:12:06" itemprop="dateModified" datetime="2022-08-02T22:12:06+08:00">2022-08-02</time>
+        <time title="Modified: 2023-02-15 21:11:02" itemprop="dateModified" datetime="2023-02-15T21:11:02+08:00">2023-02-15</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -327,7 +315,7 @@ specification and user manual》</a></p>
 Circuit)是一种通用的总线协议。它是由Philips(飞利浦)公司，现NXP(恩智浦)半导体开发的一种简单的双向两线制总线协议标准。</p>
 <p>对于硬件设计人员来说，只需要2个管脚，极少的连接线和面积，就可以实现芯片间的通讯，对于软件开发者来说，可以使用同一个IIC驱动库，来实现实现不同器件的驱动，大大减少了软件的开发时间。极低的工作电流，降低了系统的功耗，完善的应答机制大大增强通讯的可靠性。</p>
 <h2 id="术语">术语</h2>
-<p><img src="https://pic.islet.space/2021/05/image-20210514111033910.png" alt="image-20210514111033910" style="zoom: 67%;" /></p>
+<p><img src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/image-20210514111033910.png" alt="image-20210514111033910" style="zoom: 67%;" /></p>
 <table>
 <colgroup>
 <col style="width: 14%" />
@@ -375,12 +363,13 @@ Circuit)是一种通用的总线协议。它是由Philips(飞利浦)公司，现
 </tbody>
 </table>
 <p>以下这个图应该可以较好地解释“多主机”的概念，多个主机可以同时向外发出传输数据的申请，也可以主动结束其数据传输。虽然，IIC降低了总线复用的成本，但仍需要“仲裁”机制来解决多个主机之间的无序竞争状态。</p>
-<p><img src="https://pic.islet.space/2021/05/image-20210514112114667.png" alt="image-20210514112114667" style="zoom:67%;" /></p>
+<p><img src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/image-20210514112114667.png" alt="image-20210514112114667" style="zoom:67%;" /></p>
 <h2 id="硬件要求">硬件要求</h2>
 <h3 id="电气特性">电气特性</h3>
 <p>根据要求，I2C的高电平有效值要达到输入参考电压（一般是VDD）的0.7倍以上，低电平有效值需要达到输入参考电压的0.3倍以下。</p>
 <figure>
-<img src="https://pic.islet.space/2021/06/20210618143441.png"
+<img
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/06/20210618143441.png"
 alt="image-20210618143438565" />
 <figcaption aria-hidden="true">image-20210618143438565</figcaption>
 </figure>
@@ -467,7 +456,7 @@ VIL is 0.3VDD and VIH is 0.7V DD .</p>
 fixed at V<sub>IL</sub> = 1.5 V and V<sub>IH</sub> = 3.0 V, but all new
 devices require this 30 %/70 % specification.</p>
 </blockquote>
-<p><img src="https://pic.islet.space/2021/05/image-20210514134830615.png" alt="image-20210514134830615" style="zoom: 67%;" /></p>
+<p><img src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/image-20210514134830615.png" alt="image-20210514134830615" style="zoom: 67%;" /></p>
 <h3 id="时序正确性">时序正确性</h3>
 <ul>
 <li>SDA上的数据必须在SCL高电平期间保持稳定，即不能在SCL高电平期间发生翻转（后见原因），只有在SCL低电平时可以翻转。</li>
@@ -479,7 +468,7 @@ clock. The HIGH or LOW state of the data line can only change when the
 clock signal on the SCL line is LOW (see Figure 4). One clock pulse is
 generated for each data bit transferred.</p>
 </blockquote>
-<p><img src="https://pic.islet.space/2021/05/image-20210514141512136.png" alt="image-20210514141512136" style="zoom: 80%;" /></p>
+<p><img src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/image-20210514141512136.png" alt="image-20210514141512136" style="zoom: 80%;" /></p>
 <h3 id="开始及结束标志">开始及结束标志</h3>
 <ul>
 <li><p>传输开始时必须以一个 <strong>开始</strong>
@@ -496,9 +485,9 @@ generated for each data bit transferred.</p>
 is HIGH defines a START condition. A LOW to HIGH transition on the SDA
 line while SCL is HIGH defines a STOP condition.</p>
 </blockquote>
-<p><img src="https://pic.islet.space/2021/05/image-20210514142116674.png" alt="image-20210514142116674" style="zoom: 80%;" /></p>
+<p><img src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/image-20210514142116674.png" alt="image-20210514142116674" style="zoom: 80%;" /></p>
 <h4 id="开始字节">开始字节</h4>
-<p><img src="https://pic.islet.space/2021/05/image-20210515150526897.png" alt="image-20210515150526897" style="zoom:67%;" /></p>
+<p><img src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/image-20210515150526897.png" alt="image-20210515150526897" style="zoom:67%;" /></p>
 <blockquote>
 <p>dummy acknowledge (HIGH) : 无声确认？？？</p>
 </blockquote>
@@ -537,7 +526,7 @@ clock line SCL LOW to force the master into a wait state. Data transfer
 then continues when the slave is ready for another byte of data and
 releases clock line SCL.</p>
 </blockquote>
-<p><img src="https://pic.islet.space/2021/05/image-20210514144620803.png" alt="image-20210514144620803" style="zoom:80%;" /></p>
+<p><img src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/image-20210514144620803.png" alt="image-20210514144620803" style="zoom:80%;" /></p>
 <h3 id="确认标志">确认标志</h3>
 <ul>
 <li>每个字节（8比特）后都跟着一个确认位，即前8位数据，第9位确认。</li>
@@ -550,7 +539,8 @@ releases clock line SCL.</p>
 </ul>
 <p><mark>即，此时（第9个脉冲时）SDA的控制权已经被mater释放了，但仍为高电平，slave可以在这第9个时钟脉冲高电平期间获得控制权，如果确认收到数据，则将电平拉低，否则不拉低。</mark></p>
 <figure>
-<img src="https://pic.islet.space/2021/06/image-20210607141115024.png"
+<img
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/06/image-20210607141115024.png"
 alt="image-20210607141115024" />
 <figcaption aria-hidden="true">image-20210607141115024</figcaption>
 </figure>
@@ -617,7 +607,7 @@ this time.</p>
 <p>当所有相关的主控器都结束了他们的低电平周期，时钟线被释放并变成高电平。</p>
 <p>然后，在主站时钟和SCL线的状态之间没有差异，所有的主站开始计算他们的高电平周期。</p>
 <p><strong>第一个完成其高电平周期的主站再次将SCL线拉到低电平</strong>。这样，就产生了一个<strong>同步的SCL时钟</strong>，<strong>其低电平周期由具有最长时钟低电平周期的主站决定</strong>，<strong>其高电平周期由具有最短时钟高电平周期的主站决定</strong>。</p>
-<p><img src="https://pic.islet.space/2021/05/image-20210514170202184.png" alt="image-20210514170202184" style="zoom: 67%;" /></p>
+<p><img src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/image-20210514170202184.png" alt="image-20210514170202184" style="zoom: 67%;" /></p>
 <h3 id="竞争仲裁">竞争仲裁</h3>
 <p>仲裁和同步一样，是指只有在系统中使用一个以上的主站时才需要的协议的一个部分。注意，从机不参与仲裁程序。</p>
 <p>一个主站只有在总线空闲时才可以开始传输。两个主站可以在START条件的最小保持时间（tHD;STA）内产生一个START条件，从而在总线上产生一个有效的START条件。然后需要进行仲裁，以确定哪个主站将完成其传输。</p>
@@ -627,20 +617,23 @@ this time.</p>
 <p><mark>如果一个主站也包含了一个从站功能，并且它在寻址阶段失去了仲裁，有可能获胜的主站正试图对它进行寻址。因此，失败的主站必须立即切换到其从站模式。</mark></p>
 <p>图8显示了两个主站的仲裁程序。可能涉及更多，这取决于有多少个主站连接到总线上。</p>
 <p><mark>当产生DATA1的主站的内部数据电平与SDA线上的实际电平有差异时，DATA1的输出被关闭。这并不影响由获胜主站发起的数据传输。</mark></p>
-<p><img src="https://pic.islet.space/2021/05/image-20210515142633906.png" alt="image-20210515142633906" style="zoom: 67%;" /></p>
+<p><img src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/image-20210515142633906.png" alt="image-20210515142633906" style="zoom: 67%;" /></p>
 <h3 id="通用寻址">通用寻址</h3>
 <figure>
-<img src="https://pic.islet.space/2021/05/image-20210515172907284.png"
+<img
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/image-20210515172907284.png"
 alt="image-20210515172907284" />
 <figcaption aria-hidden="true">image-20210515172907284</figcaption>
 </figure>
 <figure>
-<img src="https://pic.islet.space/2021/05/image-20210515172945861.png"
+<img
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/image-20210515172945861.png"
 alt="image-20210515172945861" />
 <figcaption aria-hidden="true">image-20210515172945861</figcaption>
 </figure>
 <figure>
-<img src="https://pic.islet.space/2021/05/image-20210515172958184.png"
+<img
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/image-20210515172958184.png"
 alt="image-20210515172958184" />
 <figcaption aria-hidden="true">image-20210515172958184</figcaption>
 </figure>
@@ -673,7 +666,7 @@ their address.</p>
 <li>9位零件ID，由设备制造商写入</li>
 <li>3位模具/晶元版本，由设备制造商写入</li>
 </ul>
-<p><img src="https://pic.islet.space/2021/05/image-20210515152141963.png" alt="image-20210515152141963" style="zoom:67%;" /></p>
+<p><img src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/image-20210515152141963.png" alt="image-20210515152141963" style="zoom:67%;" /></p>
 <ol type="1">
 <li><p>启动条件</p></li>
 <li><p>主站发送保留设备ID的 IIC
@@ -712,16 +705,17 @@ NACK。</p>
 DPI 11 和 13。即 <strong>DPI_P11</strong> 为
 <strong><em>SDA</em></strong>，<strong>DPI_P13</strong> 为
 <strong><em>SCLK</em></strong>。</p>
-<p><img src="https://pic.islet.space/2021/05/20210527144920.png" alt="image-20210524112141809" style="zoom:67%;" /></p>
+<p><img src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/20210527144920.png" alt="image-20210524112141809" style="zoom:67%;" /></p>
 <figure>
-<img src="https://pic.islet.space/2021/06/20210621154130.png"
+<img
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/06/20210621154130.png"
 alt="image-20210615083241938" />
 <figcaption aria-hidden="true">image-20210615083241938</figcaption>
 </figure>
 <p>MediaWorks核心板J3引脚排示意图</p>
 <p>以下描述均以评估板为例，DIY板不一定适用。</p>
 <h2 id="插口jumper定义">插口（Jumper）定义</h2>
-<p><img src="https://pic.islet.space/2021/04/image-20210427165847934.png" alt="image-20210427165847934" style="zoom: 67%;" /></p>
+<p><img src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/04/image-20210427165847934.png" alt="image-20210427165847934" style="zoom: 67%;" /></p>
 <h2 id="时钟及pll">时钟及PLL</h2>
 <ol type="1">
 <li>1772的工作频率为12.288兆赫，而如果过要设置PLL，<strong>PLL输出一定是24.576兆赫。</strong></li>
@@ -735,21 +729,23 @@ alt="image-20210615083241938" />
 <li>要使用PLL时，<strong>首先要明确PLL输出频率是多少</strong>，当PLL信号与时钟信号是整数倍关系时才需要使用整数分频器。</li>
 </ol>
 <figure>
-<img src="https://pic.islet.space/2021/05/image-20210513093158863.png"
+<img
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/image-20210513093158863.png"
 alt="image-20210513093158863" />
 <figcaption aria-hidden="true">image-20210513093158863</figcaption>
 </figure>
 <p>以下列举了整数型及分数型分频器的参数设置：</p>
-<p><img src="https://pic.islet.space/2021/05/image-20210513093047973.png" alt="image-20210513093047973" style="zoom:67%;" /></p>
+<p><img src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/image-20210513093047973.png" alt="image-20210513093047973" style="zoom:67%;" /></p>
 <h3 id="评估板电路图">评估板电路图</h3>
-<p><img src="https://pic.islet.space/2021/05/image-20210513092007130.png" alt="image-20210513092007130" style="zoom:67%;" /></p>
+<p><img src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/image-20210513092007130.png" alt="image-20210513092007130" style="zoom:67%;" /></p>
 <h2 id="输入输出">输入输出</h2>
 <h3 id="评估板电路图-1">评估板电路图</h3>
-<p><img src="https://pic.islet.space/2021/05/image-20210513090414605.png" alt="image-20210513090414605" style="zoom: 67%;" /></p>
+<p><img src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/image-20210513090414605.png" alt="image-20210513090414605" style="zoom: 67%;" /></p>
 <h3 id="第0及第1通道">第0及第1通道</h3>
 <p>以下为codec芯片对引脚的定义，在提供一个接地端，构成TRS是完全没有问题，但是codec的定义和其评估板的外围电路设计有所区别。</p>
 <figure>
-<img src="https://pic.islet.space/2021/05/image-20210513083636462.png"
+<img
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/image-20210513083636462.png"
 alt="image-20210513083636462" />
 <figcaption aria-hidden="true">image-20210513083636462</figcaption>
 </figure>
@@ -764,8 +760,8 @@ alt="image-20210513083636462" />
 <ul>
 <li>2/3输入通道是复用立体声通道，即1通道和0通道都可以单独接入音源，在物理音频接口上独立，但第2/3通道是在一起的，共用一个物理通道。UG第7页中也有提到。</li>
 </ul>
-<p><img src="https://pic.islet.space/2021/04/image-20210427104818097.png" alt="image-20210427104818097" style="zoom:50%;" /></p>
-<p><img src="https://pic.islet.space/2021/04/image-20210427105655639.png" alt="image-20210427105655639" style="zoom:67%;" /></p>
+<p><img src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/04/image-20210427104818097.png" alt="image-20210427104818097" style="zoom:50%;" /></p>
+<p><img src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/04/image-20210427105655639.png" alt="image-20210427105655639" style="zoom:67%;" /></p>
 <ul>
 <li>有四个单端输入通道可以设置为麦克风信号或线路信号，一个双立体声数字输入信号通道和也可被用于单端输出的两个差分(differential)输出。</li>
 </ul>
@@ -781,7 +777,7 @@ alt="image-20210513083636462" />
 单字主读模式，由从机发送至主机。</p>
 <p>图88展示了 多字主读模式
 的时序，展示了读取目标字节为2bytes的示例。<em><u>此处上述黄底字重复</u></em>。其他地址范围可能有不同的字长，从一个到四个字节不等。ADAU1772总是对子地址进行解码，并设置自动递增电路，使地址在适当的字节数后递增。</p>
-<p><img src="https://pic.islet.space/2021/05/image-20210518105918652.png" alt="image-20210518105918652" style="zoom: 67%;" /></p>
+<p><img src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/image-20210518105918652.png" alt="image-20210518105918652" style="zoom: 67%;" /></p>
 <blockquote>
 <p>S = 开始 标志</p>
 <p>P = 停止 标志</p>
@@ -793,12 +789,13 @@ alt="image-20210513083636462" />
 <p>​
 《SigmaStudio_USBi_to_EZ-Board_Adapter_Schematic-Rel_0.1.pdf》中对接口的定义，总共需要4个引脚，分别是1、3、4、10，对应着
 SCL / SDA / VCC / GND；</p>
-<p><img src="https://pic.islet.space/2021/05/image-20210518112823329.png" alt="image-20210518112823329" style="zoom:67%;" /></p>
+<p><img src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/image-20210518112823329.png" alt="image-20210518112823329" style="zoom:67%;" /></p>
 <h4 id="接口-1">1772接口</h4>
 <p>需要用到的接口是 <code>SCL/SCLK</code> 和 <code>SDA/MISO</code>
 。</p>
 <figure>
-<img src="https://pic.islet.space/2021/06/20210601105623.png"
+<img
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/06/20210601105623.png"
 alt="image-20210518192233133" />
 <figcaption aria-hidden="true">image-20210518192233133</figcaption>
 </figure>
@@ -806,11 +803,12 @@ alt="image-20210518192233133" />
 <strong><em>CLATCH</em></strong> 和 <strong><em>CDATA</em></strong>
 针脚。</p>
 <figure>
-<img src="https://pic.islet.space/2021/06/20210607150001.png"
+<img
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/06/20210607150001.png"
 alt="image-20210607145600052" />
 <figcaption aria-hidden="true">image-20210607145600052</figcaption>
 </figure>
-<p><img src="https://pic.islet.space/2021/05/image-20210518112823329.png" alt="image-20210518112823329" style="zoom:67%;" /></p>
+<p><img src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/image-20210518112823329.png" alt="image-20210518112823329" style="zoom:67%;" /></p>
 <table>
 <colgroup>
 <col style="width: 6%" />
@@ -880,11 +878,12 @@ alt="image-20210607145600052" />
 <h4 id="接口-2">21479接口</h4>
 <p>《ADSP-21479 EZ-Board Evaluation System Manual》，需要用到的接口是
 <code>SPI_CLK(DPI_P3)</code> 和 <code>SPI_MISO(DPI_P2)</code> 。</p>
-<p><img src="https://pic.islet.space/2021/05/image-20210518113240492.png" alt="image-20210518113240492" style="zoom:67%;" /></p>
+<p><img src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/image-20210518113240492.png" alt="image-20210518113240492" style="zoom:67%;" /></p>
 <p>对应评估板上的针脚接口如下图示 24（DPI_P3） 和 27（DPI_P2）
 接口。</p>
 <figure>
-<img src="https://pic.islet.space/2021/05/20210519114409.png"
+<img
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/20210519114409.png"
 alt="image-20210519114333234" />
 <figcaption aria-hidden="true">image-20210519114333234</figcaption>
 </figure>
@@ -900,11 +899,12 @@ alt="image-20210519114333234" />
 <li>每个SDA和SCL线都应该接入一个2.0KΩ的升压电阻，但不应该高过IOVDD。</li>
 </ul>
 <figure>
-<img src="https://pic.islet.space/2021/06/20210601105537.png"
+<img
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/06/20210601105537.png"
 alt="image-20210519093557617" />
 <figcaption aria-hidden="true">image-20210519093557617</figcaption>
 </figure>
-<p><img src="https://pic.islet.space/2021/06/20210601105628.png" alt="image-20210519094454381" style="zoom: 67%;" /></p>
+<p><img src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/06/20210601105628.png" alt="image-20210519094454381" style="zoom: 67%;" /></p>
 <h2 id="相关问答">相关问答</h2>
 <p><strong>Q</strong>: what is the macro SIGMA_WRITE_DELAY supposed to
 do? Is it a simple delay? Why are there parameters regarding the device
@@ -1032,7 +1032,7 @@ specification and user manual》</a></li>
 
 <div class="copyright">
   &copy; 2019 – 
-  <span itemprop="copyrightYear">2022</span>
+  <span itemprop="copyrightYear">2023</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

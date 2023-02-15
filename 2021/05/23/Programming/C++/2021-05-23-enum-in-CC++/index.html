@@ -29,22 +29,14 @@
 <meta property="og:site_name" content="Coder的孤岛">
 <meta property="og:description" content="enum 是 Enumeration &#x2F;&#x2F; 的缩写，是C&#x2F;C++中的 枚举 关键字。 特点 符合以下场景时可能需要使用到枚举：  需要使用到的变量 数量较大，通过枚举以简写代码，提高代码可读性 使用整形（integer）进行定义（但不同于直接定义成 int 的 显式整形，使用枚举类型定义的话会变成 隐式整形） 所有值都是有固定范围的，是可人为预设的。 具有常量的特性（主要特点是：不可在定义之外的地">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://pic.islet.space/2021/05/image-20210523204125878.png">
-<meta property="og:image" content="https://pic.islet.space/2021/05/image-20210523204041715.png">
-<meta property="og:image" content="https://pic.islet.space/2021/05/image-20210523182310296.png">
-<meta property="og:image" content="https://pic.islet.space/2021/05/image-20210523204224839.png">
-<meta property="og:image" content="https://pic.islet.space/2021/05/image-20210523202049638.png">
-<meta property="og:image" content="https://pic.islet.space/2021/05/image-20210523202501260.png">
-<meta property="og:image" content="https://pic.islet.space/2021/05/image-20210523202757582.png">
 <meta property="article:published_time" content="2021-05-23T10:22:00.000Z">
-<meta property="article:modified_time" content="2021-05-23T14:03:34.000Z">
+<meta property="article:modified_time" content="2023-02-15T13:11:02.054Z">
 <meta property="article:author" content="Liewzheng">
 <meta property="article:tag" content="C">
 <meta property="article:tag" content="C++">
 <meta property="article:tag" content="enum">
 <meta property="article:tag" content="typedef">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://pic.islet.space/2021/05/image-20210523204125878.png">
 
 
 <link rel="canonical" href="http://islet.space/2021/05/23/Programming/C++/2021-05-23-enum-in-CC++/">
@@ -258,10 +250,16 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">Posted on</span>
-      
 
-      <time title="Created: 2021-05-23 18:22:00 / Modified: 22:03:34" itemprop="dateCreated datePublished" datetime="2021-05-23T18:22:00+08:00">2021-05-23</time>
+      <time title="Created: 2021-05-23 18:22:00" itemprop="dateCreated datePublished" datetime="2021-05-23T18:22:00+08:00">2021-05-23</time>
     </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2023-02-15 21:11:02" itemprop="dateModified" datetime="2023-02-15T21:11:02+08:00">2023-02-15</time>
+      </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
         <i class="far fa-folder"></i>
@@ -347,23 +345,27 @@
 <strong>在同一个作用域内</strong> 的不同枚举变量中定义
 <strong>名称一样的元素</strong>。</p>
 <figure>
-<img src="https://pic.islet.space/2021/05/image-20210523204125878.png"
+<img
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/image-20210523204125878.png"
 alt="image-20210523204125878" />
 <figcaption aria-hidden="true">image-20210523204125878</figcaption>
 </figure>
 <figure>
-<img src="https://pic.islet.space/2021/05/image-20210523204041715.png"
+<img
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/image-20210523204041715.png"
 alt="image-20210523204041715" />
 <figcaption aria-hidden="true">image-20210523204041715</figcaption>
 </figure>
 <p>以上两种情况的错误提示如下：</p>
 <figure>
-<img src="https://pic.islet.space/2021/05/image-20210523182310296.png"
+<img
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/image-20210523182310296.png"
 alt="image-20210523182310296" />
 <figcaption aria-hidden="true">image-20210523182310296</figcaption>
 </figure>
 <figure>
-<img src="https://pic.islet.space/2021/05/image-20210523204224839.png"
+<img
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/image-20210523204224839.png"
 alt="image-20210523204224839" />
 <figcaption aria-hidden="true">image-20210523204224839</figcaption>
 </figure>
@@ -372,13 +374,15 @@ alt="image-20210523204224839" />
 <p>枚举类数据不允许更改数值（包括自增和赋值都不允许），有点类似于常量（const）。</p>
 <p>枚举中的元素自增时的错误提示：</p>
 <figure>
-<img src="https://pic.islet.space/2021/05/image-20210523202049638.png"
+<img
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/image-20210523202049638.png"
 alt="image-20210523202049638" />
 <figcaption aria-hidden="true">image-20210523202049638</figcaption>
 </figure>
 <p>枚举中的元素赋值时的错误提示：</p>
 <figure>
-<img src="https://pic.islet.space/2021/05/image-20210523202501260.png"
+<img
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/image-20210523202501260.png"
 alt="image-20210523202501260" />
 <figcaption aria-hidden="true">image-20210523202501260</figcaption>
 </figure>
@@ -390,7 +394,8 @@ target="_blank" rel="noopener" href="https://zhidao.baidu.com/question/142755629
 </blockquote>
 <p>以下为常量自增时给出的错误提示：</p>
 <figure>
-<img src="https://pic.islet.space/2021/05/image-20210523202757582.png"
+<img
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/image-20210523202757582.png"
 alt="image-20210523202757582" />
 <figcaption aria-hidden="true">image-20210523202757582</figcaption>
 </figure>
@@ -470,7 +475,7 @@ alt="image-20210523202757582" />
 
 <div class="copyright">
   &copy; 2019 – 
-  <span itemprop="copyrightYear">2022</span>
+  <span itemprop="copyrightYear">2023</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

@@ -29,16 +29,12 @@
 <meta property="og:site_name" content="Coder的孤岛">
 <meta property="og:description" content="PART 1 THE BASICS  WHY TEMPLATES?  C++ 要求我们使用指定的类型来声明变量、函数 和 大部分其他实体。然而，很多代码对于不同的类型看起来都是一样的。比如，对于不同的数据结构，如 int 数组或 string 字符串向量，只要包含的类型可以相互比较，快速排序算法的实现在结构上看起来是一样的。 如果使用的编程语言不支持 通用性（genericity）的 特殊语言功能">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://pic.islet.space/2021/10/image-20211005171952999.png">
-<meta property="og:image" content="https://pic.islet.space/2021/11/image-20211007035818560.png">
-<meta property="og:image" content="https://pic.islet.space/2021/10/image-20211007040416472.png">
 <meta property="article:published_time" content="2021-10-05T07:00:00.000Z">
-<meta property="article:modified_time" content="2021-11-21T08:38:34.000Z">
+<meta property="article:modified_time" content="2023-02-15T13:11:02.054Z">
 <meta property="article:author" content="Liewzheng">
 <meta property="article:tag" content="C++">
 <meta property="article:tag" content="Templates">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://pic.islet.space/2021/10/image-20211005171952999.png">
 
 
 <link rel="canonical" href="http://islet.space/2021/10/05/Programming/C++/2021-10-05-C++-Templates/">
@@ -261,7 +257,7 @@ DEFINITION</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" h
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-11-21 16:38:34" itemprop="dateModified" datetime="2021-11-21T16:38:34+08:00">2021-11-21</time>
+        <time title="Modified: 2023-02-15 21:11:02" itemprop="dateModified" datetime="2023-02-15T21:11:02+08:00">2023-02-15</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -379,7 +375,8 @@ if neither a copy nor a move constructor is valid）。</p>
 即是说需要调用的函数模糊不清，因为标准库中也有一个
 <code>std::max()</code>，编译器查找不到该函数具体是在哪个函数文件中。</p>
 <figure>
-<img src="https://pic.islet.space/2021/10/image-20211005171952999.png"
+<img
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/10/image-20211005171952999.png"
 alt="image-20211005171952999" />
 <figcaption aria-hidden="true">image-20211005171952999</figcaption>
 </figure>
@@ -446,7 +443,8 @@ parameters by reference）时，即使是 微不足道的转换（trivial coners
 </ul>
 <p><strong>错误提示</strong>：对int类型的非恒定值引用不能与int类型的临时值绑定</p>
 <figure>
-<img src="https://pic.islet.space/2021/11/image-20211007035818560.png"
+<img
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/11/image-20211007035818560.png"
 alt="image-20211007035818560" />
 <figcaption aria-hidden="true">image-20211007035818560</figcaption>
 </figure>
@@ -457,7 +455,8 @@ alt="image-20211007035818560" />
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Max</span>(<span class="number">4</span>, <span class="number">7.2</span>);</span><br><span class="line"><span class="built_in">Max</span>(<span class="string">&quot;Hello&quot;</span>,s);</span><br></pre></td></tr></table></figure>
 <p>错误提示如下：</p>
 <figure>
-<img src="https://pic.islet.space/2021/10/image-20211007040416472.png"
+<img
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/10/image-20211007040416472.png"
 alt="image-20211007040416472" />
 <figcaption aria-hidden="true">image-20211007040416472</figcaption>
 </figure>
@@ -550,7 +549,7 @@ alt="image-20211007040416472" />
 
 <div class="copyright">
   &copy; 2019 – 
-  <span itemprop="copyrightYear">2022</span>
+  <span itemprop="copyrightYear">2023</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

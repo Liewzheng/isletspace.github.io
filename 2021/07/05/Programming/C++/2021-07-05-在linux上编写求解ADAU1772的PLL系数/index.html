@@ -29,19 +29,14 @@
 <meta property="og:site_name" content="Coder的孤岛">
 <meta property="og:description" content="通过在Linux上编写代码，计算求解ADAU1772在 输入时钟（MCLK Input）为16.6MHz时，如何设置内部的4个参数，以达到符合输出时钟要求的目的。 据《ADAU1772》和SigmaStudio，1772 Codec 内部可修改的参数有 输入时钟分频（Input Clock Divider）、整数设置（Integer Setting）、分子（Numerator） 和 分母（Deno">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://pic.islet.space/2021/07/image-20210706002255187.png">
-<meta property="og:image" content="https://pic.islet.space/2021/07/image-20210706002412136.png">
-<meta property="og:image" content="https://pic.islet.space/2021/07/image-20210706001243698.png">
-<meta property="og:image" content="https://pic.islet.space/2021/07/image-20210706001350802.png">
 <meta property="article:published_time" content="2021-07-05T12:00:00.000Z">
-<meta property="article:modified_time" content="2021-07-05T17:01:05.000Z">
+<meta property="article:modified_time" content="2023-02-15T13:11:02.054Z">
 <meta property="article:author" content="Liewzheng">
 <meta property="article:tag" content="ADI">
 <meta property="article:tag" content="Linux">
 <meta property="article:tag" content="1772">
 <meta property="article:tag" content="cofficient">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://pic.islet.space/2021/07/image-20210706002255187.png">
 
 
 <link rel="canonical" href="http://islet.space/2021/07/05/Programming/C++/2021-07-05-%E5%9C%A8linux%E4%B8%8A%E7%BC%96%E5%86%99%E6%B1%82%E8%A7%A3ADAU1772%E7%9A%84PLL%E7%B3%BB%E6%95%B0/">
@@ -263,7 +258,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-07-06 01:01:05" itemprop="dateModified" datetime="2021-07-06T01:01:05+08:00">2021-07-06</time>
+        <time title="Modified: 2023-02-15 21:11:02" itemprop="dateModified" datetime="2023-02-15T21:11:02+08:00">2023-02-15</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -297,13 +292,15 @@ Setting）、<strong>分子</strong>（Numerator） 和
 <h1 id="原公式">原公式</h1>
 <p>以下为《ADAU1772》第30页中，关于PLL计算的公式描述：</p>
 <figure>
-<img src="https://pic.islet.space/2021/07/image-20210706002255187.png"
+<img
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/07/image-20210706002255187.png"
 alt="image-20210706002255187" />
 <figcaption aria-hidden="true">image-20210706002255187</figcaption>
 </figure>
 <p>以下为SigmaStudio中的PLL设定界面参数设定：</p>
 <figure>
-<img src="https://pic.islet.space/2021/07/image-20210706002412136.png"
+<img
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/07/image-20210706002412136.png"
 alt="image-20210706002412136" />
 <figcaption aria-hidden="true">image-20210706002412136</figcaption>
 </figure>
@@ -318,13 +315,15 @@ alt="image-20210706002412136" />
 <h1 id="运行结果">运行结果</h1>
 <p>通过自行编写的代码，遍历所有可更改的系数进行计算求解，取得小数点后9位精度，并且符合要求的系数如下（含1/2系数）：</p>
 <figure>
-<img src="https://pic.islet.space/2021/07/image-20210706001243698.png"
+<img
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/07/image-20210706001243698.png"
 alt="image-20210706001243698" />
 <figcaption aria-hidden="true">image-20210706001243698</figcaption>
 </figure>
 <p>以下为不含1/2系数的结果：</p>
 <figure>
-<img src="https://pic.islet.space/2021/07/image-20210706001350802.png"
+<img
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/07/image-20210706001350802.png"
 alt="image-20210706001350802" />
 <figcaption aria-hidden="true">image-20210706001350802</figcaption>
 </figure>
@@ -405,7 +404,7 @@ alt="image-20210706001350802" />
 
 <div class="copyright">
   &copy; 2019 – 
-  <span itemprop="copyrightYear">2022</span>
+  <span itemprop="copyrightYear">2023</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

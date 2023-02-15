@@ -29,20 +29,12 @@
 <meta property="og:site_name" content="Coder的孤岛">
 <meta property="og:description" content="因为基本上没什么人直接使用 armcc 作为自动化编译、持续集成和交付的工具，更多是使用 UV4 软件读取 .uvprojx 文件来获取编译信息，进而驱动 armcc 进行编译过程。 通过自行编辑 Makefile 文件，使用 make 和 armcc 工具可以对代码文件进行编译，可以进行静态库的生成，也可以生成可烧录文件，但是就不要想着复杂的 make test 等测试功能了。 DIFF BET">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://pic.islet.space/2022/06/image-20220608100300944.png">
-<meta property="og:image" content="https://pic.islet.space/2022/06/image-20220608100748964.png">
-<meta property="og:image" content="https://pic.islet.space/2022/06/image-20220609110616631.png">
-<meta property="og:image" content="https://pic.islet.space/2022/06/image-20220608105439447.png">
-<meta property="og:image" content="https://pic.islet.space/2022/06/image-20220608110734097.png">
-<meta property="og:image" content="https://pic.islet.space/2022/06/image-20220608151900214.png">
-<meta property="og:image" content="https://pic.islet.space/2022/06/image-20220608135309057.png">
 <meta property="article:published_time" content="2022-05-25T08:00:00.000Z">
-<meta property="article:modified_time" content="2022-06-09T13:53:25.000Z">
+<meta property="article:modified_time" content="2023-02-15T13:11:02.054Z">
 <meta property="article:author" content="Liewzheng">
 <meta property="article:tag" content="keil">
 <meta property="article:tag" content="cmake">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://pic.islet.space/2022/06/image-20220608100300944.png">
 
 
 <link rel="canonical" href="http://islet.space/2022/05/25/Programming/Compiling/2022-05-25-armcc%E7%9A%84%E4%BA%A4%E5%8F%89%E7%BC%96%E8%AF%91%E5%92%8C%E6%8C%81%E7%BB%AD%E4%BA%A4%E4%BB%98/">
@@ -269,7 +261,7 @@ A1854E: Unknown opcode &#39;BLX&#39;, maybe wrong target CPU?</span></a></li></o
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2022-06-09 21:53:25" itemprop="dateModified" datetime="2022-06-09T21:53:25+08:00">2022-06-09</time>
+        <time title="Modified: 2023-02-15 21:11:02" itemprop="dateModified" datetime="2023-02-15T21:11:02+08:00">2023-02-15</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -332,12 +324,14 @@ target="_blank" rel="noopener" href="https://storage.islet.space/02_Softwares/06
 target="_blank" rel="noopener" href="https://developer.arm.com/tools-and-software/embedded/arm-compiler/arm-compiler-5/downloads">ARM
 Compiler 5 Downloads</a></p>
 <figure>
-<img src="https://pic.islet.space/2022/06/image-20220608100300944.png"
+<img
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2022/06/image-20220608100300944.png"
 alt="image-20220608100300944" />
 <figcaption aria-hidden="true">image-20220608100300944</figcaption>
 </figure>
 <figure>
-<img src="https://pic.islet.space/2022/06/image-20220608100748964.png"
+<img
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2022/06/image-20220608100748964.png"
 alt="image-20220608100748964" />
 <figcaption aria-hidden="true">image-20220608100748964</figcaption>
 </figure>
@@ -395,7 +389,8 @@ Keil MDK-ARM 的是不一样的。</p>
 <p>由于编译器不一致，所以 <code>.s</code>
 的启动文件也不能互相兼容，需要使用 CubeMX重新生成。</p>
 <figure>
-<img src="https://pic.islet.space/2022/06/image-20220609110616631.png"
+<img
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2022/06/image-20220609110616631.png"
 alt="image-20220609110616631" />
 <figcaption aria-hidden="true">image-20220609110616631</figcaption>
 </figure>
@@ -406,7 +401,8 @@ id="error-35-please-select-first-the-target-stm32l4xx-device-used-in-your-applic
 #35: PLEASE SELECT FIRST THE TARGET STM32L4XX DEVICE USED IN YOUR
 APPLICATION</h3>
 <figure>
-<img src="https://pic.islet.space/2022/06/image-20220608105439447.png"
+<img
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2022/06/image-20220608105439447.png"
 alt="image-20220608105439447" />
 <figcaption aria-hidden="true">image-20220608105439447</figcaption>
 </figure>
@@ -416,7 +412,8 @@ alt="image-20220608105439447" />
 id="error-l6050u-the-code-size-of-the-image-exceeds-the-maximum">ERROR
 L6050U: THE CODE SIZE OF THE IMAGE EXCEEDS THE MAXIMUM</h3>
 <figure>
-<img src="https://pic.islet.space/2022/06/image-20220608110734097.png"
+<img
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2022/06/image-20220608110734097.png"
 alt="image-20220608110734097" />
 <figcaption aria-hidden="true">image-20220608110734097</figcaption>
 </figure>
@@ -429,7 +426,8 @@ alt="image-20220608110734097" />
 <h3 id="error-a1854e-unknown-opcode-blx-maybe-wrong-target-cpu">Error:
 A1854E: Unknown opcode 'BLX', maybe wrong target CPU?</h3>
 <figure>
-<img src="https://pic.islet.space/2022/06/image-20220608151900214.png"
+<img
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2022/06/image-20220608151900214.png"
 alt="image-20220608151900214" />
 <figcaption aria-hidden="true">image-20220608151900214</figcaption>
 </figure>
@@ -438,7 +436,8 @@ alt="image-20220608151900214" />
 id="warning-1295-d-deprecated-declaration-two_wired_resync---give-arg-types">Warning:
 #1295-D: Deprecated declaration two_wired_resync - give arg types</h3>
 <figure>
-<img src="https://pic.islet.space/2022/06/image-20220608135309057.png"
+<img
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2022/06/image-20220608135309057.png"
 alt="image-20220608135309057" />
 <figcaption aria-hidden="true">image-20220608135309057</figcaption>
 </figure>
@@ -529,7 +528,7 @@ Compiler v5.06 for μVision®</a>》</li>
 
 <div class="copyright">
   &copy; 2019 – 
-  <span itemprop="copyrightYear">2022</span>
+  <span itemprop="copyrightYear">2023</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

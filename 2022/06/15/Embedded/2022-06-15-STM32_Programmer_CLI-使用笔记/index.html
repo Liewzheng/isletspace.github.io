@@ -29,25 +29,12 @@
 <meta property="og:site_name" content="Coder的孤岛">
 <meta property="og:description" content="环境部署  直接使用绝对路径，如 &quot;D:\STMicroelectronics\STM32Cube\STM32CubeProgrammer\bin\STM32_Programmer_CLI.exe&quot;，这种方法可以在 PowerShell 或 cmd 直接使用。 将 &quot;D:\STMicroelectronics\STM32Cube\STM32CubeProgrammer\bin 添加到 系统环境变量">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://pic.islet.space/2022/06/image-20220615134109619.png">
-<meta property="og:image" content="https://pic.islet.space/2022/06/image-20220615121113727.png">
-<meta property="og:image" content="https://pic.islet.space/2022/06/image-20220615122116373.png">
-<meta property="og:image" content="https://pic.islet.space/2022/06/image-20220615121414609.png">
-<meta property="og:image" content="https://pic.islet.space/2022/06/image-20220615121643968.png">
-<meta property="og:image" content="https://pic.islet.space/2022/06/image-20220615121729021.png">
-<meta property="og:image" content="https://pic.islet.space/2022/06/image-20220615124617282.png">
-<meta property="og:image" content="https://pic.islet.space/2022/06/image-20220615130250432.png">
-<meta property="og:image" content="https://pic.islet.space/2022/06/image-20220615130543343.png">
-<meta property="og:image" content="https://pic.islet.space/2022/06/image-20220615123114639.png">
-<meta property="og:image" content="https://pic.islet.space/2022/06/image-20220615124508137.png">
-<meta property="og:image" content="https://pic.islet.space/2022/06/image-20220615121045036.png">
 <meta property="article:published_time" content="2022-06-15T04:20:00.000Z">
-<meta property="article:modified_time" content="2022-06-27T15:39:00.000Z">
+<meta property="article:modified_time" content="2023-02-15T13:11:02.133Z">
 <meta property="article:author" content="Liewzheng">
 <meta property="article:tag" content="stm32">
 <meta property="article:tag" content="programmed">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://pic.islet.space/2022/06/image-20220615134109619.png">
 
 
 <link rel="canonical" href="http://islet.space/2022/06/15/Embedded/2022-06-15-STM32_Programmer_CLI-%E4%BD%BF%E7%94%A8%E7%AC%94%E8%AE%B0/">
@@ -269,7 +256,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2022-06-27 23:39:00" itemprop="dateModified" datetime="2022-06-27T23:39:00+08:00">2022-06-27</time>
+        <time title="Modified: 2023-02-15 21:11:02" itemprop="dateModified" datetime="2023-02-15T21:11:02+08:00">2023-02-15</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -302,7 +289,8 @@ PowerShell 或 cmd 直接使用。</li>
 可以使用，cmd 还是不可以。</li>
 </ol>
 <figure>
-<img src="https://pic.islet.space/2022/06/image-20220615134109619.png"
+<img
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2022/06/image-20220615134109619.png"
 alt="image-20220615134109619" />
 <figcaption aria-hidden="true">image-20220615134109619</figcaption>
 </figure>
@@ -317,7 +305,8 @@ MPU</strong>、<strong>MCU安全烧录</strong>、<strong>STM32WBxx</strong>
 <p>下面语句可以查看所有连接至PC端的设备。</p>
 <figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">STM32_Programmer_CLI <span class="literal">-l</span></span><br></pre></td></tr></table></figure>
 <figure>
-<img src="https://pic.islet.space/2022/06/image-20220615121113727.png"
+<img
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2022/06/image-20220615121113727.png"
 alt="设备列表" />
 <figcaption aria-hidden="true">设备列表</figcaption>
 </figure>
@@ -329,7 +318,8 @@ alt="设备列表" />
 <p>使用指令 <code>STM32_Programmer_CLI -c port=SWD</code>
 即可自动连接至设备。</p>
 <figure>
-<img src="https://pic.islet.space/2022/06/image-20220615122116373.png"
+<img
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2022/06/image-20220615122116373.png"
 alt="设备自动连接" />
 <figcaption aria-hidden="true">设备自动连接</figcaption>
 </figure>
@@ -340,19 +330,22 @@ alt="设备自动连接" />
 格式（<code>-r32</code> ）读取 <code>0x400</code> <strong>byte</strong>
 数据。</p>
 <figure>
-<img src="https://pic.islet.space/2022/06/image-20220615121414609.png"
+<img
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2022/06/image-20220615121414609.png"
 alt="以32bit格式读取数据" />
 <figcaption aria-hidden="true">以32bit格式读取数据</figcaption>
 </figure>
 <p><code>-r32</code> 可以更换成 <code>-r16</code> 或 <code>-r8</code>
 。</p>
 <figure>
-<img src="https://pic.islet.space/2022/06/image-20220615121643968.png"
+<img
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2022/06/image-20220615121643968.png"
 alt="以16bit格式读取数据" />
 <figcaption aria-hidden="true">以16bit格式读取数据</figcaption>
 </figure>
 <figure>
-<img src="https://pic.islet.space/2022/06/image-20220615121729021.png"
+<img
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2022/06/image-20220615121729021.png"
 alt="以8bit格式读取数据" />
 <figcaption aria-hidden="true">以8bit格式读取数据</figcaption>
 </figure>
@@ -361,7 +354,8 @@ alt="以8bit格式读取数据" />
 erase）所有内容，一般来说烧录的时候不会去擦除全部内容，这部分应该看情况。</p>
 <figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">STM32_Programmer_CLI <span class="literal">-c</span> port=SWD <span class="literal">-e</span> all</span><br></pre></td></tr></table></figure>
 <figure>
-<img src="https://pic.islet.space/2022/06/image-20220615124617282.png"
+<img
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2022/06/image-20220615124617282.png"
 alt="擦除全部内容" />
 <figcaption aria-hidden="true">擦除全部内容</figcaption>
 </figure>
@@ -371,12 +365,14 @@ alt="擦除全部内容" />
 文件后，flash内部结束尾部临界处的数据。交替烧录两个大小不易的
 <code>.bin</code> 文件，可以观察到结尾处都是正常的，并没有出现异常。</p>
 <figure>
-<img src="https://pic.islet.space/2022/06/image-20220615130250432.png"
+<img
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2022/06/image-20220615130250432.png"
 alt="临界处数据" />
 <figcaption aria-hidden="true">临界处数据</figcaption>
 </figure>
 <figure>
-<img src="https://pic.islet.space/2022/06/image-20220615130543343.png"
+<img
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2022/06/image-20220615130543343.png"
 alt="image-20220615130543343" />
 <figcaption aria-hidden="true">image-20220615130543343</figcaption>
 </figure>
@@ -389,7 +385,8 @@ alt="image-20220615130543343" />
 <li><p><code>-v</code> 是指 代码验证。</p></li>
 </ul>
 <figure>
-<img src="https://pic.islet.space/2022/06/image-20220615123114639.png"
+<img
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2022/06/image-20220615123114639.png"
 alt="image-20220615123114639" />
 <figcaption aria-hidden="true">image-20220615123114639</figcaption>
 </figure>
@@ -398,14 +395,16 @@ alt="image-20220615123114639" />
 <h2 id="设备复位和运行">设备复位和运行</h2>
 <figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">STM32_Programmer_CLI <span class="literal">-c</span> port=SWD <span class="literal">-hardRst</span></span><br><span class="line">STM32_Programmer_CLI <span class="literal">-c</span> port=SWD <span class="literal">-s</span></span><br></pre></td></tr></table></figure>
 <figure>
-<img src="https://pic.islet.space/2022/06/image-20220615124508137.png"
+<img
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2022/06/image-20220615124508137.png"
 alt="image-20220615124508137" />
 <figcaption aria-hidden="true">image-20220615124508137</figcaption>
 </figure>
 <h1 id="报错">报错</h1>
 <h2 id="端口占用报错">端口占用报错</h2>
 <figure>
-<img src="https://pic.islet.space/2022/06/image-20220615121045036.png"
+<img
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2022/06/image-20220615121045036.png"
 alt="image-20220615121045036" />
 <figcaption aria-hidden="true">image-20220615121045036</figcaption>
 </figure>
@@ -483,7 +482,7 @@ alt="image-20220615121045036" />
 
 <div class="copyright">
   &copy; 2019 – 
-  <span itemprop="copyrightYear">2022</span>
+  <span itemprop="copyrightYear">2023</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

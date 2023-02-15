@@ -29,33 +29,24 @@
 <meta property="og:site_name" content="Coder的孤岛">
 <meta property="og:description" content="SPI Introdution SPI， Serial Peripheral Interface， 即串行设备接口，微控制器和外围IC（如传感器、ADC、DAC、移位寄存器、SRAM等）之间使用最广泛的接口之一。 SPI是一种同步的主从式接口，支持全部通信制式（单工、半双工、全双工）。与I2C的 多主多从 模式不同，SPI协议为 一主多从 模式。SPI所消耗的接口数也有所提升。 接线 SPI 的物">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://pic.islet.space/2021/08/image-20210819075248043.png">
-<meta property="og:image" content="https://pic.islet.space/2021/08/image-20210819084200284.png">
-<meta property="og:image" content="https://pic.islet.space/2021/08/image-20210819084447672.png">
-<meta property="og:image" content="https://pic.islet.space/2021/08/205973_fig_02.png">
+<meta property="og:image" content="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/08/image-20210819075248043.png">
+<meta property="og:image" content="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/08/205973_fig_02.png">
 <meta property="og:image" content="https://www.analog.com/-/media/images/analog-dialogue/en/volume-52/number-3/articles/introduction-to-spi-interface/205973_fig_03.png?la=en&vs=1">
 <meta property="og:image" content="https://www.analog.com/-/media/images/analog-dialogue/en/volume-52/number-3/articles/introduction-to-spi-interface/205973_fig_04.png?la=en&vs=1">
 <meta property="og:image" content="https://www.analog.com/-/media/images/analog-dialogue/en/volume-52/number-3/articles/introduction-to-spi-interface/205973_fig_05.png?la=en&vs=1">
-<meta property="og:image" content="https://pic.islet.space/2021/08/image-20210819075431419.png">
-<meta property="og:image" content="https://pic.islet.space/2021/08/image-20210819075542602.png">
+<meta property="og:image" content="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/08/image-20210819075542602.png">
 <meta property="og:image" content="https://www.analog.com/-/media/images/analog-dialogue/en/volume-52/number-3/articles/introduction-to-spi-interface/205973_fig_08.png?la=en&vs=1">
-<meta property="og:image" content="https://pic.islet.space/2022/04/image-20220118135819247.png">
-<meta property="og:image" content="https://pic.islet.space/2022/04/image-20220419235450360.png">
-<meta property="og:image" content="https://pic.islet.space/2022/04/image-20220118140526017.png">
-<meta property="og:image" content="https://pic.islet.space/2022/04/image-20220118141033005.png">
-<meta property="og:image" content="https://pic.islet.space/2022/04/image-20220423193121090.png">
-<meta property="og:image" content="https://pic.islet.space/2022/04/image-20220419210753902.png">
-<meta property="og:image" content="https://pic.islet.space/2022/08/202208241758385.png">
-<meta property="og:image" content="https://pic.islet.space/2022/08/202208241800048.png">
-<meta property="og:image" content="https://pic.islet.space/2022/08/202208241759416.png">
-<meta property="og:image" content="https://pic.islet.space/2022/08/202208241800029.png">
+<meta property="og:image" content="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2022/04/image-20220118135819247.png">
+<meta property="og:image" content="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2022/04/image-20220118140526017.png">
+<meta property="og:image" content="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2022/04/image-20220118141033005.png">
+<meta property="og:image" content="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2022/08/202208241758385.png">
 <meta property="article:published_time" content="2022-01-18T05:40:00.000Z">
-<meta property="article:modified_time" content="2022-08-26T12:41:09.839Z">
+<meta property="article:modified_time" content="2023-02-15T13:11:04.470Z">
 <meta property="article:author" content="Liewzheng">
 <meta property="article:tag" content="spi">
 <meta property="article:tag" content="3wire">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://pic.islet.space/2021/08/image-20210819075248043.png">
+<meta name="twitter:image" content="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/08/image-20210819075248043.png">
 
 
 <link rel="canonical" href="http://islet.space/2022/01/18/Communication/2022-01-18-SPI/">
@@ -277,7 +268,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2022-08-26 20:41:09" itemprop="dateModified" datetime="2022-08-26T20:41:09+08:00">2022-08-26</time>
+        <time title="Modified: 2023-02-15 21:11:04" itemprop="dateModified" datetime="2023-02-15T21:11:04+08:00">2023-02-15</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -319,7 +310,7 @@
 <li><strong>数据线</strong>（DA 或 MOSI 和 MISO ）</li>
 </ul>
 <p><mark>需要注意的是，SPI的通信线有太多的名称，需要自行对照芯片手册进行查询，避免混淆。</mark>下方为标准全双工四线SPI的通信接线示意图</p>
-<p><img src="https://pic.islet.space/2021/08/image-20210819075248043.png" alt="image-20210819075248043" style="zoom: 33%;" /></p>
+<p><img src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/08/image-20210819075248043.png" alt="image-20210819075248043" style="zoom: 33%;" /></p>
 <p>SPI 通过对硬件资源的使用修改（禁用片选、禁 / 复用数据线）可以达到
 <strong>全双工</strong> 或 <strong>半双工</strong> 通信的目的。标准SPI为
 四线SPI （CS / CLK / MOSI / MISO）；最低支持2根数据引脚（仅保留 CLK /
@@ -434,19 +425,21 @@ Phase，<strong>CPHA</strong>）。</p>
 </table>
 <p>下图为TI公司F280049芯片的SPI时钟模式：</p>
 <figure>
-<img src="https://pic.islet.space/2021/08/image-20210819084200284.png"
+<img
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/08/image-20210819084200284.png"
 alt="image-20210819084200284" />
 <figcaption aria-hidden="true">image-20210819084200284</figcaption>
 </figure>
 <p>下图为ADI公司ADSP21479芯片的SPI时钟模式：</p>
 <figure>
-<img src="https://pic.islet.space/2021/08/image-20210819084447672.png"
+<img
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/08/image-20210819084447672.png"
 alt="image-20210819084447672" />
 <figcaption aria-hidden="true">image-20210819084447672</figcaption>
 </figure>
 <p>后述 图2 至 图5 显示了四种SPI模式下的通信示例。</p>
 <p>在这些示例中，数据显示在MOSI和MISO线上。传输的开始和结束用绿色虚线表示，采样边沿用橙色虚线表示，移位边沿用蓝色虚线表示。请注意，这些图形仅供参考。要成功进行SPI通信，用户须参阅产品数据手册并确保满足器件的时序规格。</p>
-<p><img src="https://pic.islet.space/2021/08/205973_fig_02.png" alt="图2. SPI模式0，CPOL = 0，CPHA = 0：CLK空闲状态 = 低电平，数据在上升沿采样，并在下降沿移出" style="zoom: 60%;" /></p>
+<p><img src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/08/205973_fig_02.png" alt="图2. SPI模式0，CPOL = 0，CPHA = 0：CLK空闲状态 = 低电平，数据在上升沿采样，并在下降沿移出" style="zoom: 60%;" /></p>
 <div style="font-weight: 900; text-align: center;">
 图2. SPI模式0，CPOL = 0，CPHA = 0：CLK空闲状态 =
 低电平，数据在上升沿采样，并在下降沿移出
@@ -473,7 +466,8 @@ alt="image-20210819084447672" />
 <p>多个从机可与单个SPI主机一起使用。从机可以采用常规模式连接，或采用菊花链模式连接。</p>
 <h3 id="常规spi模式">常规SPI模式</h3>
 <figure>
-<img src="https://pic.islet.space/2021/08/image-20210819075431419.png"
+<img
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/08/image-20210819075431419.png"
 alt="image-20210819075431419" />
 <figcaption aria-hidden="true">image-20210819075431419</figcaption>
 </figure>
@@ -483,7 +477,7 @@ alt="image-20210819075431419" />
 <p>在常规模式下，主机需要为每个从机提供单独的片选信号。一旦主机使能（拉低）片选信号，MOSI/MISO线上的时钟和数据便可用于所选的从机。如果使能多个片选信号，则MISO线上的数据会被破坏，因为主机无法识别哪个从机正在传输数据。</p>
 <p>从图6可以看出，随着从机数量的增加，来自主机的片选线的数量也增加。这会快速增加主机需要提供的输入和输出数量，并限制可以使用的从机数量。可以使用其他技术来增加常规模式下的从机数量，例如使用多路复用器产生片选信号。</p>
 <h3 id="菊花链模式">菊花链模式</h3>
-<p><img src="https://pic.islet.space/2021/08/image-20210819075542602.png" alt="image-20210819075542602" style="zoom:67%;" /></p>
+<p><img src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/08/image-20210819075542602.png" alt="image-20210819075542602" style="zoom:67%;" /></p>
 <div style="font-weight: 900; text-align: center;">
 图7. 多从机SPI菊花链配置
 </div>
@@ -514,13 +508,14 @@ SPI接口时钟；<mark style="font-weight: 900;">总是由主控制器生成和
 <h3 id="关于数据方向控制位">关于数据方向/控制位</h3>
 <p>通常定义是，当需要写入数据时，控制位写 <code>1</code>
 。当需要读出数据时，控制位写 <code>0</code> 。</p>
-<p><img src="https://pic.islet.space/2022/04/image-20220118135819247.png" alt="image-20220118135819247" style="zoom: 50%;" /></p>
+<p><img src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2022/04/image-20220118135819247.png" alt="image-20220118135819247" style="zoom: 50%;" /></p>
 <p>但不一定所有支持半双工SPI的通信控制位都是在MSB，有可能是在 LSB 。</p>
 <blockquote>
 <p>如，下方右侧 SL8541E
 的安卓平台主控，支持半双工SPI，但是其控制位就在地址字符的LSB上。</p>
 <figure>
-<img src="https://pic.islet.space/2022/04/image-20220419235450360.png"
+<img
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2022/04/image-20220419235450360.png"
 alt="image-20220419235450360" />
 <figcaption aria-hidden="true">image-20220419235450360</figcaption>
 </figure>
@@ -528,21 +523,22 @@ alt="image-20220419235450360" />
 <h3 id="写操作">写操作</h3>
 <p><mark style="font-weight:900;">主控制器在SCLK下降沿时改变
 SDIO的电平，被控设备在SCLK上升沿时读取SDIO的电平。</mark></p>
-<p><img src="https://pic.islet.space/2022/04/image-20220118140526017.png" alt="image-20220118140526017" style="zoom:50%;" /></p>
+<p><img src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2022/04/image-20220118140526017.png" alt="image-20220118140526017" style="zoom:50%;" /></p>
 <h3 id="读取操作">读取操作</h3>
 <blockquote>
 <p>SDIO会在SCLK下降沿时修改，主控制器需要在SCLK的上升沿时读取SDIO的电平信息。</p>
 </blockquote>
 <p><strong>注意</strong>：发送完地址字
 之后需要延长半个周期的时钟低电平。</p>
-<p><img src="https://pic.islet.space/2022/04/image-20220118141033005.png" alt="image-20220118141033005" style="zoom:50%;" /></p>
+<p><img src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2022/04/image-20220118141033005.png" alt="image-20220118141033005" style="zoom:50%;" /></p>
 <h1 id="timing-serial">Timing Serial</h1>
 <p>因为芯片自带的时序图有些许错误，所以就自己画了一个。</p>
 <p>时序图绘图工具（开源）：<a
 target="_blank" rel="noopener" href="https://wavedrom.com/editor.html">WAVEDROM</a></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">&#123;signal: [</span><br><span class="line">    [&#39;CPOL&#x3D;1,CPHA&#x3D;1&#39;,</span><br><span class="line">    [&#39;Read&#39;,</span><br><span class="line">        [&#39;Control&#39;,</span><br><span class="line">            &#123;name: &#39;NCS&#39;, wave: &#39;hl................h&#39;&#125;,</span><br><span class="line">            &#123;name: &#39;SCLK&#39;, wave: &#39;hn.......lnn......h&#39;&#125;,</span><br><span class="line">        ],</span><br><span class="line">         &#123;name: &#39;SDIO&#39;, wave: &#39;102222222x222222221&#39;,data: [&quot;A6&quot;,&quot;A5&quot;,&quot;A4&quot;,&quot;A3&quot;,&quot;A2&quot;,&quot;A1&quot;,&quot;A0&quot;,&quot;D7&quot;,&quot;D6&quot;,&quot;D5&quot;,&quot;D4&quot;,&quot;D3&quot;,&quot;D2&quot;,&quot;D1&quot;,&quot;D0&quot;,]&#125;,</span><br><span class="line">	],</span><br><span class="line">    &#123;&#125;,</span><br><span class="line">  	[&#39;Write&#39;,</span><br><span class="line">        [&#39;Control&#39;,</span><br><span class="line">            &#123;name: &#39;NCS&#39;, wave: &#39;hl...............h&#39;&#125;,</span><br><span class="line">            &#123;name: &#39;SCLK&#39;, wave: &#39;hn...............h&#39;&#125;,</span><br><span class="line">        ],</span><br><span class="line">        &#123;name: &#39;SDIO&#39;, wave: &#39;1.2222222222222221&#39;,data: [&quot;A6&quot;,&quot;A5&quot;,&quot;A4&quot;,&quot;A3&quot;,&quot;A2&quot;,&quot;A1&quot;,&quot;A0&quot;,&quot;D7&quot;,&quot;D6&quot;,&quot;D5&quot;,&quot;D4&quot;,&quot;D3&quot;,&quot;D2&quot;,&quot;D1&quot;,&quot;D0&quot;,]&#125;,</span><br><span class="line">	]</span><br><span class="line">],</span><br><span class="line">&#123;&#125;,</span><br><span class="line">    [&#39;CPOL&#x3D;1,CPHA&#x3D;0&#39;,</span><br><span class="line">    [&#39;Read&#39;,</span><br><span class="line">        [&#39;Control&#39;,</span><br><span class="line">            &#123;name: &#39;NCS&#39;, wave: &#39;hl................h&#39;&#125;,</span><br><span class="line">            &#123;name: &#39;SCLK&#39;, wave: &#39;hpp......lpp......h&#39;&#125;,</span><br><span class="line">        ],</span><br><span class="line">         &#123;name: &#39;SDIO&#39;, wave: &#39;102222222x222222221&#39;,data: [&quot;A6&quot;,&quot;A5&quot;,&quot;A4&quot;,&quot;A3&quot;,&quot;A2&quot;,&quot;A1&quot;,&quot;A0&quot;,&quot;D7&quot;,&quot;D6&quot;,&quot;D5&quot;,&quot;D4&quot;,&quot;D3&quot;,&quot;D2&quot;,&quot;D1&quot;,&quot;D0&quot;,],phase: 0.25&#125;,</span><br><span class="line">	],</span><br><span class="line">    &#123;&#125;,</span><br><span class="line">  	[&#39;Write&#39;,</span><br><span class="line">        [&#39;Control&#39;,</span><br><span class="line">            &#123;name: &#39;NCS&#39;, wave: &#39;hl...............h&#39;&#125;,</span><br><span class="line">            &#123;name: &#39;SCLK&#39;, wave: &#39;hpp..............h&#39;&#125;,</span><br><span class="line">        ],</span><br><span class="line">         &#123;name: &#39;SDIO&#39;, wave: &#39;1.2222222222222221&#39;,data: [&quot;A6&quot;,&quot;A5&quot;,&quot;A4&quot;,&quot;A3&quot;,&quot;A2&quot;,&quot;A1&quot;,&quot;A0&quot;,&quot;D7&quot;,&quot;D6&quot;,&quot;D5&quot;,&quot;D4&quot;,&quot;D3&quot;,&quot;D2&quot;,&quot;D1&quot;,&quot;D0&quot;],phase: 0.25&#125;,</span><br><span class="line">	]</span><br><span class="line">],         </span><br><span class="line">     </span><br><span class="line">],</span><br><span class="line">config: &#123; hscale: 1 &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 <figure>
-<img src="https://pic.islet.space/2022/04/image-20220423193121090.png"
+<img
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2022/04/image-20220423193121090.png"
 alt="image-20220423193121090" />
 <figcaption aria-hidden="true">image-20220423193121090</figcaption>
 </figure>
@@ -554,7 +550,8 @@ alt="image-20220423193121090" />
 <strong>输出模式</strong>，最好 <strong>强制拉高</strong>，而不是
 <code>Hi-Z</code> 态。</p>
 <figure>
-<img src="https://pic.islet.space/2022/04/image-20220419210753902.png"
+<img
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2022/04/image-20220419210753902.png"
 alt="image-20220419210753902" />
 <figcaption aria-hidden="true">image-20220419210753902</figcaption>
 </figure>
@@ -570,16 +567,18 @@ alt="image-20220419210753902" />
 <p>主从设备必须将SPI特性保持一致，才能确保读写的稳定性。</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * @brief 写入8bit数据</span></span><br><span class="line"><span class="comment"> * @param &#123;uint8_t&#125; data</span></span><br><span class="line"><span class="comment"> * @return &#123;*&#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">write_byte</span><span class="params">(<span class="keyword">uint8_t</span> data)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">7</span>; i&gt;= <span class="number">0</span>; i--)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span>( (data &gt;&gt; i) &amp; <span class="number">0x01</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            write_high_level();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">        &#123;</span><br><span class="line">            write_low_level();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * @brief 读取8bit数据</span></span><br><span class="line"><span class="comment"> * @param &#123;*&#125;</span></span><br><span class="line"><span class="comment"> * @return &#123;uint8_t&#125; data</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">uint8_t</span> <span class="title">read_byte</span><span class="params">(<span class="keyword">void</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">uint8_t</span> data = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">7</span>; i&gt;= <span class="number">0</span>; i--)</span><br><span class="line">    &#123;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">if</span> (CPHA == 1)</span></span><br><span class="line">        SCLK_SET_LOW;</span><br><span class="line">        data |= HAL_GPIO_ReadPin(SPI_DATA_GPIO_Port, SPI_DATA_Pin) &lt;&lt; i;</span><br><span class="line">        delay_nop(LEVEL_DELAY_SLICES);</span><br><span class="line"></span><br><span class="line">        SCLK_SET_HIGH;</span><br><span class="line">        delay_nop(LEVEL_DELAY_SLICES);</span><br><span class="line"><span class="meta">#<span class="meta-keyword">else</span></span></span><br><span class="line">        </span><br><span class="line">        SCLK_SET_HIGH;</span><br><span class="line">        delay_nop(LEVEL_DELAY_SLICES);</span><br><span class="line">        SCLK_SET_LOW;</span><br><span class="line">        data |= HAL_GPIO_ReadPin(SPI_DATA_GPIO_Port, SPI_DATA_Pin) &lt;&lt; i;</span><br><span class="line">        delay_nop(LEVEL_DELAY_SLICES);</span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> data;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h2 id="stm32-spi-配置">STM32 SPI 配置</h2>
-<p><img src="https://pic.islet.space/2022/08/202208241758385.png" alt="image-20220824175804976" style="zoom:50%;" /></p>
+<p><img src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2022/08/202208241758385.png" alt="image-20220824175804976" style="zoom:50%;" /></p>
 <figure>
-<img src="https://pic.islet.space/2022/08/202208241800048.png"
+<img
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2022/08/202208241800048.png"
 alt="image-20220824175908055" />
 <figcaption aria-hidden="true">image-20220824175908055</figcaption>
 </figure>
 <p>由外设SPI控制的 <code>SCLK</code> / <code>SDIO</code>
 波形与手动控制的 <code>SNCS</code> 波形之间的矛盾。</p>
 <figure>
-<img src="https://pic.islet.space/2022/08/202208241759416.png"
+<img
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2022/08/202208241759416.png"
 alt="image-20220824175942791" />
 <figcaption aria-hidden="true">image-20220824175942791</figcaption>
 </figure>
@@ -587,7 +586,8 @@ alt="image-20220824175942791" />
 <code>0x89, 0xA5</code> ，而 <code>SNCS</code>
 在两处地方产生了错误的波形。</p>
 <figure>
-<img src="https://pic.islet.space/2022/08/202208241800029.png"
+<img
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2022/08/202208241800029.png"
 alt="image-20220824175951156" />
 <figcaption aria-hidden="true">image-20220824175951156</figcaption>
 </figure>
@@ -707,7 +707,7 @@ target="_blank" rel="noopener" href="http://www.microchip.com.cn/community/Uploa
 
 <div class="copyright">
   &copy; 2019 – 
-  <span itemprop="copyrightYear">2022</span>
+  <span itemprop="copyrightYear">2023</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

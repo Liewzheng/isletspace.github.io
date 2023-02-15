@@ -250,7 +250,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-06-01 22:27:16" itemprop="dateModified" datetime="2021-06-01T22:27:16+08:00">2021-06-01</time>
+        <time title="Modified: 2023-02-15 21:11:02" itemprop="dateModified" datetime="2023-02-15T21:11:02+08:00">2023-02-15</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -285,37 +285,39 @@ target="_blank" rel="noopener" href="https://blog.csdn.net/qq_36784975/article/d
 <p>在一些情况下需要在子线程结束后主线程才能结束，而一些情况则不需要等待，但需注意一点，并不是主线程结束了其他子线程就立即停止，其他子线程会进入后台运行</p>
 <h1 id="join">join()</h1>
 <p>join()函数是一个等待线程完成函数，<mark>主线程需要等待子线程运行结束了才可以结束</mark></p>
-<p><img src="https://pic.islet.space/2021/05/image-20210531223156398.png" alt="image-20210531223156398" style="zoom:80%;" /></p>
+<p><img src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/image-20210531223156398.png" alt="image-20210531223156398" style="zoom:80%;" /></p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;thread&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">func</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">   <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">-10</span>; i &gt; <span class="number">-20</span>; i--)</span><br><span class="line">    &#123;</span><br><span class="line">        cout &lt;&lt; <span class="string">&quot;from func():&quot;</span> &lt;&lt; i &lt;&lt; endl;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span>  <span class="comment">//主线程</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	cout &lt;&lt; <span class="string">&quot;mian()&quot;</span> &lt;&lt; endl;</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;mian()&quot;</span> &lt;&lt; endl;</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;mian()&quot;</span> &lt;&lt; endl;</span><br><span class="line">	<span class="function">thread <span class="title">t</span><span class="params">(func)</span></span>;  <span class="comment">//子线程</span></span><br><span class="line">	t.<span class="built_in">join</span>();  <span class="comment">//等待子线程结束后才进入主线程</span></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <figure>
 <img
-src="https://pic.islet.space/2021/05/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2Nzg0OTc1,size_16,color_FFFFFF,t_70.png"
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2Nzg0OTc1,size_16,color_FFFFFF,t_70.png"
 alt="在这里插入图片描述" />
 <figcaption aria-hidden="true">在这里插入图片描述</figcaption>
 </figure>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;thread&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">func</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">   <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">-10</span>; i &gt; <span class="number">-20</span>; i--)</span><br><span class="line">    &#123;</span><br><span class="line">        cout &lt;&lt; <span class="string">&quot;from func():&quot;</span> &lt;&lt; i &lt;&lt; endl;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span>			<span class="comment">//主线程</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="function">thread <span class="title">t</span><span class="params">(func)</span></span>;	<span class="comment">//子线程</span></span><br><span class="line">	cout &lt;&lt; <span class="string">&quot;mian()&quot;</span> &lt;&lt; endl;</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;mian()&quot;</span> &lt;&lt; endl;</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;mian()&quot;</span> &lt;&lt; endl;</span><br><span class="line">	t.<span class="built_in">join</span>();		<span class="comment">//等待子线程结束后才进入主线程</span></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <figure>
 <img
-src="https://pic.islet.space/2021/05/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2Nzg0OTc1,size_16,color_FFFFFF,t_70-20210531224629846.png"
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2Nzg0OTc1,size_16,color_FFFFFF,t_70-20210531224629846.png"
 alt="在这里插入图片描述" />
 <figcaption aria-hidden="true">在这里插入图片描述</figcaption>
 </figure>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;thread&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">func</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">   <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">-10</span>; i &gt; <span class="number">-20</span>; i--)</span><br><span class="line">    &#123;</span><br><span class="line">        cout &lt;&lt; <span class="string">&quot;from func():&quot;</span> &lt;&lt; i &lt;&lt; endl;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span>			<span class="comment">//主线程</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="function">thread <span class="title">t</span><span class="params">(func)</span></span>;	<span class="comment">//子线程</span></span><br><span class="line">	t.<span class="built_in">join</span>();		<span class="comment">//等待子线程结束后才进入主线程</span></span><br><span class="line">	cout &lt;&lt; <span class="string">&quot;mian()&quot;</span> &lt;&lt; endl;</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;mian()&quot;</span> &lt;&lt; endl;</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;mian()&quot;</span> &lt;&lt; endl;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <figure>
 <img
-src="https://pic.islet.space/2021/05/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2Nzg0OTc1,size_16,color_FFFFFF,t_70-20210531224634866.png"
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2Nzg0OTc1,size_16,color_FFFFFF,t_70-20210531224634866.png"
 alt="在这里插入图片描述" />
 <figcaption aria-hidden="true">在这里插入图片描述</figcaption>
 </figure>
 <h1 id="detach">detach()</h1>
 <figure>
-<img src="https://pic.islet.space/2021/06/image-20210601222337419.png"
+<img
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/06/image-20210601222337419.png"
 alt="image-20210601222337419" />
 <figcaption aria-hidden="true">image-20210601222337419</figcaption>
 </figure>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;thread&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">func</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">   <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">-10</span>; i &gt; <span class="number">-20</span>; i--)</span><br><span class="line">    &#123;</span><br><span class="line">        cout &lt;&lt; <span class="string">&quot;from func():&quot;</span> &lt;&lt; i &lt;&lt; endl;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span>			<span class="comment">//主线程</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	cout &lt;&lt; <span class="string">&quot;mian()&quot;</span> &lt;&lt; endl;</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;mian()&quot;</span> &lt;&lt; endl;</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;mian()&quot;</span> &lt;&lt; endl;</span><br><span class="line">	<span class="function">thread <span class="title">t</span><span class="params">(func)</span></span>;	<span class="comment">//子线程</span></span><br><span class="line">	t.<span class="built_in">detach</span>();		<span class="comment">//分离子线程</span></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <figure>
-<img src="https://pic.islet.space/2021/05/20190220120254940.png"
+<img
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/20190220120254940.png"
 alt="在这里插入图片描述" />
 <figcaption aria-hidden="true">在这里插入图片描述</figcaption>
 </figure>
@@ -323,7 +325,7 @@ alt="在这里插入图片描述" />
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;thread&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">func</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">   <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">-10</span>; i &gt; <span class="number">-20</span>; i--)</span><br><span class="line">    &#123;</span><br><span class="line">        cout &lt;&lt; <span class="string">&quot;from func():&quot;</span> &lt;&lt; i &lt;&lt; endl;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span>			<span class="comment">//主线程</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="function">thread <span class="title">t</span><span class="params">(func)</span></span>;	<span class="comment">//子线程</span></span><br><span class="line">	cout &lt;&lt; <span class="string">&quot;mian()&quot;</span> &lt;&lt; endl;</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;mian()&quot;</span> &lt;&lt; endl;</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;mian()&quot;</span> &lt;&lt; endl;</span><br><span class="line">	t.<span class="built_in">detach</span>();		<span class="comment">//分离子线程</span></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <figure>
 <img
-src="https://pic.islet.space/2021/05/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2Nzg0OTc1,size_16,color_FFFFFF,t_70-20210531224653683.png"
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2Nzg0OTc1,size_16,color_FFFFFF,t_70-20210531224653683.png"
 alt="在这里插入图片描述" />
 <figcaption aria-hidden="true">在这里插入图片描述</figcaption>
 </figure>
@@ -331,7 +333,7 @@ alt="在这里插入图片描述" />
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;thread&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">func</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">   <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">-10</span>; i &gt; <span class="number">-20</span>; i--)</span><br><span class="line">    &#123;</span><br><span class="line">        cout &lt;&lt; <span class="string">&quot;from func():&quot;</span> &lt;&lt; i &lt;&lt; endl;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span>			<span class="comment">//主线程</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="function">thread <span class="title">t</span><span class="params">(func)</span></span>;	<span class="comment">//子线程</span></span><br><span class="line">	cout &lt;&lt; <span class="string">&quot;mian()&quot;</span> &lt;&lt; endl;</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;mian()&quot;</span> &lt;&lt; endl;</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;mian()&quot;</span> &lt;&lt; endl;</span><br><span class="line">	t.<span class="built_in">detach</span>();		<span class="comment">//分离子线程</span></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <figure>
 <img
-src="https://pic.islet.space/2021/05/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2Nzg0OTc1,size_16,color_FFFFFF,t_70-20210531224659144.png"
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2Nzg0OTc1,size_16,color_FFFFFF,t_70-20210531224659144.png"
 alt="在这里插入图片描述" />
 <figcaption aria-hidden="true">在这里插入图片描述</figcaption>
 </figure>
@@ -745,7 +747,7 @@ C++11 之前，我们要调用 for_each 函数将 vector
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-05-28 00:33:04" itemprop="dateModified" datetime="2021-05-28T00:33:04+08:00">2021-05-28</time>
+        <time title="Modified: 2023-02-15 21:11:02" itemprop="dateModified" datetime="2023-02-15T21:11:02+08:00">2023-02-15</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -793,7 +795,8 @@ shell、zsh等。</p>
 </ul>
 <p><code>cd ../</code>可以返回上一层文件目录</p>
 <figure>
-<img src="https://pic.islet.space/2021/05/image-20210528002003445.png"
+<img
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/image-20210528002003445.png"
 alt="image-20210528002003445" />
 <figcaption aria-hidden="true">image-20210528002003445</figcaption>
 </figure>
@@ -801,7 +804,8 @@ alt="image-20210528002003445" />
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkdir zplusplus</span><br></pre></td></tr></table></figure>
 <p>即make directory，创建目录</p>
 <figure>
-<img src="https://pic.islet.space/2021/05/image-20210528001730316.png"
+<img
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/image-20210528001730316.png"
 alt="image-20210528001730316" />
 <figcaption aria-hidden="true">image-20210528001730316</figcaption>
 </figure>
@@ -821,7 +825,8 @@ alt="image-20210528001730316" />
 <p>即List，（展现）列表</p>
 <p>这个命令非常好用，学会了就基本忘不了，各别shell能够提供不同的色彩显示，对于文档类型识别来说非常高效。</p>
 <figure>
-<img src="https://pic.islet.space/2021/05/image-20210528001701289.png"
+<img
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/image-20210528001701289.png"
 alt="image-20210528001701289" />
 <figcaption aria-hidden="true">image-20210528001701289</figcaption>
 </figure>
@@ -844,7 +849,8 @@ alt="image-20210528001701289" />
 </blockquote>
 <p><strong>编辑界面如下</strong>：</p>
 <figure>
-<img src="https://pic.islet.space/2021/05/image-20210528002252175.png"
+<img
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/image-20210528002252175.png"
 alt="image-20210528002252175" />
 <figcaption aria-hidden="true">image-20210528002252175</figcaption>
 </figure>
@@ -864,14 +870,16 @@ target="_blank" rel="noopener" href="https://baike.baidu.com/item/gnu/671972">GN
 </ul>
 </blockquote>
 <figure>
-<img src="https://pic.islet.space/2021/05/image-20210528002708689.png"
+<img
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/image-20210528002708689.png"
 alt="image-20210528002708689" />
 <figcaption aria-hidden="true">image-20210528002708689</figcaption>
 </figure>
 <p>编译完成之后使用 <code>ls</code> 可以查看已生成的文件
 <code>a.out</code>（默认命名）。</p>
 <figure>
-<img src="https://pic.islet.space/2021/05/image-20210528002757152.png"
+<img
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/image-20210528002757152.png"
 alt="image-20210528002757152" />
 <figcaption aria-hidden="true">image-20210528002757152</figcaption>
 </figure>
@@ -880,7 +888,8 @@ alt="image-20210528002757152" />
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./a.out</span><br></pre></td></tr></table></figure>
 <p>运行效果如下：</p>
 <figure>
-<img src="https://pic.islet.space/2021/05/image-20210528002900901.png"
+<img
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/image-20210528002900901.png"
 alt="image-20210528002900901" />
 <figcaption aria-hidden="true">image-20210528002900901</figcaption>
 </figure>
@@ -948,7 +957,7 @@ alt="image-20210528002900901" />
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-05-26 00:08:05" itemprop="dateModified" datetime="2021-05-26T00:08:05+08:00">2021-05-26</time>
+        <time title="Modified: 2023-02-15 21:11:02" itemprop="dateModified" datetime="2023-02-15T21:11:02+08:00">2023-02-15</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -993,7 +1002,7 @@ PD充电+DA300的方式满足便携扩展需求，因此
 <h1 id="目录">目录</h1>
 <figure>
 <img
-src="https://pic.islet.space/2021/05/v2-2cfa4f5dd53c8f74f80203245dca1435_b.jpg"
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/v2-2cfa4f5dd53c8f74f80203245dca1435_b.jpg"
 alt="img" />
 <figcaption aria-hidden="true">img</figcaption>
 </figure>
@@ -1010,7 +1019,7 @@ C口）</li>
 Mode的控制器总结，由于PD控制器门槛不高，陆续会有MCU厂家涉足该领域，但和主流硬件选用相比不足为提。</p>
 <figure>
 <img
-src="https://pic.islet.space/2021/05/v2-b6b31e69d199a7bfcfc997f6c5d87cb6_b.jpg"
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/v2-b6b31e69d199a7bfcfc997f6c5d87cb6_b.jpg"
 alt="img" />
 <figcaption aria-hidden="true">img</figcaption>
 </figure>
@@ -1032,7 +1041,7 @@ HP，Dell，苹果，微软的新品转接器，这些厂子的转接器不分�
 <p>依然不建议依赖该表，建议通读</p>
 <figure>
 <img
-src="https://pic.islet.space/2021/05/v2-8660a99fbe26365d9a3d7488288971f6_b.jpg"
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/v2-8660a99fbe26365d9a3d7488288971f6_b.jpg"
 alt="img" />
 <figcaption aria-hidden="true">img</figcaption>
 </figure>
@@ -1044,13 +1053,13 @@ alt="img" />
 <p>一类是长得像 Belkin 的 非Belkin 产品</p>
 <figure>
 <img
-src="https://pic.islet.space/2021/05/v2-ed0fcb1bc9f15717df5a0549ff865e81_b.jpg"
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/v2-ed0fcb1bc9f15717df5a0549ff865e81_b.jpg"
 alt="img" />
 <figcaption aria-hidden="true">img</figcaption>
 </figure>
 <figure>
 <img
-src="https://pic.islet.space/2021/05/v2-395b6b257e5b4bfba528ae61084b04d9_b.jpg"
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/v2-395b6b257e5b4bfba528ae61084b04d9_b.jpg"
 alt="img" />
 <figcaption aria-hidden="true">img</figcaption>
 </figure>
@@ -1070,20 +1079,20 @@ alt="img" />
 VL100系主控，没一家的做工和防护能比得上Satechi（苹果合作款）</p>
 <figure>
 <img
-src="https://pic.islet.space/2021/05/v2-3dfff693a1575ca58b5c3b089f8c59c5_b.jpg"
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/v2-3dfff693a1575ca58b5c3b089f8c59c5_b.jpg"
 alt="img" />
 <figcaption aria-hidden="true">img</figcaption>
 </figure>
 <figure>
 <img
-src="https://pic.islet.space/2021/05/v2-fd6a19341d4d279adceae25faa1f4837_b.jpg"
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/v2-fd6a19341d4d279adceae25faa1f4837_b.jpg"
 alt="img" />
 <figcaption aria-hidden="true">img</figcaption>
 </figure>
 <p>另一类是长得像苹果的非苹果产品</p>
 <figure>
 <img
-src="https://pic.islet.space/2021/05/v2-222af6d53c029fc372a794c438375936_b.jpg"
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/v2-222af6d53c029fc372a794c438375936_b.jpg"
 alt="img" />
 <figcaption aria-hidden="true">img</figcaption>
 </figure>
@@ -1101,19 +1110,19 @@ href="about:reader?url=https%3A%2F%2Fzhuanlan.zhihu.com%2Fp%2F342165494#ref_2">2
 <p>外形就请自行想象了，以下三款图内PCBA的售价都在10元内</p>
 <figure>
 <img
-src="https://pic.islet.space/2021/05/v2-59012a67ebb1e0efd1eb6c053219cb6d_b.jpg"
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/v2-59012a67ebb1e0efd1eb6c053219cb6d_b.jpg"
 alt="img" />
 <figcaption aria-hidden="true">img</figcaption>
 </figure>
 <figure>
 <img
-src="https://pic.islet.space/2021/05/v2-17fd6a55704998d450f3a29924a272f2_b.jpg"
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/v2-17fd6a55704998d450f3a29924a272f2_b.jpg"
 alt="img" />
 <figcaption aria-hidden="true">img</figcaption>
 </figure>
 <figure>
 <img
-src="https://pic.islet.space/2021/05/v2-ceb7df6aa2250a6a365ee70f3d83296d_b.jpg"
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/v2-ceb7df6aa2250a6a365ee70f3d83296d_b.jpg"
 alt="img" />
 <figcaption aria-hidden="true">img</figcaption>
 </figure>
@@ -1175,7 +1184,7 @@ Mode配件不需要驱动就可以外接显示器，但只能在支持的 Type-C
 <p>1.Type C 转换为任意视频接口的单转单线缆</p>
 <figure>
 <img
-src="https://pic.islet.space/2021/05/v2-90fca4eddcbd18bb79b5168133732cc6_b.jpg"
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/v2-90fca4eddcbd18bb79b5168133732cc6_b.jpg"
 alt="img" />
 <figcaption aria-hidden="true">img</figcaption>
 </figure>
@@ -1183,7 +1192,7 @@ alt="img" />
 功能，都可以无需外接电源使用</p>
 <figure>
 <img
-src="https://pic.islet.space/2021/05/v2-10d2580b3567724941d4a97daacaa186_b.jpg"
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/v2-10d2580b3567724941d4a97daacaa186_b.jpg"
 alt="img" />
 <figcaption aria-hidden="true">img</figcaption>
 </figure>
@@ -1192,7 +1201,7 @@ alt="img" />
 </ol>
 <figure>
 <img
-src="https://pic.islet.space/2021/05/v2-430f652dde5f98949f553f875a9dd2f8_b.jpg"
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/v2-430f652dde5f98949f553f875a9dd2f8_b.jpg"
 alt="img" />
 <figcaption aria-hidden="true">img</figcaption>
 </figure>
@@ -1273,7 +1282,7 @@ Host（USB主控）以及 DP Source（DP信号源），
 Type-C的性能三维就是由这些上游的应用以及MUX本身的性能所决定的了（MUX走USB和DP信号，会影响这二维的性能）</p>
 <figure>
 <img
-src="https://pic.islet.space/2021/05/v2-322b8700e520c9d7f46d2c077d9c675e_b.jpg"
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/v2-322b8700e520c9d7f46d2c077d9c675e_b.jpg"
 alt="img" />
 <figcaption aria-hidden="true">img</figcaption>
 </figure>
@@ -1285,7 +1294,7 @@ Gen2主控，因此可以支持到10Gbps，但是Host上游的PCIe带宽只给�
 X1，因此实际上也是不满10Gbps的</p>
 <figure>
 <img
-src="https://pic.islet.space/2021/05/v2-4b2043b71e05f2e51ab65dded0cf3516_b.jpg"
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/v2-4b2043b71e05f2e51ab65dded0cf3516_b.jpg"
 alt="img" />
 <figcaption aria-hidden="true">img</figcaption>
 </figure>
@@ -1306,7 +1315,7 @@ href="about:reader?url=https%3A%2F%2Fzhuanlan.zhihu.com%2Fp%2F342165494#ref_8">8
 PD 控制器加上 MUX的形式，区别只在于这里的MUX是解复用功能</p>
 <figure>
 <img
-src="https://pic.islet.space/2021/05/v2-9ced86eb508a76eefd11c9ffaeec4aa4_b.jpg"
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/v2-9ced86eb508a76eefd11c9ffaeec4aa4_b.jpg"
 alt="img" />
 <figcaption aria-hidden="true">img</figcaption>
 </figure>
@@ -1317,7 +1326,7 @@ DockCase DPR01S
 Type-C 扩展设备拆解存档</a></p>
 <figure>
 <img
-src="https://pic.islet.space/2021/05/v2-b6546a28845e426a25b971ce7fcab919_ipico.jpg"
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/v2-b6546a28845e426a25b971ce7fcab919_ipico.jpg"
 alt="图标" />
 <figcaption aria-hidden="true">图标</figcaption>
 </figure>
@@ -1325,7 +1334,7 @@ alt="图标" />
 接口所设计的结构，即设备端是具有完整的Type-C接口，需要独立的线缆进行连接的情况</p>
 <figure>
 <img
-src="https://pic.islet.space/2021/05/v2-88b4440cae89d86b165ebdf938fee0ca_b.jpg"
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/v2-88b4440cae89d86b165ebdf938fee0ca_b.jpg"
 alt="img" />
 <figcaption aria-hidden="true">img</figcaption>
 </figure>
@@ -1345,7 +1354,7 @@ receptacle &lt;---------- USB-C cable ----------&gt; USB-C receptacle
 </blockquote>
 <figure>
 <img
-src="https://pic.islet.space/2021/05/v2-26ab46bc6d083bd1a166199a4080a03e_b.jpg"
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/v2-26ab46bc6d083bd1a166199a4080a03e_b.jpg"
 alt="img" />
 <figcaption aria-hidden="true">img</figcaption>
 </figure>
@@ -1360,7 +1369,7 @@ USB 和DP 配件，如今由于 DP Alt Mode的存在被整合到一块电路板�
 <p>比如转 4G无线网卡的应用</p>
 <figure>
 <img
-src="https://pic.islet.space/2021/05/v2-8f57bae7c539aade5bd5e273dce8664d_b.jpg"
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/v2-8f57bae7c539aade5bd5e273dce8664d_b.jpg"
 alt="img" />
 <figcaption aria-hidden="true">img</figcaption>
 </figure>
@@ -1387,7 +1396,7 @@ Gen2x2可以启用两组共四对信号，因此可以实现 20Gbps
 Gen2 才是质变，而只使用D+D- 的USB2.0则跟USB3.0可以算是两个物种了）</p>
 <figure>
 <img
-src="https://pic.islet.space/2021/05/v2-393f880610f4e5cd987f606c436ae1ee_b.jpg"
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/v2-393f880610f4e5cd987f606c436ae1ee_b.jpg"
 alt="img" />
 <figcaption aria-hidden="true">img</figcaption>
 </figure>
@@ -1399,7 +1408,7 @@ Channel +&amp;- （以下简称Aux对）用于音频传输，有趣的是，DP�
 ML0，ML1 两条Lane的模式下工作</p>
 <figure>
 <img
-src="https://pic.islet.space/2021/05/v2-c339e6274c4434320a960af7ddb4e3e9_b.jpg"
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/v2-c339e6274c4434320a960af7ddb4e3e9_b.jpg"
 alt="img" />
 <figcaption aria-hidden="true">img</figcaption>
 </figure>
@@ -1414,7 +1423,7 @@ Channel（以下简称CC），电源线和接地定义也不能动，不过剩�
 <p>常规情况 USB 模式时 Type-C 的针脚分布如下</p>
 <figure>
 <img
-src="https://pic.islet.space/2021/05/v2-bb880cb32b70197fb69aa5e48e7c759a_b.jpg"
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/v2-bb880cb32b70197fb69aa5e48e7c759a_b.jpg"
 alt="img" />
 <figcaption aria-hidden="true">img</figcaption>
 </figure>
@@ -1422,14 +1431,14 @@ alt="img" />
 时，针脚功能如下</p>
 <figure>
 <img
-src="https://pic.islet.space/2021/05/v2-9d8fe2b6caf88d296c112dd79dbfcb7f_b.jpg"
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/v2-9d8fe2b6caf88d296c112dd79dbfcb7f_b.jpg"
 alt="img" />
 <figcaption aria-hidden="true">img</figcaption>
 </figure>
 <p>当激活成 DP Alt Mode 4Lane 时：</p>
 <figure>
 <img
-src="https://pic.islet.space/2021/05/v2-bffd5ba676c6ec65ec536294f20c4311_b.jpg"
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/v2-bffd5ba676c6ec65ec536294f20c4311_b.jpg"
 alt="img" />
 <figcaption aria-hidden="true">img</figcaption>
 </figure>
@@ -1442,7 +1451,7 @@ Link，是为VR应用所开发的，Nvidia 的2000系 和AMD
 href="about:reader?url=https%3A%2F%2Fzhuanlan.zhihu.com%2Fp%2F342165494#ref_12">12]</a></p>
 <figure>
 <img
-src="https://pic.islet.space/2021/05/v2-18ecc3a36f700f8677e5990b3aa7fa8e_b.jpg"
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/v2-18ecc3a36f700f8677e5990b3aa7fa8e_b.jpg"
 alt="img" />
 <figcaption aria-hidden="true">img</figcaption>
 </figure>
@@ -1459,7 +1468,7 @@ Link，抑或是雷电，都是作为Alt Mode 触发的，而触发方式，都�
 Delivery 的通信功能</p>
 <figure>
 <img
-src="https://pic.islet.space/2021/05/v2-4945c8109a8ac189e840096ceec01824_b.jpg"
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/v2-4945c8109a8ac189e840096ceec01824_b.jpg"
 alt="img" />
 <figcaption aria-hidden="true">img</figcaption>
 </figure>
@@ -1496,13 +1505,13 @@ href="https://link.zhihu.com/?target=https%3A//www.ti.com/lit/an/slva844b/slva84
 href="about:reader?url=https%3A%2F%2Fzhuanlan.zhihu.com%2Fp%2F342165494#ref_13">13]</a></p>
 <figure>
 <img
-src="https://pic.islet.space/2021/05/v2-60d85aec0bf111a1b96a72244a2f5400_b.jpg"
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/v2-60d85aec0bf111a1b96a72244a2f5400_b.jpg"
 alt="img" />
 <figcaption aria-hidden="true">img</figcaption>
 </figure>
 <figure>
 <img
-src="https://pic.islet.space/2021/05/v2-cfaeb19dc5eb541b350a0c6fa38a0926_b.jpg"
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/v2-cfaeb19dc5eb541b350a0c6fa38a0926_b.jpg"
 alt="img" />
 <figcaption aria-hidden="true">img</figcaption>
 </figure>
@@ -1527,7 +1536,7 @@ PD控制器为主控的绿联功能扩展坞（带SD卡槽版）[<a
 href="about:reader?url=https%3A%2F%2Fzhuanlan.zhihu.com%2Fp%2F342165494#ref_14">14]</a></p>
 <figure>
 <img
-src="https://pic.islet.space/2021/05/v2-ef2d0e97afef9b1a26d267dd741d1faf_b.jpg"
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/v2-ef2d0e97afef9b1a26d267dd741d1faf_b.jpg"
 alt="img" />
 <figcaption aria-hidden="true">img</figcaption>
 </figure>
@@ -1566,7 +1575,7 @@ href="about:reader?url=https%3A%2F%2Fzhuanlan.zhihu.com%2Fp%2F342165494#ref_1">1
 href="about:reader?url=https%3A%2F%2Fzhuanlan.zhihu.com%2Fp%2F342165494#ref_19">19]</a></p>
 <figure>
 <img
-src="https://pic.islet.space/2021/05/v2-c14f66052bca51b903261fa9ca68be02_b.jpg"
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/v2-c14f66052bca51b903261fa9ca68be02_b.jpg"
 alt="img" />
 <figcaption aria-hidden="true">img</figcaption>
 </figure>
@@ -1601,25 +1610,25 @@ Nvidia USB-C to DisplayPort Adapter[<a
 href="about:reader?url=https%3A%2F%2Fzhuanlan.zhihu.com%2Fp%2F342165494#ref_23">23]</a></p>
 <figure>
 <img
-src="https://pic.islet.space/2021/05/v2-3814f250fd70c1e0171891cc398e0732_b.jpg"
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/v2-3814f250fd70c1e0171891cc398e0732_b.jpg"
 alt="img" />
 <figcaption aria-hidden="true">img</figcaption>
 </figure>
 <figure>
 <img
-src="https://pic.islet.space/2021/05/v2-b8485a62056f17a0e3b787a1c9bfc669_b.jpg"
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/v2-b8485a62056f17a0e3b787a1c9bfc669_b.jpg"
 alt="img" />
 <figcaption aria-hidden="true">img</figcaption>
 </figure>
 <figure>
 <img
-src="https://pic.islet.space/2021/05/v2-ad3301d173bce644fc40e11de4b3ab82_b.jpg"
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/v2-ad3301d173bce644fc40e11de4b3ab82_b.jpg"
 alt="img" />
 <figcaption aria-hidden="true">img</figcaption>
 </figure>
 <figure>
 <img
-src="https://pic.islet.space/2021/05/v2-420fcfeb486e5c98d986324eab578b78_b.jpg"
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/v2-420fcfeb486e5c98d986324eab578b78_b.jpg"
 alt="img" />
 <figcaption aria-hidden="true">img</figcaption>
 </figure>
@@ -1634,7 +1643,7 @@ Mode的触发，完全不干涉DP信号自身；理论上这款线缆在HBR3支�
 href="about:reader?url=https%3A%2F%2Fzhuanlan.zhihu.com%2Fp%2F342165494#ref_24">24]</a></p>
 <figure>
 <img
-src="https://pic.islet.space/2021/05/v2-ad8aeafa0ce502ef34f2df340be10e82_b.jpg"
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/v2-ad8aeafa0ce502ef34f2df340be10e82_b.jpg"
 alt="img" />
 <figcaption aria-hidden="true">img</figcaption>
 </figure>
@@ -1646,13 +1655,13 @@ DP输出能力，然而代价是牺牲掉了USB 3.0应用</p>
 的DP转换，那么HDMI的输出分辨率支持就能高达8K 30Hz了</p>
 <figure>
 <img
-src="https://pic.islet.space/2021/05/v2-e8c09344ceb408b843341959ba4e46ff_b.jpg"
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/v2-e8c09344ceb408b843341959ba4e46ff_b.jpg"
 alt="img" />
 <figcaption aria-hidden="true">img</figcaption>
 </figure>
 <figure>
 <img
-src="https://pic.islet.space/2021/05/v2-a99ad2572163711133df31bee162ac7c_b.jpg"
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/v2-a99ad2572163711133df31bee162ac7c_b.jpg"
 alt="img" />
 <figcaption aria-hidden="true">img</figcaption>
 </figure>
@@ -1663,7 +1672,7 @@ alt="img" />
 href="about:reader?url=https%3A%2F%2Fzhuanlan.zhihu.com%2Fp%2F342165494#ref_25">25]</a></p>
 <figure>
 <img
-src="https://pic.islet.space/2021/05/v2-deec7db196937f5b5fc1759901fe7c45_b.jpg"
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/v2-deec7db196937f5b5fc1759901fe7c45_b.jpg"
 alt="img" />
 <figcaption aria-hidden="true">img</figcaption>
 </figure>
@@ -1688,7 +1697,7 @@ href="about:reader?url=https%3A%2F%2Fzhuanlan.zhihu.com%2Fp%2F342165494#ref_26">
 Tech已经给出了实现该功能的拓补（同时也给出了将USB与充电C口融合的参考，然而做的厂家也非常稀少）</p>
 <figure>
 <img
-src="https://pic.islet.space/2021/05/v2-5e04ecfc898b01b77a6d97e6a229cefe_b.jpg"
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/v2-5e04ecfc898b01b77a6d97e6a229cefe_b.jpg"
 alt="img" />
 <figcaption aria-hidden="true">img</figcaption>
 </figure>
@@ -1696,7 +1705,7 @@ alt="img" />
 Lane 与 4Lane 模式之间来回切换的关键</p>
 <figure>
 <img
-src="https://pic.islet.space/2021/05/v2-d606ef4c0362b25a358b2b3839fd7374_b.jpg"
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/v2-d606ef4c0362b25a358b2b3839fd7374_b.jpg"
 alt="img" />
 <figcaption aria-hidden="true">img</figcaption>
 </figure>
@@ -1705,19 +1714,19 @@ alt="img" />
 很遗憾这里就没有拆解参考了</p>
 <figure>
 <img
-src="https://pic.islet.space/2021/05/v2-fa87401c31ca6f3bb52ffc4074495a42_b.jpg"
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/v2-fa87401c31ca6f3bb52ffc4074495a42_b.jpg"
 alt="img" />
 <figcaption aria-hidden="true">img</figcaption>
 </figure>
 <figure>
 <img
-src="https://pic.islet.space/2021/05/v2-5a82fd7b9e0bfee74b9d7389a32adada_b.jpg"
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/v2-5a82fd7b9e0bfee74b9d7389a32adada_b.jpg"
 alt="img" />
 <figcaption aria-hidden="true">img</figcaption>
 </figure>
 <figure>
 <img
-src="https://pic.islet.space/2021/05/v2-0618d8ef8ed93e037e5b90c79d68d207_b.jpg"
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/v2-0618d8ef8ed93e037e5b90c79d68d207_b.jpg"
 alt="img" />
 <figcaption aria-hidden="true">img</figcaption>
 </figure>
@@ -1738,13 +1747,13 @@ alt="img" />
 Docking Station 可惜这次连使用的芯片信息都没有了</p>
 <figure>
 <img
-src="https://pic.islet.space/2021/05/v2-1b2d7f13dfb8a4de886cca67fd4e364d_b.jpg"
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/v2-1b2d7f13dfb8a4de886cca67fd4e364d_b.jpg"
 alt="img" />
 <figcaption aria-hidden="true">img</figcaption>
 </figure>
 <figure>
 <img
-src="https://pic.islet.space/2021/05/v2-f3d06ce5afcd1135c490f6255cf345dc_b.jpg"
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/v2-f3d06ce5afcd1135c490f6255cf345dc_b.jpg"
 alt="img" />
 <figcaption aria-hidden="true">img</figcaption>
 </figure>
@@ -1752,7 +1761,7 @@ alt="img" />
 或者 双 4K 30Hz 输出，似乎也不支持 HBR3 应用，甚是可惜</p>
 <figure>
 <img
-src="https://pic.islet.space/2021/05/v2-c2503d9d9a6546e221326150a10394aa_b.jpg"
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/v2-c2503d9d9a6546e221326150a10394aa_b.jpg"
 alt="img" />
 <figcaption aria-hidden="true">img</figcaption>
 </figure>
@@ -1780,7 +1789,7 @@ href="about:reader?url=https%3A%2F%2Fzhuanlan.zhihu.com%2Fp%2F342165494#ref_21">
 芯片 PS8802 后表现这么拉跨只能说比较遗憾了</p>
 <figure>
 <img
-src="https://pic.islet.space/2021/05/v2-68bd1cc3e9713d420baa55432e7d7e45_b.jpg"
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/v2-68bd1cc3e9713d420baa55432e7d7e45_b.jpg"
 alt="img" />
 <figcaption aria-hidden="true">img</figcaption>
 </figure>
@@ -1788,13 +1797,13 @@ alt="img" />
 <p>代价是连接主机的一个上游端口变为两根</p>
 <figure>
 <img
-src="https://pic.islet.space/2021/05/v2-7d4014fd7cafa7c5d1cc6a92c0249ef4_b.jpg"
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/v2-7d4014fd7cafa7c5d1cc6a92c0249ef4_b.jpg"
 alt="img" />
 <figcaption aria-hidden="true">img</figcaption>
 </figure>
 <figure>
 <img
-src="https://pic.islet.space/2021/05/v2-0230b0e5f9fddf62bffb4cb17f0af7f4_b.jpg"
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/v2-0230b0e5f9fddf62bffb4cb17f0af7f4_b.jpg"
 alt="img" />
 <figcaption aria-hidden="true">img</figcaption>
 </figure>
@@ -1813,7 +1822,7 @@ href="about:reader?url=https%3A%2F%2Fzhuanlan.zhihu.com%2Fp%2F342165494#ref_17">
 也是用的这个主控</p>
 <figure>
 <img
-src="https://pic.islet.space/2021/05/v2-775a929a96ed14fb25ac2f3a15c7b555_b.jpg"
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/v2-775a929a96ed14fb25ac2f3a15c7b555_b.jpg"
 alt="img" />
 <figcaption aria-hidden="true">img</figcaption>
 </figure>
@@ -1828,7 +1837,7 @@ alt="img" />
 ，一颗芯片就可完成视频转换，PD充电 的功能</p>
 <figure>
 <img
-src="https://pic.islet.space/2021/05/v2-7ea776cc7b2541fa2b06a28b6ee53b17_b.jpg"
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/v2-7ea776cc7b2541fa2b06a28b6ee53b17_b.jpg"
 alt="img" />
 <figcaption aria-hidden="true">img</figcaption>
 </figure>
@@ -1842,7 +1851,7 @@ href="https://link.zhihu.com/?target=https%3A//docs.qq.com/sheet/DWmZoUFJpTmVXRk
 href="https://link.zhihu.com/?target=https%3A//docs.qq.com/sheet/DWmZoUFJpTmVXRkVa">docs.qq.com</a></p>
 <figure>
 <img
-src="https://pic.islet.space/2021/05/v2-1e8f184208cc70de95edd04e901f402c_b.jpg"
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/v2-1e8f184208cc70de95edd04e901f402c_b.jpg"
 alt="img" />
 <figcaption aria-hidden="true">img</figcaption>
 </figure>
@@ -1918,13 +1927,13 @@ alt="img" />
 <p>第二点一般利用法拉第笼的原理在转接器外围造一层金属罩进行无线屏蔽</p>
 <figure>
 <img
-src="https://pic.islet.space/2021/05/v2-68a8b3984897e0937f3446f56b255dea_b.jpg"
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/v2-68a8b3984897e0937f3446f56b255dea_b.jpg"
 alt="img" />
 <figcaption aria-hidden="true">img</figcaption>
 </figure>
 <figure>
 <img
-src="https://pic.islet.space/2021/05/v2-e4e71c2210d763b837b9cee71ee442e5_b.jpg"
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/v2-e4e71c2210d763b837b9cee71ee442e5_b.jpg"
 alt="img" />
 <figcaption aria-hidden="true">img</figcaption>
 </figure>
@@ -1933,7 +1942,7 @@ discharge）防护，然而并不能确保芯片可以在较恶劣的环境下�
 <p>其中TVS管就是最常用的方式</p>
 <figure>
 <img
-src="https://pic.islet.space/2021/05/v2-0cb4401a831b61646eaed46f15b20eca_b.jpg"
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/v2-0cb4401a831b61646eaed46f15b20eca_b.jpg"
 alt="img" />
 <figcaption aria-hidden="true">img</figcaption>
 </figure>
@@ -1943,7 +1952,7 @@ USB HUB TEARDOWN: ESD ROBUSTNESS</a>
 仅作参考，该文是较为典型的过分堆料</p>
 <figure>
 <img
-src="https://pic.islet.space/2021/05/v2-98c67086b6a85d7b4014e261e778443e_b.jpg"
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/v2-98c67086b6a85d7b4014e261e778443e_b.jpg"
 alt="img" />
 <figcaption aria-hidden="true">img</figcaption>
 </figure>
@@ -1951,13 +1960,13 @@ alt="img" />
 使用TVS管作为ESD防护以及电源总线上附带过流保险</p>
 <figure>
 <img
-src="https://pic.islet.space/2021/05/v2-f402b8767c2e6bbfdb96f8a06921c8b3_b.jpg"
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/v2-f402b8767c2e6bbfdb96f8a06921c8b3_b.jpg"
 alt="img" />
 <figcaption aria-hidden="true">img</figcaption>
 </figure>
 <figure>
 <img
-src="https://pic.islet.space/2021/05/v2-c79f4ee4605017330e342cd9edb71679_b.jpg"
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/v2-c79f4ee4605017330e342cd9edb71679_b.jpg"
 alt="img" />
 <figcaption aria-hidden="true">img</figcaption>
 </figure>
@@ -1990,7 +1999,7 @@ HP，Dell，苹果，微软的新品转接器，这些厂子的转接器不分�
 <p>依然不建议依赖该表，建议通读</p>
 <figure>
 <img
-src="https://pic.islet.space/2021/05/v2-8660a99fbe26365d9a3d7488288971f6_b-20210526000705763.jpg"
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/v2-8660a99fbe26365d9a3d7488288971f6_b-20210526000705763.jpg"
 alt="img" />
 <figcaption aria-hidden="true">img</figcaption>
 </figure>
@@ -2255,7 +2264,7 @@ class="footnote-back" role="doc-backlink">↩︎</a></p></li>
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-07-08 22:41:04" itemprop="dateModified" datetime="2021-07-08T22:41:04+08:00">2021-07-08</time>
+        <time title="Modified: 2023-02-15 21:11:02" itemprop="dateModified" datetime="2023-02-15T21:11:02+08:00">2023-02-15</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -2287,11 +2296,11 @@ Reference》，后简称《HWR》。</p>
 <p>许多寄存器旁边都会标注位类型和操作方法，位类型包括
 可读可写（RW）、只读（RO）、只读清除（ROC）、只写清除（WOC）、可读可写1清除（RW1C）、
 可读可写1设置（RW1S）。</p>
-<p><img src="https://pic.islet.space/2021/05/20210528141056.png" alt="image-20210528134312811" style="zoom: 80%;" /></p>
+<p><img src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/20210528141056.png" alt="image-20210528134312811" style="zoom: 80%;" /></p>
 <p><strong>注意</strong>：<mark>不要尝试去写入这些
 <strong><em>reversed位</em></strong>
 ，读取的值就会使这些位上的值进行更新或者复位。</mark></p>
-<p><img src="https://pic.islet.space/2021/05/20210528141255.png" alt="image-20210528134457084" style="zoom:67%;" /></p>
+<p><img src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/20210528141255.png" alt="image-20210528134457084" style="zoom:67%;" /></p>
 <h2
 id="头文件-外围设备及寄存器宏定义">头文件-外围设备及寄存器宏定义</h2>
 <p><code>&lt;def21479.h&gt;</code> 是关于
@@ -2304,7 +2313,8 @@ id="头文件-外围设备及寄存器宏定义">头文件-外围设备及寄存
 <code>*pSYSTAT = 0x12345678;</code>。</p>
 <p>《HWR》仅有第99页中提及了这两份文件。</p>
 <figure>
-<img src="https://pic.islet.space/2021/06/20210602171620.png"
+<img
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/06/20210602171620.png"
 alt="image-20210602171608976" />
 <figcaption aria-hidden="true">image-20210602171608976</figcaption>
 </figure>
@@ -2371,7 +2381,8 @@ TX输入数据格式、SPDIF接收控制寄存器、SPDIF接收状态（只读�
 </ul>
 <p>在《HWR》“自己眼”中，可能自己就这么点儿寄存器。</p>
 <figure>
-<img src="https://pic.islet.space/2021/05/20210529114430.png"
+<img
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/20210529114430.png"
 alt="image-20210528140017190" />
 <figcaption aria-hidden="true">image-20210528140017190</figcaption>
 </figure>
@@ -2382,7 +2393,8 @@ Reset Control Register）。</p>
 表A-5 RUNRSTCTL寄存器位功能描述
 </p>
 <figure>
-<img src="https://pic.islet.space/2021/05/20210527170843.png"
+<img
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/20210527170843.png"
 alt="image-20210527170816951" />
 <figcaption aria-hidden="true">image-20210527170816951</figcaption>
 </figure>
@@ -2395,17 +2407,20 @@ alt="image-20210527170816951" />
 表A-6 默认中断路由
 </p>
 <figure>
-<img src="https://pic.islet.space/2021/05/20210527171222.png"
+<img
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/20210527171222.png"
 alt="image-20210527171119962" />
 <figcaption aria-hidden="true">image-20210527171119962</figcaption>
 </figure>
 <figure>
-<img src="https://pic.islet.space/2021/05/20210527171224.png"
+<img
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/20210527171224.png"
 alt="image-20210527171204914" />
 <figcaption aria-hidden="true">image-20210527171204914</figcaption>
 </figure>
 <figure>
-<img src="https://pic.islet.space/2021/05/20210527171227.png"
+<img
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/20210527171227.png"
 alt="image-20210527171219793" />
 <figcaption aria-hidden="true">image-20210527171219793</figcaption>
 </figure>
@@ -2416,7 +2431,8 @@ alt="image-20210527171219793" />
 <li><p>default interrupt sources</p></li>
 </ul>
 <figure>
-<img src="https://pic.islet.space/2021/05/20210527172018.png"
+<img
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/20210527172018.png"
 alt="image-20210527171809869" />
 <figcaption aria-hidden="true">image-20210527171809869</figcaption>
 </figure>
@@ -2424,7 +2440,8 @@ alt="image-20210527171809869" />
 图 A-4 PICR0 寄存器
 </p>
 <figure>
-<img src="https://pic.islet.space/2021/05/20210527172024.png"
+<img
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/20210527172024.png"
 alt="image-20210527171824344" />
 <figcaption aria-hidden="true">image-20210527171824344</figcaption>
 </figure>
@@ -2432,7 +2449,8 @@ alt="image-20210527171824344" />
 图 A-5 PICR1 寄存器
 </p>
 <figure>
-<img src="https://pic.islet.space/2021/05/20210527172027.png"
+<img
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/20210527172027.png"
 alt="image-20210527171841316" />
 <figcaption aria-hidden="true">image-20210527171841316</figcaption>
 </figure>
@@ -2440,7 +2458,8 @@ alt="image-20210527171841316" />
 图 A-6 PICR2 寄存器
 </p>
 <figure>
-<img src="https://pic.islet.space/2021/05/20210527172029.png"
+<img
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/20210527172029.png"
 alt="image-20210527171852287" />
 <figcaption aria-hidden="true">image-20210527171852287</figcaption>
 </figure>
@@ -2460,17 +2479,18 @@ across the DAI/DPI interrupts.</p>
 </blockquote>
 <h2 id="twi-register">TWI Register</h2>
 <p>《HWR》第1193页起定义了TWI的寄存器。第1244页同样给了TWI相关的寄存器一个列表。</p>
-<p><img src="https://pic.islet.space/2021/05/20210528140307.png" alt="image-20210528140209933" style="zoom:67%;" /></p>
+<p><img src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/20210528140307.png" alt="image-20210528140209933" style="zoom:67%;" /></p>
 <p><code>&lt;cdef21479.h&gt;</code>
 对TWI相关的寄存器定义如下，p为前缀的定义是该寄存器的地址位，通过与<code>&lt;def21479.h&gt;</code>
 的定义进行 <code>或</code> 运算并赋值给对应的寄存器地址进行控制，如
 <code>*pTWIMITR = (0x14) | TWIEN;</code> 。</p>
 <p>TWI中所有的Status相关寄存器都是 “只读” 状态，其《位描述》表上都有一个
 <code>RO</code> 标志。</p>
-<p><img src="https://pic.islet.space/2021/05/20210527095059.png" alt="image-20210527095053483" style="zoom:80%;" /></p>
+<p><img src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/20210527095059.png" alt="image-20210527095053483" style="zoom:80%;" /></p>
 <p>在VisualDSP++这款IDE中，也可以通过 直接观察到所有TWI的寄存器值。</p>
-<p><img src="https://pic.islet.space/2021/06/20210607103819.png" alt="image-20210607103816755" style="zoom:80%;" />
-<img src="https://pic.islet.space/2021/06/20210607103750.png"
+<p><img src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/06/20210607103819.png" alt="image-20210607103816755" style="zoom:80%;" />
+<img
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/06/20210607103750.png"
 alt="image-20210607103747655" /></p>
 <h3 id="twimitr">TWIMITR</h3>
 <p>TWIMITR（<strong>Master Internal Time
@@ -2486,7 +2506,7 @@ Register</strong>），即主机内部时间寄存器（如图A-143所示，并�
 PCLK</em></strong> using the prescaled value shown below.</p>
 <p><code>PRESCALE = fPCLK/10 MHz</code></p>
 </blockquote>
-<p><img src="https://pic.islet.space/2021/05/20210525135455.png" alt="image-20210525133555377" style="zoom: 67%;" /></p>
+<p><img src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/20210525135455.png" alt="image-20210525133555377" style="zoom: 67%;" /></p>
 <p style="text-align: center; color: gray; font-weight: 800;">
 图 A-143 TWIMITR 寄存器
 </p>
@@ -2530,7 +2550,7 @@ Register</strong>），即时钟分频器寄存器（如图A-144所示，并在�
 <li>串行时钟的频率可以从400KHz到小于20KHz不等。产生的时钟分辨率为1/10
 MHz或100 ns。</li>
 </ul>
-<p><img src="https://pic.islet.space/2021/05/20210525135457.png" alt="image-20210525134728762" style="zoom: 67%;" /></p>
+<p><img src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/20210525135457.png" alt="image-20210525134728762" style="zoom: 67%;" /></p>
 <p style="text-align: center; color: gray; font-weight: 800;">
 图 A-144 TWIDIV 寄存器
 </p>
@@ -2575,15 +2595,15 @@ with master mode operation.</p>
 <p>Bits in this register do not affect slave mode operation and should
 not be modified to control slave mode functionality.</p>
 </blockquote>
-<p><img src="https://pic.islet.space/2021/05/20210525143535.png" alt="image-20210525140532502" style="zoom: 67%;" /></p>
+<p><img src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/20210525143535.png" alt="image-20210525140532502" style="zoom: 67%;" /></p>
 <p style="text-align: center; color: gray; font-weight: 800;">
 图 A-145 TWIMCTL 寄存器
 </p>
 <p style="text-align: center; color: gray; font-weight: 800;">
 表A-131 TWIMCTL 寄存器位功能描述
 </p>
-<p><img src="https://pic.islet.space/2021/05/20210525143532.png" alt="image-20210525143454398" style="zoom: 67%;" /></p>
-<p><img src="https://pic.islet.space/2021/05/20210525143531.png" alt="image-20210525143529519" style="zoom: 67%;" /></p>
+<p><img src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/20210525143532.png" alt="image-20210525143454398" style="zoom: 67%;" /></p>
+<p><img src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/20210525143531.png" alt="image-20210525143529519" style="zoom: 67%;" /></p>
 <h3 id="twimaddr">TWIMADDR</h3>
 <p>在传输的寻址阶段中，TWI控制器的主机使能，并传输TWI主机模式地址寄存器中的内容。</p>
 <p>在对本寄存器进行编程时，忽略读/写位。只有从机地址的前7位（6-0）会被写入本寄存器。</p>
@@ -2602,7 +2622,7 @@ should be written to this register. For example, if the slave address is
 appends the read/write bit as appropriate, based on the state of the
 TWIMDIR bit in the master mode control register.</p>
 </blockquote>
-<p><img src="https://pic.islet.space/2021/05/20210525143542.png" alt="image-20210525140743855" style="zoom: 67%;" /></p>
+<p><img src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/20210525143542.png" alt="image-20210525140743855" style="zoom: 67%;" /></p>
 <p style="text-align: center; color: gray; font-weight: 800;">
 图 A-146 TWIMADDR 寄存器
 </p>
@@ -2613,25 +2633,26 @@ information on the current transfer.</li>
 <li>Slave mode operation does not affect master mode status bits.</li>
 </ul>
 <figure>
-<img src="https://pic.islet.space/2021/06/20210603153454.png"
+<img
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/06/20210603153454.png"
 alt="image-20210603153452903" />
 <figcaption aria-hidden="true">image-20210603153452903</figcaption>
 </figure>
 <p>如果TWIMSTAT寄存器中的第2位是1</p>
-<p><img src="https://pic.islet.space/2021/06/20210603153720.png" alt="image-20210603153655529" style="zoom:80%;" /></p>
-<p><img src="https://pic.islet.space/2021/06/20210603153724.png" alt="image-20210603153719024" style="zoom:80%;" /></p>
+<p><img src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/06/20210603153720.png" alt="image-20210603153655529" style="zoom:80%;" /></p>
+<p><img src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/06/20210603153724.png" alt="image-20210603153719024" style="zoom:80%;" /></p>
 <h3 id="twififoctl">TWIFIFOCTL</h3>
 <p>TWIFIFOCTL（<strong>FIFO Control
 Register</strong>），即先进先出控制寄存器，只控制FIFO，<mark>完全不与主机模式
 或 从机模式操作绑定。</mark></p>
-<p><img src="https://pic.islet.space/2021/05/20210525144902.png" alt="image-20210525144403383" style="zoom: 67%;" /></p>
+<p><img src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/20210525144902.png" alt="image-20210525144403383" style="zoom: 67%;" /></p>
 <p style="text-align: center; color: gray; font-weight: 800;">
 图 A-151 TWIFIFOCTL 寄存器
 </p>
 <p style="text-align: center; color: gray; font-weight: 800;">
 表A-135 TWIFIFOCTL 寄存器位功能描述
 </p>
-<p><img src="https://pic.islet.space/2021/05/20210525144904.png" alt="image-20210525144738016" style="zoom:67%;" /></p>
+<p><img src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/20210525144904.png" alt="image-20210525144738016" style="zoom:67%;" /></p>
 <h3 id="twififostat">TWIFIFOSTAT</h3>
 <ul>
 <li>指示FIFO缓冲区的接收和发送内容的状态。</li>
@@ -2639,17 +2660,20 @@ Register</strong>），即先进先出控制寄存器，只控制FIFO，<mark>�
 <li>可以对FIFO进行管理，允许同时进行主、从操作。</li>
 </ul>
 <figure>
-<img src="https://pic.islet.space/2021/06/20210603152241.png"
+<img
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/06/20210603152241.png"
 alt="image-20210603152156841" />
 <figcaption aria-hidden="true">image-20210603152156841</figcaption>
 </figure>
 <figure>
-<img src="https://pic.islet.space/2021/06/20210603152239.png"
+<img
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/06/20210603152239.png"
 alt="image-20210603152211766" />
 <figcaption aria-hidden="true">image-20210603152211766</figcaption>
 </figure>
 <figure>
-<img src="https://pic.islet.space/2021/06/20210603152242.png"
+<img
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/06/20210603152242.png"
 alt="image-20210603152235432" />
 <figcaption aria-hidden="true">image-20210603152235432</figcaption>
 </figure>
@@ -2678,15 +2702,15 @@ register）。</p></li>
 <li><p>所有的位都是粘性的 （sticky）和
 <strong><em>RW1C</em></strong>。</p></li>
 </ul>
-<p><img src="https://pic.islet.space/2021/05/20210525163021.png" alt="image-20210525163016113" style="zoom: 50%;" /></p>
+<p><img src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/20210525163021.png" alt="image-20210525163016113" style="zoom: 50%;" /></p>
 <p style="text-align: center; color: gray; font-weight: 800;">
 图 A-1534 TWIIRPTL 寄存器
 </p>
 <p style="text-align: center; color: gray; font-weight: 800;">
 表A-137 TWIIRPTL 寄存器位功能描述
 </p>
-<p><img src="https://pic.islet.space/2021/05/20210525164025.png" alt="image-20210525163933340" style="zoom:67%;" /></p>
-<p><img src="https://pic.islet.space/2021/05/20210525164028.png" alt="image-20210525163959598" style="zoom:67%;" /></p>
+<p><img src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/20210525164025.png" alt="image-20210525163933340" style="zoom:67%;" /></p>
+<p><img src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/20210525164028.png" alt="image-20210525163959598" style="zoom:67%;" /></p>
 <h4 id="twitxint">TWITXINT</h4>
 <p>首先要搞清楚，这个TWITXINT
 是寄存器还是寄存器位，如果是寄存器位，哪它来自于哪个寄存器呢。目前已知包含TWITXINT的寄存器有：<code>TWIIRPTL</code>
@@ -2718,15 +2742,15 @@ register）一个<strong>中断延迟位</strong>（interrupt latch
 bit）通信。</li>
 <li>对TWIIMASK寄存器的读写不会影响 TWIIRPTL 寄存器的内容。</li>
 </ul>
-<p><img src="https://pic.islet.space/2021/05/20210525164217.png" alt="image-20210525145706357" style="zoom: 67%;" /></p>
+<p><img src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/20210525164217.png" alt="image-20210525145706357" style="zoom: 67%;" /></p>
 <p style="text-align: center; color: gray; font-weight: 800;">
 图 A-154 TWIIMASK 寄存器
 </p>
 <p style="text-align: center; color: gray; font-weight: 800;">
 表A-138 TWIIMASK 寄存器位功能描述
 </p>
-<p><img src="https://pic.islet.space/2021/05/20210525150124.png" alt="image-20210525150058029" style="zoom:67%;" /></p>
-<p><img src="https://pic.islet.space/2021/05/20210525164016.png" alt="image-20210525150122857" style="zoom:67%;" /></p>
+<p><img src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/20210525150124.png" alt="image-20210525150058029" style="zoom:67%;" /></p>
+<p><img src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/20210525164016.png" alt="image-20210525150122857" style="zoom:67%;" /></p>
 <h3 id="txtwi8">TXTWI8</h3>
 <p>8位传输用FIFO寄存器（TWI 8-bit transmit FIFO
 register），做数据缓存之用。</p>
@@ -2739,18 +2763,19 @@ register），做数据缓存之用。</p>
 <li>当FIFO缓存存满时，仍有数据需要写入的话，核心就会让数据等着，直到转运缓存（TRANSMIT
 FIFO BUFFER）由至少一个字节的空间时才能完成写入操作。</li>
 </ul>
-<p><img src="https://pic.islet.space/2021/05/20210525161210.png" alt="image-20210525155309392" style="zoom:67%;" /></p>
+<p><img src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/20210525161210.png" alt="image-20210525155309392" style="zoom:67%;" /></p>
 <p style="text-align: center; color: gray; font-weight: 800;">
 图 22-7 8位传输FIFO寄存器
 </p>
-<p><img src="https://pic.islet.space/2021/05/20210527133602.png" alt="image-20210527114613231" style="zoom:67%;" /></p>
+<p><img src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/20210527133602.png" alt="image-20210527114613231" style="zoom:67%;" /></p>
 <h3 id="例程">例程</h3>
 <h4 id="主寄存器初始化函数">主寄存器初始化函数</h4>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">ADAU1772_1_ADDR = <span class="number">0X3C</span>;  <span class="comment">//第一个从设备的地址是0x3C，其ADDR1和ADDR0引脚均为0；</span></span><br><span class="line">ADAU1772_2_ADDR = <span class="number">0X3D</span>;  <span class="comment">//第一个从设备的地址是0x3D，其ADDR1和ADDR0引脚为0和1；</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Master_TWI_Init</span><span class="params">(<span class="keyword">void</span>)</span></span>&#123;</span><br><span class="line">	<span class="comment">// 预分频为 fPCLK/10 MHz</span></span><br><span class="line">	*pTWIMITR = (<span class="number">0x14</span>) | TWIEN;  <span class="comment">//0x14和0x80进行 位或操作，将结果148写入TWI主机时间寄存器中</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">// CLKDIV = TWI SCL period ? 10 MHz time reference</span></span><br><span class="line">	<span class="comment">// CLKDIV = (1/100 KHz) / 100 ns = 100</span></span><br><span class="line">	<span class="comment">// For 40 - 60 duty cycle, CLKHI = 40 and CLKLOW = 60</span></span><br><span class="line"></span><br><span class="line">	*pTWIDIV = (CLKHI &lt;&lt; <span class="number">8</span>) | CLKLOW;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 需要被访问的从设备的地址</span></span><br><span class="line">	*pTWIMADDR = ADAU1772_1_ADDR; </span><br><span class="line"></span><br><span class="line">	<span class="comment">// 传送至从属设备的第一个字节数据</span></span><br><span class="line">	*pTXTWI8 = <span class="number">0x00</span>;</span><br><span class="line">    *pTXTWI8 = <span class="number">0x85</span>; <span class="comment">//(0101 0101b)</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">/*  // 配置TWIFIFOCTL寄存器，为每个数据字节(byte)生成中断</span></span><br><span class="line"><span class="comment">	*pTWIFIFOCTL = TWITXFLUSH | TWIRXFLUSH;</span></span><br><span class="line"><span class="comment">	*pTWIFIFOCTL = 0;</span></span><br><span class="line"><span class="comment">	*/</span>  <span class="comment">//暂时禁用该数据写入寄存器配置（包括中断和写入读取规则等）</span></span><br><span class="line">    *pTWIFIFOCTL = <span class="number">0x15</span>;  <span class="comment">//即（0 1111b），详细配置信息请参照《ADSP-214xx SHARC Processor Hardware Reference》</span></span><br><span class="line">    </span><br><span class="line">	<span class="comment">// 中断使能位，上方已经写过了，有些重复</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">ifdef</span> INTERRUPT_MODE</span></span><br><span class="line">	*pTWIIMASK |= TWITXINT;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br><span class="line"></span><br><span class="line">	<span class="comment">// 打开TWI的控制寄存器</span></span><br><span class="line">	*pTWIMCTL = (N &lt;&lt; <span class="number">6</span>);  <span class="comment">//？？</span></span><br><span class="line">	*pTWIMCTL |= TWIMEN;  <span class="comment">// 打开主机模式（Master Mode enable）</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h2 id="特性-features">特性 Features</h2>
 <p>《HWR》第855页起对TWI进行了描述。</p>
 <figure>
-<img src="https://pic.islet.space/2021/06/20210603140236.png"
+<img
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/06/20210603140236.png"
 alt="image-20210603140215469" />
 <figcaption aria-hidden="true">image-20210603140215469</figcaption>
 </figure>
@@ -2767,13 +2792,13 @@ alt="image-20210603140215469" />
 <li>在总线锁死时，对数据和时钟线的独立复写控制</li>
 <li>峰值抑制的输入滤波器</li>
 </ul>
-<p><img src="https://pic.islet.space/2021/05/20210527100924.png" alt="image-20210527100834503" style="zoom: 67%;" /></p>
-<p><img src="https://pic.islet.space/2021/05/20210527133611.png" alt="image-20210527100951355" style="zoom:67%;" /></p>
+<p><img src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/20210527100924.png" alt="image-20210527100834503" style="zoom: 67%;" /></p>
+<p><img src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/20210527133611.png" alt="image-20210527100951355" style="zoom:67%;" /></p>
 <h2 id="针脚描述-pin-descriptions">针脚描述 Pin Descriptions</h2>
-<p><img src="https://pic.islet.space/2021/05/20210527102109.png" alt="image-20210527101956389" style="zoom:67%;" /></p>
+<p><img src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/20210527102109.png" alt="image-20210527101956389" style="zoom:67%;" /></p>
 <h2 id="sru编程-sru-programming">SRU编程 SRU Programming</h2>
 <p>TWI信号可以通过 <code>SRU2</code> ，如表22-3所示进行路由。</p>
-<p><img src="https://pic.islet.space/2021/05/20210527102114.png" alt="image-20210527102029529" style="zoom:67%;" /></p>
+<p><img src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/20210527102114.png" alt="image-20210527102029529" style="zoom:67%;" /></p>
 <blockquote>
 <p>Identify the peripherals that you are trying to connect to the SHARC
 DSP, and count the unique signals. List the unique I/O signals and look
@@ -2793,7 +2818,7 @@ devices, it also counts as a single signal.</p></li>
 <p><strong><em>注意</em></strong> 下图中的 <code>PBxx_O</code> /
 <code>PBxx_I</code> / <code>PBENxx_I</code>
 。针脚缓冲器就像一个小型缓冲器放大器，可以提供足够的电流来驱动针脚和电路板上的痕迹。打开时（即当其启用输入为逻辑高时），针缓冲输入处的逻辑值被驱动到针缓冲输出上。当关闭时（即，当其启用输入为逻辑低时），缓冲器放大器为高阻抗，并且引脚缓冲器输出的逻辑电平很容易由外部源控制。引脚缓冲区是与DAI相关联的物理IC包引线的逻辑网关。</p>
-<p><img src="https://pic.islet.space/2021/06/20210603170450.png" alt="image-20210603170447943" style="zoom: 80%;" /></p>
+<p><img src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/06/20210603170450.png" alt="image-20210603170447943" style="zoom: 80%;" /></p>
 <p>由于引脚缓冲器是一个片上外设，连接到物理封装上的信号被称为引脚缓冲器的输出。虽然它是SHARC的一个输入，但它是引脚缓冲器的一个输出。请注意，图1显示了两个连接的轨迹，它们被标记为
 <code>PBxx_O</code>（引脚缓冲器输出）。其中一个是SRU接口的一部分，另一个是外部封装连接引脚。当引脚缓冲器被用作输入时，信号会沿着这个路径。换句话说，SRU内的引脚缓冲器输出总是等于外部引脚的逻辑值。</p>
 <p>——《<em>Configuring the Signal Routing Unit of ADSP-2126x SHARC®
@@ -2811,7 +2836,7 @@ MODE</em></strong></p>
 100ns。</li>
 </ul>
 <p>分频数的计算案例如下：</p>
-<p><img src="https://pic.islet.space/2021/05/20210527102916.png" alt="image-20210527102754286" style="zoom:67%;" /></p>
+<p><img src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/20210527102916.png" alt="image-20210527102754286" style="zoom:67%;" /></p>
 <h2 id="功能描述-functional-description">功能描述 Functional
 Description</h2>
 <p>下图22-1展示了TWI控制器的架构。</p>
@@ -2823,7 +2848,7 @@ interface）支持32位宽的数据传输，并被处理器用于支持寄存器
 <li><strong>FIFO缓冲器</strong>
 被配置为一个1字节宽、2字节深的发送/接收FIFO缓冲器。</li>
 </ul>
-<p><img src="https://pic.islet.space/2021/05/20210527133616.png" alt="image-20210527103515471"  /></p>
+<p><img src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/20210527133616.png" alt="image-20210527103515471"  /></p>
 <ul>
 <li><strong>发送移位寄存器</strong>（transmit
 shift）串行地将其数据从外部移出芯片（shift its data out externally off
@@ -2856,15 +2881,15 @@ output）被驱动为低电平，时钟低电平（<code>CLKLOW</code>）计数�
 <p>The TWI controller only issues a clock during master mode operation
 and only at the time a transfer has been initiated.</p>
 </blockquote>
-<p><img src="https://pic.islet.space/2021/06/20210603144929.png" alt="image-20210603144317584" style="zoom:80%;" /></p>
+<p><img src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/06/20210603144929.png" alt="image-20210603144317584" style="zoom:80%;" /></p>
 <p>TWI控制器遵守《<em>Philips I2C Bus Specification version 2.1 dated
 January 2000</em>》传输协议。图22-3是简易的TWI传输示意。</p>
-<p><img src="https://pic.islet.space/2021/06/20210603172309.png" alt="image-20210603145223033" style="zoom:80%;" /></p>
+<p><img src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/06/20210603172309.png" alt="image-20210603145223033" style="zoom:80%;" /></p>
 <p>图22-4是TWI控制器在传输过程中的寄存器映射。</p>
-<p><img src="https://pic.islet.space/2021/06/20210603172312.png" alt="image-20210603145235075" style="zoom: 80%;" /></p>
+<p><img src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/06/20210603172312.png" alt="image-20210603145235075" style="zoom: 80%;" /></p>
 <h3 id="总线仲裁-bus-arbitration">总线仲裁 Bus Arbitration</h3>
 <p>略</p>
-<p><img src="https://pic.islet.space/2021/06/20210603145741.png" alt="image-20210603145739629" style="zoom:67%;" /></p>
+<p><img src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/06/20210603145741.png" alt="image-20210603145739629" style="zoom:67%;" /></p>
 <h3 id="开始与结束情景-start-stop-condition">开始与结束情景 Start &amp;
 Stop condition</h3>
 <p>略</p>
@@ -2934,7 +2959,7 @@ TWI有一个输入和输出的串行移位器，下面将介绍。</p>
 <p><strong>Input Shift Register</strong>：
 接收移位寄存器从芯片外串行地接收数据。在内部，接收移位寄存器是字节宽的，收到的数据可以被转移到缓冲区或用于地址比较。</p>
 <h2 id="中断-interrupt">中断 Interrupt</h2>
-<p><img src="https://pic.islet.space/2021/05/20210527133619.png" alt="image-20210527104039047" style="zoom:67%;" /></p>
+<p><img src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/20210527133619.png" alt="image-20210527104039047" style="zoom:67%;" /></p>
 <h2 id="调试特征-debug-feature">调试特征 Debug Feature</h2>
 <h3 id="masking">Masking</h3>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">bit <span class="built_in">set</span> IMASK P14I; <span class="comment">/* unmasks P14I interrupt */</span></span><br><span class="line">ustat1=dm(DPI_IMASK_RE); <span class="comment">/* set TWI Int */</span></span><br><span class="line">bit <span class="built_in">set</span> ustat1 TWI_INT;</span><br><span class="line">dm(DPI_IMASK_RE)=ustat1;</span><br></pre></td></tr></table></figure>
@@ -2960,7 +2985,7 @@ value <code>0x0201</code> enables master mode operation, generates a
 7-bit address, sets the direction to master-transmit, uses standard mode
 timing, and transmits 8 data bytes before generating a stop
 condition.</p>
-<p><img src="https://pic.islet.space/2021/05/20210527105334.png" alt="image-20210527104628291" style="zoom:67%;" /></p>
+<p><img src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/20210527105334.png" alt="image-20210527104628291" style="zoom:67%;" /></p>
 <h1 id="clock">Clock</h1>
 <blockquote>
 <p>The PLLD bits define the VCO output clock to core clock ratio to
@@ -3017,9 +3042,10 @@ peripherals）)</li>
 17-16）</li>
 <li>包含三选一的加速器（FIR、IIR、FFT）</li>
 </ul>
-<p><img src="https://pic.islet.space/2021/06/20210608103432.png" alt="image-20210608101359924" style="zoom: 67%;" /></p>
+<p><img src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/06/20210608103432.png" alt="image-20210608101359924" style="zoom: 67%;" /></p>
 <figure>
-<img src="https://pic.islet.space/2021/05/20210527150918.png"
+<img
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/20210527150918.png"
 alt="image-20210527150852485" />
 <figcaption aria-hidden="true">image-20210527150852485</figcaption>
 </figure>
@@ -3030,22 +3056,25 @@ alt="image-20210527150852485" />
 表A-3 PMCTL寄存器位功能描述
 </p>
 <figure>
-<img src="https://pic.islet.space/2021/05/20210527151117.png"
+<img
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/20210527151117.png"
 alt="image-20210527151035867" />
 <figcaption aria-hidden="true">image-20210527151035867</figcaption>
 </figure>
 <figure>
-<img src="https://pic.islet.space/2021/05/20210527151120.png"
+<img
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/20210527151120.png"
 alt="image-20210527151017770" />
 <figcaption aria-hidden="true">image-20210527151017770</figcaption>
 </figure>
 <figure>
-<img src="https://pic.islet.space/2021/05/20210527151124.png"
+<img
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/20210527151124.png"
 alt="image-20210527151110432" />
 <figcaption aria-hidden="true">image-20210527151110432</figcaption>
 </figure>
 <h3 id="pmctl1">PMCTL1</h3>
-<p><img src="https://pic.islet.space/2021/05/20210527152316.png" alt="image-20210527152044822" style="zoom:67%;" /></p>
+<p><img src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/20210527152316.png" alt="image-20210527152044822" style="zoom:67%;" /></p>
 <p style="text-align: center; color: gray; font-weight: 800;">
 图 A-3 PMCTL1 寄存器
 </p>
@@ -3053,17 +3082,20 @@ alt="image-20210527151110432" />
 表A-4 PMCTL1寄存器位功能描述
 </p>
 <figure>
-<img src="https://pic.islet.space/2021/05/20210527152313.png"
+<img
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/20210527152313.png"
 alt="image-20210527152155406" />
 <figcaption aria-hidden="true">image-20210527152155406</figcaption>
 </figure>
 <figure>
-<img src="https://pic.islet.space/2021/05/20210527152318.png"
+<img
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/20210527152318.png"
 alt="image-20210527152229763" />
 <figcaption aria-hidden="true">image-20210527152229763</figcaption>
 </figure>
 <figure>
-<img src="https://pic.islet.space/2021/05/20210527152322.png"
+<img
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/20210527152322.png"
 alt="image-20210527152251696" />
 <figcaption aria-hidden="true">image-20210527152251696</figcaption>
 </figure>
@@ -3074,9 +3106,9 @@ alt="image-20210527152251696" />
 <strong>处理器核心时钟</strong>（CCLK）。正在使用的分频器可以被随时改变，新的分频比率可以实时被应用。</p>
 <p><mark style="font-weight: 900;">Page 957:</mark>
 <strong>PLLD</strong>只有2位，可以设置为2、4、8、16。</p>
-<p><img src="https://pic.islet.space/2021/05/20210529113458.png" alt="image-20210529113003651" style="zoom:67%;" /></p>
+<p><img src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/20210529113458.png" alt="image-20210529113003651" style="zoom:67%;" /></p>
 <p><mark style="font-weight: 900;">&lt;def21479.h&gt;</mark>:<img
-src="https://pic.islet.space/2021/05/20210529113406.png"
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/20210529113406.png"
 alt="image-20210529113403231" /></p>
 <p>以下这几个操作中均需要用到PLLD，分别是：</p>
 <ul>
@@ -3085,9 +3117,9 @@ Model）</li>
 <li>改变链接口时钟（Changing the Link Port Clock）</li>
 <li>发布分频器（Post Divider）</li>
 </ul>
-<p><img src="https://pic.islet.space/2021/05/20210529113238.png" alt="image-20210529111641680" style="zoom:67%;" /></p>
-<p><img src="https://pic.islet.space/2021/05/20210529113241.png" alt="image-20210529111748944" style="zoom:67%;" /></p>
-<p><img src="https://pic.islet.space/2021/05/20210529113244.png" alt="image-20210529112121464" style="zoom:67%;" /></p>
+<p><img src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/20210529113238.png" alt="image-20210529111641680" style="zoom:67%;" /></p>
+<p><img src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/20210529113241.png" alt="image-20210529111748944" style="zoom:67%;" /></p>
+<p><img src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/20210529113244.png" alt="image-20210529112121464" style="zoom:67%;" /></p>
 <h2 id="官方示例">官方示例</h2>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Init_PLL</span><span class="params">(<span class="keyword">void</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> temp,i;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// Step 1 - change the PLLD to 4</span></span><br><span class="line">	temp=*pPMCTL;   <span class="comment">//备份PMCTL寄存器的值至temp</span></span><br><span class="line">	temp&amp;=~PLLD16 ;     <span class="comment">//0x20，将PLLD16的值和temp进行逐位“与”运算</span></span><br><span class="line">	temp|=(PLLD4 | DIVEN) ;   <span class="comment">//0x260    0010 0110 0000</span></span><br><span class="line">	*pPMCTL = temp;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// Step 2 - 等待分频器稳定</span></span><br><span class="line">	SysWait(<span class="number">16</span>);</span><br><span class="line"></span><br><span class="line">	<span class="comment">// Step 3 - set INDIV bit now to bring down the VCO speed and enter the bypass mode</span></span><br><span class="line">	temp&amp;=~DIVEN;</span><br><span class="line">	temp|=(INDIV | PLLBP);</span><br><span class="line">	*pPMCTL = temp;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// Step 4 -等待PLL锁定</span></span><br><span class="line">	SysWait(<span class="number">4096</span>);</span><br><span class="line"></span><br><span class="line">	<span class="comment">// Step 5 - come out of the bypass mode</span></span><br><span class="line">	temp=*pPMCTL;</span><br><span class="line">	temp&amp;=~PLLBP;</span><br><span class="line">	*pPMCTL = temp;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// Step 6 - 等待分频器稳定</span></span><br><span class="line">	SysWait(<span class="number">16</span>);</span><br><span class="line"></span><br><span class="line">	<span class="comment">// Step 7 - set the required PLLM and INDIV values here  and enter the bypass mode</span></span><br><span class="line">	 <span class="comment">//PLLM=16, INDIV=0,  fVCO=2*PLLM*CLKIN = 2*16*16.625 = 532 MHz</span></span><br><span class="line">	temp = *pPMCTL;</span><br><span class="line">	temp&amp;=~ (INDIV | PLLM63);</span><br><span class="line">	temp|= (PLL_MULT| PLLBP);</span><br><span class="line">	*pPMCTL = temp;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// Step 8 - wait for the PLL to lock</span></span><br><span class="line">	<span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;<span class="number">4096</span>;i++);</span><br><span class="line"></span><br><span class="line">	<span class="comment">// Step 9 - come out of the bypass mode</span></span><br><span class="line">	temp = *pPMCTL;</span><br><span class="line">	temp&amp;=~PLLBP;</span><br><span class="line">	*pPMCTL=temp;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// Step 10 - wait for dividers to stabilize</span></span><br><span class="line">	SysWait(<span class="number">16</span>);</span><br><span class="line">	</span><br><span class="line">	<span class="comment">// Step 11 - set the required values of PLLD(=2) and SDCKR (=2.5 for ADSP-21489 and 2 for ADSP-21479) here</span></span><br><span class="line">	<span class="comment">// fCCLK = fVCO/PLLD = 532/2 = 266 MHz, fSDCLK = fCCLK/SDCKR = 266/2 = 133 MHz</span></span><br><span class="line">	temp=*pPMCTL;</span><br><span class="line">	temp&amp;=~(PLLD16 | <span class="number">0x1C0000</span> );</span><br><span class="line">	temp|= (SDCKR2 | PLLD2 | DIVEN);</span><br><span class="line">	*pPMCTL=temp;</span><br><span class="line">	</span><br><span class="line">	<span class="comment">// Step 12 - wait for the dividers to stabilize</span></span><br><span class="line">	SysWait(<span class="number">16</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p><strong>问题</strong>1： 为啥一定要使用temp变量来进行处理，直接使用
@@ -3140,7 +3172,8 @@ SDRAM 时钟的要求 VCO frequency = 2*f<sub>INPUT</sub>*PLLM =
 <li>DAI和DPI都是4分频</li>
 </ul>
 <figure>
-<img src="https://pic.islet.space/2021/06/20210602150124.png"
+<img
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/06/20210602150124.png"
 alt="image-20210602150117965" />
 <figcaption aria-hidden="true">image-20210602150117965</figcaption>
 </figure>
@@ -3174,12 +3207,14 @@ DPI_IMASK_RE 和 DPI_IMASK_FE。</p>
 <p><strong>DPI
 中断锁存寄存器</strong>（<strong>DPI_IRPTL</strong>）：为DPI中断锁存中断。</p>
 <figure>
-<img src="https://pic.islet.space/2021/06/20210603134601.png"
+<img
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/06/20210603134601.png"
 alt="image-20210603134437928" />
 <figcaption aria-hidden="true">image-20210603134437928</figcaption>
 </figure>
 <figure>
-<img src="https://pic.islet.space/2021/06/20210603134603.png"
+<img
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/06/20210603134603.png"
 alt="image-20210603134453465" />
 <figcaption aria-hidden="true">image-20210603134453465</figcaption>
 </figure>
@@ -3204,7 +3239,8 @@ to）核心中断控制逻辑。</p>
 interrupt line and fed to the core’s interrupt controller logic.</p>
 </blockquote>
 <figure>
-<img src="https://pic.islet.space/2021/06/20210602155414.png"
+<img
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/06/20210602155414.png"
 alt="image-20210602154656729" />
 <figcaption aria-hidden="true">image-20210602154656729</figcaption>
 </figure>
@@ -3220,7 +3256,7 @@ into）32个中断源里，并以 <code>DAI_INT 0 ~ 31</code> 作为标签名称
 <p>DPI有3个外围（中断）源都被多路复用至（multiplexed
 into）12个中断源里，并以 <code>DPI_INT 0 ~ 13</code> 作为标签名称。</p>
 <p>下表介绍了DAI/DPI在不同的通信方式和信号响应的关系。</p>
-<p><img src="https://pic.islet.space/2021/06/image-20210602195334432.png" alt="image-20210602195334432" style="zoom:67%;" /></p>
+<p><img src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/06/image-20210602195334432.png" alt="image-20210602195334432" style="zoom:67%;" /></p>
 <h4 id="dai中断锁存优先级设置">DAI中断锁存优先级设置</h4>
 <p>DAI系统中断控制器寄存器对（ <code>DAI_IRPTL_H</code> 和
 <code>DAI_IRPTL_L</code>）取代了通常由核心中断控制器的IRPTL寄存器执行的功能。一个单一的寄存器（
@@ -3231,12 +3267,12 @@ into）12个中断源里，并以 <code>DPI_INT 0 ~ 13</code> 作为标签名称
 <code>P12I</code> 核心中断上。默认情况下。<code>PICR</code>
 寄存器可以改变这种连接。每当DAI的低优先级中断被设置，<code>LIRPTL</code>寄存器中的
 <code>DAILI</code> 位就会被设置，核心就会为该低优先级中断服务。</p>
-<p><img src="https://pic.islet.space/2021/06/image-20210602200433030.png" alt="image-20210602200433030" style="zoom:67%;" /></p>
+<p><img src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/06/image-20210602200433030.png" alt="image-20210602200433030" style="zoom:67%;" /></p>
 <p><strong>注意</strong>：
 DAI会在<strong>中断向量表</strong>中触发一个高优先级一个低优先级的中断。当任一来自DAI的中断需要服务时，两个核心ISR之一必须审查（interrogate）DAI的中断控制器以判定其中断源。</p>
 <blockquote>
 <p>中断向量表（Interrupt Vector Table, IVT）, Page 177</p>
-<p><img src="https://pic.islet.space/2021/06/image-20210602205507981.png" alt="image-20210602205507981" style="zoom:67%;" /></p>
+<p><img src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/06/image-20210602205507981.png" alt="image-20210602205507981" style="zoom:67%;" /></p>
 </blockquote>
 <h4 id="dpi中断锁存">DPI中断锁存</h4>
 <p>DPI系统中断控制寄存器（<code>DPI_IRPTL</code>）取代了通常是由核心控制器寄存器（<code>IRPTL</code>）的功能。</p>
@@ -3389,28 +3425,29 @@ controller）对中断的确认状态。</p></li>
 <p>首先，SPORT是指Serial Port，即串行接口。有0 ~ 7
 共8个这样的SPORT。</p>
 <figure>
-<img src="https://pic.islet.space/2021/06/20210629151248.png"
+<img
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/06/20210629151248.png"
 alt="image-20210629151245935" />
 <figcaption aria-hidden="true">image-20210629151245935</figcaption>
 </figure>
 <p>如果需要用到I2S模式，则需要针对 <code>SPCTLx</code> 和
 <code>SPMCTLx</code> 两个寄存器中的某些位做单独设置，其设置指引表格如下
 ：</p>
-<p><img src="https://pic.islet.space/2021/06/20210629151016.png" alt="image-20210629150923785" style="zoom:80%;" /></p>
+<p><img src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/06/20210629151016.png" alt="image-20210629150923785" style="zoom:80%;" /></p>
 <h2 id="spctl">SPCTL</h2>
 <p>SPCTL 寄存器在多种模式下具有不同的位定义。</p>
 <h3 id="寄存器位指示">寄存器位指示</h3>
-<p><img src="https://pic.islet.space/2021/06/20210629162516.png" alt="image-20210629162509309" style="zoom: 80%;" /></p>
-<p><img src="https://pic.islet.space/2021/06/20210629162554.png" alt="image-20210629162550029" style="zoom:80%;" /></p>
-<p><img src="https://pic.islet.space/2021/06/20210629162731.png" alt="image-20210629162728195" style="zoom:80%;" /></p>
+<p><img src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/06/20210629162516.png" alt="image-20210629162509309" style="zoom: 80%;" /></p>
+<p><img src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/06/20210629162554.png" alt="image-20210629162550029" style="zoom:80%;" /></p>
+<p><img src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/06/20210629162731.png" alt="image-20210629162728195" style="zoom:80%;" /></p>
 <h3 id="寄存器位说明">寄存器位说明</h3>
-<p><img src="https://pic.islet.space/2021/06/20210629172559.png" alt="image-20210629172318405" style="zoom: 67%;" /></p>
-<p><img src="https://pic.islet.space/2021/06/20210629172604.png" alt="image-20210629172412087" style="zoom:67%;" /></p>
-<p><img src="https://pic.islet.space/2021/06/20210629172610.png" alt="image-20210629172430662" style="zoom:67%;" /></p>
-<p><img src="https://pic.islet.space/2021/06/20210629172614.png" alt="image-20210629172455121" style="zoom:67%;" /></p>
-<p><img src="https://pic.islet.space/2021/06/20210629172619.png" alt="image-20210629172510903" style="zoom:67%;" /></p>
-<p><img src="https://pic.islet.space/2021/06/20210629172625.png" alt="image-20210629172534214" style="zoom:67%;" /></p>
-<p><img src="https://pic.islet.space/2021/06/20210629172628.png" alt="image-20210629172549089" style="zoom:67%;" /></p>
+<p><img src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/06/20210629172559.png" alt="image-20210629172318405" style="zoom: 67%;" /></p>
+<p><img src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/06/20210629172604.png" alt="image-20210629172412087" style="zoom:67%;" /></p>
+<p><img src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/06/20210629172610.png" alt="image-20210629172430662" style="zoom:67%;" /></p>
+<p><img src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/06/20210629172614.png" alt="image-20210629172455121" style="zoom:67%;" /></p>
+<p><img src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/06/20210629172619.png" alt="image-20210629172510903" style="zoom:67%;" /></p>
+<p><img src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/06/20210629172625.png" alt="image-20210629172534214" style="zoom:67%;" /></p>
+<p><img src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/06/20210629172628.png" alt="image-20210629172549089" style="zoom:67%;" /></p>
 <h2 id="spctlnx">SPCTLNx</h2>
 <p><strong><em>FE</em></strong>: frame edge 帧边沿</p>
 <p><strong><em>FS</em></strong>: frame sync 帧同步</p>
@@ -3422,23 +3459,27 @@ transmit DMA count is expired or when the last bit of last word is
 shifted out.</p>
 </blockquote>
 <figure>
-<img src="https://pic.islet.space/2021/06/image-20210630162335568.png"
+<img
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/06/image-20210630162335568.png"
 alt="image-20210630162335568" />
 <figcaption aria-hidden="true">image-20210630162335568</figcaption>
 </figure>
 <p>注意：212XX系列和213xx系列芯片上并没有这个寄存器。</p>
 <figure>
-<img src="https://pic.islet.space/2021/06/image-20210630162415539.png"
+<img
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/06/image-20210630162415539.png"
 alt="image-20210630162415539" />
 <figcaption aria-hidden="true">image-20210630162415539</figcaption>
 </figure>
 <figure>
-<img src="https://pic.islet.space/2021/06/image-20210630162442482.png"
+<img
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/06/image-20210630162442482.png"
 alt="image-20210630162442482" />
 <figcaption aria-hidden="true">image-20210630162442482</figcaption>
 </figure>
 <figure>
-<img src="https://pic.islet.space/2021/06/image-20210630162505383.png"
+<img
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/06/image-20210630162505383.png"
 alt="image-20210630162505383" />
 <figcaption aria-hidden="true">image-20210630162505383</figcaption>
 </figure>
@@ -3447,23 +3488,27 @@ alt="image-20210630162505383" />
 registers</p>
 <p>在214xx系列芯片中，该寄存器独立工作，并不成对操作；因此每一个SPORT都有其独立的多通道控制寄存器，所以只需要向两个SPMCTLx寄存器写一次，就可以将SPORT作为一对来操作。</p>
 <figure>
-<img src="https://pic.islet.space/2021/06/image-20210630162916913.png"
+<img
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/06/image-20210630162916913.png"
 alt="image-20210630162916913" />
 <figcaption aria-hidden="true">image-20210630162916913</figcaption>
 </figure>
 <p>其中，x表示0、2、4、6，y表示1、3、5、7。</p>
 <figure>
-<img src="https://pic.islet.space/2021/06/image-20210630163319226.png"
+<img
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/06/image-20210630163319226.png"
 alt="image-20210630163319226" />
 <figcaption aria-hidden="true">image-20210630163319226</figcaption>
 </figure>
 <figure>
-<img src="https://pic.islet.space/2021/06/image-20210630163357041.png"
+<img
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/06/image-20210630163357041.png"
 alt="image-20210630163357041" />
 <figcaption aria-hidden="true">image-20210630163357041</figcaption>
 </figure>
 <figure>
-<img src="https://pic.islet.space/2021/06/image-20210630163451919.png"
+<img
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/06/image-20210630163451919.png"
 alt="image-20210630163451919" />
 <figcaption aria-hidden="true">image-20210630163451919</figcaption>
 </figure>
@@ -3485,7 +3530,8 @@ CPU 的大量中断负载。否则，CPU
 控制器来实行和完成。典型的例子就是移动一个外部内存的区块到芯片内部更快的内存区。像是这样的操作并没有让处理器工作拖延，反而可以被重新排程去处理其他的工作。DMA
 传输对于高效能 嵌入式系统算法和网络是很重要的。</p>
 <figure>
-<img src="https://pic.islet.space/2021/06/format,f_auto.jpeg"
+<img
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/06/format,f_auto.jpeg"
 alt="DMA" />
 <figcaption aria-hidden="true">DMA</figcaption>
 </figure>
@@ -3512,7 +3558,8 @@ alt="DMA" />
 <h3 id="停止cpu访问内存">停止CPU访问内存</h3>
 <p>当外围设备要求传送一批数据时，由DMA控制器发一个停止信号给CPU，要求CPU放弃对地址总线、数据总线和有关控制总线的使用权。DMA控制器获得总线控制权以后，开始进行数据传送。在一批数据传送完毕后，DMA控制器通知CPU可以使用内存，并把总线控制权交还给CPU。图(a)是这种传送方式的时间图。很显然，在这种DMA传送过程中，CPU基本处于不工作状态或者说保持状态。</p>
 <figure>
-<img src="https://pic.islet.space/2021/06/image-20210630135714198.png"
+<img
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/06/image-20210630135714198.png"
 alt="image-20210630135714198" />
 <figcaption aria-hidden="true">image-20210630135714198</figcaption>
 </figure>
@@ -3524,7 +3571,8 @@ alt="image-20210630135714198" />
 <p>当I/O设备没有DMA请求时，CPU按程序要求访问内存；一旦I/O设备有DMA请求，则由I/O设备挪用一个或几个
 <strong>内存周期</strong>。这种传送方式的时间图如下图(b)：</p>
 <figure>
-<img src="https://pic.islet.space/2021/06/image-20210630135800538.png"
+<img
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/06/image-20210630135800538.png"
 alt="image-20210630135800538" />
 <figcaption aria-hidden="true">image-20210630135800538</figcaption>
 </figure>
@@ -3538,7 +3586,8 @@ alt="image-20210630135800538" />
 <h3 id="dma与cpu交替访问内存">DMA与CPU交替访问内存</h3>
 <p>如果CPU的工作周期比内存存取周期长很多，此时采用交替访内的方法可以使DMA传送和CPU同时发挥最高的效率。这种传送方式的时间图如下：</p>
 <figure>
-<img src="https://pic.islet.space/2021/06/image-20210630135821665.png"
+<img
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/06/image-20210630135821665.png"
 alt="image-20210630135821665" />
 <figcaption aria-hidden="true">image-20210630135821665</figcaption>
 </figure>
@@ -3580,12 +3629,13 @@ bit setting）。</p>
 <h1 id="tcb">TCB</h1>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* TCB = &quot;Transfer Control Block&quot; */</span></span><br><span class="line"><span class="comment">/* TCB format:    ECx (length of destination buffer),</span></span><br><span class="line"><span class="comment">				  EMx (destination buffer step size),</span></span><br><span class="line"><span class="comment">				  EIx (destination buffer index (initialized to start address)),</span></span><br><span class="line"><span class="comment">				  GPx (&quot;general purpose&quot;),</span></span><br><span class="line"><span class="comment">				  CPx (&quot;Chain Point register&quot;; points to last address (IIx) of next TCB to jump to upon completion of this TCB.),</span></span><br><span class="line"><span class="comment">				  Cx  (length of source buffer),</span></span><br><span class="line"><span class="comment">				  IMx (source buffer step size),</span></span><br><span class="line"><span class="comment">				  IIx (source buffer index (initialized to start address))       */</span></span><br></pre></td></tr></table></figure>
 <figure>
-<img src="https://pic.islet.space/2021/07/image-20210701013537361.png"
+<img
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/07/image-20210701013537361.png"
 alt="image-20210701013537361" />
 <figcaption aria-hidden="true">image-20210701013537361</figcaption>
 </figure>
-<p><img src="https://pic.islet.space/2021/06/20210629172133.png" alt="image-20210629155207745" style="zoom:80%;" /></p>
-<p><img src="https://pic.islet.space/2021/06/20210629172128.png" alt="image-20210629160318759" style="zoom: 80%;" /></p>
+<p><img src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/06/20210629172133.png" alt="image-20210629155207745" style="zoom:80%;" /></p>
+<p><img src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/06/20210629172128.png" alt="image-20210629160318759" style="zoom: 80%;" /></p>
 <h1 id="others">Others</h1>
 <h2 id="dmatcbsport之间的关系">DMA、TCB、SPORT之间的关系</h2>
 <p>DMA，Directly Memory Access，直接内存访问。</p>
@@ -3601,7 +3651,8 @@ id="clockarbitrationpllprescale">Clock、Arbitration、PLL、prescale</h2>
 <h3 id="twi-效果延迟时间">TWI 效果延迟（时间）</h3>
 <p>在TWI寄存器设置后，其效果延迟大概是 1.5到2个PCLK周期。</p>
 <figure>
-<img src="https://pic.islet.space/2021/05/20210525153905.png"
+<img
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/20210525153905.png"
 alt="image-20210525153855627" />
 <figcaption aria-hidden="true">image-20210525153855627</figcaption>
 </figure>
@@ -3667,12 +3718,14 @@ I</em></strong>）返回确认（ACK）信息。
 执行后，观察寄存器窗口查看到数据仍为0x00。</li>
 </ul>
 <figure>
-<img src="https://pic.islet.space/2021/06/20210607155909.png"
+<img
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/06/20210607155909.png"
 alt="image-20210607155906359" />
 <figcaption aria-hidden="true">image-20210607155906359</figcaption>
 </figure>
 <figure>
-<img src="https://pic.islet.space/2021/06/20210607163901.png"
+<img
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/06/20210607163901.png"
 alt="image-20210607163859502" />
 <figcaption aria-hidden="true">image-20210607163859502</figcaption>
 </figure>
@@ -3742,7 +3795,7 @@ target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/138573828">DMA
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-05-26 00:26:57" itemprop="dateModified" datetime="2021-05-26T00:26:57+08:00">2021-05-26</time>
+        <time title="Modified: 2023-02-15 21:11:02" itemprop="dateModified" datetime="2023-02-15T21:11:02+08:00">2023-02-15</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -3767,19 +3820,22 @@ target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/138573828">DMA
           <h1 id="预备知识">预备知识</h1>
 <h2 id="c标准库">C标准库</h2>
 <figure>
-<img src="https://pic.islet.space/2021/05/image-20210524001458724.png"
+<img
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/image-20210524001458724.png"
 alt="image-20210524001458724" />
 <figcaption aria-hidden="true">image-20210524001458724</figcaption>
 </figure>
 <h3 id="文本流">文本流</h3>
 <figure>
-<img src="https://pic.islet.space/2021/05/image-20210524001643408.png"
+<img
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/image-20210524001643408.png"
 alt="image-20210524001643408" />
 <figcaption aria-hidden="true">image-20210524001643408</figcaption>
 </figure>
 <h3 id="二进制流">二进制流</h3>
 <figure>
-<img src="https://pic.islet.space/2021/05/image-20210524001722423.png"
+<img
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/image-20210524001722423.png"
 alt="image-20210524001722423" />
 <figcaption aria-hidden="true">image-20210524001722423</figcaption>
 </figure>
@@ -3787,16 +3843,18 @@ alt="image-20210524001722423" />
 <h2 id="字符集和字符编码">字符集和字符编码</h2>
 <p><a target="_blank" rel="noopener" href="https://unicode.org/">UNICODE主页</a></p>
 <figure>
-<img src="https://pic.islet.space/2021/05/image-20210524002528437.png"
+<img
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/image-20210524002528437.png"
 alt="image-20210524002528437" />
 <figcaption aria-hidden="true">image-20210524002528437</figcaption>
 </figure>
 <h3 id="字符集对内存的影响">字符集对内存的影响</h3>
 <p>字符集涉及编码规则，包括单个字符所占用的空间大小，进而影响数据在硬件中的内存占用。</p>
-<p><img src="https://pic.islet.space/2021/05/image-20210526002443105.png" alt="image-20210526002443105"  /></p>
+<p><img src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/image-20210526002443105.png" alt="image-20210526002443105"  /></p>
 <p>如果将UTF-8转换成更为精简的GBK字符集，则会输出不同的结果。</p>
 <figure>
-<img src="https://pic.islet.space/2021/05/image-20210526002630693.png"
+<img
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/image-20210526002630693.png"
 alt="image-20210526002630693" />
 <figcaption aria-hidden="true">image-20210526002630693</figcaption>
 </figure>
@@ -4073,10 +4131,16 @@ false 和 true 两个值，即分别是0和1。</p>
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">Posted on</span>
-      
 
-      <time title="Created: 2021-05-23 18:22:00 / Modified: 22:03:34" itemprop="dateCreated datePublished" datetime="2021-05-23T18:22:00+08:00">2021-05-23</time>
+      <time title="Created: 2021-05-23 18:22:00" itemprop="dateCreated datePublished" datetime="2021-05-23T18:22:00+08:00">2021-05-23</time>
     </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2023-02-15 21:11:02" itemprop="dateModified" datetime="2023-02-15T21:11:02+08:00">2023-02-15</time>
+      </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
         <i class="far fa-folder"></i>
@@ -4162,23 +4226,27 @@ false 和 true 两个值，即分别是0和1。</p>
 <strong>在同一个作用域内</strong> 的不同枚举变量中定义
 <strong>名称一样的元素</strong>。</p>
 <figure>
-<img src="https://pic.islet.space/2021/05/image-20210523204125878.png"
+<img
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/image-20210523204125878.png"
 alt="image-20210523204125878" />
 <figcaption aria-hidden="true">image-20210523204125878</figcaption>
 </figure>
 <figure>
-<img src="https://pic.islet.space/2021/05/image-20210523204041715.png"
+<img
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/image-20210523204041715.png"
 alt="image-20210523204041715" />
 <figcaption aria-hidden="true">image-20210523204041715</figcaption>
 </figure>
 <p>以上两种情况的错误提示如下：</p>
 <figure>
-<img src="https://pic.islet.space/2021/05/image-20210523182310296.png"
+<img
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/image-20210523182310296.png"
 alt="image-20210523182310296" />
 <figcaption aria-hidden="true">image-20210523182310296</figcaption>
 </figure>
 <figure>
-<img src="https://pic.islet.space/2021/05/image-20210523204224839.png"
+<img
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/image-20210523204224839.png"
 alt="image-20210523204224839" />
 <figcaption aria-hidden="true">image-20210523204224839</figcaption>
 </figure>
@@ -4187,13 +4255,15 @@ alt="image-20210523204224839" />
 <p>枚举类数据不允许更改数值（包括自增和赋值都不允许），有点类似于常量（const）。</p>
 <p>枚举中的元素自增时的错误提示：</p>
 <figure>
-<img src="https://pic.islet.space/2021/05/image-20210523202049638.png"
+<img
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/image-20210523202049638.png"
 alt="image-20210523202049638" />
 <figcaption aria-hidden="true">image-20210523202049638</figcaption>
 </figure>
 <p>枚举中的元素赋值时的错误提示：</p>
 <figure>
-<img src="https://pic.islet.space/2021/05/image-20210523202501260.png"
+<img
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/image-20210523202501260.png"
 alt="image-20210523202501260" />
 <figcaption aria-hidden="true">image-20210523202501260</figcaption>
 </figure>
@@ -4205,7 +4275,8 @@ target="_blank" rel="noopener" href="https://zhidao.baidu.com/question/142755629
 </blockquote>
 <p>以下为常量自增时给出的错误提示：</p>
 <figure>
-<img src="https://pic.islet.space/2021/05/image-20210523202757582.png"
+<img
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/05/image-20210523202757582.png"
 alt="image-20210523202757582" />
 <figcaption aria-hidden="true">image-20210523202757582</figcaption>
 </figure>
@@ -4243,7 +4314,7 @@ alt="image-20210523202757582" />
 
 <div class="copyright">
   &copy; 2019 – 
-  <span itemprop="copyrightYear">2022</span>
+  <span itemprop="copyrightYear">2023</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

@@ -30,7 +30,7 @@
 <meta property="og:description" content="嵌入式芯片（如MCU、DSP等）内部包含众多的模块化外设，如 串口控制模块，SPI模块，I2C模块，A&#x2F;D模块，PWM模块，CAN模块，EEPROM，比较器模块，等等，它们都集成在芯片内部，有相对应的内部控制寄存器，可通过指令直接控制。 按照控制信号类别对外设进行分类，可以分为 模拟外设（Analog Peripherals）、控制外设（Control Peripherals） 和 通信外设（Co">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2021-07-11T05:50:00.000Z">
-<meta property="article:modified_time" content="2021-07-15T13:11:03.000Z">
+<meta property="article:modified_time" content="2023-02-15T13:11:02.146Z">
 <meta property="article:author" content="Liewzheng">
 <meta property="article:tag" content="TI">
 <meta property="article:tag" content="嵌入式">
@@ -258,7 +258,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-07-15 21:11:03" itemprop="dateModified" datetime="2021-07-15T21:11:03+08:00">2021-07-15</time>
+        <time title="Modified: 2023-02-15 21:11:02" itemprop="dateModified" datetime="2023-02-15T21:11:02+08:00">2023-02-15</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -317,12 +317,12 @@ Accelerator，是一个32位浮点数计算加速器，可以理解为一个专�
 <p>可以将CLA看作是辅助CPU进行计算的浮点运算协处理器（co-processor）。</p>
 <p>一个典型的应用场景如下：</p>
 <p><img
-src="https://pic.islet.space/2021/07/v2-9fdd0b85b26f7ff8074a8c58b1aba945_720w.jpg"
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/07/v2-9fdd0b85b26f7ff8074a8c58b1aba945_720w.jpg"
 alt="img" />闭环控制电路</p>
 <p>CPU通过ADC采集主电路的电压、电流信息，计算得到控制逻辑（包括频率以及占空比等），从而控制电路工作。因此如果CPU的计算负担很大，比如说需要计算傅里叶分解，比如说需要计算反三角函数等，那么就造成了极大的控制时延。而CLA应运而生，专门为计算浮点数进行优化，且不会造成CPU阻塞于计算而对异常情况无法响应的情况。</p>
 <figure>
 <img
-src="https://pic.islet.space/2021/07/v2-2d0d2214e132b1a9982d3ab50db429ff_720w.jpg"
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/07/v2-2d0d2214e132b1a9982d3ab50db429ff_720w.jpg"
 alt="img" />
 <figcaption aria-hidden="true">img</figcaption>
 </figure>
@@ -346,7 +346,7 @@ generator, chip select等。
 Subsystem，比较器子系统。由模拟比较器和支持电路组成，可用于峰值电流模式控制、开关电源、功率因数校正、电压跳闸监测等应用。</p>
 <p>每个CMPSS包含两个比较器、两个12位DAC参考、两个数字滤波器和一个斜坡发生器。比较器在每个模块中表示为“H”或“L”，其中“H”和“L”分别表示高和低。每个比较器产生一个数字输出，指示正输入端的电压是否大于负输入端的电压。比较器的正输入由外部引脚或PGA驱动，负输入可由外部引脚或可编程参考12位DAC驱动。每个比较器输出通过一个可编程的数字滤波器，可以消除假跳闸信号。如果不需要滤波，也可以使用未滤波的输出。一个可选的斜坡发生器电路可用于控制高比较器的12位参考DAC值。</p>
 <p><img
-src="https://pic.islet.space/2021/07/20200416154658460.png" /></p>
+src="https://liewpicturestorage-20210408-1251513394.cos.ap-guangzhou.myqcloud.com/2021/07/20200416154658460.png" /></p>
 <h1 id="can">CAN</h1>
 <p>A controller area network(CAN) is ideally suited to the many
 high-level industrial protocols embracing CAN and
@@ -494,7 +494,7 @@ the Controller Area Network(CAN)》</a></li>
 
 <div class="copyright">
   &copy; 2019 – 
-  <span itemprop="copyrightYear">2022</span>
+  <span itemprop="copyrightYear">2023</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
